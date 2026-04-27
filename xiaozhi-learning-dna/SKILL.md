@@ -2,7 +2,7 @@
 name: xiaozhi-learning-dna
 display_name: 🧬 学习DNA档案
 version: 1.0.0
-author: 小龙虾高效学习法
+author: 大智若愚
 category: 通用核心
 tags: [学习档案, 长期记忆, 个性化, 通用, 必装]
 description: >

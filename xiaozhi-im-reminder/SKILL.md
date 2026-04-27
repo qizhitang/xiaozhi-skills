@@ -2,7 +2,7 @@
 name: xiaozhi-im-reminder
 display_name: ⏰ IM智能提醒
 version: 1.0.0
-author: 小龙虾高效学习法
+author: 大智若愚
 category: 通用核心
 tags: [提醒, 复习计划, 艾宾浩斯, 记忆飞轮, 主动提醒, 必装]
 description: >

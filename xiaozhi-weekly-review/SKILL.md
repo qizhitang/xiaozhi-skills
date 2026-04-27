@@ -2,7 +2,7 @@
 name: xiaozhi-weekly-review
 display_name: 📊 每周学习复盘
 version: 1.0.0
-author: 小龙虾高效学习法
+author: 大智若愚
 category: 通用核心
 tags: [周复盘, 学习报告, 成长记录, 数据驱动, 必装]
 description: >

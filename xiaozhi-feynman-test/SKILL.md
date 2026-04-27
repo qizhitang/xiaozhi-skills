@@ -2,7 +2,7 @@
 name: xiaozhi-feynman-test
 display_name: 🎓 费曼测试
 version: 1.0.0
-author: 小龙虾高效学习法
+author: 大智若愚
 category: 通用核心
 tags: [费曼学习法, 深度理解, 自我检验, 全科通用, 必装]
 description: >
