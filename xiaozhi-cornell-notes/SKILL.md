@@ -2,7 +2,7 @@
 name: cornell-notes-archive
 display_name: 📝 智能康奈尔笔记档案
 version: 1.0.0
-author: 小龙虾高效学习法
+author: 大智若愚
 category: 通用核心
 tags: [笔记, 康奈尔, 知识联动, 主动推送, 笔记DNA, 跨学科, 必装]
 description: >

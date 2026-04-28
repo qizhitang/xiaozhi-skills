@@ -2,7 +2,7 @@
 name: learning-plan-maker
 display_name: 🗓️ 30天学习计划制定师
 version: 1.0.0
-author: 小龙虾高效学习法
+author: 大智若愚
 category: 通用核心
 tags: [学习计划, DNA驱动, 个性化方案, 家庭看板, 执行监控, 自我管理]
 description: >

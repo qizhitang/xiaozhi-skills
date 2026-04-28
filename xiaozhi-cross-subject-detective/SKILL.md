@@ -2,7 +2,7 @@
 name: cross-subject-detective
 display_name: 🔭 跨学科侦探周
 version: 1.0.0
-author: 小龙虾高效学习法
+author: 大智若愚
 category: 通用核心
 tags: [跨学科, 侦探周, 知识联结, 项目学习, 联结力, 知识积累树]
 description: >
@@ -15,7 +15,7 @@ description: >
   真正的深度学习发生在知识与知识之间的边界上——这个SKILL就是建桥的工具。
   凡是涉及跨学科联结、主题研究、知识网络构建的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna, cornell-notes-archive
+depends_on: xiaozhi-learning-dna, xiaozhi-cornell-notes
 ---
 
 # 🔭 跨学科侦探周 SKILL

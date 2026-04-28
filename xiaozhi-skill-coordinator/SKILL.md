@@ -1,8 +1,8 @@
 ---
-name: three-skill-coordinator
+name: xiaozhi-skill-coordinator
 display_name: 🔗 三SKILL联动协调器
 version: 1.1.0
-author: 小龙虾高效学习法
+author: 大智若愚
 category: 通用核心
 tags: [联动, 协调, 错题本, 费曼测试, 康奈尔笔记, 学习计划, 时间专注, 月报, 系统级]
 description: >
@@ -11,7 +11,7 @@ description: >
   必须激活此SKILL。当前版本已整合五SKILL协调体系、五维度月报、扩展联动判断规则
   与更完整的系统健康检查。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna, wrong-answer-notebook, feynman-test, cornell-notes-archive
+depends_on: xiaozhi-learning-dna, xiaozhi-wrong-answer-notebook, xiaozhi-feynman-test, xiaozhi-cornell-notes
 ---
 
 # 🔗 三SKILL联动协调器 SKILL
