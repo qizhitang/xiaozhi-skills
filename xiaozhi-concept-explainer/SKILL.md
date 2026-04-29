@@ -1,5 +1,5 @@
 ---
-name: math-concept-explainer
+name: xiaozhi-concept-explainer
 display_name: 💡 数学概念解释器
 version: 1.0.0
 author: 大智若愚

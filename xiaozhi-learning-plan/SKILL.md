@@ -1,5 +1,5 @@
 ---
-name: learning-plan-maker
+name: xiaozhi-learning-plan
 display_name: 🗓️ 30天学习计划制定师
 version: 1.0.0
 author: 大智若愚

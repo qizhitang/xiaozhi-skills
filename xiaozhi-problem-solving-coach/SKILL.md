@@ -1,5 +1,5 @@
 ---
-name: math-problem-solving-coach
+name: xiaozhi-problem-solving-coach
 display_name: 📐 数学解题教练
 version: 1.0.0
 author: 大智若愚
@@ -22,6 +22,12 @@ depends_on: xiaozhi-learning-dna, xiaozhi-error-gene-archive
 > **一句话定位：** 传统AI是"给答案的计算器"——  
 > 这个SKILL是"追问思路的数学教练"。  
 > 你卡在哪里，我帮你找到；你懂了哪里，我帮你记住。
+
+---
+
+## ⚠️ 技术实现边界声明
+
+> **关于“拍照解析”机制：** 本模块核心的「三步拍照法」对错题图片的上传与识别，强依赖于多模态大语言模型（Multimodal LLMs）的视觉解析能力，或专属 SKILL 扩展配置的本地 OCR 脚本服务，并非纯文本 LLM 原生支持。
 
 ---
 

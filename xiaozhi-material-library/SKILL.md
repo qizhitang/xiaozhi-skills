@@ -1,5 +1,5 @@
 ---
-name: chinese-material-library
+name: xiaozhi-material-library
 display_name: 📚 语文素材库2.0
 version: 1.0.0
 author: 大智若愚

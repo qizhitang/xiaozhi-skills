@@ -1,5 +1,5 @@
 ---
-name: math-word-problem-coach
+name: xiaozhi-word-problem-coach
 display_name: 📝 应用题数学建模教练
 version: 1.0.0
 author: 大智若愚

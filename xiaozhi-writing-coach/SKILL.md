@@ -1,5 +1,5 @@
 ---
-name: chinese-writing-coach
+name: xiaozhi-writing-coach
 display_name: 🖊️ 语文写作教练
 version: 1.0.0
 author: 大智若愚
@@ -21,6 +21,12 @@ depends_on: xiaozhi-learning-dna
 
 > **一句话定位：** 把"让AI帮你写"变成"用AI把你自己的写作能力激活出来"——  
 > 你写，AI追问；你改，AI指路；你成长，AI见证。
+
+---
+
+## ⚠️ 技术实现边界声明
+
+> **关于“风格DNA与跨次记忆”机制：** 本模块对学生写作风格的跨次积累与长期记忆，**并不依赖**大语言模型（LLM）的上下文长度，而是依托于 OpenClaw 平台底层的「本地化持久记忆机制」。
 
 ---
 

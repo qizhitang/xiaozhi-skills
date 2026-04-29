@@ -1,5 +1,5 @@
 ---
-name: time-focus-coach
+name: xiaozhi-time-focus-coach
 display_name: ⏱️ 时间与专注力教练
 version: 1.0.0
 author: 大智若愚
@@ -24,6 +24,10 @@ depends_on: xiaozhi-learning-dna, xiaozhi-learning-plan
 > 实际上数不清1.5小时被手机和发呆吃掉了。  
 > 这个SKILL帮你看清楚时间到底去哪里了——  
 > 然后让你基于真实数据做决策，而不是基于感觉。
+
+## ⚠️ 技术实现边界声明
+
+> **关于“精确计时”机制：** 本模块中涉及的精确定时（如智能番茄钟），并非 LLM 自身具备的毫秒级自主计时能力。它依托于如 QClaw 等定制化 OpenClaw 平台的「定时任务机制」与「自动化工作流引擎」来在指定时间点自动唤醒大模型执行动作。
 
 ---
 

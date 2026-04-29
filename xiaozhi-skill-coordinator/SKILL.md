@@ -18,6 +18,10 @@ depends_on: xiaozhi-learning-dna, xiaozhi-wrong-answer-notebook, xiaozhi-feynman
 
 > **一句话定位：** 真正有效的不是“装了很多工具”，而是这些工具会在正确时机自动配合。
 
+## ⚠️ 技术实现边界声明
+
+> **关于“定时调度”机制：** 本模块中涉及的定期自动化报告生成调度，并非 LLM 自身具备的自主唤醒能力。它依托于如 QClaw 等定制化 OpenClaw 平台的「自动化工作流引擎」在指定时间自动触发大模型执行联动分析。
+
 ---
 
 ## 一、核心使命

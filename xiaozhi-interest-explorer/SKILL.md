@@ -1,5 +1,5 @@
 ---
-name: interest-growth-explorer
+name: xiaozhi-interest-explorer
 display_name: ☕ 兴趣成长探索计划
 version: 1.0.0
 author: 大智若愚

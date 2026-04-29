@@ -1,5 +1,5 @@
 ---
-name: math-gradient-trainer
+name: xiaozhi-gradient-trainer
 display_name: 🎯 思维梯度训练师
 version: 1.0.0
 author: 大智若愚

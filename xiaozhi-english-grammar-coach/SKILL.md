@@ -1,5 +1,5 @@
 ---
-name: english-grammar-coach
+name: xiaozhi-english-grammar-coach
 display_name: 📝 英语语法突破教练
 version: 1.0.0
 author: 大智若愚

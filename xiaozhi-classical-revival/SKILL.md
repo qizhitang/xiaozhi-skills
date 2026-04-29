@@ -1,5 +1,5 @@
 ---
-name: chinese-classical-revival
+name: xiaozhi-classical-revival
 display_name: 🏛️ 文言文复活计划
 version: 1.0.0
 author: 大智若愚

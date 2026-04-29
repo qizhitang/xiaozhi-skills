@@ -1,5 +1,5 @@
 ---
-name: english-speaking-coach
+name: xiaozhi-speaking-coach
 display_name: 🎙️ 英语口语陪练
 version: 1.0.0
 author: 大智若愚
@@ -24,6 +24,12 @@ depends_on: xiaozhi-learning-dna
 > **一句话定位：** "哑巴英语"只有一个真正的解法——  
 > 开口说，说错了不要紧，  
 > 关键是有人记得你上次哪里说错了，这次帮你纠回来。
+
+---
+
+## ⚠️ 技术实现边界声明
+
+> **关于“口语进化档案”机制：** 本模块记录发音弱点并跨次纠错的长期记忆能力，**并不依赖**大模型自身的记忆能力，而是依托于 OpenClaw 平台底层的「本地化持久记忆机制」。
 
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: english-writing-coach
+name: xiaozhi-english-writing-coach
 display_name: ✍️ 英语写作进化教练
 version: 1.0.0
 author: 大智若愚

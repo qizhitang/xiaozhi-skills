@@ -1,5 +1,5 @@
 ---
-name: chinese-reading-decoder
+name: xiaozhi-reading-decoder
 display_name: 📖 阅读理解拆解师
 version: 1.0.0
 author: 大智若愚

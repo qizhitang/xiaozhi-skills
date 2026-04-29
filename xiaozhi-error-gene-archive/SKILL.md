@@ -1,5 +1,5 @@
 ---
-name: math-error-gene-archive
+name: xiaozhi-error-gene-archive
 display_name: 🧬 数学错误基因档案
 version: 1.0.0
 author: 大智若愚

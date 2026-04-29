@@ -1,5 +1,5 @@
 ---
-name: english-listening-trainer
+name: xiaozhi-listening-trainer
 display_name: 🎧 个性化英语听力训练师
 version: 1.0.0
 author: 大智若愚

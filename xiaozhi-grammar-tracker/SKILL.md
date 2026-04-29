@@ -1,5 +1,5 @@
 ---
-name: chinese-grammar-tracker
+name: xiaozhi-grammar-tracker
 display_name: 🔍 语病追踪档案
 version: 1.0.0
 author: 大智若愚

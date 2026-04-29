@@ -1,5 +1,5 @@
 ---
-name: cross-subject-detective
+name: xiaozhi-cross-subject-detective
 display_name: 🔭 跨学科侦探周
 version: 1.0.0
 author: 大智若愚

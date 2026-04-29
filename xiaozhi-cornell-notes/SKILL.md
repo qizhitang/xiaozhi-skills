@@ -1,5 +1,5 @@
 ---
-name: cornell-notes-archive
+name: xiaozhi-cornell-notes
 display_name: 📝 智能康奈尔笔记档案
 version: 1.0.0
 author: 大智若愚
@@ -23,6 +23,12 @@ depends_on: xiaozhi-learning-dna
 > **一句话定位：** 你记笔记，笔记记住你——  
 > 当你需要它的时候，它主动找到你；  
 > 当你以为忘了，它帮你想起来。
+
+---
+
+## ⚠️ 技术实现边界声明
+
+> **关于“拍照解析”机制：** 模块中的课堂笔记拍照上传与提炼功能，强依赖于多模态大语言模型（Multimodal LLMs）的视觉识别能力，或定制化平台上专属 SKILL 扩展的本地 OCR 脚本服务，并非普通纯文本 LLM 原生具备的能力。
 
 ---
 
