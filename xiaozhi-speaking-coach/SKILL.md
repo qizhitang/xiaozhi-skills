@@ -2,7 +2,7 @@
 name: xiaozhi-speaking-coach
 display_name: 🎙️ 英语口语陪练
 version: 1.0.0
-author: 大智若愚
+author: 小智伴学
 category: 英语专项
 tags: [英语, 口语, 发音, 晨间热身, 角色扮演, 口语进化档案, 必装]
 description: >

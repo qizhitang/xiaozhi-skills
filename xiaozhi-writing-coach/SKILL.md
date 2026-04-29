@@ -2,7 +2,7 @@
 name: xiaozhi-writing-coach
 display_name: 🖊️ 语文写作教练
 version: 1.0.0
-author: 大智若愚
+author: 小智伴学
 category: 语文专项
 tags: [写作, 作文, 议论文, 记叙文, 说明文, 风格DNA, 苏格拉底, 语文]
 description: >

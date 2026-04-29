@@ -2,7 +2,7 @@
 name: xiaozhi-cross-subject-detective
 display_name: 🔭 跨学科侦探周
 version: 1.0.0
-author: 大智若愚
+author: 小智伴学
 category: 通用核心
 tags: [跨学科, 侦探周, 知识联结, 项目学习, 联结力, 知识积累树]
 description: >

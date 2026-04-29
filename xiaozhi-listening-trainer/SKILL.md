@@ -2,7 +2,7 @@
 name: xiaozhi-listening-trainer
 display_name: 🎧 个性化英语听力训练师
 version: 1.0.0
-author: 大智若愚
+author: 小智伴学
 category: 英语专项
 tags: [英语, 听力, 个性化材料, 词汇DNA, 卡壳追问, 听力训练]
 description: >

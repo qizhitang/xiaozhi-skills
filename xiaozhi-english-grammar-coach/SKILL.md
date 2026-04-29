@@ -2,7 +2,7 @@
 name: xiaozhi-english-grammar-coach
 display_name: 📝 英语语法突破教练
 version: 1.0.0
-author: 大智若愚
+author: 小智伴学
 category: 英语专项
 tags: [英语, 语法, 苏格拉底, 时态, 定语从句, 语法DNA, 追问, 必装]
 description: >

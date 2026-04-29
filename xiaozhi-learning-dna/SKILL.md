@@ -2,7 +2,7 @@
 name: xiaozhi-learning-dna
 display_name: 🧬 学习DNA档案
 version: 1.1.0
-author: 大智若愚
+author: 小智伴学
 category: 通用核心
 tags: [学习档案, 长期记忆, 个性化, 成长图谱, 通用, 必装]
 description: >

@@ -2,7 +2,7 @@
 name: xiaozhi-classical-revival
 display_name: 🏛️ 文言文复活计划
 version: 1.0.0
-author: 大智若愚
+author: 小智伴学
 category: 语文专项
 tags: [文言文, 古诗词, 古人扮演, 背诵, 诗词鉴赏, 语文, 经典]
 description: >

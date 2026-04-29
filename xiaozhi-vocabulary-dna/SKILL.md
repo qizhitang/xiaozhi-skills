@@ -2,7 +2,7 @@
 name: xiaozhi-vocabulary-dna
 display_name: 📖 智能词汇DNA系统
 version: 1.0.0
-author: 大智若愚
+author: 小智伴学
 category: 英语专项
 tags: [英语, 词汇, 单词记忆, 艾宾浩斯, 五轮提醒, 词汇DNA, 预热雷达, 必装]
 description: >

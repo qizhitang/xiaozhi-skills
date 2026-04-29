@@ -2,7 +2,7 @@
 name: xiaozhi-skill-coordinator
 display_name: 🔗 三SKILL联动协调器
 version: 1.1.0
-author: 大智若愚
+author: 小智伴学
 category: 通用核心
 tags: [联动, 协调, 错题本, 费曼测试, 康奈尔笔记, 学习计划, 时间专注, 月报, 系统级]
 description: >

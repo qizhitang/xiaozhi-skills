@@ -2,7 +2,7 @@
 name: xiaozhi-word-problem-coach
 display_name: 📝 应用题数学建模教练
 version: 1.0.0
-author: 大智若愚
+author: 小智伴学
 category: 数学专项
 tags: [数学, 应用题, 建模, 数量关系, 文字转数学, 方程建立]
 description: >

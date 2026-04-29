@@ -2,7 +2,7 @@
 name: xiaozhi-cornell-notes
 display_name: 📝 智能康奈尔笔记档案
 version: 1.0.0
-author: 大智若愚
+author: 小智伴学
 category: 通用核心
 tags: [笔记, 康奈尔, 知识联动, 主动推送, 笔记DNA, 跨学科, 必装]
 description: >

@@ -2,7 +2,7 @@
 name: xiaozhi-error-gene-archive
 display_name: 🧬 数学错误基因档案
 version: 1.0.0
-author: 大智若愚
+author: 小智伴学
 category: 数学专项
 tags: [数学, 错题, 错误追踪, 弱项分析, 数学焦虑, 月报, 必装]
 description: >

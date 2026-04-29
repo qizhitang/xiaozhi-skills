@@ -2,7 +2,7 @@
 name: xiaozhi-english-writing-coach
 display_name: ✍️ 英语写作进化教练
 version: 1.0.0
-author: 大智若愚
+author: 小智伴学
 category: 英语专项
 tags: [英语, 写作, 作文批改, 写作进化, 句式升级, 三维批改, 场景脚本]
 description: >

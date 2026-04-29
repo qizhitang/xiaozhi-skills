@@ -2,7 +2,7 @@
 name: xiaozhi-im-reminder
 display_name: ⏰ IM智能提醒
 version: 1.1.0
-author: 大智若愚
+author: 小智伴学
 category: 通用核心
 tags: [提醒, 复习计划, 艾宾浩斯, 主动提醒, 计划提醒, 探索提醒, 必装]
 description: >

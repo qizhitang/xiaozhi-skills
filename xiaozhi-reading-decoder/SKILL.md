@@ -2,7 +2,7 @@
 name: xiaozhi-reading-decoder
 display_name: 📖 阅读理解拆解师
 version: 1.0.0
-author: 大智若愚
+author: 小智伴学
 category: 语文专项
 tags: [阅读理解, 现代文, 出题人视角, 答题规范, 语文, 阅读]
 description: >

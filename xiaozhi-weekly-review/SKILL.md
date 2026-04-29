@@ -2,7 +2,7 @@
 name: xiaozhi-weekly-review
 display_name: 📊 每周学习复盘
 version: 1.1.0
-author: 大智若愚
+author: 小智伴学
 category: 通用核心
 tags: [周复盘, 学习报告, 成长记录, 苏格拉底复盘, 成长曲线, 必装]
 description: >

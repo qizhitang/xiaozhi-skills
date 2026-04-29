@@ -2,7 +2,7 @@
 name: xiaozhi-skill-creator
 display_name: 🛠️ SKILL创建教练
 version: 1.0.0
-author: 大智若愚
+author: 小智伴学
 category: 通用核心
 tags: [SKILL创建, 四层结构, 资料投喂, 元SKILL, 自定义, 必装]
 description: >

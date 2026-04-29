@@ -2,7 +2,7 @@
 name: xiaozhi-grammar-tracker
 display_name: 🔍 语病追踪档案
 version: 1.0.0
-author: 大智若愚
+author: 小智伴学
 category: 语文专项
 tags: [语病, 病句, 语法, 写作改错, 追踪档案, 语文]
 description: >

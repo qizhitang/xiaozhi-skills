@@ -2,7 +2,7 @@
 name: xiaozhi-problem-solving-coach
 display_name: 📐 数学解题教练
 version: 1.0.0
-author: 大智若愚
+author: 小智伴学
 category: 数学专项
 tags: [数学, 解题, 错题分析, 三步拍照法, CLAW模板, 苏格拉底, 必装]
 description: >

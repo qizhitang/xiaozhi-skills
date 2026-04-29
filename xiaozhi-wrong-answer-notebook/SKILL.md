@@ -2,7 +2,7 @@
 name: xiaozhi-wrong-answer-notebook
 display_name: ❌ 错题本
 version: 1.1.0
-author: 大智若愚
+author: 小智伴学
 category: 通用核心
 tags: [错题, 错因分析, 弱项预警, 学期报告, 全科通用, 必装]
 description: >

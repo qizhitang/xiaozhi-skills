@@ -2,7 +2,7 @@
 name: xiaozhi-learning-plan
 display_name: 🗓️ 30天学习计划制定师
 version: 1.0.0
-author: 大智若愚
+author: 小智伴学
 category: 通用核心
 tags: [学习计划, DNA驱动, 个性化方案, 家庭看板, 执行监控, 自我管理]
 description: >
