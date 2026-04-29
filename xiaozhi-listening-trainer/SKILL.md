@@ -16,7 +16,7 @@ description: >
   不是给你标准听力题，而是为你专门生成一段材料。
   凡是涉及英语听力练习、材料理解、听力能力提升的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna, english-vocabulary-dna
+depends_on: xiaozhi-learning-dna, xiaozhi-vocabulary-dna
 ---
 
 # 🎧 个性化英语听力训练师 SKILL

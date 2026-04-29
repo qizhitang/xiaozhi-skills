@@ -14,7 +14,7 @@ description: >
   先建直觉，再学公式——顺序不能颠倒。
   凡是涉及数学概念理解、公式原理追问、几何想象力训练的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna
+depends_on: xiaozhi-learning-dna
 ---
 
 # 💡 数学概念解释器 SKILL

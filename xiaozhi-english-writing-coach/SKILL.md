@@ -15,7 +15,7 @@ description: >
   不直接改——用追问引导学生自己改，改了才记得。
   凡是涉及英语写作练习、作文批改、句式表达改进的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna, english-grammar-coach
+depends_on: xiaozhi-learning-dna, xiaozhi-english-grammar-coach
 ---
 
 # ✍️ 英语写作进化教练 SKILL

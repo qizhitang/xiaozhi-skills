@@ -14,7 +14,7 @@ description: >
   不直接建模，用追问引导学生自己完成文字到数学语言的转化。
   凡是涉及应用题理解、数学建模、设元列方程的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna, math-error-gene-archive
+depends_on: xiaozhi-learning-dna, xiaozhi-error-gene-archive
 ---
 
 # 📝 应用题数学建模教练 SKILL

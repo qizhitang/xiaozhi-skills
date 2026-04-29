@@ -15,7 +15,7 @@ description: >
   这是所有SKILL的"元SKILL"——用SKILL来帮你创造更好的SKILL。
   凡是涉及自定义SKILL创建、提示词撰写、SKILL调试的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna
+depends_on: xiaozhi-learning-dna
 ---
 
 # 🛠️ SKILL创建教练 SKILL

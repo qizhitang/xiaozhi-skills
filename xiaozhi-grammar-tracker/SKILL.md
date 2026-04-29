@@ -13,7 +13,7 @@ description: >
   不直接告诉学生哪里错了——用追问引导学生自己发现，才能真正改掉。
   凡是涉及病句修改、语法纠错、语言规范的语文场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna
+depends_on: xiaozhi-learning-dna
 ---
 
 # 🔍 语病追踪档案 SKILL

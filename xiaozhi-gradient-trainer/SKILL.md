@@ -15,7 +15,7 @@ description: >
   不是刷难题——是找到当前天花板，精准突破那一层。
   凡是涉及数学进阶训练、思维提升、水平测定的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna, math-error-gene-archive
+depends_on: xiaozhi-learning-dna, xiaozhi-error-gene-archive
 ---
 
 # 🎯 思维梯度训练师 SKILL

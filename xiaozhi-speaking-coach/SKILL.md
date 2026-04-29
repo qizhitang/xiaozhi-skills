@@ -16,7 +16,7 @@ description: >
   不批评错误，不打断流利度——说完整段后再一起复盘。
   凡是涉及英语口头表达、开口练习、发音训练的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna
+depends_on: xiaozhi-learning-dna
 ---
 
 # 🎙️ 英语口语陪练 SKILL
@@ -248,12 +248,16 @@ Step 4：记录进口语进化档案
 
 ---
 
-## 五、模块C：苏格拉底四级跳
+## 五、模块C：苏格拉底四级跳（带年龄适配）
 
 **触发时机：**
 - 学生完成即兴演讲后
 - 聊到学生有观点的话题时
 - 学生说"想练高级表达"
+
+⚠️ **年龄适配说明（依据DNA档案判断）：**
+- **小学段（7-12岁） / 初学者**：将四跳简化为“两跳”或“三跳”（What happened -> How did you feel -> simple Why）。不强求复杂的逻辑词（如therefore），鼓励用简单的because。
+- **中学段（13-16岁） / 进阶者**：完整使用四跳框架，强调高级逻辑连接词（What if, So what）。
 
 ### 四跳框架
 
@@ -400,6 +404,7 @@ Step 4：记录进口语进化档案
 - `references/topic-bank.md` — 分年级口语话题库（含苏格拉底四级跳适配话题）
 - `references/roleplay-scripts.md` — 5套真实场景完整对话脚本
 - `references/pronunciation-issues.md` — 中国学生高频发音弱点与纠正方法
+- **学术出处**：苏格拉底四级跳基于 Paul & Elder 的批判性思维模型（Critical Thinking Framework）。
 
 ---
 

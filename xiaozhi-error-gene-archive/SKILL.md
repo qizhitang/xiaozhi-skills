@@ -14,7 +14,7 @@ description: >
   同时承担数学焦虑的数据化破解：用精准档案数据替代"我不行"的模糊感受。
   凡是涉及数学错题记录、弱项分析、考前策略制定的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna, math-problem-solving-coach
+depends_on: xiaozhi-learning-dna, xiaozhi-problem-solving-coach
 ---
 
 # 🧬 数学错误基因档案 SKILL
@@ -44,6 +44,10 @@ depends_on: learning-dna, math-problem-solving-coach
                   从"这道题"上升到"这类错误"
                   从孤立事件变成可分析的数据
 ```
+
+⚠️ **【架构定位声明】：本SKILL是通用核心包中“❌ 错题本 SKILL”在数学领域的专属扩展实现，并非独立的第二套错题本。**
+- 数学错题的表面记录依然由通用错题本统一流转。
+- **本SKILL的专职**：负责数学特有的深度分析（四类数学专属错因、概念混淆对照、读题习惯训练、数学焦虑的数据化破解）。两者无缝配合，确保不产生重复记录和触发冲突。
 
 ---
 

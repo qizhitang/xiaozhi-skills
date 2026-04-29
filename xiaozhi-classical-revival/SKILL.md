@@ -14,7 +14,7 @@ description: >
   + 游戏化背诵三题型。让历史情境、个人情感、文字选择三维融合，
   记忆深度是逐字翻译的十倍。凡是涉及古诗文、文言文理解、诗词背诵的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna
+depends_on: xiaozhi-learning-dna
 ---
 
 # 🏛️ 文言文复活计划 SKILL

@@ -268,6 +268,7 @@ IM智能提醒
 ## 十二、参考资源
 
 - `references/ebbinghaus-schedule.md` - 艾宾浩斯遗忘曲线详细参数与提醒间隔计算
+- **学术出处**：基于 Ebbinghaus (1885) 遗忘曲线理论及间隔重复（Spaced Repetition）研究的简化模型，参考 Pimsleur (1967) 间隔学习理论与 SuperMemo SM-2 算法。
 
 ---
 

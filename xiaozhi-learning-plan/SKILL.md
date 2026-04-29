@@ -15,7 +15,7 @@ description: >
   普通AI对话基于你说的信息，此SKILL基于你的真实学习数据。
   凡是涉及学期规划、月度计划、考前安排、时间分配的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna, math-error-gene-archive, english-vocabulary-dna
+depends_on: xiaozhi-learning-dna
 ---
 
 # 🗓️ 30天学习计划制定师 SKILL

@@ -15,7 +15,7 @@ description: >
   始终追问，永不直接给答案——自己发现的规律，记得深十倍。
   凡是涉及英语语法错误、句子分析、语法专项训练的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna
+depends_on: xiaozhi-learning-dna
 ---
 
 # 📝 英语语法突破教练 SKILL
@@ -442,6 +442,7 @@ Step 5  造句应用
 ## 九、参考资源
 
 - `references/grammar-patterns.md` — 五类语法错误详细分析与追问话术扩展库
+- **学术出处**：苏格拉底语法追问教练基于 Paul & Elder 的批判性思维模型（Critical Thinking Framework）。
 
 ---
 

@@ -14,7 +14,7 @@ description: >
   绝不直接给答案，只帮学生理解出题人的逻辑，训练答题思路。
   凡是涉及现代文阅读、课外阅读练习、答题格式规范的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna
+depends_on: xiaozhi-learning-dna
 ---
 
 # 📖 阅读理解拆解师 SKILL

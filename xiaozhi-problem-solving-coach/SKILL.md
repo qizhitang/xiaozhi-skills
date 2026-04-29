@@ -14,7 +14,7 @@ description: >
   内置5套CLAW数学专项模板 + 数学苏格拉底五问链，覆盖数学学习80%场景。
   凡是涉及数学解题、错题分析、概念追问、考前复习的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna, math-error-gene-archive
+depends_on: xiaozhi-learning-dna, xiaozhi-error-gene-archive
 ---
 
 # 📐 数学解题教练 SKILL
@@ -440,6 +440,7 @@ depends_on: learning-dna, math-error-gene-archive
 
 - `references/claw-templates-extended.md` — 5套CLAW模板的扩展话术和变体场景
 - `references/math-socrates-guide.md` — 苏格拉底五问链各学段适配指南
+- **学术出处**：数学苏格拉底五问链基于 Paul & Elder 的批判性思维模型（Critical Thinking Framework）。
 
 ---
 

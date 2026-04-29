@@ -15,7 +15,7 @@ description: >
   普通笔记是静态仓库，此SKILL让笔记主动找你。
   凡是涉及课堂笔记整理、知识点提炼、复习备考的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna
+depends_on: xiaozhi-learning-dna
 ---
 
 # 📝 智能康奈尔笔记档案 SKILL
@@ -397,6 +397,7 @@ Step 4：标注记忆状态
 ## 十、参考资源
 
 - `references/cornell-format-guide.md` — 康奈尔笔记格式详解与各科笔记模板
+- **学术出处**：基于 Walter Pauk (Cornell University) 提出的康奈尔笔记法（The Cornell Note-taking System）。
 
 ---
 

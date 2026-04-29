@@ -14,7 +14,7 @@ description: >
   普通素材收集是"被动的仓库"，此SKILL是"主动的助手"——写作前它来找你。
   凡是涉及素材积累、好句收藏、写作备料的语文场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna
+depends_on: xiaozhi-learning-dna
 ---
 
 # 📚 语文素材库2.0 SKILL

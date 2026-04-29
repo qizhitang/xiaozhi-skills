@@ -15,7 +15,7 @@ description: >
   不需要学生记住复习时间——只需要在消息来的时候回答那道题。
   凡是涉及英语单词记忆、词汇积累、课前预习的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna, english-speaking-coach
+depends_on: xiaozhi-learning-dna
 ---
 
 # 📖 智能词汇DNA系统 SKILL
@@ -380,6 +380,10 @@ QQ推送：
     ──→ 学习DNA档案（词汇积累状态写入总档案）
     ──→ 英语语法突破教练（词汇正确用法联动确认）
 ```
+
+## 十、参考资源
+
+- **学术出处**：基于 Ebbinghaus (1885) 遗忘曲线理论及间隔重复（Spaced Repetition）研究的简化模型，参考 Pimsleur (1967) 间隔学习理论与 SuperMemo SM-2 算法。
 
 ---
 
