@@ -1,6 +1,6 @@
 ---
 name: xiaozhi-skill-coordinator
-display_name: 🔗 三SKILL联动协调器
+display_name: 🔗 SKILL联动协调器
 version: 1.1.0
 author: 小智伴学
 category: 通用核心
