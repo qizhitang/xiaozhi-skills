@@ -233,7 +233,7 @@ depends_on: xiaozhi-learning-dna, xiaozhi-error-gene-archive
 ### 成长日记的记录触发
 
 ```
-自动触发：
+满足条件时可触发：
 - 完成一道梯度题后（无论成功与否）
 - 突破了一个新的层级
 - 攻克了档案中的顽固弱项
