@@ -1,0 +1,723 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xiaozhi-skills.openclaw.dev/schemas/dna-profile.schema.json",
+  "title": "LearningDNAProfile",
+  "description": "学习DNA档案 —— 小龙虾长期记忆核心引擎的数据结构定义。覆盖六大基础维度（基础信息、学科强弱、学习风格、错误模式、对话摘要、成长轨迹）与 v1.1 扩展（成长图谱、兴趣DNA）。所有字段均为可选（optional），默认只记录完成个性化辅导所必需的最小信息。",
+
+  "type": "object",
+  "additionalProperties": false,
+
+  "properties": {
+    "meta": {
+      "description": "档案元数据：版本、创建时间、授权状态",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "profileId": {
+          "type": "string",
+          "description": "档案唯一标识符，由平台自动生成",
+          "pattern": "^[a-zA-Z0-9_-]+$"
+        },
+        "schemaVersion": {
+          "type": "string",
+          "description": "档案结构版本号，与 SKILL 版本对应",
+          "enum": ["1.0.0", "1.1.0", "1.1.1"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "首次建档时间（ISO 8601）"
+        },
+        "lastUpdatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "最近一次更新时间（ISO 8601）"
+        },
+        "consentStatus": {
+          "description": "授权状态：用户对长期档案的当前授权情况",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "profileEnabled": {
+              "type": "boolean",
+              "description": "用户是否已同意开启长期档案",
+              "default": false
+            },
+            "memoryPaused": {
+              "type": "boolean",
+              "description": "是否暂停记忆（本次不读取也不写入）",
+              "default": false
+            },
+            "crossSkillSharing": {
+              "type": "boolean",
+              "description": "是否允许跨SKILL共享最小字段摘要",
+              "default": false
+            },
+            "reminderConsent": {
+              "type": "boolean",
+              "description": "是否同意接收IM提醒",
+              "default": false
+            },
+            "interestTrackingConsent": {
+              "type": "boolean",
+              "description": "是否同意记录兴趣偏好",
+              "default": false
+            }
+          }
+        }
+      },
+      "required": ["profileId", "schemaVersion", "createdAt", "consentStatus"]
+    },
+
+    "basicInfo": {
+      "description": "一、基础信息：年级、目标、可用时间等与学生身份和学习安排相关的低敏信息",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "gradeLevel": {
+          "type": "string",
+          "description": "年级或学段（粗粒度，不记录学校班级全称）",
+          "examples": ["小学四年级", "初一", "初三", "高一"]
+        },
+        "shortTermGoal": {
+          "type": "string",
+          "description": "短期学习目标（具体可衡量，如'下次月考数学过80分'）",
+          "maxLength": 200
+        },
+        "longTermGoal": {
+          "type": "string",
+          "description": "长期学习目标或方向",
+          "maxLength": 200
+        },
+        "availableStudyTime": {
+          "type": "string",
+          "description": "可用学习时间的粗粒度描述（不记录精确作息）",
+          "examples": ["晚饭后1小时", "周末上午2小时", "每天30分钟碎片时间"]
+        },
+        "upcomingExams": {
+          "type": "array",
+          "description": "近期重要考试节点",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "examName": {
+                "type": "string",
+                "description": "考试名称",
+                "maxLength": 100
+              },
+              "subject": {
+                "type": "string",
+                "description": "相关学科"
+              },
+              "estimatedDate": {
+                "type": "string",
+                "format": "date",
+                "description": "预计考试日期"
+              }
+            },
+            "required": ["examName", "subject"]
+          },
+          "maxItems": 5
+        }
+      }
+    },
+
+    "subjectMap": {
+      "description": "二、学科强弱地图：各科强项与薄弱项的结构化记录",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "strengths": {
+          "type": "array",
+          "description": "强项科目及具体章节",
+          "items": {
+            "$ref": "#/$defs/subjectEntry"
+          }
+        },
+        "weaknesses": {
+          "type": "array",
+          "description": "薄弱科目及根本原因",
+          "items": {
+            "$ref": "#/$defs/subjectEntry"
+          }
+        },
+        "weakKnowledgePoints": {
+          "type": "array",
+          "description": "薄弱知识点清单（细化到知识点层级）",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "subject": {
+                "type": "string",
+                "description": "学科名称",
+                "examples": ["语文", "数学", "英语", "物理", "化学"]
+              },
+              "chapter": {
+                "type": "string",
+                "description": "所属章节"
+              },
+              "knowledgePoint": {
+                "type": "string",
+                "description": "知识点名称"
+              },
+              "rootCause": {
+                "type": "string",
+                "description": "薄弱根本原因（一句话概括）"
+              },
+              "status": {
+                "type": "string",
+                "description": "当前攻克状态",
+                "enum": ["待处理", "初步弱项", "突破中", "顽固弱项", "已攻克"]
+              },
+              "confidenceLevel": {
+                "$ref": "#/$defs/confidenceLevel"
+              }
+            },
+            "required": ["subject", "knowledgePoint"]
+          }
+        }
+      }
+    },
+
+    "learningStyle": {
+      "description": "三、学习风格偏好：解释方式、对话节奏、注意力习惯",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "preferredExplanationMode": {
+          "type": "array",
+          "description": "偏好解释方式（可多选）",
+          "items": {
+            "type": "string",
+            "enum": ["类比", "举例", "分步拆解", "图示辅助", "先结论后过程"]
+          },
+          "uniqueItems": true
+        },
+        "conversationPace": {
+          "type": "string",
+          "description": "对话节奏偏好",
+          "enum": ["快问快答", "深度慢聊", "先自己想再提示"]
+        },
+        "attentionHabit": {
+          "type": "string",
+          "description": "注意力习惯（仅记录与学习直接相关的概括性描述，不记录具体家庭作息细节）",
+          "examples": ["还好", "有点容易分心", "很容易分心", "需要白噪音环境"]
+        }
+      }
+    },
+
+    "errorPatterns": {
+      "description": "四、错误模式记录：固定性错误类型、根因分析、已攻克记录",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fixedErrorTypes": {
+          "type": "array",
+          "description": "固定性错误类型（连续3次同类错误后识别为固定模式）",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "errorType": {
+                "type": "string",
+                "description": "错误类型分类",
+                "enum": ["概念理解错误", "计算/操作失误", "审题习惯问题", "策略选择错误"]
+              },
+              "subject": {
+                "type": "string",
+                "description": "相关学科"
+              },
+              "knowledgePoint": {
+                "type": "string",
+                "description": "相关知识点"
+              },
+              "occurrenceCount": {
+                "type": "integer",
+                "description": "同类错误出现次数",
+                "minimum": 3
+              },
+              "rootCause": {
+                "type": "string",
+                "description": "根本原因（一句话概括）"
+              },
+              "confidenceLevel": {
+                "$ref": "#/$defs/confidenceLevel"
+              },
+              "identifiedDate": {
+                "type": "string",
+                "format": "date",
+                "description": "首次识别为固定模式的日期"
+              }
+            },
+            "required": ["errorType", "subject", "knowledgePoint", "occurrenceCount", "rootCause"]
+          }
+        },
+        "rootCauseAnalysis": {
+          "type": "array",
+          "description": "错误根因分析记录",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "subject": { "type": "string" },
+              "knowledgePoint": { "type": "string" },
+              "rootCause": { "type": "string" },
+              "analysisDate": { "type": "string", "format": "date" }
+            },
+            "required": ["subject", "knowledgePoint", "rootCause"]
+          }
+        },
+        "conqueredWeakPoints": {
+          "type": "array",
+          "description": "已攻克薄弱点（从顽固弱项变为已攻克）",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "subject": { "type": "string" },
+              "knowledgePoint": { "type": "string" },
+              "historicalErrorCount": {
+                "type": "integer",
+                "description": "历史出错次数",
+                "minimum": 1
+              },
+              "conqueredDate": {
+                "type": "string",
+                "format": "date",
+                "description": "攻克日期"
+              },
+              "conqueredVerification": {
+                "type": "string",
+                "description": "攻克验证方式（如'连续3次复测通过'）"
+              },
+              "breakthroughMethod": {
+                "type": "string",
+                "description": "突破方法",
+                "enum": ["错题本", "费曼测试", "专项训练", "综合突破"]
+              }
+            },
+            "required": ["subject", "knowledgePoint", "conqueredDate"]
+          }
+        }
+      }
+    },
+
+    "conversationSummary": {
+      "description": "五、对话历史摘要：本周重点、未解决疑问、近期学习节点",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "weeklyKeyTopics": {
+          "type": "array",
+          "description": "本周重点对话主题",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "topic": { "type": "string" },
+              "subject": { "type": "string" },
+              "weekOf": { "type": "string", "format": "date" }
+            },
+            "required": ["topic"]
+          },
+          "maxItems": 10
+        },
+        "unresolvedQuestions": {
+          "type": "array",
+          "description": "上次未解决的疑问",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "question": { "type": "string" },
+              "subject": { "type": "string" },
+              "raisedDate": { "type": "string", "format": "date" }
+            },
+            "required": ["question"]
+          },
+          "maxItems": 10
+        },
+        "recentLearningNodes": {
+          "type": "array",
+          "description": "近期学习节点（测验/考试/作业等）",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "nodeType": {
+                "type": "string",
+                "enum": ["测验", "考试", "作业", "课堂学习", "自主练习"]
+              },
+              "subject": { "type": "string" },
+              "description": { "type": "string" },
+              "date": { "type": "string", "format": "date" }
+            },
+            "required": ["nodeType", "description"]
+          },
+          "maxItems": 20
+        }
+      }
+    },
+
+    "growthTrack": {
+      "description": "六、成长轨迹：里程碑时刻、持续进步领域、飞轮状态",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "milestones": {
+          "type": "array",
+          "description": "里程碑时刻记录",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "milestoneId": {
+                "type": "string",
+                "description": "里程碑唯一ID，自动生成"
+              },
+              "name": {
+                "type": "string",
+                "description": "里程碑名称"
+              },
+              "category": {
+                "type": "string",
+                "description": "里程碑类别",
+                "enum": ["时间维度", "能力维度", "习惯维度"]
+              },
+              "triggerDate": {
+                "type": "string",
+                "format": "date",
+                "description": "触发日期"
+              },
+              "triggerEvent": {
+                "type": "string",
+                "description": "触发事件描述（一句话具体描述什么行为或数据触发了这个里程碑）"
+              },
+              "subject": {
+                "type": "string",
+                "description": "相关学科/领域（如适用）"
+              },
+              "comment": {
+                "type": "string",
+                "description": "小龙虾评语（存储当时说给学生的那句话）"
+              }
+            },
+            "required": ["milestoneId", "name", "category", "triggerDate"]
+          }
+        },
+        "continuousProgressAreas": {
+          "type": "array",
+          "description": "持续进步领域",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "subject": { "type": "string" },
+              "area": { "type": "string" },
+              "progressDescription": { "type": "string" },
+              "sinceDate": { "type": "string", "format": "date" }
+            },
+            "required": ["subject", "area"]
+          }
+        },
+        "flywheelStatus": {
+          "type": "string",
+          "description": "当前学习飞轮状态",
+          "enum": ["未启动", "起步中", "正在转", "稳定运转", "高速运转"]
+        },
+        "consecutiveLearningDays": {
+          "type": "integer",
+          "description": "连续学习天数（用于里程碑触发：7/14/30/100天）",
+          "minimum": 0
+        }
+      }
+    },
+
+    "growthMap": {
+      "description": "v1.1 扩展 · 成长图谱：让进步变得可见、可追踪、可对比",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "errorMap": {
+          "description": "5.1 错题地图：细化到知识点层级的错误分布",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "subject": {
+                "type": "string",
+                "description": "学科"
+              },
+              "chapter": {
+                "type": "string",
+                "description": "章节"
+              },
+              "knowledgePoint": {
+                "type": "string",
+                "description": "知识点"
+              },
+              "errorCount": {
+                "type": "integer",
+                "description": "错误次数",
+                "minimum": 0
+              },
+              "currentStatus": {
+                "type": "string",
+                "description": "当前状态",
+                "enum": ["正常", "初步弱项", "顽固弱项", "已攻克"]
+              },
+              "lastOccurrenceDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "trendSummary": {
+                "type": "string",
+                "description": "趋势摘要（由周报或月报生成时同步）"
+              }
+            },
+            "required": ["subject", "chapter", "knowledgePoint", "errorCount", "currentStatus"]
+          }
+        },
+        "oralGrowthTrack": {
+          "description": "5.2 口语成长轨迹：英语口语用户的发音与表达进展",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "pronunciationWeaknesses": {
+              "type": "array",
+              "description": "发音弱点清单",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "phoneme": {
+                    "type": "string",
+                    "description": "问题音节/单词"
+                  },
+                  "occurrenceCount": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "isStubborn": {
+                    "type": "boolean",
+                    "description": "是否为顽固弱点（出现≥3次）"
+                  },
+                  "improvementCurve": {
+                    "type": "string",
+                    "description": "改善曲线描述",
+                    "enum": ["无改善", "轻微改善", "明显改善", "已攻克"]
+                  },
+                  "lastOccurrenceDate": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                },
+                "required": ["phoneme", "occurrenceCount"]
+              }
+            },
+            "consecutiveWarmupDays": {
+              "type": "integer",
+              "description": "连续完成晨间热身天数",
+              "minimum": 0
+            },
+            "oralMilestones": {
+              "type": "array",
+              "description": "口语里程碑事件",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "event": { "type": "string" },
+                  "date": { "type": "string", "format": "date" }
+                },
+                "required": ["event", "date"]
+              }
+            }
+          }
+        },
+        "weaknessBreakthroughs": {
+          "description": "5.3 弱项突破记录：顽固弱项从'长期卡住'到'正式攻克'的全过程",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "weaknessName": {
+                "type": "string",
+                "description": "弱项名称"
+              },
+              "firstDiscoveredDate": {
+                "type": "string",
+                "format": "date",
+                "description": "首次发现日期"
+              },
+              "historicalErrorCount": {
+                "type": "integer",
+                "description": "历史出错次数",
+                "minimum": 1
+              },
+              "breakthroughMethod": {
+                "type": "string",
+                "description": "突破方法",
+                "enum": ["错题本", "费曼测试", "专项训练", "综合突破"]
+              },
+              "conqueredDate": {
+                "type": "string",
+                "format": "date",
+                "description": "攻克日期"
+              },
+              "conqueredVerification": {
+                "type": "string",
+                "description": "攻克验证（如'连续3次复测通过'）"
+              }
+            },
+            "required": ["weaknessName", "firstDiscoveredDate", "historicalErrorCount"]
+          }
+        },
+        "knowledgeAccumulationTree": {
+          "description": "5.4 知识积累树：跨学科联结记录",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "pointA": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "knowledge": { "type": "string" },
+                  "subject": { "type": "string" }
+                },
+                "required": ["knowledge", "subject"]
+              },
+              "pointB": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "knowledge": { "type": "string" },
+                  "subject": { "type": "string" }
+                },
+                "required": ["knowledge", "subject"]
+              },
+              "linkType": {
+                "type": "string",
+                "description": "联结方式",
+                "enum": ["概念相同", "逻辑相似", "因果关联", "应用迁移"]
+              },
+              "discoverySource": {
+                "type": "string",
+                "description": "发现来源",
+                "enum": ["跨学科侦探周", "学习中自然发现", "小龙虾推送"]
+              },
+              "discoveryDate": {
+                "type": "string",
+                "format": "date"
+              }
+            },
+            "required": ["pointA", "pointB", "linkType"]
+          }
+        }
+      }
+    },
+
+    "interestDNA": {
+      "description": "v1.1 扩展 · 兴趣DNA：仅在用户使用兴趣成长探索计划且同意记录时同步",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "currentExploringFields": {
+          "type": "array",
+          "description": "当前正在探索的领域",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "fieldName": { "type": "string" },
+              "startedDate": { "type": "string", "format": "date" },
+              "explorationWeeks": { "type": "integer", "minimum": 1 }
+            },
+            "required": ["fieldName"]
+          }
+        },
+        "challengeReactionSignals": {
+          "type": "array",
+          "description": "各领域挑战反应信号",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "fieldName": { "type": "string" },
+              "reactionSignal": {
+                "type": "string",
+                "description": "挑战反应信号",
+                "enum": ["放弃信号", "继续信号", "确认兴趣"]
+              },
+              "confidenceLevel": {
+                "$ref": "#/$defs/confidenceLevel"
+              }
+            },
+            "required": ["fieldName", "reactionSignal"]
+          }
+        },
+        "confirmedShallowLikes": {
+          "type": "array",
+          "description": "已确认浅层喜好的领域",
+          "items": { "type": "string" }
+        },
+        "possibleTrueInterests": {
+          "type": "array",
+          "description": "可能真正兴趣的领域",
+          "items": { "type": "string" }
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date",
+          "description": "兴趣DNA最后更新日期"
+        }
+      }
+    }
+  },
+
+  "required": ["meta"],
+
+  "$defs": {
+    "confidenceLevel": {
+      "description": "结论置信度标签：防止数据不足时给出误导性结论。凡是基于'连续N次'得出的AI结论必须附带此标签。data_sufficient=🟢数据充分（样本量足够，时间跨度合理，规律可信）；preliminary_trend=⚠️初步判断/趋势明显（达到最低触发阈值，但仍需警惕偶然因素）；insufficient_sample=🔴样本不足（数据极少，不能作为最终结论，仅供参考）",
+      "type": "string",
+      "enum": [
+        "data_sufficient",
+        "preliminary_trend",
+        "insufficient_sample"
+      ]
+    },
+
+    "subjectEntry": {
+      "description": "学科条目：用于强项和弱项列表",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "subject": {
+          "type": "string",
+          "description": "学科名称",
+          "examples": ["语文", "数学", "英语", "物理", "化学", "生物", "历史", "地理", "政治"]
+        },
+        "chapters": {
+          "type": "array",
+          "description": "具体章节或知识点",
+          "items": { "type": "string" }
+        },
+        "rootCause": {
+          "type": "string",
+          "description": "薄弱的根本原因（仅弱项使用）"
+        },
+        "confidenceLevel": {
+          "$ref": "#/$defs/confidenceLevel"
+        }
+      },
+      "required": ["subject"]
+    }
+  }
+}

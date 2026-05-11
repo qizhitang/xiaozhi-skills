@@ -389,6 +389,8 @@ compatibility: OpenClaw / ClawHub
 
 - `references/dna-template.md` - 完整DNA档案填写模板
 - `references/growth-milestones.md` - 成长里程碑参考标准
+- `schemas/dna-profile.schema.json` - 学习DNA档案 JSON Schema（正式数据结构定义，覆盖全部六大维度 + v1.1扩展）
+- `schemas/examples/full-profile.example.json` - 完整档案示例数据
 
 ---
 

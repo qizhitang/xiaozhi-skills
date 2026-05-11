@@ -1,0 +1,8 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Schema validation temp files
+**/schemas/node_modules/
+**/schemas/package-lock.json
+**/schemas/package.json

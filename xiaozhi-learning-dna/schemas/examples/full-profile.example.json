@@ -1,0 +1,221 @@
+{
+  "meta": {
+    "profileId": "stu-20260511-demo01",
+    "schemaVersion": "1.1.1",
+    "createdAt": "2026-03-15T09:30:00+08:00",
+    "lastUpdatedAt": "2026-05-11T20:15:00+08:00",
+    "consentStatus": {
+      "profileEnabled": true,
+      "memoryPaused": false,
+      "crossSkillSharing": true,
+      "reminderConsent": true,
+      "interestTrackingConsent": true
+    }
+  },
+  "basicInfo": {
+    "gradeLevel": "初二",
+    "shortTermGoal": "下学期期中考试数学过85分",
+    "longTermGoal": "中考进入重点高中",
+    "availableStudyTime": "晚饭后1.5小时+周末上午2小时",
+    "upcomingExams": [
+      { "examName": "期中考试", "subject": "数学", "estimatedDate": "2026-05-20" },
+      { "examName": "月考", "subject": "英语", "estimatedDate": "2026-06-01" }
+    ]
+  },
+  "subjectMap": {
+    "strengths": [
+      { "subject": "语文", "chapters": ["记叙文写作", "古诗词默写"] }
+    ],
+    "weaknesses": [
+      {
+        "subject": "数学",
+        "chapters": ["一次函数", "二元一次方程组"],
+        "rootCause": "函数概念直觉未建立，方程组消元法步骤记忆但不理解原理",
+        "confidenceLevel": "data_sufficient"
+      },
+      {
+        "subject": "英语",
+        "chapters": ["定语从句"],
+        "rootCause": "母语迁移：中文无定语从句后置结构",
+        "confidenceLevel": "preliminary_trend"
+      }
+    ],
+    "weakKnowledgePoints": [
+      {
+        "subject": "数学",
+        "chapter": "一次函数",
+        "knowledgePoint": "象限判断",
+        "rootCause": "不会从k和b的正负快速判断图像经过的象限",
+        "status": "已攻克",
+        "confidenceLevel": "data_sufficient"
+      },
+      {
+        "subject": "数学",
+        "chapter": "一次函数",
+        "knowledgePoint": "解析式推导",
+        "rootCause": "待定系数法步骤不熟练，常在代入时出错",
+        "status": "顽固弱项",
+        "confidenceLevel": "data_sufficient"
+      }
+    ]
+  },
+  "learningStyle": {
+    "preferredExplanationMode": ["类比", "分步拆解"],
+    "conversationPace": "先自己想再提示",
+    "attentionHabit": "有点容易分心"
+  },
+  "errorPatterns": {
+    "fixedErrorTypes": [
+      {
+        "errorType": "概念理解错误",
+        "subject": "数学",
+        "knowledgePoint": "一次函数解析式推导",
+        "occurrenceCount": 5,
+        "rootCause": "待定系数法只记步骤不理解为什么这样代入",
+        "confidenceLevel": "data_sufficient",
+        "identifiedDate": "2026-04-20"
+      }
+    ],
+    "rootCauseAnalysis": [
+      {
+        "subject": "数学",
+        "knowledgePoint": "一次函数解析式推导",
+        "rootCause": "待定系数法只记步骤不理解为什么这样代入",
+        "analysisDate": "2026-04-20"
+      }
+    ],
+    "conqueredWeakPoints": [
+      {
+        "subject": "数学",
+        "knowledgePoint": "一次函数象限判断",
+        "historicalErrorCount": 3,
+        "conqueredDate": "2026-04-28",
+        "conqueredVerification": "连续3次复测通过",
+        "breakthroughMethod": "错题本"
+      }
+    ]
+  },
+  "conversationSummary": {
+    "weeklyKeyTopics": [
+      { "topic": "一次函数解析式推导专项训练", "subject": "数学", "weekOf": "2026-05-05" }
+    ],
+    "unresolvedQuestions": [
+      { "question": "为什么待定系数法要代入两个点？一个点不行吗？", "subject": "数学", "raisedDate": "2026-05-10" }
+    ],
+    "recentLearningNodes": [
+      { "nodeType": "测验", "subject": "数学", "description": "一次函数单元测验 78/100", "date": "2026-05-08" }
+    ]
+  },
+  "growthTrack": {
+    "milestones": [
+      {
+        "milestoneId": "ms-20260315-001",
+        "name": "DNA种子萌芽",
+        "category": "时间维度",
+        "triggerDate": "2026-03-15",
+        "triggerEvent": "完成首次建档，录入3条学习记录",
+        "comment": "你的学习DNA档案已经建立了——我开始认识你了。"
+      },
+      {
+        "milestoneId": "ms-20260428-001",
+        "name": "第一个薄弱点攻克",
+        "category": "能力维度",
+        "triggerDate": "2026-04-28",
+        "triggerEvent": "一次函数象限判断连续3次复测全对",
+        "subject": "数学",
+        "comment": "这个弱项正式攻克，我已经记进你的成长图谱了。"
+      },
+      {
+        "milestoneId": "ms-20260501-001",
+        "name": "第一周连续",
+        "category": "时间维度",
+        "triggerDate": "2026-05-01",
+        "triggerEvent": "连续7天有学习对话",
+        "comment": "整整一周，每天都来了。这个习惯比任何一道题都有价值。"
+      }
+    ],
+    "continuousProgressAreas": [
+      { "subject": "数学", "area": "一次函数象限判断", "progressDescription": "从错误3次到连续3次复测全对", "sinceDate": "2026-04-15" }
+    ],
+    "flywheelStatus": "正在转",
+    "consecutiveLearningDays": 23
+  },
+  "growthMap": {
+    "errorMap": [
+      {
+        "subject": "数学",
+        "chapter": "一次函数",
+        "knowledgePoint": "象限判断",
+        "errorCount": 3,
+        "currentStatus": "已攻克",
+        "lastOccurrenceDate": "2026-04-20"
+      },
+      {
+        "subject": "数学",
+        "chapter": "一次函数",
+        "knowledgePoint": "斜率计算",
+        "errorCount": 1,
+        "currentStatus": "正常",
+        "lastOccurrenceDate": "2026-05-03"
+      },
+      {
+        "subject": "数学",
+        "chapter": "一次函数",
+        "knowledgePoint": "解析式推导",
+        "errorCount": 5,
+        "currentStatus": "顽固弱项",
+        "lastOccurrenceDate": "2026-05-10",
+        "trendSummary": "近两周从每周2次降至每周1次，初步改善但仍需持续追踪"
+      }
+    ],
+    "oralGrowthTrack": {
+      "pronunciationWeaknesses": [
+        {
+          "phoneme": "comfortable",
+          "occurrenceCount": 4,
+          "isStubborn": true,
+          "improvementCurve": "轻微改善",
+          "lastOccurrenceDate": "2026-05-09"
+        }
+      ],
+      "consecutiveWarmupDays": 5,
+      "oralMilestones": [
+        { "event": "开口第一天", "date": "2026-04-10" }
+      ]
+    },
+    "weaknessBreakthroughs": [
+      {
+        "weaknessName": "一次函数象限判断",
+        "firstDiscoveredDate": "2026-04-02",
+        "historicalErrorCount": 3,
+        "breakthroughMethod": "错题本",
+        "conqueredDate": "2026-04-28",
+        "conqueredVerification": "连续3次复测通过"
+      }
+    ],
+    "knowledgeAccumulationTree": [
+      {
+        "pointA": { "knowledge": "一次函数图像", "subject": "数学" },
+        "pointB": { "knowledge": "匀速直线运动图像", "subject": "物理" },
+        "linkType": "逻辑相似",
+        "discoverySource": "学习中自然发现",
+        "discoveryDate": "2026-05-06"
+      }
+    ]
+  },
+  "interestDNA": {
+    "currentExploringFields": [
+      { "fieldName": "编程", "startedDate": "2026-04-20", "explorationWeeks": 3 }
+    ],
+    "challengeReactionSignals": [
+      {
+        "fieldName": "编程",
+        "reactionSignal": "继续信号",
+        "confidenceLevel": "preliminary_trend"
+      }
+    ],
+    "confirmedShallowLikes": [],
+    "possibleTrueInterests": ["编程"],
+    "lastUpdated": "2026-05-10"
+  }
+}
