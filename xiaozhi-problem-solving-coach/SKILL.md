@@ -4,13 +4,13 @@ display_name: 📐 数学解题教练
 version: 1.0.0
 author: 小智伴学
 category: 数学专项
-tags: [数学, 解题, 错题分析, 三步拍照法, CLAW模板, 苏格拉底, 必装]
+tags: [数学, 解题, 错题分析, 四步拍照法, CLAW模板, 苏格拉底, 必装]
 description: >
   数学学习最高频场景的全流程AI教练——绝不直接给答案，只帮学生找到思路。
   当学生说"帮我做这道题"、"我卡在哪里了"、"这道题我做错了"、"帮我出同类题"、
   "考前帮我梳理重点"、发来数学题目图片、说"我思考了XX分钟没思路"时，
   必须激活此SKILL。
-  核心工作流：三步拍照法（拍题→CLAW提问→3轮追问→出同类题）。
+  核心工作流：四步拍照法（拍题→CLAW提问→3轮追问→出同类题）。
   内置5套CLAW数学专项模板 + 数学苏格拉底五问链，覆盖数学学习80%场景。
   凡是涉及数学解题、错题分析、概念追问、考前复习的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
@@ -27,7 +27,7 @@ depends_on: xiaozhi-learning-dna, xiaozhi-error-gene-archive
 
 ## ⚠️ 技术实现边界声明
 
-> **关于“拍照解析”机制：** 本模块核心的「三步拍照法」对错题图片的上传与识别，强依赖于多模态大语言模型（Multimodal LLMs）的视觉解析能力，或专属 SKILL 扩展配置的本地 OCR 脚本服务，并非纯文本 LLM 原生支持。
+> **关于“拍照解析”机制：** 本模块核心的「四步拍照法」对错题图片的上传与识别，强依赖于多模态大语言模型（Multimodal LLMs）的视觉解析能力，或专属 SKILL 扩展配置的本地 OCR 脚本服务，并非纯文本 LLM 原生支持。
 
 ---
 
@@ -52,7 +52,7 @@ depends_on: xiaozhi-learning-dna, xiaozhi-error-gene-archive
 
 ```
 数学解题教练 SKILL
-├── 模块A  三步拍照法（核心主线工作流）
+├── 模块A  四步拍照法（核心主线工作流）
 │   ├── Step 1  拍题——拒绝答案，说出思路
 │   ├── Step 2  CLAW提问——5套专项模板
 │   ├── Step 3  三轮追问深挖
@@ -63,11 +63,11 @@ depends_on: xiaozhi-learning-dna, xiaozhi-error-gene-archive
 
 ---
 
-## 三、模块A：三步拍照法全流程
+## 三、模块A：四步拍照法全流程
 
 ### 触发识别
 
-以下任何一种情况，进入三步拍照法流程：
+以下任何一种情况，进入四步拍照法流程：
 - 学生发来数学题目（图片或文字描述）
 - 学生说"我做错了这道题"
 - 学生说"我不知道怎么做"
@@ -378,7 +378,7 @@ depends_on: xiaozhi-learning-dna, xiaozhi-error-gene-archive
 ### 考前梳理操作原则
 
 ```
-距考试 > 3天：正常三步拍照法节奏，不需要特殊模式
+距考试 > 3天：正常四步拍照法节奏，不需要特殊模式
 
 距考试 1-3天：
   → 启动考前模式
@@ -446,6 +446,7 @@ depends_on: xiaozhi-learning-dna, xiaozhi-error-gene-archive
 
 - `references/claw-templates-extended.md` — 5套CLAW模板的扩展话术和变体场景
 - `references/math-socrates-guide.md` — 苏格拉底五问链各学段适配指南
+- `references/photo-4step-statemachine.md` — 四步拍照法状态机定义（含CLAW分支、断点恢复与降级流程）
 - **学术出处**：数学苏格拉底五问链基于 Paul & Elder 的批判性思维模型（Critical Thinking Framework）。
 
 ---

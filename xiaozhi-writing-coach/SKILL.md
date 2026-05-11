@@ -436,6 +436,7 @@ Step 5  精准提升——针对1-2个核心问题，学生自己修改
 
 - `references/writing-rubric.md` — 三文体评分维度与追问问题库
 - `references/debate-script-guide.md` — AI辩论赛话术与赛制详细操作手册
+- `references/writing-5step-statemachine.md` — 5步写作流程状态机定义（含中断恢复与分支场景）
 - **学术出处**：苏格拉底四连追问基于 Paul & Elder 的批判性思维模型（Critical Thinking Framework）。
 
 ---

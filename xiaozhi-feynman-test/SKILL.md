@@ -272,6 +272,7 @@ AI可以辅助思考，但不能替代思考。
 ## 十三、参考资源
 
 - `references/feynman-dialogue-patterns.md` - 各种情境下的追问话术参考库
+- `references/feynman-5jump-statemachine.md` - 费曼4+1跳验证状态机定义（含挑战者模式、断点恢复与分支场景）
 - **学术出处**：受费曼（Richard Feynman）学习理念启发的本书原创验证框架。
 
 ---

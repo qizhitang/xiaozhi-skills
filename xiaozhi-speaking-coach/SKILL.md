@@ -410,6 +410,7 @@ Step 4：记录进口语进化档案
 - `references/topic-bank.md` — 分年级口语话题库（含苏格拉底四级跳适配话题）
 - `references/roleplay-scripts.md` — 5套真实场景完整对话脚本
 - `references/pronunciation-issues.md` — 中国学生高频发音弱点与纠正方法
+- `references/morning-warmup-statemachine.md` — 晨间5分钟热身状态机定义（含开口恐惧、卡壳、中断恢复）
 - **学术出处**：苏格拉底四级跳基于 Paul & Elder 的批判性思维模型（Critical Thinking Framework）。
 
 ---
