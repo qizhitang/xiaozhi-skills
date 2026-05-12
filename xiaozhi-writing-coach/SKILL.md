@@ -434,6 +434,7 @@ Step 5  精准提升——针对1-2个核心问题，学生自己修改
 
 ## 十、参考资源
 
+- `references/chinese-error-dimension-table.md` — 语文错因维度表（含写作思维WT01-WT10子类型与写作五步法维度对应，放置于阅读理解拆解师SKILL）
 - `references/writing-rubric.md` — 三文体评分维度与追问问题库
 - `references/debate-script-guide.md` — AI辩论赛话术与赛制详细操作手册
 - `references/writing-5step-statemachine.md` — 5步写作流程状态机定义（含中断恢复与分支场景）

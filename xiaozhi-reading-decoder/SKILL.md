@@ -335,6 +335,8 @@ Step 4  错题三追问复盘（针对错题）
 
 ## 九、参考资源
 
+- `references/chinese-error-dimension-table.md` — 语文错因维度表（五维×子类型分类体系，含阅读/写作/文言文/语言运用的跨维度关联规则）
+- `references/pit-training.md` — 阅读理解五大坑专项训练策略
 - `references/question-type-library.md` — 现代文各题型出题逻辑与答题模板详解
 
 ---

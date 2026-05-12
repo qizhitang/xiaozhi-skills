@@ -441,6 +441,7 @@ Step 5  造句应用
 
 ## 九、参考资源
 
+- `references/english-error-dimension-table.md` — 英语错因维度表（五维×子类型分类体系，含跨维度关联规则与英语专项SKILL维度分配）
 - `references/grammar-patterns.md` — 五类语法错误详细分析与追问话术扩展库
 - **学术出处**：苏格拉底语法追问教练基于 Paul & Elder 的批判性思维模型（Critical Thinking Framework）。
 

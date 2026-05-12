@@ -309,6 +309,7 @@ Step 4：执行（出3道递进题）
 
 ## 九、参考资源
 
+- `references/math-error-dimension-table.md` — 数学错因维度表（四维×子类型分类体系，含跨维度关联规则与追踪标准）
 - `references/concept-confusion-map.md` — 初中数学高频概念混淆对照表
 - `references/reading-habits.md` — 数学读题失误训练方法手册
 
