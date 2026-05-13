@@ -1,7 +1,7 @@
 {
   "meta": {
     "profileId": "stu-20260511-demo01",
-    "schemaVersion": "1.1.1",
+    "schemaVersion": "1.2.0",
     "createdAt": "2026-03-15T09:30:00+08:00",
     "lastUpdatedAt": "2026-05-11T20:15:00+08:00",
     "consentStatus": {
@@ -9,7 +9,8 @@
       "memoryPaused": false,
       "crossSkillSharing": true,
       "reminderConsent": true,
-      "interestTrackingConsent": true
+      "interestTrackingConsent": true,
+      "emotionTrackingConsent": true
     }
   },
   "basicInfo": {
@@ -18,24 +19,43 @@
     "longTermGoal": "中考进入重点高中",
     "availableStudyTime": "晚饭后1.5小时+周末上午2小时",
     "upcomingExams": [
-      { "examName": "期中考试", "subject": "数学", "estimatedDate": "2026-05-20" },
-      { "examName": "月考", "subject": "英语", "estimatedDate": "2026-06-01" }
+      {
+        "examName": "期中考试",
+        "subject": "数学",
+        "estimatedDate": "2026-05-20"
+      },
+      {
+        "examName": "月考",
+        "subject": "英语",
+        "estimatedDate": "2026-06-01"
+      }
     ]
   },
   "subjectMap": {
     "strengths": [
-      { "subject": "语文", "chapters": ["记叙文写作", "古诗词默写"] }
+      {
+        "subject": "语文",
+        "chapters": [
+          "记叙文写作",
+          "古诗词默写"
+        ]
+      }
     ],
     "weaknesses": [
       {
         "subject": "数学",
-        "chapters": ["一次函数", "二元一次方程组"],
+        "chapters": [
+          "一次函数",
+          "二元一次方程组"
+        ],
         "rootCause": "函数概念直觉未建立，方程组消元法步骤记忆但不理解原理",
         "confidenceLevel": "data_sufficient"
       },
       {
         "subject": "英语",
-        "chapters": ["定语从句"],
+        "chapters": [
+          "定语从句"
+        ],
         "rootCause": "母语迁移：中文无定语从句后置结构",
         "confidenceLevel": "preliminary_trend"
       }
@@ -60,7 +80,10 @@
     ]
   },
   "learningStyle": {
-    "preferredExplanationMode": ["类比", "分步拆解"],
+    "preferredExplanationMode": [
+      "类比",
+      "分步拆解"
+    ],
     "conversationPace": "先自己想再提示",
     "attentionHabit": "有点容易分心"
   },
@@ -97,13 +120,26 @@
   },
   "conversationSummary": {
     "weeklyKeyTopics": [
-      { "topic": "一次函数解析式推导专项训练", "subject": "数学", "weekOf": "2026-05-05" }
+      {
+        "topic": "一次函数解析式推导专项训练",
+        "subject": "数学",
+        "weekOf": "2026-05-05"
+      }
     ],
     "unresolvedQuestions": [
-      { "question": "为什么待定系数法要代入两个点？一个点不行吗？", "subject": "数学", "raisedDate": "2026-05-10" }
+      {
+        "question": "为什么待定系数法要代入两个点？一个点不行吗？",
+        "subject": "数学",
+        "raisedDate": "2026-05-10"
+      }
     ],
     "recentLearningNodes": [
-      { "nodeType": "测验", "subject": "数学", "description": "一次函数单元测验 78/100", "date": "2026-05-08" }
+      {
+        "nodeType": "测验",
+        "subject": "数学",
+        "description": "一次函数单元测验 78/100",
+        "date": "2026-05-08"
+      }
     ]
   },
   "growthTrack": {
@@ -135,7 +171,12 @@
       }
     ],
     "continuousProgressAreas": [
-      { "subject": "数学", "area": "一次函数象限判断", "progressDescription": "从错误3次到连续3次复测全对", "sinceDate": "2026-04-15" }
+      {
+        "subject": "数学",
+        "area": "一次函数象限判断",
+        "progressDescription": "从错误3次到连续3次复测全对",
+        "sinceDate": "2026-04-15"
+      }
     ],
     "flywheelStatus": "正在转",
     "consecutiveLearningDays": 23
@@ -180,7 +221,10 @@
       ],
       "consecutiveWarmupDays": 5,
       "oralMilestones": [
-        { "event": "开口第一天", "date": "2026-04-10" }
+        {
+          "event": "开口第一天",
+          "date": "2026-04-10"
+        }
       ]
     },
     "weaknessBreakthroughs": [
@@ -195,8 +239,14 @@
     ],
     "knowledgeAccumulationTree": [
       {
-        "pointA": { "knowledge": "一次函数图像", "subject": "数学" },
-        "pointB": { "knowledge": "匀速直线运动图像", "subject": "物理" },
+        "pointA": {
+          "knowledge": "一次函数图像",
+          "subject": "数学"
+        },
+        "pointB": {
+          "knowledge": "匀速直线运动图像",
+          "subject": "物理"
+        },
         "linkType": "逻辑相似",
         "discoverySource": "学习中自然发现",
         "discoveryDate": "2026-05-06"
@@ -205,7 +255,11 @@
   },
   "interestDNA": {
     "currentExploringFields": [
-      { "fieldName": "编程", "startedDate": "2026-04-20", "explorationWeeks": 3 }
+      {
+        "fieldName": "编程",
+        "startedDate": "2026-04-20",
+        "explorationWeeks": 3
+      }
     ],
     "challengeReactionSignals": [
       {
@@ -215,7 +269,107 @@
       }
     ],
     "confirmedShallowLikes": [],
-    "possibleTrueInterests": ["编程"],
+    "possibleTrueInterests": [
+      "编程"
+    ],
     "lastUpdated": "2026-05-10"
+  },
+  "learningEmotion": {
+    "currentMoodBaseline": "波动中",
+    "moodBaselineConfidence": "preliminary_trend",
+    "subjectMoodMap": [
+      {
+        "subject": "语文",
+        "typicalEmotion": "自信愉悦",
+        "emotionSignals": [
+          "主动练习",
+          "完成后的满足感表达"
+        ],
+        "confidenceLevel": "data_sufficient"
+      },
+      {
+        "subject": "数学",
+        "typicalEmotion": "焦虑回避",
+        "emotionSignals": [
+          "拖延开始",
+          "频繁说'不会'",
+          "中断后主动回来"
+        ],
+        "confidenceLevel": "data_sufficient"
+      },
+      {
+        "subject": "英语",
+        "typicalEmotion": "紧张但能应对",
+        "emotionSignals": [
+          "答题速度慢但坚持",
+          "主动提问"
+        ],
+        "confidenceLevel": "preliminary_trend"
+      }
+    ],
+    "anxietyTriggers": [
+      {
+        "triggerType": "特定知识点恐惧",
+        "subject": "数学",
+        "observedSignals": [
+          "看到一次函数题就说'不会做'",
+          "拖延5分钟以上才开始"
+        ],
+        "occurrenceCount": 4,
+        "firstObservedDate": "2026-04-10",
+        "lastObservedDate": "2026-05-08",
+        "currentStatus": "正在应对",
+        "confidenceLevel": "data_sufficient"
+      },
+      {
+        "triggerType": "考前焦虑",
+        "subject": "数学",
+        "observedSignals": [
+          "说'明天考试我完全没把握'",
+          "反复问'万一考不好怎么办'"
+        ],
+        "occurrenceCount": 2,
+        "firstObservedDate": "2026-05-09",
+        "lastObservedDate": "2026-05-10",
+        "currentStatus": "待关注",
+        "confidenceLevel": "preliminary_trend"
+      }
+    ],
+    "motivationState": {
+      "driveType": "混合驱动",
+      "engagementTrend": "上升",
+      "persistencePattern": "容易放弃需鼓励",
+      "confidenceLevel": "preliminary_trend"
+    },
+    "emotionMilestones": [
+      {
+        "milestoneId": "em-20260508-001",
+        "name": "首次主动求助数学题",
+        "triggerDate": "2026-05-08",
+        "subject": "数学",
+        "comment": "你刚才说'帮我看看这道函数题'——上周你一看到函数就说'不想做'。从'不想做'到'帮我看看'，这个转变比做对一道题更重要。"
+      }
+    ],
+    "effectiveSupportStrategies": [
+      {
+        "strategy": "数据替代情绪（用事实消解焦虑）",
+        "effectiveFor": "知识点恐惧",
+        "observedEffectiveness": "逐渐有效",
+        "observationCount": 3
+      },
+      {
+        "strategy": "拆小步骤降低压力",
+        "effectiveFor": "拖延回避",
+        "observedEffectiveness": "立即有效",
+        "observationCount": 2
+      },
+      {
+        "strategy": "先做会做的建立信心",
+        "effectiveFor": "连续错误挫败",
+        "observedEffectiveness": "立即有效",
+        "observationCount": 4
+      }
+    ],
+    "lastUpdated": "2026-05-11"
   }
 }

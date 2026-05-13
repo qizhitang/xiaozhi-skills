@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://xiaozhi-skills.openclaw.dev/schemas/dna-profile.schema.json",
   "title": "LearningDNAProfile",
-  "description": "学习DNA档案 —— 小龙虾长期记忆核心引擎的数据结构定义。覆盖六大基础维度（基础信息、学科强弱、学习风格、错误模式、对话摘要、成长轨迹）与 v1.1 扩展（成长图谱、兴趣DNA）。所有字段均为可选（optional），默认只记录完成个性化辅导所必需的最小信息。",
+  "description": "学习DNA档案 —— 小龙虾长期记忆核心引擎的数据结构定义。覆盖六大基础维度（基础信息、学科强弱、学习风格、错误模式、对话摘要、成长轨迹）与 v1.1 扩展（成长图谱、兴趣DNA）及 v1.2 扩展（学习情绪）。所有字段均为可选（optional），默认只记录完成个性化辅导所必需的最小信息。",
 
   "type": "object",
   "additionalProperties": false,
@@ -21,7 +21,7 @@
         "schemaVersion": {
           "type": "string",
           "description": "档案结构版本号，与 SKILL 版本对应",
-          "enum": ["1.0.0", "1.1.0", "1.1.1"]
+          "enum": ["1.0.0", "1.1.0", "1.1.1", "1.2.0"]
         },
         "createdAt": {
           "type": "string",
@@ -61,6 +61,11 @@
             "interestTrackingConsent": {
               "type": "boolean",
               "description": "是否同意记录兴趣偏好",
+              "default": false
+            },
+            "emotionTrackingConsent": {
+              "type": "boolean",
+              "description": "是否同意记录学习情绪数据（v1.2新增，默认关闭，需单独授权）",
               "default": false
             }
           }
@@ -676,6 +681,196 @@
           "type": "string",
           "format": "date",
           "description": "兴趣DNA最后更新日期"
+        }
+      }
+    },
+
+    "learningEmotion": {
+      "description": "v1.2 扩展 · 学习情绪：追踪学生情绪对学习效果的影响，仅在 emotionTrackingConsent=true 时记录。不是'心理档案'，而是'学习状态观察'——关注情绪如何影响学习行为，而非诊断情绪本身。",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "currentMoodBaseline": {
+          "description": "当前情绪基线：学生最近一段时间的学习情绪整体状态（由AI从对话信号推断，非自我报告）",
+          "type": "string",
+          "enum": ["积极稳定", "波动中", "低落倾向", "焦虑明显", "数据不足"],
+          "examples": ["积极稳定", "波动中"]
+        },
+        "moodBaselineConfidence": {
+          "$ref": "#/$defs/confidenceLevel"
+        },
+        "subjectMoodMap": {
+          "description": "各学科情绪关联：不同学科引发的不同情绪反应模式",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "subject": {
+                "type": "string",
+                "description": "学科名称"
+              },
+              "typicalEmotion": {
+                "type": "string",
+                "description": "该学科典型学习情绪",
+                "enum": ["自信愉悦", "平静专注", "紧张但能应对", "焦虑回避", "挫败抗拒", "数据不足"]
+              },
+              "emotionSignals": {
+                "type": "array",
+                "description": "观察到的情绪信号（从对话中推断的行为指标，非主观诊断）",
+                "items": {
+                  "type": "string",
+                  "enum": ["主动提问", "主动练习", "拖延开始", "频繁说'不会'", "说'我太差了'", "说'不想学'", "中断后主动回来", "完成后的满足感表达", "答题速度快且正确率高", "答题速度慢但坚持"]
+                }
+              },
+              "confidenceLevel": {
+                "$ref": "#/$defs/confidenceLevel"
+              }
+            },
+            "required": ["subject", "typicalEmotion"]
+          }
+        },
+        "anxietyTriggers": {
+          "description": "焦虑触发因素：从对话中识别的引发学习焦虑的具体场景（不是标签化诊断，而是场景化观察）",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "triggerType": {
+                "type": "string",
+                "description": "触发类型",
+                "enum": ["考前焦虑", "特定知识点恐惧", "比较压力", "家长期待压力", "时间压力", "连续错误挫败"]
+              },
+              "subject": {
+                "type": "string",
+                "description": "相关学科（如适用）"
+              },
+              "observedSignals": {
+                "type": "array",
+                "description": "观察到的具体行为信号",
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 5
+              },
+              "occurrenceCount": {
+                "type": "integer",
+                "description": "出现次数",
+                "minimum": 1
+              },
+              "firstObservedDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "lastObservedDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "currentStatus": {
+                "type": "string",
+                "description": "当前应对状态",
+                "enum": ["待关注", "正在应对", "已缓解"]
+              },
+              "confidenceLevel": {
+                "$ref": "#/$defs/confidenceLevel"
+              }
+            },
+            "required": ["triggerType", "occurrenceCount"]
+          },
+          "maxItems": 10
+        },
+        "motivationState": {
+          "description": "学习动力状态：学生当前的学习驱动力和持续性",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "driveType": {
+              "type": "string",
+              "description": "主要驱动类型",
+              "enum": ["内驱主导（好奇心/成就感）", "混合驱动", "外驱主导（考试/家长要求）", "驱动力不足", "数据不足"]
+            },
+            "engagementTrend": {
+              "type": "string",
+              "description": "参与度趋势（近两周）",
+              "enum": ["上升", "稳定", "下降", "波动", "数据不足"]
+            },
+            "persistencePattern": {
+              "type": "string",
+              "description": "坚持模式：遇到困难时的典型行为",
+              "enum": ["主动求助后继续", "独立反复尝试", "容易放弃需鼓励", "回避困难内容", "数据不足"]
+            },
+            "confidenceLevel": {
+              "$ref": "#/$defs/confidenceLevel"
+            }
+          }
+        },
+        "emotionMilestones": {
+          "description": "情绪里程碑：情绪层面的重要转变时刻",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "milestoneId": {
+                "type": "string",
+                "description": "里程碑唯一ID"
+              },
+              "name": {
+                "type": "string",
+                "description": "里程碑名称",
+                "examples": ["首次主动求助", "焦虑学科首次完成练习", "从回避到主动", "连续7天无焦虑信号"]
+              },
+              "triggerDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "subject": {
+                "type": "string",
+                "description": "相关学科（如适用）"
+              },
+              "comment": {
+                "type": "string",
+                "description": "小龙虾评语"
+              }
+            },
+            "required": ["milestoneId", "name", "triggerDate"]
+          }
+        },
+        "effectiveSupportStrategies": {
+          "description": "有效支持策略记录：哪些情绪支持方式对这个学生有效",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "strategy": {
+                "type": "string",
+                "description": "策略名称",
+                "enum": ["数据替代情绪（用事实消解焦虑）", "拆小步骤降低压力", "先做会做的建立信心", "肯定具体进步而非空洞鼓励", "允许暂停不强迫", "用类比降低陌生感", "限时练习建立掌控感", "对比历史数据看见成长"]
+              },
+              "effectiveFor": {
+                "type": "string",
+                "description": "对哪种情绪场景有效",
+                "enum": ["考前焦虑", "知识点恐惧", "连续错误挫败", "比较压力", "拖延回避", "开口/动笔恐惧"]
+              },
+              "observedEffectiveness": {
+                "type": "string",
+                "description": "观察到的效果",
+                "enum": ["立即有效", "逐渐有效", "效果一般", "无效"]
+              },
+              "observationCount": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": ["strategy", "effectiveFor", "observedEffectiveness"]
+          }
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date",
+          "description": "学习情绪维度最后更新日期"
         }
       }
     }
