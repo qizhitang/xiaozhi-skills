@@ -15,7 +15,7 @@ description: >
   普通笔记是静态仓库，此SKILL让笔记在需要时被调起。
   凡是涉及课堂笔记整理、知识点提炼、复习备考的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: learning-dna
+depends_on: xiaozhi-learning-dna
 ---
 
 # 📝 智能康奈尔笔记档案 SKILL

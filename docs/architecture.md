@@ -46,30 +46,30 @@
 
 | # | SKILL 名称 | 文件夹 | 核心功能 | 对应章节 | 依赖 |
 |---|-----------|-------|---------|---------|------|
-| ⑬ | 语文写作教练 | `xiaozhi-writing-coach/` | 5步流程 + 风格DNA + 苏格拉底四连 + AI辩论赛 | 3.1 写作篇 | 学习DNA档案 |
-| ⑭ | 阅读理解拆解师 | `xiaozhi-reading-decoder/` | 五大坑诊断 + 出题人视角 + 三追问 | 3.2 阅读篇 | 学习DNA档案 |
-| ⑮ | 文言文复活计划 | `xiaozhi-classical-revival/` | 古人角色扮演 + 三级跳 + 游戏化背诵 | 3.2 阅读篇 | 学习DNA档案 |
-| ⑯ | 语文素材库2.0 | `xiaozhi-material-library/` | 存储 + 自动标签 + 主动推送 + 使用追踪 | 3.3 积累篇 | 学习DNA档案 |
-| ⑰ | 语病追踪档案 | `xiaozhi-grammar-tracker/` | 六类语病识别 + 顽固档案 + 写作前预警 | 3.3 积累篇 | 学习DNA档案 |
+| ⑬ | 语文写作教练 | `xiaozhi-chinese-writing-coach/` | 5步流程 + 风格DNA + 苏格拉底四连 + AI辩论赛 | 3.1 写作篇 | 学习DNA档案 |
+| ⑭ | 阅读理解拆解师 | `xiaozhi-chinese-reading-decoder/` | 五大坑诊断 + 出题人视角 + 三追问 | 3.2 阅读篇 | 学习DNA档案 |
+| ⑮ | 文言文复活计划 | `xiaozhi-chinese-classical-revival/` | 古人角色扮演 + 三级跳 + 游戏化背诵 | 3.2 阅读篇 | 学习DNA档案 |
+| ⑯ | 语文素材库2.0 | `xiaozhi-chinese-material-library/` | 存储 + 自动标签 + 主动推送 + 使用追踪 | 3.3 积累篇 | 学习DNA档案 |
+| ⑰ | 语病追踪档案 | `xiaozhi-chinese-grammar-tracker/` | 六类语病识别 + 顽固档案 + 写作前预警 | 3.3 积累篇 | 学习DNA档案 |
 
 ### 数学学科专项 SKILL
 
 | # | SKILL 名称 | 文件夹 | 核心功能 | 对应章节 | 依赖 |
 |---|-----------|-------|---------|---------|------|
-| ⑱ | 数学解题教练 | `xiaozhi-problem-solving-coach/` | 四步拍照法 + CLAW5模板 + 苏格拉底五问链 | 4.2 + 4.3 | 学习DNA档案、数学错误基因档案 |
-| ⑲ | 数学错误基因档案 | `xiaozhi-error-gene-archive/` | 四类错误分类 + 顽固追踪 + 月度图谱 | 4.4 | 学习DNA档案、解题教练 |
-| ⑳ | 数学概念解释器 | `xiaozhi-concept-explainer/` | 生活类比建直觉 + 几何空间训练 | 4.5 挑战①④ | 学习DNA档案 |
-| 21 | 应用题建模教练 | `xiaozhi-word-problem-coach/` | 数量关系三步提取 + 五大题型建模 | 4.5 挑战③ | 学习DNA档案、数学错误基因档案 |
-| 22 | 思维梯度训练师 | `xiaozhi-gradient-trainer/` | 天花板测定 + DNA定制序列 + 成长日记 | 4.6 | 学习DNA档案、数学错误基因档案 |
+| ⑱ | 数学解题教练 | `xiaozhi-math-problem-solving-coach/` | 四步拍照法 + CLAW5模板 + 苏格拉底五问链 | 4.2 + 4.3 | 学习DNA档案、数学错误基因档案 |
+| ⑲ | 数学错误基因档案 | `xiaozhi-math-error-gene-archive/` | 四类错误分类 + 顽固追踪 + 月度图谱 | 4.4 | 学习DNA档案、解题教练 |
+| ⑳ | 数学概念解释器 | `xiaozhi-math-concept-explainer/` | 生活类比建直觉 + 几何空间训练 | 4.5 挑战①④ | 学习DNA档案 |
+| 21 | 应用题建模教练 | `xiaozhi-math-word-problem-coach/` | 数量关系三步提取 + 五大题型建模 | 4.5 挑战③ | 学习DNA档案、数学错误基因档案 |
+| 22 | 思维梯度训练师 | `xiaozhi-math-gradient-trainer/` | 天花板测定 + DNA定制序列 + 成长日记 | 4.6 | 学习DNA档案、数学错误基因档案 |
 
 ### 英语学科专项 SKILL
 
 | # | SKILL 名称 | 文件夹 | 核心功能 | 对应章节 | 依赖 |
 |---|-----------|-------|---------|---------|------|
-| 23 | 英语口语陪练 | `xiaozhi-speaking-coach/` | 晨间热身 + 角色扮演 + 四级跳 + 口语进化档案 | 5.2 全节 | 学习DNA档案 |
-| 24 | 智能词汇DNA系统 | `xiaozhi-vocabulary-dna/` | 三种入库 + 五轮提醒 + 新词雷达 + 遗忘追踪 | 5.3 全节 | 学习DNA档案 |
+| 23 | 英语口语陪练 | `xiaozhi-english-speaking-coach/` | 晨间热身 + 角色扮演 + 四级跳 + 口语进化档案 | 5.2 全节 | 学习DNA档案 |
+| 24 | 智能词汇DNA系统 | `xiaozhi-english-vocabulary-dna/` | 三种入库 + 五轮提醒 + 新词雷达 + 遗忘追踪 | 5.3 全节 | 学习DNA档案 |
 | 25 | 英语语法突破教练 | `xiaozhi-english-grammar-coach/` | 基因图谱 + 苏格拉底追问 + DNA档案 + 定语从句营 | 5.4 全节 | 学习DNA档案 |
-| 26 | 个性化英语听力训练师 | `xiaozhi-listening-trainer/` | DNA驱动生成 + 四步法 + 卡壳追问 + 生词入库 | 5.5 前半 | 学习DNA档案、词汇DNA系统 |
+| 26 | 个性化英语听力训练师 | `xiaozhi-english-listening-trainer/` | DNA驱动生成 + 四步法 + 卡壳追问 + 生词入库 | 5.5 前半 | 学习DNA档案、词汇DNA系统 |
 | 27 | 英语写作进化教练 | `xiaozhi-english-writing-coach/` | 三维批改 + 句式升级 + 进化档案 + 场景脚本 | 5.5 后半 | 学习DNA档案、语法突破教练 |
 
 ---
@@ -469,60 +469,60 @@ xiaozhi-skills/
 ├── xiaozhi-interest-explorer/
 │   └── SKILL.md
 │
-├── xiaozhi-writing-coach/
+├── xiaozhi-chinese-writing-coach/
 │   ├── SKILL.md
 │   └── references/
 │       └── writing-rubric.md
 │
-├── xiaozhi-reading-decoder/
+├── xiaozhi-chinese-reading-decoder/
 │   ├── SKILL.md
 │   └── references/
 │       └── question-type-library.md
 │
-├── xiaozhi-classical-revival/
+├── xiaozhi-chinese-classical-revival/
 │   ├── SKILL.md
 │   └── references/
 │       └── classical-author-profiles.md
 │
-├── xiaozhi-material-library/
+├── xiaozhi-chinese-material-library/
 │   └── SKILL.md
 │
-├── xiaozhi-grammar-tracker/
+├── xiaozhi-chinese-grammar-tracker/
 │   ├── SKILL.md
 │   └── references/
 │       └── grammar-error-library.md
 │
-├── xiaozhi-problem-solving-coach/
+├── xiaozhi-math-problem-solving-coach/
 │   ├── SKILL.md
 │   └── references/
 │       └── claw-templates-extended.md
 │
-├── xiaozhi-error-gene-archive/
+├── xiaozhi-math-error-gene-archive/
 │   ├── SKILL.md
 │   └── references/
 │       └── concept-confusion-map.md
 │
-├── xiaozhi-concept-explainer/
+├── xiaozhi-math-concept-explainer/
 │   ├── SKILL.md
 │   └── references/
 │       └── analogy-bank.md
 │
-├── xiaozhi-word-problem-coach/
+├── xiaozhi-math-word-problem-coach/
 │   ├── SKILL.md
 │   └── references/
 │       └── modeling-patterns.md
 │
-├── xiaozhi-gradient-trainer/
+├── xiaozhi-math-gradient-trainer/
 │   ├── SKILL.md
 │   └── references/
 │       └── gradient-levels.md
 │
-├── xiaozhi-speaking-coach/
+├── xiaozhi-english-speaking-coach/
 │   ├── SKILL.md
 │   └── references/
 │       └── speaking-resources.md
 │
-├── xiaozhi-vocabulary-dna/
+├── xiaozhi-english-vocabulary-dna/
 │   ├── SKILL.md
 │   └── references/
 │       └── vocabulary-radar-topics.md
@@ -532,7 +532,7 @@ xiaozhi-skills/
 │   └── references/
 │       └── grammar-patterns.md
 │
-├── xiaozhi-listening-trainer/
+├── xiaozhi-english-listening-trainer/
 │   ├── SKILL.md
 │   └── references/
 │       └── listening-topic-templates.md
