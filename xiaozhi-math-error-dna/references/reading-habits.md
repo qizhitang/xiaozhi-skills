@@ -1,6 +1,6 @@
 # 数学读题失误训练方法手册
 
-> 本文档为 `xiaozhi-math-error-gene-archive` 的配套参考资源。
+> 本文档为 `xiaozhi-math-error-dna` 的配套参考资源。
 
 ## 核心训练方法
 - 高亮关键字法

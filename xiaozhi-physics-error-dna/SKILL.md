@@ -1,6 +1,6 @@
 ---
-name: xiaozhi-physics-error-archive
-display_name: 🧬 物理错误基因档案
+name: xiaozhi-physics-error-dna
+display_name: 🧬 物理错误DNA
 version: 1.0.0
 author: 小智伴学
 category: 物理专项
@@ -13,10 +13,10 @@ compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-learning-dna, xiaozhi-physics-problem-coach, xiaozhi-wrong-answer-notebook
 ---
 
-# 🧬 物理错误基因档案 SKILL
+# 🧬 物理错误DNA SKILL
 
 > **一句话定位：** 普通错题本告诉你"哪道物理题错了"——
-> 物理错误基因档案告诉你"你为什么总在同一类图景上出错"，
+> 物理错误DNA告诉你"你为什么总在同一类图景上出错"，
 > 然后用数据消灭那个模糊的"我物理不行"的感觉。
 
 ---
@@ -334,7 +334,7 @@ Step 4：执行（出3道递进题，物理版强调图景）
 ### 8.1 通用协作关系
 
 ```text
-物理错误基因档案 SKILL
+物理错误DNA SKILL
     <-- 通用错题本（物理错题交接记录：基础分类+表面信息）
     --> 通用错题本（深度分析回写：子类型ID+跨维度+深度根因+弱项状态）
     <-- 物理解题教练（经同意的错题分析记录）
@@ -343,7 +343,7 @@ Step 4：执行（出3道递进题，物理版强调图景）
     --> 物理建模教练（过程分析类错误联动建模训练）
     --> 物理实验思维教练（实验过程类错误联动实验思维训练）
     --> IM提醒SKILL（需求由本SKILL指定、通用错题本统一调度）
-    --> 学习DNA档案（仅在用户同意时写入月报摘要或成长摘要）
+    --> 学习DNA（仅在用户同意时写入月报摘要或成长摘要）
     --> 每周学习复盘（仅提供本周物理错误摘要）
 ```
 

@@ -15,7 +15,7 @@ description: >
   不是刷难题——是找到当前天花板，精准突破那一层。
   凡是涉及数学进阶训练、思维提升、水平测定的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-learning-dna, xiaozhi-math-error-gene-archive
+depends_on: xiaozhi-learning-dna, xiaozhi-math-error-dna
 ---
 
 # 🎯 思维梯度训练师 SKILL
@@ -85,7 +85,7 @@ depends_on: xiaozhi-learning-dna, xiaozhi-math-error-gene-archive
 - 学生说"我想练进阶题"
 - 学生刚攻克了一个弱项，准备进阶
 - 学生说"帮我测一下我现在的水平"
-- 数学错误基因档案显示弱项已攻克
+- 数学错误DNA显示弱项已攻克
 
 ### 天花板测定序列（每个知识点5题递增）
 
@@ -144,12 +144,12 @@ depends_on: xiaozhi-learning-dna, xiaozhi-math-error-gene-archive
 ### 触发条件
 - 学生请求"基于我的弱项出梯度题"
 - 天花板测定后进入突破阶段
-- 数学错误基因档案显示某类错误已触发顽固弱项
+- 数学错误DNA显示某类错误已触发顽固弱项
 
 ### DNA驱动的定制逻辑
 
 ```
-从数学错误基因档案读取：
+从数学错误DNA读取：
   1. 当前顽固弱项列表（按严重程度排序）
   2. 最近已攻克的弱项（确认稳固）
   3. 思维天花板位置（从历史梯度题记录）
@@ -372,11 +372,11 @@ Step 4：更新日记和档案
 
 ```
 思维梯度训练师 SKILL
-    ←── 数学错误基因档案（读取顽固弱项和天花板位置）
-    ──→ 数学错误基因档案（更新训练记录和突破状态）
+    ←── 数学错误DNA（读取顽固弱项和天花板位置）
+    ──→ 数学错误DNA（更新训练记录和突破状态）
     ←── 数学解题教练（梯度题做不出时联动追问）
     ←── 数学概念解释器（某层卡住时联动概念重建）
-    ──→ 学习DNA档案（成长轨迹写入学期总档案）
+    ──→ 学习DNA（成长轨迹写入学期总档案）
     ──→ IM提醒SKILL（每周成长检测定时提醒）
 ```
 

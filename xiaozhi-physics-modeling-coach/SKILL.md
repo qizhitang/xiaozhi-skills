@@ -10,7 +10,7 @@ description: >
   （识别现象→选择模型→数学表达）。五大核心模型覆盖初中物理80%的建模场景，
   训练学生从"看到题就套公式"变成"先判断物理模型再列式"。
 compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-learning-dna, xiaozhi-physics-error-archive
+depends_on: xiaozhi-learning-dna, xiaozhi-physics-error-dna
 ---
 
 # 📐 物理建模教练 SKILL
@@ -316,9 +316,9 @@ depends_on: xiaozhi-learning-dna, xiaozhi-physics-error-archive
 ```text
 物理建模教练
     ← 物理解题教练（Step 2 物理建模遇到困难时联动）
-    ← 物理错误基因档案（建模错误类/过程分析类错误触发联动）
+    ← 物理错误DNA（建模错误类/过程分析类错误触发联动）
     → 物理概念直觉器（模型理解不清时联动）
-    → 学习DNA档案（仅在用户同意时写入建模能力摘要）
+    → 学习DNA（仅在用户同意时写入建模能力摘要）
     → IM提醒SKILL（仅在学生同意提醒时设置模型训练提醒）
 ```
 

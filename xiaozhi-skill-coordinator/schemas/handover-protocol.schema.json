@@ -27,10 +27,10 @@
       "type": "string",
       "enum": [
         "xiaozhi-wrong-answer-notebook",
-        "xiaozhi-feynman-test",
+        "xiaozhi-feynman-learning",
         "xiaozhi-skill-coordinator",
-        "xiaozhi-math-error-gene-archive",
-        "xiaozhi-physics-error-archive"
+        "xiaozhi-math-error-dna",
+        "xiaozhi-physics-error-dna"
       ]
     },
     "recipient": {
@@ -39,8 +39,8 @@
       "enum": [
         "xiaozhi-learning-dna",
         "xiaozhi-im-reminder",
-        "xiaozhi-math-error-gene-archive",
-        "xiaozhi-physics-error-archive",
+        "xiaozhi-math-error-dna",
+        "xiaozhi-physics-error-dna",
         "xiaozhi-skill-coordinator"
       ]
     },
@@ -92,7 +92,7 @@
           "required": ["errorId", "subject", "concept", "handoverTrigger", "basicDimension", "surfaceInfo"]
         },
         "profileData": {
-          "description": "DNA档案回写专属结构。在 handoverType='profile_writeback' 时必填",
+          "description": "DNA回写专属结构。在 handoverType='profile_writeback' 时必填",
           "type": "object",
           "properties": {
             "updateTarget": { "type": "string", "enum": ["concept_graph", "emotion_dimension", "growth_milestones"] },

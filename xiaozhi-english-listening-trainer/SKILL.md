@@ -327,7 +327,7 @@ depends_on: xiaozhi-learning-dna, xiaozhi-english-vocabulary-dna
     ←── 智能词汇DNA系统（调取词汇库生成材料）
     ──→ 智能词汇DNA系统（听力生词实时入库）
     ──→ 英语语法突破教练（句子结构卡壳联动）
-    ──→ 学习DNA档案（兴趣话题偏好读取和更新）
+    ──→ 学习DNA（兴趣话题偏好读取和更新）
     ──→ IM提醒SKILL（听力生词五轮提醒触发）
 ```
 

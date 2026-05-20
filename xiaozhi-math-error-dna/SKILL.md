@@ -1,6 +1,6 @@
 ---
-name: xiaozhi-math-error-gene-archive
-display_name: 🧬 数学错误基因档案
+name: xiaozhi-math-error-dna
+display_name: 🧬 数学错误DNA
 version: 1.1.0
 author: 小智伴学
 category: 数学专项
@@ -13,10 +13,10 @@ compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-learning-dna, xiaozhi-math-problem-solving-coach, xiaozhi-wrong-answer-notebook
 ---
 
-# 🧬 数学错误基因档案 SKILL
+# 🧬 数学错误DNA SKILL
 
 > **一句话定位：** 普通错题本告诉你"哪道题错了"——  
-> 数学错误基因档案告诉你"你为什么总在同一个地方出错"，  
+> 数学错误DNA告诉你"你为什么总在同一个地方出错"，  
 > 然后用数据消灭那个模糊的"我数学不行"的感觉。
 
 ---
@@ -315,7 +315,7 @@ Step 4：执行（出3道递进题）
 ### 8.1 通用协作关系
 
 ```text
-数学错误基因档案 SKILL
+数学错误DNA SKILL
     <-- 通用错题本（数学错题交接记录：基础分类+表面信息）
     --> 通用错题本（深度分析回写：子类型ID+跨维度+深度根因+弱项状态）
     <-- 数学解题教练（经同意的错题分析记录）
@@ -323,7 +323,7 @@ Step 4：执行（出3道递进题）
     --> 数学概念解释器（概念模糊类错误在当前任务内联动）
     --> IM提醒SKILL（仅在学生同意提醒时设置验证提醒，需求由本SKILL指定、通用错题本统一调度）
     --> 思维梯度训练师（弱项攻克后可推送进阶）
-    --> 学习DNA档案（仅在用户同意时写入月报摘要或成长摘要）
+    --> 学习DNA（仅在用户同意时写入月报摘要或成长摘要）
     --> 每周学习复盘（仅提供本周数学错误摘要）
 ```
 

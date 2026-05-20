@@ -14,7 +14,7 @@ description: >
   不直接建模，用追问引导学生自己完成文字到数学语言的转化。
   凡是涉及应用题理解、数学建模、设元列方程的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-learning-dna, xiaozhi-math-error-gene-archive
+depends_on: xiaozhi-learning-dna, xiaozhi-math-error-dna
 ---
 
 # 📝 应用题数学建模教练 SKILL
@@ -302,10 +302,10 @@ Step 3  翻译转化（把中文关系翻译成数学表达式）
 
 ```
 应用题数学建模教练 SKILL
-    ←── 数学错误基因档案（读题失误类错误触发联动）
-    ──→ 数学错误基因档案（建模类错误记录归档）
+    ←── 数学错误DNA（读题失误类错误触发联动）
+    ──→ 数学错误DNA（建模类错误记录归档）
     ←── 数学解题教练（建模完成后联动解题流程）
-    ──→ 学习DNA档案（应用题能力状态更新）
+    ──→ 学习DNA（应用题能力状态更新）
 ```
 
 ---

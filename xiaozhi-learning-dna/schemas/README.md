@@ -1,12 +1,12 @@
-# 学习DNA档案 · JSON Schema
+# 学习DNA · JSON Schema
 
-本目录包含学习DNA档案的正式数据结构定义。
+本目录包含学习DNA的正式数据结构定义。
 
 ## 文件说明
 
 | 文件 | 说明 |
 |------|------|
-| `dna-profile.schema.json` | 学习DNA档案完整 JSON Schema（draft 2020-12） |
+| `dna-profile.schema.json` | 学习DNA完整 JSON Schema（draft 2020-12） |
 | `examples/full-profile.example.json` | 完整档案示例数据（覆盖所有维度） |
 | `validate.js` | ajv 验证脚本（测试 schema 自身有效性 + 示例数据合规性） |
 

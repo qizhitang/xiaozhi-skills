@@ -150,7 +150,7 @@
         "category": "时间维度",
         "triggerDate": "2026-03-15",
         "triggerEvent": "完成首次建档，录入3条学习记录",
-        "comment": "你的学习DNA档案已经建立了——我开始认识你了。"
+        "comment": "你的学习DNA已经建立了——我开始认识你了。"
       },
       {
         "milestoneId": "ms-20260428-001",

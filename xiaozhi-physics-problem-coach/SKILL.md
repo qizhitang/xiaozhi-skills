@@ -11,7 +11,7 @@ description: >
   是第一步，不是"读懂题"而是"看见物理世界"。内置四类图景追问+
   物理三层次苏格拉底追问，覆盖物理学习80%场景。
 compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-learning-dna, xiaozhi-physics-error-archive
+depends_on: xiaozhi-learning-dna, xiaozhi-physics-error-dna
 ---
 
 # 🧲 物理解题教练 SKILL
@@ -278,7 +278,7 @@ Step 3：标电流方向
   □ 特别是：km/h→m/s, cm²→m², g→kg, kW·h→J
 
 四、错误档案对照
-  → 从物理错误基因档案调取近期弱项清单
+  → 从物理错误DNA调取近期弱项清单
   → 考前重点看"顽固弱项"和"高频混淆对"
 ```
 
@@ -288,11 +288,11 @@ Step 3：标电流方向
 
 ```text
 物理解题教练
-    → 物理错误基因档案（错题分析后推送记录，经同意）
+    → 物理错误DNA（错题分析后推送记录，经同意）
     → 物理概念直觉器（解题中遇到概念理解问题时联动）
     → 物理建模教练（Step 2 物理建模遇到困难时联动）
     → 物理实验思维教练（识别为实验题时联动）
-    → 学习DNA档案（仅在用户同意时写入解题能力摘要）
+    → 学习DNA（仅在用户同意时写入解题能力摘要）
     → IM提醒SKILL（仅在学生同意提醒时设置验证提醒）
     → 通用错题本（物理错题通过通用错题本统一入口接收）
 ```

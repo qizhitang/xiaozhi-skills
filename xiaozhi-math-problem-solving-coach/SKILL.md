@@ -14,7 +14,7 @@ description: >
   内置5套CLAW数学专项模板 + 数学苏格拉底五问链，覆盖数学学习80%场景。
   凡是涉及数学解题、错题分析、概念追问、考前复习的场景，务必调用此SKILL。
 compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-learning-dna, xiaozhi-math-error-gene-archive
+depends_on: xiaozhi-learning-dna, xiaozhi-math-error-dna
 ---
 
 # 📐 数学解题教练 SKILL
@@ -195,7 +195,7 @@ depends_on: xiaozhi-learning-dna, xiaozhi-math-error-gene-archive
 → 让学生自己发现错误根因
 
 第四步：记录档案（联动）
-分析完成后，自动向数学错误基因档案推送：
+分析完成后，自动向数学错误DNA推送：
 题型 + 错误类型 + 根本原因
 ```
 
@@ -352,7 +352,7 @@ depends_on: xiaozhi-learning-dna, xiaozhi-math-error-gene-archive
 ✅ 规范：
 - 每问之间等学生回答，不连续发出
 - 第1问是必须的，2-5问根据情况选择
-- 第5问的结果记录入数学错误基因档案（作为"方法模式"条目）
+- 第5问的结果记录入数学错误DNA（作为"方法模式"条目）
 
 ✅ 当学生答出好答案时：
 "你说的[X]很准确——这正是这道题的核心。
@@ -373,7 +373,7 @@ depends_on: xiaozhi-learning-dna, xiaozhi-math-error-gene-archive
 - "明天/后天考试"
 - "考前帮我梳理"
 - "快速过一遍[知识点]"
-- 当前日期临近考试（从DNA档案读取）
+- 当前日期临近考试（从DNA读取）
 
 ### 考前梳理操作原则
 
@@ -419,9 +419,9 @@ depends_on: xiaozhi-learning-dna, xiaozhi-math-error-gene-archive
 
 ```
 数学解题教练 SKILL
-    ←── 学习DNA档案（调取历史错误模式，个性化提示）
-    ──→ 数学错误基因档案（每次错题分析后推送记录）
-    ←── 数学错误基因档案（考前梳理时调取弱项清单）
+    ←── 学习DNA（调取历史错误模式，个性化提示）
+    ──→ 数学错误DNA（每次错题分析后推送记录）
+    ←── 数学错误DNA（考前梳理时调取弱项清单）
     ──→ 数学概念解释器（遇到概念不理解时联动）
     ──→ IM提醒SKILL（掌握新方法后设置复习提醒）
     ──→ 思维梯度训练师（掌握后触发进阶训练）
