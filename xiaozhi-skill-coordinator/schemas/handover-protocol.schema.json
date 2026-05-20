@@ -1,0 +1,173 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "XiaozhiMultiAgentHandoverProtocol",
+  "description": "小智伴学多智能体协作与数据流转强Schema协议 (v2.0)",
+  "type": "object",
+  "properties": {
+    "sessionId": {
+      "description": "当前会话的唯一ID标识，用于跟踪跨智能体对话流",
+      "type": "string"
+    },
+    "protocolVersion": {
+      "description": "协议版本，当前固定为 2.0.0",
+      "type": "string",
+      "enum": ["2.0.0"]
+    },
+    "handoverType": {
+      "description": "交接协议类型",
+      "type": "string",
+      "enum": [
+        "wrong_answer_handover",
+        "profile_writeback",
+        "reminder_sync"
+      ]
+    },
+    "sender": {
+      "description": "发送数据的源SKILL名称",
+      "type": "string",
+      "enum": [
+        "xiaozhi-wrong-answer-notebook",
+        "xiaozhi-feynman-test",
+        "xiaozhi-skill-coordinator",
+        "xiaozhi-math-error-gene-archive",
+        "xiaozhi-physics-error-archive"
+      ]
+    },
+    "recipient": {
+      "description": "接收数据的目标SKILL名称",
+      "type": "string",
+      "enum": [
+        "xiaozhi-learning-dna",
+        "xiaozhi-im-reminder",
+        "xiaozhi-math-error-gene-archive",
+        "xiaozhi-physics-error-archive",
+        "xiaozhi-skill-coordinator"
+      ]
+    },
+    "payload": {
+      "description": "数据负载主体，结构根据 handoverType 动态变化",
+      "type": "object",
+      "properties": {
+        "wrongAnswerData": {
+          "description": "错题交接专属结构。在 handoverType='wrong_answer_handover' 时必填",
+          "type": "object",
+          "properties": {
+            "errorId": { "type": "string" },
+            "subject": { "type": "string", "enum": ["math", "physics"] },
+            "concept": { "type": "string" },
+            "handoverTrigger": {
+              "type": "string",
+              "enum": ["new_error", "stubborn_weakness", "anxiety_trigger"]
+            },
+            "basicDimension": {
+              "type": "string",
+              "enum": ["概念模糊", "计算失误", "读题失误", "方法用错"]
+            },
+            "surfaceInfo": {
+              "type": "object",
+              "properties": {
+                "questionAbstract": { "type": "string" },
+                "studentAnswer": { "type": "string" },
+                "correctAnswer": { "type": "string" },
+                "surfaceRootCause": { "type": "string" }
+              },
+              "required": ["questionAbstract", "studentAnswer", "surfaceRootCause"]
+            },
+            "anxietySignals": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "physicsBasicDimension": {
+              "type": "string",
+              "enum": ["图景建立(P)", "概念混淆(C)", "公式误用(F)", "过程分析错误(R)", "数学工具错误(T)"]
+            },
+            "judgmentClue": {
+              "type": "string"
+            },
+            "historyRefs": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          },
+          "required": ["errorId", "subject", "concept", "handoverTrigger", "basicDimension", "surfaceInfo"]
+        },
+        "profileData": {
+          "description": "DNA档案回写专属结构。在 handoverType='profile_writeback' 时必填",
+          "type": "object",
+          "properties": {
+            "updateTarget": { "type": "string", "enum": ["concept_graph", "emotion_dimension", "growth_milestones"] },
+            "graphUpdates": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "nodeId": { "type": "string" },
+                  "conceptName": { "type": "string" },
+                  "subject": { "type": "string" },
+                  "masteryLevel": { "type": "string", "enum": ["会复述", "会解释", "真正掌握"] },
+                  "relationships": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "relationType": { "type": "string", "enum": ["requires", "isParentOf", "appliesTo", "correlatesWith"] },
+                        "targetNodeId": { "type": "string" }
+                      },
+                      "required": ["relationType", "targetNodeId"]
+                    }
+                  }
+                },
+                "required": ["conceptName", "subject", "masteryLevel"]
+              }
+            },
+            "emotionUpdates": {
+              "type": "object",
+              "properties": {
+                "baseline": { "type": "string", "enum": ["积极稳定", "波动中", "低落倾向", "焦虑明显"] },
+                "subjectEmotions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "subject": { "type": "string" },
+                      "emotionType": { "type": "string", "enum": ["自信愉悦", "平静专注", "紧张但能应对", "焦虑回避", "挫败抗拒"] }
+                    },
+                    "required": ["subject", "emotionType"]
+                  }
+                }
+              }
+            },
+            "milestone": {
+              "type": "object",
+              "properties": {
+                "milestoneName": { "type": "string" },
+                "milestoneType": { "type": "string", "enum": ["weakness_solved", "feynman_mastered", "system_health_excellent"] },
+                "triggerDate": { "type": "string", "format": "date-time" }
+              },
+              "required": ["milestoneName", "milestoneType"]
+            }
+          },
+          "required": ["updateTarget"]
+        },
+        "reminderData": {
+          "description": "提醒同步专属结构。在 handoverType='reminder_sync' 时必填",
+          "type": "object",
+          "properties": {
+            "reminderId": { "type": "string" },
+            "type": { "type": "string", "enum": ["ebbinghaus_review", "scheduled_task", "exploration_task", "daily_confirmation"] },
+            "scheduledTime": { "type": "string", "format": "date-time" },
+            "content": { "type": "string" },
+            "targetKnowledgePoint": { "type": "string" }
+          },
+          "required": ["reminderId", "type", "scheduledTime", "content"]
+        }
+      }
+    },
+    "timestamp": {
+      "description": "ISO-8601格式的时间戳",
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": ["sessionId", "protocolVersion", "handoverType", "sender", "recipient", "payload", "timestamp"]
+}
