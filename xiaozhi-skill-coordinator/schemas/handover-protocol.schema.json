@@ -26,7 +26,7 @@
       "description": "发送数据的源SKILL名称",
       "type": "string",
       "enum": [
-        "xiaozhi-wrong-answer-notebook",
+        "xiaozhi-correction-notebook",
         "xiaozhi-feynman-learning",
         "xiaozhi-skill-coordinator",
         "xiaozhi-math-error-dna",

@@ -10,7 +10,7 @@ description: >
   生成数学报告或同意连续跟踪时激活。核心功能：四类错误分类 + 顽固弱项识别
   + 错误类型图谱 + 数学弱项报告。未获同意时，不建立长期档案、不默认跨SKILL共享。
 compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-learning-dna, xiaozhi-math-problem-solving-coach, xiaozhi-wrong-answer-notebook
+depends_on: xiaozhi-learning-dna, xiaozhi-math-problem-solving-coach, xiaozhi-correction-notebook
 ---
 
 # 🧬 数学错误DNA SKILL
@@ -42,7 +42,7 @@ depends_on: xiaozhi-learning-dna, xiaozhi-math-problem-solving-coach, xiaozhi-wr
 ```
 
 ⚠️ **【架构定位声明——数学错题双SKILL协作协议】**
-本SKILL是通用核心包中"❌ 错题本 SKILL"在数学领域的专属扩展实现，并非独立的第二套错题本。两者按以下协议分工协作：
+本SKILL是通用核心包中"❌ 智能错题本 SKILL"在数学领域的专属扩展实现，并非独立的第二套错题本。两者按以下协议分工协作：
 
 | 职责 | 归属 | 说明 |
 |------|------|------|

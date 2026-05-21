@@ -445,7 +445,7 @@ C06(电学概念混淆) + F06(多公式联立错误)
 
 交接记录格式：
   {
-    "source": "wrong-answer-notebook",
+    "source": "correction-notebook",
     "type": "新错题 / 顽固弱项确认 / 深度分析请求 / 焦虑信号",
     "physicsBasicDimension": "图景建立错误 / 概念混淆 / 公式误用 / 过程分析错误 / 数学工具错误",
     "surfaceInfo": {

@@ -10,7 +10,7 @@ description: >
   + 顽固弱项识别 + 错误类型图谱 + 物理弱项报告。与通用错题本协作，通用层记表面，
   物理层记根因，不产生重复记录和触发冲突。
 compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-learning-dna, xiaozhi-physics-problem-coach, xiaozhi-wrong-answer-notebook
+depends_on: xiaozhi-learning-dna, xiaozhi-physics-problem-coach, xiaozhi-correction-notebook
 ---
 
 # 🧬 物理错误DNA SKILL
@@ -47,7 +47,7 @@ depends_on: xiaozhi-learning-dna, xiaozhi-physics-problem-coach, xiaozhi-wrong-a
 ```
 
 ⚠️ **【架构定位声明——物理错题双SKILL协作协议】**
-本SKILL是通用核心包中"❌ 错题本 SKILL"在物理领域的专属扩展实现，并非独立的第二套错题本。两者按以下协议分工协作：
+本SKILL是通用核心包中"❌ 智能错题本 SKILL"在物理领域的专属扩展实现，并非独立的第二套错题本。两者按以下协议分工协作：
 
 | 职责 | 归属 | 说明 |
 |------|------|------|

@@ -342,7 +342,7 @@ R02(误读数量关系) + M01(题型识别错误)
 
 交接记录格式：
   {
-    "source": "wrong-answer-notebook",
+    "source": "correction-notebook",
     "type": "新错题 / 顽固弱项确认 / 深度分析请求 / 焦虑信号",
     "mathBasicDimension": "概念模糊 / 计算失误 / 读题失误 / 方法用错",
     "surfaceInfo": { "题目摘要", "学生答案", "正确答案", "表面根因" },
