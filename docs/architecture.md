@@ -1,86 +1,161 @@
 # 🏛️ 系统架构与方法论
 
-本文档包含《龙虾高效学习法》全套 32 个 SKILL 的完整目录清单、系统协作架构、背后的方法论依据以及详细的文件目录结构。
+本文档包含《龙虾高效学习法》全套 58 个 SKILL（学生端 32 个 + 老师端 26 个）的完整目录清单、系统协作架构、背后的方法论依据以及详细的文件目录结构。
 
 ## 🗂️ 完整 SKILL 目录
 
-### 核心通用 SKILL
+> **目录结构说明：** 全部 SKILL 按角色分为学生端（`student/`）和老师端（`teacher/`）。学生端含通用学习与学科专项；老师端含通用教学、独立教师日常与学科专项。
+
+### 学生端 · 通用 SKILL
 
 | # | SKILL 名称 | 文件夹 | 版本 | 核心功能 | 依赖 |
 |---|-----------|-------|------|---------|------|
-| ① | 🧬 学习DNA | `xiaozhi-learning-dna/` | v1.1 | 长期记忆引擎 + 成长图谱四维度 + 里程碑自动标注 | 无（基础层） |
-| ② | ❌ 智能错题本 | `xiaozhi-correction-notebook/` | v1.1 | 智能错因分析 + 弱项预警 + 学期全景报告 | 学习DNA |
-| ③ | ⏰ IM智能提醒 | `xiaozhi-im-reminder/` | v1.1 | 艾宾浩斯复习提醒 + 计划任务提醒 + 探索提醒 + 每日确认回访 | 学习DNA |
-| ④ | 🎓 费曼学习法 | `xiaozhi-feynman-learning/` | v1.1 | 理解验证 + 三层深度档案 + 第五跳批判性验证 | 学习DNA |
-| ⑤ | 📊 每周学习复盘 | `xiaozhi-weekly-review/` | v1.1 | AI周报生成 + 六模块复盘 + 苏格拉底七问 + 成长曲线 | 全部SKILL |
-| ⑥ | 🛠️ SKILL创建教练 | `xiaozhi-skill-creator/` | v1.0 | 四层结构 + 五步创建 + 八实践 + 六健康指标 | 学习DNA |
-| ⑦ | 📝 康奈尔笔记 | `xiaozhi-cornell-notes/` | v1.0 | 拍照提炼 + 笔记DNA + 主动推送 + 跨科网络 | 学习DNA、IM智能提醒 |
-| ⑧ | 🔗 五SKILL联动协调器 | `xiaozhi-skill-coordinator/` | v1.1 | 五SKILL联动 + 全系统全景月报中枢 + 健康检查 | 学习DNA、错题本、费曼测试、康奈尔笔记 |
+| ① | 🧬 学习DNA | `student/general/xiaozhi-learning-dna/` | v1.1 | 长期记忆引擎 + 成长图谱四维度 + 里程碑自动标注 | 无（基础层） |
+| ② | ❌ 智能错题本 | `student/general/xiaozhi-correction-notebook/` | v1.1 | 智能错因分析 + 弱项预警 + 学期全景报告 | 学习DNA |
+| ③ | ⏰ IM智能提醒 | `student/general/xiaozhi-im-reminder/` | v1.1 | 艾宾浩斯复习提醒 + 计划任务提醒 + 探索提醒 + 每日确认回访 | 学习DNA |
+| ④ | 🎓 费曼学习法 | `student/general/xiaozhi-feynman-learning/` | v1.1 | 理解验证 + 三层深度档案 + 第五跳批判性验证 | 学习DNA |
+| ⑤ | 📊 每周学习复盘 | `student/general/xiaozhi-weekly-review/` | v1.1 | AI周报生成 + 六模块复盘 + 苏格拉底七问 + 成长曲线 | 全部SKILL |
+| ⑥ | 🛠️ SKILL创建教练 | `student/general/xiaozhi-skill-creator/` | v1.0 | 四层结构 + 五步创建 + 八实践 + 六健康指标 | 学习DNA |
+| ⑦ | 📝 康奈尔笔记 | `student/general/xiaozhi-cornell-notes/` | v1.0 | 拍照提炼 + 笔记DNA + 主动推送 + 跨科网络 | 学习DNA、IM智能提醒 |
+| ⑧ | 🔗 五SKILL联动协调器 | `student/general/xiaozhi-skill-coordinator/` | v1.1 | 五SKILL联动 + 全系统全景月报中枢 + 健康检查 | 学习DNA、错题本、费曼测试、康奈尔笔记 |
 
-### 第七章、第八章 SKILL 与整合能力
+### 学生端 · 第七章与第八章 SKILL
 
 | # | 名称 | 文件夹 | 类型 | 核心功能 | 来源章节 |
 |---|------|-------|------|---------|---------|
-| ⑨ | 🗓️ 30天学习计划制定师 | `xiaozhi-learning-plan/` | 新增SKILL | DNA驱动 + 五步生成 + 执行监控 + 家庭看板 | 7.1 全节 |
-| ⑩ | ⏱️ 时间与专注力教练 | `xiaozhi-time-focus-coach/` | 新增SKILL | 时间销行账 + 黄金时段 + 智能番茄钟 + 10专注法 | 7.2+7.3 全节 |
-| ⑪ | 🔭 跨学科侦探周 | `xiaozhi-cross-subject-detective/` | 新增SKILL | 五步流程 + 项目DNA + 跨项目复利 + 知识积累树 | 8.4 全节 |
-| ⑫ | ☕ 兴趣成长探索计划 | `xiaozhi-interest-explorer/` | 新增SKILL | 52杯咖啡 + 四维度 + 批判验证 + 兴趣DNA | 8.5 全节 |
-| 整合能力A | 📊 每周学习复盘（已并入主文件） | `xiaozhi-weekly-review/` | 已整合 | 三维度→六模块 + 苏格拉底七问 + 成长曲线可视化 | 7.4 全节 |
-| 整合能力B | 🧬 学习DNA（已并入主文件） | `xiaozhi-learning-dna/` | 已整合 | 成长图谱四维度 + 里程碑自动标注 + 兴趣/跨科接口 | 8.2 全节 |
-| 整合能力C | 🎓 费曼学习法（已并入主文件） | `xiaozhi-feynman-learning/` | 已整合 | 第五跳批判性验证 + AI主动验证 + 思维主权规则 | 8.3 全节 |
-| 整合能力D | 🔗 五SKILL联动协调器（已并入主文件） | `xiaozhi-skill-coordinator/` | 已整合 | 三SKILL→五SKILL + 五维度月报 + 两类新联动规则 | 7.4.2 |
-| 整合能力E | ⏰ IM智能提醒（已并入主文件） | `xiaozhi-im-reminder/` | 已整合 | 计划任务提醒 + 52杯咖啡探索提醒 + 时间销行账确认 | 7.1+8.5 |
+| ⑨ | 🗓️ 30天学习计划制定师 | `student/general/xiaozhi-learning-plan/` | 新增SKILL | DNA驱动 + 五步生成 + 执行监控 + 家庭看板 | 7.1 全节 |
+| ⑩ | ⏱️ 时间与专注力教练 | `student/general/xiaozhi-time-focus-coach/` | 新增SKILL | 时间销行账 + 黄金时段 + 智能番茄钟 + 10专注法 | 7.2+7.3 全节 |
+| ⑪ | 🔭 跨学科侦探周 | `student/general/xiaozhi-cross-subject-detective/` | 新增SKILL | 五步流程 + 项目DNA + 跨项目复利 + 知识积累树 | 8.4 全节 |
+| ⑫ | ☕ 兴趣成长探索计划 | `student/general/xiaozhi-interest-explorer/` | 新增SKILL | 52杯咖啡 + 四维度 + 批判验证 + 兴趣DNA | 8.5 全节 |
+| 整合能力A | 📊 每周学习复盘（已并入主文件） | `student/general/xiaozhi-weekly-review/` | 已整合 | 三维度→六模块 + 苏格拉底七问 + 成长曲线可视化 | 7.4 全节 |
+| 整合能力B | 🧬 学习DNA（已并入主文件） | `student/general/xiaozhi-learning-dna/` | 已整合 | 成长图谱四维度 + 里程碑自动标注 + 兴趣/跨科接口 | 8.2 全节 |
+| 整合能力C | 🎓 费曼学习法（已并入主文件） | `student/general/xiaozhi-feynman-learning/` | 已整合 | 第五跳批判性验证 + AI主动验证 + 思维主权规则 | 8.3 全节 |
+| 整合能力D | 🔗 五SKILL联动协调器（已并入主文件） | `student/general/xiaozhi-skill-coordinator/` | 已整合 | 三SKILL→五SKILL + 五维度月报 + 两类新联动规则 | 7.4.2 |
+| 整合能力E | ⏰ IM智能提醒（已并入主文件） | `student/general/xiaozhi-im-reminder/` | 已整合 | 计划任务提醒 + 52杯咖啡探索提醒 + 时间销行账确认 | 7.1+8.5 |
 
 ### 学习方法论 SKILL 与整合能力
 
 | # | 名称 | 文件夹 | 类型 | 核心功能 | 对应章节 |
 |---|------|-------|------|---------|---------|
-| ⑥ | 🛠️ SKILL创建教练 | `xiaozhi-skill-creator/` | 新增SKILL | 四层结构 + 五步创建 + 八实践 + 六健康指标 | 6.1 全节 |
-| ⑦ | 📝 康奈尔笔记 | `xiaozhi-cornell-notes/` | 新增SKILL | 拍照提炼 + 笔记DNA + 主动推送 + 跨科网络 | 6.4 全节 |
-| ⑧ | 🔗 五SKILL联动协调器 | `xiaozhi-skill-coordinator/` | 新增SKILL | 联动流程 + 判断规则 + 全景月报中枢 + 健康检查 | 6.5 全节 |
-| 整合能力① | ❌ 智能错题本（已并入主文件） | `xiaozhi-correction-notebook/` | 已整合 | 拍题三信息法 + 弱项预警四触发 + 学期全景报告 + 使用边界 | 6.2 全节 |
-| 整合能力② | 🎓 费曼学习法（已并入主文件） | `xiaozhi-feynman-learning/` | 已整合 | 挑战者五触发点 + 理解深度DNA三层 + 亲子费曼日 | 6.3 全节 |
-| 整合能力③ | 📊 每周复盘（已并入主文件） | `xiaozhi-weekly-review/` | 已整合 | 三维度框架 + 学习存折量化 + 建议精确化 | 6.4.4节 |
+| ⑥ | 🛠️ SKILL创建教练 | `student/general/xiaozhi-skill-creator/` | 新增SKILL | 四层结构 + 五步创建 + 八实践 + 六健康指标 | 6.1 全节 |
+| ⑦ | 📝 康奈尔笔记 | `student/general/xiaozhi-cornell-notes/` | 新增SKILL | 拍照提炼 + 笔记DNA + 主动推送 + 跨科网络 | 6.4 全节 |
+| ⑧ | 🔗 五SKILL联动协调器 | `student/general/xiaozhi-skill-coordinator/` | 新增SKILL | 联动流程 + 判断规则 + 全景月报中枢 + 健康检查 | 6.5 全节 |
+| 整合能力① | ❌ 智能错题本（已并入主文件） | `student/general/xiaozhi-correction-notebook/` | 已整合 | 拍题三信息法 + 弱项预警四触发 + 学期全景报告 + 使用边界 | 6.2 全节 |
+| 整合能力② | 🎓 费曼学习法（已并入主文件） | `student/general/xiaozhi-feynman-learning/` | 已整合 | 挑战者五触发点 + 理解深度DNA三层 + 亲子费曼日 | 6.3 全节 |
+| 整合能力③ | 📊 每周复盘（已并入主文件） | `student/general/xiaozhi-weekly-review/` | 已整合 | 三维度框架 + 学习存折量化 + 建议精确化 | 6.4.4节 |
 
-### 语文学科专项 SKILL
-
-| # | SKILL 名称 | 文件夹 | 核心功能 | 对应章节 | 依赖 |
-|---|-----------|-------|---------|---------|------|
-| ⑬ | 语文写作教练 | `xiaozhi-chinese-writing-coach/` | 5步流程 + 风格DNA + 苏格拉底四连 + AI辩论赛 | 3.1 写作篇 | 学习DNA |
-| ⑭ | 阅读理解拆解师 | `xiaozhi-chinese-reading-decoder/` | 五大坑诊断 + 出题人视角 + 三追问 | 3.2 阅读篇 | 学习DNA |
-| ⑮ | 文言文复活计划 | `xiaozhi-chinese-classical-revival/` | 古人角色扮演 + 三级跳 + 游戏化背诵 | 3.2 阅读篇 | 学习DNA |
-| ⑯ | 语文素材库2.0 | `xiaozhi-chinese-material-library/` | 存储 + 自动标签 + 主动推送 + 使用追踪 | 3.3 积累篇 | 学习DNA |
-| ⑰ | 语病追踪档案 | `xiaozhi-chinese-grammar-tracker/` | 六类语病识别 + 顽固档案 + 写作前预警 | 3.3 积累篇 | 学习DNA |
-
-### 数学学科专项 SKILL
+### 学生端 · 语文学科专项 SKILL
 
 | # | SKILL 名称 | 文件夹 | 核心功能 | 对应章节 | 依赖 |
 |---|-----------|-------|---------|---------|------|
-| ⑱ | 数学解题教练 | `xiaozhi-math-problem-solving-coach/` | 四步拍照法 + CLAW5模板 + 苏格拉底五问链 | 4.2 + 4.3 | 学习DNA、数学错误DNA |
-| ⑲ | 数学错误DNA | `xiaozhi-math-error-dna/` | 四类错误分类 + 顽固追踪 + 月度图谱 | 4.4 | 学习DNA、解题教练 |
-| ⑳ | 数学概念解释器 | `xiaozhi-math-concept-explainer/` | 生活类比建直觉 + 几何空间训练 | 4.5 挑战①④ | 学习DNA |
-| 21 | 应用题建模教练 | `xiaozhi-math-word-problem-coach/` | 数量关系三步提取 + 五大题型建模 | 4.5 挑战③ | 学习DNA、数学错误DNA |
-| 22 | 思维梯度训练师 | `xiaozhi-math-gradient-trainer/` | 天花板测定 + DNA定制序列 + 成长日记 | 4.6 | 学习DNA、数学错误DNA |
+| ⑬ | 语文写作教练 | `student/chinese/xiaozhi-chinese-writing-coach/` | 5步流程 + 风格DNA + 苏格拉底四连 + AI辩论赛 | 3.1 写作篇 | 学习DNA |
+| ⑭ | 阅读理解拆解师 | `student/chinese/xiaozhi-chinese-reading-decoder/` | 五大坑诊断 + 出题人视角 + 三追问 | 3.2 阅读篇 | 学习DNA |
+| ⑮ | 文言文复活计划 | `student/chinese/xiaozhi-chinese-classical-revival/` | 古人角色扮演 + 三级跳 + 游戏化背诵 | 3.2 阅读篇 | 学习DNA |
+| ⑯ | 语文素材库2.0 | `student/chinese/xiaozhi-chinese-material-library/` | 存储 + 自动标签 + 主动推送 + 使用追踪 | 3.3 积累篇 | 学习DNA |
+| ⑰ | 语病追踪档案 | `student/chinese/xiaozhi-chinese-grammar-tracker/` | 六类语病识别 + 顽固档案 + 写作前预警 | 3.3 积累篇 | 学习DNA |
 
-### 物理学科专项 SKILL
-
-| # | SKILL 名称 | 文件夹 | 核心功能 | 对应章节 | 依赖 |
-|---|-----------|-------|---------|---------|------|
-| 28 | 物理解题教练 | `xiaozhi-physics-problem-coach/` | 四步物理解题法 + 图景建立 + 物理三层次苏格拉底追问 | 物理专项 | 学习DNA、物理错误DNA |
-| 29 | 物理错误DNA | `xiaozhi-physics-error-dna/` | 五维错误分类 + 图景缺失率 + 顽固弱项追踪 + 物理焦虑处理 | 物理专项 | 学习DNA、物理解题教练、通用错题本 |
-| 30 | 物理概念直觉器 | `xiaozhi-physics-concept-intuition/` | 三步直觉建立法 + 生活类比/实验想象/公式意义还原 | 物理专项 | 学习DNA |
-| 31 | 物理建模教练 | `xiaozhi-physics-modeling-coach/` | 建模三步法 + 五大核心模型 + 模型迁移训练 | 物理专项 | 学习DNA、物理错误DNA |
-| 32 | 物理实验思维教练 | `xiaozhi-physics-lab-coach/` | 七种实验方法 + 数据分析三件套 + 实验评价思维 | 物理专项 | 学习DNA |
-
-### 英语学科专项 SKILL
+### 学生端 · 数学学科专项 SKILL
 
 | # | SKILL 名称 | 文件夹 | 核心功能 | 对应章节 | 依赖 |
 |---|-----------|-------|---------|---------|------|
-| 23 | 英语口语陪练 | `xiaozhi-english-speaking-coach/` | 晨间热身 + 角色扮演 + 四级跳 + 口语DNA | 5.2 全节 | 学习DNA |
-| 24 | 智能词汇DNA系统 | `xiaozhi-english-vocabulary-dna/` | 三种入库 + 五轮提醒 + 新词雷达 + 遗忘追踪 | 5.3 全节 | 学习DNA |
-| 25 | 英语语法突破教练 | `xiaozhi-english-grammar-coach/` | 基因图谱 + 苏格拉底追问 + DNA + 定语从句营 | 5.4 全节 | 学习DNA |
-| 26 | 个性化英语听力训练师 | `xiaozhi-english-listening-trainer/` | DNA驱动生成 + 四步法 + 卡壳追问 + 生词入库 | 5.5 前半 | 学习DNA、词汇DNA系统 |
-| 27 | 英语写作进化教练 | `xiaozhi-english-writing-coach/` | 三维批改 + 句式升级 + 进化档案 + 场景脚本 | 5.5 后半 | 学习DNA、语法突破教练 |
+| ⑱ | 数学解题教练 | `student/math/xiaozhi-math-problem-solving-coach/` | 四步拍照法 + CLAW5模板 + 苏格拉底五问链 | 4.2 + 4.3 | 学习DNA、数学错误DNA |
+| ⑲ | 数学错误DNA | `student/math/xiaozhi-math-error-dna/` | 四类错误分类 + 顽固追踪 + 月度图谱 | 4.4 | 学习DNA、解题教练 |
+| ⑳ | 数学概念解释器 | `student/math/xiaozhi-math-concept-explainer/` | 生活类比建直觉 + 几何空间训练 | 4.5 挑战①④ | 学习DNA |
+| 21 | 应用题建模教练 | `student/math/xiaozhi-math-word-problem-coach/` | 数量关系三步提取 + 五大题型建模 | 4.5 挑战③ | 学习DNA、数学错误DNA |
+| 22 | 思维梯度训练师 | `student/math/xiaozhi-math-gradient-trainer/` | 天花板测定 + DNA定制序列 + 成长日记 | 4.6 | 学习DNA、数学错误DNA |
+
+### 学生端 · 物理学科专项 SKILL
+
+| # | SKILL 名称 | 文件夹 | 核心功能 | 对应章节 | 依赖 |
+|---|-----------|-------|---------|---------|------|
+| 28 | 物理解题教练 | `student/physics/xiaozhi-physics-problem-coach/` | 四步物理解题法 + 图景建立 + 物理三层次苏格拉底追问 | 物理专项 | 学习DNA、物理错误DNA |
+| 29 | 物理错误DNA | `student/physics/xiaozhi-physics-error-dna/` | 五维错误分类 + 图景缺失率 + 顽固弱项追踪 + 物理焦虑处理 | 物理专项 | 学习DNA、物理解题教练、通用错题本 |
+| 30 | 物理概念直觉器 | `student/physics/xiaozhi-physics-concept-intuition/` | 三步直觉建立法 + 生活类比/实验想象/公式意义还原 | 物理专项 | 学习DNA |
+| 31 | 物理建模教练 | `student/physics/xiaozhi-physics-modeling-coach/` | 建模三步法 + 五大核心模型 + 模型迁移训练 | 物理专项 | 学习DNA、物理错误DNA |
+| 32 | 物理实验思维教练 | `student/physics/xiaozhi-physics-lab-coach/` | 七种实验方法 + 数据分析三件套 + 实验评价思维 | 物理专项 | 学习DNA |
+
+### 学生端 · 英语学科专项 SKILL
+
+| # | SKILL 名称 | 文件夹 | 核心功能 | 对应章节 | 依赖 |
+|---|-----------|-------|---------|---------|------|
+| 23 | 英语口语陪练 | `student/english/xiaozhi-english-speaking-coach/` | 晨间热身 + 角色扮演 + 四级跳 + 口语DNA | 5.2 全节 | 学习DNA |
+| 24 | 智能词汇DNA系统 | `student/english/xiaozhi-english-vocabulary-dna/` | 三种入库 + 五轮提醒 + 新词雷达 + 遗忘追踪 | 5.3 全节 | 学习DNA |
+| 25 | 英语语法突破教练 | `student/english/xiaozhi-english-grammar-coach/` | 基因图谱 + 苏格拉底追问 + DNA + 定语从句营 | 5.4 全节 | 学习DNA |
+| 26 | 个性化英语听力训练师 | `student/english/xiaozhi-english-listening-trainer/` | DNA驱动生成 + 四步法 + 卡壳追问 + 生词入库 | 5.5 前半 | 学习DNA、词汇DNA系统 |
+| 27 | 英语写作进化教练 | `student/english/xiaozhi-english-writing-coach/` | 三维批改 + 句式升级 + 进化档案 + 场景脚本 | 5.5 后半 | 学习DNA、语法突破教练 |
+
+### 老师端 · 通用 SKILL
+
+| # | SKILL 名称 | 文件夹 | 版本 | 核心功能 | 依赖 |
+|---|-----------|-------|------|---------|------|
+| T① | 教案设计器 | `teacher/general/xiaozhi-teach-lesson-planner/` | v1.0 | UbD 逆向设计 + 三维目标 + 六步环节时间矩阵 + Bloom 提问链 + A/B/C 分层输出 | 学情分析师 |
+| T② | 作业设计师 | `teacher/general/xiaozhi-teach-assignment-designer/` | v1.0 | 知识点四层拆解 + 难度梯度四档 + A/B/C 分层任务卡 + 过程分+结果分双轨评分标准 + 与学情分析/作业跟进/错题本接口 | 学情分析师 |
+| T③ | 学情分析师 | `teacher/general/xiaozhi-teach-student-analyzer/` | v1.0 | 班级画像 + 知识点热力图 + 个体诊断卡 + 教学调整建议 + 与测评/教案/互动数据接口 | 测评设计师 |
+| T④ | 课堂互动教练 | `teacher/general/xiaozhi-teach-classroom-coach/` | v1.0 | 四种互动模式 + 苏格拉底 6-8 问链 + 候场追问矩阵 + 小组合作任务卡 + 冷场 3 步走 + 即时反馈话术 + 课后 5 分钟观察记录 | 教案设计器、学情分析师 |
+| T⑤ | 测评设计师 | `teacher/general/xiaozhi-teach-exam-designer/` | v1.0 | 四类测评目的 + 双向细目表 + 难度梯度（基础 50/中等 30/提升 15/挑战 5）+ 题目版权管理 + 评分标准 + 考后分析（实际 P/实际 D/知识点热力图）+ 讲评设计 | 学情分析师 |
+| T⑥ | 复习规划师 | `teacher/general/xiaozhi-teach-review-planner/` | v1.0 | 知识图谱四层结构 + 三维度重难点识别 + 单元复习 5 阶段 + 考前分阶段策略（>14/7-14/3-7/1-3/当天）+ 主动回忆/概念网络/跨科联结/错题档案 + 心理建设 | 教案设计器、学情分析师、测评设计师 |
+
+### 老师端 · 独立教师日常 SKILL
+
+| # | SKILL 名称 | 文件夹 | 版本 | 核心功能 | 依赖 |
+|---|-----------|-------|------|---------|------|
+| T⑦ | 独立教师工作台 | `teacher/independent/xiaozhi-teach-solo-dashboard/` | v1.0 | 7 区块日工作台 + 5 类风险学员自动标记 + 续课节点预警 + schema 数据读写协议 | 排课+课后记录+作业跟进 |
+| T⑧ | 试听与学员建档 | `teacher/independent/xiaozhi-teach-student-intake/` | v1.0 | 最小化信息收集 + 5W 需求访谈 + 学情诊断卡 + 试讲课 5 段设计 + 5 维度试听记录 + 转化/续费/流失三阶段话术 + 正式学员档案 | 独立教师工作台、教案设计器、学情分析师 |
+| T⑨ | 排课与课时管理 | `teacher/independent/xiaozhi-teach-schedule-manager/` | v1.0 | 学员时间矩阵 + 老师时间矩阵 + 周课表生成三步走（固定优先/填空/留缓冲）+ 冲突检测三类（老师时间/学员时间/课时包）+ 补课/请假/调课三动作（标准流程+留痕）+ 课时包台账 + 续费预警三档（30%/10%/到期 7 天）+ 寒暑假/考试期/请假多特殊场景 | 独立教师工作台、试听与学员建档、课后记录助手、家长沟通助手 |
+| T⑩ | 课后记录助手 | `teacher/independent/xiaozhi-teach-lesson-log/` | v1.0 | 5 维度结构化记录（学/掌握/反应/进步/调整）+ 5 分钟即时记录原则 + 学习轨迹视图 + 课时预扣 24h 可调 + 衔接建议 + 家长简报 | 独立教师工作台、学情分析师、教案设计器 |
+| T⑪ | 家长沟通助手 | `teacher/independent/xiaozhi-teach-parent-communication/` | v1.0 | 4 类沟通场景（日常/节点/应急/续费）+ 三原则（具体化/低焦虑/可操作）+ 6 类典型场景话术 + 家长群运营（无个体信息）+ 沟通频率管理 + 敏感场景应对 | 课后记录助手、独立教师工作台、阶段报告与续课助手 |
+| T⑫ | 作业跟进管家 | `teacher/independent/xiaozhi-teach-homework-tracker/` | v1.0 | 作业状态四分类（已提交/部分/未交/已批改/归档）+ 完成度追踪（学员+班级双视图）+ 催交流三层（学员/家长/教学诊断）+ 错题回流清单 + 错因七分类 + 顽固弱项档案（3 次触发/5 次升级高危）+ 下节课预诊断 + 学员作业画像 | 独立教师工作台、作业设计师、学情分析师、课后记录助手 |
+| T⑬ | 阶段报告与续课助手 | `teacher/independent/xiaozhi-teach-renewal-report/` | v1.0 | 5 类触发节点（中期/续费/期末/节点/应急）+ 三段式报告（事实+进步+计划）+ 进步可视化（数据对比+热力图+时间线）+ 续费建议（课时包推荐+选项+优惠）+ 续费沟通话术 | 独立教师工作台、课后记录助手、学情分析师、家长沟通助手 |
+| T⑭ | 教学资源复用库 | `teacher/independent/xiaozhi-teach-resource-library/` | v1.0 | 资源五大类（讲义/题库/讲评/案例/教案）+ 标签化体系（7 维度）+ 三种检索方式（关键词/学员画像/错因）+ 复用四步走（检索→评估→调整→记录）+ 改编四原则（改数/改问/改情境/改综合度）+ 版权管理四档（自有/改编/公开可引用/仅存索引）+ 案例脱敏规则 + 资源生命周期管理 | 独立教师工作台、教案设计器、作业设计师、课堂互动教练、测评设计师、作业跟进管家 |
+
+### 老师端 · 语文学科 SKILL
+
+| # | SKILL 名称 | 文件夹 | 版本 | 核心功能 | 依赖 |
+|---|-----------|-------|------|---------|------|
+| T⑮ | 写作教学指导 | `teacher/chinese/xiaozhi-teach-chinese-writing-guide/` | v1.0 | 任务设计三原则（真实情境/思维门槛/风格自由）+ 5 类任务样板（记叙/议论/说明/应用/文学）+ 任务库版权四档 + 过程引导三步（构思/起草/修改）+ 三维批改 12 分制（结构 5 项/语言 5 项/思维 5 项）+ 批改样板 6 模块 + 风格 DNA 6 维度（词汇/句式/修辞/情感/思维/结构）+ 学员风格档案 7 块 + 讲评三段式（5+20+10 分钟）+ 典型样本三选（优/中/待改） | 教案设计器、学情分析师、课堂互动教练 |
+| T⑯ | 阅读教学指导 | `teacher/chinese/xiaozhi-teach-chinese-reading-guide/` | v1.0 | 文本三解（字面 5 问/结构 5 问/主题 5 问）+ 6 大阅读策略显性教学（预测/提问/可视化/联结/推断/总结）+ 三阶练习（基础 5 分钟/分析 10 分钟/思辨 10 分钟）+ 三段任务（预习 15-20/课中 40-45/课后 30-60）+ 群文阅读设计四步（议题/文本/问题/结构）+ 5 类群文样板（主题/体裁/作者/表达/时代）+ 阅读力档案 7 维度（速度/量/字面/分析/思辨/策略/偏好） | 教案设计器、学情分析师、课堂互动教练 |
+| T⑰ | 文言文教学指导 | `teacher/chinese/xiaozhi-teach-chinese-classical-guide/` | v1.0 | 诵读三阶（正音/断句/情感）+ 断句 5 法（虚词/对称/顶真/重复/标点）+ 训诂三阶（字词/句式/语法）+ 实词训诂 4 法 + 虚词 20 速查 + 词类活用 4 类 + 串讲三步（感知/分段/整合）+ 主题三维度（思想/情感/价值）+ 文化背景四维 + 现代联结 3 角度 + 诗词鉴赏四维（意象/意境/手法/情感）+ 意象 8 速查 + 古文积累档案 7 维度 | 教案设计器、阅读教学指导、学情分析师 |
+
+### 老师端 · 数学学科 SKILL
+
+| # | SKILL 名称 | 文件夹 | 版本 | 核心功能 | 依赖 |
+|---|-----------|-------|------|---------|------|
+| T⑱ | 数学教案设计 | `teacher/math/xiaozhi-teach-math-lesson-planner/` | v1.0 | 概念建构四步（情境引入/抽象/命名/辨析）+ 5 类情境引入（生活/历史/游戏/问题/反例）+ 概念对比 11 对 + 例题三要素（思路/步骤/易错）+ 5 种思路引导法（出声思维/回溯/类比/图示/假设）+ 变式三类型（一题多解/多题一解/变条件）+ 3 类变式样板 + 课堂小结三形式（结构图/口诀/反思）+ 错因 7 分类 + 错例档案 6 模块 | 教案设计器、学情分析师、课堂互动教练 |
+| T⑲ | 班级错因分析 | `teacher/math/xiaozhi-teach-math-error-analyzer/` | v1.0 | 7 类错因（概念模糊/规则错误/审题错误/策略错误/计算错误/粗心大意/知识漏洞）+ 错因 4 层溯源（表面/分类/根因/教学原因）+ 知识点热力图（🟢>70%/🟡40-70%/🔴<40%）+ 班级共性报告 6 模块（错因分布/TOP 3/弱项/教学建议）+ 学员个体档案 5 维度（错因分布/主导/图谱/进化/趋势）+ 教学干预 14 条（班级+个体）+ 顽固错因追踪（3 次触发/5 次升级） | 学情分析师、教案设计器、作业跟进管家 |
+| T⑳ | 数学测评设计 | `teacher/math/xiaozhi-teach-math-exam-designer/` | v1.0 | 三类测评（诊断性/形成性/总结性）+ 双向细目表（知识点×Bloom 6 级）+ 难度梯度 60/30/10（基础/中等/提升）+ 题目来源四类（教材/改编/自有/CC）+ 测评频率建议 + 测评实施规则（限时/规则/讲评）+ 班级报告 6 模块 + 学员报告 5 模块 + 结果使用三类（诊断/调整/评定） | 学情分析师、教案设计器、班级错因分析 |
+
+### 老师端 · 英语学科 SKILL
+
+| # | SKILL 名称 | 文件夹 | 版本 | 核心功能 | 依赖 |
+|---|-----------|-------|------|---------|------|
+| T21 | 口语活动设计 | `teacher/english/xiaozhi-teach-english-speaking-designer/` | v1.0 | 口语三维目标（流利/准确/得体）+ 输入准备三类（听力/词汇/情境）+ 任务型教学法 TBLT + 任务三类型（信息差/角色扮演/辩论）+ 4 类任务样板（找差异/拼图/餐厅/酒店/面试/辩论）+ 输出练习三类（独白/对话/讨论）+ 反馈三方式（即时/延时/学员自评/同伴反馈）+ 重述式纠正 + 纠错三原则 + 口语档案 8 维度 | 教案设计器、学情分析师、课堂互动教练 |
+| T22 | 听力材料设计 | `teacher/english/xiaozhi-teach-english-listening-designer/` | v1.0 | 听力四类目标（主旨/细节/推断/观点）+ 材料选编四来源（教材/自有/CC/经授权）+ i+1 难度原则 + 6 种材料类型（对话/独白/新闻/故事/影视/教学）+ 听前预测三方法（标题/图片/问题）+ 三遍听法（泛听/精听/推断）+ 听后任务三类（复述/讨论/写）+ 8 个微技能训练（抓主旨/细节/推断/语气/数字/转折/连接/重音）+ 听写三阶段 + 听力档案 8 维度 | 教案设计器、学情分析师、课堂互动教练 |
+| T23 | 英语综合测评 | `teacher/english/xiaozhi-teach-english-assessment/` | v1.0 | 听说读写 4 维能力 + 4 维测评设计（听 30%/口 20%/读 30%/写 20%）+ CEFR 6 等级（A1-C2）+ 4 维等级对照 + 4 维双向细目表 + 学员能力画像 9 维度（4 维等级/词汇/语法/CEFR/强项/弱项）+ 教学干预 4 维（听/说/读/写）+ 词汇干预三档（<2000/2000-3500/>3500）+ 成长档案时间轴 | 学情分析师、教案设计器、数学测评设计 |
+
+### 老师端 · 物理学科 SKILL
+
+| # | SKILL 名称 | 文件夹 | 版本 | 核心功能 | 依赖 |
+|---|-----------|-------|------|---------|------|
+| T24 | 物理教案设计 | `teacher/physics/xiaozhi-teach-physics-lesson-planner/` | v1.0 | 五大核心物理观念（物质观/运动观/能量观/相互作用/演化观）+ 概念建构三步（引入/抽象/应用）+ 3 类引入（生活/演示/反例）+ 概念辨析 7 对 + 规律教学三步（实验/数据/归纳）+ 10 类演示实验样板（惯性/浮力/杠杆/气体压强/反射/折射/电流/欧姆/磁场/自由落体）+ 物理模型 7 类（质点/刚体/理想气体/点电荷/理想流体/弹簧振子/单摆）+ 建模三步（抓主要/忽略次要/建模型）+ 应用三类（生活/科技/前沿）+ 物理档案 8 维度 | 教案设计器、学情分析师、课堂互动教练 |
+| T25 | 实验教学指导 | `teacher/physics/xiaozhi-teach-physics-experiment-coach/` | v1.0 | 三类实验（验证性/探究性/测量性）+ 实验设计四要素（目的/原理/器材/步骤）+ 变量控制三类型（自变量/因变量/控制变量）+ 实验实施（演示/学生）+ 数据处理三形式（表格/图像/计算）+ 误差分析三类（系统/偶然/错误）+ 实验报告 8 段结构 + 评分 7 维度 + 实验能力档案 8 维度 + safetyLevel 三档 | 物理教案设计、学情分析师、课堂互动教练 |
+| T26 | 解题教学指导 | `teacher/physics/xiaozhi-teach-physics-problem-guide/` | v1.0 | 五步解题法（审题/建模/过程分析/列方程/求解）+ 审题三读（场景/已知/求）+ 建模三步（选择/简化/建构）+ 过程分析三步（受力/运动/能量）+ 列方程（规律/几何/约束）+ 求解（数学/讨论/检验）+ 反思三维度（结果/过程/拓展）+ 7 类样板题（滑块/抛体/弹簧振子/电路/气体/透镜）+ 变式训练三类型 + 解题档案 11 维度 + 错因 8 类 | 物理教案设计、学情分析师、班级错因分析 |
+
+### 独立教师日常闭环
+
+独立教师日常 SKILL 负责教学之外的一人工作流，和 `teacher/general/` 的教学设计能力分工如下：
+
+```text
+试听诊断 → 学员建档 → 排课课时 → 课前准备
+    ↓                         ↓
+课堂教学 ← 通用/学科教师SKILL ← 独立教师工作台
+    ↓
+课后记录 → 作业跟进 → 家长沟通 → 阶段报告/续课 → 资源复用
+```
+
+**核心原则：**
+- 通用教师 SKILL 负责"课怎么设计"；独立教师 SKILL 负责"服务如何连续交付"。
+- 涉及学生或家长的数据只保存学习相关低敏摘要，不记录身份证、住址、精确学校班级或家庭纠纷细节。
+- 续课报告必须基于课堂、作业、测评等证据，不使用焦虑式销售话术。
 
 ---
 
@@ -153,7 +228,7 @@
 > 覆盖写作、阅读、古文、积累、语法五大语文核心能力维度。
 
 > ⚠️ **前置要求：** 请先安装《核心通用 SKILL 包》（五件套），  
-> 尤其是 `xiaozhi-learning-dna/`，本包所有 SKILL 均依赖它运行。
+> 尤其是 `student/general/xiaozhi-learning-dna/`，本包所有 SKILL 均依赖它运行。
 
 ### 五个 SKILL 的联动关系
 
@@ -202,7 +277,7 @@
 > 覆盖解题教练、错误追踪、概念理解、建模训练、思维进阶五大数学核心维度。
 
 > ⚠️ **前置要求：** 请先安装《核心通用 SKILL 包》（五件套），  
-> 尤其是 `xiaozhi-learning-dna/` 和 `xiaozhi-correction-notebook/`。
+> 尤其是 `student/general/xiaozhi-learning-dna/` 和 `student/general/xiaozhi-correction-notebook/`。
 
 ### 五个 SKILL 的协作关系
 
@@ -254,7 +329,7 @@
 > 覆盖口语、词汇、语法、听力、写作五大英语核心维度。
 
 > ⚠️ **前置要求：** 请先安装《核心通用 SKILL 包》，  
-> 尤其是 `xiaozhi-learning-dna/` 和 `xiaozhi-im-reminder/`，本包所有SKILL均依赖它们。
+> 尤其是 `student/general/xiaozhi-learning-dna/` 和 `student/general/xiaozhi-im-reminder/`，本包所有SKILL均依赖它们。
 
 ### 以 DNA 为中心的协作架构
 
@@ -310,7 +385,7 @@ Vocabulary（词汇）→ SKILL② 智能词汇DNA系统（贯穿所有技能）
 > 覆盖图景解题、错误追踪、概念直觉、物理建模、实验思维五大物理核心维度。
 
 > ⚠️ **前置要求：** 请先安装《核心通用 SKILL 包》，
-> 尤其是 `xiaozhi-learning-dna/` 和 `xiaozhi-correction-notebook/`，本包所有 SKILL 均依赖它们。
+> 尤其是 `student/general/xiaozhi-learning-dna/` 和 `student/general/xiaozhi-correction-notebook/`，本包所有 SKILL 均依赖它们。
 
 ### 五个 SKILL 的协作关系
 
@@ -504,159 +579,96 @@ xiaozhi-skills/
 │   ├── installation-guide.md（安装指南）
 │   └── changelog.md（更新日志）
 │
-├── xiaozhi-learning-dna/
-│   ├── SKILL.md
-│   └── references/
-│       └── dna-template.md
+├── student/（学生端 SKILL）
+│   ├── general/（通用学习 SKILL）
+│   │   ├── xiaozhi-learning-dna/
+│   │   ├── xiaozhi-correction-notebook/
+│   │   ├── xiaozhi-im-reminder/
+│   │   ├── xiaozhi-feynman-learning/
+│   │   ├── xiaozhi-weekly-review/
+│   │   ├── xiaozhi-skill-creator/
+│   │   ├── xiaozhi-cornell-notes/
+│   │   ├── xiaozhi-skill-coordinator/
+│   │   ├── xiaozhi-learning-plan/
+│   │   ├── xiaozhi-time-focus-coach/
+│   │   ├── xiaozhi-cross-subject-detective/
+│   │   └── xiaozhi-interest-explorer/
+│   │
+│   ├── chinese/（语文学科 SKILL）
+│   │   ├── xiaozhi-chinese-writing-coach/
+│   │   ├── xiaozhi-chinese-reading-decoder/
+│   │   ├── xiaozhi-chinese-classical-revival/
+│   │   ├── xiaozhi-chinese-material-library/
+│   │   └── xiaozhi-chinese-grammar-tracker/
+│   │
+│   ├── math/（数学学科 SKILL）
+│   │   ├── xiaozhi-math-problem-solving-coach/
+│   │   ├── xiaozhi-math-error-dna/
+│   │   ├── xiaozhi-math-concept-explainer/
+│   │   ├── xiaozhi-math-word-problem-coach/
+│   │   └── xiaozhi-math-gradient-trainer/
+│   │
+│   ├── english/（英语学科 SKILL）
+│   │   ├── xiaozhi-english-speaking-coach/
+│   │   ├── xiaozhi-english-vocabulary-dna/
+│   │   ├── xiaozhi-english-grammar-coach/
+│   │   ├── xiaozhi-english-listening-trainer/
+│   │   └── xiaozhi-english-writing-coach/
+│   │
+│   └── physics/（物理学科 SKILL）
+│       ├── xiaozhi-physics-problem-coach/
+│       ├── xiaozhi-physics-error-dna/
+│       ├── xiaozhi-physics-concept-intuition/
+│       ├── xiaozhi-physics-modeling-coach/
+│       └── xiaozhi-physics-lab-coach/
 │
-├── xiaozhi-correction-notebook/
-│   ├── SKILL.md
-│   └── references/
-│       └── error-analysis-framework.md
-│
-├── xiaozhi-im-reminder/
-│   ├── SKILL.md
-│   └── references/
-│       └── ebbinghaus-schedule.md
-│
-├── xiaozhi-feynman-learning/
-│   ├── SKILL.md
-│   └── references/
-│       └── feynman-dialogue-patterns.md
-│
-├── xiaozhi-weekly-review/
-│   ├── SKILL.md
-│   └── references/
-│       └── review-report-template.md
-│
-├── xiaozhi-skill-creator/
-│   ├── SKILL.md
-│   └── references/
-│       └── skill-templates-library.md
-│
-├── xiaozhi-cornell-notes/
-│   ├── SKILL.md
-│   └── references/
-│       └── cornell-format-guide.md
-│
-├── xiaozhi-skill-coordinator/
-│   ├── SKILL.md
-│   └── references/
-│       └── one-week-linkage-record.md
-│
-├── xiaozhi-learning-plan/
-│   └── SKILL.md
-│
-├── xiaozhi-time-focus-coach/
-│   └── SKILL.md
-│
-├── xiaozhi-cross-subject-detective/
-│   └── SKILL.md
-│
-├── xiaozhi-interest-explorer/
-│   └── SKILL.md
-│
-├── xiaozhi-chinese-writing-coach/
-│   ├── SKILL.md
-│   └── references/
-│       └── writing-rubric.md
-│
-├── xiaozhi-chinese-reading-decoder/
-│   ├── SKILL.md
-│   └── references/
-│       └── question-type-library.md
-│
-├── xiaozhi-chinese-classical-revival/
-│   ├── SKILL.md
-│   └── references/
-│       └── classical-author-profiles.md
-│
-├── xiaozhi-chinese-material-library/
-│   └── SKILL.md
-│
-├── xiaozhi-chinese-grammar-tracker/
-│   ├── SKILL.md
-│   └── references/
-│       └── grammar-error-library.md
-│
-├── xiaozhi-math-problem-solving-coach/
-│   ├── SKILL.md
-│   └── references/
-│       └── claw-templates-extended.md
-│
-├── xiaozhi-math-error-dna/
-│   ├── SKILL.md
-│   └── references/
-│       └── concept-confusion-map.md
-│
-├── xiaozhi-math-concept-explainer/
-│   ├── SKILL.md
-│   └── references/
-│       └── analogy-bank.md
-│
-├── xiaozhi-math-word-problem-coach/
-│   ├── SKILL.md
-│   └── references/
-│       └── modeling-patterns.md
-│
-├── xiaozhi-math-gradient-trainer/
-│   ├── SKILL.md
-│   └── references/
-│       └── gradient-levels.md
-│
-├── xiaozhi-english-speaking-coach/
-│   ├── SKILL.md
-│   └── references/
-│       └── speaking-resources.md
-│
-├── xiaozhi-english-vocabulary-dna/
-│   ├── SKILL.md
-│   └── references/
-│       └── vocabulary-radar-topics.md
-│
-├── xiaozhi-english-grammar-coach/
-│   ├── SKILL.md
-│   └── references/
-│       └── grammar-patterns.md
-│
-├── xiaozhi-english-listening-trainer/
-│   ├── SKILL.md
-│   └── references/
-│       └── listening-topic-templates.md
-│
-├── xiaozhi-english-writing-coach/
-│   ├── SKILL.md
-│   └── references/
-│       └── vocabulary-upgrade.md
-│
-├── xiaozhi-physics-problem-coach/
-│   ├── SKILL.md
-│   └── references/
-│       ├── physics-4step-statemachine.md
-│       ├── physics-socrates-guide.md
-│       ├── physics-diagram-guide.md
-│       └── claw-templates-physics.md
-│
-├── xiaozhi-physics-error-dna/
-│   ├── SKILL.md
-│   └── references/
-│       ├── physics-error-dimension-table.md
-│       ├── physics-concept-confusion-map.md
-│       └── physics-math-tools-checklist.md
-│
-├── xiaozhi-physics-concept-intuition/
-│   ├── SKILL.md
-│   └── references/
-│       └── physics-analogy-bank.md
-│
-├── xiaozhi-physics-modeling-coach/
-│   ├── SKILL.md
-│   └── references/
-│       └── physics-modeling-patterns.md
-│
-├── xiaozhi-physics-lab-coach/
-│   ├── SKILL.md
-│   └── references/
-│       ├── physics-experiment-methods.md
-│       └── physics-data-analysis.md
+└── teacher/（老师端 SKILL）
+    ├── general/（老师通用 SKILL）
+    │   ├── xiaozhi-teach-lesson-planner/        （教案设计器）
+    │   ├── xiaozhi-teach-assignment-designer/    （作业设计师）
+    │   ├── xiaozhi-teach-student-analyzer/       （学情分析师）
+    │   ├── xiaozhi-teach-classroom-coach/        （课堂互动教练）
+    │   ├── xiaozhi-teach-exam-designer/          （测评设计师）
+    │   └── xiaozhi-teach-review-planner/         （复习规划师）
+    │
+    ├── independent/（独立教师日常 SKILL）
+    │   ├── xiaozhi-teach-solo-dashboard/          （独立教师工作台）
+    │   ├── xiaozhi-teach-student-intake/          （试听与学员建档）
+    │   ├── xiaozhi-teach-schedule-manager/        （排课与课时管理）
+    │   ├── xiaozhi-teach-lesson-log/              （课后记录助手）
+    │   ├── xiaozhi-teach-parent-communication/    （家长沟通助手）
+    │   ├── xiaozhi-teach-homework-tracker/        （作业跟进管家）
+    │   ├── xiaozhi-teach-renewal-report/          （阶段报告与续课助手）
+    │   ├── xiaozhi-teach-resource-library/        （教学资源复用库）
+    │   └── schemas/
+    │       └── solo-teacher-workspace.schema.json （独立教师工作空间 Schema）
+    │
+    ├── chinese/（语文老师 SKILL）
+    │   ├── xiaozhi-teach-chinese-writing-guide/    （写作教学指导）
+    │   ├── xiaozhi-teach-chinese-reading-guide/    （阅读教学指导）
+    │   └── xiaozhi-teach-chinese-classical-guide/  （文言文教学指导）
+    │
+    ├── math/（数学老师 SKILL）
+    │   ├── xiaozhi-teach-math-lesson-planner/     （数学教案设计）
+    │   ├── xiaozhi-teach-math-error-analyzer/     （班级错因分析）
+    │   └── xiaozhi-teach-math-exam-designer/      （数学测评设计）
+    │
+    ├── english/（英语老师 SKILL）
+    │   ├── xiaozhi-teach-english-speaking-designer/  （口语活动设计）
+    │   ├── xiaozhi-teach-english-listening-designer/ （听力材料设计）
+    │   └── xiaozhi-teach-english-assessment/         （英语综合测评）
+    │
+    └── physics/（物理老师 SKILL）
+        ├── xiaozhi-teach-physics-lesson-planner/    （物理教案设计）
+        ├── xiaozhi-teach-physics-experiment-coach/  （实验教学指导）
+        └── xiaozhi-teach-physics-problem-guide/     （解题教学指导）
 ```
+
+> **每个 SKILL 目录的标准文件结构：**
+> ```
+> xiaozhi-{name}/
+> ├── SKILL.md          （完整版 SKILL 定义）
+> ├── SKILL.lite.md     （精简版，≤ 4KB，运行时使用）
+> └── references/       （参考资源目录）
+>     └── *.md          （各类参考文档）
+> ```

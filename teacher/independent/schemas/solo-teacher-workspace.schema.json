@@ -1,0 +1,207 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xiaozhi-skills.openclaw.dev/schemas/solo-teacher-workspace.schema.json",
+  "title": "SoloTeacherWorkspace",
+  "description": "独立教师工作空间数据结构。用于低敏记录学员卡、课表、课后记录、作业跟进、家长沟通、课时包和阶段证据。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "teacherProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "teacherId": { "type": "string" },
+        "subjects": { "type": "array", "items": { "type": "string" } },
+        "serviceModes": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["一对一", "小班", "试听课", "线上", "线下"] }
+        }
+      },
+      "required": ["teacherId"]
+    },
+    "studentCards": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/studentCard" }
+    },
+    "lessonSchedule": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/lessonEvent" }
+    },
+    "lessonLogs": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/lessonLog" }
+    },
+    "homeworkFollowups": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/homeworkFollowup" }
+    },
+    "parentCommunicationLogs": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/parentCommunication" }
+    },
+    "coursePackageLedger": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/coursePackage" }
+    },
+    "progressEvidence": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/progressEvidence" }
+    },
+    "resourceLibraryIndex": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/resourceIndexItem" }
+    }
+  },
+  "required": ["teacherProfile"],
+  "$defs": {
+    "studentCard": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "studentId": { "type": "string" },
+        "alias": { "type": "string", "description": "低敏代号，不记录真实全名" },
+        "gradeLevel": { "type": "string" },
+        "subjects": { "type": "array", "items": { "type": "string" } },
+        "goals": { "type": "array", "items": { "type": "string" } },
+        "primaryWeaknesses": { "type": "array", "items": { "type": "string" } },
+        "learningPreferences": { "type": "array", "items": { "type": "string" } },
+        "guardianCommunicationPreference": { "type": "string" },
+        "consent": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "profileEnabled": { "type": "boolean", "default": false },
+            "crossSkillSharing": { "type": "boolean", "default": false },
+            "parentCommunicationAllowed": { "type": "boolean", "default": false }
+          }
+        }
+      },
+      "required": ["studentId", "alias"]
+    },
+    "lessonEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "lessonId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "subject": { "type": "string" },
+        "startTime": { "type": "string", "format": "date-time" },
+        "durationMinutes": { "type": "integer", "minimum": 15 },
+        "day_of_week": {
+          "type": "string",
+          "enum": ["周一", "周二", "周三", "周四", "周五", "周六", "周日", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "description": "兼容中英文的排课星期枚举，中文优先"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["scheduled", "completed", "rescheduled", "makeup", "cancelled", "absence"]
+        },
+        "lessonGoal": { "type": "string" }
+      },
+      "required": ["lessonId", "studentId", "subject", "startTime", "status"]
+    },
+    "lessonLog": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "logId": { "type": "string" },
+        "lessonId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "completedContent": { "type": "array", "items": { "type": "string" } },
+        "evidence": { "type": "array", "items": { "type": "string" } },
+        "masteryStatus": {
+          "type": "string",
+          "enum": ["已掌握", "基本理解", "仍需巩固", "需要重讲", "证据不足"]
+        },
+        "nextLessonFocus": { "type": "string" },
+        "parentSummary": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "面向家长的事实摘要，受 500 字符硬约束。禁止写入真实姓名、家庭住址、身份证件、联系电话、账户信息、医疗诊断、心理标签、家庭纠纷、财务细节等高敏信息。"
+        },
+        "consumeLessonUnits": { "type": "number", "minimum": 0 }
+      },
+      "required": ["logId", "lessonId", "studentId", "masteryStatus"]
+    },
+    "homeworkFollowup": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "homeworkId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "task": { "type": "string" },
+        "dueDate": { "type": "string", "format": "date" },
+        "status": {
+          "type": "string",
+          "enum": ["assigned", "submitted", "checked", "corrected", "overdue", "reduced"]
+        },
+        "mainErrors": { "type": "array", "items": { "type": "string" } },
+        "nextAction": { "type": "string" }
+      },
+      "required": ["homeworkId", "studentId", "task", "status"]
+    },
+    "parentCommunication": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "communicationId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "scenario": {
+          "type": "string",
+          "enum": ["课后反馈", "周反馈", "问题沟通", "调课确认", "阶段报告", "续课说明"]
+        },
+        "factSummary": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "沟通事实摘要，受 500 字符硬约束。禁止写入真实姓名、家庭住址、身份证件、联系电话、账户信息、医疗诊断、心理标签、家庭纠纷、财务细节等高敏信息。"
+        },
+        "actionSuggestion": { "type": "string" },
+        "sentStatus": { "type": "string", "enum": ["draft", "sent", "not_sent"] }
+      },
+      "required": ["communicationId", "studentId", "date", "scenario", "sentStatus"]
+    },
+    "coursePackage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "packageId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "totalUnits": { "type": "number", "minimum": 0 },
+        "usedUnits": { "type": "number", "minimum": 0 },
+        "remainingUnits": { "type": "number", "minimum": 0 },
+        "renewalAttention": { "type": "boolean", "default": false }
+      },
+      "required": ["packageId", "studentId", "totalUnits", "usedUnits", "remainingUnits"]
+    },
+    "progressEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "evidenceId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "evidenceType": { "type": "string", "enum": ["课堂表现", "作业", "测评", "订正", "口头表达", "家长反馈"] },
+        "description": { "type": "string" },
+        "confidenceLevel": { "type": "string", "enum": ["data_sufficient", "preliminary_trend", "insufficient_sample"] }
+      },
+      "required": ["evidenceId", "studentId", "date", "evidenceType", "description"]
+    },
+    "resourceIndexItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "resourceId": { "type": "string" },
+        "title": { "type": "string" },
+        "resourceType": { "type": "string", "enum": ["题目", "讲义", "课件", "板书", "讲评话术", "错因案例", "家长话术"] },
+        "subject": { "type": "string" },
+        "gradeLevel": { "type": "string" },
+        "knowledgePoint": { "type": "string" },
+        "difficulty": { "type": "string", "enum": ["基础", "中等", "提升", "挑战"] },
+        "copyrightStatus": { "type": "string", "enum": ["自有", "公开可引用", "仅存索引"] },
+        "usageNotes": { "type": "string" }
+      },
+      "required": ["resourceId", "title", "resourceType", "copyrightStatus"]
+    }
+  }
+}

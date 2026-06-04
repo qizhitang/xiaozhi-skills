@@ -6,3 +6,5 @@ package-lock.json
 **/schemas/node_modules/
 **/schemas/package-lock.json
 **/schemas/package.json
+
+.qoder/
