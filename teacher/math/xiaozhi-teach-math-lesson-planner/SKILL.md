@@ -556,9 +556,9 @@ depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozh
 
 ## 十三、参考资源
 
-- `references/concept-build-template.md` — 概念建构模板（待补）
-- `references/variation-design.md` — 变式训练设计模板（待补）
-- `references/error-pattern-rubric.md` — 错因分类表（待补）
+- `references/concept-build-template.md` — 概念建构四步模板（情境/抽象/应用/体系化）
+- `references/variation-design.md` — 变式训练设计模板（条件/情境/深度）
+- `references/error-pattern-rubric.md` — 错因分类表（7 类错因 + 教案预防）
 
 ---
 

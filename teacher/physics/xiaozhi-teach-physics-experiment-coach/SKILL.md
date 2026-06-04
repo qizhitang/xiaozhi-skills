@@ -681,9 +681,9 @@ depends_on: xiaozhi-teach-physics-lesson-planner, xiaozhi-teach-student-analyzer
 
 ## 十五、参考资源
 
-- `references/experiment-types.md` — 实验类型详解（待补）
-- `references/data-processing-rubric.md` — 数据处理评分（待补）
-- `references/lab-report-template.md` — 实验报告模板（待补）
+- `references/experiment-types.md` — 实验类型详解（7 大类型 + 设计要点）
+- `references/data-processing-rubric.md` — 数据处理评分（图像/表格/误差 三件套）
+- `references/lab-report-template.md` — 实验报告模板（6 要素）
 
 ---
 

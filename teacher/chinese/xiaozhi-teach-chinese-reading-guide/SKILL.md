@@ -630,9 +630,9 @@ depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozh
 
 ## 十四、参考资源
 
-- `references/text-three-solve.md` — 文本三解模板（待补）
-- `references/six-strategies-card.md` — 6 大策略卡片（待补）
-- `references/group-text-design.md` — 群文阅读设计模板（待补）
+- `references/text-three-solve.md` — 文本三解模板（基础/深层/外延）
+- `references/six-strategies-card.md` — 阅读 6 大策略卡片（预测/提问/联想/比较/概括/评价）
+- `references/group-text-design.md` — 群文阅读设计模板（5 类样板）
 
 ---
 

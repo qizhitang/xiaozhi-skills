@@ -650,9 +650,9 @@ depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozh
 
 ## 十四、参考资源
 
-- `references/task-based-template.md` — 任务型活动模板（待补）
-- `references/speaking-rubric.md` — 口语评估评分细则（待补）
-- `references/error-correction-strategies.md` — 纠错策略参考（待补）
+- `references/task-based-template.md` — 任务型活动模板（5 类任务样板）
+- `references/speaking-rubric.md` — 口语评估评分细则（5 维度 + CEFR 等级）
+- `references/error-correction-strategies.md` — 纠错策略参考（4 时机 + 5 方法）
 
 ---
 

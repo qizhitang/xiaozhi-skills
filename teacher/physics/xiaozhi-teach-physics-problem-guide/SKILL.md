@@ -715,9 +715,9 @@ depends_on: xiaozhi-teach-physics-lesson-planner, xiaozhi-teach-student-analyzer
 
 ## 十四、参考资源
 
-- `references/five-step-template.md` — 五步解题模板（待补）
-- `references/model-selection.md` — 物理模型选择参考（待补）
-- `references/variation-physics.md` — 物理解题变式设计（待补）
+- `references/five-step-template.md` — 五步物理解题模板（审题/建模/过程/列方程/求解）
+- `references/model-selection.md` — 物理模型选择参考（7 类模型 + 决策树）
+- `references/variation-physics.md` — 物理解题变式设计（情境/物理量/解法 三维度）
 
 ---
 

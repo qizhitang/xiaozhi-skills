@@ -596,9 +596,9 @@ depends_on: xiaozhi-teach-student-analyzer, xiaozhi-teach-lesson-planner, xiaozh
 
 ## 十四、参考资源
 
-- `references/cefr-can-do-statements.md` — CEFR "能做什么"语句（待补）
-- `references/four-skill-rubric.md` — 4 维评分细则（待补）
-- `references/assessment-template.md` — 综合测评模板（待补）
+- `references/cefr-can-do-statements.md` — CEFR "能做什么"语句（A1-C2 等级）
+- `references/four-skill-rubric.md` — 4 维（听说读写）评分细则
+- `references/assessment-template.md` — 综合测评设计模板（4 阶段）
 
 ---
 

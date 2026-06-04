@@ -602,9 +602,9 @@ depends_on: xiaozhi-teach-student-analyzer, xiaozhi-teach-lesson-planner, xiaozh
 
 ## 十五、参考资源
 
-- `references/blueprint-template.md` — 双向细目表模板（待补）
-- `references/exam-design-process.md` — 测评设计流程（待补）
-- `references/result-analysis-rubric.md` — 结果分析模板（待补）
+- `references/blueprint-template.md` — 双向细目表模板（知识点 × 能力层级）
+- `references/exam-design-process.md` — 测评设计 6 步流程
+- `references/result-analysis-rubric.md` — 结果分析 4 维模板（分数/知识点/错因/学员）
 
 ---
 

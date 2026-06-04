@@ -629,9 +629,9 @@ depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozh
 
 ## 十五、参考资源
 
-- `references/physics-concepts-map.md` — 物理概念图谱（待补）
-- `references/lab-design-template.md` — 实验设计模板（待补）
-- `references/model-examples.md` — 物理模型案例（待补）
+- `references/physics-concepts-map.md` — 物理概念图谱（五大物理观念）
+- `references/lab-design-template.md` — 实验设计模板（演示/分组/课外）
+- `references/model-examples.md` — 物理模型案例（7 类核心模型）
 
 ---
 

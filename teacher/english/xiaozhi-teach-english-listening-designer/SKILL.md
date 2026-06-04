@@ -629,9 +629,9 @@ depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozh
 
 ## 十五、参考资源
 
-- `references/listening-material-sources.md` — 听力材料来源清单（待补）
-- `references/micro-skill-training.md` — 微技能训练法（待补）
-- `references/listening-rubric.md` — 听力评估评分细则（待补）
+- `references/listening-material-sources.md` — 听力材料来源清单（5 类来源 × 学段矩阵）
+- `references/micro-skill-training.md` — 微技能训练法（8 个微技能 + 训练步骤）
+- `references/listening-rubric.md` — 听力评估评分细则（4 题型 + CEFR 等级）
 
 ---
 

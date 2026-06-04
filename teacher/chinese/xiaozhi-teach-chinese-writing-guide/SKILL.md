@@ -626,9 +626,9 @@ depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozh
 
 ## 十三、参考资源
 
-- `references/writing-task-template.md` — 写作任务设计模板（待补）
-- `references/three-dim-rubric.md` — 三维批改评分细则（待补）
-- `references/style-dna-record.md` — 风格 DNA 记录模板（待补）
+- `references/writing-task-template.md` — 写作任务设计模板（5 类任务样板）
+- `references/three-dim-rubric.md` — 三维批改 12 分制评分细则
+- `references/style-dna-record.md` — 学员风格 DNA 记录模板（7 块档案）
 
 ---
 

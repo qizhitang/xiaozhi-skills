@@ -638,7 +638,16 @@ depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozh
 
 ---
 
-> 🦞 **小龙虾说：**
+## 十五、参考资源
+
+- `references/classical-vocab-quick-ref.md` — 文言文常用实词虚词速查（30 实词 + 7 虚词）
+- `references/recitation-rhythm-guide.md` — 诵读三阶与节奏训练指南
+- `references/exegesis-method-card.md` — 训诂四法速查卡（字形/组词/语境/联想）
+- `references/poetry-image-catalog.md` — 诗词意象速查（30+ 常见意象寓意）
+
+---
+
+> 🦞 **小龙虾说**：
 > "文言文不是密码，是一条通向中国文化的'路'。
 >  当学员走在这条路上，
 >  看到的是'古人在想什么'，

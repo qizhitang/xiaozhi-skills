@@ -534,9 +534,9 @@ depends_on: xiaozhi-teach-student-analyzer, xiaozhi-teach-lesson-planner, xiaozh
 
 ## 十三、参考资源
 
-- `references/error-classification-rubric.md` — 错因分类细则（待补）
-- `references/knowledge-map-template.md` — 知识图谱模板（待补）
-- `references/intervention-design.md` — 教学干预设计模板（待补）
+- `references/error-classification-rubric.md` — 错因分类细则（7 类错因 + 评分模板）
+- `references/knowledge-map-template.md` — 知识图谱模板（4 层结构 + 学员个人版）
+- `references/intervention-design.md` — 教学干预设计模板（识别/诊断/干预/跟踪）
 
 ---
 
