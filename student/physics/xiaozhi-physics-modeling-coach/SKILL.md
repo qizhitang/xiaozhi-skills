@@ -347,7 +347,7 @@ depends_on: xiaozhi-learning-dna, xiaozhi-physics-error-dna
 
 ---
 
-> 💡 **小智说：**
+> 🦞 **小龙虾说：**
 > "你会做这道题，不等于你会做这类题。
 >  但如果你能判断'这是力学平衡模型'——
 >  那换一道斜面题、一道浮力题、一道杠杆题，

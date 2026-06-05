@@ -339,7 +339,7 @@ depends_on: xiaozhi-learning-dna, xiaozhi-english-vocabulary-dna
 
 ---
 
-> 💡 **小智说：**  
+> 🦞 **小龙虾说：**  
 > "最好的听力材料，就是那种  
 >  你听着听着突然意识到：'我居然大部分都听懂了！'  
 >  然后有2-3个词让你稍微动了一下脑子。  
