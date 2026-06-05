@@ -20,6 +20,9 @@ description: >
   让 3 年经验 > 1 年经验 × 3 倍。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-solo-dashboard, xiaozhi-teach-lesson-planner, xiaozhi-teach-assignment-designer, xiaozhi-teach-classroom-coach, xiaozhi-teach-exam-designer, xiaozhi-teach-homework-tracker
+id: openclaw:xiaozhi-teach-resource-library
+min_platform_version: "2.0"
+max_round_limit: 20
 ---
 
 # 教学资源复用库 SKILL
@@ -617,7 +620,7 @@ copyrightStatus：[own/adapted/public/index-only]
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "独立教师的核心壁垒不是'我能教'，
 >  是'我教过 1000 个学员，每个都不一样，但我都记得'。
 >  当你把这些经验和素材沉淀到资源库，

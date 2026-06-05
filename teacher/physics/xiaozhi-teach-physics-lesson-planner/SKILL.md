@@ -22,6 +22,9 @@ description: >
   让物理教学从"记公式"到"建观念"。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozhi-teach-classroom-coach
+id: openclaw:xiaozhi-teach-physics-lesson-planner
+min_platform_version: "2.0"
+max_round_limit: 30
 ---
 
 # 物理教案设计 SKILL
@@ -635,7 +638,7 @@ depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozh
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "物理不是'记公式'，
 >  是'看世界的方式'。
 >  当学员能用物理观念解释生活、

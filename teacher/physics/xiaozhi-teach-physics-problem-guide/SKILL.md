@@ -23,6 +23,9 @@ description: >
   让解题从"套公式"到"建模型"。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-physics-lesson-planner, xiaozhi-teach-student-analyzer, xiaozhi-teach-math-error-analyzer
+id: openclaw:xiaozhi-teach-physics-problem-guide
+min_platform_version: "2.0"
+max_round_limit: 20
 ---
 
 # 物理解题教学指导 SKILL
@@ -721,7 +724,7 @@ depends_on: xiaozhi-teach-physics-lesson-planner, xiaozhi-teach-student-analyzer
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "物理解题不是'套公式'，
 > 是'建模型'。
 >  当学员面对一个问题，

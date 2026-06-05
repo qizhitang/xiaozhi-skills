@@ -18,6 +18,9 @@ description: >
   避免给家长制造焦虑，建立长期信任。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-lesson-log, xiaozhi-teach-solo-dashboard, xiaozhi-teach-renewal-report
+id: openclaw:xiaozhi-teach-parent-communication
+min_platform_version: "2.0"
+max_round_limit: 15
 ---
 
 # 家长沟通助手 SKILL
@@ -608,7 +611,7 @@ depends_on: xiaozhi-teach-lesson-log, xiaozhi-teach-solo-dashboard, xiaozhi-teac
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "家长沟通的真正目的不是让家长知道孩子学了什么，
 >  是让家长成为教学路上的合伙人。
 >  当家长知道自己的具体动作能帮到孩子，

@@ -16,6 +16,9 @@ description: >
   该版本建立了完整的测评-分析闭环，强基于目标与学情。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-student-analyzer
+id: openclaw:xiaozhi-teach-exam-designer
+min_platform_version: "2.0"
+max_round_limit: 25
 ---
 
 # 测评设计师 SKILL
@@ -546,7 +549,7 @@ D < 0.20 的题说明"所有学生都错"或"所有学生都对"，
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "好的试卷不是用来难倒学生的，
 >  是用来照亮他们的——
 >  照亮已经掌握的，照亮还没掌握的，

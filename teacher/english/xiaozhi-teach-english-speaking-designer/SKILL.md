@@ -22,6 +22,9 @@ description: >
   让学员在"做事中学英语"。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozhi-teach-classroom-coach
+id: openclaw:xiaozhi-teach-english-speaking-designer
+min_platform_version: "2.0"
+max_round_limit: 20
 ---
 
 # 英语口语活动设计 SKILL
@@ -656,7 +659,7 @@ depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozh
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "口语不是'发音标准'，
 >  是'用英语做事'。
 >  当学员能用英语点餐、问路、面试、辩论，

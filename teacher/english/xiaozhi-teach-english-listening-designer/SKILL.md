@@ -22,6 +22,9 @@ description: >
   让听力教学从"刷题"变成"真正能听懂"。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozhi-teach-classroom-coach
+id: openclaw:xiaozhi-teach-english-listening-designer
+min_platform_version: "2.0"
+max_round_limit: 20
 ---
 
 # 英语听力材料设计 SKILL
@@ -635,7 +638,7 @@ depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozh
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "听力不是'听每个词'，
 >  是'用英语获取信息'。
 >  当学员能听懂一段对话的'意思'，

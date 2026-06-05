@@ -16,6 +16,9 @@ description: >
   强基于学情数据，不编造学生表现。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-exam-designer
+id: openclaw:xiaozhi-teach-student-analyzer
+min_platform_version: "2.0"
+max_round_limit: 25
 ---
 
 # 学情分析师 SKILL
@@ -502,7 +505,7 @@ C 层任务（拔尖学生）：
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "分数告诉你'发生了什么'，
 >  学情分析告诉你'为什么发生'和'接下来该怎么办'。
 >  真正有效的教学调整，

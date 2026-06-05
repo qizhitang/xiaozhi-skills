@@ -23,6 +23,9 @@ description: >
   让实验教学从"走过场"到"真探究"。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-physics-lesson-planner, xiaozhi-teach-student-analyzer, xiaozhi-teach-classroom-coach
+id: openclaw:xiaozhi-teach-physics-experiment-coach
+min_platform_version: "2.0"
+max_round_limit: 20
 ---
 
 # 物理实验教学指导 SKILL
@@ -687,7 +690,7 @@ depends_on: xiaozhi-teach-physics-lesson-planner, xiaozhi-teach-student-analyzer
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "实验不是'走过场'，
 > 是'真探究'。
 >  当学员亲手操作、

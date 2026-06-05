@@ -18,6 +18,9 @@ description: >
   让续费沟通成为专业服务而非销售话术。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-solo-dashboard, xiaozhi-teach-lesson-log, xiaozhi-teach-student-analyzer, xiaozhi-teach-parent-communication
+id: openclaw:xiaozhi-teach-renewal-report
+min_platform_version: "2.0"
+max_round_limit: 15
 ---
 
 # 阶段报告与续课助手 SKILL
@@ -626,7 +629,7 @@ depends_on: xiaozhi-teach-solo-dashboard, xiaozhi-teach-lesson-log, xiaozhi-teac
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "续费不是说服家长掏钱，
 >  是让家长看到孩子真实成长后的自然选择。
 >  当你的报告里满是真实的数据、具体的进步、清晰的计划，

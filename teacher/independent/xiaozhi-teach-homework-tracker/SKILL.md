@@ -19,6 +19,9 @@ description: >
   让每份作业都为下一节课服务。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-solo-dashboard, xiaozhi-teach-assignment-designer, xiaozhi-teach-student-analyzer, xiaozhi-teach-lesson-log
+id: openclaw:xiaozhi-teach-homework-tracker
+min_platform_version: "2.0"
+max_round_limit: 12
 ---
 
 # 作业跟进管家 SKILL
@@ -548,7 +551,7 @@ depends_on: xiaozhi-teach-solo-dashboard, xiaozhi-teach-assignment-designer, xia
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "作业是教学里最被低估的环节。
 >  大多数老师批完就忘，但如果你把每份作业
 >  看作下一节课的 X 光片，

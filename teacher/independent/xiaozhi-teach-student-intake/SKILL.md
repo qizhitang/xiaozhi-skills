@@ -17,6 +17,9 @@ description: >
   该版本支持独立教师全流程：建档 → 试听 → 转化 → 跟进。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-solo-dashboard, xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer
+id: openclaw:xiaozhi-teach-student-intake
+min_platform_version: "2.0"
+max_round_limit: 15
 ---
 
 # 试听与学员建档 SKILL
@@ -693,7 +696,7 @@ depends_on: xiaozhi-teach-solo-dashboard, xiaozhi-teach-lesson-planner, xiaozhi-
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "试听的真正价值不是让家长签单，
 >  是让老师看见这个学生能不能教，
 >  让学生看见这个老师我喜不喜欢，

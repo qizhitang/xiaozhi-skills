@@ -17,6 +17,9 @@ description: >
   强基于学情数据，差异化精准布置。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer
+id: openclaw:xiaozhi-teach-assignment-designer
+min_platform_version: "2.0"
+max_round_limit: 20
 ---
 
 # 作业设计师 SKILL
@@ -462,7 +465,7 @@ C 层（拔尖）：本次作业以"跨章迁移"为主
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "作业不是惩罚，是探测器。
 >  每一道题都在告诉你：
 >  这个学生，在哪一步是真的会了，

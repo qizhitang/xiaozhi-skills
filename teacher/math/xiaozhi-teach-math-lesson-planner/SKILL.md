@@ -21,6 +21,9 @@ description: >
   让数学概念在学员心里"长出来"。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozhi-teach-classroom-coach
+id: openclaw:xiaozhi-teach-math-lesson-planner
+min_platform_version: "2.0"
+max_round_limit: 30
 ---
 
 # 数学教案设计 SKILL
@@ -562,7 +565,7 @@ depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozh
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "数学不是一座'山'，是一棵'树'。
 >  概念是根，方法是枝，题目是叶。
 >  学员在数学学习里，

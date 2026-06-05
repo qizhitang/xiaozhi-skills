@@ -17,6 +17,9 @@ description: >
   建立接口，强基于教学目标和学情分层设计互动。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer
+id: openclaw:xiaozhi-teach-classroom-coach
+min_platform_version: "2.0"
+max_round_limit: 20
 ---
 
 # 课堂互动教练 SKILL
@@ -574,7 +577,7 @@ depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "课堂不是剧场，老师不是演员。
 >  真正的好课堂，是学生说得多、老师说得少；
 >  学生想得深、老师讲得准。

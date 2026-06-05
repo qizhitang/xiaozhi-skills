@@ -18,6 +18,9 @@ description: >
   该版本基于"风格DNA"理念，让学员作文可追踪可进化。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozhi-teach-classroom-coach
+id: openclaw:xiaozhi-teach-chinese-writing-guide
+min_platform_version: "2.0"
+max_round_limit: 20
 ---
 
 # 写作教学指导 SKILL
@@ -632,7 +635,7 @@ depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozh
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "写作不是教学生写'好作文'，
 >  是教学生找到自己的声音。
 >  当 30 个学员写 30 篇不一样的作文，

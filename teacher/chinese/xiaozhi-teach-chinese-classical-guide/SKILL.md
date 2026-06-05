@@ -20,6 +20,9 @@ description: >
   该版本基于"诵读+训诂+主题"三步法，让文言文不死。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozhi-teach-chinese-reading-guide
+id: openclaw:xiaozhi-teach-chinese-classical-guide
+min_platform_version: "2.0"
+max_round_limit: 20
 ---
 
 # 文言文教学指导 SKILL
@@ -647,7 +650,7 @@ depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozh
 
 ---
 
-> 🦞 **小龙虾说**：
+> 💡 **小智说**：
 > "文言文不是密码，是一条通向中国文化的'路'。
 >  当学员走在这条路上，
 >  看到的是'古人在想什么'，

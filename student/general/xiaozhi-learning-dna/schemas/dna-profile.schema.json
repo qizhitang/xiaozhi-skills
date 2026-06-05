@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://xiaozhi-skills.openclaw.dev/schemas/dna-profile.schema.json",
   "title": "LearningDNAProfile",
-  "description": "学习DNA —— 小龙虾长期记忆核心引擎的数据结构定义。覆盖六大基础维度（基础信息、学科强弱、学习风格、错误模式、对话摘要、成长轨迹）与 v1.1 扩展（成长图谱、兴趣DNA）及 v1.2 扩展（学习情绪）。所有字段均为可选（optional），默认只记录完成个性化辅导所必需的最小信息。",
+  "description": "学习DNA —— 小智长期记忆核心引擎的数据结构定义。覆盖六大基础维度（基础信息、学科强弱、学习风格、错误模式、对话摘要、成长轨迹）与 v1.1 扩展（成长图谱、兴趣DNA）及 v1.2 扩展（学习情绪）。所有字段均为可选（optional），默认只记录完成个性化辅导所必需的最小信息。"
 
   "type": "object",
   "additionalProperties": false,
@@ -406,7 +406,7 @@
               },
               "comment": {
                 "type": "string",
-                "description": "小龙虾评语（存储当时说给学生的那句话）"
+                "description": "小智评语（存储当时说给学生的那句话）"
               }
             },
             "required": ["milestoneId", "name", "category", "triggerDate"]
@@ -615,7 +615,7 @@
               "discoverySource": {
                 "type": "string",
                 "description": "发现来源",
-                "enum": ["跨学科侦探周", "学习中自然发现", "小龙虾推送"]
+                "enum": ["跨学科侦探周", "学习中自然发现", "小智推送"]
               },
               "discoveryDate": {
                 "type": "string",
@@ -831,7 +831,7 @@
               },
               "comment": {
                 "type": "string",
-                "description": "小龙虾评语"
+                "description": "小智评语"
               }
             },
             "required": ["milestoneId", "name", "triggerDate"]

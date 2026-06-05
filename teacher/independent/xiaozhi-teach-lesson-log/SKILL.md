@@ -19,6 +19,9 @@ description: >
   让独立教师的"教学资产"持续累积。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-solo-dashboard, xiaozhi-teach-student-analyzer, xiaozhi-teach-lesson-planner
+id: openclaw:xiaozhi-teach-lesson-log
+min_platform_version: "2.0"
+max_round_limit: 15
 ---
 
 # 课后记录助手 SKILL
@@ -577,7 +580,7 @@ depends_on: xiaozhi-teach-solo-dashboard, xiaozhi-teach-student-analyzer, xiaozh
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "独立教师最贵的资产不是课时费，
 >  是累积起来的教学档案。
 >  一年下来，你有了 50 个学员的成长轨迹，

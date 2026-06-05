@@ -20,6 +20,9 @@ description: >
   该版本基于"CEFR 框架"，让英语测评从"分数"到"能力"。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-student-analyzer, xiaozhi-teach-lesson-planner, xiaozhi-teach-math-exam-designer
+id: openclaw:xiaozhi-teach-english-assessment
+min_platform_version: "2.0"
+max_round_limit: 25
 ---
 
 # 英语综合测评 SKILL
@@ -602,7 +605,7 @@ depends_on: xiaozhi-teach-student-analyzer, xiaozhi-teach-lesson-planner, xiaozh
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "英语测评不是给学员'打分数'，
 > 是给教学'画能力地图'。
 >  学员不是'90 分'或'80 分'，

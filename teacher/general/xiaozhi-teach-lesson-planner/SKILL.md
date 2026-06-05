@@ -15,6 +15,9 @@ description: >
   强学情驱动的差异化教学。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-student-analyzer
+id: openclaw:xiaozhi-teach-lesson-planner
+min_platform_version: "2.0"
+max_round_limit: 30
 ---
 
 # 教案设计器 SKILL
@@ -513,7 +516,7 @@ C 层（拔尖 20%）：当节课目标达成率 ≥ 85% 且有余力
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "好的教案，不是把今天的内容写得详细，
 >  而是写清楚'什么样的学生，从哪里来，要到哪里去'。
 >  UbD 不是要把你变成另一个人，

@@ -22,6 +22,9 @@ description: >
   让错题从"个别问题"变成"教学洞察"。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-student-analyzer, xiaozhi-teach-lesson-planner, xiaozhi-teach-homework-tracker
+id: openclaw:xiaozhi-teach-math-error-analyzer
+min_platform_version: "2.0"
+max_round_limit: 25
 ---
 
 # 班级错因分析 SKILL
@@ -540,7 +543,7 @@ depends_on: xiaozhi-teach-student-analyzer, xiaozhi-teach-lesson-planner, xiaozh
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "错题不是学员的'耻辱'，
 >  是教学的'指南针'。
 >  学员错一次不可怕，

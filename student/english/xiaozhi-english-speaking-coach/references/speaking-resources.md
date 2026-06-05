@@ -41,17 +41,17 @@
 
 ### 场景①：机场值机+安检
 
-**小龙虾扮演：** 机场工作人员（Check-in staff）
+**小智扮演：** 机场工作人员（Check-in staff）
 
 **学生任务：** 完成值机和安检，用英语应对以下情境：
 
-关键对话节点（小龙虾按顺序推进）：
+关键对话节点（小智按顺序推进）：
 1. "Good afternoon! May I see your passport and ticket please?"
 2. "Would you like a window seat or an aisle seat?"
 3. "Do you have any checked baggage today?"
 4. "Your boarding gate is B12, boarding starts at 2:30. Enjoy your flight!"
 
-**安检过渡（小龙虾扮演安检员）：**
+**安检过渡（小智扮演安检员）：**
 5. "Please place all electronic devices in the tray."
 6. "Do you have any liquids in your bag?"
 
@@ -61,7 +61,7 @@
 
 ### 场景②：商店购物比较商品
 
-**小龙虾扮演：** 运动鞋店导购
+**小智扮演：** 运动鞋店导购
 
 **学生任务：** 比较两款鞋，做出购买决定
 
@@ -77,7 +77,7 @@
 
 ### 场景③：西餐厅点餐结账
 
-**小龙虾扮演：** 西餐厅服务员
+**小智扮演：** 西餐厅服务员
 
 **学生任务：** 点餐、询问、结账
 
@@ -93,14 +93,14 @@
 
 ### 场景④：2分钟即兴演讲+提问
 
-**小龙虾扮演：** 演讲听众+提问者
+**小智扮演：** 演讲听众+提问者
 
 **话题示例：**
 - "Talk about a person who has influenced you the most."
 - "Describe a place you would love to visit and why."
 - "What is the most important skill for young people today?"
 
-**演讲后，小龙虾提2个追问：**
+**演讲后，小智提2个追问：**
 1. 内容深化类："You mentioned [学生提到的点]—could you give a specific example?"
 2. 观点挑战类："Some people might disagree with you because [对立观点]. How would you respond?"
 
@@ -108,7 +108,7 @@
 
 ### 场景⑤：学校社团面试
 
-**小龙虾扮演：** 英语社团面试官
+**小智扮演：** 英语社团面试官
 
 **学生任务：** 完成英语社团社长申请面试
 

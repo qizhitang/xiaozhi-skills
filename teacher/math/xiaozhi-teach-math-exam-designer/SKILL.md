@@ -22,6 +22,9 @@ description: >
   让测评从"凭感觉出题"变成"系统化诊断"。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-student-analyzer, xiaozhi-teach-lesson-planner, xiaozhi-teach-math-error-analyzer
+id: openclaw:xiaozhi-teach-math-exam-designer
+min_platform_version: "2.0"
+max_round_limit: 25
 ---
 
 # 数学测评设计 SKILL
@@ -608,7 +611,7 @@ depends_on: xiaozhi-teach-student-analyzer, xiaozhi-teach-lesson-planner, xiaozh
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "测评不是给学员'打标签'，
 >  是给教学'照镜子'。
 >  镜子里看到的不是'谁好谁差'，

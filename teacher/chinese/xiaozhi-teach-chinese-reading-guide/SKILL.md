@@ -18,6 +18,9 @@ description: >
   该版本基于"三阶阅读"模型，从基础到思辨。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozhi-teach-classroom-coach
+id: openclaw:xiaozhi-teach-chinese-reading-guide
+min_platform_version: "2.0"
+max_round_limit: 20
 ---
 
 # 阅读教学指导 SKILL
@@ -636,7 +639,7 @@ depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozh
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "阅读不是输入，是对话。
 >  当学员和文本'对话'，
 >  文本就成了学员的一部分——

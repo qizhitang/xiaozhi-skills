@@ -77,7 +77,7 @@ depends_on: xiaozhi-learning-dna, xiaozhi-english-vocabulary-dna
  但可以加3-5个我还没学过的新词。"
 ```
 
-**小龙虾确认参数后生成：**
+**小智确认参数后生成：**
 
 ```
 "收到！我来根据你的档案定制这段材料——
@@ -339,7 +339,7 @@ depends_on: xiaozhi-learning-dna, xiaozhi-english-vocabulary-dna
 
 ---
 
-> 🦞 **小龙虾说：**  
+> 💡 **小智说：**  
 > "最好的听力材料，就是那种  
 >  你听着听着突然意识到：'我居然大部分都听懂了！'  
 >  然后有2-3个词让你稍微动了一下脑子。  

@@ -1,6 +1,6 @@
 # 🏛️ 系统架构与方法论
 
-本文档包含《龙虾高效学习法》全套 58 个 SKILL（学生端 32 个 + 老师端 26 个）的完整目录清单、系统协作架构、背后的方法论依据以及详细的文件目录结构。
+本文档包含小智伴学全套 58 个 SKILL（学生端 32 个 + 老师端 26 个）的完整目录清单、系统协作架构、背后的方法论依据以及详细的文件目录结构。
 
 ## 🗂️ 完整 SKILL 目录
 
@@ -19,70 +19,70 @@
 | ⑦ | 📝 康奈尔笔记 | `student/general/xiaozhi-cornell-notes/` | v1.0 | 拍照提炼 + 笔记DNA + 主动推送 + 跨科网络 | 学习DNA、IM智能提醒 |
 | ⑧ | 🔗 五SKILL联动协调器 | `student/general/xiaozhi-skill-coordinator/` | v1.1 | 五SKILL联动 + 全系统全景月报中枢 + 健康检查 | 学习DNA、错题本、费曼测试、康奈尔笔记 |
 
-### 学生端 · 第七章与第八章 SKILL
+### 学生端 · 自我管理与探索 SKILL
 
-| # | 名称 | 文件夹 | 类型 | 核心功能 | 来源章节 |
-|---|------|-------|------|---------|---------|
-| ⑨ | 🗓️ 30天学习计划制定师 | `student/general/xiaozhi-learning-plan/` | 新增SKILL | DNA驱动 + 五步生成 + 执行监控 + 家庭看板 | 7.1 全节 |
-| ⑩ | ⏱️ 时间与专注力教练 | `student/general/xiaozhi-time-focus-coach/` | 新增SKILL | 时间销行账 + 黄金时段 + 智能番茄钟 + 10专注法 | 7.2+7.3 全节 |
-| ⑪ | 🔭 跨学科侦探周 | `student/general/xiaozhi-cross-subject-detective/` | 新增SKILL | 五步流程 + 项目DNA + 跨项目复利 + 知识积累树 | 8.4 全节 |
-| ⑫ | ☕ 兴趣成长探索计划 | `student/general/xiaozhi-interest-explorer/` | 新增SKILL | 52杯咖啡 + 四维度 + 批判验证 + 兴趣DNA | 8.5 全节 |
-| 整合能力A | 📊 每周学习复盘（已并入主文件） | `student/general/xiaozhi-weekly-review/` | 已整合 | 三维度→六模块 + 苏格拉底七问 + 成长曲线可视化 | 7.4 全节 |
-| 整合能力B | 🧬 学习DNA（已并入主文件） | `student/general/xiaozhi-learning-dna/` | 已整合 | 成长图谱四维度 + 里程碑自动标注 + 兴趣/跨科接口 | 8.2 全节 |
-| 整合能力C | 🎓 费曼学习法（已并入主文件） | `student/general/xiaozhi-feynman-learning/` | 已整合 | 第五跳批判性验证 + AI主动验证 + 思维主权规则 | 8.3 全节 |
-| 整合能力D | 🔗 五SKILL联动协调器（已并入主文件） | `student/general/xiaozhi-skill-coordinator/` | 已整合 | 三SKILL→五SKILL + 五维度月报 + 两类新联动规则 | 7.4.2 |
-| 整合能力E | ⏰ IM智能提醒（已并入主文件） | `student/general/xiaozhi-im-reminder/` | 已整合 | 计划任务提醒 + 52杯咖啡探索提醒 + 时间销行账确认 | 7.1+8.5 |
+| # | 名称 | 文件夹 | 类型 | 核心功能 |
+|---|------|-------|------|----------|
+| ⑨ | 🗓️ 30天学习计划制定师 | `student/general/xiaozhi-learning-plan/` | 新增SKILL | DNA驱动 + 五步生成 + 执行监控 + 家庭看板 |
+| ⑩ | ⏱️ 时间与专注力教练 | `student/general/xiaozhi-time-focus-coach/` | 新增SKILL | 时间销行账 + 黄金时段 + 智能番茄钟 + 10专注法 |
+| ⑪ | 🔭 跨学科侦探周 | `student/general/xiaozhi-cross-subject-detective/` | 新增SKILL | 五步流程 + 项目DNA + 跨项目复利 + 知识积累树 |
+| ⑫ | ☕ 兴趣成长探索计划 | `student/general/xiaozhi-interest-explorer/` | 新增SKILL | 52杯咖啡 + 四维度 + 批判验证 + 兴趣DNA |
+| 整合能力A | 📊 每周学习复盘（已并入主文件） | `student/general/xiaozhi-weekly-review/` | 已整合 | 三维度→六模块 + 苏格拉底七问 + 成长曲线可视化 |
+| 整合能力B | 🧬 学习DNA（已并入主文件） | `student/general/xiaozhi-learning-dna/` | 已整合 | 成长图谱四维度 + 里程碑自动标注 + 兴趣/跨科接口 |
+| 整合能力C | 🎓 费曼学习法（已并入主文件） | `student/general/xiaozhi-feynman-learning/` | 已整合 | 第五跳批判性验证 + AI主动验证 + 思维主权规则 |
+| 整合能力D | 🔗 五SKILL联动协调器（已并入主文件） | `student/general/xiaozhi-skill-coordinator/` | 已整合 | 三SKILL→五SKILL + 五维度月报 + 两类新联动规则 |
+| 整合能力E | ⏰ IM智能提醒（已并入主文件） | `student/general/xiaozhi-im-reminder/` | 已整合 | 计划任务提醒 + 52杯咖啡探索提醒 + 时间销行账确认 |
 
 ### 学习方法论 SKILL 与整合能力
 
-| # | 名称 | 文件夹 | 类型 | 核心功能 | 对应章节 |
-|---|------|-------|------|---------|---------|
-| ⑥ | 🛠️ SKILL创建教练 | `student/general/xiaozhi-skill-creator/` | 新增SKILL | 四层结构 + 五步创建 + 八实践 + 六健康指标 | 6.1 全节 |
-| ⑦ | 📝 康奈尔笔记 | `student/general/xiaozhi-cornell-notes/` | 新增SKILL | 拍照提炼 + 笔记DNA + 主动推送 + 跨科网络 | 6.4 全节 |
-| ⑧ | 🔗 五SKILL联动协调器 | `student/general/xiaozhi-skill-coordinator/` | 新增SKILL | 联动流程 + 判断规则 + 全景月报中枢 + 健康检查 | 6.5 全节 |
-| 整合能力① | ❌ 智能错题本（已并入主文件） | `student/general/xiaozhi-correction-notebook/` | 已整合 | 拍题三信息法 + 弱项预警四触发 + 学期全景报告 + 使用边界 | 6.2 全节 |
-| 整合能力② | 🎓 费曼学习法（已并入主文件） | `student/general/xiaozhi-feynman-learning/` | 已整合 | 挑战者五触发点 + 理解深度DNA三层 + 亲子费曼日 | 6.3 全节 |
-| 整合能力③ | 📊 每周复盘（已并入主文件） | `student/general/xiaozhi-weekly-review/` | 已整合 | 三维度框架 + 学习存折量化 + 建议精确化 | 6.4.4节 |
+| # | 名称 | 文件夹 | 类型 | 核心功能 |
+|---|------|-------|------|----------|
+| ⑥ | 🛠️ SKILL创建教练 | `student/general/xiaozhi-skill-creator/` | 新增SKILL | 四层结构 + 五步创建 + 八实践 + 六健康指标 |
+| ⑦ | 📝 康奈尔笔记 | `student/general/xiaozhi-cornell-notes/` | 新增SKILL | 拍照提炼 + 笔记DNA + 主动推送 + 跨科网络 |
+| ⑧ | 🔗 五SKILL联动协调器 | `student/general/xiaozhi-skill-coordinator/` | 新增SKILL | 联动流程 + 判断规则 + 全景月报中枢 + 健康检查 |
+| 整合能力① | ❌ 智能错题本（已并入主文件） | `student/general/xiaozhi-correction-notebook/` | 已整合 | 拍题三信息法 + 弱项预警四触发 + 学期全景报告 + 使用边界 |
+| 整合能力② | 🎓 费曼学习法（已并入主文件） | `student/general/xiaozhi-feynman-learning/` | 已整合 | 挑战者五触发点 + 理解深度DNA三层 + 亲子费曼日 |
+| 整合能力③ | 📊 每周复盘（已并入主文件） | `student/general/xiaozhi-weekly-review/` | 已整合 | 三维度框架 + 学习存折量化 + 建议精确化 |
 
 ### 学生端 · 语文学科专项 SKILL
 
-| # | SKILL 名称 | 文件夹 | 核心功能 | 对应章节 | 依赖 |
-|---|-----------|-------|---------|---------|------|
-| ⑬ | 语文写作教练 | `student/chinese/xiaozhi-chinese-writing-coach/` | 5步流程 + 风格DNA + 苏格拉底四连 + AI辩论赛 | 3.1 写作篇 | 学习DNA |
-| ⑭ | 阅读理解拆解师 | `student/chinese/xiaozhi-chinese-reading-decoder/` | 五大坑诊断 + 出题人视角 + 三追问 | 3.2 阅读篇 | 学习DNA |
-| ⑮ | 文言文复活计划 | `student/chinese/xiaozhi-chinese-classical-revival/` | 古人角色扮演 + 三级跳 + 游戏化背诵 | 3.2 阅读篇 | 学习DNA |
-| ⑯ | 语文素材库2.0 | `student/chinese/xiaozhi-chinese-material-library/` | 存储 + 自动标签 + 主动推送 + 使用追踪 | 3.3 积累篇 | 学习DNA |
-| ⑰ | 语病追踪档案 | `student/chinese/xiaozhi-chinese-grammar-tracker/` | 六类语病识别 + 顽固档案 + 写作前预警 | 3.3 积累篇 | 学习DNA |
+| # | SKILL 名称 | 文件夹 | 核心功能 | 依赖 |
+|---|-----------|-------|---------|------|
+| ⑬ | 语文写作教练 | `student/chinese/xiaozhi-chinese-writing-coach/` | 5步流程 + 风格DNA + 苏格拉底四连 + AI辩论赛 | 学习DNA |
+| ⑭ | 阅读理解拆解师 | `student/chinese/xiaozhi-chinese-reading-decoder/` | 五大坑诊断 + 出题人视角 + 三追问 | 学习DNA |
+| ⑮ | 文言文复活计划 | `student/chinese/xiaozhi-chinese-classical-revival/` | 古人角色扮演 + 三级跳 + 游戏化背诵 | 学习DNA |
+| ⑯ | 语文素材库2.0 | `student/chinese/xiaozhi-chinese-material-library/` | 存储 + 自动标签 + 主动推送 + 使用追踪 | 学习DNA |
+| ⑰ | 语病追踪档案 | `student/chinese/xiaozhi-chinese-grammar-tracker/` | 六类语病识别 + 顽固档案 + 写作前预警 | 学习DNA |
 
 ### 学生端 · 数学学科专项 SKILL
 
-| # | SKILL 名称 | 文件夹 | 核心功能 | 对应章节 | 依赖 |
-|---|-----------|-------|---------|---------|------|
-| ⑱ | 数学解题教练 | `student/math/xiaozhi-math-problem-solving-coach/` | 四步拍照法 + CLAW5模板 + 苏格拉底五问链 | 4.2 + 4.3 | 学习DNA、数学错误DNA |
-| ⑲ | 数学错误DNA | `student/math/xiaozhi-math-error-dna/` | 四类错误分类 + 顽固追踪 + 月度图谱 | 4.4 | 学习DNA、解题教练 |
-| ⑳ | 数学概念解释器 | `student/math/xiaozhi-math-concept-explainer/` | 生活类比建直觉 + 几何空间训练 | 4.5 挑战①④ | 学习DNA |
-| 21 | 应用题建模教练 | `student/math/xiaozhi-math-word-problem-coach/` | 数量关系三步提取 + 五大题型建模 | 4.5 挑战③ | 学习DNA、数学错误DNA |
-| 22 | 思维梯度训练师 | `student/math/xiaozhi-math-gradient-trainer/` | 天花板测定 + DNA定制序列 + 成长日记 | 4.6 | 学习DNA、数学错误DNA |
+| # | SKILL 名称 | 文件夹 | 核心功能 | 依赖 |
+|---|-----------|-------|---------|------|
+| ⑱ | 数学解题教练 | `student/math/xiaozhi-math-problem-solving-coach/` | 四步拍照法 + CLAW5模板 + 苏格拉底五问链 | 学习DNA、数学错误DNA |
+| ⑲ | 数学错误DNA | `student/math/xiaozhi-math-error-dna/` | 四类错误分类 + 顽固追踪 + 月度图谱 | 学习DNA、解题教练 |
+| ⑳ | 数学概念解释器 | `student/math/xiaozhi-math-concept-explainer/` | 生活类比建直觉 + 几何空间训练 | 学习DNA |
+| 21 | 应用题建模教练 | `student/math/xiaozhi-math-word-problem-coach/` | 数量关系三步提取 + 五大题型建模 | 学习DNA、数学错误DNA |
+| 22 | 思维梯度训练师 | `student/math/xiaozhi-math-gradient-trainer/` | 天花板测定 + DNA定制序列 + 成长日记 | 学习DNA、数学错误DNA |
 
 ### 学生端 · 物理学科专项 SKILL
 
-| # | SKILL 名称 | 文件夹 | 核心功能 | 对应章节 | 依赖 |
-|---|-----------|-------|---------|---------|------|
-| 28 | 物理解题教练 | `student/physics/xiaozhi-physics-problem-coach/` | 四步物理解题法 + 图景建立 + 物理三层次苏格拉底追问 | 物理专项 | 学习DNA、物理错误DNA |
-| 29 | 物理错误DNA | `student/physics/xiaozhi-physics-error-dna/` | 五维错误分类 + 图景缺失率 + 顽固弱项追踪 + 物理焦虑处理 | 物理专项 | 学习DNA、物理解题教练、通用错题本 |
-| 30 | 物理概念直觉器 | `student/physics/xiaozhi-physics-concept-intuition/` | 三步直觉建立法 + 生活类比/实验想象/公式意义还原 | 物理专项 | 学习DNA |
-| 31 | 物理建模教练 | `student/physics/xiaozhi-physics-modeling-coach/` | 建模三步法 + 五大核心模型 + 模型迁移训练 | 物理专项 | 学习DNA、物理错误DNA |
-| 32 | 物理实验思维教练 | `student/physics/xiaozhi-physics-lab-coach/` | 七种实验方法 + 数据分析三件套 + 实验评价思维 | 物理专项 | 学习DNA |
+| # | SKILL 名称 | 文件夹 | 核心功能 | 依赖 |
+|---|-----------|-------|---------|------|
+| 28 | 物理解题教练 | `student/physics/xiaozhi-physics-problem-coach/` | 四步物理解题法 + 图景建立 + 物理三层次苏格拉底追问 | 学习DNA、物理错误DNA |
+| 29 | 物理错误DNA | `student/physics/xiaozhi-physics-error-dna/` | 五维错误分类 + 图景缺失率 + 顽固弱项追踪 + 物理焦虑处理 | 学习DNA、物理解题教练、通用错题本 |
+| 30 | 物理概念直觉器 | `student/physics/xiaozhi-physics-concept-intuition/` | 三步直觉建立法 + 生活类比/实验想象/公式意义还原 | 学习DNA |
+| 31 | 物理建模教练 | `student/physics/xiaozhi-physics-modeling-coach/` | 建模三步法 + 五大核心模型 + 模型迁移训练 | 学习DNA、物理错误DNA |
+| 32 | 物理实验思维教练 | `student/physics/xiaozhi-physics-lab-coach/` | 七种实验方法 + 数据分析三件套 + 实验评价思维 | 学习DNA |
 
 ### 学生端 · 英语学科专项 SKILL
 
-| # | SKILL 名称 | 文件夹 | 核心功能 | 对应章节 | 依赖 |
-|---|-----------|-------|---------|---------|------|
-| 23 | 英语口语陪练 | `student/english/xiaozhi-english-speaking-coach/` | 晨间热身 + 角色扮演 + 四级跳 + 口语DNA | 5.2 全节 | 学习DNA |
-| 24 | 智能词汇DNA系统 | `student/english/xiaozhi-english-vocabulary-dna/` | 三种入库 + 五轮提醒 + 新词雷达 + 遗忘追踪 | 5.3 全节 | 学习DNA |
-| 25 | 英语语法突破教练 | `student/english/xiaozhi-english-grammar-coach/` | 基因图谱 + 苏格拉底追问 + DNA + 定语从句营 | 5.4 全节 | 学习DNA |
-| 26 | 个性化英语听力训练师 | `student/english/xiaozhi-english-listening-trainer/` | DNA驱动生成 + 四步法 + 卡壳追问 + 生词入库 | 5.5 前半 | 学习DNA、词汇DNA系统 |
-| 27 | 英语写作进化教练 | `student/english/xiaozhi-english-writing-coach/` | 三维批改 + 句式升级 + 进化档案 + 场景脚本 | 5.5 后半 | 学习DNA、语法突破教练 |
+| # | SKILL 名称 | 文件夹 | 核心功能 | 依赖 |
+|---|-----------|-------|---------|------|
+| 23 | 英语口语陪练 | `student/english/xiaozhi-english-speaking-coach/` | 晨间热身 + 角色扮演 + 四级跳 + 口语DNA | 学习DNA |
+| 24 | 智能词汇DNA系统 | `student/english/xiaozhi-english-vocabulary-dna/` | 三种入库 + 五轮提醒 + 新词雷达 + 遗忘追踪 | 学习DNA |
+| 25 | 英语语法突破教练 | `student/english/xiaozhi-english-grammar-coach/` | 基因图谱 + 苏格拉底追问 + DNA + 定语从句营 | 学习DNA |
+| 26 | 个性化英语听力训练师 | `student/english/xiaozhi-english-listening-trainer/` | DNA驱动生成 + 四步法 + 卡壳追问 + 生词入库 | 学习DNA、词汇DNA系统 |
+| 27 | 英语写作进化教练 | `student/english/xiaozhi-english-writing-coach/` | 三维批改 + 句式升级 + 进化档案 + 场景脚本 | 学习DNA、语法突破教练 |
 
 ### 老师端 · 通用 SKILL
 
@@ -161,7 +161,7 @@
 
 ## 📖 方法论依据
 
-本 SKILL 包的设计基于《龙虾高效学习法》第一章的核心方法论：
+本 SKILL 包的设计基于以下核心方法论：
 
 **记忆飞轮五转：**
 1. 记录首次错误 → **错题本 SKILL**
@@ -171,7 +171,7 @@
 5. 生成弱项报告 → **每周复盘 SKILL**
 
 **费曼学习法：**
-- 用"教会小龙虾"验证真实理解 → **费曼学习法 SKILL**
+- 用"教会小智"验证真实理解 → **费曼学习法 SKILL**
 
 **AI学习铁律：**
 - 用AI辅助思考，不用AI替代思考 → 所有 SKILL 的设计原则
@@ -204,7 +204,7 @@
 - 从套公式到建模型 → **物理建模教练 SKILL**
 - 实验思维从背步骤到理解设计 → **物理实验思维教练 SKILL**
 
-**第六章系统升级：**
+**学习方法论系统升级：**
 - 学会自己造工具 → **SKILL创建教练 SKILL**
 - 让笔记主动找你 → **康奈尔笔记 SKILL**
 - 让核心工具自动联动 → **五SKILL联动协调器 SKILL**
@@ -212,7 +212,7 @@
 - 费曼测试升级为深度档案 → **费曼测试 v1.1**
 - 每周复盘升级为量化存折 → **每周学习复盘 v1.1**
 
-**第七章、第八章系统升级：**
+**自我管理与成长系统升级：**
 - 学会基于真实数据制定计划 → **30天学习计划制定师 SKILL**
 - 看清时间流向并提升专注 → **时间与专注力教练 SKILL**
 - 打破学科孤岛建立联结 → **跨学科侦探周 SKILL**
@@ -224,10 +224,10 @@
 
 ## 🈶 语文学科专项包说明
 
-> **《龙虾高效学习法》配套官方 SKILL 包 · 第三章语文学科五件套**  
+> **小智伴学 · 语文学科专项 SKILL 包**
 > 覆盖写作、阅读、古文、积累、语法五大语文核心能力维度。
 
-> ⚠️ **前置要求：** 请先安装《核心通用 SKILL 包》（五件套），  
+> ⚠️ **前置要求：** 请先安装《核心通用 SKILL 包》（五件套），
 > 尤其是 `student/general/xiaozhi-learning-dna/`，本包所有 SKILL 均依赖它运行。
 
 ### 五个 SKILL 的联动关系
@@ -260,7 +260,7 @@
 └──────────────────┘
 ```
 
-**三联动循环（书中核心理念的 SKILL 实现）：**
+**三联动循环（核心设计理念的 SKILL 实现）：**
 
 ```
 精读 ──→ 好句存入素材库
@@ -273,10 +273,10 @@
 
 ## ➗ 数学学科专项包说明
 
-> **《龙虾高效学习法》配套官方 SKILL 包 · 第四章数学学科五件套**  
+> **小智伴学 · 数学学科专项 SKILL 包**
 > 覆盖解题教练、错误追踪、概念理解、建模训练、思维进阶五大数学核心维度。
 
-> ⚠️ **前置要求：** 请先安装《核心通用 SKILL 包》（五件套），  
+> ⚠️ **前置要求：** 请先安装《核心通用 SKILL 包》（五件套），
 > 尤其是 `student/general/xiaozhi-learning-dna/` 和 `student/general/xiaozhi-correction-notebook/`。
 
 ### 五个 SKILL 的协作关系
@@ -313,7 +313,7 @@
 
 ### 五大挑战 → SKILL 对应
 
-| 章节中的五大挑战 | 对应SKILL |
+| 学习挑战 | 对应SKILL |
 |--------------|----------|
 | 挑战① 概念理解难 | 数学概念解释器 |
 | 挑战② 计算反复出错 | 数学错误DNA |
@@ -325,10 +325,10 @@
 
 ## 🔤 英语学科专项包说明
 
-> **《龙虾高效学习法》配套官方 SKILL 包 · 第五章英语学科五件套**  
+> **小智伴学 · 英语学科专项 SKILL 包**
 > 覆盖口语、词汇、语法、听力、写作五大英语核心维度。
 
-> ⚠️ **前置要求：** 请先安装《核心通用 SKILL 包》，  
+> ⚠️ **前置要求：** 请先安装《核心通用 SKILL 包》，
 > 尤其是 `student/general/xiaozhi-learning-dna/` 和 `student/general/xiaozhi-im-reminder/`，本包所有SKILL均依赖它们。
 
 ### 以 DNA 为中心的协作架构
@@ -381,7 +381,7 @@ Vocabulary（词汇）→ SKILL② 智能词汇DNA系统（贯穿所有技能）
 
 ## 🧲 物理学科专项包说明
 
-> **《龙虾高效学习法》配套官方 SKILL 包 · 物理学科五件套**
+> **小智伴学 · 物理学科专项 SKILL 包**
 > 覆盖图景解题、错误追踪、概念直觉、物理建模、实验思维五大物理核心维度。
 
 > ⚠️ **前置要求：** 请先安装《核心通用 SKILL 包》，
@@ -449,16 +449,16 @@ Vocabulary（词汇）→ SKILL② 智能词汇DNA系统（贯穿所有技能）
 
 ---
 
-## 🧠 第六章学习方法论包说明
+## 🧠 学习方法论包说明
 
-> **《龙虾高效学习法》配套官方 SKILL 包 · 第六章三新SKILL + 三项整合升级**  
+> **小智伴学 · 学习方法论 SKILL 包**
 > 从独立工具走向协同系统：新增 3 个系统级 SKILL，并将 3 个核心 SKILL 的升级能力合并进主文件。
 
-### 第六章的核心贡献：从工具到系统
+### 核心贡献：从工具到系统
 
 ```text
-第一章到第五章：造好每一件工具
-第六章：让所有工具协同工作，形成一个自我强化的学习系统
+基础层：造好每一件工具
+系统层：让所有工具协同工作，形成一个自我强化的学习系统
 ```
 
 **两个维度的升级：**
@@ -475,7 +475,7 @@ Vocabulary（词汇）→ SKILL② 智能词汇DNA系统（贯穿所有技能）
   · 每周复盘：从“感性总结”到“量化存折体系”
 ```
 
-### 第六章完成后的完整SKILL协同图
+### 完成后的完整SKILL协同图
 
 ```text
           ┌─────────────────────────────────────────────────┐
@@ -507,21 +507,21 @@ Vocabulary（词汇）→ SKILL② 智能词汇DNA系统（贯穿所有技能）
 
 ---
 
-## 🚦 第七章、第八章自我管理与成长探索包说明
+## 🚦 自我管理与成长探索包说明
 
-> **《龙虾高效学习法》配套官方 SKILL 包 · 第七章、第八章四新SKILL + 五项整合升级**  
+> **小智伴学 · 自我管理与成长探索 SKILL 包**
 > 从学习系统继续升级为自我管理系统和成长探索系统。
 
-### 第七八章的核心贡献：从学习系统到自我管理系统
+### 核心贡献：从学习系统到自我管理系统
 
 ```text
-第七章贡献：学习管理维度
+学习管理维度
   把“学什么”扩展到“如何管理学习这件事本身”
   · 时间不是管出来的，是看清楚了自然会用对的（时间销行账）
   · 计划要基于真实数据而非模糊愿望（DNA驱动计划）
   · 自我复盘不是总结，是苏格拉底式的追问（七问框架）
 
-第八章贡献：思维升维
+思维升维维度
   把“学会知识”升维到“成为有批判性思维的学习者”
   · 打破学科孤岛，建立跨学科联结力（侦探周）
   · 区分浅层喜好与真正兴趣（52杯咖啡）
@@ -529,7 +529,7 @@ Vocabulary（词汇）→ SKILL② 智能词汇DNA系统（贯穿所有技能）
   · 把进步变得看得见（成长图谱）
 ```
 
-### 全书32个SKILL完整协同图
+### 完整32个学生端SKILL协同图
 
 ```text
                     ┌──────────────────────────────┐

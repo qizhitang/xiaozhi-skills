@@ -17,6 +17,9 @@ description: >
   不编造学员状态，不自动发送家长消息。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-schedule-manager, xiaozhi-teach-lesson-log, xiaozhi-teach-homework-tracker
+id: openclaw:xiaozhi-teach-solo-dashboard
+min_platform_version: "2.0"
+max_round_limit: 20
 ---
 
 # 独立教师工作台 SKILL
@@ -263,7 +266,7 @@ depends_on: xiaozhi-teach-schedule-manager, xiaozhi-teach-lesson-log, xiaozhi-te
 
 ```text
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🦞 独立教师今日工作台
+💡 独立教师今日工作台
 2026-06-04 · 周四 · 晴
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -607,7 +610,7 @@ consumeLessonUnits 字段：
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "独立教师最难的不是上课，
 >  是在没课的 5 分钟里，
 >  知道这 5 分钟该做什么。

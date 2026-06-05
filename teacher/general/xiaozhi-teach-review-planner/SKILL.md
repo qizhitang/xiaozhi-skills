@@ -18,6 +18,9 @@ description: >
   让复习课比新授课更高效。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozhi-teach-exam-designer
+id: openclaw:xiaozhi-teach-review-planner
+min_platform_version: "2.0"
+max_round_limit: 30
 ---
 
 # 复习规划师 SKILL
@@ -541,7 +544,7 @@ depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozh
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "复习不是把知识塞回去，
 >  是让学生在已经学过的内容上，
 >  发现新的联结、新的深度、新的应用。

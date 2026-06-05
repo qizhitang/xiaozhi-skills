@@ -19,6 +19,9 @@ description: >
   让排课冲突早发现、课时台账透明化。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-solo-dashboard, xiaozhi-teach-student-intake, xiaozhi-teach-lesson-log, xiaozhi-teach-parent-communication
+id: openclaw:xiaozhi-teach-schedule-manager
+min_platform_version: "2.0"
+max_round_limit: 12
 ---
 
 # 排课与课时管理 SKILL
@@ -567,7 +570,7 @@ depends_on: xiaozhi-teach-solo-dashboard, xiaozhi-teach-student-intake, xiaozhi-
 
 ---
 
-> 🦞 **小龙虾说：**
+> 💡 **小智说：**
 > "独立教师最大的浪费不是没课可上，
 >  是把时间花在'我不知道今天该上什么'。
 >  排课不是排时间表，
