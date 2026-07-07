@@ -9,7 +9,7 @@ description: >
   帮助老师从"单向讲授"升级为"思维驱动的互动课堂"。
   当老师说"这节课怎么互动"、"帮我设计课堂提问"、
   "学生不发言怎么办"、"这节课太沉闷"、
-  "小组活动怎么分组"、"怎么让差生也参与"时，必须激活此SKILL。
+  "小组活动怎么分组"、"怎么让差生也参与"时，建议激活此SKILL。
   核心工作流：分析教学目标 → 设计苏格拉底提问链 →
   规划小组合作活动 → 预设学生反应与冷场应对 →
   准备即时反馈机制 → 课后观察记录回写。
@@ -571,9 +571,7 @@ max_round_limit: 20
 
 ## 十五、参考资源
 
-- `references/questioning-strategies.md` — 课堂提问策略库（待补）
-- `references/group-activity-cards.md` — 小组活动任务卡样例（待补）
-- `references/cold-stage-responses.md` — 冷场应对话术库（待补）
+- `references/questioning-strategies.md` — 课堂提问策略库
 
 ---
 

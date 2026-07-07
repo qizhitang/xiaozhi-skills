@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://xiaozhi-skills.openclaw.dev/schemas/dna-profile.schema.json",
   "title": "LearningDNAProfile",
-  "description": "学习DNA —— 小智长期记忆核心引擎的数据结构定义。覆盖六大基础维度（基础信息、学科强弱、学习风格、错误模式、对话摘要、成长轨迹）与 v1.1 扩展（成长图谱、兴趣DNA）及 v1.2 扩展（学习情绪）。所有字段均为可选（optional），默认只记录完成个性化辅导所必需的最小信息。"
+  "description": "学习DNA —— 小智长期记忆核心引擎的数据结构定义。覆盖六大基础维度（基础信息、学科强弱、学习风格、错误模式、对话摘要、成长轨迹）与 v1.1 扩展（成长图谱、兴趣DNA）及 v1.2 扩展（学习情绪）。所有字段均为可选（optional），默认只记录完成个性化辅导所必需的最小信息。",
 
   "type": "object",
   "additionalProperties": false,
@@ -583,7 +583,7 @@
           }
         },
         "knowledgeAccumulationTree": {
-          "description": "5.4 知识积累树：跨学科联结记录",
+          "description": "5.4 知识积累树（旧结构，已由 conceptGraph 取代；保留仅为向后兼容，新数据请写入 conceptGraph）：跨学科联结记录",
           "type": "array",
           "items": {
             "type": "object",
@@ -623,6 +623,53 @@
               }
             },
             "required": ["pointA", "pointB", "linkType"]
+          }
+        },
+        "conceptGraph": {
+          "description": "5.4 跨学科概念图谱（Entity-Relation Concept Graph）。与 xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json 的 profileData.graphUpdates 对齐，是 SKILL 正文 §5.4 概念图谱的正式存储结构，取代扁平的 knowledgeAccumulationTree。",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "nodes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "nodeId": { "type": "string", "description": "节点唯一标识，如 Node01" },
+                  "conceptName": { "type": "string" },
+                  "subject": { "type": "string" },
+                  "masteryLevel": {
+                    "type": "string",
+                    "description": "掌握级别（全库统一三档）",
+                    "enum": ["会复述", "会解释", "真正掌握"]
+                  }
+                },
+                "required": ["nodeId", "conceptName", "subject"]
+              }
+            },
+            "edges": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "sourceNodeId": { "type": "string" },
+                  "targetNodeId": { "type": "string" },
+                  "relationType": {
+                    "type": "string",
+                    "description": "有向关系类型，与 handover 协议一致",
+                    "enum": ["requires", "isParentOf", "appliesTo", "correlatesWith"]
+                  },
+                  "discoverySource": {
+                    "type": "string",
+                    "enum": ["跨学科侦探周", "学习中自然发现", "小智推送"]
+                  },
+                  "discoveryDate": { "type": "string", "format": "date" }
+                },
+                "required": ["sourceNodeId", "targetNodeId", "relationType"]
+              }
+            }
           }
         }
       }

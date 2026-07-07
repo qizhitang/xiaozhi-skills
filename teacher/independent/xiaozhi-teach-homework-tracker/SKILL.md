@@ -9,7 +9,7 @@ description: >
   帮助独立教师把"作业收上来"升级为"作业全生命周期管理"。
   当老师说"作业跟进"、"作业完成度"、
   "错题回流"、"下节课预诊断"、
-  "作业没交怎么办"、"作业状态怎么追"时，必须激活此SKILL。
+  "作业没交怎么办"、"作业状态怎么追"时，建议激活此SKILL。
   核心工作流：作业布置登记 → 完成度追踪 →
   错题回流（→ student-analyzer）→ 顽固弱项标记 →
   下节课预诊断 → 学员作业画像 →
@@ -543,11 +543,23 @@ max_round_limit: 12
 
 ---
 
+## 隐私与数据控制入口
+
+> 本 SKILL 读写的学员数据存于共享工作空间（`solo-teacher-workspace.schema.json`），涉及未成年人信息，须提供可执行的控制入口。老师本人、或应学员/家长要求，可随时说：
+
+- **查看**："查看 [学员化名] 的工作空间记录 / 课表 / 作业 / 报告"
+- **更正**："更正 [学员化名] 的 [某字段]"（覆盖旧值，避免新旧冲突并存）
+- **删除**："删除 [学员化名] 的某条记录 / 全部数据"（流失学员应按约定周期删除）
+- **暂停记录**："这次不要记录 / 暂停记录 [学员化名]"
+- **取消跨 SKILL 共享**："不要把 [学员化名] 的数据共享给其他 SKILL"
+
+**校验要求**：跨 SKILL 共享或建档前，须确认 `consent.crossSkillSharing` / `consent.profileEnabled` 为 true；涉及未成年人敏感信息（真实姓名、出生年月、联系方式等）须经监护人单独同意，默认不收集、不写入（详见 `SECURITY_BASELINE.md`）。
+
+---
+
 ## 十五、参考资源
 
-- `references/homework-status-template.md` — 作业状态追踪模板（待补）
-- `references/error-tendency-analysis.md` — 错因分析模板（待补）
-- `references/next-lesson-pre-diagnosis.md` — 预诊断模板（待补）
+- `references/homework-status-template.md` — 作业状态追踪模板
 
 ---
 

@@ -9,7 +9,7 @@ description: >
   帮助老师从"统一布置作业"升级为"分层精准设计"。
   当老师说"帮我设计作业"、"出一份分层练习"、
   "这个知识点怎么布置作业"、"作业怎么批改"、
-  "出一份带评分标准的作业"时，必须激活此SKILL。
+  "出一份带评分标准的作业"时，建议激活此SKILL。
   核心工作流：确认知识点 → 设计梯度难度 →
   分层任务卡（基础/提升/拓展）→ 评分标准 →
   反馈模板 → 与 xiaozhi-teach-student-analyzer 共性弱项对接。
@@ -460,8 +460,6 @@ C 层（拔尖）：本次作业以"跨章迁移"为主
 ## 十三、参考资源
 
 - `references/assignment-rubric.md` — 作业评分标准模板
-- `references/layered-task-card.md` — A/B/C 分层任务卡样例（待补）
-- `references/feedback-phrase-bank.md` — 反馈话术库（待补）
 
 ---
 

@@ -9,7 +9,7 @@ description: >
   帮助独立教师把"续费沟通"升级为"基于学习档案的专业续课"。
   当老师说"做一份阶段报告"、"学员要续费了"、
   "续课报告怎么写"、"总结学员这学期"、
-  "家长要看学习报告"、"续费话术"时，必须激活此SKILL。
+  "家长要看学习报告"、"续费话术"时，建议激活此SKILL。
   核心工作流：收集阶段数据 → 生成学员成长档案 →
   进步可视化展示 → 续课建议 →
   续费沟通话术 → 与 xiaozhi-teach-solo-dashboard /
@@ -621,11 +621,23 @@ max_round_limit: 15
 
 ---
 
+## 隐私与数据控制入口
+
+> 本 SKILL 读写的学员数据存于共享工作空间（`solo-teacher-workspace.schema.json`），涉及未成年人信息，须提供可执行的控制入口。老师本人、或应学员/家长要求，可随时说：
+
+- **查看**："查看 [学员化名] 的工作空间记录 / 课表 / 作业 / 报告"
+- **更正**："更正 [学员化名] 的 [某字段]"（覆盖旧值，避免新旧冲突并存）
+- **删除**："删除 [学员化名] 的某条记录 / 全部数据"（流失学员应按约定周期删除）
+- **暂停记录**："这次不要记录 / 暂停记录 [学员化名]"
+- **取消跨 SKILL 共享**："不要把 [学员化名] 的数据共享给其他 SKILL"
+
+**校验要求**：跨 SKILL 共享或建档前，须确认 `consent.crossSkillSharing` / `consent.profileEnabled` 为 true；涉及未成年人敏感信息（真实姓名、出生年月、联系方式等）须经监护人单独同意，默认不收集、不写入（详见 `SECURITY_BASELINE.md`）。
+
+---
+
 ## 十五、参考资源
 
-- `references/renewal-report-template.md` — 报告模板库（待补）
-- `references/progress-visualization.md` — 进步可视化模板（待补）
-- `references/renewal-playbook.md` — 续费沟通剧本（待补）
+- `references/renewal-report-template.md` — 报告模板库
 
 ---
 

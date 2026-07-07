@@ -231,7 +231,7 @@ compatibility: OpenClaw / ClawHub
 ■ 跨学科概念图谱
   ├── 节点库：
   │   ├── Node01: { 概念名称: "一次函数", 学科: "数学", 掌握级别: "真正掌握" }
-  │   ├── Node02: { 概念名称: "匀速直线运动", 学科: "物理", 掌握级别: "基本理解" }
+  │   ├── Node02: { 概念名称: "匀速直线运动", 学科: "物理", 掌握级别: "会解释" }
   │   └── Node03: { 概念名称: "自变量与因变量", 学科: "数学", 掌握级别: "真正掌握" }
   └── 边库（有向联结）：
       ├── Edge01: [Node02(物理)] --(requires)--> [Node01(数学)] | 来源: 学习中自然发现
@@ -298,6 +298,7 @@ compatibility: OpenClaw / ClawHub
   ❌ 不记录非学习场景的情绪信息
 
 低敏化与安全过滤原则：
+  *   **⚠️ 危机例外（最高优先级，先于一切低敏转化）**：一旦出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等**超出学习支持范畴的危机信号**，**立即停止**低敏温情转化，**不得**把求救信号包装成"攻坚蓄能期"等安抚话术；必须按 `references/crisis-referral-protocol.md` 处置：稳住不评判 → 说明 AI 边界 → 如实、及时提示监护人/信任的成年人 → 提供专业求助渠道（如即时危险建议拨打 110/120）。宁可误报，不可漏报；长期档案只记"已转介"的处置事实，不留敏感细节。
   *   **严禁标签化**：禁止使用“学困生”、“数理障碍”、“多动”等标签。
   *   **对内客观诊断，对外温情低敏（双通道输出）**：
       *   AI 内部状态判定：保持客观，以便精准匹配支架；
@@ -632,6 +633,8 @@ compatibility: OpenClaw / ClawHub
 
 - `references/dna-template.md` - 完整DNA填写模板
 - `references/growth-milestones.md` - 成长里程碑参考标准
+- `references/cross-subject-connections.md` - 跨学科概念关联标准模板库（20 例，供概念图谱 §5.4 填写参考）
+- `references/crisis-referral-protocol.md` - 危机识别与转介协议（全库安全底线，§6.5 危机例外的完整处置流程）
 - `schemas/dna-profile.schema.json` - 学习DNA JSON Schema（正式数据结构定义，覆盖全部六大维度 + v1.1扩展）
 - `schemas/examples/full-profile.example.json` - 完整档案示例数据
 

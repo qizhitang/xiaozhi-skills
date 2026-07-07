@@ -9,7 +9,7 @@ description: >
   帮助老师从"凭经验判断学情"升级为"数据驱动的教学决策"。
   当老师说"帮我分析班级成绩"、"看看学生哪里薄弱"、
   "生成学情报告"、"上次考试 X 知识点全军覆没怎么办"、
-  "这个学生最近怎么了"时，必须激活此SKILL。
+  "这个学生最近怎么了"时，建议激活此SKILL。
   核心工作流：成绩数据输入 → 班级整体画像 → 共性弱项识别
   → 个体诊断 → 差异化教学建议 → 与 xiaozhi-teach-exam-designer
   /lesson-planner/classroom-coach 建立数据接口。
@@ -500,8 +500,6 @@ C 层任务（拔尖学生）：
 ## 十三、参考资源
 
 - `references/analysis-framework.md` — 学情分析框架与模板
-- `references/score-input-template.md` — 成绩输入模板（待补）
-- `references/knowledge-point-taxonomy.md` — 各学科知识点分类标准（待补）
 
 ---
 

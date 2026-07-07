@@ -9,7 +9,7 @@ description: >
   帮助老师从"从头到尾再讲一遍"升级为"结构化复习规划"。
   当老师说"帮我安排复习计划"、"期末怎么复习"、
   "考前冲刺怎么安排"、"单元复习怎么上"、
-  "帮我梳理本章知识图谱"时，必须激活此SKILL。
+  "帮我梳理本章知识图谱"时，建议激活此SKILL。
   核心工作流：梳理知识图谱 → 识别重难点 →
   制定阶段策略 → 安排课时 → 设计复习活动 →
   考前心理建设 → 与 xiaozhi-teach-lesson-planner / exam-designer
@@ -539,8 +539,6 @@ max_round_limit: 30
 ## 十四、参考资源
 
 - `references/review-strategy.md` — 复习策略模板
-- `references/knowledge-graph-template.md` — 知识图谱模板（待补）
-- `references/retrieval-practice-bank.md` — 主动回忆练习库（待补）
 
 ---
 

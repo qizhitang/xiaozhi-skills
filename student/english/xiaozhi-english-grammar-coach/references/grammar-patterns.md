@@ -159,7 +159,6 @@ for：为了，持续时间
 | good on | good at | "擅长是精通某个技能点（at）" |
 | married with | married to | "婚姻是连接两人（to）" |
 | depend in | depend on | "依靠是站在...上面（on）" |
-| talk to/with | talk to（单向）/talk with（双向） | "区别在于是否双向对话" |
 
 ---
 
@@ -182,20 +181,25 @@ for：为了，持续时间
 ### 从句中关系词充当成分的判断
 
 ```
-关键追问："把从句单独拿出来看，
-          去掉关系词后，句子完整吗？
-          → 完整：关系词是宾语（可省略）
-          → 不完整：关系词是主语（不可省略）"
+关键追问："把从句单独拿出来看，它缺主语，还是缺宾语？
+          → 缺主语位 → 关系词作主语（不可省略）
+          → 缺宾语位 → 关系词作宾语（可省略）
+          → 主语、宾语都不缺 → 句中有多余代词，删掉它"
 
 示例：
-The book that I borrowed it...
-拿出从句："I borrowed it"→ 完整（it是宾语）
-→ 关系词that是宾语 → it多余，删掉
+The book that I borrowed...
+拿出从句："I borrowed ___"→ 及物动词 borrow 后缺宾语
+→ 关系词 that 作宾语 → 可省略（The book I borrowed...）
+
+The book that I borrowed it...（常见错误）
+拿出从句："I borrowed it"→ 主语、宾语都不缺，it 多余
+→ 删掉 it
 
 The girl who won the prize...
-拿出从句："won the prize"→ 不完整（缺主语）
-→ 关系词who是主语 → 不可省略
+拿出从句："___ won the prize"→ 缺主语
+→ 关系词 who 作主语 → 不可省略
 ```
+（注：仅凭"去掉关系词后句子是否完整"无法区分主/宾——正常宾语从句去掉关系词后同样不完整；须看从句缺的是主语位还是宾语位。）
 
 ---
 

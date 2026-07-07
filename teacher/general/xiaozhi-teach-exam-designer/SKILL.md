@@ -9,7 +9,7 @@ description: >
   帮助老师从"拼凑试卷"升级为"科学测评设计"。
   当老师说"帮我出一份试卷"、"设计一个单元测验"、
   "怎么控制试卷难度"、"出一份月考卷"、
-  "这份卷子质量如何"时，必须激活此SKILL。
+  "这份卷子质量如何"时，建议激活此SKILL。
   核心工作流：确认测评目标 → 设计双向细目表 →
   筛选/改编题目 → 控制难度梯度 → 生成评分标准 →
   考后分析建议 → 与 xiaozhi-teach-student-analyzer 得分率反哺。
@@ -544,8 +544,6 @@ D < 0.20 的题说明"所有学生都错"或"所有学生都对"，
 ## 十四、参考资源
 
 - `references/exam-blueprint.md` — 试卷蓝图与双向细目表模板
-- `references/item-bank-mgmt.md` — 题库管理规范（待补）
-- `references/post-exam-analysis.md` — 考后分析模板（待补）
 
 ---
 

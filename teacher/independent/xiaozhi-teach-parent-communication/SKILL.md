@@ -9,7 +9,7 @@ description: >
   帮助独立教师把"临时发消息"升级为"有节奏的家长沟通"。
   当老师说"给家长发个消息"、"怎么跟家长沟通"、
   "家长问成绩怎么回"、"家长焦虑怎么办"、
-  "续费怎么跟家长说"、"家长群里发什么"时，必须激活此SKILL。
+  "续费怎么跟家长说"、"家长群里发什么"时，建议激活此SKILL。
   核心工作流：识别沟通场景 → 评估沟通目的 →
   生成沟通话术（具体化/低焦虑/可操作）→
   沟通频率管理 → 与 xiaozhi-teach-lesson-log / solo-dashboard
@@ -603,11 +603,23 @@ max_round_limit: 15
 
 ---
 
+## 隐私与数据控制入口
+
+> 本 SKILL 读写的学员数据存于共享工作空间（`solo-teacher-workspace.schema.json`），涉及未成年人信息，须提供可执行的控制入口。老师本人、或应学员/家长要求，可随时说：
+
+- **查看**："查看 [学员化名] 的工作空间记录 / 课表 / 作业 / 报告"
+- **更正**："更正 [学员化名] 的 [某字段]"（覆盖旧值，避免新旧冲突并存）
+- **删除**："删除 [学员化名] 的某条记录 / 全部数据"（流失学员应按约定周期删除）
+- **暂停记录**："这次不要记录 / 暂停记录 [学员化名]"
+- **取消跨 SKILL 共享**："不要把 [学员化名] 的数据共享给其他 SKILL"
+
+**校验要求**：跨 SKILL 共享或建档前，须确认 `consent.crossSkillSharing` / `consent.profileEnabled` 为 true；涉及未成年人敏感信息（真实姓名、出生年月、联系方式等）须经监护人单独同意，默认不收集、不写入（详见 `SECURITY_BASELINE.md`）。
+
+---
+
 ## 十四、参考资源
 
-- `references/parent-message-templates.md` — 家长沟通话术库（待补）
-- `references/communication-frequency-guide.md` — 沟通频率指南（待补）
-- `references/sensitive-scenario-playbook.md` — 敏感场景应对手册（待补）
+- `references/parent-message-templates.md` — 家长沟通话术库
 
 ---
 

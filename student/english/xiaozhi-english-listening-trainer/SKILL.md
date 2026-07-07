@@ -9,7 +9,7 @@ description: >
   生成完全匹配你词汇量和兴趣的听力材料——不再太难或太简单。
   当学生说"帮我生成听力材料"、"我想练听力"、"听力太难了听不懂"、
   "给我适合我水平的英语材料"、"帮我练听这个话题"、
-  "我听力卡在哪里了"时，必须激活此SKILL。
+  "我听力卡在哪里了"时，建议激活此SKILL。
   核心功能：词汇DNA驱动材料生成（已学词+10%微挑战）+
   兴趣话题匹配 + 听力四步法（先听→自述→对照→追问）+
   卡壳点精准追问 + 听力生词实时存入词汇DNA。
@@ -113,7 +113,7 @@ depends_on: xiaozhi-learning-dna, xiaozhi-english-vocabulary-dna
 话题优先级：
 ① 从学习DNA读取学生明确表达过感兴趣的话题
 ② 从口语档案读取聊得最顺畅的话题
-③ 兜底：以下5个万能话题库（见references/topics.md）
+③ 兜底：以下5个万能话题库（完整分年级分兴趣模板见references/listening-topic-templates.md）
 
 话题分类（可组合）：
 - 科技类：手机/AI/游戏/太空探索
@@ -335,11 +335,11 @@ depends_on: xiaozhi-learning-dna, xiaozhi-english-vocabulary-dna
 
 ## 九、参考资源
 
-- `references/listening-topics.md` — 分年级分兴趣话题的听力材料生成模板与提示词
+- `references/listening-topic-templates.md` — 分年级分兴趣话题的听力材料生成模板、调节维度参数与提示词框架
 
 ---
 
-> 🦞 **小龙虾说：**  
+> 💡 **小智说：**  
 > "最好的听力材料，就是那种  
 >  你听着听着突然意识到：'我居然大部分都听懂了！'  
 >  然后有2-3个词让你稍微动了一下脑子。  
