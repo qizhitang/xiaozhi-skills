@@ -14,7 +14,7 @@ description: >
   制定阶段策略 → 安排课时 → 设计复习活动 →
   考前心理建设 → 与 xiaozhi-teach-lesson-planner / exam-designer
   / student-analyzer 建立数据接口。
-  该版本基于艾宾浩斯遗忘曲线 + 学情数据，
+  该版本基于间隔复习与提取练习（spacing + retrieval practice）+ 学情数据，
   让复习课比新授课更高效。
 compatibility: OpenClaw / ClawHub
 depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozhi-teach-exam-designer

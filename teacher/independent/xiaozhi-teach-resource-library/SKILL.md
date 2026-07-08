@@ -383,19 +383,19 @@ max_round_limit: 20
 ### 8.1 资源版权分类
 
 ```text
-✅ 自有（copyrightStatus: own）
+✅ 自有（copyrightStatus: 自有）
   老师原创或组内原创
   完整存储
 
-✅ 改编（copyrightStatus: adapted）
+✅ 改编（copyrightStatus: 改编）
   基于某资源改编
   必须标注"原出处 + 改编点"
 
-✅ 公开可引用（copyrightStatus: public）
+✅ 公开可引用（copyrightStatus: 公开可引用）
   教材例题、CC 协议资源
   完整存储，标注来源
 
-⚠️ 仅存索引（copyrightStatus: index-only）
+⚠️ 仅存索引（copyrightStatus: 仅存索引）
   教辅原题只记题号和出处
   不复制题干
 
@@ -412,24 +412,24 @@ max_round_limit: 20
 📄 资源版权信息
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 资源 ID：[   ]
-copyrightStatus：[own/adapted/public/index-only]
+copyrightStatus：[自有/改编/公开可引用/仅存索引]
 
-【own】
+【自有】
   作者：[老师/组内]
   创建时间：[日期]
 
-【adapted】
+【改编】
   原出处：[X 教辅/网站/资料]
   改编点：
     · [X 处]
     · [X 处]
   改编时间：[日期]
 
-【public】
+【公开可引用】
   来源：[X 教材/CC 协议资源]
   引用许可：[CC BY 4.0 等]
 
-【index-only】
+【仅存索引】
   题号：[X 教辅 第 X 页 题 X]
   出处：[X 教辅 出版社/作者]
   不复制题干

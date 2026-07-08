@@ -88,7 +88,7 @@
 
 | # | SKILL 名称 | 文件夹 | 版本 | 核心功能 | 依赖 |
 |---|-----------|-------|------|---------|------|
-| T① | 教案设计器 | `teacher/general/xiaozhi-teach-lesson-planner/` | v1.0 | UbD 逆向设计 + 三维目标 + 六步环节时间矩阵 + Bloom 提问链 + A/B/C 分层输出 | 学情分析师 |
+| T① | 教案设计器 | `teacher/general/xiaozhi-teach-lesson-planner/` | v1.0 | UbD 逆向设计 + 核心素养导向目标（2022 新课标）+ 六步环节时间矩阵 + Bloom 提问链 + A/B/C 分层输出 | 学情分析师 |
 | T② | 作业设计师 | `teacher/general/xiaozhi-teach-assignment-designer/` | v1.0 | 知识点四层拆解 + 难度梯度四档 + A/B/C 分层任务卡 + 过程分+结果分双轨评分标准 + 与学情分析/作业跟进/错题本接口 | 学情分析师 |
 | T③ | 学情分析师 | `teacher/general/xiaozhi-teach-student-analyzer/` | v1.0 | 班级画像 + 知识点热力图 + 个体诊断卡 + 教学调整建议 + 与测评/教案/互动数据接口 | 测评设计师 |
 | T④ | 课堂互动教练 | `teacher/general/xiaozhi-teach-classroom-coach/` | v1.0 | 四种互动模式 + 苏格拉底 6-8 问链 + 候场追问矩阵 + 小组合作任务卡 + 冷场 3 步走 + 即时反馈话术 + 课后 5 分钟观察记录 | 教案设计器、学情分析师 |
@@ -667,8 +667,8 @@ xiaozhi-skills/
 > **每个 SKILL 目录的标准文件结构：**
 > ```
 > xiaozhi-{name}/
-> ├── SKILL.md          （完整版 SKILL 定义）
-> ├── SKILL.lite.md     （精简版，≤ 4KB，运行时使用）
-> └── references/       （参考资源目录）
+> ├── SKILL.md          （SKILL 定义：name + description 进入上下文，正文按需加载）
+> └── references/       （参考资源目录，渐进披露）
 >     └── *.md          （各类参考文档）
 > ```
+> 说明：遵循 Anthropic Agent Skills 官方"单一 SKILL.md + 渐进披露"模型，不再使用非标准的 `SKILL.lite.md` 双版本机制（已于本轮移除，精简度通过 description 与 references 分层实现）。

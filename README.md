@@ -132,7 +132,7 @@
 
 | 工具 | 关键能力 |
 |------|---------|
-| [教案设计器](teacher/general/xiaozhi-teach-lesson-planner/) | UbD 逆向设计 + 三维目标 + 六步环节时间矩阵 + Bloom 提问链 + A/B/C 分层输出 |
+| [教案设计器](teacher/general/xiaozhi-teach-lesson-planner/) | UbD 逆向设计 + 核心素养导向目标（2022 新课标）+ 六步环节时间矩阵 + Bloom 提问链 + A/B/C 分层输出 |
 | [作业设计师](teacher/general/xiaozhi-teach-assignment-designer/) | 知识点四层拆解 + 难度梯度四档 + A/B/C 分层任务卡 + 过程分+结果分双轨评分 |
 | [学情分析师](teacher/general/xiaozhi-teach-student-analyzer/) | 班级画像 + 知识点热力图 + 个体诊断卡 + 教学调整建议 |
 | [课堂互动教练](teacher/general/xiaozhi-teach-classroom-coach/) | 四种互动模式 + 苏格拉底 6-8 问链 + 候场追问矩阵 + 冷场 3 步走 |
@@ -184,7 +184,7 @@
   - 语/数/英/物学科专项的具体拆解机制
   - 师生协同架构与全树状结构图
 - 🗺️ **[安装指南与发布信息 (Installation Guide)](docs/installation-guide.md)**
-  - 详尽的四阶段、35步长序列成长安装路径建议
+  - 详尽的四阶段、40步长序列成长安装路径建议
   - ClawHub 官方各套餐包裹推荐
 - 🔄 **[版本历史与升级追踪 (Changelog)](docs/changelog.md)**
   - 全套 SKILL 的当前版本对照表

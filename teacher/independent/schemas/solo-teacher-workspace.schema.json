@@ -113,7 +113,7 @@
           "type": "string",
           "enum": ["已掌握", "基本理解", "仍需巩固", "需要重讲", "证据不足"]
         },
-        "nextLessonFocus": { "type": "string" },
+        "nextLessonFocus": { "type": "string", "maxLength": 500 },
         "parentSummary": {
           "type": "string",
           "maxLength": 500,
@@ -129,14 +129,14 @@
       "properties": {
         "homeworkId": { "type": "string" },
         "studentId": { "type": "string" },
-        "task": { "type": "string" },
+        "task": { "type": "string", "maxLength": 500 },
         "dueDate": { "type": "string", "format": "date" },
         "status": {
           "type": "string",
-          "enum": ["assigned", "submitted", "checked", "corrected", "overdue", "reduced"]
+          "enum": ["已布置", "已提交", "部分提交", "未交", "已批改", "已订正", "已减免"]
         },
         "mainErrors": { "type": "array", "items": { "type": "string" } },
-        "nextAction": { "type": "string" }
+        "nextAction": { "type": "string", "maxLength": 500 }
       },
       "required": ["homeworkId", "studentId", "task", "status"]
     },
@@ -156,7 +156,7 @@
           "maxLength": 500,
           "description": "沟通事实摘要，受 500 字符硬约束。禁止写入真实姓名、家庭住址、身份证件、联系电话、账户信息、医疗诊断、心理标签、家庭纠纷、财务细节等高敏信息。"
         },
-        "actionSuggestion": { "type": "string" },
+        "actionSuggestion": { "type": "string", "maxLength": 500 },
         "sentStatus": { "type": "string", "enum": ["draft", "sent", "not_sent"] }
       },
       "required": ["communicationId", "studentId", "date", "scenario", "sentStatus"]
@@ -182,7 +182,7 @@
         "studentId": { "type": "string" },
         "date": { "type": "string", "format": "date" },
         "evidenceType": { "type": "string", "enum": ["课堂表现", "作业", "测评", "订正", "口头表达", "家长反馈"] },
-        "description": { "type": "string" },
+        "description": { "type": "string", "maxLength": 500, "description": "进步证据的事实描述，受 500 字符硬约束。禁止写入真实姓名、联系方式、家庭/医疗/财务等高敏信息。" },
         "confidenceLevel": { "type": "string", "enum": ["data_sufficient", "preliminary_trend", "insufficient_sample"] }
       },
       "required": ["evidenceId", "studentId", "date", "evidenceType", "description"]
@@ -198,8 +198,8 @@
         "gradeLevel": { "type": "string" },
         "knowledgePoint": { "type": "string" },
         "difficulty": { "type": "string", "enum": ["基础", "中等", "提升", "挑战"] },
-        "copyrightStatus": { "type": "string", "enum": ["自有", "公开可引用", "仅存索引"] },
-        "usageNotes": { "type": "string" }
+        "copyrightStatus": { "type": "string", "enum": ["自有", "改编", "公开可引用", "仅存索引"] },
+        "usageNotes": { "type": "string", "maxLength": 500 }
       },
       "required": ["resourceId", "title", "resourceType", "copyrightStatus"]
     }
