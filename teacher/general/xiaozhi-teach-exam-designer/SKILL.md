@@ -12,10 +12,9 @@ description: >
   "这份卷子质量如何"时，建议激活此SKILL。
   核心工作流：确认测评目标 → 设计双向细目表 →
   筛选/改编题目 → 控制难度梯度 → 生成评分标准 →
-  考后分析建议 → 与 xiaozhi-teach-student-analyzer 得分率反哺。
+  考后分析建议 → 与 xiaozhi-teach-student-analyzer 得分率反哺（学情为可选输入，无学情时可独立设计基础版）。
   该版本建立了完整的测评-分析闭环，强基于目标与学情。
 compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-teach-student-analyzer
 id: openclaw:xiaozhi-teach-exam-designer
 min_platform_version: "2.0"
 max_round_limit: 25

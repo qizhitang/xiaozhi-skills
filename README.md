@@ -135,7 +135,7 @@
 | [教案设计器](teacher/general/xiaozhi-teach-lesson-planner/) | UbD 逆向设计 + 核心素养导向目标（2022 新课标）+ 六步环节时间矩阵 + Bloom 提问链 + A/B/C 分层输出 |
 | [作业设计师](teacher/general/xiaozhi-teach-assignment-designer/) | 知识点四层拆解 + 难度梯度四档 + A/B/C 分层任务卡 + 过程分+结果分双轨评分 |
 | [学情分析师](teacher/general/xiaozhi-teach-student-analyzer/) | 班级画像 + 知识点热力图 + 个体诊断卡 + 教学调整建议 |
-| [课堂互动教练](teacher/general/xiaozhi-teach-classroom-coach/) | 四种互动模式 + 苏格拉底 6-8 问链 + 候场追问矩阵 + 冷场 3 步走 |
+| [课堂互动教练](teacher/general/xiaozhi-teach-classroom-coach/) | 四种互动模式 + Bloom 6-8 层分层提问链 + 苏格拉底式候场追问矩阵 + 冷场 3 步走 |
 | [测评设计师](teacher/general/xiaozhi-teach-exam-designer/) | 四类测评目的 + 双向细目表 + 难度梯度 + 题目版权管理 + 讲评设计 |
 | [复习规划师](teacher/general/xiaozhi-teach-review-planner/) | 知识图谱四层 + 三维重难点 + 单元复习 5 阶段 + 考前分阶段策略 + 心理建设 |
 

@@ -24,6 +24,8 @@ depends_on: xiaozhi-learning-dna, xiaozhi-math-error-dna, xiaozhi-physics-error-
 
 > **关于“拍照解析”机制：** 本模块对错题图片的提取与结构化分析，强依赖于多模态大语言模型（Multimodal LLMs）的视觉识别能力，或平台上专属 SKILL 扩展的本地 OCR 脚本服务。
 
+> **无拍照 / OCR 能力时的降级路径**：请学生手动输入题目与自己的解答（或口述），本 SKILL 照常完成四维错因分析与弱项预警；拍照只是录入便利，不是错因分析的前提。识别不清时，先请学生确认题目文字再分析，不臆测题意。
+
 ---
 
 ## 一、SKILL 的核心使命

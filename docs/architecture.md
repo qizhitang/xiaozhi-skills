@@ -91,7 +91,7 @@
 | T① | 教案设计器 | `teacher/general/xiaozhi-teach-lesson-planner/` | v1.0 | UbD 逆向设计 + 核心素养导向目标（2022 新课标）+ 六步环节时间矩阵 + Bloom 提问链 + A/B/C 分层输出 | 学情分析师 |
 | T② | 作业设计师 | `teacher/general/xiaozhi-teach-assignment-designer/` | v1.0 | 知识点四层拆解 + 难度梯度四档 + A/B/C 分层任务卡 + 过程分+结果分双轨评分标准 + 与学情分析/作业跟进/错题本接口 | 学情分析师 |
 | T③ | 学情分析师 | `teacher/general/xiaozhi-teach-student-analyzer/` | v1.0 | 班级画像 + 知识点热力图 + 个体诊断卡 + 教学调整建议 + 与测评/教案/互动数据接口 | 测评设计师 |
-| T④ | 课堂互动教练 | `teacher/general/xiaozhi-teach-classroom-coach/` | v1.0 | 四种互动模式 + 苏格拉底 6-8 问链 + 候场追问矩阵 + 小组合作任务卡 + 冷场 3 步走 + 即时反馈话术 + 课后 5 分钟观察记录 | 教案设计器、学情分析师 |
+| T④ | 课堂互动教练 | `teacher/general/xiaozhi-teach-classroom-coach/` | v1.0 | 四种互动模式 + Bloom 6-8 层分层提问链 + 苏格拉底式候场追问矩阵 + 小组合作任务卡 + 冷场 3 步走 + 即时反馈话术 + 课后 5 分钟观察记录 | 教案设计器、学情分析师 |
 | T⑤ | 测评设计师 | `teacher/general/xiaozhi-teach-exam-designer/` | v1.0 | 四类测评目的 + 双向细目表 + 难度梯度（基础 50/中等 30/提升 15/挑战 5）+ 题目版权管理 + 评分标准 + 考后分析（实际 P/实际 D/知识点热力图）+ 讲评设计 | 学情分析师 |
 | T⑥ | 复习规划师 | `teacher/general/xiaozhi-teach-review-planner/` | v1.0 | 知识图谱四层结构 + 三维度重难点识别 + 单元复习 5 阶段 + 考前分阶段策略（>14/7-14/3-7/1-3/当天）+ 主动回忆/概念网络/跨科联结/错题档案 + 心理建设 | 教案设计器、学情分析师、测评设计师 |
 
