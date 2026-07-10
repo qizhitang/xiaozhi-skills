@@ -168,7 +168,7 @@
 | | [数学测评设计](teacher/math/xiaozhi-teach-math-exam-designer/) | 三类测评 + 双向细目表 + 难度梯度 60/30/10 |
 | **英语** | [口语活动设计](teacher/english/xiaozhi-teach-english-speaking-designer/) | 任务型教学法 TBLT + 任务三类型 + 重述式纠正 |
 | | [听力材料设计](teacher/english/xiaozhi-teach-english-listening-designer/) | i+1 难度 + 三遍听法 + 8 个微技能训练 |
-| | [英语综合测评](teacher/english/xiaozhi-teach-english-assessment/) | 听说读写 4 维 + CEFR 6 等级 + 学员能力画像 |
+| | [英语综合测评](teacher/english/xiaozhi-teach-english-assessment/) | 听说读写 4 维 + CSE 九级 / CEFR 对照 + 学员能力画像 |
 | **物理** | [物理教案设计](teacher/physics/xiaozhi-teach-physics-lesson-planner/) | 五大物理观念 + 概念建构 + 物理模型 7 类 + 应用三类 |
 | | [实验教学指导](teacher/physics/xiaozhi-teach-physics-experiment-coach/) | 三类实验 + 变量控制 + 数据处理 + 误差分析 |
 | | [解题教学指导](teacher/physics/xiaozhi-teach-physics-problem-guide/) | 五步解题法 + 过程分析 + 7 类样板题 + 变式训练 |
