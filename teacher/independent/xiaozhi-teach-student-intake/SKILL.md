@@ -608,18 +608,36 @@ max_round_limit: 15
 
 ### 11.2 接口
 
+> 所有读写均落在共享工作空间 `solo-teacher-workspace.schema.json`；下列为真实存储字段，派生/生成项已单独标注。
+
 ```text
-读：（无前置 SKILL 数据依赖）
+读：（本 SKILL 位于流程起点，无前置 SKILL 数据依赖；建档/写入前须校验目标学员的
+     workspace.studentCards[].consent.profileEnabled / crossSkillSharing 为 true）
 
 写：
-  intake.studentProfile     → 学员档案
-  intake.learningGoal       → 学习目标
-  intake.schedulePreference → 上课时间
-  intake.lessonPackage      → 课时包
-  intake.riskFlag           → 风险标记
-  → solo-dashboard 接收
-  → student-analyzer 接收（学情基线）
-  → lesson-planner 接收（首课教案）
+  学员档案     → workspace.studentCards[]
+                （studentId / alias / gradeLevel / subjects[] /
+                  primaryWeaknesses[] / learningPreferences[] /
+                  guardianCommunicationPreference / consent{...}）
+  学习目标     → workspace.studentCards[].goals[]
+  上课时间偏好 → workspace.lessonSchedule[].startTime / .day_of_week
+                （首课排期时逐条写入 lessonEvent）
+  课时包       → workspace.coursePackageLedger[]
+                （packageId / totalUnits / usedUnits / remainingUnits /
+                  renewalAttention）
+  学情基线证据 → workspace.progressEvidence[]
+                （evidenceType / description / confidenceLevel，源自试听诊断）
+
+  风险标记     →（派生视图，非存储字段：由 solo-dashboard 依据
+                  workspace.homeworkFollowups[].status（作业风险）、
+                  workspace.lessonLogs[].masteryStatus（测评退步）、
+                  workspace.coursePackageLedger[].remainingUnits /
+                  .renewalAttention（课时耗尽预警）实时计算，本 SKILL 仅在
+                  试听记录中给出口头判断，不写入独立字段）
+
+  → solo-dashboard 读取 studentCards[] / coursePackageLedger[] 显示学员档与排课
+  → student-analyzer 读取 primaryWeaknesses[] / progressEvidence[] 作为学情基线
+  → lesson-planner 读取 studentCards[].goals[] / lessonSchedule[] 生成首课教案
 ```
 
 ---

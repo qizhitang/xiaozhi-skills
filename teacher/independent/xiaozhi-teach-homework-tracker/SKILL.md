@@ -480,20 +480,45 @@ max_round_limit: 12
 ### 11.2 接口
 
 ```text
-读：
-  assignmentDesigner.assignmentList → 作业布置
-  soloDashboard.studentBaseline     → 学员基线
-  lessonLog.previousEmphasis        → 上次重点
+读（均来自共享工作空间 solo-teacher-workspace.schema.json）：
+  workspace.homeworkFollowups[].task / .dueDate
+      → 作业布置内容与截止时间（由 assignment-designer 登记）
+  workspace.studentCards[].primaryWeaknesses / .goals / .gradeLevel
+      → 学员基线（弱项、目标、年级）
+  workspace.lessonLogs[].nextLessonFocus
+      → 上次课设定的下节课重点
 
-写：
-  homeworkTracker.completionRate    → 完成度
-  homeworkTracker.errorTendency     → 错题回流
-  homeworkTracker.persistentMistakes → 顽固弱项
-  homeworkTracker.preDiagnosis      → 下节课预诊断
-  → student-analyzer 接收
-  → lesson-log 接收
-  → solo-dashboard 接收
-  → parent-communication 接收
+写（落地到真实存储字段的项）：
+  workspace.homeworkFollowups[].status
+      → 作业状态（已布置/已提交/部分提交/未交/已批改/已订正/已减免）
+  workspace.homeworkFollowups[].mainErrors / .nextAction
+      → 错题回流原始数据（错因、知识点）与跟进动作
+  workspace.studentCards[].primaryWeaknesses
+      → 顽固弱项写回学员卡（追加/更新弱项标签）
+  workspace.progressEvidence[]（evidenceType/description/date）
+      → 订正、攻克顽固错题等过程证据
+
+派生视图（非存储字段，由上述真实字段实时计算，不落库）：
+  完成度 completionRate
+      →（派生视图，非存储字段：由 workspace.homeworkFollowups[].status 聚合计算）
+  错因分布 errorTendency
+      →（派生视图，非存储字段：由 workspace.homeworkFollowups[].mainErrors 聚合统计）
+  顽固弱项触发标记 persistentMistakes
+      →（派生视图，非存储字段：由 workspace.homeworkFollowups[].mainErrors 跨次比对，
+         同知识点/同错因达阈值时触发；触发后将弱项写回 studentCards[].primaryWeaknesses）
+  风险标记 riskFlag
+      →（派生视图，非存储字段：由 workspace.homeworkFollowups[].status 连续统计得出）
+
+生成的报告段落（非工作空间存储字段；事实来源见括注）：
+  下节课预诊断 preDiagnosis
+      →（生成的报告段落，非存储字段；事实来源为 workspace.homeworkFollowups[].mainErrors，
+         其结论以 workspace.lessonLogs[].nextLessonFocus 形式回写并被 lesson-log 跟踪）
+
+下游交接（口头/报告交接，非字段写入）：
+  → student-analyzer 接收错题回流与顽固弱项
+  → lesson-log 接收下节课预诊断
+  → solo-dashboard 呈现作业画像与风险标记
+  → parent-communication 接收催交/反馈事实
 ```
 
 ---

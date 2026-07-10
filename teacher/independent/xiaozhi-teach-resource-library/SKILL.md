@@ -550,14 +550,26 @@ copyrightStatus：[自有/改编/公开可引用/仅存索引]
 
 ```text
 读：
-  soloDashboard.studentProfile  → 学员画像
-  lessonLog.record              → 课后记录
-  homeworkTracker.errorTendency → 错因分布
+  workspace.studentCards[].alias / gradeLevel / subjects /
+    goals / primaryWeaknesses / learningPreferences
+                                → 学员画像（匹配资源用）
+  workspace.lessonLogs[].completedContent / masteryStatus /
+    nextLessonFocus             → 课后记录（沉淀资源用）
+  错因分布                       → （派生视图，非存储字段：
+                                   由 workspace.homeworkFollowups[].mainErrors
+                                   实时聚合出的错因倾向）
 
 写：
-  resourceLibrary.index         → 资源索引
-  resourceLibrary.matchResult   → 学员匹配结果
-  resourceLibrary.usageStats    → 使用统计
+  workspace.resourceLibraryIndex[].resourceId / title /
+    resourceType / subject / gradeLevel / knowledgePoint /
+    difficulty / copyrightStatus / usageNotes
+                                → 资源索引（唯一真实存储结构）
+  学员匹配结果                   → （派生视图，非存储字段：
+                                   由 workspace.resourceLibraryIndex[] 与
+                                   workspace.studentCards[] 学情实时匹配算出）
+  使用统计                       → （派生视图，非存储字段：
+                                   运行时对资源引用做的聚合，schema 不落地；
+                                   如需持久化只写回 resourceLibraryIndex[].usageNotes）
   → 各 SKILL 按需检索
 ```
 

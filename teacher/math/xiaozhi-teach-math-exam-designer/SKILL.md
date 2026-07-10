@@ -21,7 +21,7 @@ description: >
   该版本基于"双向细目表"理念，
   让测评从"凭感觉出题"变成"系统化诊断"。
 compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-teach-student-analyzer, xiaozhi-teach-lesson-planner, xiaozhi-teach-math-error-analyzer
+depends_on: xiaozhi-teach-exam-designer, xiaozhi-teach-student-analyzer, xiaozhi-teach-lesson-planner, xiaozhi-teach-math-error-analyzer
 id: openclaw:xiaozhi-teach-math-exam-designer
 min_platform_version: "2.0"
 max_round_limit: 25
@@ -126,6 +126,8 @@ max_round_limit: 25
 
 ### 4.1 测评类型总览
 
+> ⚠️ **本 SKILL 是通用 `xiaozhi-teach-exam-designer` 的数学学科细化，不是替代。** 通用版的测量学工具——**难度系数 P、区分度 D、四类测评目的（含选拔性）、考后实际 P/实际 D 分析**——一律沿用通用版定义，本 SKILL 只补充数学学科的知识点体系、题型与双向细目表，不重定义、不删减。选拔性测评（升学/竞赛选拔）请用通用版的 P 0.35-0.55 + 极强区分度标准。
+
 ```text
 ┌──────────┬────────────────────────┬────────────┬──────────────┐
 │ 类型      │ 描述                    │ 时机        │ 目的         │
@@ -133,6 +135,7 @@ max_round_limit: 25
 │ 诊断性    │ 测"学员已有什么"        │ 单元/学期初 │ 找起点       │
 │ 形成性    │ 测"学员学到哪了"        │ 单元/期中  │ 调进度       │
 │ 总结性    │ 测"学员学得怎样"        │ 期末/升学  │ 评成果       │
+│ 选拔性    │ 测"谁更强"（沿用通用版） │ 竞赛/选拔  │ 拉开区分度   │
 └──────────┴────────────────────────┴────────────┴──────────────┘
 ```
 

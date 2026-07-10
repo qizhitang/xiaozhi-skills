@@ -497,19 +497,44 @@ max_round_limit: 12
 
 ### 10.2 接口
 
+> 统一读写共享工作空间 `solo-teacher-workspace.schema.json`（下称 `workspace`）。字段名一律以该 schema 为准。
+
 ```text
 读：
-  studentIntake.schedulePreference → 学员时间偏好
-  soloDashboard.lessonHours         → 课时消耗
-  lessonLog.consumedHours           → 实际消耗
+  workspace.studentCards[].learningPreferences[]
+      → 学员时间/上课偏好（排课时读取，仅用授权信息）
+  workspace.coursePackageLedger[].usedUnits
+  workspace.coursePackageLedger[].remainingUnits
+      → 课时消耗与剩余（课时包台账基础数据）
+  workspace.lessonLogs[].consumeLessonUnits
+      → 单节实际消耗课时（由 lesson-log 课后写入）
 
 写：
-  scheduleManager.weeklyTable        → 周课表
-  scheduleManager.conflictReport     → 冲突检测
-  scheduleManager.lessonPackage      → 课时包台账
-  scheduleManager.renewalWarning     → 续费预警
-  → solo-dashboard 接收
-  → parent-communication 接收
+  workspace.lessonSchedule[]（lessonEvent:
+      studentId / subject / startTime / durationMinutes /
+      day_of_week / status / lessonGoal）
+      → 排课结果（老师确认后写入）；"周课表"为其渲染视图
+  workspace.coursePackageLedger[]（packageId / studentId /
+      totalUnits / usedUnits / remainingUnits / renewalAttention）
+      → 课时包台账
+  workspace.coursePackageLedger[].renewalAttention
+      → 续费预警标记
+      （派生视图，非独立存储：由 remainingUnits / totalUnits
+        及到期日实时计算，命中 30%/10%/到期前 7 天阈值时置位）
+
+派生视图（非工作空间存储字段）：
+  · 冲突检测报告
+      （派生视图，非存储字段：由 workspace.lessonSchedule[] 的
+        startTime/durationMinutes/day_of_week 与
+        workspace.studentCards[].learningPreferences[] 实时比对得出）
+  · 周课表
+      （派生视图，非存储字段：由 workspace.lessonSchedule[] 实时渲染）
+
+交接：
+  → solo-dashboard 读取 workspace.lessonSchedule[] /
+    coursePackageLedger[] 呈现课表与台账
+  → lesson-log 课后写 workspace.lessonLogs[].consumeLessonUnits 触发课时预扣
+  → parent-communication 依 renewalAttention 触发续费沟通（老师确认后发出）
 ```
 
 ---

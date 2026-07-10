@@ -543,18 +543,43 @@ max_round_limit: 15
 
 ### 10.2 接口
 
-```text
-读：
-  lessonLog.record            → 沟通素材
-  soloDashboard.lessonHours  → 续费节点
-  soloDashboard.riskFlag      → 应急沟通触发
+> 所有读写字段均以共享工作空间 `solo-teacher-workspace.schema.json` 为唯一真实存储结构；
+> 标注"派生视图"的项不落库，由老师端实时计算。
 
-写：
-  communicationLog.timeline  → 沟通时间线
-  communicationLog.tone      → 沟通风格
-  communicationLog.followup  → 后续跟进点
-  → solo-dashboard 接收
-  → renewal-report 接收
+```text
+读（真实存储字段）：
+  workspace.lessonLogs[].completedContent / parentSummary / evidence
+                              → 沟通素材（课后学了什么、家长版小结、证据）
+  workspace.lessonLogs[].masteryStatus
+                              → 报喜/报忧的掌握度依据
+  workspace.homeworkFollowups[].status / mainErrors
+                              → 作业完成情况与主要错因（沟通素材）
+  workspace.coursePackageLedger[].usedUnits / remainingUnits
+                              → 续费节点判断（课时消耗/剩余）
+  workspace.coursePackageLedger[].renewalAttention
+                              → 续费沟通触发标记
+  workspace.studentCards[].consent.parentCommunicationAllowed
+                              → 是否允许家长沟通的前置校验
+
+读（派生视图，非存储字段）：
+  riskFlag（应急沟通触发）
+                              → 派生视图，非存储字段：由老师端综合
+                                workspace.lessonLogs[].masteryStatus 与
+                                workspace.homeworkFollowups[].status 实时计算，
+                                不写回工作空间
+
+写（真实存储字段，写入 parentCommunicationLogs[]）：
+  workspace.parentCommunicationLogs[].date        → 沟通时间线
+  workspace.parentCommunicationLogs[].scenario    → 沟通场景枚举（见第四节）
+  workspace.parentCommunicationLogs[].factSummary → 沟通要点（客观事实）
+  workspace.parentCommunicationLogs[].actionSuggestion → 后续跟进/家长配合动作
+  workspace.parentCommunicationLogs[].sentStatus  → 老师确认后的发送状态
+
+说明：
+  · "沟通风格/tone"不写入工作空间（schema 无对应字段），
+    仅作为生成话术时的口头风格约定，不落库。
+  · 续费相关事实由 renewal-report 读取本 SKILL 写入的
+    parentCommunicationLogs[] 与 coursePackageLedger[]，本 SKILL 不另建报告字段。
 ```
 
 ---

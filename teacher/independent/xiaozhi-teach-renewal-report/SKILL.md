@@ -556,18 +556,42 @@ max_round_limit: 15
 ### 11.2 接口
 
 ```text
-读：
-  lessonLog.records              → 课后记录
-  studentAnalyzer.classReport    → 班级画像
-  soloDashboard.lessonHours      → 课时消耗
-  soloDashboard.riskFlag         → 风险标记
+读（均为 solo-teacher-workspace.schema.json 真实字段）：
+  workspace.lessonLogs[].completedContent   → 已完成教学内容
+  workspace.lessonLogs[].masteryStatus      → 掌握度状态
+  workspace.lessonLogs[].nextLessonFocus    → 下阶段重点
+  workspace.progressEvidence[].description  → 进步证据
+  workspace.coursePackageLedger[].usedUnits      → 已消耗课时
+  workspace.coursePackageLedger[].remainingUnits → 剩余课时
+  workspace.coursePackageLedger[].renewalAttention → 续费关注标记
+
+  · 学情画像
+    （派生视图，非存储字段：由 student-analyzer 基于
+      workspace.studentCards[].primaryWeaknesses 与
+      workspace.progressEvidence[] 实时计算）
+  · 续费风险标记 riskFlag
+    （派生视图，非存储字段：由 solo-dashboard 基于
+      workspace.coursePackageLedger[].remainingUnits 与
+      renewalAttention 实时计算）
 
 写：
-  renewalReport.factSection      → 事实段
-  renewalReport.progressSection  → 进步段
-  renewalReport.planSection      → 计划段
-  renewalReport.renewalSuggestion → 续费建议
-  → parent-communication 接收
+  workspace.parentCommunicationLogs[]  → 经 parent-communication
+    落库（factSummary / actionSuggestion / sentStatus）；
+    老师确认后发送
+
+  · 事实段 factSection
+    （生成的报告段落，非工作空间存储字段；事实来源为
+      workspace.lessonLogs[] 与 workspace.coursePackageLedger[]）
+  · 进步段 progressSection
+    （生成的报告段落，非工作空间存储字段；事实来源为
+      workspace.progressEvidence[] 与 workspace.lessonLogs[].masteryStatus）
+  · 计划段 planSection
+    （生成的报告段落，非工作空间存储字段；事实来源为
+      workspace.lessonLogs[].nextLessonFocus 与
+      workspace.homeworkFollowups[].nextAction）
+  · 续费建议 renewalSuggestion
+    （生成的报告段落，非工作空间存储字段；事实来源为
+      workspace.coursePackageLedger[].remainingUnits 与 renewalAttention）
 ```
 
 ---

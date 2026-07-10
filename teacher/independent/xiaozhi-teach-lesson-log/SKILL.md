@@ -508,17 +508,38 @@ max_round_limit: 15
 
 ```text
 读：
-  lessonPlan.emphasis            → 衔接素材
-  soloDashboard.studentBaseline  → 学情基线对比
+  workspace.lessonSchedule[].lessonGoal
+    → 上游课节目标，作衔接素材参考
+  workspace.studentCards[].primaryWeaknesses / goals
+    → 学情基线对比（原 soloDashboard.studentBaseline，
+       基线即学员卡片的既有弱项与目标）
 
 写：
-  lessonLog.record              → 5 维度记录
-  lessonLog.masteryDelta        → 掌握度变化
-  lessonLog.lessonHours         → 课时消耗
-  lessonLog.trailPoint          → 轨迹点
-  → solo-dashboard 接收
-  → student-analyzer 接收
-  → parent-communication 接收
+  workspace.lessonLogs[].completedContent
+    → 5 维度记录之「学了什么」
+  workspace.lessonLogs[].masteryStatus
+    → 5 维度记录之「掌握度」（五档取值之一）
+  workspace.lessonLogs[].evidence
+    → 掌握度/进步的证据条目
+  workspace.lessonLogs[].nextLessonFocus
+    → 下节课衔接点
+  workspace.lessonLogs[].parentSummary
+    → 家长简报事实来源
+  workspace.lessonLogs[].consumeLessonUnits
+    + workspace.coursePackageLedger[].usedUnits / remainingUnits
+    → 课时消耗登记（预扣写入课时账本）
+
+派生 / 非存储项（不落 schema，读取时实时计算）：
+  掌握度变化 masteryDelta
+    （派生视图，非存储字段：由 workspace.lessonLogs[].masteryStatus
+      按课时先后比较得出，不单独存储）
+  学习轨迹点 trailPoint
+    （派生视图，非存储字段：由 workspace.lessonLogs[]
+      与 workspace.progressEvidence[] 按时间聚合而成）
+
+  → solo-dashboard 读取上述字段渲染课时/轨迹
+  → student-analyzer 读取 lessonLogs 更新学情
+  → parent-communication 读取 parentSummary 准备话术
 ```
 
 ---

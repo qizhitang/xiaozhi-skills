@@ -19,7 +19,7 @@ description: >
   / 词汇 DNA / 学情分析师建立数据接口。
   该版本基于"CEFR 框架"，让英语测评从"分数"到"能力"。
 compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-teach-student-analyzer, xiaozhi-teach-lesson-planner, xiaozhi-teach-math-exam-designer
+depends_on: xiaozhi-teach-student-analyzer, xiaozhi-teach-lesson-planner, xiaozhi-teach-exam-designer
 id: openclaw:xiaozhi-teach-english-assessment
 min_platform_version: "2.0"
 max_round_limit: 25
@@ -278,6 +278,8 @@ max_round_limit: 25
   · 题型：应用文/记叙文/议论文
   · 难度：略高于学员
 ```
+
+> ⚠️ **本 SKILL 是通用 `xiaozhi-teach-exam-designer` 的英语学科细化，不是替代。** 双向细目表的测量学基础——**难度系数 P、区分度 D、四类测评目的、考后实际 P/实际 D 分析**——沿用通用版定义；本 SKILL 只补充听说读写四维的能力描述与 CEFR 对照，不重定义、不删减测量学工具。
 
 ### 6.3 4 维双向细目表
 
