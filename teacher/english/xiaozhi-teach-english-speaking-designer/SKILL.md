@@ -331,38 +331,7 @@ max_round_limit: 20
 
 ### 6.7 任务设计样板
 
-```text
-━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗣️ 任务设计样板 · 餐厅点餐
-━━━━━━━━━━━━━━━━━━━━━━━━━━━
-■ 任务
-  学员 A 是顾客，学员 B 是服务员
-  学员 A 点了 3 道菜，学员 B 记录
-  学员 A 询问价格，学员 B 给出
-
-■ 输入准备
-  · 听力：餐厅对话音频
-  · 词汇：菜单词汇
-  · 情境：模拟餐厅
-
-■ 任务流程
-  · 1. 学员 A 坐好
-  · 2. 学员 B 递菜单
-  · 3. 学员 A 点餐
-  · 4. 学员 B 复述
-  · 5. 学员 A 询问
-  · 6. 完成
-
-■ 词汇
-  · order, menu, bill, please, thank you
-  · I'd like...
-  · How much is it?
-
-■ 输出
-  · 学员 A：完成点餐
-  · 学员 B：记录订单
-━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
+> 📎 完整样板见 `references/task-design-sample-restaurant.md`（"餐厅点餐"任务设计范例：任务/输入准备/任务流程/词汇/输出）
 
 ---
 
@@ -476,24 +445,7 @@ max_round_limit: 20
 
 ### 8.4 反馈话术
 
-```text
-■ 肯定
-  · "Good job speaking!"
-  · "I like your idea."
-  · "Great use of the word..."
-
-■ 重述
-  · "I see... I went there yesterday."
-  · "Did you mean... I went to..."
-
-■ 引导
-  · "Could you tell me more about...?"
-  · "How did you feel?"
-
-■ 不直接说"错"
-  · 避免打击学员
-  · 鼓励学员继续说
-```
+> 📎 完整话术库见 `references/feedback-phrases.md`（肯定/重述/引导/不直接说"错"四类反馈话术）
 
 ---
 
@@ -518,44 +470,7 @@ max_round_limit: 20
 
 ### 9.2 学员口语档案
 
-```text
-━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗣️ 口语档案 · [学员化名]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━
-■ 流利度（[N] / 5）
-  · 说话速度：[N] 词/分钟
-  · 自然停顿：[N] / 10
-
-■ 准确度（[N] / 5）
-  · 用词准确：[N] / 5
-  · 语法准确：[N] / 5
-  · 发音准确：[N] / 5
-
-■ 得体度（[N] / 5）
-  · 礼貌用语：[N] / 5
-  · 场合适应：[N] / 5
-
-■ 词汇量
-  · 主动词汇：[N] 词
-
-■ 句式
-  · 简单句：[N]%
-  · 复合句：[N]%
-
-■ 发音
-  · 音准：[N] / 5
-  · 语调：[N] / 5
-  · 连读：[N] / 5
-
-■ 互动
-  · 主动说话：[N] / 5
-  · 倾听回应：[N] / 5
-
-■ 自信
-  · 敢开口：[N] / 5
-  · 不怕错：[N] / 5
-━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
+> 📎 完整模板见 `references/speaking-profile-template.md`（口语档案填写模板：流利度/准确度/得体度/词汇量/句式/发音/互动/自信 8 维打分）
 
 ---
 
@@ -656,6 +571,9 @@ max_round_limit: 20
 - `references/task-based-template.md` — 任务型活动模板（5 类任务样板）
 - `references/speaking-rubric.md` — 口语评估评分细则（5 维度 + CEFR 等级）
 - `references/error-correction-strategies.md` — 纠错策略参考（4 时机 + 5 方法）
+- `references/task-design-sample-restaurant.md` — 任务设计样板（餐厅点餐范例）
+- `references/feedback-phrases.md` — 反馈话术库（肯定/重述/引导/不直接说"错"）
+- `references/speaking-profile-template.md` — 学员口语档案模板（8 维打分）
 
 ---
 
