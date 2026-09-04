@@ -8,6 +8,7 @@ import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const REPO_VERSION = JSON.parse(readFileSync(join(root, "package.json"), "utf-8")).version;
 const schemas = [
   "student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json",
   "student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json",
@@ -51,12 +52,21 @@ for (const rel of schemas) {
     for (const k of ["consentGivenBy", "ageBand", "parentSharingConsent", "emotionSharingWithParent", "teacherWritebackConsent"]) if (!text.includes(`"${k}"`)) fail(`dna-profile 缺授权位：${k}`);
     for (const k of ["subjectExtensions", "extensions", "safetyRecord"]) if (!schema.properties[k]) fail(`dna-profile 缺顶层扩展：${k}`);
   }
+  // 版本号必须与 package.json 一致（shared/vocab.md：全库单一版本）
+  if (rel.includes("dna-profile")) {
+    const sv = schema.properties.meta.properties.schemaVersion.enum;
+    if (sv.length !== 1 || sv[0] !== REPO_VERSION) fail(`dna-profile：schemaVersion 应为 ["${REPO_VERSION}"]，实为 ${JSON.stringify(sv)}`);
+    else ok(`schemaVersion 与仓库版本一致：${REPO_VERSION}`);
+  }
   if (rel.includes("handover")) {
     const n = schema.properties.sender.enum.length;
     if (n < 57) fail(`handover：sender 枚举仅 ${n} 个，应覆盖全库 SKILL`);
     if (!has(ERROR_DIM)) fail("handover：basicDimension 枚举与 vocab §1 不一致");
     if (!schema.properties.handoverType.enum.includes("deep_analysis_writeback")) fail("handover：缺 deep_analysis_writeback");
     if (!schema.properties.handoverType.enum.includes("reminder_enqueue")) fail("handover：缺 reminder_enqueue");
+    const pv = schema.properties.protocolVersion.enum;
+    if (pv.length !== 1 || pv[0] !== REPO_VERSION) fail(`handover：protocolVersion 应为 ["${REPO_VERSION}"]，实为 ${JSON.stringify(pv)}`);
+    else ok(`protocolVersion 与仓库版本一致：${REPO_VERSION}`);
   }
   if (rel.includes("solo-teacher")) {
     const st = schema.$defs.homeworkFollowup.properties.status.enum;

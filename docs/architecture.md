@@ -46,7 +46,7 @@ v2.1.0 的核心变化是把散落在各 SKILL 里的术语、阈值、降级规
 
 | SKILL | 目录 | 核心能力（v2.1.0 现状） | 适用学段 |
 |---|---|---|---|
-| 🧬 学习DNA | `student/general/xiaozhi-learning-dna/` | 长期档案层；v1.3 六位授权模型 + 说话人确认；概念图谱为唯一图谱结构；四科扩展档案与五类通用扩展；危机处置事实 | 小学中段–高中 |
+| 🧬 学习DNA | `student/general/xiaozhi-learning-dna/` | 长期档案层；六位授权模型 + 说话人确认；概念图谱为唯一图谱结构；四科扩展档案与五类通用扩展；危机处置事实 | 小学中段–高中 |
 | ❌ 智能错题本 | `student/general/xiaozhi-correction-notebook/` | 全学科统一入口；**"3 次顽固"唯一计数权威**；快速记录模式（≤2 轮）与轮次预算（≤6 轮）；提示阶梯默认 L5 | 小学中段–高中 |
 | ⏰ IM智能提醒 | `student/general/xiaozhi-im-reminder/` | **全库唯一提醒发送方**；每日 1 条合并摘要 + 最多 1 条即时；学段免打扰表；无回应即暂停 | 小学中段–高中 |
 | 🎓 费曼学习法 | `student/general/xiaozhi-feynman-learning/` | 五跳验证；**熔断前先做危机信号检查**；小学段跳过第五跳不封顶评级；写回理解深度 | 小学中段–高中 |
@@ -151,8 +151,8 @@ v2.1.0 的核心变化是把散落在各 SKILL 里的术语、阈值、降级规
 
 | Schema | 位置 | 承载 |
 |---|---|---|
-| 学习DNA v1.3 | `student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json` | 授权位、学科强弱、学习风格、错误模式、对话摘要、成长轨迹、成长图谱（概念图谱 + 口语轨迹）、兴趣、学习情绪、**四科扩展档案**、**五类通用扩展**、**安全处置记录** |
-| 交接协议 v2.1 | `student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json` | 七种交接类型、全库收发方枚举、授权位快照、条件必填校验 |
+| 学习DNA | `student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json` | 授权位、学科强弱、学习风格、错误模式、对话摘要、成长轨迹、成长图谱（概念图谱 + 口语轨迹）、兴趣、学习情绪、**四科扩展档案**、**五类通用扩展**、**安全处置记录** |
+| 交接协议 | `student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json` | 七种交接类型、全库收发方枚举、授权位快照、条件必填校验 |
 | 独立教师工作空间 | `teacher/independent/schemas/solo-teacher-workspace.schema.json` | 学员卡（含可用时段）、课表、课后记录、作业跟进、家长沟通、课时包（含待确认条目）、进步证据、资源索引 |
 | 班级教学工作空间 | `teacher/general/schemas/class-teaching-workspace.schema.json` | 班级画像、教案、课堂记录、作业、双向细目表、逐题得分、题目统计、班级汇总、弱项排序、分层、复习计划 |
 

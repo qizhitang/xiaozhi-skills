@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://xiaozhi-skills.openclaw.dev/schemas/dna-profile.schema.json",
   "title": "LearningDNAProfile",
-  "description": "学习DNA —— 小智长期记忆核心引擎的数据结构定义。覆盖六大基础维度（基础信息、学科强弱、学习风格、错误模式、对话摘要、成长轨迹）、v1.1 扩展（成长图谱、兴趣DNA）、v1.2 扩展（学习情绪）与 v1.3 扩展（授权主体与学段、学科扩展档案 subjectExtensions、通用扩展档案 extensions、安全处置记录 safetyRecord）。所有词表以 shared/vocab.md 为唯一来源。所有字段均为可选，默认只记录完成个性化辅导所必需的最小信息。",
+  "description": "学习DNA —— 小智长期记忆核心引擎的数据结构定义。覆盖六大基础维度（基础信息、学科强弱、学习风格、错误模式、对话摘要、成长轨迹）、成长图谱与兴趣DNA、学习情绪，以及授权主体与学段、学科扩展档案 subjectExtensions、通用扩展档案 extensions、安全处置记录 safetyRecord。所有词表以 shared/vocab.md 为唯一来源。所有字段均为可选，默认只记录完成个性化辅导所必需的最小信息。",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -18,13 +18,9 @@
         },
         "schemaVersion": {
           "type": "string",
-          "description": "档案结构版本号，与 SKILL 版本对应",
+          "description": "档案结构版本号，与仓库版本一致（当前 2.1.0）。旧档案（1.0.0–1.3.0）的字段在本结构中全部保留且均为可选，迁移时只需把本字段改写为 2.1.0。",
           "enum": [
-            "1.0.0",
-            "1.1.0",
-            "1.1.1",
-            "1.2.0",
-            "1.3.0"
+            "2.1.0"
           ]
         },
         "createdAt": {
@@ -69,7 +65,7 @@
             },
             "emotionTrackingConsent": {
               "type": "boolean",
-              "description": "是否同意记录学习情绪数据（v1.2新增，默认关闭，需单独授权）",
+              "description": "是否同意记录学习情绪数据（默认关闭，需单独授权）",
               "default": false
             },
             "consentGivenBy": {
@@ -618,7 +614,7 @@
       }
     },
     "growthMap": {
-      "description": "v1.1 扩展 · 成长图谱：让进步变得可见、可追踪、可对比",
+      "description": "成长图谱：让进步变得可见、可追踪、可对比",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -794,7 +790,7 @@
           }
         },
         "knowledgeAccumulationTree": {
-          "description": "【已弃用，v1.1 起由 conceptGraph 替代；仅为兼容旧档案保留，不再写入】",
+          "description": "【已弃用，由 conceptGraph 替代；仅为兼容旧档案保留，不再写入】",
           "type": "array",
           "items": {
             "type": "object",
@@ -943,7 +939,7 @@
       }
     },
     "interestDNA": {
-      "description": "v1.1 扩展 · 兴趣DNA：仅在用户使用兴趣成长探索计划且同意记录时同步",
+      "description": "兴趣DNA：仅在用户使用兴趣成长探索计划且同意记录时同步",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -1022,7 +1018,7 @@
       }
     },
     "learningEmotion": {
-      "description": "v1.2 扩展 · 学习情绪：追踪学生情绪对学习效果的影响，仅在 emotionTrackingConsent=true 时记录。不是'心理档案'，而是'学习状态观察'——关注情绪如何影响学习行为，而非诊断情绪本身。",
+      "description": "学习情绪：追踪学生情绪对学习效果的影响，仅在 emotionTrackingConsent=true 时记录。不是'心理档案'，而是'学习状态观察'——关注情绪如何影响学习行为，而非诊断情绪本身。",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -1309,7 +1305,7 @@
     "subjectExtensions": {
       "type": "object",
       "additionalProperties": false,
-      "description": "学科扩展档案（v1.3）。每个学科 SKILL 只读写本学科分支（数学 SKILL 只写 math，物理只写 physics，语文只写 chinese，英语只写 english），且受 consentStatus.crossSkillSharing 约束。写入一律经 handover 的 subject_profile_writeback",
+      "description": "学科扩展档案。每个学科 SKILL 只读写本学科分支（数学 SKILL 只写 math，物理只写 physics，语文只写 chinese，英语只写 english），且受 consentStatus.crossSkillSharing 约束。写入一律经 handover 的 subject_profile_writeback",
       "properties": {
         "math": {
           "type": "object",
@@ -1726,7 +1722,7 @@
     "extensions": {
       "type": "object",
       "additionalProperties": false,
-      "description": "通用扩展档案（v1.3）：notes 由康奈尔笔记写入，focus 由时间与专注力教练写入，plans 由 30 天学习计划制定师写入，projects 由跨学科侦探周写入，understanding 由费曼学习法写入。各分支只由对应 SKILL 写入，写入一律经 handover 的 subject_profile_writeback",
+      "description": "通用扩展档案：notes 由康奈尔笔记写入，focus 由时间与专注力教练写入，plans 由 30 天学习计划制定师写入，projects 由跨学科侦探周写入，understanding 由费曼学习法写入。各分支只由对应 SKILL 写入，写入一律经 handover 的 subject_profile_writeback",
       "properties": {
         "notes": {
           "type": "object",
@@ -1912,7 +1908,7 @@
     "safetyRecord": {
       "type": "object",
       "additionalProperties": false,
-      "description": "安全处置记录（v1.3）。只记处置事实，禁止记录事件细节、原话、家庭信息（shared/crisis-exception.md）",
+      "description": "安全处置记录。只记处置事实，禁止记录事件细节、原话、家庭信息（shared/crisis-exception.md）",
       "properties": {
         "crisisReferrals": {
           "type": "array",

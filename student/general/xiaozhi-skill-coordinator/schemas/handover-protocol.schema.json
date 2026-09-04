@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "XiaozhiMultiAgentHandoverProtocol",
-  "description": "小智伴学多智能体协作与数据流转协议 (v2.1)。sender/recipient 覆盖全库 58 个 SKILL；词表以 shared/vocab.md 为唯一来源。",
+  "description": "小智伴学多智能体协作与数据流转协议 (2.1.0)。sender/recipient 覆盖全库 58 个 SKILL；词表以 shared/vocab.md 为唯一来源。",
   "type": "object",
   "properties": {
     "sessionId": {
@@ -9,10 +9,9 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本。当前版本为 2.1.0；2.0.0 仅为兼容旧交接保留",
+      "description": "协议版本，与仓库版本一致（当前 2.1.0）",
       "type": "string",
       "enum": [
-        "2.0.0",
         "2.1.0"
       ]
     },

@@ -53,7 +53,7 @@ compatibility: OpenClaw / ClawHub
 
 ---
 
-## 三、授权模型（v1.3）
+## 三、授权模型
 
 本 SKILL 的 `meta.consentStatus` 是**全库唯一授权状态位**，定义见 `shared/vocab.md §8`，字段落在 `schemas/dna-profile.schema.json#/properties/meta/properties/consentStatus`。其他 SKILL 只读取快照、不自行定义授权。
 
@@ -167,7 +167,7 @@ compatibility: OpenClaw / ClawHub
 │   ├── 持续进步领域
 │   └── 当前学习飞轮状态
 │
-├── 🌈 学习情绪（v1.2 新增）
+├── 🌈 学习情绪
 │   ├── 当前情绪基线
 │   ├── 学科情绪关联图
 │   ├── 焦虑触发因素
@@ -175,7 +175,7 @@ compatibility: OpenClaw / ClawHub
 │   ├── 情绪里程碑
 │   └── 有效支持策略
 │
-├── [扩展层 v1.1]
+├── [扩展层]
 │   ├── 📈 成长图谱 growthMap
 │   │   ├── 错题地图 errorMap
 │   │   ├── 口语成长轨迹 oralGrowthTrack
@@ -187,20 +187,20 @@ compatibility: OpenClaw / ClawHub
 │       ├── 挑战反应信号
 │       └── 确认兴趣与浅层喜好
 │
-├── [学科扩展 v1.3] subjectExtensions
+├── [学科扩展] subjectExtensions
 │   ├── math（数学错误DNA / 梯度训练师）
 │   ├── physics（物理错误DNA / 建模教练 / 实验教练）
 │   ├── chinese（语病、写作风格、阅读五坑、素材、文言进度）
 │   └── english（词汇到期日、语法档案、写作、听力）
 │
-├── [通用扩展 v1.3] extensions
+├── [通用扩展] extensions
 │   ├── notes（康奈尔笔记）
 │   ├── focus（时间与专注力）
 │   ├── plans（30天学习计划）
 │   ├── projects（跨学科侦探周）
 │   └── understanding（费曼理解深度）
 │
-└── [安全 v1.3] safetyRecord
+└── [安全] safetyRecord
     └── crisisReferrals（只记"已转介"的处置事实）
 ```
 
@@ -230,7 +230,7 @@ compatibility: OpenClaw / ClawHub
 
 ## 五、成长图谱扩展
 
-在基础DNA之上，v1.1新增**成长图谱层**，让进步变得可见、可追踪、可对比。
+在基础DNA之上，**成长图谱层**，让进步变得可见、可追踪、可对比。
 
 ### 5.1 错题地图
 
@@ -337,7 +337,7 @@ compatibility: OpenClaw / ClawHub
 
 ---
 
-## 七、学习情绪维度（v1.2）
+## 七、学习情绪维度
 
 > ⚠️ **边界声明：** 学习情绪维度**不是心理档案**，而是**学习状态观察**。  
 > 它关注的是"情绪如何影响学习行为"，而非诊断情绪本身。  
@@ -731,7 +731,7 @@ compatibility: OpenClaw / ClawHub
 - `references/growth-milestones.md` - 成长里程碑参考标准
 - `references/cross-subject-connections.md` - 跨学科概念关联模板库（供概念图谱 §5.4 填写参考）
 - `references/crisis-referral-protocol.md` - 危机识别与转介协议（全库安全底线，§7.0 危机例外的完整处置流程）
-- `schemas/dna-profile.schema.json` - 学习DNA JSON Schema v1.3（六大维度 + v1.1/v1.2/v1.3 扩展）
+- `schemas/dna-profile.schema.json` - 学习DNA JSON Schema（六大维度 + 成长图谱 / 兴趣 / 情绪 / 学科扩展 / 通用扩展 / 安全记录）
 - `schemas/README.md` - schema 结构与授权模型说明
 - `schemas/examples/full-profile.example.json` - 完整档案示例数据
 - `shared/vocab.md` §1/§4/§5/§6/§7/§8/§10 - 词表、阈值与授权位的唯一来源

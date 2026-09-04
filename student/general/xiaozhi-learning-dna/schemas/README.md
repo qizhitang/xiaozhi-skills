@@ -1,6 +1,6 @@
 # 学习DNA · JSON Schema
 
-本目录包含学习DNA的正式数据结构定义。当前 `schemaVersion` 为 **1.3.0**。
+本目录包含学习DNA的正式数据结构定义。当前 `schemaVersion` 为 **2.1.0**，与仓库版本一致。
 
 ## 文件说明
 
@@ -23,19 +23,19 @@ Schema 覆盖以下所有维度，与 `SKILL.md` 中的字段定义一一对应�
 6. `conversationSummary` — 对话历史摘要（本周重点/未解决疑问/学习节点）
 7. `growthTrack` — 成长轨迹（里程碑/持续进步/飞轮状态）
 
-**v1.1 扩展维度：**
+**成长图谱与兴趣维度：**
 8. `growthMap` — 成长图谱（错题地图/口语轨迹/弱项突破/`conceptGraph` 概念图谱）
 9. `interestDNA` — 兴趣DNA（探索领域/挑战反应/浅层喜好/真正兴趣）
 
-**v1.2 扩展维度：**
+**学习情绪维度：**
 10. `learningEmotion` — 学习情绪（情绪基线/学科情绪/焦虑触发/动力状态/情绪里程碑/有效支持策略），需 `emotionTrackingConsent`
 
-**v1.3 扩展维度：**
+**授权、学科扩展与安全维度：**
 11. `subjectExtensions` — 学科扩展档案，四个分支 `math` / `physics` / `chinese` / `english`，各学科 SKILL 只读写本学科分支
 12. `extensions` — 通用扩展档案：`notes`（康奈尔笔记）/ `focus`（时间与专注力）/ `plans`（30天学习计划）/ `projects`（跨学科侦探周）/ `understanding`（费曼理解深度）
 13. `safetyRecord` — 安全处置记录，只记"已转介"的处置事实，不记事件细节（`shared/crisis-exception.md`）
 
-## 授权模型（v1.3）
+## 授权模型
 
 `meta.consentStatus` 是全库唯一授权状态位，定义见 `shared/vocab.md §8`：
 
