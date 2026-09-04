@@ -2,6 +2,10 @@
 
 > 适用学段：小学中段 / 小学高段 / 初中（高中同样适用）。
 > 对应 `xiaozhi-teach-review-planner` SKILL.md §5.2。得分率来自 `classWorkspace.weaknessRank` 与 `itemStats`。
+>
+> ⚠️ 本表的"学情得分率"一律是**知识点级的班级聚合值**，不是某个学生的成绩。
+> 表里不出现真实姓名、个体分数、名次或分数段位置；确需标注对象时只写化名或"全班/某组"。
+> 填完的清单是**待确认草稿**，老师明确说可以存之后才写入 `classWorkspace.reviewPlans`。
 
 ```text
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━

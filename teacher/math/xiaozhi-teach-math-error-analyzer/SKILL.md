@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-math-error-analyzer
 display_name: 班级错因分析
-version: 2.1.0
+version: 2.1.1
 author: 小智伴学
 category: 老师数学
 grade_bands:
@@ -35,7 +35,7 @@ max_round_limit: 25
 > 干预方案里的针对性练习题若由 AI 现出，生成前按 `shared/ai-item-check.md` 自检，
 > 并标注 `【AI 生成，入库前请人工验算】`；未经老师验算不得进入作业或试卷。
 
-⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 给出专业求助渠道（即时危险：110/120）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 ### 隐私与数据控制入口
 
@@ -478,10 +478,14 @@ max_round_limit: 25
 写（生成待确认条目，老师确认后落库）：
   classWorkspace.weaknessRank[]
     .weaknessId / .knowledgePoint / .errorRate
-    .dimension（通用四维）/ .stubbornCount / .evidenceExamIds[] / .lastUpdated
+    .dimension（通用四维）/ .evidenceExamIds[] / .lastUpdated
+    （不写 .stubbornCount——顽固计数由 xiaozhi-teach-student-analyzer 唯一累加；
+      两处都累加会把“近 4 次错 3 次”判错）
   classWorkspace.homeworkAssignments[] 的 completionSummary › commonErrors[]
     knowledgePoint / dimension（四维）/ teacherCategory（七类）/ count
-  classWorkspace.studentTiers[]（studentAlias / tier / basis）→ A/B/C 分层
+  （不写 classWorkspace.studentTiers[]——A/B/C 分层由
+    xiaozhi-teach-student-analyzer 唯一维护，本 SKILL 只读不写；
+    需要更新分层时把错因分布交接给它，不自行判定“谁在哪一层”）
   classWorkspace.interactionLogs[].misconceptionsObserved[] → 课上观察到的典型错误
   → 供 xiaozhi-teach-math-lesson-planner 读 weaknessRank 设计下节课
   → 供 xiaozhi-teach-math-exam-designer 读 weaknessRank 组卷

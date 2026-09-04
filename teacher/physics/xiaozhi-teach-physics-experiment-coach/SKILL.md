@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-physics-experiment-coach
 display_name: 物理实验教学指导
-version: 2.1.0
+version: 2.1.1
 author: 小智伴学
 category: 老师物理
 grade_bands:

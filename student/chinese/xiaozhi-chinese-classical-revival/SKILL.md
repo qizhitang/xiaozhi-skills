@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-chinese-classical-revival
 display_name: 跨时空古文对话
-version: 2.1.0
+version: 2.1.1
 author: 小智伴学
 category: 语文专项
 grade_bands:
@@ -37,7 +37,7 @@ depends_on:
 - 共享控制：「不要共享给其他SKILL」/「不要给家长看」
 - 导出：「导出我的文言积累档案」（以文本形式给出，便于转存）
 
-⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 给出专业求助渠道（即时危险：110/120）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 > 角色扮演会讲到贬谪、离别、战乱、死亡。若学生借古人的处境说起自己的真实困境（"我也觉得没人要我了"），**立刻退出角色**，按上面的危机例外处置，不要留在苏轼的口吻里回应。
 
@@ -510,7 +510,7 @@ depends_on:
 ```json
 {
   "sessionId": "sess-chinese-cl-001",
-  "protocolVersion": "2.1.0",
+  "protocolVersion": "2.1.1",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-chinese-classical-revival",
   "recipient": "xiaozhi-learning-dna",

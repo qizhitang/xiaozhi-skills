@@ -50,9 +50,12 @@
   parentCommunicationAllowed：□是 □否
   emotionSharingWithParent：□是 □否
   grantedBy：□学生本人 □监护人 □学生与监护人
-    （未满 14 周岁必须含监护人，见 shared/vocab.md §8）
+    （未满 14 周岁必须含监护人；14 岁以上的未成年人也要确认
+      监护人知情同意后再建卡，见 shared/vocab.md §8）
   grantedAt：[YYYY-MM-DD]
-  retentionUntil：[YYYY-MM-DD]（默认结课后 6 个月）
+  retentionUntil：[YYYY-MM-DD]
+    已报名：默认结课后 6 个月
+    试听未报名：试听日 + 90 天（删除窗口，见 SKILL.md §12.3）
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -64,9 +67,17 @@
 
 ## 结课与删除
 
+每一步都要老师点头，本 SKILL 不替老师改状态、也不替老师删卡。
+
 ```text
-结课时     → status 改为"已结课"，不再写入新记录
+结课时     → 先问一句「把 小A 的卡标成"已结课"吗？」，
+             确认后才改 status，之后不再写入新记录
 到 retentionUntil → 提示老师："小A 的档案今天到保留期，要删除吗？"
 老师确认   → status 改为"待删除"，再次确认后整卡删除
-学员/家长要求提前删除 → 随时执行，不需要理由
+老师没回应 → 保持提示，下次再问；不替老师删，也不悄悄续期
+学员/家长要求提前删除 → 老师确认后随时执行，不需要理由
+
+试听未报名的档案走同一套流程，只是期限更短：试听日 + 90 天。
 ```
+
+结课、暂停、删除都是**档案动作**，只在本 SKILL 里做。`xiaozhi-teach-parent-communication` 与 `xiaozhi-teach-renewal-report` 遇到这类要求时只会转达给老师，不代改。

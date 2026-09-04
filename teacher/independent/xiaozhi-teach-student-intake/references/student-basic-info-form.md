@@ -33,9 +33,13 @@
   parentCommunicationAllowed（家长沟通）：□是 □否（默认否）
   emotionSharingWithParent（课堂状态可否转述家长）：□是 □否（默认否）
   grantedBy（谁授权的）：□学生本人 □监护人 □学生与监护人 □未记录
-      未满 14 周岁（小学各段或初一）必须含监护人
+      未满 14 周岁（小学各段或初一）必须含监护人；
+      14 岁以上的未成年人也要确认监护人知情同意后再建卡。
+      确认不到监护人同意 → 不建卡，这张表一个字都不填
   grantedAt（授权时间）：[YYYY-MM-DD]
-  retentionUntil（保留至）：[YYYY-MM-DD]（默认结课后 6 个月）
+  retentionUntil（保留至）：[YYYY-MM-DD]
+      已报名：默认结课后 6 个月
+      试听未报名：试听日 + 90 天（到期提示老师删除）
 
 ■ 课时包（coursePackageLedger[]）
   totalUnits（总课时）：[N]

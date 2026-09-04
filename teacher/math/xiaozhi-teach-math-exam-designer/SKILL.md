@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-math-exam-designer
 display_name: 数学测评设计
-version: 2.1.0
+version: 2.1.1
 author: 小智伴学
 category: 老师数学
 grade_bands:
@@ -9,15 +9,17 @@ grade_bands:
 tags: [测评设计, 双向细目表, 诊断性测评, 形成性测评, 数学老师]
 description: >
   数学教师的测评设计：用双向细目表把"凭感觉出数学卷"变成可诊断的命题。
-  当老师说"这次数学考什么""数学试卷怎么出""数学双向细目表""数学诊断性测评怎么设计""数学题难度怎么排""这次数学测评结果怎么用"时，建议激活此SKILL。
-  核心工作流：测评目标（诊断性/形成性/终结性）→双向细目表（知识点 × 课标四级结果目标）→题目选编与版权标注→难度比例（校内形成性 6:3:1，中考模拟 7:2:1）→测评实施→结果分析（逐题 P/D + 信度）。
-  不处理：班级错因归类与教学干预（转 xiaozhi-teach-math-error-analyzer）、教案与概念建构（转 xiaozhi-teach-math-lesson-planner）、非数学学科测评（转 xiaozhi-teach-exam-designer）。
+  仅在老师提出明确的数学命题任务时建议激活，例如"给八年级数学出一份单元测评""做一张数学双向细目表""算这次数学测评的逐题 P/D"；泛泛聊数学、问某题怎么解、问学生近况都不激活。
+  只做四件事：命题蓝图与双向细目表、题目选编与版权标注、题目统计（逐题 P/D 与信度）、经老师逐条确认后的写回。
+  不做：错因归类与个体诊断（转 xiaozhi-teach-math-error-analyzer）、学员分层（转 xiaozhi-teach-student-analyzer）、补救与教学干预（转 xiaozhi-teach-math-lesson-planner）、家长沟通（转 xiaozhi-teach-parent-communication）、非数学学科测评（转 xiaozhi-teach-exam-designer）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-teach-exam-designer
   - xiaozhi-teach-student-analyzer
   - xiaozhi-teach-lesson-planner
   - xiaozhi-teach-math-error-analyzer
+  - xiaozhi-teach-math-lesson-planner
+  - xiaozhi-teach-parent-communication
 id: openclaw:xiaozhi-teach-math-exam-designer
 min_platform_version: "2.0"
 max_round_limit: 25
@@ -32,11 +34,51 @@ max_round_limit: 25
 > 技术边界：本 SKILL 依赖能力 [M, X, F]，无该能力时按 shared/platform-conventions.md 降级。
 > 无跨会话统计（X）时：不输出跨次测评的趋势数字，只分析老师本次提供的逐题分数，并注明样本量。
 > 本 SKILL 输出**测评设计框架**与**双向细目表**，不代替老师出完整试卷、不替老师阅卷评分。
-> AI 生成的题一律标注 `【AI 生成，入库前请人工验算】`，生成前按 `shared/ai-item-check.md` 自检
+> 细目表出现缺口时，可按缺口起草**候选题草稿**填空——草稿不是成卷，
+> 一律标注 `【AI 生成，入库前请人工验算】`，生成前按 `shared/ai-item-check.md` 自检
 >（自解一遍、有解且唯一、条件充分不多余、数值友好、不超出本班学段）；
 > 对应 `examBlueprints[].items[]` 的 `aiGenerated=true` 且 `verifiedByTeacher` 必须由老师验算后才置 true，
-> **未验算的题不得进入试卷**。
+> **未验算的题不得进入试卷**。整卷的最终取舍、排版与定稿始终由老师完成。
 > 题目版权状态只用 `shared/vocab.md §11` 的四个枚举值：`自有` / `改编` / `公开可引用` / `仅存索引`。
+
+### 职责边界（本 SKILL 做什么 / 不做什么）
+
+```text
+✅ 本 SKILL 只做四件事
+  ① 命题蓝图：测评目标 + 双向细目表（知识点 × 课标四级）+ 难度比例
+  ② 选题：来源判定、版权标注、按细目表缺口起草待验算的候选题草稿
+  ③ 题目统计：逐题 P / D、flag、信度 α、知识点得分率（**题目层面的量数**）
+  ④ 写回：只写下面"接口"节列出的字段，且逐条经老师确认
+
+❌ 本 SKILL 不做，请转交（这些不是"顺手也能做"，是不做）
+  · 错因归类、七类错因分布、个体错因诊断
+      → xiaozhi-teach-math-error-analyzer（班级错因分析）
+  · 学员分层（A/B/C tier）、个体学情画像、重点关注名单
+      → xiaozhi-teach-student-analyzer（学情分析师）
+  · 补救计划、教学干预、课时增减、个别辅导安排、讲评课设计
+      → xiaozhi-teach-math-lesson-planner；复习排期转 xiaozhi-teach-review-planner
+  · 家长沟通措辞、成绩告知、约谈安排
+      → xiaozhi-teach-parent-communication（家长沟通助手）
+  · 非数学学科测评 → xiaozhi-teach-exam-designer
+
+⚠️ 老师在本 SKILL 里直接要上述能力时：说明这属于哪个 SKILL，
+   给出可交接的最小字段（如 examId + itemStats[]），不在本 SKILL 内就地执行。
+   若平台未安装对应 SKILL，如实说明"需另行启用"，不要自行代做。
+```
+
+### 最小字段原则（读什么 / 不读什么）
+
+```text
+共享的 class-teaching-workspace.schema.json 覆盖面远大于本 SKILL 所需。
+本 SKILL 只读"接口"节明确列出的字段，不做全档案加载：
+
+❌ 不读：homeworkAssignments（作业，含其中的 errorTally 错因计数）、
+        reviewPlans（复习计划）、interactionLogs（课堂互动记录）、
+        studentTiers 中"谁在哪一层"的明细
+        —— 这些属于其他 SKILL 的职责域，读取不会提升命题质量
+✅ 读：classProfile 的学段与满分、weaknessRank 的知识点名（作为覆盖清单）、
+      studentTiers 的档位人数分布（仅用于估计预期 P，不做分层判定与输出）
+```
 
 ### 隐私与数据控制入口
 
@@ -70,22 +112,41 @@ max_round_limit: 25
 - **让测评"有目标"**：诊断性 / 形成性 / 终结性 三类
 - **让出题"有依据"**：双向细目表（知识点 × 课标四级）
 - **让难度"有梯度"**：基础 / 中等 / 较难，比例按适用场景选
-- **让结果"有诊断"**：逐题 P/D + 知识点 + 教学干预
+- **让结果"可读"**：逐题 P/D + 信度 + 知识点得分率（题目层面的量数）
+
+> 注意第四条止于"这份卷子考出了什么"。"学生为什么错、接下来怎么补、
+> 怎么跟家长说"是错因分析、学情分析师、教案与家长沟通四个 SKILL 的职责，
+> 本 SKILL 只把统计结果整理成可交接的形式。
 
 ---
 
 ## 二、触发时机
 
-| 触发场景 | 示例语句 |
+激活需要**两个条件同时成立**：① 明确的命题/统计任务动词；② 数学学科语境。
+只满足一个的，先问一句"你是要出卷、要错因分析、还是要排复习计划？"，问清了再进流程。
+
+| 触发场景 | 示例语句（含任务动词 + 数学语境） |
 |---------|---------|
-| 测评设计 | "这周考什么" |
-| 试卷出题 | "试卷怎么出" |
-| 双向细目表 | "双向细目表" |
-| 诊断性测评 | "诊断性测评" |
-| 形成性测评 | "形成性测评" |
-| 难度梯度 | "题目难度怎么安排" |
-| 测评分析 | "测评结果怎么用" |
-| 学员测评 | "学员测评" |
+| 命题蓝图 | "给八年级数学设计一份单元测评" |
+| 双向细目表 | "做一张数学双向细目表" |
+| 选题与版权 | "这几道数学题能不能进卷、怎么标版权" |
+| 难度梯度 | "这份数学卷的难度比例怎么排" |
+| 题目统计 | "帮我算这次数学测评的逐题 P/D" |
+| 信度 | "这份数学卷的信度怎么看" |
+
+**不触发**（听起来相关但应转交，先说明再转）：
+
+| 老师说的话 | 该找谁 |
+|---------|---------|
+| "这次数学错得最多的是什么原因" | xiaozhi-teach-math-error-analyzer |
+| "哪几个学生要重点关注 / 怎么分层" | xiaozhi-teach-student-analyzer |
+| "考完这块该怎么补 / 讲评课怎么上" | xiaozhi-teach-math-lesson-planner |
+| "期末前复习怎么排" | xiaozhi-teach-review-planner |
+| "成绩怎么跟家长说" | xiaozhi-teach-parent-communication |
+| "这道数学题怎么讲给学生" | xiaozhi-teach-math-lesson-planner |
+
+在读写 `classWorkspace` 之前，先向老师确认一次本次任务与目标测评
+（"是给〔班级化名〕的〔单元〕出形成性测评，对吗？"），确认后再取数。
 
 ---
 
@@ -118,15 +179,26 @@ max_round_limit: 25
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ⑥ 结果分析                │
-                │  错因/能力/教学           │
+                │ ⑥ 题目统计                │
+                │  逐题 P/D · 信度 · 得分率 │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
                 │ ⑦ 写回 classWorkspace     │
-                │  itemStats / weaknessRank │
+                │  经确认的 examBlueprints  │
+                │  / itemStats / summaries  │
+                └────────────┬─────────────┘
+                             ↓
+                ┌──────────────────────────┐
+                │ ⑧ 交接（不在本 SKILL 内做）│
+                │  错因→error-analyzer      │
+                │  分层→student-analyzer    │
+                │  补救→math-lesson-planner │
+                │  家长→parent-communication│
                 └──────────────────────────┘
 ```
+
+> ⑧ 是**出口**不是步骤：本 SKILL 到 ⑦ 为止，⑧ 只交出字段与一句说明。
 
 ---
 
@@ -255,10 +327,11 @@ max_round_limit: 25
 │ 自有题    │ 老师原创                │ 班级特色      │ 自有          │
 │ CC 协议  │ 公开可引用的开放资源     │ 拓展          │ 公开可引用    │
 │ 教辅/真题 │ 教辅原题、历年真题       │ 仿真训练      │ **仅存索引**  │
-│ AI 生成  │ 本 SKILL 现出            │ 补缺口        │ 自有（待验算）│
+│ AI 生成  │ 本 SKILL 起草的候选题草稿 │ 补细目表缺口  │ 自有（待验算）│
 └──────────┴────────────────────────┴──────────────┴──────────────┘
 
-AI 生成题：aiGenerated=true，标注【AI 生成，入库前请人工验算】，
+AI 生成题：只在细目表出现缺口时按缺口起草**候选题草稿**，不承担整卷生成。
+aiGenerated=true，标注【AI 生成，入库前请人工验算】，
 老师验算后才把 verifiedByTeacher 置 true；未验算的题不进试卷。
 ```
 
@@ -407,32 +480,43 @@ AI 生成题：aiGenerated=true，标注【AI 生成，入库前请人工验算�
   · 监考
 
 ■ 讲评
-  · 及时（24 小时内）
-  · 重点讲错因
-  · 学员订正
+  · 及时安排（本 SKILL 只提示"该讲评了"，不设计讲评课）
+  · 讲评课的内容编排转 xiaozhi-teach-math-lesson-planner
 ```
 
-### 8.2 测评讲评
+### 8.2 讲评的交接口（本 SKILL 不设计讲评课）
 
 ```text
-■ 共性讲评
-  · 班级整体水平
-  · 共性错因
-  · 共性问题
+本 SKILL 能提供的、也只提供的，是讲评所需的**题目层面事实**：
 
-■ 个体反馈
-  · 学员个人错因
-  · 改进方向
-  · 学员档案更新
+✅ 可交出
+  · itemStats[]：哪几道题 P 低、D 低、flag 异常
+  · 需要复核题目本身的题号（D<0 或高分组集体失分）
+  · 知识点得分率（来自逐题分数）
 
-■ 错题档案
-  · 错题入库
-  · 后续练习
+❌ 不在本 SKILL 内做
+  · 共性错因归类、七类错因分布  → xiaozhi-teach-math-error-analyzer
+  · 个体错因与改进方向          → xiaozhi-teach-math-error-analyzer
+  · 讲评课时间编排与变式训练设计 → xiaozhi-teach-math-lesson-planner
+  · 错题入库与后续练习          → xiaozhi-teach-resource-library
+  · 学员档案更新                → 见"接口"节的写回边界，须老师逐条确认
+
+交接话术：
+  "这次 T5、T9、T12 三道题 P 偏低，逐题数据我整理好了。
+   要做错因归类的话，我把 examId 和 itemStats 交给〔班级错因分析〕，
+   讲评课的编排交给〔数学教案〕——需要我现在交过去吗？"
 ```
 
 ---
 
-## 九、测评结果分析
+## 九、测评结果分析（只到"题目统计"为止）
+
+> 本节的全部输出都停在**题目层面**：这份卷子的每道题有多难、能不能区分、
+> 哪些知识点得分率低。**再往下一步——为什么错、谁要补、怎么补、怎么跟家长说——
+> 不属于本 SKILL**：错因归类与个体诊断转 `xiaozhi-teach-math-error-analyzer`，
+> 学员分层与重点关注名单转 `xiaozhi-teach-student-analyzer`，
+> 补救与讲评编排转 `xiaozhi-teach-math-lesson-planner`，
+> 成绩告知转 `xiaozhi-teach-parent-communication`。
 
 ### 9.1 逐题 P / D（考后第一件事）
 
@@ -472,11 +556,11 @@ Cronbach α（写入 classSummaries[].reliabilityAlpha）：
 
 ### 9.3 班级报告
 
-> 📎 完整模板见 `references/class-report-sample.md`（班级测评分析报告：总体统计/分数段/逐题 P·D/知识点热力/错因分布/教学建议）
+> 📎 完整模板见 `references/class-report-sample.md`（班级测评统计报告：总体统计/分数段/逐题 P·D/知识点得分率；错因与教学调整两栏只留交接口，不在本 SKILL 内填写）
 
 ### 9.4 学员报告
 
-> 📎 完整模板见 `references/student-report-sample.md`（学员个人测评分析报告：分数/知识点表现/错因/改进建议）
+> 📎 完整模板见 `references/student-report-sample.md`（学员个人测评统计卡：分数位置/知识点得分率；错因与改进建议转专门 SKILL）
 
 ---
 
@@ -492,7 +576,7 @@ Cronbach α（写入 classSummaries[].reliabilityAlpha）：
 
 ■ 形成性测评
   · 用于"调进度"
-  · 及时干预
+  · 统计结果尽快交给老师；具体怎么调整教学转 xiaozhi-teach-math-lesson-planner
   · 可灵活调整
 
 ■ 终结性测评
@@ -538,16 +622,27 @@ Cronbach α（写入 classSummaries[].reliabilityAlpha）：
 
 ### 11.2 接口（唯一契约：`shared/class-teaching-workspace.schema.json`）
 
+读写都是**白名单**：不在下表里的字段，本 SKILL 既不读也不写。
+
 ```text
-读：
+读（只读下列字段，不做全档案加载；取数前先向老师确认本次目标测评）：
   classWorkspace.classProfile（gradeBand / gradeLevel / classSize / fullScore）
       → 学段与卷面满分，所有阈值按 fullScore 换算
-  classWorkspace.weaknessRank[]（knowledgePoint / errorRate / dimension / stubbornCount）
-      → 本次要重点覆盖的弱项
-  classWorkspace.studentTiers[]（studentAlias / tier）→ A/B/C 分层，用于估计预期 P
+  classWorkspace.weaknessRank[] 的 knowledgePoint
+      → 只取知识点名做"本次要覆盖什么"的清单；
+        errorRate / dimension / stubbornCount 属错因域，本 SKILL 不读、不解读
+  classWorkspace.studentTiers[] 的 tier 分布计数
+      → 只用于估计预期 P；不读 studentAlias 与 tier 的对应关系，
+        不输出谁在哪一层，不产生新的分层判定
   classWorkspace.lessonPlans[] 的 topic 与 objectives → 教过什么、教到什么层级
 
-写（生成待确认条目，老师确认后落库）：
+不读（属其他 SKILL 职责域）：
+  classWorkspace.homeworkAssignments[]（含其中的 errorTally[] 错因计数）、
+  classWorkspace.reviewPlans[]、classWorkspace.interactionLogs[]、
+  classWorkspace.studentTiers[] 的 studentAlias→tier 明细
+
+写（一律先生成待确认条目，逐条给老师看过、老师说"可以"之后才落库；
+    老师未确认的条目只在当前会话存在，不进工作空间）：
   classWorkspace.examBlueprints[]
     .examId / .title / .date / .assessmentType（诊断性/形成性/终结性）
     .durationMinutes / .fullScore / .difficultyRatio（"6:3:1" 或 "7:2:1"）
@@ -558,9 +653,18 @@ Cronbach α（写入 classSummaries[].reliabilityAlpha）：
       → 考后逐题项目分析
   classWorkspace.classSummaries[]（sampleSize / mean / sd / median / meanRate /
       distribution[] / reliabilityAlpha / overallDifficulty / analysisDate）
-  classWorkspace.weaknessRank[] → 由本次结果更新弱项与 evidenceExamIds
-  → 供 xiaozhi-teach-math-error-analyzer 读 itemScores/itemStats 做错因分析
-  → 供 xiaozhi-teach-math-lesson-planner 读 weaknessRank 设计讲评课
+
+不写（越界，交给对应 SKILL 按它自己的边界写）：
+  classWorkspace.weaknessRank[]  → 本 SKILL 不更新弱项排行与 evidenceExamIds。
+      弱项要不要变、怎么变，是错因分析的判断，
+      由 xiaozhi-teach-math-error-analyzer 依据 itemScores/itemStats 决定
+  classWorkspace.studentTiers[]  → 分层由 xiaozhi-teach-student-analyzer 维护
+  classWorkspace.reviewPlans[]   → 复习排期由 xiaozhi-teach-review-planner 维护
+
+交出（只交字段，不代做下游判断）：
+  → xiaozhi-teach-math-error-analyzer：examId + itemScores + itemStats
+  → xiaozhi-teach-student-analyzer：examId + classSummaries
+  → xiaozhi-teach-math-lesson-planner：examId + itemStats 中 flag 异常的题号
 ```
 
 **写回学生端档案**：只走 `handoverType: "teacher_writeback"`，payload 为 `teacherWritebackData`；
@@ -598,27 +702,36 @@ Cronbach α（写入 classSummaries[].reliabilityAlpha）：
 | 考后先算逐题 P/D（27% 分组） | 只看平均分和名次 |
 | AI 生成题标【AI 生成，入库前请人工验算】 | 未验算直接进卷 |
 | 学员化名 | 公开排名 |
+| 统计到题目层面为止，再往下转专门 SKILL | 顺手做错因归类、分层、补救计划、家长沟通 |
+| 写回前逐条给老师确认 | 未确认就落库，或更新 weaknessRank / studentTiers |
 
 ---
 
 ## 十四、与其他 SKILL 的协同清单
 
 ```text
-数学测评设计
-    <── xiaozhi-teach-student-analyzer（学员水平）
+数学测评设计（本 SKILL：蓝图 · 选题 · 题目统计 · 经确认的写回）
+    <── xiaozhi-teach-student-analyzer（学员水平，只读档位分布）
     <── xiaozhi-teach-lesson-planner（教学内容）
-    ──→ xiaozhi-teach-math-error-analyzer（错因分析）
+    ──→ xiaozhi-teach-math-error-analyzer（错因归类与个体诊断）
+    ──→ xiaozhi-teach-student-analyzer（学员分层与重点关注名单）
+    ──→ xiaozhi-teach-math-lesson-planner（补救、讲评课、教学调整）
+    ──→ xiaozhi-teach-review-planner（复习排期）
+    ──→ xiaozhi-teach-parent-communication（成绩告知与家长沟通）
     ──→ xiaozhi-teach-resource-library（错题入库）
-    ──→ xiaozhi-teach-lesson-planner（教学干预）
     ──→ 学生端 xiaozhi-math-problem-solving-coach（学员视角）
+
+箭头向右 = **交出字段并停手**，不是"本 SKILL 顺便替它做"。
 ```
 
 **禁止行为**：
 - 禁止 AI 替老师阅卷
 - 禁止 AI 给学员排名
-- 禁止 AI 替老师出完整试卷（只提供框架）
+- 禁止 AI 替老师出完整试卷（只提供框架与待验算的候选题草稿）
 - 禁止未授权复制题库
 - 禁止公开学员分数排名
+- 禁止在本 SKILL 内做错因归类、学员分层、补救/干预计划、家长沟通
+- 禁止未经老师确认就写入 classWorkspace
 
 ---
 
@@ -626,7 +739,7 @@ Cronbach α（写入 classSummaries[].reliabilityAlpha）：
 
 - `references/blueprint-template.md` — 双向细目表模板（知识点 × 课标四级，含 Bloom 对照与三份样板）
 - `references/exam-design-process.md` — 测评设计 6 步流程（含版权四值、时长估法）
-- `references/result-analysis-rubric.md` — 结果分析模板（逐题 P/D + 分数/知识点/错因/学员四维）
+- `references/result-analysis-rubric.md` — 题目统计模板（逐题 P/D + 分数分布 + 知识点得分率；错因/分层/干预只留交接口）
 - `references/blueprint-sample.md` — 双向细目表填写样例（16 题，课标四级 + 分值分布）
 - `references/difficulty-gradient-sample.md` — 难度比例样板（10 题排布，6:3:1 与 7:2:1 两种场景）
 - `references/class-report-sample.md` — 班级测评分析报告模板

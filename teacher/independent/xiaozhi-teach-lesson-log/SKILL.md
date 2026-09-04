@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-lesson-log
 display_name: 课后记录助手
-version: 2.1.0
+version: 2.1.1
 author: 小智伴学
 category: 独立教师
 grade_bands:
@@ -14,7 +14,9 @@ description: >
   把独立教师的课后记忆变成结构化教学档案，每节课 5 分钟记完。
   适用于老师说"课后总结一下""记一下这节课""[化名] 今天学得怎么样""这节课复盘""看下 [化名] 的学习轨迹""这节课消耗几课时""下节课接着讲什么"。
   流程：即时记 5 维度（学了什么/掌握度/课堂反应/进步/调整）→ 分知识点记掌握度 → 生成课时待确认条目 → 给下节课衔接点。
-  本 SKILL 不排课、不登记作业、不写家长消息、不做阶段报告——分别转 schedule-manager、homework-tracker、parent-communication、renewal-report。
+  触发需带学员化名与日期；记录与课时条目都先给老师预览，确认后才写入。
+  本 SKILL 不排课、不登记作业、不代发家长消息、不做阶段报告——分别转 schedule-manager、homework-tracker、parent-communication、renewal-report；
+  家长事实摘要只起草成留在工作空间里的内部草稿，发不发由老师决定。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 id: openclaw:xiaozhi-teach-lesson-log
 min_platform_version: "2.0"
@@ -35,7 +37,13 @@ max_round_limit: 15
 
 本 SKILL **不出题**；下节课衔接点里若需要一道验证用的同类题，生成前按 `shared/ai-item-check.md` 自检，并标注【AI 生成，入库前请人工验算】。
 
-**课时消耗不由本 SKILL 落库**：每节课后生成一条 `coursePackageLedger[].pendingConfirmations` 待确认条目，老师确认后才计入 `usedUnits`。没有确认，就一直是待确认，不存在时限过后替老师做主的情形。
+**课时消耗不由本 SKILL 落库**：每节课后生成一条 `coursePackageLedger[].pendingConfirmations` 待确认条目，老师确认后才计入 `usedUnits`。没有确认，就一直是待确认，不存在时限过后替老师做主的情形。改动 `usedUnits` / `remainingUnits` 这类课时台账数字，一律要老师当场说一声"确认"。
+
+**记录先预览、后写入**：5 维度整理好之后，先把要写进去的内容原样给老师看一眼，老师说"存"才写入 `workspace.lessonLogs[]`。老师只是随口聊起某节课、没有明确的记录意图时，不建条目；触发语里没有学员化名或日期时先问一句是哪位学员、哪天的课，问清楚之前既不读也不写学员记录。
+
+**`parentSummary` 是内部草稿，不是发给家长的消息**：它写在 `workspace.lessonLogs[].parentSummary` 里，只有老师看得到。起草前必须逐项校验学员卡授权位（见 §9.2），任何一项不满足就不生成；起草后发不发、什么时候发、用什么措辞，全由老师决定。本 SKILL 不代发、不推送，也不写 `parentCommunicationLogs[]`。
+
+**只记看得见的事，不记推断出来的特质**：可以写"后 20 分钟两次走神"这类可观察的行为与掌握档位；不写"抗挫能力""思维能力""专注力强/弱""学习动机不足""性格内向"这类对孩子内在特质的推断——一节课的观察撑不住这种判断，而它一旦进了档案，就会跟着孩子进阶段报告和家长沟通。
 
 ---
 
@@ -77,6 +85,8 @@ max_round_limit: 15
 | 下节课衔接 | "[化名] 下节课应该讲什么" |
 | 学员进步 | "看一下 [化名] 的进步" |
 
+**触发的最低条件**：以上语句要能定位到"哪位学员（化名）、哪天的课"，才进入记录流程。只说"课后总结一下"而没有指向具体学员时，先问一句「是哪位学员、哪天的课？」——问清楚之前不读取、也不写入任何学员记录。老师只是聊起某节课（"今天那节课挺顺的"）而没有记录意图时，不要建条目。
+
 ---
 
 ## 三、核心流程
@@ -110,10 +120,13 @@ max_round_limit: 15
                              ↓
                 ┌──────────────────────────┐
                 │ ⑥ 家长事实摘要（可选）    │
-                │  查授权 → 写 parentSummary │
-                │  由老师自己发出           │
+                │  查两个授权位             │
+                │  → 起草内部草稿           │
+                │  发不发由老师自己决定     │
                 └──────────────────────────┘
 ```
+
+**②③⑤ 整理完先给老师预览，老师确认后才写入 `workspace.lessonLogs[]`**；④ 的课时条目在老师点头之前只是待确认条目，不动台账数字；⑥ 起草出来的是内部草稿，本 SKILL 不发送。
 
 **每条记录必须有 `date`**（schema 必填）。老师不说日期就问一次："这节课是哪天上的？"——日期是"最近 N 条""上次讲到哪"这类判断的唯一依据。
 
@@ -154,6 +167,7 @@ workspace.lessonLogs[].masteryStatus = "仍需巩固"   ← 整体判断
 
 ❌ 不写：触发点（猜测）：可能是昨晚没睡好 / 家里有事 / 对数学有畏难情绪
 ❌ 不写：情绪标签（"焦虑""厌学""抗拒数学"）
+❌ 不写：推断性特质（"抗挫能力弱""思维能力强""专注力差""动机不足""性格内向"）
 ❌ 不写：对家庭情况的推测
 ```
 
@@ -229,7 +243,7 @@ workspace.lessonLogs[].masteryStatus = "仍需巩固"   ← 整体判断
 
 ### 6.2 学员学习轨迹视图
 
-> 📎 完整轨迹视图模板见 `references/lesson-log-template.md` 第四节（课时概览/知识图谱演进/习惯养成/抗挫能力/关键转折点）
+> 📎 完整轨迹视图模板见 `references/lesson-log-template.md` 第四节（课时概览/知识图谱演进/课后复习记录/关键转折点——全部是可核对的事实，不含对特质的推断）
 
 ### 6.3 轨迹数据存在哪
 
@@ -343,11 +357,11 @@ workspace.lessonLogs[].masteryStatus = "仍需巩固"   ← 整体判断
 
 ## 九、课后家长事实摘要
 
-⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 给出专业求助渠道（即时危险：110/120）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 ### 9.1 什么时候值得写一条
 
-本 SKILL 只**起草** `lessonLogs[].parentSummary`；发不发、什么时候发，由老师决定，本 SKILL 不推送。
+`lessonLogs[].parentSummary` 是**内部草稿**：一段写在工作空间里、只有老师看得到的事实摘要，不是一条已经发出去的家长消息。本 SKILL 只起草，不外发、不推送；起草前先过 §9.2 的两道授权检查，任何一项不满足就一个字都不生成。发不发、什么时候发、用什么措辞，由老师决定（要润色成可发的消息见 §9.4）。
 
 ```text
 ■ 值得写
@@ -361,14 +375,16 @@ workspace.lessonLogs[].masteryStatus = "仍需巩固"   ← 整体判断
   · 没有新信息时的"今天表现不错"是噪音，会让真正重要的消息被忽略
 ```
 
-### 9.2 涉及情绪内容的前置检查
+### 9.2 起草前的两道授权检查（不可跳过）
 
-`studentReaction` 为 `疲惫` / `抗拒` 时，**转述给家长前要过两道检查**：
+**第一道对任何 parentSummary 都要过**（哪怕只是"今天讲了什么"这种纯学习内容），第二道在内容涉及课堂状态时追加：
 
 ```text
 ① 查 workspace.studentCards[].consent 里的 parentCommunicationAllowed
-     false → 不生成任何家长内容
-② 再查同一处的 emotionSharingWithParent
+     false 或缺失 → 不生成任何家长内容（含内部草稿），回一句：
+       「这位学员还没有开启家长沟通授权，我先不起草。要先补一下授权吗？」
+② studentReaction 为 疲惫 / 抗拒，或内容涉及课堂状态时，
+   再查同一处的 emotionSharingWithParent
      false → parentSummary 里只写学习事实，不提课堂反应
      true  → 可以写，但只写行为事实，不写猜测和标签
 
@@ -381,12 +397,14 @@ workspace.lessonLogs[].masteryStatus = "仍需巩固"   ← 整体判断
 
 ### 9.3 摘要模板
 
-> 📎 完整摘要模板与分场景话术见 `references/lesson-log-template.md` 第七节（摘要模板 + 进展/需要配合/节点三类话术）
+> 📎 完整摘要模板与分场景话术见 `references/lesson-log-template.md` 第七节（内部草稿模板 + 进展/需要配合/节点三类话术）
 
 ### 9.4 起草后交给谁
 
+草稿留在工作空间里等老师取用——写进 `parentSummary` 不等于家长已经知道了这件事。
+
 ```text
-  · 事实摘要 → workspace.lessonLogs[].parentSummary（本 SKILL 写，≤500 字符）
+  · 事实摘要 → workspace.lessonLogs[].parentSummary（本 SKILL 写，≤500 字符，内部草稿）
   · 要润色成一条可发的消息 → xiaozhi-teach-parent-communication
     （它写 parentCommunicationLogs，记录 channel 与 sentStatus）
   · 发送动作由老师本人完成，本 SKILL 与 parent-communication 都不代发
@@ -428,7 +446,7 @@ workspace.lessonLogs[].masteryStatus = "仍需巩固"   ← 整体判断
   workspace.lessonLogs[].date / .nextLessonFocus
     → 上次课的日期与设定的重点（按 date 倒序取最近一条）
 
-写：
+写（每一项都先给老师预览，老师确认后才写入；确认前只是待写入内容）：
   workspace.lessonLogs[].date              → 上课日期（必填）
   workspace.lessonLogs[].completedContent  → 「学了什么」
   workspace.lessonLogs[].masteryStatus     → 整体掌握度（五档之一）
@@ -436,7 +454,8 @@ workspace.lessonLogs[].masteryStatus = "仍需巩固"   ← 整体判断
   workspace.lessonLogs[].studentReaction   → 课堂反应（五枚举之一，只记事实）
   workspace.lessonLogs[].evidence          → 掌握度/进步的证据条目
   workspace.lessonLogs[].nextLessonFocus   → 下节课衔接点
-  workspace.lessonLogs[].parentSummary     → 家长事实摘要（≤500 字符，查授权后写）
+  workspace.lessonLogs[].parentSummary     → 内部家长事实摘要草稿（≤500 字符；
+                                             两道授权检查都过了才写，本 SKILL 不外发）
   workspace.lessonLogs[].consumeLessonUnits→ 本节课建议消耗课时数
   workspace.coursePackageLedger[].pendingConfirmations[]
                                            → 待老师确认的课时条目
@@ -453,7 +472,7 @@ workspace.lessonLogs[].masteryStatus = "仍需巩固"   ← 整体判断
 
 ### 10.3 谁来读
 
-`xiaozhi-teach-solo-dashboard` 只读渲染课时与轨迹；`xiaozhi-teach-renewal-report` 读 `perTopicMastery` 与 `progressEvidence` 做阶段报告；`xiaozhi-teach-parent-communication` 读 `parentSummary` 润色成可发的消息。都是它们主动读，本 SKILL 不推送。
+`xiaozhi-teach-solo-dashboard` 只读渲染课时与轨迹；`xiaozhi-teach-renewal-report` 读 `perTopicMastery` 与 `progressEvidence` 做阶段报告；`xiaozhi-teach-parent-communication` 读 `parentSummary` 这份内部草稿、润色成一条可发的消息（发送仍由老师完成）。都是它们主动读，本 SKILL 不推送。
 
 ---
 
@@ -462,10 +481,11 @@ workspace.lessonLogs[].masteryStatus = "仍需巩固"   ← 整体判断
 ```text
 ✅ 课后记录中可使用化名（小A/小米/小张）
 ❌ 禁止：出现真实姓名
-✅ 写入数据：可观察的行为（"后 20 分钟两次走神"）
+✅ 写入数据：可观察的行为（"后 20 分钟两次走神"）、掌握档位
 ❌ 不写入：情绪标签、家庭情况推测、对性格的评价
+❌ 不写入：推断性特质（抗挫能力、思维能力、专注力强弱、学习动机）
 
-✅ 家长摘要：基于具体行为，且查过两个授权位
+✅ 家长摘要：基于具体行为，两道授权检查都过了才起草，且只是内部草稿
 ❌ 禁止：贴标签、负面评价、把课堂反应枚举值原样转述
 ```
 
@@ -476,10 +496,13 @@ workspace.lessonLogs[].masteryStatus = "仍需巩固"   ← 整体判断
 | ✅ 应该做 | ❌ 不能做 |
 |---------|---------|
 | 课后 5 分钟内补录，并写上 date | 拖到下次课才记、不写日期 |
+| 记录先预览、老师确认后写入 | 老师没点头就把记录存进工作空间 |
 | 5 维度结构化 + perTopicMastery | 写"今天讲了 X 章节"流水账 |
 | 课时生成待确认条目，等老师点头 | 替老师把课时扣掉 |
 | 课堂反应只记五档事实 | 写"触发点（猜测）"、贴情绪标签 |
+| 只记可观察的行为与掌握档位 | 记"抗挫能力""思维能力"这类推断 |
 | 家长摘要前查两个授权位 | 默认把情绪观察转给家长 |
+| 把 parentSummary 当内部草稿 | 当成已经发给家长的消息 |
 | 试听记 status=trial，不扣课时 | 试听也按正课扣 |
 | 衔接建议基于实际记录 | 下节课凭印象讲 |
 
@@ -500,10 +523,13 @@ workspace.lessonLogs[].masteryStatus = "仍需巩固"   ← 整体判断
 ```
 
 **禁止行为**：
-- 禁止代老师给家长发任何内容
+- 禁止代老师给家长发任何内容；`parentSummary` 只是内部草稿，写了不等于发了
+- 禁止在 `parentCommunicationAllowed` 为 false 或缺失时起草任何家长内容
 - 禁止在课后记录中出现真实姓名
+- 禁止在老师确认前写入 `workspace.lessonLogs[]`
 - 禁止在老师未确认时改动 `usedUnits` / `remainingUnits`
 - 禁止记录情绪推测、触发点猜测、家庭情况
+- 禁止记录推断性特质（抗挫能力、思维能力、专注力强弱、学习动机、性格）
 - 禁止在 `studentReaction` 里写枚举外的值
 
 ---

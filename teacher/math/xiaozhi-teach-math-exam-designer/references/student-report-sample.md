@@ -1,7 +1,14 @@
-# 测评分析报告模板（学员）
+# 测评统计卡模板（学员）
 
 > 适用学段：初中（7-9 年级）。一律用化名（studentAlias），不写真实姓名。
-> **不写具体名次**——个体报告的作用是指出下一步做什么，不是排位。
+> **不写具体名次**——个体统计卡的作用是给出这次的客观得分情况，不是排位。
+>
+> ⚠️ **边界**：本模板只填**这次卷子上的得分事实**。
+> "为什么错"（错因诊断）转 `xiaozhi-teach-math-error-analyzer`；
+> "接下来练什么"（改进计划、个别辅导）转 `xiaozhi-teach-math-lesson-planner`；
+> "在班里处于什么水平 / 属于哪一层"转 `xiaozhi-teach-student-analyzer`；
+> 给家长看的版本转 `xiaozhi-teach-parent-communication`。
+> 本模板对这四项只留交接口，不代填。
 
 ```text
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -18,19 +25,23 @@
   · 要补的：[知识点]（得分率 [N]%）
   · 本次没考到、但档案里仍是弱项的：[知识点]
 
-■ 错因分析
-  · 主导错因：[七类之一]  → 通用四维：[概念模糊/计算失误/读题失误/方法用错]
-  · 具体表现：[写具体行为，不写"粗心""不认真"]
-  · 置信度：🟢 数据充分 / 🟡 初步趋势 / 🔴 样本不足
-    （本次错题 <10 道时只写方向，不写百分比）
+■ 错因分析 —— 本模板不填
+  · 本 SKILL 只能给出"错在哪几题、涉及哪些知识点"
+  · 判断"为什么错"要看学生的实际书写与步骤，
+    转 xiaozhi-teach-math-error-analyzer；本卡不写主导错因与置信度
 
-■ 改进建议（一次只给 1-2 条，能当周做完）
-  · [具体动作，如"解方程后回代检验，连续一周每题都做"]
-  · [具体动作]
+■ 改进建议 —— 本模板不填
+  · 接下来练什么、怎么练、要不要个别辅导
+    → xiaozhi-teach-math-lesson-planner（复习排期转 xiaozhi-teach-review-planner）
 
-■ 授权提示
-  · 写回学生端档案前核对 teacherWritebackConsent
-  · 交给家长前核对 parentSharingConsent；涉及情绪内容再核对 emotionSharingWithParent
-  · 两者任一为 false → 只给学生本人
+■ 可交接的最小字段
+  · 学员化名 + examId + 该生逐题得失分 + 涉及知识点
+  · 交出前先问老师："要我把这份交给〔班级错因分析〕看错因吗？"
+
+■ 交接与授权提示
+  · 本卡是待确认草稿，老师确认后才写入 classWorkspace
+  · 写回学生端档案前核对 teacherWritebackConsent，为 false 则丢弃并告知老师
+  · 本 SKILL 不生成家长版本；家长侧输出转 xiaozhi-teach-parent-communication，
+    由它核对 parentSharingConsent 后决定给什么
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```

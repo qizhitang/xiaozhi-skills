@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-student-intake
 display_name: 试听与学员建档
-version: 2.1.0
+version: 2.1.1
 author: 小智伴学
 category: 独立教师
 grade_bands:
@@ -9,12 +9,13 @@ grade_bands:
   - 小学高段
   - 初中
   - 高中
-tags: [试听, 学员建档, 需求诊断, 试讲课, 续费, 独立教师]
+tags: [试听, 学员建档, 需求诊断, 试讲课, 转化跟进, 独立教师]
 description: >
   把试听从"体验课"变成一次双向诊断，并按最小化原则给新学员建档。
   适用于老师说"新学员要试听""安排一节试听""试听课怎么上""学员档案怎么建""家长/孩子想学什么""试听完怎么记录""试听后怎么跟进"。
-  流程：收最小必要信息 → 5W 需求访谈 → 5-10 分钟前测评 → 设计诊断式试讲 → 记录 5 维度观察 → 判断是否适配 → 建正式学员卡。
-  本 SKILL 不排课、不写课后记录、不登记作业、不做阶段报告，也不收集或存储任何联系方式——排课转 schedule-manager，课后记录转 lesson-log，阶段报告转 renewal-report。
+  流程：确认监护人同意 → 收最小必要信息 → 5W 需求访谈 → 5-10 分钟前测评 → 设计诊断式试讲 → 记录 5 维度观察 → 判断是否适配 → 建正式学员卡。
+  范围到建档为止：不排课、不写课后记录、不登记作业、不做阶段报告、不谈续费与流失挽回，也不收集或存储任何联系方式。
+  排课与课节状态转 schedule-manager，课后记录转 lesson-log，续费/阶段报告/流失跟进转 renewal-report。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 id: openclaw:xiaozhi-teach-student-intake
 min_platform_version: "2.0"
@@ -34,6 +35,27 @@ max_round_limit: 15
 **联系方式不进这套系统。** 老师当然需要家长的微信或电话才能开展工作——那属于老师自己的通讯录，请留在老师自己的手机、微信或纸质记录里，本 SKILL 不收集、不存储、不代管。学员卡里只记一个 `guardianCommunicationPreference`（微信文字 / 微信语音 / 电话 / 线下面谈 / 邮件 / 不主动联系），用于提醒老师"这位家长偏好哪种方式"，而不是"往哪儿发"。紧急联系人同理：老师自己保管，不入档案。
 
 试讲课的核心是诊断而非展示；不夸大教学效果，不做提分承诺。本 SKILL 不向家长或学员发送任何消息，只生成话术建议由老师自行使用。无 `K`（日期感知）时先问今天日期再排跟进节点。
+
+**范围就是建档本身。** 需求访谈 → 试听诊断 → 试听观察 → 建一张学员卡与一个课时包，到此为止。以下都不在本 SKILL，老师在这里问起时说明该找哪个技能，不在本 SKILL 里执行：
+
+```text
+续费节点沟通、阶段报告、家长犹豫时的挽留、退费   → xiaozhi-teach-renewal-report
+缺课跟进、流失挽回、课节状态（含把试听课记成
+  status=trial）、首课排期、补课与改期            → xiaozhi-teach-schedule-manager
+课后记录、课时消耗登记                            → xiaozhi-teach-lesson-log
+家长消息的润色与沟通记录                          → xiaozhi-teach-parent-communication
+```
+
+**未成年人建档前先确认监护人同意。** 建卡是一次持久化写入，写的是一个孩子的学习信息，所以顺序是"先确认同意，再建卡"：
+
+```text
+① 先问一句：「这张卡由谁授权建？家长知道并同意吗？」
+② 记进 consent：profileEnabled 为 true 才建卡；
+   grantedBy 未满 14 周岁（小学各段或初一）必须含"监护人"；
+   14 岁及以上的未成年人，也要确认监护人知情同意后再建
+③ 确认不到监护人同意 → 不建卡、不写任何字段，
+   只在当次会话里口头给试听与教学建议
+```
 
 ---
 
@@ -58,7 +80,7 @@ max_round_limit: 15
 本 SKILL 要解决的是：
 - **让试听成为双向诊断**：老师诊断学生 + 家长诊断老师
 - **让学员档案是"教学起点"**：含需求画像 + 学情基线 + 目标设定
-- **让跟进有节奏**：转化期/续费期/流失期 三个阶段不同话术
+- **让试听后的跟进有节奏**：试听 → 报名这一段有明确节奏，最多问三次就停；报名之后的续费与流失跟进交给对应的伙伴技能
 
 ---
 
@@ -71,9 +93,18 @@ max_round_limit: 15
 | 需求诊断 | "家长/学生有什么需求" / "学员来学什么" |
 | 试讲课设计 | "试听课怎么上" / "试听讲什么" |
 | 试听记录 | "试听完怎么记录" / "试听反馈怎么写" |
-| 试听后跟进 | "试听后怎么跟进" / "怎么转化" |
-| 续费判断 | "要不要续费" / "学员能继续上吗" |
-| 学员流失 | "学员不来上课了" / "学员退费" |
+| 试听后跟进 | "试听后怎么跟进"（仅限试听→报名这一段） |
+
+**不由本 SKILL 处理的相邻场景**（听到这些就转，不要顺手接下去）：
+
+| 老师说 | 转给 |
+|---------|---------|
+| "要不要续费" / "学员能继续上吗" / "家长犹豫续不续" | `xiaozhi-teach-renewal-report` |
+| "学员不来上课了" / "学员退费" / "怎么把人留住" | `xiaozhi-teach-renewal-report`（挽留话术）、`xiaozhi-teach-schedule-manager`（缺课与改期） |
+| "试听课排在周几" / "首课怎么排" | `xiaozhi-teach-schedule-manager` |
+| "这节课记一下" | `xiaozhi-teach-lesson-log` |
+
+**触发的最低条件**：要同时看到"新学员 / 试听 / 建档"的场景信号和一个明确的操作意图（安排试听、设计试讲、记录试听、建卡），才进入本流程。像"学员来学什么"这种话单独出现时，先问一句「是要给新学员做需求访谈，还是问在读学员的目标？」——问清楚之前不建卡、不写任何字段。建卡这一步在任何情况下都要先走 §技术边界 的监护人同意确认。
 
 ---
 
@@ -107,14 +138,17 @@ max_round_limit: 15
                              ↓
                 ┌──────────────────────────┐
                 │ ⑥ 转化判断与跟进          │
-                │  转化期/续费期/流失期    │
+                │  只到"试听→报名"为止      │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
                 │ ⑦ 正式学员档案建立        │
+                │  先确认监护人同意         │
                 │  → solo-dashboard          │
                 └──────────────────────────┘
 ```
+
+流程到 ⑦ 结束。报名之后的事——排课、课后记录、续费节点、流失挽回——分别由 schedule-manager、lesson-log、renewal-report 接手，本 SKILL 不往下延伸。
 
 ---
 
@@ -285,7 +319,7 @@ max_round_limit: 15
 
 ### 8.1 5 维度观察记录
 
-> 📎 完整模板见 `references/trial-observation-record.md`（学情表现/性格特征/家长参与/双向契合度/转化判断 五维观察记录卡）
+> 📎 完整模板见 `references/trial-observation-record.md`（学情表现/课堂反应五档/家长参与/双向适配/下一步 五维观察记录卡——只记这一节课看到的事实，不写性格与特质推断）
 
 ### 8.2 试听反馈话术
 
@@ -305,25 +339,33 @@ max_round_limit: 15
 
 ---
 
-## 九、转化/续费/流失三阶段跟进
+## 九、试听后的转化跟进（只有这一段）
 
-以下所有话术都由**老师本人**发出，本 SKILL 只起草。起草前先查 `workspace.studentCards[].consent` 中的 `parentCommunicationAllowed`。
+话术由**老师本人**发出，本 SKILL 只起草；起草前先查 `workspace.studentCards[].consent` 中的 `parentCommunicationAllowed`，为 false 时一条都不生成。
 
 ### 9.1 转化期（试听后 1-7 天）
 
-> 📎 完整节奏与话术见 `references/followup-scripts-three-stages.md`（转化期跟进节奏 + 话术示例 + 避免事项）
+这是本 SKILL 负责的唯一一段跟进：让双方判断合不合适，而不是催家长下单。节奏是"当天一条反馈 → 2-3 天问一次有没有疑问 → 5-7 天没回就打住"。
 
-### 9.2 续费期（课时包已用 50% / 70%）
+> 📎 完整节奏与话术见 `references/followup-scripts-trial-conversion.md`（转化期跟进节奏 + 话术示例 + 避免事项）
 
-**全库统一两个节点：已用 50%、已用 70%**，与 `xiaozhi-teach-renewal-report`、`xiaozhi-teach-schedule-manager` 一致。本 SKILL 不另设 80% 或 90% 节点——节点越多越像催单，两次就够：50% 时给一次阶段性反馈，70% 时把"还剩多少、下一阶段打算做什么"说清楚，剩下的交给家长判断。
+### 9.2 报名之后的跟进不在本 SKILL
 
-> 📎 完整节奏与话术见 `references/followup-scripts-three-stages.md`（续费期 50% / 70% 两节点节奏 + 话术示例）
+学员报名以后的每一类跟进都由别的技能负责，本 SKILL 只做转介，不起草这些话术：
 
-### 9.3 流失期（连续 2-3 次缺课或明确表达不再继续）
+```text
+续费节点沟通（已用 50% / 70%）、家长犹豫时的回应、阶段报告
+  → xiaozhi-teach-renewal-report
+连续缺课的跟进、流失挽回、改期与补课
+  → xiaozhi-teach-schedule-manager（排期）
+  → xiaozhi-teach-renewal-report（体面结束与交接话术）
+```
 
-> 📎 完整节奏与话术见 `references/followup-scripts-three-stages.md`（流失期诊断节奏 + 话术示例 + 体面结束注意事项）
+续费节点的口径全库统一为**已用 50% / 70%** 两个（见 `xiaozhi-teach-renewal-report`），本 SKILL 只是引用这个口径以免建档时给家长讲错，不在这里生成续费话术。
 
-学员结课后：把 `studentCards[].status` 改为"已结课"，并按 `consent.retentionUntil`（默认结课后 6 个月）到期提示老师删除整张卡。
+### 9.3 结课与档案状态
+
+学员结课时，改的是学员卡而不是发消息，所以留在本 SKILL 的档案生命周期里处理，且每一步都要老师确认：见 §12.3。
 
 ---
 
@@ -371,11 +413,13 @@ max_round_limit: 15
 > 所有读写均落在共享工作空间 `solo-teacher-workspace.schema.json`；派生项已单独标注。
 
 ```text
-建档前的校验：
+建档前的校验（都不满足就不建卡）：
   workspace.studentCards[].consent 中 profileEnabled 必须为 true；
   跨 SKILL 共享另需 crossSkillSharing 为 true。
-  未满 14 周岁（学段为小学各段或初一）时，consent 的 grantedBy
-  必须含"监护人"（shared/vocab.md §8）。
+  未成年人须确认监护人知情同意；未满 14 周岁（学段为小学各段或
+  初一）时，consent 的 grantedBy 必须含"监护人"（shared/vocab.md §8）。
+  retentionUntil 必填：已报名的按结课后 6 个月，试听未报名的按
+  试听日 + 90 天（见 §12.3）。
 
 写：
   workspace.studentCards[]
@@ -395,8 +439,11 @@ max_round_limit: 15
       见 shared/vocab.md §7）
 
 本 SKILL 不写：
-  workspace.lessonSchedule[]  → 首课排期交 xiaozhi-teach-schedule-manager
+  workspace.lessonSchedule[]  → 首课排期与课节状态（含试听课的
+                                status=trial）交 xiaozhi-teach-schedule-manager
   workspace.lessonLogs[]      → 交 xiaozhi-teach-lesson-log
+  续费/流失相关的任何输出     → 交 xiaozhi-teach-renewal-report；
+                                本 SKILL 只做试听→报名这一段跟进
   风险标记                    →（派生视图，非存储字段：由工作台依据
                                 homeworkFollowups[].overdueDays、
                                 lessonLogs[].masteryStatus、
@@ -437,13 +484,30 @@ max_round_limit: 15
 公开报告/案例绝不出现真实姓名
 ```
 
-### 12.3 保留期限
+### 12.3 保留期限与删除窗口
+
+两条保留线，按"有没有报名"分开走。两条都不会替老师做主：到期只提示，删除要老师确认两次（一次改成"待删除"，一次真删）。
 
 ```text
-consent.retentionUntil：结课后默认保留 6 个月，到期提示老师删除整卡
-studentCards[].status = "已结课" → 不再写入新记录
-studentCards[].status = "待删除" → 等老师确认后整卡删除
-学员/家长随时可要求提前删除，见下方控制入口
+■ 已报名的正式学员
+  retentionUntil：结课后默认保留 6 个月
+  status = "已结课" → 不再写入新记录
+  status = "待删除" → 老师再确认一次后整卡删除
+
+■ 试听后没有报名的学员（删除窗口）
+  retentionUntil = 试听日 + 90 天
+    （本 SKILL 的默认取值；老师可以当场改短，比如"这个就别留了"）
+  到期当天提示一次：
+    「小A 试听后没有报名，档案今天到保留期了，删掉吗？（删 / 再留 30 天）」
+  老师确认删 → status 改 "待删除"，再确认一次后整卡删除
+  老师说再留   → 顺延一次，并记下新的 retentionUntil
+  老师没回应   → 保持提示，下次进入本 SKILL 时再问一次；
+                 既不替老师删，也不悄悄续期
+
+■ 任何时候
+  学员/家长要求提前删除 → 老师确认后随时执行，不需要理由
+  结课、暂停、删除都是档案动作，只在本 SKILL 里做；
+  parent-communication 与 renewal-report 遇到这类要求只转达，不代改
 ```
 
 ---
@@ -452,12 +516,13 @@ studentCards[].status = "待删除" → 等老师确认后整卡删除
 
 | ✅ 应该做 | ❌ 不能做 |
 |---------|---------|
+| 建卡前先确认监护人同意 | 没确认同意就先把卡建了 |
 | 只收教学用得上的字段 | 收联系方式、真实姓名、出生年月 |
 | 联系方式请老师自己保管 | 代老师存家长电话/微信 |
 | 试听是诊断而非表演 | 把试听上成"表演课" |
 | 双向契合度判断 | 单方面推销课时包 |
-| 续费只在 50% / 70% 两个节点说 | 每隔几节课就提一次续费 |
-| 流失期体面结束 | 强行挽留 / 诋毁其他老师 |
+| 续费、流失、排课转对应技能 | 在建档技能里接着办续费和挽留 |
+| 未报名的试听档案 90 天到期提示 | 让不转化的试听记录无限期留着 |
 | 化名一致使用 | 公开档案/案例出现真实姓名 |
 | 单次观察标 🔴 样本不足 | 凭一节试听下长期结论 |
 
@@ -471,12 +536,18 @@ studentCards[].status = "待删除" → 等老师确认后整卡删除
     写 workspace.coursePackageLedger[]   ← 新开课时包时
     写 workspace.progressEvidence[]      ← 试听诊断基线
 
-  首课排期交 xiaozhi-teach-schedule-manager（它读 availability[]）。
-  跟进话术由老师本人发出；需要润色时交 xiaozhi-teach-parent-communication。
-  阶段报告与续费口径见 xiaozhi-teach-renewal-report（已用 50% / 70%）。
+  首课排期与课节状态（含试听课的 status=trial）交 xiaozhi-teach-schedule-manager
+  （它读 availability[]，本 SKILL 不写 lessonSchedule[]）。
+  转化期话术由老师本人发出；需要润色时交 xiaozhi-teach-parent-communication。
+  续费沟通、阶段报告、流失挽回与体面结束交 xiaozhi-teach-renewal-report
+  （续费节点口径同样在那边：已用 50% / 70%）。
 ```
 
 **禁止行为**：
+- 禁止在确认监护人同意之前建卡或写入任何字段
+- 禁止在本 SKILL 内起草续费、挽留、流失跟进话术（转 `xiaozhi-teach-renewal-report`）
+- 禁止写 `workspace.lessonSchedule[]`（含把试听课记成 `status=trial`，交 schedule-manager）
+- 禁止让未转化的试听档案没有删除窗口地留着
 - 禁止收集或存储任何联系方式、紧急联系人
 - 禁止记录真实姓名（含姓氏首字）、出生年月、住址、学校班级
 - 禁止"保证提分"承诺
@@ -509,7 +580,7 @@ studentCards[].status = "待删除" → 等老师确认后整卡删除
 - `references/diagnosis-card-template.md` — 学情诊断卡模板
 - `references/trial-lesson-5-segment-structure.md` — 试讲课 5 段结构模板
 - `references/trial-observation-record.md` — 试听记录（5 维度观察）模板
-- `references/followup-scripts-three-stages.md` — 转化/续费/流失三阶段跟进节奏与话术库
+- `references/followup-scripts-trial-conversion.md` — 试听后转化期跟进节奏与话术（报名之后的跟进不在本 SKILL）
 - `references/formal-student-profile-template.md` — 正式学员档案模板
 - `shared/vocab.md` — 授权位、置信度、学段（唯一来源）
 - `shared/grade-bands.md` — 课时长度参数
@@ -520,6 +591,7 @@ studentCards[].status = "待删除" → 等老师确认后整卡删除
 
 每次输出学员档案或试听方案前，逐条过一遍：
 
+- [ ] 建卡前是否确认过监护人同意（未满 14 周岁必须，14 岁以上也要家长知情）
 - [ ] 是否只收了教学用得上的字段
 - [ ] 是否**没有**记录任何联系方式、紧急联系人、真实姓名、出生年月
 - [ ] 是否使用化名，且化名不含真实姓氏
@@ -530,8 +602,8 @@ studentCards[].status = "待删除" → 等老师确认后整卡删除
 - [ ] 试听观察结论是否标了 🔴 样本不足
 - [ ] 试讲是否诊断式而非表演式，时长是否与授课形式一致
 - [ ] 是否避免了"保证提分"类承诺
-- [ ] 续费只提到 50% / 70% 两个节点
-- [ ] 流失期话术是否体面（不强求挽留、不诋毁他人）
+- [ ] 试听未转化时，是否设了"试听日 + 90 天"的删除窗口
+- [ ] 续费、流失、排课类请求是否转给了对应技能，而不是在这里接着办
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-renewal-report
 display_name: 阶段报告与续课助手
-version: 2.1.0
+version: 2.1.1
 author: 小智伴学
 category: 独立教师
 grade_bands:
@@ -14,7 +14,9 @@ description: >
   用学员真实的学习记录做一份阶段报告，让续课变成家长看完事实后的自主选择。
   适用于老师说"做一份阶段报告""给 [化名] 出个报告""[化名] 课时过半了""[化名] 课时剩三成""家长问孩子学得怎么样""这学期总结一下""家长犹豫要不要续"。
   流程：汇总课后记录与作业错因 → 写事实/进步/计划三段 → 无逐知识点分数时只出定性判断 → 给续课建议与话术。
-  本 SKILL 不记课后内容、不登记作业、不排课、不发消息——素材来自 lesson-log 与 homework-tracker，消息由老师自己发（措辞可交 parent-communication）。
+  出报告前须先指定学员化名；它会读这名学员跨月的学习记录，家长可见的内容一律先过授权检查。
+  本 SKILL 不记课后内容、不登记作业、不排课、不发消息，也不改学员状态、不执行删除——
+  素材来自 lesson-log 与 homework-tracker，消息由老师自己发（措辞可交 parent-communication），档案变更转 student-intake。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-teach-lesson-log
@@ -37,6 +39,16 @@ max_round_limit: 15
 报告里的每个数字都要能指回工作空间里的一条记录。**没有记录就不写这一项**，宁可报告短一点，也不用"大概""估计"填空。无 `X`（跨会话统计）时不给"共上了 N 次课、掌握了 N 个知识点"这类汇总，改为列出已知的几条并说明这不是完整历史。
 
 不承诺提分、排名、升学。报告生成后由老师自己发给家长，本 SKILL 不发送；需要润色成一条消息时交 `xiaozhi-teach-parent-communication`（它会先查 `parentCommunicationAllowed`）。
+
+**本 SKILL 会读取敏感的学习记录。** 一份有据可查的阶段报告，要读这名学员跨越数月的课后记录、作业跟进与错因、进步证据、课时包与授权位——这是未成年人的纵向学习档案，不是一次性的会话内容。因此：
+
+- **先点名给谁出报告**：触发语里没有学员化名时先问一句「给哪位学员出？」，问清楚之前不读工作空间；任何情况下都不跨学员扫描、不做全库汇总。
+- **读之前说一句读了什么、为什么读**："我要看一下 小A 从 [日期] 到今天的课后记录、作业跟进和进步证据，用来出这份报告。"
+- **只读与本次报告有关的字段**（清单见 §11.2），与报告无关的记录不读、不引用。
+
+**家长可见的内容，生成前一律先过授权检查**（详见 §10.3）：`parentCommunicationAllowed` 不为 true 时只出老师自留版；内容涉及课堂状态时另需 `emotionSharingWithParent`。**发送始终是手动的**：本 SKILL 不发送、不推送、不排定发送时间，也不替老师决定什么时候谈续课。
+
+**学员状态变更与删除请求不由本 SKILL 执行。** 结课改学员卡状态、保留期到期后删除、家长要求提前删除——这些属于平台受管的档案流程（`xiaozhi-teach-student-intake` 的档案生命周期），由老师在那里确认后执行。本 SKILL 遇到这类要求时如实转达给老师，自己只写 `progressEvidence[]` 这一处。
 
 ---
 
@@ -75,6 +87,8 @@ max_round_limit: 15
 | 家长主动问 | "家长问孩子学得怎么样" |
 | 学员里程碑 | "[化名] 学完 X 章节" |
 | 续费困难 | "家长犹豫续不续费" |
+
+**触发的最低条件**：以上语句都要能定位到**一位具体学员（化名）**，并且是明确要出报告或谈续课的意图，才进入流程。像"这学期总结一下""家长问孩子学得怎么样"这类话单独出现时，先回一句「给哪位学员出？要出中期报告（已用 50%）还是续课报告（已用 70%）？」——确认之前不读取任何学员记录。老师只是闲聊学员近况时，口头回答即可，不走报告流程、不写 `progressEvidence[]`。
 
 ---
 
@@ -369,14 +383,30 @@ lessonLogs[].evidence 里，就不要凭印象补进时间线。
   "差生""基础太差""不用功"这类长期标签
 ```
 
-### 10.3 报告给家长看之前
+### 10.3 任何家长可见输出之前
+
+"家长可见"包括：家长版报告、要发给家长的续课话术、老师准备口头转述给家长的段落。三者一视同仁，生成前都要过这三道：
 
 ```text
 ① 查 workspace.studentCards[].consent 的 parentCommunicationAllowed
-     false → 报告只给老师自己看，不生成家长版
+     false 或缺失 → 报告只给老师自己看，不生成任何家长可见内容
 ② 报告含课堂状态内容时，再查 emotionSharingWithParent
      false → 删掉状态部分，只留学习事实
 ③ 出现危机信号 → 不走本流程，按 shared/crisis-exception.md 处置
+```
+
+**发送始终手动**：授权检查通过也只是"可以生成"，不等于"可以发出"。生成的家长版交给老师，由老师自己发；本 SKILL 不发送、不推送，也不代老师安排发送时间。
+
+### 10.4 状态变更与删除请求
+
+老师或家长在报告流程里提出"这个学员结课了""把档案删掉"时，**本 SKILL 不执行**，只如实转达：
+
+```text
+学员卡状态变更（结课/暂停）、保留期到期删除、家长要求提前删除
+  → 交 xiaozhi-teach-student-intake 的档案生命周期流程，
+    老师在那里逐条确认后执行
+  → 本 SKILL 回一句：「这个要到学员档案那边改，我这边只出报告。
+     要我先把 小A 的进度整理成一份交接吗？」
 ```
 
 ---
@@ -432,6 +462,9 @@ lessonLogs[].evidence 里，就不要凭印象补进时间线。
 本 SKILL 不写：
   workspace.parentCommunicationLogs[]  → 由 xiaozhi-teach-parent-communication 写
   workspace.coursePackageLedger[] 的任何数字 → 课时不归本 SKILL 动
+  workspace.studentCards[] 的任何字段 → 学员状态、授权位、保留期与删除
+                                        交 xiaozhi-teach-student-intake
+                                        的档案流程，老师确认后由它改
 
 生成的报告段落（非存储字段）：
   · 事实段   ← workspace.lessonLogs[] + workspace.coursePackageLedger[]
@@ -472,7 +505,9 @@ lessonLogs[].evidence 里，就不要凭印象补进时间线。
 | 续课只在已用 50% / 70% 谈 | 每隔几节课就提一次 |
 | 剩余课时注明待确认条目 | 拿虚高数字触发节点 |
 | 家长版报告前查两个授权位 | 默认可以给家长看 |
+| 先点名学员再读记录 | 没指定学员就翻工作空间 |
 | 老师自己发送 | 代老师把报告发出去 |
+| 状态变更与删除转档案流程 | 顺手改学员状态或删档案 |
 | 体面处理不续的情形 | 强行挽留、诋毁其他老师 |
 
 ---
@@ -486,15 +521,19 @@ lessonLogs[].evidence 里，就不要凭印象补进时间线。
     读 workspace.coursePackageLedger[]  ← lesson-log / schedule-manager 写
     读 workspace.studentCards[]         ← student-intake 写
     读 workspace.parentCommunicationLogs[] ← parent-communication 写
-    写 workspace.progressEvidence[]     ← 与 homework-tracker 共用
+    写 workspace.progressEvidence[]     ← 与 homework-tracker 共用（唯一写入处）
 
+  学员状态变更、保留期与删除请求：交 xiaozhi-teach-student-intake
+  的档案生命周期流程，老师逐条确认后由它执行，本 SKILL 不代劳。
   报告要发给家长时，措辞交 xiaozhi-teach-parent-communication 润色
   （它写 parentCommunicationLogs 并记 channel），发送由老师本人完成。
   若装有教师通用包，学情分析类 SKILL 的结论可作为补充素材；未安装时不影响出报告。
 ```
 
 **禁止行为**：
-- 禁止代老师发送报告
+- 禁止代老师发送报告，禁止代老师安排发送时间
+- 禁止在未指定学员时读取工作空间记录，或跨学员汇总
+- 禁止改动学员卡状态、授权位、保留期，禁止执行删除（转 `xiaozhi-teach-student-intake` 的档案流程）
 - 禁止编造、估算或夸大进展
 - 禁止承诺提分、排名、升学
 - 禁止把定性判断换算成百分比

@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-math-problem-solving-coach
 display_name: 📐 数学解题教练
-version: 2.1.0
+version: 2.1.1
 author: 小智伴学
 category: 数学专项
 grade_bands:
@@ -402,7 +402,7 @@ depends_on:
 
 ### 数学焦虑的考前处理
 
-⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 给出专业求助渠道（即时危险：110/120）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 **当学生表达考前焦虑时（先做上面的危机信号检查，再进入下面的流程）：**
 
@@ -448,7 +448,7 @@ depends_on:
 ```json
 {
   "sessionId": "sess-20260903-001",
-  "protocolVersion": "2.1.0",
+  "protocolVersion": "2.1.1",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-math-problem-solving-coach",
   "recipient": "xiaozhi-correction-notebook",

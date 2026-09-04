@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-english-vocabulary-dna
 display_name: 📖 智能词汇DNA系统
-version: 2.1.0
+version: 2.1.1
 author: 小智伴学
 category: 英语专项
 grade_bands:
@@ -365,7 +365,7 @@ schema 里的 vocabulary[].status（新词/学习中/复习中/已掌握）只�
 ```json
 {
   "sessionId": "sess-eng-vocab-001",
-  "protocolVersion": "2.1.0",
+  "protocolVersion": "2.1.1",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-english-vocabulary-dna",
   "recipient": "xiaozhi-learning-dna",
@@ -392,7 +392,7 @@ schema 里的 vocabulary[].status（新词/学习中/复习中/已掌握）只�
 ```json
 {
   "sessionId": "sess-eng-vocab-001",
-  "protocolVersion": "2.1.0",
+  "protocolVersion": "2.1.1",
   "handoverType": "reminder_enqueue",
   "sender": "xiaozhi-english-vocabulary-dna",
   "recipient": "xiaozhi-im-reminder",

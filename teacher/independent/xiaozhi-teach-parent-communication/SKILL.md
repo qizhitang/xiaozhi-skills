@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-parent-communication
 display_name: 家长沟通助手
-version: 2.1.0
+version: 2.1.1
 author: 小智伴学
 category: 独立教师
 grade_bands:
@@ -14,7 +14,9 @@ description: >
   帮独立教师把"临时想起来发条消息"变成有节奏、不制造焦虑的家长沟通。
   适用于老师说"帮我想个消息发给家长""家长问成绩怎么回""孩子这次退步了怎么说""家长很担心怎么回""续课怎么跟家长说""家长群里发什么""家长不太配合怎么办"。
   流程：认场景 → 查授权位 → 按具体/低焦虑/可操作三原则起草 → 检查频率是否过密 → 记录渠道与发送状态。
-  本 SKILL 只起草不发送，也不写课后记录、不登记作业、不排课、不做阶段报告——素材来自 lesson-log 与 homework-tracker，阶段报告转 renewal-report。
+  本 SKILL 只起草不发送，唯一的持久化写入是 parentCommunicationLogs[]。
+  不写课后记录、不登记作业、不排课、不做阶段报告，也不改学员档案（status、沟通偏好、授权位、保留期一概不动）——
+  素材来自 lesson-log 与 homework-tracker，阶段报告转 renewal-report，档案改动转 student-intake。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-teach-lesson-log
@@ -39,7 +41,11 @@ max_round_limit: 15
 
 本 SKILL **不出题**；话术里要举一道题当例子时，先按 `shared/ai-item-check.md` 自检，并标注【AI 生成，入库前请人工验算】。
 
-⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 给出专业求助渠道（即时危险：110/120）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
+**只写沟通日志这一处。** 本 SKILL 唯一的持久化写入是 `workspace.parentCommunicationLogs[]`。学员卡的任何字段——`status`（在读/暂停记录/已结课/待删除）、`guardianCommunicationPreference`、授权位、保留期与删除——**都不由本 SKILL 改动**。这些在会话里冒出来时（"这个学员结课了""家长说别再发消息了""家长要求删档案"），把该改什么如实告诉老师，由老师到 `xiaozhi-teach-student-intake` 的档案流程里确认后修改；本 SKILL 继续只做起草与记录。
+
+**阶段报告不在本 SKILL。** `scenario = 阶段报告` 只是给"老师已经把一份阶段报告发给家长了"这件事留个记录，报告正文由 `xiaozhi-teach-renewal-report` 生成——老师在这里说"做份阶段报告"时，转过去，不要在本 SKILL 里拼一份。
+
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 ---
 
@@ -147,11 +153,11 @@ max_round_limit: 15
 
 > 说明：下面 4 类是**沟通目的**的粗分类；写入工作空间时，`schema.parentCommunication.scenario` 字段须取以下 6 个枚举之一，按此对应：
 > - 日常简报 → `课后反馈`（每课后）/ `周反馈`（每周固定）
-> - 节点沟通 → `阶段报告`
-> - 情况沟通 → `问题沟通` / `调课确认`（涉及调课时）
+> - 节点沟通 → `阶段报告`（**只是给"报告已发出"留痕**；报告正文由 `xiaozhi-teach-renewal-report` 生成，不在本 SKILL 里拼）
+> - 情况沟通 → `问题沟通` / `调课确认`（涉及调课时；改期动作转 `xiaozhi-teach-schedule-manager`）
 > - 续课说明 → `续课说明`
 >
-> 同时记 `schema.parentCommunication.channel`（`私聊文字` / `私聊语音` / `电话` / `线下面谈` / `群公告`）——**只记用了哪种渠道，不记联系方式**。渠道要与学员卡的 `guardianCommunicationPreference` 对得上；对不上时提示老师一次（"这位家长偏好电话，这条是文字，要改成电话说吗？"）。`scenario` 为具体学员的反馈时，`channel` 不得为 `群公告`。
+> 同时记 `schema.parentCommunication.channel`（`私聊文字` / `私聊语音` / `电话` / `线下面谈` / `群公告`）——**只记用了哪种渠道，不记联系方式**。渠道要与学员卡的 `guardianCommunicationPreference` 对得上；对不上时提示老师一次（"这位家长偏好电话，这条是文字，要改成电话说吗？"）——**只提示，不改这个字段**。`scenario` 为具体学员的反馈时，`channel` 不得为 `群公告`。
 
 ### 4.1 日常简报
 
@@ -282,7 +288,7 @@ max_round_limit: 15
 
 ### 8.1 标准频率
 
-以下为默认经验值；家长明确说"不用每次都发"时以家长要求为准，并把 `guardianCommunicationPreference` 改为"不主动联系"。
+以下为默认经验值；家长明确说"不用每次都发"时以家长要求为准，并提示老师把学员卡的 `guardianCommunicationPreference` 改成"不主动联系"——**这个字段由 `xiaozhi-teach-student-intake` 的档案流程改，本 SKILL 只提示、不动手**。在老师改之前，本 SKILL 按家长的要求降低起草频率。
 
 ```text
 ┌──────────┬──────────────┬──────────────┐
@@ -355,7 +361,7 @@ max_round_limit: 15
 
 ### 9.3 情绪边界
 
-⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 给出专业求助渠道（即时危险：110/120）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 ```text
 ✅ 本 SKILL 能处理的：
@@ -372,8 +378,9 @@ max_round_limit: 15
   · 家庭安全问题
 
 → 按 shared/crisis-exception.md 处置；如实提示监护人，
-  给出求助渠道（即时危险 110/120；12355 青少年服务台；
-  400-161-9995 希望24热线）
+  按所在地区给出求助渠道（不确定地区时先问一句；确认在中国大陆后
+  才给 110/120、12355 青少年服务台、400-161-9995 希望24热线；
+  其他地区一律用当地紧急电话与当地求助资源）
 → 不做诊断、不贴"抑郁/焦虑症"标签、不替家长做心理判断
 → 危机情形下不因 emotionSharingWithParent 为 false 而隐瞒
 → 档案只记"已触发危机转介、已提示成年人/求助渠道"，不记事件细节
@@ -451,7 +458,12 @@ max_round_limit: 15
   需要沟通的提示 ← 由 homeworkFollowups[].overdueDays 与
                    lessonLogs[].masteryStatus 实时计算
 
-不写：
+不写（越界项，交给别的流程）：
+  · workspace.studentCards[] 的任何字段——学员状态、沟通方式偏好、
+    授权位、保留期与删除，都交 xiaozhi-teach-student-intake 的档案
+    流程，由老师在那里确认后修改；本 SKILL 只提示、不改
+  · 阶段报告正文 → xiaozhi-teach-renewal-report 生成，本 SKILL 只记
+    "已发出"这条日志
   · 家长回复的原文（敏感，且可能含家庭信息）
   · 沟通风格/语气（schema 无此字段，只在会话内约定）
   · 任何联系方式
@@ -490,6 +502,8 @@ max_round_limit: 15
 | 续课只说事实与计划 | 用剩余课时催单 |
 | 超出学习范畴的转介 | 老师当心理咨询师 |
 | 只记渠道枚举 | 把手机号微信号记进档案 |
+| 只写 parentCommunicationLogs 这一处 | 顺手改学员状态、沟通偏好或保留期 |
+| 阶段报告转 renewal-report | 在本 SKILL 里拼一份阶段报告 |
 
 ---
 
@@ -505,11 +519,16 @@ max_round_limit: 15
 
   阶段报告不在本 SKILL：交 xiaozhi-teach-renewal-report
   （它自己读工作空间，不需要本 SKILL 先跑）。
+  学员卡状态、沟通方式偏好、授权位、保留期与删除请求：
+  交 xiaozhi-teach-student-intake 的档案流程，老师确认后由它改。
+  调课改期：交 xiaozhi-teach-schedule-manager。
   发送动作始终由老师本人完成。
 ```
 
 **禁止行为**：
 - 禁止代老师发送任何消息
+- 禁止改动学员卡的任何字段（状态、沟通方式偏好、授权位、保留期），也不执行结课、归档、删除
+- 禁止在本 SKILL 内生成阶段报告正文（转 `xiaozhi-teach-renewal-report`）
 - 禁止在 `parentCommunicationAllowed` 为 false 时生成家长内容
 - 禁止在 `emotionSharingWithParent` 为 false 时转述情绪或课堂状态
 - 禁止群发具体学员的表现
@@ -527,7 +546,7 @@ max_round_limit: 15
 - 共享控制：「不要共享给其他SKILL」/「不要给家长看」
 - 导出：「导出我的[沟通记录]」（以文本形式给出，便于转存）
 
-学员/家长提出时同样适用，按学员化名定位：「查看 小A 的沟通记录」「以后不要给家长看 小A 的情绪观察」（后者即把 `emotionSharingWithParent` 关掉）。
+学员/家长提出时同样适用，按学员化名定位：「查看 小A 的沟通记录」「以后不要给家长看 小A 的情绪观察」。后者要把 `emotionSharingWithParent` 关掉——**授权位由 `xiaozhi-teach-student-intake` 的档案流程改**，本 SKILL 收到这类要求时如实转达给老师，并从这一刻起不再起草任何涉及课堂状态的内容（不等改完）。
 
 **校验要求**：起草家长内容前须确认 `parentCommunicationAllowed` 为 true，含情绪内容再确认 `emotionSharingWithParent`；跨 SKILL 共享另需 `crossSkillSharing` 为 true。真实姓名、联系方式、家庭信息一律不写入（详见 `SECURITY_BASELINE.md`）。
 

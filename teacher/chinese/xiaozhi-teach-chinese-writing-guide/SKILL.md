@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-chinese-writing-guide
 display_name: 写作教学指导
-version: 2.1.0
+version: 2.1.1
 author: 小智伴学
 category: 老师语文
 grade_bands:
@@ -46,7 +46,7 @@ max_round_limit: 20
 - 共享控制：「不要共享给其他SKILL」/「不要给家长看」
 - 导出：「导出我的班级写作记录」（以文本形式给出，便于转存）
 
-⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 给出专业求助渠道（即时危险：110/120）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 > 作文是学员最容易吐露真实处境的地方。老师把这类作文拿来讨论批改时，**先按危机例外处置**，
 > 不要先谈"这段细节可以再具体些"，也不要把它选进讲评样本。
@@ -455,7 +455,9 @@ AI 生成的作文题：生成前按 shared/ai-item-check.md 自检（题意清�
   classWorkspace.interactionLogs[]    → 讲评课后回填：participationNote、
                                         misconceptionsObserved[]（如"把升华当结尾套话"）
   classWorkspace.weaknessRank[]       → 依据本次作文等级分布更新写作类弱项
-  classWorkspace.studentTiers[]       → 依据近几次作文等级更新分层（basis 写清依据）
+  （不写 classWorkspace.studentTiers[]——分层由 xiaozhi-teach-student-analyzer
+    唯一维护；本 SKILL 只读分层用于任务分档，需要调整分层时把作文等级分布
+    交接给它，不自行改写学生所处档位）
 ```
 
 **写回学生个人档案（可选，需授权）：**
@@ -466,7 +468,7 @@ AI 生成的作文题：生成前按 shared/ai-item-check.md 自检（题意清�
 ```json
 {
   "sessionId": "sess-teach-wt-001",
-  "protocolVersion": "2.1.0",
+  "protocolVersion": "2.1.1",
   "handoverType": "teacher_writeback",
   "sender": "xiaozhi-teach-chinese-writing-guide",
   "recipient": "xiaozhi-learning-dna",

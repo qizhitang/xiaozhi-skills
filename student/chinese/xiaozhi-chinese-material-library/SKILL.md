@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-chinese-material-library
 display_name: 📚 语文素材库
-version: 2.1.0
+version: 2.1.1
 author: 小智伴学
 category: 语文专项
 grade_bands:
@@ -354,7 +354,7 @@ depends_on:
 ```json
 {
   "sessionId": "sess-chinese-mat-001",
-  "protocolVersion": "2.1.0",
+  "protocolVersion": "2.1.1",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-chinese-material-library",
   "recipient": "xiaozhi-learning-dna",

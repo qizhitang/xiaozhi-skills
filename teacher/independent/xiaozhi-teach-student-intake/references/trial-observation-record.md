@@ -1,8 +1,9 @@
 # 试听记录（5 维度观察）模板
 
 > 适用学段：小学中段 / 小学高段 / 初中 / 高中
-> 配合 `xiaozhi-teach-student-intake` §8.1 使用。试听课节记为 `lessonSchedule[].status = trial`，不消耗课时。
+> 配合 `xiaozhi-teach-student-intake` §8.1 使用。试听课节在排课里记为 `lessonSchedule[].status = trial`、不消耗课时——**这一条由 `xiaozhi-teach-schedule-manager` 写，本 SKILL 不动 `lessonSchedule[]`**，这里列出来只是让老师知道试听不扣课时。
 > 课堂反应用 `lessonLogs[].studentReaction` 的五档枚举；观察结论的置信度一律 🔴 样本不足。
+> 本表只记这一节课看到的事实，不记对特质的推断。
 
 ```text
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -49,4 +50,4 @@
 - 记录里只出现化名，不出现真实姓名。
 - 暖场闲聊听到的家庭情况（父母工作、家里几个孩子、住哪儿）一律不写。
 - 试听观察写入 `progressEvidence[]` 时，`evidenceType` 填"课堂表现"，`confidenceLevel` 填 `insufficient_sample`。
-- 试听不转化也要把记录留着：家长过一阵回来时，老师能接上。学员卡的 `status` 保持"在读"或按老师意愿标"已结课"，到 `retentionUntil` 提示删除。
+- **试听不转化时的删除窗口**：记录可以先留着（家长过一阵回来时老师能接上），但要有明确的期限——`retentionUntil` 设为**试听日 + 90 天**，到期当天提示老师一次「小A 试听后没有报名，档案今天到保留期了，删掉吗？（删 / 再留 30 天）」，老师确认后才删（先改 `status = 待删除`，再确认一次整卡删除）。老师说"这个就别留了"时当场按流程删。老师不回应就保持提示，不替老师删、也不悄悄续期。完整规则见 SKILL.md §12.3。

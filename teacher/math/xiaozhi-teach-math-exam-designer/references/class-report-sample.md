@@ -1,7 +1,14 @@
-# 测评分析报告模板（班级）
+# 测评题目统计报告模板（班级）
 
 > 适用学段：初中（7-9 年级）。词表见 `shared/vocab.md`。
 > 需要逐题分数才能填第 2-4 段；只有总分时只填"总体"与"分数段"，并写明未做项目分析。
+>
+> ⚠️ **边界**：本模板只填**题目层面的统计量**。错因归类转
+> `xiaozhi-teach-math-error-analyzer`，分层与重点关注名单转
+> `xiaozhi-teach-student-analyzer`，教学调整与讲评编排转
+> `xiaozhi-teach-math-lesson-planner`，家长侧输出转
+> `xiaozhi-teach-parent-communication`。本模板对这四项只留交接口，不代填。
+> 本模板是**待确认草稿**：任何一段写入 `classWorkspace` 前都要老师逐条确认。
 
 ```text
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -39,23 +46,24 @@
   · 知识点 3：🔴 [N]%
     🟢 >70%  🟡 40-70%  🔴 <40%（样本 [N] 人）
 
-■ 错因分布（只对错误率 >30% 的题做；抽样 [N] 份）
-  · 知识漏洞：[N]%
-  · 概念模糊：[N]%
-  · 规则错误：[N]%
-  · 审题错误：[N]%
-  · 策略错误：[N]%
-  · 表达/书写不规范：[N]%
-  · 计算错误：[N]%
-  · 习惯性失误：[N]%
+■ 错因分布 —— 本模板不填
+  · 错误率 >30% 的题号：[题号]（这是本 SKILL 能给的全部）
+  · 归类为哪一种错因，需要看学生实际书写与步骤，
+    转 xiaozhi-teach-math-error-analyzer；本报告不写错因百分比
 
-■ 教学建议
-  · 重新讲：[X]
-  · 加练习：[X]
-  · 需要个别跟进：[化名]（不公示、不排名）
+■ 教学建议 —— 本模板不填
+  · 重新讲什么、加什么练习、讲评课怎么排
+    → xiaozhi-teach-math-lesson-planner
+  · 谁需要个别跟进 → xiaozhi-teach-student-analyzer
+  · 本报告不列"需要个别跟进"的学员名单，也不公示、不排名
 
-■ 授权提示
-  · 写回学生端档案前核对 teacherWritebackConsent
-  · 给家长的内容交 parent-communication，先核对 parentSharingConsent；不发班级排名
+■ 家长沟通 —— 本模板不填
+  · 家长侧输出一律转 xiaozhi-teach-parent-communication，
+    由它核对 parentSharingConsent 后决定给什么；本 SKILL 不发班级排名
+
+■ 交接与授权提示
+  · 本报告是待确认草稿，老师逐条确认后才写入 classWorkspace
+  · 交出给下游 SKILL 前同样要老师确认
+  · 写回学生端档案前核对 teacherWritebackConsent，为 false 则丢弃并告知老师
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```

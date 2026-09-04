@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-math-concept-explainer
 display_name: 💡 数学概念解释器
-version: 2.1.0
+version: 2.1.1
 author: 小智伴学
 category: 数学专项
 grade_bands:

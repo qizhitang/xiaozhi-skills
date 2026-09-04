@@ -1,6 +1,6 @@
 {
   "name": "xiaozhi-skills",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "private": true,
   "description": "小智伴学 K12 SKILL 库：全库校验脚本与 schema 验证",
   "scripts": {

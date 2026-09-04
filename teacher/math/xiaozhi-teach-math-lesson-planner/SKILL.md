@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-math-lesson-planner
 display_name: 数学教案设计
-version: 2.1.0
+version: 2.1.1
 author: 小智伴学
 category: 老师数学
 grade_bands:
@@ -473,7 +473,7 @@ payload 为 `teacherWritebackData`（`teacherSkill` / `studentAlias` / `weakKnow
 **给家长的反馈**：本 SKILL 不直接生成家长内容；需要时交 `xiaozhi-teach-parent-communication`，
 由它在核对 `parentSharingConsent`（含情绪内容再核对 `emotionSharingWithParent`）后输出。不默认推送家长简报。
 
-⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 给出专业求助渠道（即时危险：110/120）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 ---
 

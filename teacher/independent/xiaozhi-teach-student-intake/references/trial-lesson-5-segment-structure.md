@@ -3,7 +3,7 @@
 > 适用学段：小学中段 / 小学高段 / 初中 / 高中
 > 配合 `xiaozhi-teach-student-intake` §7.2 使用。
 > 总时长按老师实际排课取值，见 `shared/grade-bands.md` 三：校外一对一/小班常见 60 或 90 分钟，**线上单次建议 ≤ 30-45 分钟**。下表给 60 分钟线下与 30 分钟线上两档，其他时长按比例伸缩。
-> 试听课节记为 `lessonSchedule[].status = trial`，不消耗课时。
+> 试听课节在排课里记为 `lessonSchedule[].status = trial`、不消耗课时——这一条由 `xiaozhi-teach-schedule-manager` 写，本 SKILL 不写 `lessonSchedule[]`；这里列出来只是说明试听不扣课时。
 
 ## 一、60 分钟（线下 / 线上长课）
 

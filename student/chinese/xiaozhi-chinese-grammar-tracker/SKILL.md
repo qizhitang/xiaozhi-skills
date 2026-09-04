@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-chinese-grammar-tracker
 display_name: 🔍 语病追踪档案
-version: 2.1.0
+version: 2.1.1
 author: 小智伴学
 category: 语文专项
 grade_bands:
@@ -357,7 +357,7 @@ Step 4：写作前提示
 ```json
 {
   "sessionId": "sess-chinese-lg-001",
-  "protocolVersion": "2.1.0",
+  "protocolVersion": "2.1.1",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-chinese-grammar-tracker",
   "recipient": "xiaozhi-learning-dna",
