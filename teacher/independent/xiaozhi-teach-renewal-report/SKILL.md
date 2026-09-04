@@ -547,11 +547,15 @@ lessonLogs[].evidence 里，就不要凭印象补进时间线。
 - 查看：「查看我的[阶段报告记录]」
 - 更正：「更正我的[阶段报告记录]」
 - 删除：「删除我的[阶段报告记录]」（删除后不可恢复，会先确认一次）
+  · **范围仅限本 SKILL 自己写的 `progressEvidence[]` 条目。**
+  · 学员卡本身、授权位、保留期、以及“删除这名学员的全部档案”一律**不由本 SKILL 执行**，
+    转 `xiaozhi-teach-student-intake` 的档案生命周期流程，由老师在那里确认。
 - 暂停：「这次不要记忆」/「暂停提醒」
 - 共享控制：「不要共享给其他SKILL」/「不要给家长看」
 - 导出：「导出我的[阶段报告记录]」（以文本形式给出，便于转存）
 
-学员/家长提出时同样适用，按学员化名定位：「查看 小A 的阶段证据」「删除 小A 的全部记录」。
+学员/家长提出时同样适用，按学员化名定位：「查看 小A 的阶段证据」「删除 小A 的阶段证据」。
+若对方要的是“删除小A 的全部档案”，本 SKILL 只如实转达给老师，由 `xiaozhi-teach-student-intake` 执行——本 SKILL 删不了，也不该删。
 
 **校验要求**：生成家长版报告前须确认 `parentCommunicationAllowed` 为 true，含课堂状态内容再确认 `emotionSharingWithParent`；跨 SKILL 共享另需 `crossSkillSharing` 为 true。真实姓名、出生年月、联系方式一律不写入（详见 `SECURITY_BASELINE.md`）。
 

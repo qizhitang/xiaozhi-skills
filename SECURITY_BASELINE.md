@@ -126,7 +126,7 @@
 - 长期档案、情绪记录、家长可见输出的授权位定义见 `shared/vocab.md §8`，字段落在 `dna-profile.schema.json#/meta/consentStatus`。
 - 授权必须记录**主体**：`consentGivenBy` 取 `学生本人` / `监护人` / `学生与监护人`。
 - 小学各学段（约 14 周岁以下）必须由监护人同意，`consentGivenBy` 必须包含"监护人"；学段由 `ageBand` 记录，`guardianConsentRequired` 由学段推导。
-- 学生与监护人共用一个 IM 会话时，先确认说话人；无法确认的按"学生本人"处理，且不输出家长版内容。
+- 学生与监护人共用一个 IM 会话时，先确认说话人；**确认之前进入受限模式**：不读长期档案、不写任何记录、不执行删除、不变更授权位、不输出家长版内容，只用当前会话信息作答。不得用“默认按学生本人处理”绕过确认。
 - 家长可见内容双门控：学习摘要需 `parentSharingConsent`，含情绪内容再需 `emotionSharingWithParent`（且由学生本人同意）。
 - 老师端写回学生档案需 `teacherWritebackConsent`，并只能走交接协议的 `teacher_writeback`。
 - 危机例外（`shared/crisis-exception.md`）优先于以上所有授权位。
