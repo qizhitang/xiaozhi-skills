@@ -34,18 +34,30 @@ WorkBuddy 的技能是可插拔模块：装好后不需要额外配置，模型�
 
 打开 [skillhub.cn](https://skillhub.cn) 搜索"小智伴学"，按学生端/老师端的分包选择安装。分包划分见本文《打包上架建议》一节。
 
+### 共享约定：每个技能包已自带
+
+本库不是 57 个互不相干的技能，而是一套共享同一份词表与数据契约的体系。SKILL 正文里有 **707 处**引用 `shared/` 的六份共享约定（错因四维、危机例外、提示阶梯、出题自检、平台降级、学段参数）。
+
+为了让**单技能安装也能工作**，每个 SKILL 目录下都放了一份 `shared/` 副本：
+
+```
+xiaozhi-correction-notebook/
+├── SKILL.md
+├── references/
+└── shared/            ← 六份共享约定，随包分发
+    ├── vocab.md
+    ├── platform-conventions.md
+    ├── crisis-exception.md
+    ├── hint-ladder.md
+    ├── ai-item-check.md
+    └── grade-bands.md
+```
+
+这样 `shared/vocab.md` 这类路径在两种场景下都能解析：整库使用时相对仓库根，单技能安装后相对技能目录。
+
+副本由 `npm run sync:shared` 从仓库根 `shared/` 生成，文件头有"请勿直接编辑"横幅；`npm run check` 会校验副本与源一致，不一致即失败。**要改共享约定，请改仓库根目录下的源文件再重新同步。**
+
 ### 方式三 · 整库安装（团队协作或需要改内容时推荐）
-
-**先理解一件事：本库不是 57 个互不相干的技能，而是一套共享同一份词表与数据契约的体系。**
-
-| 依赖形式 | 数量 | 例子 |
-|---|---|---|
-| 引用 `shared/` 六份共享约定 | 707 处 | 错因四维、危机例外、提示阶梯、学段参数 |
-| 跨 SKILL 引用 | 39 处 | 错题本引用交接协议 schema、物理解题教练引用受力图指南 |
-
-这些都是**相对仓库根目录**的路径。如果只把某一个技能文件夹单独放进 `~/.workbuddy/skills/<技能名>/`，上述引用会全部断开，该 SKILL 里的词表、危机处置流程、提示阶梯与数据契约都会读不到。
-
-因此整库安装必须**保持目录结构**：
 
 ```bash
 git clone https://github.com/qizhitang/xiaozhi-skills.git ~/.workbuddy/skills/xiaozhi-skills
@@ -59,7 +71,7 @@ git clone https://github.com/qizhitang/xiaozhi-skills.git <你的项目>/.workbu
 
 装好后在 WorkBuddy 里执行 `/reload-skills` 重新扫描技能目录。
 
-> ⚠️ **从市场按单个技能安装时**，请确认该技能包内自带了 `shared/` 的六份共享约定；如果没有，请改用整库安装，否则会出现"SKILL 正文引用了读不到的文件"。
+> ⚠️ **单技能安装的已知限制**：共享约定已随包分发，但仍有 **41 处跨技能引用**（分布在 21 个 SKILL）在单独安装时无法解析，例如错题本引用交接协议 schema、英语听力训练师引用语法教练的错因维度表。其中 18 处指向 schema 文件，属于契约说明，不影响 SKILL 正常运行；其余 23 处指向另一技能的参考文档，缺失时该处引导会失效。需要完整体验请用整库安装，或把相关联的技能一并装上。
 
 ### 安装位置怎么选
 

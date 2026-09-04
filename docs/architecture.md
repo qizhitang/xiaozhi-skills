@@ -282,7 +282,8 @@ consentStatus
 |---|---|
 | `scripts/check-references.mjs` | 引用文件存在；references 无孤儿 |
 | `scripts/check-skills.mjs` | F1 frontmatter（name/version/depends_on 列表/grade_bands）· F2 依赖无环 · F3 硬命令词与自动措辞 · R1 占位文件 · R2 跨文件重复 · V1 废弃词表 · V2 协调器命名 · P1 平台边界与控制入口 · S1 危机片段 · G1 高中术语标注 · A1 出题自检与示例题验算 · H1 提示阶梯 · I1 接口路径存在于 schema · D1 文档一致性 |
-| `scripts/validate-schemas.mjs` | 四份 schema 有效；8 份示例合规；枚举与 `shared/vocab.md` 一致；收发方覆盖全库；关键字段存在 |
+| `scripts/validate-schemas.mjs` | 四份 schema 有效；8 份示例合规；枚举与 `shared/vocab.md` 一致；收发方覆盖全库；关键字段存在；结构与协议版本号等于 `package.json` |
+| `scripts/sync-shared.mjs --check` | 58 个 SKILL 目录内的 `shared/` 副本与仓库根源文件一致（缺失、被改、残留均报错）|
 
 ---
 
@@ -293,7 +294,7 @@ xiaozhi-skills/
 ├── README.md
 ├── SECURITY_BASELINE.md
 ├── package.json                     校验脚本入口
-├── shared/                          单一事实源（6 份）
+├── shared/                          单一事实源（6 份，源文件）
 │   ├── vocab.md
 │   ├── platform-conventions.md
 │   ├── crisis-exception.md
@@ -326,8 +327,11 @@ xiaozhi-skills/
 ```
 xiaozhi-{name}/
 ├── SKILL.md          frontmatter（name/description 进入上下文）+ 正文
-└── references/       渐进披露的参考资源
+├── references/       渐进披露的参考资源
+└── shared/           六份共享约定的副本（生成物，使单技能包自包含）
 ```
+
+`shared/` 副本由 `npm run sync:shared` 从仓库根同步，带"请勿直接编辑"横幅，并由 CI 校验一致性。这样 `shared/vocab.md` 这类路径在整库使用（相对仓库根）与单技能安装（相对技能目录）两种场景下都能解析。
 
 frontmatter 字段：`name` · `display_name` · `version` · `author` · `category` · `grade_bands` · `tags` · `description` · `compatibility` · `depends_on`；老师端另有平台字段 `id` · `min_platform_version` · `max_round_limit`。
 

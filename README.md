@@ -29,7 +29,8 @@
 
 ```
 xiaozhi-skills/
-├── shared/          共享约定（词表 / 平台 / 危机 / 提示阶梯 / 出题自检 / 学段）
+├── shared/          共享约定源文件（词表 / 平台 / 危机 / 提示阶梯 / 出题自检 / 学段）
+│                   —— 由 npm run sync:shared 同步进每个 SKILL 目录，使单技能包自包含
 ├── student/         学生端 31 个 SKILL
 │   ├── general/     通用学习 11 个
 │   ├── chinese/     语文 5 个
@@ -135,7 +136,9 @@ xiaozhi-skills/
 git clone https://github.com/qizhitang/xiaozhi-skills.git ~/.workbuddy/skills/xiaozhi-skills
 ```
 
-之后在 WorkBuddy 里执行 `/reload-skills`。完整说明（安装位置、触发与指定、更新卸载、能力降级、装后验证）见 [安装指南](docs/installation-guide.md#-在-workbuddy-中安装)。
+之后在 WorkBuddy 里执行 `/reload-skills`。
+
+每个技能包都自带 `shared/` 六份共享约定，因此**单技能安装也能正常工作**；仍有 41 处跨技能引用需整库安装才完整。完整说明（安装位置、触发与指定、更新卸载、能力降级、装后验证）见 [安装指南](docs/installation-guide.md#-在-workbuddy-中安装)。
 
 ---
 
@@ -151,6 +154,7 @@ npm run check
 | `scripts/check-references.mjs` | 引用的 references / schemas 文件真实存在，无孤儿文件 |
 | `scripts/check-skills.mjs` | frontmatter 规范、依赖无环、词表一致、占位与重复文件、学段标注、控制入口与危机片段、接口路径存在于 schema、文档一致性 |
 | `scripts/validate-schemas.mjs` | 四份 schema 自身有效、8 份 examples 合规、枚举与 `shared/vocab.md` 一致、结构与协议版本号等于 `package.json` |
+| `scripts/sync-shared.mjs --check` | 每个 SKILL 目录内的 `shared/` 副本与仓库根源文件逐字节一致 |
 
 ---
 
