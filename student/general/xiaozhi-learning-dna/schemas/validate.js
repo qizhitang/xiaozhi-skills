@@ -37,7 +37,7 @@ if (valid) {
 const minimalProfile = {
   meta: {
     profileId: "stu-minimal-001",
-    schemaVersion: "1.1.1",
+    schemaVersion: "2.1.0",
     createdAt: "2026-05-11T10:00:00+08:00",
     consentStatus: {
       profileEnabled: false
@@ -71,7 +71,7 @@ if (!invalidValid) {
 const invalidConfidence = {
   meta: {
     profileId: "stu-test-002",
-    schemaVersion: "1.1.1",
+    schemaVersion: "2.1.0",
     createdAt: "2026-05-11T10:00:00+08:00",
     consentStatus: { profileEnabled: true }
   },

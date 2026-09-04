@@ -1,5 +1,7 @@
 # 串讲样板模板
 
+> 适用学段：初中。
+
 > 配合 `xiaozhi-teach-chinese-classical-guide` 使用。串讲三步（整体感知/分段讲解/整合）的完整填写样板。
 
 ```text

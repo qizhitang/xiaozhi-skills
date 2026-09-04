@@ -1,6 +1,8 @@
 # 物理错因维度表
 
-> 本文档为 `xiaozhi-physics-error-dna` 的核心参考资源，定义物理学科包的五维错因维度体系、子类型分类、跨维度关联规则与追踪标准。
+> 适用学段：初中（7-9 年级）。
+> 本文档为 `xiaozhi-physics-error-dna` 的核心参考资源，定义物理学科包的五维错因维度体系、子类型分类、跨维度关联规则与交接契约。
+> 词表与阈值以 `shared/vocab.md` 为唯一来源；本表只定义物理子类型 ID 的含义（`shared/vocab.md §2`）。
 >
 > ⚠️ **编码命名空间**：本表子类型编码（P/C/F/R/T…）是**物理学科私有**——物理 `C`=概念混淆、`R`=过程分析。数学错因表的 `C`=计算失误、`R`=读题失误，含义不同。跨科交接或人工阅读时，编码须带学科前缀区分（物理记作 `物-C01`、数学记作 `数-C01`），不可仅凭字母跨科比对。
 
@@ -351,11 +353,13 @@ C06(电学概念混淆) + F06(多公式联立错误)
 ## 八、顽固弱项追踪标准
 
 ```
-同一子类型（相同维度+子类型ID+相同知识点标签）出现次数追踪：
+计数口径按 shared/vocab.md §5，唯一计数权威是通用错题本：
+  粒度 = 同一知识点标签 + 同一通用四维（子类型 ID 不同但通用维度相同仍计入同一计数）
+  时间窗 = 滚动 28 天，累计（非连续），同一天同一知识点多次错只计 1 次
 
-出现1次 → 标记"偶发"，低优先级
-出现2次 → 标记"初步弱项"，进入观察期
-出现≥3次 → 标记"顽固弱项"，启动专项突破流程
+状态五档按 shared/vocab.md §4：
+  待处理 → 初步弱项 → 顽固弱项 → 突破中 → 已攻克
+  本表不另立"偶发/观察期"等说法
 
 顽固弱项突破流程（物理版）：
   Step 1：纯净版图景测试
@@ -400,18 +404,18 @@ C06(电学概念混淆) + F06(多公式联立错误)
 通用错题本职责（表面层）：
   → 接收所有科目错题（统一入口）
   → 拍题三信息法收集信息
-  → 基础四维分类（概念/计算/审题/策略）
+  → 基础四维分类（概念模糊/计算失误/读题失误/方法用错，shared/vocab.md §1）
   → 记录错题表面信息
+  → 28 天累计计数与"顽固"判定（唯一权威，shared/vocab.md §5）
   → 跨科目统一管理与学期报告汇总
-  → IM提醒统一调度
 
 物理错误DNA职责（深度层，本维度表）：
   → 物理专属五维度深度分类
   → 子类型精确定位（P01/C03/F02/R01/T05等）
   → 跨维度关联分析
-  → 顽固弱项专项突破（四步流程）
-  → 物理焦虑处理
-  → 物理弱项月报生成
+  → 顽固弱项专项突破（四步流程，计数不在本层）
+  → 物理焦虑处理（先过危机例外）
+  → 物理弱项月报生成（学生要求时才生成）
 ```
 
 ### 9.2 维度映射表
@@ -419,72 +423,92 @@ C06(电学概念混淆) + F06(多公式联立错误)
 通用错题本的基础四维分类与本维度表的深度分类映射关系：
 
 ```text
-通用错题本四维标签    →  本维度表可能映射       →  判断依据
+通用四维（basicDimension）  →  物理五维可能映射       →  判断依据
 ───────────────────────────────────────────────────────────
-概念理解错误          →  P类(图景)或C类(概念)   →  是否涉及图景缺失？
+概念模糊              →  P类(图景)或C类(概念)   →  是否涉及图景缺失？
                        P类：因为没画图所以"不理解"
                        C类：概念本身理解偏差
-计算/操作失误         →  T类(数学工具)或F类     →  物理思路对吗？
+计算失误              →  T类(数学工具)或F类     →  物理思路对吗？
                        T类：物理思路对但数学算错
                        F类：公式用错导致计算方向错
-审题习惯问题          →  P类(图景)或R类(过程)   →  是否图景/过程遗漏？
+读题失误              →  P类(图景)或R类(过程)   →  是否图景/过程遗漏？
                        P类：漏条件因为没画图
                        R类：条件都有但过程分析不完整
-策略选择错误          →  R类(过程)或F类(公式)   →  方法选择还是过程划分？
+方法用错              →  R类(过程)或F类(公式)   →  方法选择还是过程划分？
                        R类：过程划分策略错
                        F类：公式选择策略错
 ```
 
-交接时，通用错题本将基础四维标签作为 `physicsBasicDimension` 字段推送，本SKILL据此进入对应维度的子类型精确定位。由于通用四维→物理五维映射不是1:1，本SKILL会结合题目类型标签（力学/电学/光学/热学）进行综合判断。
+反向映射（写回通用层时用，`shared/vocab.md §2`）：物理 P、C → 概念模糊；T → 计算失误；R（审题部分）→ 读题失误；F → 方法用错。
 
-### 9.3 数据流转规则
+由于通用四维 ↔ 物理五维不是 1:1，本SKILL结合题目模块标签（力学/电学/光学/热学）综合判断，判断结果写入 `physicsBasicDimension`，通用层字段 `basicDimension` 保持错题本给出的值不变。
 
-```text
-交接流程：
-  通用错题本完成基础分类 → 推送交接记录至物理错误DNA → 本维度表进行深度分类
-  物理错误DNA完成深度分析 → 回写至通用错题本的"物理专属字段"区域
-  不产生重复记录：通用层记表面，物理层记根因
+### 9.3 交接契约（以 handover-protocol.schema.json 为源）
 
-交接记录格式：
-  {
-    "source": "correction-notebook",
-    "type": "新错题 / 顽固弱项确认 / 深度分析请求 / 焦虑信号",
-    "physicsBasicDimension": "图景建立错误 / 概念混淆 / 公式误用 / 过程分析错误 / 数学工具错误",
-    "surfaceInfo": {
-      "题目摘要": "...",
-      "学生答案": "...",
-      "正确答案": "...",
-      "表面根因": "...",
-      "题目类型标签": "力学/电学/光学/热学"
-    },
-    "historyRefs": ["错题ID1", "错题ID2"],
-    "timestamp": "..."
-  }
+交接结构必须与 `student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json` 完全一致，字段名与枚举不得自造。
 
-回写字段：
-  物理深度分类：已交接至基因档案
-  物理子类型ID：如 P01/C03/F02/R01/T05
-  物理跨维度关联：如 "主维度P01+次要维度C01"
-  物理根因分析（深度）：一句话深度根因
-  物理弱项状态：无 / 观察 / 顽固 / 突破中 / 已攻克
+**接收：`wrong_answer_handover`**
+
+```json
+{
+  "sessionId": "sess-2026-09-03-01",
+  "protocolVersion": "2.1.0",
+  "handoverType": "wrong_answer_handover",
+  "sender": "xiaozhi-correction-notebook",
+  "recipient": "xiaozhi-physics-error-dna",
+  "consent": { "crossSkillSharing": true, "verifiedAt": "2026-09-03T20:05:00+08:00" },
+  "payload": {
+    "wrongAnswerData": {
+      "errorId": "err-20260903-007",
+      "subject": "physics",
+      "concept": "斜面上的物体受力分析",
+      "handoverTrigger": "stubborn_weakness",
+      "basicDimension": "概念模糊",
+      "physicsBasicDimension": "图景建立(P)",
+      "subtypeId": "P02",
+      "surfaceInfo": {
+        "questionAbstract": "物块沿斜面匀速下滑，求摩擦力方向",
+        "studentAnswer": "沿斜面向下",
+        "correctAnswer": "沿斜面向上",
+        "surfaceRootCause": "没画受力图，凭印象判断摩擦力方向"
+      },
+      "occurrenceCountInWindow": 3,
+      "historyRefs": ["err-20260815-003", "err-20260828-011"]
+    }
+  },
+  "timestamp": "2026-09-03T20:05:00+08:00"
+}
 ```
+
+字段约束：
+- `basicDimension` 必填，取通用四维（概念模糊 / 计算失误 / 读题失误 / 方法用错）
+- `physicsBasicDimension` 取五维枚举原文：`图景建立(P)` `概念混淆(C)` `公式误用(F)` `过程分析错误(R)` `数学工具错误(T)`
+- `subtypeId` 形如 `P02`，即本表定义的物理子类型编码
+- `occurrenceCountInWindow` 由通用错题本给出，本SKILL不改写、不重算
+- `handoverTrigger` 只取 `new_error` / `stubborn_weakness` / `anxiety_trigger`
+
+**回写：`deep_analysis_writeback`**，`payload.deepAnalysisData` 携带 `errorId`（原样带回）、`subject="physics"`、`subtypeId`、`basicDimension`、`rootCause`（≤300 字，不含原始对话）、`status`（五档）、`crackedVerification`、`recommendedAction`。
+
+**写入学习 DNA**：`subject_profile_writeback`，`payload.profileData.updateTarget="subject_extension"`，`subjectExtensionPatch` 只带 `subjectExtensions.physics` 分支（`subtypes` / `modelingProfile` / `labSkills`）。
+
+**提醒**：`reminder_enqueue` + `payload.reminderData`，接收方固定为 `xiaozhi-im-reminder`。
 
 ### 9.4 触发去重规则
 
 ```text
-物理科目3次同类错误：
-  → 通用错题本：仅标记"待物理错误DNA处理"，不独立启动预警
-  → 物理错误DNA：执行顽固弱项四步突破流程
+28 天累计计数与"顽固"判定：
+  → 通用错题本：唯一计数权威，达阈值后推送 handoverTrigger="stubborn_weakness"
+  → 物理错误DNA：只消费该事件，执行四步突破流程，不自行计数
 
-物理科目固定错误模式：
-  → 通用错题本：不独立生成递进练习
-  → 物理错误DNA：执行四步突破流程
+递进练习：
+  → 通用错题本：物理科目不独立生成
+  → 物理错误DNA：统一执行四步突破流程（出题前按 shared/ai-item-check.md 自检）
 
 物理焦虑信号词：
-  → 通用错题本：检测后转交物理错误DNA
-  → 物理错误DNA：执行"数据替代情绪+图景重建"流程
+  → 通用错题本：检测后以 handoverTrigger="anxiety_trigger" 转交
+  → 物理错误DNA：先做危机信号检查（shared/crisis-exception.md），再执行"数据替代情绪+图景重建"
 
-IM提醒：
-  → 物理错误DNA：指定提醒需求（何时提醒、提醒内容）
-  → 通用错题本：统一调度，避免多个SKILL同时提醒
+提醒：
+  → 物理错误DNA：只生成 reminder_enqueue 交接
+  → xiaozhi-im-reminder：唯一发送方，按 shared/vocab.md §9 预算合并
 ```

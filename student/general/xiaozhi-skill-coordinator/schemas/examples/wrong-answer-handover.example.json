@@ -1,0 +1,34 @@
+{
+  "sessionId": "sess-demo-001",
+  "protocolVersion": "2.1.0",
+  "handoverType": "wrong_answer_handover",
+  "sender": "xiaozhi-correction-notebook",
+  "recipient": "xiaozhi-math-error-dna",
+  "consent": {
+    "crossSkillSharing": true,
+    "verifiedAt": "2026-05-11T20:00:00+08:00"
+  },
+  "payload": {
+    "wrongAnswerData": {
+      "errorId": "err-20260511-003",
+      "subject": "math",
+      "concept": "一次函数解析式推导",
+      "handoverTrigger": "stubborn_weakness",
+      "basicDimension": "概念模糊",
+      "subtypeId": "B02",
+      "occurrenceCountInWindow": 3,
+      "surfaceInfo": {
+        "questionAbstract": "已知直线过(1,3)和(2,5)，求解析式",
+        "studentAnswer": "y=2x+3",
+        "correctAnswer": "y=2x+1",
+        "surfaceRootCause": "代入一个点后直接把 b 写成 3"
+      },
+      "anxietySignals": [],
+      "historyRefs": [
+        "err-20260420-001",
+        "err-20260501-002"
+      ]
+    }
+  },
+  "timestamp": "2026-05-11T20:01:00+08:00"
+}

@@ -1,23 +1,24 @@
 ---
 name: xiaozhi-teach-chinese-writing-guide
 display_name: 写作教学指导
-version: 1.0.0
+version: 2.1.0
 author: 小智伴学
 category: 老师语文
+grade_bands:
+  - 小学高段
+  - 初中
 tags: [写作教学, 批改标准, 任务设计, 讲评, 风格DNA, 语文老师]
 description: >
-  帮助语文老师把"批改作文"升级为"系统化写作教学"。
-  当老师说"这周写什么作文"、"怎么批改作文"、
-  "写作讲评怎么上"、"学员作文怎么打分"、
-  "怎么教写作风格"、"写作任务怎么设计"时，建议激活此SKILL。
-  核心工作流：写作任务设计（命题/半命题/情境）→
-  写作过程引导（构思→起草→修改）→
-  三维批改（结构/语言/思维）→
-  风格DNA积累 → 讲评设计 → 与学生端语文写作教练
-  / 学情分析师 / 错题本建立数据接口。
-  该版本基于"风格DNA"理念，让学员作文可追踪可进化。
-compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozhi-teach-classroom-coach
+  面向语文老师的作文教学与批改标准工具。
+  当老师说"这周写什么作文"、"作文怎么批改"、"作文讲评怎么上"、"作文怎么定档打分"、"学员的写作风格怎么看"、"写作任务怎么设计"时，建议激活此SKILL。
+  工作流：写作任务设计（命题/半命题/情境）→ 过程引导（构思/起草/修改）→ 等级批改（一至四类文 × 内容/结构/语言/书写）→ 三维观察诊断 → 讲评设计 → 班级写作力记录。
+  只输出批改标准与讲评设计，不代老师逐篇精批、不为学员代写作文。
+  阅读教学转 xiaozhi-teach-chinese-reading-guide；文言文教学转 xiaozhi-teach-chinese-classical-guide。
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
+depends_on:
+  - xiaozhi-teach-lesson-planner
+  - xiaozhi-teach-student-analyzer
+  - xiaozhi-teach-classroom-coach
 id: openclaw:xiaozhi-teach-chinese-writing-guide
 min_platform_version: "2.0"
 max_round_limit: 20
@@ -29,13 +30,26 @@ max_round_limit: 20
 
 ---
 
-## ⚠️ 技术实现边界声明
+> 技术边界：本 SKILL 依赖能力 [M, O, F]，无该能力时按 shared/platform-conventions.md 降级。
+> 作文照片看不清时，请把要讨论的那一两段打字发我；无文件能力（F）时，档案表格改为对话内纯文本。
 
-> **关于"AI 批改"边界：** 本 SKILL 输出**三维批改框架**与**批改标准**；**不**直接由 AI 替老师逐篇精批作文；最终批改仍由老师完成。
->
-> **关于"题目版权"边界：** 写作题目必须标注 copyrightStatus（自有/改编/教材原文/公开可引用）；不引用未授权的作文题库。
->
-> **关于"AI 代写"边界：** 本 SKILL **不**为学员代写作文；所有写作任务必须学员本人完成；老师可示范写作过程，不提供范文代写。
+**本 SKILL 的内容边界（产品定位，不是平台能力问题）：**
+- 只输出**批改标准**与**讲评设计**，不替老师逐篇精批；最终批改与定档由老师完成。
+- 写作题目必须标注 `copyrightStatus`：`自有` / `改编` / `公开可引用` / `仅存索引`（教辅题库与历年真题一律 `仅存索引`，只记出处）。
+- 不为学员代写作文；老师可示范写作过程，本 SKILL 不提供范文代写。
+
+### 隐私与数据控制入口
+- 查看：「查看我的班级写作记录」
+- 更正：「更正我的班级写作记录」
+- 删除：「删除我的班级写作记录」（删除后不可恢复，会先确认一次）
+- 暂停：「这次不要记忆」/「暂停提醒」
+- 共享控制：「不要共享给其他SKILL」/「不要给家长看」
+- 导出：「导出我的班级写作记录」（以文本形式给出，便于转存）
+
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 给出专业求助渠道（即时危险：110/120）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
+
+> 作文是学员最容易吐露真实处境的地方。老师把这类作文拿来讨论批改时，**先按危机例外处置**，
+> 不要先谈"这段细节可以再具体些"，也不要把它选进讲评样本。
 
 ---
 
@@ -91,12 +105,12 @@ max_round_limit: 20
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ③ 三维批改                │
-                │  结构/语言/思维          │
+                │ ③ 等级批改 + 三维观察     │
+                │  四项定档 / 15 项诊断     │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ④ 风格 DNA 积累           │
+                │ ④ 写作风格档案            │
                 │  → 学员档案              │
                 └────────────┬─────────────┘
                              ↓
@@ -106,8 +120,8 @@ max_round_limit: 20
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ⑥ 写回 student-analyzer   │
-                │  写作能力维度             │
+                │ ⑥ 更新 classWorkspace     │
+                │  写作弱项 / 分层          │
                 └──────────────────────────┘
 ```
 
@@ -153,14 +167,18 @@ max_round_limit: 20
 ### 4.4 题目库版权
 
 ```text
-✅ 自有：老师原创
-✅ 改编：基于教材/经典题目改编
-✅ 教材原文：来源教材的题目
-✅ 公开可引用：CC 协议资源
+copyrightStatus 只用这四个值（shared/vocab.md §11）：
+✅ 自有        老师原创
+✅ 改编        基于教材或经典题目改编，须写明改自何处
+✅ 公开可引用  CC 协议或明确允许引用的资源
+✅ 仅存索引    教材原题、教辅题库、历年真题——只记出处与题号，不复制题干
 
-❌ 禁止：未授权复制教辅题库
+❌ 禁止：未授权复制教辅题库题干
 ❌ 禁止：未授权转载网络作文题
-```
+
+AI 生成的作文题：生成前按 shared/ai-item-check.md 自检（题意清楚、有话可写、
+不诱导编造虚假经历、学段内），输出时标注【AI 生成，入库前请人工验算】，
+老师确认后才可布置或入资源库。
 
 ---
 
@@ -229,53 +247,81 @@ max_round_limit: 20
 
 ---
 
-## 六、三维批改框架
+## 六、作文批改：等级定档 + 三维观察
 
-### 6.1 三维定义
-
-```text
-┌──────────┬────────────────────────┬────────────┬──────────────┐
-│ 维度      │ 描述                    │ 评分项     │ 等级          │
-├──────────┼────────────────────────┼────────────┼──────────────┤
-│ 结构      │ 文章整体架构            │ 5 项        │ 优/良/合格/差 │
-│ 语言      │ 用词/句式/表达          │ 5 项        │ 优/良/合格/差 │
-│ 思维      │ 思想深度/独特性         │ 5 项        │ 优/良/合格/差 │
-└──────────┴────────────────────────┴────────────┴──────────────┘
-```
-
-### 6.2 结构 5 项
-
-> 📎 结构 5 项评分细则见 `references/three-dim-scoring-items.md`（标题准确/开篇吸引/段落清晰/详略得当/结尾有力）
-
-### 6.3 语言 5 项
-
-> 📎 语言 5 项评分细则见 `references/three-dim-scoring-items.md`（用词准确/句式多样/表达具体/节奏感/无错别字语病）
-
-### 6.4 思维 5 项
-
-> 📎 思维 5 项评分细则见 `references/three-dim-scoring-items.md`（主题明确/思想深度/独特视角/真实感受/引发共鸣）
-
-### 6.5 三维评分
+批改分两件事，不要混：
 
 ```text
-每个维度按 4 等级：
-  优（4 分）：超过该年级一般水平
-  良（3 分）：达到该年级一般水平
-  合格（2 分）：基本达到要求
-  差（1 分）：明显不足
+【定档】等级描述式——一至四类文 × 中考四项（内容 / 结构 / 语言 / 书写）
+        用来回答"这篇在什么位置"。不给分数细目，按本校满分换算。
 
-总分 = 结构分 + 语言分 + 思维分 = 12 分制
+【诊断】三维观察 15 项（结构 / 语言 / 思维）
+        用来回答"下一步改什么"。只记"做到/部分做到/没做到"，不打分、不加总。
 ```
 
-### 6.6 批改样板
+> 📎 **等级描述、四项分档、本地换算带、三维 15 项细则、批改样板，全部在
+> `references/three-dim-rubric.md`——这是本 SKILL 批改标准的唯一出处。**
+> 本节只讲怎么用，不重复标准正文。
 
-> 📎 完整模板见 `references/correction-sample-template.md`（三维批改样板：整体评价 + 结构/语言/思维逐项评价 + 一句话鼓励）
+### 6.1 四项等级速览
+
+```text
+┌────────┬────────────────────────────────────────────────┐
+│ 等级    │ 一句话总体印象                                   │
+├────────┼────────────────────────────────────────────────┤
+│ 一类文  │ 切合题意、有自己的思考；材料具体；层次分明；语言有表现力│
+│ 二类文  │ 符合题意、中心明确；材料较具体；条理清楚；语言通顺     │
+│ 三类文  │ 基本符合题意但较浅；材料空泛；层次或详略有问题；有语病 │
+│ 四类文  │ 偏题或中心不明；材料脱节；结构混乱；语病多            │
+└────────┴────────────────────────────────────────────────┘
+
+四项：内容 / 结构 / 语言 / 书写（与各地中考作文评分表一致）
+定档以"内容"为基准，其余三项每有一项低两档，降半档。
+```
+
+### 6.2 不使用的做法（重要）
+
+```text
+❌ 不按"段数"定档（写五段还是七段都行，看层次是否分明）
+❌ 不数"高级词有几个""修辞有几处""细节有几处"——堆得多不等于写得好
+❌ 不给"结构 5 分 + 语言 5 分 + 思维 5 分"这类分项细目
+   （各地作文满分不同，分项细目会和本地评分表打架）
+❌ 不用 AI 替老师定档：AI 可以给"我看像二类文，理由是……"，
+   最终等级由老师定
+```
+
+### 6.3 换算到本校分值
+
+```text
+定档之后按 references/three-dim-rubric.md §3 的换算带落分：
+  老师第一次使用时填一次本校满分与错别字扣分规则，之后全班全学期沿用同一条带。
+  同一次作文中途不改换算带。
+```
+
+### 6.4 三维观察怎么用
+
+```text
+定档之后，从 15 项里挑 1-2 项写进批语，作为"下一步"。
+列满 15 项等于没点——学员一次只改得动一件事。
+
+结构维：标题扣题 / 开篇入题 / 段落层次 / 详略与过渡 / 结尾收束
+语言维：用词准确 / 句式变化 / 表达具体 / 修辞恰当 / 通顺无错字
+思维维：立意明确 / 思想深度 / 选材典型 / 真实感受 / 独到视角
+（细则见 references/three-dim-rubric.md §4）
+```
+
+> ⚠️ 命名区分：学生端 `xiaozhi-chinese-writing-coach` 用的是"论点/论据/语言**三要素**批改"，
+> 面向单篇自我修改；这里的"三维观察"是老师端班级教学镜头。两套名称不同，不要互相套用。
+
+### 6.5 批改样板
+
+> 📎 填写模板见 `references/correction-sample-template.md`（四项等级 + 定档 + 三维观察 1-2 项 + 下一步）
 
 ---
 
-## 七、风格 DNA 积累
+## 七、写作风格档案
 
-### 7.1 风格 DNA 维度
+### 7.1 风格档案 6 维度
 
 ```text
 ┌──────────┬────────────────────────┬──────────────┐
@@ -290,11 +336,12 @@ max_round_limit: 20
 └──────────┴────────────────────────┴──────────────┘
 ```
 
-### 7.2 学员风格 DNA 档案
+### 7.2 学员写作风格档案
 
-> 📎 完整模板见 `references/style-dna-profile-template.md`（风格 DNA 档案：词汇倾向/句式特征/修辞偏好/情感基调/思维风格/风格进化）
+> 📎 完整模板见 `references/style-dna-profile-template.md`（词汇倾向/句式特征/修辞偏好/情感基调/思维风格/风格演变）
+> 📎 长期跟踪记录见 `references/style-dna-record.md`
 
-### 7.3 风格 DNA 使用
+### 7.3 风格档案怎么用
 
 ```text
 ■ 学员视角
@@ -387,18 +434,65 @@ max_round_limit: 20
 
 ### 9.2 接口
 
+数据契约为 `shared/class-teaching-workspace.schema.json`，
+所有读写路径必须是该 schema 中真实存在的字段。
+
 ```text
 读：
-  lessonPlan.emphasis            → 写作任务侧重点
-  studentAnalyzer.weaknessRank   → 写作能力弱项
+  classWorkspace.classProfile.{gradeBand, gradeLevel, periodMinutes, fullScore}
+                                      → 学段、课时长度、卷面满分（用于作文换算带）
+  classWorkspace.weaknessRank[]       → 班级写作弱项（knowledgePoint 如"详略失当""立意浅"、
+                                        errorRate、dimension、stubbornCount）
+  classWorkspace.studentTiers[]       → A/B/C 分层，用于给写作任务分档
 
-写：
-  writingGuide.taskDesign        → 写作任务设计
-  writingGuide.threeDimScore     → 三维评分
-  writingGuide.styleDNA          → 风格 DNA 更新
-  writingGuide.peerReviewPlan    → 讲评计划
-  → student-analyzer 接收
-  → resource-library 接收
+写（一律生成待确认条目，老师确认后落库）：
+  classWorkspace.lessonPlans[]        → 写作课与讲评课的教学设计
+      · objectives[]（statement + cognitiveLevel + coreCompetency）
+      · segments[]（name = 任务发布/构思/起草/修改，或 共性观察/典型样本/可操作建议）
+      · questionChain[]               → 构思引导问题链
+      · sourceWeaknessIds[]           → 本课针对的 weaknessRank 条目
+  classWorkspace.homeworkAssignments[]→ 写作任务与二稿修改（purpose = 巩固/补救/拓展）
+  classWorkspace.interactionLogs[]    → 讲评课后回填：participationNote、
+                                        misconceptionsObserved[]（如"把升华当结尾套话"）
+  classWorkspace.weaknessRank[]       → 依据本次作文等级分布更新写作类弱项
+  classWorkspace.studentTiers[]       → 依据近几次作文等级更新分层（basis 写清依据）
+```
+
+**写回学生个人档案（可选，需授权）：**
+
+写回学生端学习 DNA 必须走 `handover-protocol.schema.json`，且 `meta.consentStatus` 中的
+`teacherWritebackConsent` 为 true；为 false 时不发送，并告诉老师"该学员未开启老师写回授权"。
+
+```json
+{
+  "sessionId": "sess-teach-wt-001",
+  "protocolVersion": "2.1.0",
+  "handoverType": "teacher_writeback",
+  "sender": "xiaozhi-teach-chinese-writing-guide",
+  "recipient": "xiaozhi-learning-dna",
+  "consent": { "crossSkillSharing": true, "teacherWritebackConsent": true },
+  "payload": {
+    "teacherWritebackData": {
+      "teacherSkill": "xiaozhi-teach-chinese-writing-guide",
+      "studentAlias": "小龙",
+      "weakKnowledgePointUpdates": [
+        { "subject": "语文", "knowledgePoint": "记叙文详略安排", "status": "初步弱项", "masteryLevel": "会复述" }
+      ],
+      "note": "本次二类文；材料真实，重点段落与中心错位"
+    }
+  },
+  "timestamp": "2026-09-03T15:20:00+08:00"
+}
+```
+
+**家长反馈的授权检查（生成任何家长可见内容前）：**
+
+```text
+· 先核对 dna-profile 的 meta.consentStatus 中 parentSharingConsent = true？
+· 内容含情绪描述（如"孩子写作文时很抵触"）？→ 还需 emotionSharingWithParent = true
+  任一为 false → 只给老师和学员本人，并告知"该学员未开启家长共享"。
+· 学员作文原文属于个人表达，即使有家长共享授权，也只发**批语与等级**，不转发作文全文。
+· 本 SKILL 不生成家长简报，只把素材交给 xiaozhi-teach-parent-communication，由它按授权处理。
 ```
 
 ---
@@ -422,8 +516,8 @@ max_round_limit: 20
 |---------|---------|
 | 任务设计基于真实情境 | 套路题"半命题：我的____" |
 | 过程引导 3 步（构思/起草/修改） | 任务=直接写 |
-| 三维批改（结构/语言/思维） | 只画对错 |
-| 风格 DNA 累积进化 | 强求模仿范文 |
+| 四项等级定档 + 三维观察诊断 | 只画对错 |
+| 写作风格档案累积 | 强求模仿范文 |
 | 讲评给具体修改建议 | 讲评=念范文 |
 | 学员真实姓名不公开 | 公开批评学员作文 |
 | 优秀作文脱敏入库 | 复制未授权作文库 |
@@ -438,15 +532,19 @@ max_round_limit: 20
     <── xiaozhi-teach-student-analyzer（学情/弱项）
     ──→ xiaozhi-teach-student-analyzer（写作能力维度）
     ──→ xiaozhi-teach-resource-library（优秀作文入库）
-    ──→ xiaozhi-teach-parent-communication（写作进步反馈）
+    ──→ xiaozhi-teach-parent-communication（写作进步素材；发家长前由它核对 parentSharingConsent）
     ──→ 学生端 xiaozhi-chinese-writing-coach（学员视角）
 ```
 
 **禁止行为**：
 - 禁止 AI 替学员代写作文
-- 禁止 AI 直接批改作文（只输出批改标准）
+- 禁止 AI 直接给最终等级或分数（只给"我看像 X 类文，理由是……"，由老师定）
+- 禁止按段数、修辞条数、"高级词"个数打分
+- 禁止在同一次作文中途更换换算带
 - 禁止引用未授权作文题库
 - 禁止公开学员真实姓名+作文
+- 禁止未核对 `parentSharingConsent` 就把学员作文或评价发给家长
+- 禁止未核对 `teacherWritebackConsent` 就写回学生端档案
 - 禁止用"好词好句"强行塞进学员作文
 
 ---
@@ -454,12 +552,11 @@ max_round_limit: 20
 ## 十三、参考资源
 
 - `references/writing-task-template.md` — 写作任务设计模板（5 类任务样板）
-- `references/three-dim-rubric.md` — 三维批改 12 分制评分细则
-- `references/style-dna-record.md` — 学员风格 DNA 记录模板（7 块档案）
+- `references/three-dim-rubric.md` — **作文批改标准唯一出处**：一至四类文等级描述 + 中考四项分档 + 本地换算带 + 三维观察 15 项 + 批改样板
+- `references/style-dna-record.md` — 学员写作风格长期记录模板
 - `references/task-design-sample-card.md` — 真实情境写作任务设计样板卡
-- `references/three-dim-scoring-items.md` — 三维批改评分细则（结构/语言/思维 各 5 项）
-- `references/correction-sample-template.md` — 批改样板模板
-- `references/style-dna-profile-template.md` — 学员风格 DNA 档案模板
+- `references/correction-sample-template.md` — 批改填写模板（四项等级 + 定档 + 三维观察）
+- `references/style-dna-profile-template.md` — 学员写作风格档案模板
 - `references/review-lesson-scripts.md` — 讲评话术库（优秀/中等/待改进三类样本）
 
 ---

@@ -1,24 +1,25 @@
 ---
 name: xiaozhi-teach-schedule-manager
 display_name: 排课与课时管理
-version: 1.0.0
+version: 2.1.0
 author: 小智伴学
 category: 独立教师
+grade_bands:
+  - 小学中段
+  - 小学高段
+  - 初中
+  - 高中
 tags: [排课, 课时管理, 补课请假, 课时包, 排课冲突, 独立教师]
 description: >
-  帮助独立教师把"凭记忆排课"升级为"系统化排课与课时管理"。
-  当老师说"排课"、"调课"、"补课"、
-  "学员请假"、"课时包剩余"、"本周课表"、
-  "排课冲突"、"下一节课谁"时，建议激活此SKILL。
-  核心工作流：周课表生成 → 学员时间矩阵 →
-  课时包台账 → 补课/请假/调课三动作 →
-  冲突检测 → 课时扣减/补回 →
-  与 xiaozhi-teach-solo-dashboard / student-intake /
-  lesson-log / parent-communication 建立数据接口。
-  该版本基于"时间是独立教师最稀缺资产"原则，
-  让排课冲突早发现、课时台账透明化。
-compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-teach-solo-dashboard, xiaozhi-teach-student-intake, xiaozhi-teach-lesson-log, xiaozhi-teach-parent-communication
+  把独立教师"凭记忆排课"变成看得见的周课表与课时台账。
+  适用于老师说"排下周的课""把 [化名] 的课调到周四""[化名] 缺课要补""[化名] 请假""[化名] 还剩几课时""本周课表""这个时间排了谁""我下一节课是谁"。
+  流程：读学员可上课时间段 → 生成周课表 → 检测老师/学员时间冲突 → 老师确认后写入课表 → 维护课时包剩余与到期。
+  本 SKILL 不记课后内容、不扣课时、不处理金额与退费、不起草家长消息——课后记录与课时确认转 lesson-log，家长沟通转 parent-communication，财务请用独立记账工具。
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
+depends_on:
+  - xiaozhi-teach-student-intake
+  - xiaozhi-teach-lesson-log
+  - xiaozhi-teach-parent-communication
 id: openclaw:xiaozhi-teach-schedule-manager
 min_platform_version: "2.0"
 max_round_limit: 12
@@ -30,15 +31,15 @@ max_round_limit: 12
 
 ---
 
-## ⚠️ 技术实现边界声明
+## 技术边界
 
-> **关于"自动排课"边界：** 本 SKILL 提供排课建议与冲突检测；**不**自动写入学员课表；老师需确认后写入 solo-dashboard。
->
-> **关于"学员时间偏好"边界：** 排课时仅使用学员授权的时间偏好信息（来自 intake）；不擅自增加可上课时间。
->
-> **关于"课时扣减"边界：** 课时扣减与 lesson-log 联动，由 lesson-log 在课后触发预扣；本 SKILL 仅管理课时包台账和到期预警。
->
-> **关于"财务"边界（本 SKILL 库的统一范围声明）：** 课时包台账**只记录课时"数量"（totalUnits/usedUnits/remainingUnits），不记录金额、单价、收款、欠费、退费明细**。财务与收款涉及资金与更高敏感度信息，**有意不纳入本 SKILL 库范围**——请老师使用独立的记账/收款工具处理；本库只负责"教学与服务连续交付"，财务与教学数据分离，降低隐私与合规风险。
+> 技术边界：本 SKILL 依赖能力 [M, K, F]，无该能力时按 shared/platform-conventions.md 降级。
+
+排课建议与冲突检测由本 SKILL 给出，**写入课表前一律要老师确认**。冲突检测只读 `studentCards[].availability[]`（学员授权登记的可上课时间段），不擅自扩大可上课范围。无 `K`（日期感知）时先问今天日期与本周起止日再排课。
+
+**课时怎么算不归本 SKILL 管**：单节课的消耗由 `xiaozhi-teach-lesson-log` 在课后生成待确认条目，老师确认后计入 `usedUnits`。本 SKILL 只维护课时包台账本身（总数、剩余、到期日）和到期提示。
+
+**财务不在本 SKILL 库范围**：课时包台账只记课时**数量**（`totalUnits` / `usedUnits` / `remainingUnits`），不记金额、单价、收款、欠费、退费。这是有意划出的边界——请老师用独立的记账工具处理资金，教学数据与财务数据分开存放。因此本 SKILL 的任何流程都不会提出退款、赔付或折算金额的建议。
 
 ---
 
@@ -61,10 +62,10 @@ max_round_limit: 12
 ```
 
 本 SKILL 要解决的是：
-- **让排课可视化**：周课表 + 学员时间矩阵
-- **让冲突早发现**：排课时自动检测时间冲突
-- **让课时台账透明**：每个学员课时包剩余/到期/续费节点清楚
-- **让补课请假有流程**：标准动作 + 自动留痕
+- **让排课可视化**：周课表 + 学员可上课时间段
+- **让冲突早发现**：排课时先比对 `availability[]` 再落笔
+- **让课时台账透明**：每个学员课时包剩余、到期日、待确认条目清楚
+- **让补课请假有流程**：标准动作 + 逐条留痕
 
 ---
 
@@ -88,50 +89,59 @@ max_round_limit: 12
 
 ```text
                 ┌──────────────────────────┐
-                │ ① 学员时间矩阵            │
-                │  来自 intake              │
+                │ ① 读学员可上课时间段      │
+                │  studentCards[].availability│
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ② 周课表生成              │
-                │  固定课+临时调课         │
+                │ ② 周课表草案              │
+                │  固定课 + 临时调课        │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
                 │ ③ 冲突检测                │
-                │  老师时间/学员时间        │
+                │  老师时间 × availability  │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ④ 排课建议输出            │
-                │  老师确认后写入            │
+                │ ④ 排课建议 → 老师确认     │
+                │  确认后才写 lessonSchedule│
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
                 │ ⑤ 课时包台账              │
-                │  剩余/到期/续费           │
+                │  剩余 / 到期 / 待确认条目 │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
                 │ ⑥ 补课/请假/调课          │
-                │  标准动作+自动留痕        │
-                └────────────┬─────────────┘
-                             ↓
-                ┌──────────────────────────┐
-                │ ⑦ 写回 solo-dashboard     │
-                │  课表+台账                │
+                │  一律生成待确认建议       │
                 └──────────────────────────┘
 ```
 
 ---
 
-## 四、学员时间矩阵
+## 四、可上课时间段
 
-### 4.1 学员可用时间表
+### 4.1 学员可上课时间（`availability[]`）
 
-> 📎 完整模板见 `references/weekly-schedule-template.md`（第一节"学员时间矩阵"：每周固定可上课时间勾选表 + 不可上课时间 + 备注）
+学员的可上课时间登记在 `workspace.studentCards[].availability[]`，每条是一个 `{dayOfWeek, startTime, endTime}` 三元组：
 
-### 4.2 老师时间矩阵
+```text
+小A 的 availability：
+  { "dayOfWeek": "周三", "startTime": "18:30", "endTime": "20:00" }
+  { "dayOfWeek": "周六", "startTime": "09:00", "endTime": "12:00" }
+```
+
+**只记时间，不记原因**。"周三要上钢琴课""周日爷爷家"这类信息属于家庭安排，不写进档案——排课只需要知道哪段时间可用。
+
+**不要用 `learningPreferences` 做时间冲突检测**。那个字段记的是学习方式偏好（"喜欢先看例题""步骤要写全"），拿它判断时间会得出荒唐结论。老师若在 `learningPreferences` 里写了时间类内容，提示一次并帮他迁到 `availability[]`。
+
+> 📎 完整登记模板见 `references/weekly-schedule-template.md`（第一节"学员可上课时间段"）
+
+### 4.2 老师自己的时间
+
+老师的不可用时间与上课偏好记在 `workspace.teacherProfile` 与会话中，不入学员卡。授课形式（线上/线下）读 `teacherProfile.deliveryChannels`。
 
 > 📎 完整模板见 `references/weekly-schedule-template.md`（第二节"老师时间矩阵"：不可用时间 + 可用课时位 + 老师偏好）
 
@@ -167,17 +177,23 @@ max_round_limit: 12
 
 ```text
 ■ 老师时间冲突
-  · 同时段已排其他学员
-  · 同时段是老师不可用时间
+  · 同时段 workspace.lessonSchedule[] 已有 status=scheduled/makeup 的课
+    （比对 startTime 与 durationMinutes 算出的区间是否重叠）
+  · 同时段是老师登记的不可用时间
 
 ■ 学员时间冲突
-  · 学员可用时间之外
-  · 学员自己之前有别的安排
+  · 拟排时段不落在该学员任何一条 availability[] 区间内
+    （判据：同一 dayOfWeek，且 startTime ≤ 拟排开始，
+      拟排结束 ≤ endTime）
+  · 学员没登记 availability[] → 不猜，先问一次并登记
 
-■ 课时包预警
-  · 学员课时包不足
-  · 学员课时包即将到期
+■ 课时包提示
+  · remainingUnits ≤ 3
+  · expiryDate 距今 ≤ 7 天
+  · pendingConfirmations 非空（剩余课时可能虚高）
 ```
+
+**冲突检测只看时间。** 不因为"这个学员最近状态不好""家长不太配合"之类判断去调整排课建议——那不是排课要解决的问题。
 
 ### 6.2 冲突检测输出
 
@@ -192,9 +208,10 @@ max_round_limit: 12
 ```text
 ■ 学员请假
   操作：
-    · 课时不扣（或按约定调整）
-    · 记录请假原因和日期
-    · 不自动补排（学员/家长后续约时间）
+    · 课时不扣（对应课节 status=absence，
+      课时条目由 lesson-log 生成 units=0 的待确认条目）
+    · 记录请假日期；原因只记"已请假"，不记家庭细节
+    · 不代排补课；需要补课时按 §7.2 生成待确认的补课建议
 ```
 
 > 📎 请假登记模板见 `references/leave-makeup-reschedule-forms.md`（第一节）
@@ -204,14 +221,18 @@ max_round_limit: 12
 ```text
 ■ 补课
   操作：
-    · 排入老师可用时间
-    · 课时按实际消耗扣
-    · 标注"补课"便于复盘
+    · 在老师可用时间 ∩ 该学员 availability[] 中找候选时段
+    · 生成"待确认的补课建议"，列出 1-3 个候选：
+        「小A 缺的这节课，这三个时间都排得开：
+          周四 18:30-20:00 / 周六 09:00-10:30 / 周六 10:30-12:00。
+          选哪个？也可以都不选。」
+    · 老师选定并与学员/家长确认后，才写入 lessonSchedule[]（status=makeup）
+    · 课时消耗仍由 lesson-log 在课后生成待确认条目
 
-■ 排课优先级
-  · 同周补课 > 下周补课
-  · 一次性排完 > 分散排
-  · 学员节奏保持一致
+■ 排课优先级（建议顺序，老师可推翻）
+  · 同周补 > 下周补
+  · 一次排完 > 分散排
+  · 尽量贴近该学员原有的上课节奏
 ```
 
 > 📎 补课安排模板见 `references/leave-makeup-reschedule-forms.md`（第二节）
@@ -239,40 +260,50 @@ max_round_limit: 12
 
 ### 8.1 学员课时台账
 
-> 📎 完整台账模板见 `references/weekly-schedule-template.md`（第六节"课时包台账"：课时包信息 + 消耗/续费记录 + 自动预警栏）
+> 📎 完整台账模板见 `references/weekly-schedule-template.md`（第六节"课时包台账"：课时包信息 + 待确认条目 + 消耗/续费记录 + 提示条件）
 
-### 8.2 课时包预警规则
+### 8.2 课时包提示规则
+
+提示对象是**老师本人**。要不要告诉家长、什么时候说，由老师决定；本 SKILL 不推送任何家长消息。
 
 ```text
-■ 触发条件
-  · 剩余 ≤ 30% 初始值（首次预警）
-  · 剩余 ≤ 10% 初始值（紧急预警）
-  · 到期前 7 天（到期预警）
+■ 触发条件（置 coursePackageLedger[].renewalAttention）
+  · remainingUnits ≤ 3
+  · expiryDate 距今 ≤ 7 天
 
-■ 预警动作
-  · 30% 预警：通知学员/家长（轻度）
-  · 10% 预警：通知学员/家长（强提醒）
-  · 到期预警：暂停排新课 + 通知
+■ 提示动作
+  · 向老师陈述事实：「小A 还剩 3 课时，课时包 12-31 到期，
+    另有 1 条待确认（确认后剩 2 课时）。」
+  · 不催单、不制造紧迫感、不替老师决定要不要续
 
-■ 写回 parent-communication
-  · 触发续费沟通话术
-  · 老师确认后发出
+■ 续费节点口径
+  · 已用 50% / 70%（与 xiaozhi-teach-renewal-report、
+    xiaozhi-teach-student-intake 同一套，本 SKILL 不另设节点）
+
+■ 要和家长谈时
+  · 话术起草交 xiaozhi-teach-parent-communication
+  · 起草前先查 workspace.studentCards[].consent 的
+    parentCommunicationAllowed；发送由老师本人完成
 ```
 
 ### 8.3 课时异常处理
 
 ```text
-■ 超课时上课
-  · 自动透支允许：1 课时
-  · 透支 > 1 课时：暂停排新课 + 沟通
+■ 剩余课时不足却又要排课
+  · 生成待确认提示：「小A 只剩 1 课时，这节课排下去会超出课时包。
+    照排 / 先跟家长确认 / 暂不排？」
+  · 老师选"照排"才写入 lessonSchedule[]
+  · 本 SKILL 不代做"允许透支 N 课时"的决定，也不改动课时数字
 
 ■ 学员请假不补课
-  · 课时不扣
-  · 期末统一结算（如有约定）
+  · 课时不扣；是否另行约定由老师与家长自行商定
+  · 本 SKILL 不涉及金额结算
 
 ■ 老师取消
   · 课时不扣
-  · 自动补排或退款
+  · 生成待确认的补课建议（候选时段 1-3 个），
+    由老师选定并与家长确认后写入
+  · 不涉及退款：课时包只记数量，金额相关事项请用独立记账工具处理
 ```
 
 ---
@@ -326,91 +357,85 @@ max_round_limit: 12
 
 ---
 
-## 十、与上游/下游 SKILL 的协作
+## 十、接口
 
-### 10.1 协作流图
+### 10.1 数据流
 
 ```text
-              ┌────────────────────────┐
-              │ xiaozhi-teach-         │
-              │  student-intake        │
-              │ （学员时间矩阵）       │
-              └───────────┬────────────┘
-                          │
-                          ↓
-              ┌────────────────────────┐
-              │ xiaozhi-teach-         │
-              │  schedule-manager      │
-              │  （本 SKILL）           │
-              └───────────┬────────────┘
-                          │
-        ┌─────────────────┼─────────────────┐
-        ↓                 ↓                 ↓
-  solo-dashboard     lesson-log         parent-communication
-  （课表+台账）      （课时预扣）       （续费预警）
-                          │
-                          ↓
-              ┌────────────────────────┐
-              │ xiaozhi-teach-         │
-              │  renewal-report        │
-              │ （续费报告）           │
-              └────────────────────────┘
+  老师口述可上课时间 ──→ ┌────────────────────┐
+  老师确认排课建议   ──→ │ schedule-manager    │ ──→ 周课表（渲染视图）
+                        │ （本 SKILL）         │ ──→ 待确认的补课建议
+                        └─────────┬──────────┘
+                                  │ 写这两处
+                    ┌─────────────┴─────────────┐
+                    ↓                           ↓
+             lessonSchedule            coursePackageLedger
+             （课节）                  （不含 usedUnits 增减）
 ```
 
-### 10.2 接口
+本 SKILL 不需要任何 SKILL 先跑一遍：学员没建卡也能排课，只是没有 `availability[]` 可比对，此时先问一次并登记。
+
+### 10.2 读写字段
 
 > 统一读写共享工作空间 `solo-teacher-workspace.schema.json`（下称 `workspace`）。字段名一律以该 schema 为准。
 
 ```text
 读：
-  workspace.studentCards[].learningPreferences[]
-      → 学员时间/上课偏好（排课时读取，仅用授权信息）
-  workspace.coursePackageLedger[].usedUnits
-  workspace.coursePackageLedger[].remainingUnits
-      → 课时消耗与剩余（课时包台账基础数据）
+  workspace.studentCards[].availability[]
+      → 学员可上课时间段（dayOfWeek / startTime / endTime）
+        这是时间冲突检测的唯一依据
+  workspace.studentCards[].alias / .status / .gradeBand
+      → 化名、是否在读、学段（学段影响建议上课时间的晚点边界，
+        见 shared/grade-bands.md 一的就寝时间）
+  workspace.teacherProfile.deliveryChannels / .serviceModes
+      → 线上/线下、一对一/小班，决定单节时长建议
+  workspace.coursePackageLedger[].totalUnits / .usedUnits /
+      .remainingUnits / .expiryDate / .pendingConfirmations[]
+      → 课时包台账；pendingConfirmations 非空时剩余课时按"未含 N 条待确认"展示
   workspace.lessonLogs[].consumeLessonUnits
-      → 单节实际消耗课时（由 lesson-log 课后写入）
+      → 单节实际消耗（由 lesson-log 写，本 SKILL 只读）
 
 写：
-  workspace.lessonSchedule[]（lessonEvent:
-      studentId / subject / startTime / durationMinutes /
-      day_of_week / status / lessonGoal）
-      → 排课结果（老师确认后写入）；"周课表"为其渲染视图
-  workspace.coursePackageLedger[]（packageId / studentId /
-      totalUnits / usedUnits / remainingUnits / renewalAttention）
-      → 课时包台账
+  workspace.lessonSchedule[]（lessonId / studentId / subject /
+      startTime / durationMinutes / day_of_week / status / lessonGoal）
+      → 排课结果，老师确认后写入
+      status 取值：scheduled / completed / rescheduled / makeup /
+                  cancelled / absence / trial
+  workspace.coursePackageLedger[].totalUnits / .expiryDate
+      → 新开课时包时登记
   workspace.coursePackageLedger[].renewalAttention
-      → 续费预警标记
-      （派生视图，非独立存储：由 remainingUnits / totalUnits
-        及到期日实时计算，命中 30%/10%/到期前 7 天阈值时置位）
+      → remainingUnits ≤ 3 或 expiryDate 距今 ≤ 7 天时置为 true
 
-派生视图（非工作空间存储字段）：
-  · 冲突检测报告
-      （派生视图，非存储字段：由 workspace.lessonSchedule[] 的
-        startTime/durationMinutes/day_of_week 与
-        workspace.studentCards[].learningPreferences[] 实时比对得出）
-  · 周课表
-      （派生视图，非存储字段：由 workspace.lessonSchedule[] 实时渲染）
+本 SKILL 不写：
+  workspace.coursePackageLedger[].usedUnits / .remainingUnits 的增减
+      → 由老师在 lesson-log 确认待确认条目后变更
 
-交接：
-  → solo-dashboard 读取 workspace.lessonSchedule[] /
-    coursePackageLedger[] 呈现课表与台账
-  → lesson-log 课后写 workspace.lessonLogs[].consumeLessonUnits 触发课时预扣
-  → parent-communication 依 renewalAttention 触发续费沟通（老师确认后发出）
+派生视图（非存储字段）：
+  · 周课表        ← 由 workspace.lessonSchedule[] 按 day_of_week 渲染
+  · 冲突检测报告  ← 由 workspace.lessonSchedule[] 的 startTime/durationMinutes
+                    与 workspace.studentCards[].availability[] 实时比对
+  · 补课候选时段  ← 老师可用时间 ∩ 该学员 availability[] 的差集
 ```
+
+### 10.3 谁来读
+
+`xiaozhi-teach-solo-dashboard` 只读 `lessonSchedule[]` 与 `coursePackageLedger[]` 渲染今日课表和课时区块；`xiaozhi-teach-lesson-log` 读 `lessonSchedule[].status` 判断是否试听、是否补课。都是它们主动读，本 SKILL 不推送。
 
 ---
 
 ## 十一、字段级高敏信息防护
 
 ```text
-✅ 排课中可使用：化名、可上课时间、课时包信息
-❌ 禁止：学员家庭住址、家长身份、精确学校班级
-✅ 写回数据：周课表结构、课时包台账
-❌ 不写回：学员真实姓名、家长联系方式
+✅ 排课中可使用：化名、availability[] 的时间段、课时包数量
+❌ 禁止：学员家庭住址、家长身份、就读学校与班级、联系方式
+✅ 写入数据：课节结构、课时包数量
+❌ 不写入：学员真实姓名、金额、家长联系方式
+
+✅ availability[] 只记时间：{周三, 18:30, 20:00}
+❌ 不记原因："周三要上钢琴课""周日去爷爷家"属于家庭安排，不入档案
 
 ✅ 冲突检测：仅时间维度
-❌ 不分析：学员家庭事务等高敏信息
+❌ 不分析：学员家庭事务、学习状态等非时间因素
 ```
 
 ---
@@ -419,12 +444,13 @@ max_round_limit: 12
 
 | ✅ 应该做 | ❌ 不能做 |
 |---------|---------|
-| 排课前先确认学员时间 | 凭印象排课 |
-| 冲突检测早发现 | 冲突了再处理 |
-| 课时台账实时更新 | 课时不透明 |
-| 补课请假有登记 | 微信沟通完就忘 |
-| 续费预警提前 7 天 | 课时耗尽才提醒 |
-| 写回数据脱敏 | 公开课表暴露真实姓名 |
+| 排课前比对 availability[] | 拿 learningPreferences 判断时间 |
+| 冲突先报出来再排 | 冲突了再处理 |
+| 补课给候选时段等老师定 | 替老师把补课排进去 |
+| 剩余课时注明"未含 N 条待确认" | 拿虚高的剩余课时判断续费 |
+| 课时不足时先问老师 | 自行决定"允许透支 1 课时" |
+| 到期提示只陈述事实 | 用剩余课时制造紧迫感 |
+| 一律用化名 | 课表里出现真实姓名 |
 
 ---
 
@@ -432,34 +458,38 @@ max_round_limit: 12
 
 ```text
 排课与课时管理
-    <── xiaozhi-teach-student-intake（学员时间矩阵）
-    <── xiaozhi-teach-solo-dashboard（学员基线）
-    ──→ xiaozhi-teach-solo-dashboard（课表+台账）
-    ──→ xiaozhi-teach-lesson-log（课时预扣）
-    ──→ xiaozhi-teach-parent-communication（续费预警）
-    ──→ xiaozhi-teach-renewal-report（续费报告）
+    读 workspace.studentCards[].availability[] ← student-intake 登记
+    读 workspace.coursePackageLedger[]         ← 本 SKILL 与 lesson-log 共同维护
+    写 workspace.lessonSchedule[]              ← 本 SKILL 唯一写入方
+    写 workspace.coursePackageLedger[].totalUnits / .expiryDate /
+       .renewalAttention
+
+  课时的实际扣减在 xiaozhi-teach-lesson-log（老师确认待确认条目）。
+  要和家长谈调课或续费，话术交 xiaozhi-teach-parent-communication，
+  发送由老师本人完成。
 ```
 
 **禁止行为**：
-- 禁止 AI 替老师自动排课
-- 禁止擅自增加学员可上课时间
-- 禁止课时台账不透明
-- 禁止超课时上课不预警
-- 禁止公开课表暴露真实姓名
+- 禁止未经老师确认写入课表
+- 禁止擅自扩大学员可上课时间范围
+- 禁止改动 `usedUnits` / `remainingUnits`
+- 禁止提出退款、赔付或任何金额相关建议
+- 禁止代老师联系学员或家长
+- 禁止课表中出现真实姓名
 
 ---
 
-## 隐私与数据控制入口
+### 隐私与数据控制入口
+- 查看：「查看我的[课表记录]」
+- 更正：「更正我的[课表记录]」
+- 删除：「删除我的[课表记录]」（删除后不可恢复，会先确认一次）
+- 暂停：「这次不要记忆」/「暂停提醒」
+- 共享控制：「不要共享给其他SKILL」/「不要给家长看」
+- 导出：「导出我的[课表记录]」（以文本形式给出，便于转存）
 
-> 本 SKILL 读写的学员数据存于共享工作空间（`solo-teacher-workspace.schema.json`），涉及未成年人信息，须提供可执行的控制入口。老师本人、或应学员/家长要求，可随时说：
+学员/家长提出时同样适用，按学员化名定位：「查看 小A 的课表」「删除 小A 的可上课时间」。
 
-- **查看**："查看 [学员化名] 的工作空间记录 / 课表 / 作业 / 报告"
-- **更正**："更正 [学员化名] 的 [某字段]"（覆盖旧值，避免新旧冲突并存）
-- **删除**："删除 [学员化名] 的某条记录 / 全部数据"（流失学员应按约定周期删除）
-- **暂停记录**："这次不要记录 / 暂停记录 [学员化名]"
-- **取消跨 SKILL 共享**："不要把 [学员化名] 的数据共享给其他 SKILL"
-
-**校验要求**：跨 SKILL 共享或建档前，须确认 `consent.crossSkillSharing` / `consent.profileEnabled` 为 true；涉及未成年人敏感信息（真实姓名、出生年月、联系方式等）须经监护人单独同意，默认不收集、不写入（详见 `SECURITY_BASELINE.md`）。
+**校验要求**：跨 SKILL 共享或建档前，须确认 `consent.crossSkillSharing` / `consent.profileEnabled` 为 true；学员卡 `status` 为"暂停记录"时不再写入新课节。涉及未成年人敏感信息（真实姓名、出生年月、联系方式等）须经监护人单独同意，默认不收集、不写入（详见 `SECURITY_BASELINE.md`）。
 
 ---
 

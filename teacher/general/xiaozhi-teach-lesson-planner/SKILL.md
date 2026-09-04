@@ -1,20 +1,22 @@
 ---
 name: xiaozhi-teach-lesson-planner
 display_name: 教案设计器
-version: 1.0.0
+version: 2.1.0
 author: 小智伴学
 category: 老师通用
+grade_bands:
+  - 小学中段
+  - 小学高段
+  - 初中
 tags: [教案, UbD逆向设计, 核心素养, Bloom提问链, 课堂环节, 分层输出, 老师工具]
 description: >
-  帮助老师从"经验型备课"升级为"基于UbD逆向设计的结构化教学设计"。
-  当老师说"帮我设计一节课"、"写一份教案"、"这节课怎么上"、
-  "做一份分层教案"、"生成课堂提问链"时，建议激活此SKILL。
-  核心工作流：UbD Stage1 预期结果 → Stage2 评估证据 → Stage3 规划经验
-  → 核心素养导向目标 → 六步环节时间矩阵 → Bloom 提问链 → A/B/C 分层输出。
-  该版本已与 xiaozhi-teach-student-analyzer 建立弱项反哺接口，
-  强学情驱动的差异化教学。
-compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-teach-student-analyzer
+  用 UbD 逆向设计把"经验型备课"变成可观测的教学设计。
+  当老师说"帮我设计一节《一次函数》新课"、"写一份物理教案"、"做一份分层教案"、"帮我设计一节讲评课"、"这节课的提问链草案"时，建议激活此 SKILL。
+  工作流：预期结果 → 评估证据 → 核心素养目标 → 环节时间矩阵 → 提问链草案 → A/B/C 分层。
+  本 SKILL 不出卷、不算学情、不负责课堂实施：命题转 xiaozhi-teach-exam-designer，学情统计转 xiaozhi-teach-student-analyzer，课堂提问与追问的实施转 xiaozhi-teach-classroom-coach。
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
+depends_on:
+  - xiaozhi-teach-student-analyzer
 id: openclaw:xiaozhi-teach-lesson-planner
 min_platform_version: "2.0"
 max_round_limit: 30
@@ -26,11 +28,27 @@ max_round_limit: 30
 
 ---
 
-## ⚠️ 技术实现边界声明
+> 技术边界：本 SKILL 依赖能力 [M, K]，无该能力时按 `shared/platform-conventions.md` 降级。
+> 特有降级：拿不到 `classWorkspace.studentTiers` 时只输出基础版教案，标题注明"无学情"，不硬编 A/B/C 分层；
+> 无 `K`（日期感知）时先问今天日期再排课时。
 
-> **关于"分层教案自动生成"机制：** 本 SKILL 提供的 A/B/C 三层教案输出，**并不依赖**于大语言模型自身对学情数据的访问能力，而是**强依赖**于 `xiaozhi-teach-student-analyzer` 已经完成的班级学情分析与个体诊断卡。在未获得学情摘要时，本 SKILL 退化为"基础版教案"输出，并在提示中明确说明"如需分层差异化，请先调用学情分析师"。
->
-> **关于"课堂时间预估"机制：** 课堂环节时间矩阵的默认值基于常规 45 分钟标准课时，若实际课时为 60/90/30 分钟，必须由老师显式指定，AI 不做自动换算。
+**分层从哪来**：A/B/C 分层读 `classWorkspace.studentTiers`（由 `xiaozhi-teach-student-analyzer` 依据近 3 次测评得分率算出），
+**课前就能拿到**，不需要等本节课上完。本 SKILL 不自己算分层。
+
+**课时长度**：环节时间矩阵按 `classWorkspace.classProfile.periodMinutes` 展开，取值与学段对应关系见 `shared/grade-bands.md` 三。
+小学默认 40 分钟、初中默认 45 分钟；60/90 分钟的校外课时需老师显式指定。
+
+**生成题目时**：教案里的例题、变式题、课堂练习若由 AI 生成，生成前按 `shared/ai-item-check.md` 自检，
+输出时标注【AI 生成，入库前请人工验算】。
+
+### 隐私与数据控制入口
+
+- 查看：「查看我的教案记录」
+- 更正：「更正我的教案记录」
+- 删除：「删除我的教案记录」（删除后不可恢复，会先确认一次）
+- 暂停：「这次不要记忆」
+- 共享控制：「不要共享给其他SKILL」/「不要给家长看」
+- 导出：「导出我的教案记录」（以文本形式给出，便于转存）
 
 ---
 
@@ -51,8 +69,8 @@ max_round_limit: 30
 
 本 SKILL 要解决的是结构性问题：
 - **从结果倒推教学**：用 UbD 逆向设计，让"评估证据"先于"教学活动"被设计出来
-- **让目标可观测**：核心素养导向目标 + Bloom 提问链，让"理解"变成可提问、可打分的行为
-- **让一份教案服务三种学生**：A 层基础（搭梯子）/ B 层中等（拉满目标）/ C 层拔尖（跨学科迁移）
+- **让目标可观测**：核心素养导向目标 + 按认知层级递进的提问链，让"理解"变成可提问、可打分的行为
+- **让一份教案服务三种学生**：A 层需补基础（搭梯子）/ B 层达标（拉满目标）/ C 层可拓展（跨章迁移）
 
 ---
 
@@ -62,12 +80,22 @@ max_round_limit: 30
 |---------|---------|
 | 设计新授课 | "帮我设计一节《一次函数》新课" / "写一份教案" |
 | 设计复习课 | "帮我安排一节期末复习课" |
-| 设计试卷讲评 | "试卷刚考完，帮我设计讲评课" |
+| 设计试卷讲评课 | "试卷刚考完，帮我设计讲评课"（需先从 exam-designer 拿到讲评错题清单） |
 | 拿到学情后调整 | "上次考试 X 知识点得分率只有 35%，这节课重点讲这个" |
 | 分层备课 | "基础班和提升班怎么上得不一样" |
 | 改写现有教案 | "这是我之前写的教案，帮我重做成 UbD 版本" |
-| 求助提问设计 | "这节课有哪些好提问可以让学生动起来" |
+| 提问链草案 | "这节课的提问链先起个草" |
 | 教研组任务 | "我们组下周要集体备课，出一份示范教案" |
+
+**本 SKILL 不接的相邻请求**：
+
+| 老师说 | 转给 |
+|---|---|
+| "帮我出这份卷子 / 讲评该先讲哪几道题" | `xiaozhi-teach-exam-designer`（出清单），本 SKILL 再排讲评课 |
+| "学生答不上来怎么追问 / 怎么分组 / 冷场怎么办" | `xiaozhi-teach-classroom-coach` |
+| "算一下这次的得分率和区分度" | `xiaozhi-teach-student-analyzer` |
+| "帮我把作业细化成分层任务卡" | `xiaozhi-teach-assignment-designer` |
+| "帮我排整个期末的复习计划" | `xiaozhi-teach-review-planner` |
 
 ---
 
@@ -131,9 +159,9 @@ UbD（Understanding by Design）的核心思想：**先想清楚"怎么证明学
   S Standards   标准   → 建议书的论证标准（数学依据、表达清晰度）
 
 基础评估：
-  · 课堂提问（覆盖 Bloom 六层）
-  · 课堂练习（4-6 题，分基础+提升）
-  · 课后作业（基础题 + 1 道迁移题）
+  · 课堂提问（覆盖课标四级至少 3 级：了解 / 理解 / 掌握 / 运用）
+  · 课堂练习（4-6 题，分基础 + 中等/较难）
+  · 课后作业（基础题 + 1 道迁移题，细化交 assignment-designer）
 ```
 
 ### 3.3 Stage 3：学习经验（WHERE TO 七要素）
@@ -192,7 +220,8 @@ O  Organize → 顺序如何安排（按认知层次递进）
 
 ## 五、六步课堂环节时间矩阵
 
-以标准 45 分钟课时为例，其他时长按比例缩放并显式标注。
+先读 `classWorkspace.classProfile.periodMinutes` 确定档位（`shared/grade-bands.md` 三：小学 40 分钟、初中 45 分钟、
+高中各地 40 或 45、校外一对一/小班 60 或 90、线上建议单次 ≤ 30-45）。下表以 45 分钟为基准，其他档位见 §5.1。
 
 ```text
 ┌────────────────────────────────────────────────────────┐
@@ -202,19 +231,30 @@ O  Organize → 顺序如何安排（按认知层次递进）
 ├──────┼─────────────────────────────┼────────┼──────────┤
 │ 1 导入 │ 情境/旧知链接/认知冲突       │  5 min │  11%     │
 │ 2 新授 │ 概念建构/规则揭示/示范       │ 15 min │  33%     │
-│ 3 练习 │ 基础题+提升题分层演练        │ 12 min │  27%     │
+│ 3 练习 │ 基础题+中等/较难题分层演练   │ 12 min │  27%     │
 │ 4 巩固 │ 错题对比/变式训练           │  5 min │  11%     │
 │ 5 总结 │ 学生自述+教师补充+结构图     │  3 min │   7%     │
 │ 6 作业 │ 分层布置+提交标准+预计耗时   │  5 min │  11%     │
 └──────┴─────────────────────────────┴────────┴──────────┘
 ```
 
-### 5.1 课时伸缩规则
+### 5.1 课时伸缩表（档位取自 `shared/grade-bands.md` 三）
+
+| 课时 | 适用（grade-bands 三） | 导入 | 新授 | 练习 | 巩固 | 总结 | 作业 | 合计 |
+|---|---|---|---|---|---|---|---|---|
+| **40 分钟** | **小学全段；高中部分地区** | 4 | 13 | 11 | 5 | 3 | 4 | 40 |
+| 45 分钟 | 初中（全库基线）；高中部分地区 | 5 | 15 | 12 | 5 | 3 | 5 | 45 |
+| 60 分钟 | 校外一对一 / 小班 | 5 | 18 | 16 | 8 | 5 | 8 | 60 |
+| 90 分钟 | 双课时连排 / 校外长课 | 5 | 25 | 30 | 15 | 5 | 10 | 90 |
+| 30 分钟 | 线上短课；1v1 补差 | 3 | 10 | 8 | 4 | 2 | 3 | 30 |
 
 ```text
-60 分钟课时：5/18/16/8/5/8（导入+总结+作业时间不变，其余等比拉长）
-90 分钟课时：5/25/30/15/5/10（适合双课时连排；新授+练习大幅增加）
-30 分钟课时：3/10/8/4/2/3（适合 1v1 短课；减少巩固）
+伸缩原则：
+  · 导入、总结、作业三段基本不随课时线性拉长（它们的功能与时长关系弱）；
+  · 40 分钟档不是"45 分钟砍 5 分钟"——小学学段单次专注更短，
+    练习段要拆成 2 个 5-6 分钟的小段，中间插一次全班反馈；
+  · 90 分钟档必须在中段安排一次休息或活动切换，不能连讲 25 分钟以上；
+  · 六段之和必须等于 periodMinutes，输出时把这个等式写出来给老师核对。
 ```
 
 ### 5.2 各环节失败模式
@@ -230,9 +270,23 @@ O  Organize → 顺序如何安排（按认知层次递进）
 
 ---
 
-## 六、Bloom 认知层次提问链
+## 六、认知层级提问链（本 SKILL 只出草案）
+
+> **与 `xiaozhi-teach-classroom-coach` 的分工（避免两边都做、都不做全）**：
+>
+> | 环节 | 谁负责 | 产物 |
+> |---|---|---|
+> | 备课时按认知层级排出 6-8 个核心问题 | **本 SKILL** | `classWorkspace.lessonPlans[].questionChain`（提问链草案） |
+> | 每个问题配 1-2 个候场追问、冷场 3 步走、谁来答、怎么让基础学生也参与 | `xiaozhi-teach-classroom-coach` | 课堂实施方案 |
+> | 课上顺着学生的推理即时追问、暴露矛盾（苏格拉底式） | `xiaozhi-teach-classroom-coach` | 现场策略 |
+> | 课后记录哪一问有效、哪一问无人回应 | `xiaozhi-teach-classroom-coach` | `classWorkspace.interactionLogs[].questionEffectNote` |
+>
+> 一句话：**本 SKILL 决定"问什么"，classroom-coach 决定"怎么问、答不上来怎么办"。**
+> 本 SKILL 可以顺手给 1 个候场追问作示意，但完整的追问矩阵不在这里展开。
 
 每节新课至少在 4 个层次设计提问，覆盖越完整越好。
+写进教案的层级标签用 2022 版课标四级（了解/理解/掌握/运用，对应 `cognitiveLevel`）；
+下表的 Bloom 六层是备课时的思维参照，对照关系见 `xiaozhi-teach-exam-designer` SKILL.md §5.1。
 
 ```text
 ┌────────────────────────────────────────────────────────┐
@@ -257,34 +311,48 @@ O  Organize → 顺序如何安排（按认知层次递进）
 ① 1 个记忆题（确保所有学生跟得上）
 ② 2 个理解题（让基础学生解释给同桌听）
 ③ 2 个应用题（中等学生主战场）
-④ 1 个分析题（提升学生展示思维过程）
+④ 1 个分析题（让学生把思维过程说出来）
 ⑤ 1 个评价题（拔尖学生评方案优劣）
 ⑥ 1 个创造题（开放性，鼓励所有学生尝试）
 ```
 
-### 6.2 候场问题
+### 6.2 候场问题（示意，完整矩阵见 classroom-coach）
 
-每个问题必须配 1-2 个候场追问，用于"冷场时"或"答案偏浅时"递进。
+草案里给每个核心问题挂 1 个候场追问即可，说明它的递进方向；
+完整的五类候场追问、冷场 3 步走、基础学生参与路径在 `xiaozhi-teach-classroom-coach` §5.2、§七。
 
 ```text
 问：一次函数 y=kx+b 中 k 是什么？
-候场①：k 的正负决定什么？
-候场②：如果 k=0 呢？这是什么函数？
-候场③：你能举一个 k>0 的生活例子吗？
+候场（示意）：k 的正负决定什么？
+→ 其余候场方向（边界条件、迁移到生活、变简单、变深）由 classroom-coach 展开
 ```
 
 ---
 
 ## 七、A/B/C 分层输出
 
-当提供学情摘要时，本 SKILL 自动输出三套差异化教案；未提供时只输出基础版。
+当 `classWorkspace.studentTiers` 已有数据时输出三套差异化教案；没有时只输出基础版并注明"无学情"。
 
-### 7.1 三层学生定义
+### 7.1 三层学生定义（读 studentTiers，不自己另定）
 
 ```text
-A 层（基础 20%）：当节课目标达成率 < 60%
-B 层（中等 60%）：当节课目标达成率 60%-85%
-C 层（拔尖 20%）：当节课目标达成率 ≥ 85% 且有余力
+分层来源：classWorkspace.studentTiers，由 xiaozhi-teach-student-analyzer 写入
+判定依据：该生**近 3 次测评的平均得分率**（不是"当节课目标达成率"）
+  A 层（需补基础）：平均得分率 < 0.60
+  B 层（达标）：    平均得分率 0.60（含）- 0.85
+  C 层（可拓展）：  平均得分率 ≥ 0.85
+
+为什么改用"近 3 次得分率"：
+  "当节课目标达成率"是**课后**才有的数据，用它做分层依据的话，
+  备课时根本拿不到，分层教案就永远只能靠猜。近 3 次得分率课前就在档案里。
+
+比例是动态的，不设 20/60/20：
+  · 每次新测评后由 student-analyzer 重算，A/B/C 人数随卷子难度浮动；
+  · 备课时按当前实际人数配任务量（如 A 层 15 人就准备 15 份 A 卡），
+    不要为了凑"20%"把学生塞进不合适的层；
+  · 若某层人数为 0，就不出那一层的任务卡，在教案里写明"本次无 C 层"。
+
+分层只用于配任务难度，不作为学生身份标签：任务卡上写"任务卡一/二/三"，不写"A 层卡"。
 ```
 
 ### 7.2 差异化维度
@@ -307,11 +375,11 @@ C 层（拔尖 20%）：当节课目标达成率 ≥ 85% 且有余力
 
 ### 8.1 单课时教案完整模板
 
-> 📎 完整模板见 `references/core-output-templates.md`（单课时教案七大板块填写模板；可直接填写的扩展版另见 `references/lesson-plan-template.md`）
+> 📎 完整模板见 `references/lesson-plan-template.md` §一（七大板块可填写模板：UbD 预期结果 / 评估证据 / 学习经验 / 环节时间分配 / 板书 / 风险预案 / 课后反思）
 
 ### 8.2 单元整体教案（5-8 课时）
 
-> 📎 完整模板见 `references/core-output-templates.md`（单元目标/评估蓝图/分课时地图/作业地图/评估节点框架）
+> 📎 完整模板见 `references/lesson-plan-template.md` §二（单元目标 / 评估蓝图 / 分课时地图 / 作业地图 / 评估节点）
 
 ---
 
@@ -348,27 +416,44 @@ C 层（拔尖 20%）：当节课目标达成率 ≥ 85% 且有余力
                 └────────────────┘
 ```
 
-### 9.2 与 xiaozhi-teach-student-analyzer 的接口
+### 9.2 数据接口（唯一契约：`shared/class-teaching-workspace.schema.json`）
+
+| classWorkspace 字段 | 谁写 | 本 SKILL |
+|---|---|---|
+| `classProfile` | 老师首次建档 | 读（periodMinutes 定环节时长，gradeBand 定学段参数，classSize 定活动组织） |
+| `weaknessRank` | `xiaozhi-teach-student-analyzer` | 读（教案侧重点排序 → 填 sourceWeaknessIds） |
+| `studentTiers` | `xiaozhi-teach-student-analyzer` | 读（A/B/C 分层与各层人数 → 配 tierVariants） |
+| `classSummaries` | `xiaozhi-teach-student-analyzer` | 读（meanRate 定新课起点与节奏） |
+| `examBlueprints` | `xiaozhi-teach-exam-designer` | 读（讲评课：讲评错题清单与题号→知识点） |
+| `reviewPlans` | `xiaozhi-teach-review-planner` | 读（复习课：本课在哪个复习阶段、覆盖哪些知识点） |
+| `interactionLogs` | `xiaozhi-teach-classroom-coach` | 读（上节课实际用时与卡点 → 调整本节课时间矩阵） |
+| `lessonPlans` | **本 SKILL 唯一写入** | 写 planId、topic、planType、periodMinutes、objectives（statement + cognitiveLevel + coreCompetency）、segments（含 tierVariants）、questionChain、boardPlan、sourceWeaknessIds |
 
 ```text
-输入字段（从学情分析师读）：
-  classSummary.weaknessRank    → 教案侧重点排序
-  classSummary.distribution    → A/B/C 三层划分依据
-  individualDiagnosis[].topic  → 个体补救任务设计
-  trendSnapshot.delta          → 教学节奏调整
-
-输出字段（写回学情分析师）：
-  lessonPlan.emphasis          → 本节课聚焦的弱项
-  lessonPlan.layeredTasks      → A/B/C 三层任务清单
-  lessonPlan.estimatedScoreDelta → 教师自评"这节课预期能提分X分"
+不写"预期提分"：
+  上一版有一个 estimatedScoreDelta（教师自评"这节课预期能提分 X 分"）字段，已删除。
+  单节课与分数变化之间没有可靠的因果链，写出来既无法验证，也与本库
+  "不承诺提分"的通用规则冲突（student-analyzer / assignment-designer /
+  review-planner 都写了同样的禁令）。
+  教案的效果证据放在 objectives 的可观测标准里，考完由 student-analyzer 用数据说话。
 ```
 
-### 9.3 调用边界
+### 9.3 与其他包的关系
 
-- 不默认调用 xiaozhi-teach-student-analyzer：未提供学情时输出"基础版"，并在标题注明"无学情"
-- 不调用学生端 DNA：教师数据优先；如需学生端数据须走 xiaozhi-teach-parent-communication 征求家长同意
-- 不替老师做最终判断：所有目标、提问、任务均由老师在 5 分钟内确认或调整
-- 不把课堂时间预估为绝对值：必须标注"建议时长，实际以学生反应为准"
+- **学科教案细化**：数学/物理/语文/英语的学科专有环节设计转 `xiaozhi-teach-math-lesson-planner`、
+  `xiaozhi-teach-physics-lesson-planner`、`xiaozhi-teach-chinese-reading-guide` 等学科教师端 SKILL。
+- **若老师同时安装了独立教师包**（一对一/小班场景）：可把 `xiaozhi-teach-lesson-log` 的课后记录、
+  `xiaozhi-teach-parent-communication` 的家校沟通作为可选补充。**未安装时本 SKILL 完全可独立运行**，
+  班级授课场景不依赖这些 SKILL。
+- **学生端数据**：不直接读学生端 DNA。确需读写学生个人档案时走 handover 的 `teacher_writeback`，
+  先检查 `teacherWritebackConsent`；面向家长的输出先检查 `parentSharingConsent`。
+
+### 9.4 调用边界
+
+- 拿不到 `studentTiers` 时输出"基础版"，标题注明"无学情"，不硬编 A/B/C
+- 不替老师做最终判断：所有目标、提问、任务均由老师确认或调整
+- 不把课堂时间预估为绝对值：标注"建议时长，实际以学生反应为准"
+- 不承诺提分：教案不写任何分数预期
 
 ---
 
@@ -398,9 +483,9 @@ C 层（拔尖 20%）：当节课目标达成率 ≥ 85% 且有余力
 ### 10.3 学情反哺脱敏规则
 
 ```text
-若需向学情分析师回写"这节课覆盖了哪些弱项"：
-  ✅ "本节课覆盖：一次函数图象性质（C 层）"
-  ❌ "本节课解决了小明的图象问题"
+在 lessonPlans[].sourceWeaknessIds 中登记"这节课覆盖了哪些弱项"时：
+  ✅ 只写 weaknessRank 的条目 id 与知识点："本节课覆盖：一次函数图象与性质"
+  ❌ 不写学生："本节课解决了小明的图象问题"
 ```
 
 ---
@@ -424,26 +509,28 @@ C 层（拔尖 20%）：当节课目标达成率 ≥ 85% 且有余力
 
 ```text
 教案设计器
-    <── xiaozhi-teach-student-analyzer（学情驱动）
-    ──→ xiaozhi-teach-assignment-designer（作业细化）
-    ──→ xiaozhi-teach-classroom-coach（互动策略）
-    ──→ xiaozhi-teach-review-planner（复习课规划）
-    ──→ xiaozhi-teach-exam-designer（测评对接）
-    ──→ 学科专项 SKILL（数学/物理/语文/英语）
+    <── xiaozhi-teach-student-analyzer（weaknessRank / studentTiers / classSummaries）
+    <── xiaozhi-teach-exam-designer（examBlueprints + 讲评错题清单 → 讲评课）
+    <── xiaozhi-teach-review-planner（reviewPlans → 复习课）
+    <── xiaozhi-teach-classroom-coach（interactionLogs → 上节课实际用时与卡点）
+    ──→ xiaozhi-teach-assignment-designer（lessonPlans → 作业细化）
+    ──→ xiaozhi-teach-classroom-coach（lessonPlans.questionChain → 课堂实施）
+    ──→ 学科教师 SKILL（xiaozhi-teach-math-lesson-planner 等）
+    ··→ 若已安装独立教师包：lesson-log / parent-communication 可作可选补充
 ```
 
 **禁止行为**：
 - 禁止为未授权班级编造学情
 - 禁止把通用目标（如"提高数学成绩"）作为当节课目标
 - 禁止一次性输出超过 3 个课时的完整教案（应让老师分批确认）
-- 禁止在没有学情时硬性输出 A/B/C 分层
+- 禁止在没有 studentTiers 时硬性输出 A/B/C 分层
+- 禁止在教案中写任何"预期提分/预计提高 X 分"
 
 ---
 
 ## 十三、参考资源
 
-- `references/lesson-plan-template.md` — 标准教案模板（可直接复制使用）
-- `references/core-output-templates.md` — 核心输出结构模板（§8.1 单课时教案完整模板 + §8.2 单元整体教案框架）
+- `references/lesson-plan-template.md` — 标准教案模板（§一 单课时 / §二 单元整体 / §三 提问链速查 / §四 三层任务卡 / §五 备课检查清单，可直接复制使用）
 - `references/layered-lesson-example.md` — 同一节课的三层教案示例（§7.3 A/B/C 任务卡范例）
 
 ---

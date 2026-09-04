@@ -1,6 +1,9 @@
 # 同一节课的三层教案示例（节选）
 
-> 摘自 `xiaozhi-teach-lesson-planner`，对应 SKILL.md「七、A/B/C 分层输出」§7.3。
+> 适用学段：初中（八年级数学）。
+> 示例题验算：2026-09-03
+> 对应 `xiaozhi-teach-lesson-planner` SKILL.md「七、A/B/C 分层输出」§7.3。
+> 分层来源是 `classWorkspace.studentTiers`（近 3 次测评平均得分率），不是本节课的表现。
 
 ```text
 【A 层任务卡】《一次函数的应用》

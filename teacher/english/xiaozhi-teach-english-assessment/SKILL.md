@@ -1,26 +1,23 @@
 ---
 name: xiaozhi-teach-english-assessment
 display_name: 英语综合测评
-version: 1.0.0
+version: 2.1.0
 author: 小智伴学
 category: 老师英语
+grade_bands:
+  - 小学高段
+  - 初中
 tags: [综合测评, 听说读写, 能力评估, CSE, CEFR, 英语老师]
 description: >
-  帮助英语老师把"英语考试"升级为"系统化英语能力测评"。
-  当老师说"学员英语水平如何"、"英语综合测评"、
-  "听说读写怎么测"、"CEFR 对照"、
-  "学员能做什么"、"英语水平档案"时，
-  建议激活此SKILL。
-  核心工作流：能力目标（听说读写 4 维）→
-  CEFR 对照（A1-C2）→
-  综合测评设计（听力/口语/阅读/写作）→
-  学员能力画像（4 维能力 + 微技能）→
-  教学干预建议 → 与学生端听说读写 4 个 SKILL
-  / 词汇 DNA / 学情分析师建立数据接口。
-  该版本以《中国英语能力等级量表(CSE)》为主标准、CEFR 为国际参照，
-  让英语测评从"分数"到"能力"（K12 对标须防止 CEFR 定标过高）。
-compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-teach-student-analyzer, xiaozhi-teach-lesson-planner, xiaozhi-teach-exam-designer
+  英语综合测评设计：帮英语老师把"一张卷子"变成听说读写四维的能力测评与画像。
+  触发语："学员英语水平如何"、"英语综合测评怎么设计"、"听说读写怎么测"、"CSE/CEFR 对照怎么用"、"学员能做什么"、"英语能力画像"、"测完之后怎么给建议"。
+  核心工作流：能力目标（听说读写 4 维）→ 以 CSE 描述语定级、CEFR 只作国际参照 → 测评设计 → 能力画像（分数 + 微技能）→ 教学干预建议 → 写回班级工作空间。
+  不处理：听力材料的选编与听法训练（转英语听力材料设计）、口语活动与纠错策略（转英语口语活动设计）、通用命题的双向细目表与信效度（转 xiaozhi-teach-exam-designer）。
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
+depends_on:
+  - xiaozhi-teach-student-analyzer
+  - xiaozhi-teach-lesson-planner
+  - xiaozhi-teach-exam-designer
 id: openclaw:xiaozhi-teach-english-assessment
 min_platform_version: "2.0"
 max_round_limit: 25
@@ -32,13 +29,25 @@ max_round_limit: 25
 
 ---
 
-## ⚠️ 技术实现边界声明
+> 技术边界：本 SKILL 依赖能力 [M, X, F]，无该能力时按 shared/platform-conventions.md 降级。
+> 无 X 时不输出跨次的等级变化统计，只呈现本次测评数据；无 F 时请老师粘贴逐题分数表格。
 
-> **关于"AI 阅卷"边界：** 本 SKILL 输出**英语能力测评框架**与**CEFR 对照**；**不**替老师阅卷评分。
->
-> **关于"材料版权"边界：** 测评材料必须标注 copyrightStatus；不复制未授权材料。
->
-> **关于"AI 评估"边界：** 本 SKILL **不**替老师给学员打分排名；只提供**评估框架**和**能力画像**。
+**本 SKILL 不做的三件事：**
+- 不替老师阅卷评分、不替老师给学员打分排名，只提供评估框架与能力画像。
+- **不由分数直接推等级**：等级须由老师对照 CSE 描述语人工判定（见 §五）。
+- 测评材料必须标注 `copyrightStatus`（`自有` / `改编` / `公开可引用` / `仅存索引`）；不复制未授权材料。
+
+**AI 生成的题目**：按 `shared/ai-item-check.md` 自检后输出，且一律标注
+`【AI 生成，入库前请人工验算】`；未经老师确认不得写入资源库或试卷
+（对应 `classWorkspace.examBlueprints[].items[].aiGenerated` / `verifiedByTeacher`）。
+
+### 隐私与数据控制入口
+- 查看：「查看我的班级测评记录」
+- 更正：「更正我的班级测评记录」
+- 删除：「删除我的班级测评记录」（删除后不可恢复，会先确认一次）
+- 暂停：「这次不要记忆」/「暂停提醒」
+- 共享控制：「不要共享给其他SKILL」/「不要写回学生档案」
+- 导出：「导出我的班级测评记录」（以文本形式给出，便于转存）
 
 ---
 
@@ -59,7 +68,7 @@ max_round_limit: 25
 
 本 SKILL 要解决的是：
 - **让测评"四维全面"**：听说读写全覆盖
-- **让测评"有标准"**：CEFR 框架
+- **让测评"有标准"**：以 CSE 描述语定级，CEFR 只作国际参照
 - **让测评"有画像"**：能力地图
 - **让测评"有教学"**：基于测评的教学干预
 
@@ -72,7 +81,7 @@ max_round_limit: 25
 | 学员英语水平 | "学员英语水平如何" |
 | 英语综合测评 | "英语综合测评" |
 | 听说读写 | "听说读写怎么测" |
-| CEFR 对照 | "CEFR 对照" |
+| 能力等级对照 | "CSE/CEFR 对照怎么用" |
 | 学员能做什么 | "学员能做什么" |
 | 英语水平档案 | "英语水平档案" |
 | 英语能力评估 | "英语能力评估" |
@@ -89,8 +98,8 @@ max_round_limit: 25
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ② CEFR 对照              │
-                │  A1-C2                    │
+                │ ② 等级对照                │
+                │  CSE 为主，CEFR 参照      │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
@@ -191,9 +200,31 @@ max_round_limit: 25
 （对接为"约当"区间，非精确等值；实际以 CSE 量表描述语为准）
 ```
 
-### 5.2 CEFR 4 维对照
+### 5.2 定级的唯一合法途径：对照描述语人工判定
 
-> 📎 完整速查表见 `references/cefr-four-skill-descriptors.md`（A1-C2 各等级听说读写能力描述）
+```text
+❌ 禁止：由卷面分数或正确率直接换算等级
+   （如"70 分 = B2""正确率 55-69% = B1"）。
+   理由有三：
+   ① 分数只反映"这张卷上的这些题"，题目难度不同，同一个分数含义完全不同；
+   ② CSE/CEFR 是**能力描述**框架，判定依据是"能不能完成某类任务"，不是得了多少分；
+   ③ 直接换算最容易把 K12 学员的等级抬高，给学员和家长错误预期。
+
+✅ 正确做法（三步）：
+   Step 1  看逐题得分（classWorkspace.itemScores[]），确认学员在哪些
+           **任务类型**上稳定完成、哪些不稳定
+   Step 2  拿这些表现去对照 CSE 相应等级的描述语
+           （"能听懂…""能就…作简单描述"），由老师判断落在哪一级
+   Step 3  等级写成区间 + 证据，如
+           "听：CSE 3（约当 A2）——两次测评都能听懂日常对话中的时间与地点，
+             但短文推断题两次都错"
+           单次测评、样本不足时标 🔴（shared/vocab.md §7），只作参考不入档案
+
+分数的用途：定位强弱维度、看进退步、决定下一步教什么——不是用来贴等级的。
+```
+
+> 📎 CSE 各级描述语以教育部发布的量表原文为准；
+> `references/cefr-four-skill-descriptors.md` 提供 CEFR 侧的四维简表，仅作国际参照。
 
 ### 5.3 CEFR / CSE 与中国考试对照（订正版）
 
@@ -228,35 +259,58 @@ max_round_limit: 25
 ├──────────┼────────────────────────┼──────────────┤
 │ 诊断性    │ 测学员水平              │ 学期初        │
 │ 形成性    │ 测学员进步              │ 单元/期中     │
-│ 总结性    │ 测学员成果              │ 学期末        │
+│ 终结性    │ 测学员成果              │ 学期末        │
 └──────────┴────────────────────────┴──────────────┘
 ```
 
 ### 6.2 4 维测评设计
 
 ```text
-■ 听力
-  · 时长：30-40 分钟
-  · 题型：主旨/细节/推断
-  · 难度：i+1
+■ 听力（题型按中考听力结构排，不用托福/雅思式分类）
+  · 时长：20-25 分钟（含播音）
+  · 题型：听句选图（或短对话选答语）→ 对话理解 → 短文理解 → 听填信息
+  · 语速：约 100-120 词/分钟（中考听力常见区间）
+  · 详细题型设计见「英语听力材料设计」SKILL
 
-■ 口语
-  · 时长：10-15 分钟
-  · 题型：自我介绍/对话/独白
-  · 难度：略高于学员
+■ 口语（校内班级测评的现实约束见下）
+  · 时长：单人 3-5 分钟（不是 10-15 分钟）
+  · 题型：朗读 → 情景问答 → 看图/话题连续表达
+  · 组织：分批或分组进行，见下方"班额可行性"
 
 ■ 阅读
-  · 时长：40-60 分钟
-  · 题型：主旨/细节/推断/词义
-  · 难度：i+1
+  · 时长：30-40 分钟
+  · 题型：细节 → 主旨 → 推断 → 词义猜测（按中考阅读的题型比重）
+  · 难度：略高于日常教学材料
 
 ■ 写作
-  · 时长：30-40 分钟
-  · 题型：应用文/记叙文/议论文
-  · 难度：略高于学员
+  · 时长：20-25 分钟
+  · 题型：以应用文（书信/邮件/通知）与记叙文为主；
+    议论文只在初三下学期按本地中考题型需要时才考
+  · 字数：初中 80-100 词
 ```
 
-> ⚠️ **本 SKILL 是通用 `xiaozhi-teach-exam-designer` 的英语学科细化，不是替代。** 双向细目表的测量学基础——**难度系数 P、区分度 D、四类测评目的、考后实际 P/实际 D 分析**——沿用通用版定义；本 SKILL 只补充听说读写四维的能力描述与 CEFR 对照，不重定义、不删减测量学工具。
+**口语测评的班额可行性（先算，再排）**
+
+```text
+所需课时 ≈ 班额 × 单人时长 ÷ 并行考场数 ÷ 45 分钟
+
+例：50 人班，单人 4 分钟，1 位老师逐个考
+    → 50 × 4 = 200 分钟 ≈ 4.5 节课，不现实
+
+可行的三种排法（老师选一种，本 SKILL 不替老师决定）：
+① 双人同考：两名学员一组做对话任务，单组 5 分钟
+   → 25 组 × 5 = 125 分钟 ≈ 3 节课，仍偏多，适合期末统测
+② 抽样 + 全员录音：课上抽 8-10 人现场考（作为定标样本），
+   其余学员课后录音提交，老师按同一份 rubric 评
+   → 课上约 40 分钟，1 节课内完成
+③ 分组轮转：全班分 4-5 组，一组做口语任务、其余组做笔试部分，轮换
+   → 1-2 节课内完成，需另一位老师或助教协助计时
+
+⚠️ 若排不出时间：宁可缩短单人时长或降低频次，
+   也不要把 25 分的口语分改成"平时印象分"——那不是测评。
+```
+
+> ⚠️ **本 SKILL 是通用 `xiaozhi-teach-exam-designer` 的英语学科细化，不是替代。** 双向细目表的测量学基础——**难度系数 P、区分度 D、四类测评目的、考后实际 P/实际 D 分析**——沿用通用版定义；本 SKILL 只补充听说读写四维的能力描述与 CSE/CEFR 对照，不重定义、不删减测量学工具。
 
 ### 6.3 4 维双向细目表
 
@@ -294,7 +348,7 @@ max_round_limit: 25
 │ 写        │ 写作能力                │
 │ 词汇      │ 词汇量                  │
 │ 语法      │ 语法能力                │
-│ CEFR 等级 │ 综合等级               │
+│ 等级判定  │ 由老师对照 CSE 描述语给出（不由分数换算） │
 │ 强项      │ 强维度                  │
 │ 弱项      │ 弱维度                  │
 └──────────┴────────────────────────┘
@@ -336,12 +390,22 @@ max_round_limit: 25
 └──────────┴────────────────────────┘
 ```
 
-### 8.2 词汇干预
+### 8.2 词汇干预（按课标词表分档；AWL 学术词表 ⚠高中，本学段不用）
 
 ```text
-· 主动词汇<2000 → 高频词优先
-· 主动词汇 2000-3500 → 学术词优先
-· 主动词汇>3500 → 学科词/低频词
+分档依据：2022 版义教英语课标三级词汇表约 1600 词（中考范围）；
+          高中课标必修+选择性必修约 3000 词 ⚠高中。
+
+· 课标 1600 词内、掌握不足 → 先把这部分补齐（中考绝大多数考点在此范围）
+    做法：按话题成组补（校园/健康/环保/文化/成长），不按字母表背
+· 课标 1600 词已基本掌握 → 补中考语篇里的高频超纲词（只求读到时认得出）
+    做法：从近年本地中考真题语篇里取词，不另找词表
+· 已超出中考需求、学员主动要求 → 高考 3000 词范围 ⚠高中
+    做法：说明这是高中内容，按学员意愿安排，不计入本学段的达标判断
+
+❌ 不用 AWL 分级 ⚠高中（大学学术写作场景才用得着）：AWL 取自英语学术论文语料，
+   与义教课标、中考语篇的词频分布不一致，对初中生会把方向带偏。
+❌ 不用"主动词汇 N 词"这类估计值做分档依据——课堂上没有可靠的测量手段。
 ```
 
 ### 8.3 干预样板
@@ -395,21 +459,58 @@ max_round_limit: 25
   （4 维能力画像）  （教学干预计划）  （4 维素材）
 ```
 
-### 10.2 接口
+### 10.2 接口（唯一真实字段来源：`shared/class-teaching-workspace.schema.json`）
 
 ```text
 读：
-  studentAnalyzer.speakingLevel  → 口语水平
-  studentAnalyzer.listeningLevel → 听力水平
-  studentAnalyzer.readingLevel   → 阅读水平
-  studentAnalyzer.writingLevel   → 写作水平
+  classWorkspace.classProfile        → 学段、班额、课时、常用满分
+  classWorkspace.itemScores[]        → 逐题得分（能力画像的唯一来源；
+                                        只有总分时不得生成逐维度画像）
+  classWorkspace.itemStats[]         → 各题难度 P / 区分度 D
+  classWorkspace.classSummaries[]    → 班级均分、得分率、分布
+  classWorkspace.weaknessRank[]      → 班级顽固弱项排序
 
-写：
-  englishAssessment.cefr          → CEFR 等级
-  englishAssessment.profile       → 能力画像
-  englishAssessment.intervention  → 教学干预
-  → student-analyzer 接收
-  → lesson-planner 接收
+写（均为待老师确认的条目，确认后落库）：
+  classWorkspace.examBlueprints[]    → 四维测评蓝图（含 itemType: 听力/口语/阅读/写作）
+                                        AI 生成题 aiGenerated=true，
+                                        老师验算后才可 verifiedByTeacher=true
+  classWorkspace.weaknessRank[]      → 由四维得分归纳出的弱项条目
+  classWorkspace.reviewPlans[]       → 干预建议转成的复习排布
+
+写回学生档案（可选，需授权）：
+  handoverType = "teacher_writeback"，recipient = xiaozhi-learning-dna
+  前置：交接体中的授权快照 teacherWritebackConsent 必须为 true，否则丢弃并告知老师
+  内容：weakKnowledgePointUpdates 列表（subject / knowledgePoint /
+        status / masteryLevel），note 只写低敏事实描述
+  掌握度转换（shared/vocab.md §6）：老师端五档 → 学生端三档，写回时必须转换
+        已掌握 → 真正掌握 ／ 基本理解 → 会解释 ／ 仍需巩固 → 会复述
+        需要重讲 → 会复述（并在 note 里注明"复述也不完整"）
+        证据不足 → 不写入这一条
+  ❌ 不写 CSE/CEFR 等级、不写学员真实姓名、不写心理标签
+```
+
+写回学生档案的交接示例（与 `handover-protocol.schema.json` v2.1 一致）：
+
+```json
+{
+  "sessionId": "sess-teach-eng-assess-001",
+  "protocolVersion": "2.1.0",
+  "handoverType": "teacher_writeback",
+  "sender": "xiaozhi-teach-english-assessment",
+  "recipient": "xiaozhi-learning-dna",
+  "consent": { "crossSkillSharing": true, "teacherWritebackConsent": true },
+  "payload": {
+    "teacherWritebackData": {
+      "teacherSkill": "xiaozhi-teach-english-assessment",
+      "studentAlias": "E-007",
+      "weakKnowledgePointUpdates": [
+        { "subject": "英语", "knowledgePoint": "听力·听填信息", "status": "初步弱项", "masteryLevel": "会复述" }
+      ],
+      "note": "两次测评中听填信息题得分率明显低于同卷其他听力题型"
+    }
+  },
+  "timestamp": "2026-09-03T18:00:00+08:00"
+}
 ```
 
 ---
@@ -431,7 +532,7 @@ max_round_limit: 25
 | ✅ 应该做 | ❌ 不能做 |
 |---------|---------|
 | 4 维综合（听说读写） | 测评=笔试 |
-| CEFR 框架 | 测评=分数 |
+| 对照 CSE 描述语判等级 | 分数直接换算等级 |
 | 能力画像 | 测评=一刀切 |
 | 4 维差异 | 单一分数 |
 | 教学干预 | 测完就完事 |
@@ -448,7 +549,7 @@ max_round_limit: 25
     ──→ xiaozhi-teach-student-analyzer（4 维画像）
     ──→ xiaozhi-teach-lesson-planner（教学干预）
     ──→ xiaozhi-teach-resource-library（4 维素材）
-    ──→ 学生端 4 个英语 SKILL（学员视角）
+    ──→ 学生端 5 个英语 SKILL（语法/听力/口语/词汇/写作，学员视角）
 ```
 
 **禁止行为**：
@@ -456,14 +557,16 @@ max_round_limit: 25
 - 禁止 AI 给学员排名
 - 禁止 AI 替学员答题
 - 禁止未授权复制测评材料
-- 禁止公开学员 CEFR 等级
+- 禁止公开学员的 CSE/CEFR 等级
+- 禁止由卷面分数直接换算等级（必须对照 CSE 描述语人工判定）
+- 禁止未经 `teacherWritebackConsent` 写回学生档案
 
 ---
 
 ## 十四、参考资源
 
-- `references/cefr-can-do-statements.md` — CEFR "能做什么"语句（A1-C2 等级）
-- `references/four-skill-rubric.md` — 4 维（听说读写）评分细则
+- `references/cefr-can-do-statements.md` — "能做什么"语句（CSE 为主、CEFR 参照；含定级判定流程）
+- `references/four-skill-rubric.md` — 4 维（听说读写）评分细则（只出分数 + 微技能，不出等级）
 - `references/assessment-template.md` — 综合测评设计模板（4 阶段）
 - `references/cefr-four-skill-descriptors.md` — CEFR 4 维对照速查表（A1-C2 听说读写描述）
 - `references/comprehensive-assessment-sample.md` — 4 维测评样板（综合测评结构示例）
@@ -479,4 +582,4 @@ max_round_limit: 25
 >  学员不是'90 分'或'80 分'，
 > 而是'能听懂日常对话、能读短篇故事、
 >  能介绍自己、能写简单邮件'——
->  这就是 CEFR 的真正意义。"
+>  能力量表的意义就在这里：先看他能做什么，再决定教什么。"

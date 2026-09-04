@@ -1,23 +1,24 @@
 ---
 name: xiaozhi-teach-chinese-reading-guide
 display_name: 阅读教学指导
-version: 1.0.0
+version: 2.1.0
 author: 小智伴学
 category: 老师语文
+grade_bands:
+  - 小学高段
+  - 初中
 tags: [阅读教学, 文本解读, 阅读策略, 群文阅读, 思辨, 语文老师]
 description: >
-  帮助语文老师把"讲阅读"升级为"系统化阅读教学"。
-  当老师说"这篇课文怎么讲"、"阅读理解怎么教"、
-  "学员读不懂"、"阅读策略"、"群文阅读"、
-  "名著导读"、"思辨阅读"时，建议激活此SKILL。
-  核心工作流：文本三解（字面/结构/主题）→
-  阅读策略（预测/提问/可视化/联结/推断/总结）→
-  三阶阅读（基础/分析/思辨）→
-  阅读成长档案 → 学员阅读力评估
-  → 与学生端阅读解码器 / 学情分析师建立数据接口。
-  该版本基于"三阶阅读"模型，从基础到思辨。
-compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozhi-teach-classroom-coach
+  面向语文老师的现代文阅读教学设计工具。
+  当老师说"这篇课文怎么讲"、"阅读理解怎么教"、"学员读不懂课文"、"阅读策略怎么教"、"群文阅读怎么设计"、"名著怎么导读"、"思辨阅读怎么带"时，建议激活此SKILL。
+  工作流：文本三解（字面/深层/外延）→ 六大策略（预测/提问/联想/比较/概括/评价）→ 三阶阅读 → 任务设计 → 班级阅读力记录。
+  只输出教学设计与解读框架，不代老师备课、不提供整本教材电子版。
+  文言文教学转 xiaozhi-teach-chinese-classical-guide；作文转 xiaozhi-teach-chinese-writing-guide。
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
+depends_on:
+  - xiaozhi-teach-lesson-planner
+  - xiaozhi-teach-student-analyzer
+  - xiaozhi-teach-classroom-coach
 id: openclaw:xiaozhi-teach-chinese-reading-guide
 min_platform_version: "2.0"
 max_round_limit: 20
@@ -25,17 +26,26 @@ max_round_limit: 20
 
 # 阅读教学指导 SKILL
 
-> **一句话定位：** 阅读教学不是教学生"读懂一段话"，而是教学生"和文本对话的能力"——从字面到结构到主题，三阶递进。
+> **一句话定位：** 阅读教学不是教学生"读懂一段话"，而是教学生"和文本对话的能力"——从字面到深层到外延，三层递进。
 
 ---
 
-## ⚠️ 技术实现边界声明
+> 技术边界：本 SKILL 依赖能力 [M, X, F]，无该能力时按 shared/platform-conventions.md 降级。
+> 无跨会话统计（X）时，阅读速度、阅读量这类数据由老师或学员自己填报，本 SKILL 不生成统计数字；
+> 无文件能力（F）时，档案表格改为对话内纯文本。
 
-> **关于"AI 阅读"边界：** 本 SKILL 输出**阅读教学设计**与**文本解读框架**；**不**代替老师备课，但能极大缩短老师备课时间。
->
-> **关于"教材版权"边界：** 课文选段必须标注 copyrightStatus（教材原文/公有/经授权/CC 协议）；不复制整本教材内容。
->
-> **关于"导读材料"边界：** 本 SKILL **不**直接提供完整电子版教材；只输出导读提纲、讨论问题、阅读任务设计。
+**本 SKILL 的内容边界（产品定位，不是平台能力问题）：**
+- 只输出**阅读教学设计**与**文本解读框架**，不代替老师备课。
+- 课文选段必须标注 `copyrightStatus`：`自有` / `改编` / `公开可引用` / `仅存索引`（教材原文与教辅题一律 `仅存索引`，只记出处不复制正文）。
+- 不提供完整电子版教材，只输出导读提纲、讨论问题、阅读任务设计。
+
+### 隐私与数据控制入口
+- 查看：「查看我的班级阅读记录」
+- 更正：「更正我的班级阅读记录」
+- 删除：「删除我的班级阅读记录」（删除后不可恢复，会先确认一次）
+- 暂停：「这次不要记忆」/「暂停提醒」
+- 共享控制：「不要共享给其他SKILL」/「不要给家长看」
+- 导出：「导出我的班级阅读记录」（以文本形式给出，便于转存）
 
 ---
 
@@ -56,7 +66,7 @@ max_round_limit: 20
 
 本 SKILL 要解决的是：
 - **让学员直接和文本对话**：老师不再是"翻译机"
-- **让阅读有思维层级**：字面 → 结构 → 主题
+- **让阅读有思维层级**：字面解 → 深层解 → 外延解
 - **让阅读策略显性化**：6 大策略可教可练
 - **让阅读成长可视化**：学员能看到自己"读力"成长
 
@@ -83,7 +93,7 @@ max_round_limit: 20
 ```text
                 ┌──────────────────────────┐
                 │ ① 文本三解                │
-                │  字面/结构/主题           │
+                │  字面/深层/外延           │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
@@ -102,13 +112,13 @@ max_round_limit: 20
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ⑤ 阅读成长档案            │
-                │  → 学员档案              │
+                │ ⑤ 班级阅读力记录          │
+                │  → 待确认条目            │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ⑥ 写回 student-analyzer   │
-                │  阅读力维度               │
+                │ ⑥ 更新 classWorkspace     │
+                │  阅读弱项 / 分层          │
                 └──────────────────────────┘
 ```
 
@@ -116,15 +126,17 @@ max_round_limit: 20
 
 ## 四、文本三解
 
-### 4.1 三解定义
+### 4.1 三解定义（唯一口径：字面解 / 深层解 / 外延解）
+
+> 命名以本表为准，`references/text-three-solve.md` 的模板与本表逐层对应，不另起一套名称。
 
 ```text
 ┌──────────┬────────────────────────┬────────────┬──────────────┐
 │ 层级      │ 描述                    │ 关键问题     │ 学员任务      │
 ├──────────┼────────────────────────┼────────────┼──────────────┤
 │ 字面解    │ 文本说了什么            │ 这段讲什么  │ 提取信息      │
-│ 结构解    │ 文本怎么写的            │ 怎么组织的  │ 分析结构      │
-│ 主题解    │ 文本想表达什么          │ 为什么这样  │ 思考意义      │
+│ 深层解    │ 怎么写的、为什么这样写   │ 作者想什么  │ 分析结构与意图 │
+│ 外延解    │ 对读者、对现实意味着什么 │ 与我有何关系 │ 联系与评价    │
 └──────────┴────────────────────────┴────────────┴──────────────┘
 ```
 
@@ -138,7 +150,7 @@ max_round_limit: 20
 ⑤ 我能用自己的话讲一遍吗？
 ```
 
-### 4.3 结构解 5 问
+### 4.3 深层解 5 问
 
 ```text
 ① 这段/这篇文章的顺序是什么？
@@ -148,7 +160,7 @@ max_round_limit: 20
 ⑤ 如果我来写，会怎么组织？
 ```
 
-### 4.4 主题解 5 问
+### 4.4 外延解 5 问
 
 ```text
 ① 这篇文章的核心是什么？
@@ -160,25 +172,30 @@ max_round_limit: 20
 
 ### 4.5 文本三解样板
 
-> 📎 完整模板见 `references/three-solve-sample.md`（字面/结构/主题三解填写样板）
+> 📎 完整模板见 `references/three-solve-sample.md`（字面解/深层解/外延解填写样板）
 
 ---
 
 ## 五、阅读策略（6 大策略）
 
-### 5.1 策略总览
+### 5.1 策略总览（唯一口径）
+
+六大策略为：**预测 / 提问 / 联想 / 比较 / 概括 / 评价**。
+
+> 📎 每个策略的作用、时机、操作步骤、示范问题、学员自检与老师使用要点，
+> 完整卡片见 `references/six-strategies-card.md`（可裁剪发给学员）。本文不重复列出细则。
 
 ```text
-┌──────────┬────────────────────────┬────────────┬──────────────┐
-│ 策略      │ 描述                    │ 关键动作     │ 适用文体      │
-├──────────┼────────────────────────┼────────────┼──────────────┤
-│ 预测      │ 读前/读中推测下文        │ 猜一猜      │ 叙事/说明     │
-│ 提问      │ 读中提问/找答案          │ 问自己      │ 任何文体      │
-│ 可视化    │ 把文字变成图像           │ 画出来      │ 叙事/描写     │
-│ 联结      │ 联系旧知/生活            │ 联想        │ 任何文体      │
-│ 推断      │ 透过字面推断深层          │ 想一想      │ 任何文体      │
-│ 总结      │ 概括/提炼核心            │ 用一句话   │ 任何文体      │
-└──────────┴────────────────────────┴────────────┴──────────────┘
+┌──────┬──────────┬──────────────────┬──────────────┐
+│ #    │ 策略      │ 核心问题          │ 适用阶段      │
+├──────┼──────────┼──────────────────┼──────────────┤
+│ 1    │ 预测      │ 接下来会发生什么  │ 阅读前/阅读中 │
+│ 2    │ 提问      │ 我有什么不明白的  │ 阅读中        │
+│ 3    │ 联想      │ 这让我想到什么    │ 阅读中/阅读后 │
+│ 4    │ 比较      │ 与其他文本有何异同│ 阅读中/阅读后 │
+│ 5    │ 概括      │ 这段讲了什么      │ 阅读中/阅读后 │
+│ 6    │ 评价      │ 我认同/质疑什么   │ 阅读后        │
+└──────┴──────────┴──────────────────┴──────────────┘
 ```
 
 ### 5.2 策略教学法
@@ -211,15 +228,15 @@ max_round_limit: 20
 策略不是越多越好。
 选 1-2 个策略和文本特点匹配，深度练习。
 
-· 叙事文：预测+可视化
-· 议论文：提问+推断
-· 说明文：总结+提问
-· 文学：联结+主题
+· 叙事文：预测 + 联想
+· 议论文：提问 + 评价
+· 说明文：概括 + 提问
+· 文学作品：联想 + 比较
 ```
 
 ### 5.4 策略使用样板
 
-> 📎 完整模板见 `references/strategy-use-sample.md`（提问+可视化双策略使用与反思样板）
+> 📎 完整模板见 `references/strategy-use-sample.md`（提问+联想双策略使用与反思样板）
 
 ---
 
@@ -281,7 +298,8 @@ max_round_limit: 20
 
 ### 6.5 三阶练习设计
 
-> 📎 完整模板见 `references/three-stage-practice-sample.md`（基础/分析/思辨三阶练习设计样板，含时长分配）
+> 时长以本文 §7.3 的课中任务分配为唯一口径（字面 5 / 分析 15 / 思辨 20 / 总结 5，合计 45 分钟一课时）。
+> 📎 填写样板见 `references/three-stage-practice-sample.md`（样板中的时长与 §7.3 一致，不另设一套）
 
 ---
 
@@ -298,6 +316,10 @@ max_round_limit: 20
 │ 课后      │ 拓展阅读+读后任务       │ 30-60 分钟  │
 └──────────┴────────────────────────┴────────────┘
 ```
+
+> 凡由 AI 生成的阅读题、讨论题、拓展练习，生成前按 `shared/ai-item-check.md` 自检
+> （题干成立、答案唯一或标注开放题、学段内、与原文对得上），输出时标注
+> **【AI 生成，入库前请人工验算】**，老师确认后才可进课堂、作业或资源库。
 
 ### 7.2 预习任务设计
 
@@ -401,12 +423,15 @@ max_round_limit: 20
 
 ### 9.1 档案维度
 
+> ⚠️ 阅读速度与阅读量**不是**本 SKILL 计算出来的。没有跨会话统计能力（X）时，
+> 这两栏由学员自测或老师登记；本 SKILL 不生成、不推算这两个数字。
+
 ```text
 ┌──────────┬────────────────────────┐
 │ 维度      │ 描述                    │
 ├──────────┼────────────────────────┤
-│ 阅读速度  │ 字/分钟                 │
-│ 阅读量    │ 字/月（来自平台统计）  │
+│ 阅读速度  │ 字/分钟（学员自测填报） │
+│ 阅读量    │ 字/月（学员或老师填报） │
 │ 字面能力  │ 5W1H 提取准确度         │
 │ 分析能力  │ 结构/方法分析深度       │
 │ 思辨能力  │ 评价/反思能力           │
@@ -452,17 +477,68 @@ max_round_limit: 20
 
 ### 10.2 接口
 
+数据契约为 `shared/class-teaching-workspace.schema.json`，
+所有读写路径必须是该 schema 中真实存在的字段。
+
 ```text
 读：
-  lessonPlan.text         → 课文/文本信息
-  studentAnalyzer.weaknessRank → 阅读力弱项
+  classWorkspace.classProfile.{gradeBand, gradeLevel, periodMinutes, textbookVersion}
+                                     → 学段、册次、课时长度
+  classWorkspace.weaknessRank[]      → 班级阅读弱项（knowledgePoint 如"信息提取""句子赏析"、
+                                       errorRate、dimension、stubbornCount）
+  classWorkspace.studentTiers[]      → A/B/C 分层，用于给三阶任务分档
+  classWorkspace.itemStats[]         → 上次测评阅读题的难度 pValue 与区分度 dValue
 
-写：
-  readingGuide.threeSolve → 文本三解
-  readingGuide.threeStage → 三阶练习
-  readingGuide.bookList   → 书单/读后任务
-  → student-analyzer 接收
-  → resource-library 接收
+写（一律生成待确认条目，老师确认后落库）：
+  classWorkspace.lessonPlans[]       → 本课阅读教学设计
+      · objectives[]（statement + cognitiveLevel + coreCompetency）
+      · segments[]（name = 字面层/分析层/思辨层/总结层，minutes 见 §7.3，含 tierVariants）
+      · questionChain[]              → 三解 5 问与思辨层开放问题
+      · sourceWeaknessIds[]          → 本课针对的 weaknessRank 条目
+  classWorkspace.homeworkAssignments[] → 预习与课后拓展阅读（purpose = 诊断/巩固/拓展）
+  classWorkspace.interactionLogs[]   → 课后回填：段落实际用时、misconceptionsObserved[]
+  classWorkspace.weaknessRank[]      → 依据课堂与作业表现更新阅读类弱项
+```
+
+**写回学生个人档案（可选，需授权）：**
+
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 给出专业求助渠道（即时危险：110/120）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
+
+> 学员的读后感、随笔常写到真实处境。老师转述这类内容时，先按上面的危机例外处置，
+> 不做"低敏转化"再发家长。
+
+写回学生端学习 DNA 必须走 `handover-protocol.schema.json`，且 `meta.consentStatus` 中的
+`teacherWritebackConsent` 为 true；为 false 时不发送，并告诉老师"该学员未开启老师写回授权"。
+
+```json
+{
+  "sessionId": "sess-teach-rc-001",
+  "protocolVersion": "2.1.0",
+  "handoverType": "teacher_writeback",
+  "sender": "xiaozhi-teach-chinese-reading-guide",
+  "recipient": "xiaozhi-learning-dna",
+  "consent": { "crossSkillSharing": true, "teacherWritebackConsent": true },
+  "payload": {
+    "teacherWritebackData": {
+      "teacherSkill": "xiaozhi-teach-chinese-reading-guide",
+      "studentAlias": "小B",
+      "weakKnowledgePointUpdates": [
+        { "subject": "语文", "knowledgePoint": "概括段意", "status": "初步弱项", "masteryLevel": "会复述" }
+      ],
+      "note": "课堂能复述内容，概括时仍照抄原句"
+    }
+  },
+  "timestamp": "2026-09-03T16:40:00+08:00"
+}
+```
+
+**家长反馈的授权检查（生成任何家长可见内容前）：**
+
+```text
+· 先核对 dna-profile 的 meta.consentStatus 中 parentSharingConsent = true？
+· 内容含情绪描述（如"孩子最近抗拒读长文"）？→ 还需 emotionSharingWithParent = true
+  任一为 false → 只给老师和学员本人，并告知"该学员未开启家长共享"。
+· 本 SKILL 不生成家长简报，只把素材交给 xiaozhi-teach-parent-communication，由它按授权处理。
 ```
 
 ---
@@ -484,7 +560,7 @@ max_round_limit: 20
 
 | ✅ 应该做 | ❌ 不能做 |
 |---------|---------|
-| 文本三解（字面/结构/主题） | 老师=翻译机 |
+| 文本三解（字面/深层/外延） | 老师=翻译机 |
 | 显性教阅读策略 | 学员无意识使用 |
 | 三阶阅读（基础/分析/思辨） | 训练=答题模板 |
 | 群文阅读对比设计 | 单篇孤讲 |
@@ -502,7 +578,7 @@ max_round_limit: 20
     <── xiaozhi-teach-student-analyzer（学情/弱项）
     ──→ xiaozhi-teach-student-analyzer（阅读力维度）
     ──→ xiaozhi-teach-resource-library（阅读素材入库）
-    ──→ xiaozhi-teach-parent-communication（阅读进步反馈）
+    ──→ xiaozhi-teach-parent-communication（阅读进步素材；发家长前由它核对 parentSharingConsent）
     ──→ 学生端 xiaozhi-chinese-reading-decoder（学员视角）
 ```
 
@@ -512,17 +588,20 @@ max_round_limit: 20
 - 禁止未授权复制整本教材
 - 禁止未授权复制电子书
 - 禁止公开学员阅读力排名
+- 禁止未核对 `parentSharingConsent` 就生成家长可见的学员评价
+- 禁止未核对 `teacherWritebackConsent` 就写回学生端档案
+- 禁止自行编造阅读速度/阅读量数字（这两项由学员或老师填报）
 
 ---
 
 ## 十四、参考资源
 
-- `references/text-three-solve.md` — 文本三解模板（基础/深层/外延）
-- `references/six-strategies-card.md` — 阅读 6 大策略卡片（预测/提问/联想/比较/概括/评价）
+- `references/text-three-solve.md` — 文本三解填写模板（字面解/深层解/外延解，与本文 §4 同一口径）
+- `references/six-strategies-card.md` — 阅读 6 大策略卡片（预测/提问/联想/比较/概括/评价）——策略细则的唯一出处
 - `references/group-text-design.md` — 群文阅读设计模板（5 类样板）
 - `references/three-solve-sample.md` — 文本三解填写样板
-- `references/strategy-use-sample.md` — 阅读策略使用样板（提问+可视化）
-- `references/three-stage-practice-sample.md` — 三阶练习设计样板
+- `references/strategy-use-sample.md` — 阅读策略使用样板（提问+联想）
+- `references/three-stage-practice-sample.md` — 三阶练习设计填写样板（时长同 §7.3）
 - `references/group-text-sample-childhood.md` — 群文阅读"童年"议题完整范例
 - `references/reading-ability-profile-template.md` — 学员阅读力档案模板
 

@@ -1,7 +1,7 @@
 {
   "meta": {
     "profileId": "stu-20260511-demo01",
-    "schemaVersion": "1.2.0",
+    "schemaVersion": "2.1.0",
     "createdAt": "2026-03-15T09:30:00+08:00",
     "lastUpdatedAt": "2026-05-11T20:15:00+08:00",
     "consentStatus": {
@@ -10,7 +10,14 @@
       "crossSkillSharing": true,
       "reminderConsent": true,
       "interestTrackingConsent": true,
-      "emotionTrackingConsent": true
+      "emotionTrackingConsent": true,
+      "consentGivenBy": "学生与监护人",
+      "ageBand": "初中",
+      "guardianConsentRequired": false,
+      "parentSharingConsent": true,
+      "emotionSharingWithParent": false,
+      "teacherWritebackConsent": false,
+      "grantedAt": "2026-03-15T09:30:00+08:00"
     }
   },
   "basicInfo": {
@@ -90,13 +97,14 @@
   "errorPatterns": {
     "fixedErrorTypes": [
       {
-        "errorType": "概念理解错误",
+        "errorType": "概念模糊",
         "subject": "数学",
         "knowledgePoint": "一次函数解析式推导",
         "occurrenceCount": 5,
         "rootCause": "待定系数法只记步骤不理解为什么这样代入",
         "confidenceLevel": "data_sufficient",
-        "identifiedDate": "2026-04-20"
+        "identifiedDate": "2026-04-20",
+        "subtypeId": "B02"
       }
     ],
     "rootCauseAnalysis": [
@@ -196,7 +204,7 @@
         "chapter": "一次函数",
         "knowledgePoint": "斜率计算",
         "errorCount": 1,
-        "currentStatus": "正常",
+        "currentStatus": "待处理",
         "lastOccurrenceDate": "2026-05-03"
       },
       {
@@ -237,21 +245,31 @@
         "conqueredVerification": "连续3次复测通过"
       }
     ],
-    "knowledgeAccumulationTree": [
-      {
-        "pointA": {
-          "knowledge": "一次函数图像",
-          "subject": "数学"
+    "conceptGraph": {
+      "nodes": [
+        {
+          "nodeId": "n1",
+          "conceptName": "一次函数图像",
+          "subject": "数学",
+          "masteryLevel": "会解释"
         },
-        "pointB": {
-          "knowledge": "匀速直线运动图像",
-          "subject": "物理"
-        },
-        "linkType": "逻辑相似",
-        "discoverySource": "学习中自然发现",
-        "discoveryDate": "2026-05-06"
-      }
-    ]
+        {
+          "nodeId": "n2",
+          "conceptName": "匀速直线运动图像",
+          "subject": "物理",
+          "masteryLevel": "会复述"
+        }
+      ],
+      "edges": [
+        {
+          "sourceNodeId": "n1",
+          "targetNodeId": "n2",
+          "relationType": "correlatesWith",
+          "discoverySource": "学习中自然发现",
+          "discoveryDate": "2026-05-06"
+        }
+      ]
+    }
   },
   "interestDNA": {
     "currentExploringFields": [
@@ -371,5 +389,38 @@
       }
     ],
     "lastUpdated": "2026-05-11"
+  },
+  "subjectExtensions": {
+    "math": {
+      "subtypes": [
+        {
+          "subtypeId": "B02",
+          "dimension": "概念模糊",
+          "knowledgePoint": "一次函数解析式推导",
+          "occurrenceCount": 3,
+          "windowStart": "2026-04-20",
+          "status": "顽固弱项",
+          "lastOccurrenceDate": "2026-05-08",
+          "confidenceLevel": "data_sufficient"
+        }
+      ],
+      "gradientLevel": {
+        "currentLevel": 2,
+        "lastAssessedDate": "2026-05-05",
+        "confidenceLevel": "preliminary_trend"
+      }
+    }
+  },
+  "extensions": {
+    "understanding": [
+      {
+        "concept": "待定系数法",
+        "subject": "数学",
+        "depth": "会复述",
+        "stuckAt": "说不清为什么要代入两个点",
+        "lastTestedDate": "2026-05-10",
+        "nextSuggestion": "用‘两点确定一条直线’做一次费曼"
+      }
+    ]
   }
 }

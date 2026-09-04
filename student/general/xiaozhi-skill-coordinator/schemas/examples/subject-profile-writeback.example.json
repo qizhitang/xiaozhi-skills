@@ -1,0 +1,30 @@
+{
+  "sessionId": "sess-demo-005",
+  "protocolVersion": "2.1.0",
+  "handoverType": "subject_profile_writeback",
+  "sender": "xiaozhi-time-focus-coach",
+  "recipient": "xiaozhi-learning-dna",
+  "consent": {
+    "crossSkillSharing": true,
+    "verifiedAt": "2026-05-12T21:00:00+08:00"
+  },
+  "payload": {
+    "profileData": {
+      "updateTarget": "extension",
+      "extensionPatch": {
+        "focus": {
+          "goldenSlots": [
+            "晚饭后 1 小时"
+          ],
+          "commonDistractions": [
+            "手机消息"
+          ],
+          "avgFocusMinutes": 22,
+          "confidenceLevel": "preliminary_trend",
+          "lastUpdated": "2026-05-12"
+        }
+      }
+    }
+  },
+  "timestamp": "2026-05-12T21:01:00+08:00"
+}

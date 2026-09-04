@@ -1,22 +1,21 @@
 ---
 name: xiaozhi-teach-student-intake
 display_name: 试听与学员建档
-version: 1.0.0
+version: 2.1.0
 author: 小智伴学
 category: 独立教师
+grade_bands:
+  - 小学中段
+  - 小学高段
+  - 初中
+  - 高中
 tags: [试听, 学员建档, 需求诊断, 试讲课, 续费, 独立教师]
 description: >
-  帮助独立教师把"试听体验"升级为"系统化诊断+精准转化"。
-  当老师说"安排一节试听"、"学员建档"、
-  "试听怎么上"、"试听后怎么跟进"、
-  "学员需求诊断"、"学员档案怎么建"时，建议激活此SKILL。
-  核心工作流：学员基本信息收集 → 家长/学生需求访谈 →
-  学情诊断（前置测评）→ 试讲课设计 →
-  试听记录 → 转化/续费判断 → 正式学员档案建立 →
-  与 xiaozhi-teach-solo-dashboard / student-analyzer 建立数据接口。
-  该版本支持独立教师全流程：建档 → 试听 → 转化 → 跟进。
-compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-teach-solo-dashboard, xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer
+  把试听从"体验课"变成一次双向诊断，并按最小化原则给新学员建档。
+  适用于老师说"新学员要试听""安排一节试听""试听课怎么上""学员档案怎么建""家长/孩子想学什么""试听完怎么记录""试听后怎么跟进"。
+  流程：收最小必要信息 → 5W 需求访谈 → 5-10 分钟前测评 → 设计诊断式试讲 → 记录 5 维度观察 → 判断是否适配 → 建正式学员卡。
+  本 SKILL 不排课、不写课后记录、不登记作业、不做阶段报告，也不收集或存储任何联系方式——排课转 schedule-manager，课后记录转 lesson-log，阶段报告转 renewal-report。
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 id: openclaw:xiaozhi-teach-student-intake
 min_platform_version: "2.0"
 max_round_limit: 15
@@ -28,16 +27,13 @@ max_round_limit: 15
 
 ---
 
-## ⚠️ 技术实现边界声明
+## 技术边界
 
-> **关于"学员信息收集"边界：** 本 SKILL 严格遵循**最小化收集原则**：
-> ✅ 收集：化名、年级、学科、课时需求、家长联系方式（仅 1 个）
-> ❌ 不收集：身份证号、家庭住址、家庭收入、家长职业
-> 试听期间所有信息使用化名（化名 A/B/C 等），不暴露真实姓名。
->
-> **关于"试讲课"边界：** 试讲课的核心是"诊断"而非"展示老师多厉害"；不夸大教学效果，不做"保证提分"承诺。
->
-> **关于"自动跟进"边界：** 本 SKILL **不**自动发送消息给家长；所有跟进动作需要老师确认；AI 仅生成"跟进话术建议"和"跟进时间提醒"。
+> 技术边界：本 SKILL 依赖能力 [M, K]，无该能力时按 shared/platform-conventions.md 降级。
+
+**联系方式不进这套系统。** 老师当然需要家长的微信或电话才能开展工作——那属于老师自己的通讯录，请留在老师自己的手机、微信或纸质记录里，本 SKILL 不收集、不存储、不代管。学员卡里只记一个 `guardianCommunicationPreference`（微信文字 / 微信语音 / 电话 / 线下面谈 / 邮件 / 不主动联系），用于提醒老师"这位家长偏好哪种方式"，而不是"往哪儿发"。紧急联系人同理：老师自己保管，不入档案。
+
+试讲课的核心是诊断而非展示；不夸大教学效果，不做提分承诺。本 SKILL 不向家长或学员发送任何消息，只生成话术建议由老师自行使用。无 `K`（日期感知）时先问今天日期再排跟进节点。
 
 ---
 
@@ -124,30 +120,53 @@ max_round_limit: 15
 
 ## 四、基本信息收集（最小化原则）
 
-### 4.1 必收字段
-
-> 📎 完整模板见 `references/student-basic-info-form.md`（学员基本信息表：学员/家长/课时/来源四栏必收字段填写模板）
-
-### 4.2 不收字段
+### 4.1 只收这些
 
 ```text
-❌ 身份证号
-❌ 家庭住址（精确到门牌号）
-❌ 家庭收入
-❌ 家长职业（精确到岗位）
-❌ 学生成绩单原件
-❌ 学生户口本信息
-❌ 家庭成员关系详情
+✅ 化名（alias）——老师自己起的代号，不含真实姓氏
+✅ 年级（gradeLevel）与学段（gradeBand）
+✅ 学科（subjects[]）
+✅ 学习目标（goals[]）
+✅ 可上课时间段（availability[]，只记 {周几, 开始, 结束}）
+✅ 沟通方式偏好（guardianCommunicationPreference，枚举值）
+✅ 授权位（consent，含由谁授权、授权时间、保留期限）
+```
+
+> 📎 完整模板见 `references/student-basic-info-form.md`
+
+### 4.2 不收这些
+
+```text
+❌ 家长手机号、微信号、邮箱地址——任何形式的联系方式
+❌ 紧急联系人及其联系方式
+❌ 真实姓名，包括"姓氏首字""名字第一个字"
+❌ 出生年月日（只需要年级，年级已足够决定教学内容）
+❌ 身份证号、户口信息
+❌ 家庭住址（含"哪个小区""哪条路"）
+❌ 家庭收入、家长职业
+❌ 就读学校与班级
+❌ 学生成绩单原件、家庭成员关系
+```
+
+**为什么连姓氏首字和出生年月都不收**：这两项单独看无害，和年级、学科、上课时间凑在一起就足以定位到一个具体的孩子。学员卡是给老师看的教学记录，不是身份档案——教学上完全用不到这两项，那就不留。
+
+**联系方式在哪里**：在老师自己的手机通讯录、微信、或纸质本子里。这是有意的边界：这套系统一旦存了联系方式，泄露的后果就从"某个化名学得怎么样"变成"某个能被直接联系到的孩子学得怎么样"。老师说"把家长电话记一下"时，回一句：
+
+```text
+「联系方式我不记，请你自己存在手机里。
+  我这边可以记下家长偏好哪种沟通方式——
+  微信文字 / 微信语音 / 电话 / 线下面谈 / 邮件 / 不主动联系，
+  你说一个我记进学员卡。」
 ```
 
 ### 4.3 化名规则
 
 ```text
-试听期：用 A/B/C/D ... 顺序化名
-正式学员期：使用"X 同学"格式
-  · 例：化名 A → 转正后为"小米同学"或"小张同学"
-  · 化名不暴露真实姓氏
+试听期：用 小A / 小B / 小C … 顺序化名
+正式学员期：老师可换成好记的代号（如"小米""阿泽"）
+  · 化名不含真实姓氏、不含真实名字中的字
   · 同一学员在所有文档中化名一致
+  · 化名与真名的对应关系由老师自己记，不写进任何字段
 ```
 
 ---
@@ -288,17 +307,23 @@ max_round_limit: 15
 
 ## 九、转化/续费/流失三阶段跟进
 
+以下所有话术都由**老师本人**发出，本 SKILL 只起草。起草前先查 `workspace.studentCards[].consent` 中的 `parentCommunicationAllowed`。
+
 ### 9.1 转化期（试听后 1-7 天）
 
 > 📎 完整节奏与话术见 `references/followup-scripts-three-stages.md`（转化期跟进节奏 + 话术示例 + 避免事项）
 
-### 9.2 续费期（课时包消耗到 70%-80%）
+### 9.2 续费期（课时包已用 50% / 70%）
 
-> 📎 完整节奏与话术见 `references/followup-scripts-three-stages.md`（续费期 50%/70%/80% 三节点节奏 + 话术示例）
+**全库统一两个节点：已用 50%、已用 70%**，与 `xiaozhi-teach-renewal-report`、`xiaozhi-teach-schedule-manager` 一致。本 SKILL 不另设 80% 或 90% 节点——节点越多越像催单，两次就够：50% 时给一次阶段性反馈，70% 时把"还剩多少、下一阶段打算做什么"说清楚，剩下的交给家长判断。
 
-### 9.3 流失期（连续 2-3 次缺课/退费倾向）
+> 📎 完整节奏与话术见 `references/followup-scripts-three-stages.md`（续费期 50% / 70% 两节点节奏 + 话术示例）
+
+### 9.3 流失期（连续 2-3 次缺课或明确表达不再继续）
 
 > 📎 完整节奏与话术见 `references/followup-scripts-three-stages.md`（流失期诊断节奏 + 话术示例 + 体面结束注意事项）
+
+学员结课后：把 `studentCards[].status` 改为"已结课"，并按 `consent.retentionUntil`（默认结课后 6 个月）到期提示老师删除整张卡。
 
 ---
 
@@ -310,76 +335,78 @@ max_round_limit: 15
 
 > 📎 完整模板见 `references/formal-student-profile-template.md`（基本信息/来源历史/需求画像/学情基线/课时包/风险标记 六栏正式档案）
 
-### 10.2 写回 solo-dashboard
+### 10.2 档案落在哪
 
 ```text
-写：
-  · 学员基本信息（化名/年级/学科/课时）
-  · 上课时间偏好
-  · 课时包类型与到期日
-  · 风险标记（基于试听观察）
-  · 来源（获客渠道）
+写 workspace.studentCards[]：化名、年级、学段、学科、目标、
+                             可上课时间段、沟通方式偏好、授权位
+写 workspace.coursePackageLedger[]：课时包总数与到期日
+写 workspace.progressEvidence[]：试听诊断得到的学情基线证据
 
-→ solo-dashboard 在工作台显示新学员
-→ 自动续费节点预警
+不写：联系方式、真实姓名、出生年月、住址、学校班级（本 SKILL 不收集这些）
+不写：风险标记——那是工作台按字段值实时算出来的，不落库
 ```
 
 ---
 
-## 十一、与上游/下游 SKILL 的协作
+## 十一、接口
 
-### 11.1 协作流图
+### 11.1 数据流
+
+本 SKILL 位于流程起点，**没有前置 SKILL**：所有信息来自老师与家长/学员的对话。
 
 ```text
-            ┌────────────────────────┐
-            │ 学员/家长提供信息        │
-            └───────────┬────────────┘
-                        ↓
-            ┌────────────────────────┐
-            │ xiaozhi-teach-         │
-            │  student-intake        │
-            │  （本 SKILL）           │
-            └───────────┬────────────┘
-                        ↓
-        ┌───────────────┼────────────────┐
-        ↓               ↓                ↓
-  solo-dashboard   student-analyzer  lesson-planner
-  （学员档/排课）  （学情 baseline） （首课教案）
+  老师转述访谈内容 ──→ ┌────────────────────┐ ──→ 一张建好的学员卡
+  试听观察         ──→ │ student-intake      │ ──→ 首课要注意什么
+                      │ （本 SKILL）         │
+                      └─────────┬──────────┘
+                                │ 写这三处
+              ┌─────────────────┼─────────────────┐
+              ↓                 ↓                 ↓
+        studentCards    coursePackageLedger   progressEvidence
 ```
 
-### 11.2 接口
+### 11.2 读写字段
 
-> 所有读写均落在共享工作空间 `solo-teacher-workspace.schema.json`；下列为真实存储字段，派生/生成项已单独标注。
+> 所有读写均落在共享工作空间 `solo-teacher-workspace.schema.json`；派生项已单独标注。
 
 ```text
-读：（本 SKILL 位于流程起点，无前置 SKILL 数据依赖；建档/写入前须校验目标学员的
-     workspace.studentCards[].consent.profileEnabled / crossSkillSharing 为 true）
+建档前的校验：
+  workspace.studentCards[].consent 中 profileEnabled 必须为 true；
+  跨 SKILL 共享另需 crossSkillSharing 为 true。
+  未满 14 周岁（学段为小学各段或初一）时，consent 的 grantedBy
+  必须含"监护人"（shared/vocab.md §8）。
 
 写：
-  学员档案     → workspace.studentCards[]
-                （studentId / alias / gradeLevel / subjects[] /
-                  primaryWeaknesses[] / learningPreferences[] /
-                  guardianCommunicationPreference / consent{...}）
-  学习目标     → workspace.studentCards[].goals[]
-  上课时间偏好 → workspace.lessonSchedule[].startTime / .day_of_week
-                （首课排期时逐条写入 lessonEvent）
-  课时包       → workspace.coursePackageLedger[]
-                （packageId / totalUnits / usedUnits / remainingUnits /
-                  renewalAttention）
-  学情基线证据 → workspace.progressEvidence[]
-                （evidenceType / description / confidenceLevel，源自试听诊断）
+  workspace.studentCards[]
+    studentId / alias / gradeLevel / gradeBand / status /
+    subjects[] / goals[] / primaryWeaknesses[] /
+    learningPreferences[]（学习方式偏好，不放时间）/
+    availability[]（{dayOfWeek, startTime, endTime}，排课的唯一时间依据）/
+    guardianCommunicationPreference（枚举，不是联系方式）/
+    consent{ profileEnabled, crossSkillSharing, parentCommunicationAllowed,
+             emotionSharingWithParent, grantedBy, grantedAt, retentionUntil }
+  workspace.coursePackageLedger[]
+    packageId / studentId / totalUnits / usedUnits /
+    remainingUnits / expiryDate
+  workspace.progressEvidence[]
+    evidenceType / description / date / confidenceLevel
+    （源自试听诊断；单次观察一律标 insufficient_sample，
+      见 shared/vocab.md §7）
 
-  风险标记     →（派生视图，非存储字段：由 solo-dashboard 依据
-                  workspace.homeworkFollowups[].status（作业风险）、
-                  workspace.lessonLogs[].masteryStatus（测评退步）、
-                  workspace.coursePackageLedger[].remainingUnits /
-                  .renewalAttention（课时耗尽预警）实时计算，本 SKILL 仅在
-                  试听记录中给出口头判断，不写入独立字段）
-
-  → solo-dashboard 读取 studentCards[] / coursePackageLedger[] 显示学员档与排课
-  → student-analyzer 读取 primaryWeaknesses[] / progressEvidence[] 作为学情基线
-  → lesson-planner 读取 studentCards[].goals[] / lessonSchedule[] 生成首课教案
+本 SKILL 不写：
+  workspace.lessonSchedule[]  → 首课排期交 xiaozhi-teach-schedule-manager
+  workspace.lessonLogs[]      → 交 xiaozhi-teach-lesson-log
+  风险标记                    →（派生视图，非存储字段：由工作台依据
+                                homeworkFollowups[].overdueDays、
+                                lessonLogs[].masteryStatus、
+                                coursePackageLedger[].remainingUnits
+                                实时计算）
 ```
+
+### 11.3 谁来读
+
+`xiaozhi-teach-schedule-manager` 读 `availability[]` 排首课；`xiaozhi-teach-solo-dashboard` 读 `studentCards[]` 显示新学员；`xiaozhi-teach-lesson-log`、`xiaozhi-teach-homework-tracker` 读 `goals[]` 与 `primaryWeaknesses[]` 作为基线。都是它们主动读，本 SKILL 不推送。若装有教师通用包，试听诊断结论可口头带给学情分析类 SKILL；未安装时不影响本 SKILL 使用。
 
 ---
 
@@ -389,30 +416,34 @@ max_round_limit: 15
 
 ```text
 ✅ 收集：
-  化名、年级、学科、课时、家长联系方式（1 个）
-  获客渠道、家长称呼、紧急联系人
+  化名、年级、学段、学科、学习目标、
+  可上课时间段、沟通方式偏好（枚举）、授权位
 
 ❌ 不收集：
-  身份证号、家庭住址、家庭收入、家长职业
-  学员成绩单原件、家庭成员关系
+  任何联系方式（手机号/微信号/邮箱）、紧急联系人
+  真实姓名（含姓氏首字）、出生年月
+  身份证号、户口信息、家庭住址、家庭收入、家长职业
+  就读学校与班级、成绩单原件、家庭成员关系
 ```
+
+联系方式与紧急联系人由**老师在本 SKILL 之外自行保管**（手机通讯录、微信、纸质本子），不进入工作空间的任何字段。
 
 ### 12.2 化名一致性
 
 ```text
-试听期：化名 A、B、C...
-正式期：化名"小米""小张"
-所有文档化名一致
-公开报告/案例绝不暴露真实姓名
+试听期：小A、小B、小C…
+正式期：老师换成好记的代号（"小米""阿泽"）
+所有文档化名一致；化名与真名的对应关系由老师自己记
+公开报告/案例绝不出现真实姓名
 ```
 
-### 12.3 写回 solo-dashboard 的脱敏
+### 12.3 保留期限
 
 ```text
-✅ 写：化名 + 学情 baseline
-❌ 不写：真实姓名 + 联系方式
-✅ 写：课时包到期日
-❌ 不写：家庭财务信息
+consent.retentionUntil：结课后默认保留 6 个月，到期提示老师删除整卡
+studentCards[].status = "已结课" → 不再写入新记录
+studentCards[].status = "待删除" → 等老师确认后整卡删除
+学员/家长随时可要求提前删除，见下方控制入口
 ```
 
 ---
@@ -421,53 +452,58 @@ max_round_limit: 15
 
 | ✅ 应该做 | ❌ 不能做 |
 |---------|---------|
-| 最小化收集学员信息 | 收集身份证号/家庭住址 |
-| 试听是诊断而非表演 | 把试课上成"表演课" |
-| 双向契合度判断 | 单方面销售课时包 |
-| 跟进有节奏 | 频繁催报或强行推销 |
-| 流失期体面结束 | 强行挽留/诋毁其他 |
-| 化名一致使用 | 公开档案/案例暴露真实姓名 |
-| 写回数据用化名 | 写回真实姓名+联系方式 |
+| 只收教学用得上的字段 | 收联系方式、真实姓名、出生年月 |
+| 联系方式请老师自己保管 | 代老师存家长电话/微信 |
+| 试听是诊断而非表演 | 把试听上成"表演课" |
+| 双向契合度判断 | 单方面推销课时包 |
+| 续费只在 50% / 70% 两个节点说 | 每隔几节课就提一次续费 |
+| 流失期体面结束 | 强行挽留 / 诋毁其他老师 |
+| 化名一致使用 | 公开档案/案例出现真实姓名 |
+| 单次观察标 🔴 样本不足 | 凭一节试听下长期结论 |
 
 ---
 
 ## 十四、与其他 SKILL 的协同清单
 
 ```text
-试听与学员建档
-    ──→ xiaozhi-teach-solo-dashboard（学员档/排课）
-    ──→ xiaozhi-teach-student-analyzer（学情基线）
-    ──→ xiaozhi-teach-lesson-planner（首课教案）
-    ──→ xiaozhi-teach-renewal-report（续费节点预警）
+试听与学员建档（流程起点，无前置 SKILL）
+    写 workspace.studentCards[]          ← 本 SKILL 唯一建卡方
+    写 workspace.coursePackageLedger[]   ← 新开课时包时
+    写 workspace.progressEvidence[]      ← 试听诊断基线
+
+  首课排期交 xiaozhi-teach-schedule-manager（它读 availability[]）。
+  跟进话术由老师本人发出；需要润色时交 xiaozhi-teach-parent-communication。
+  阶段报告与续费口径见 xiaozhi-teach-renewal-report（已用 50% / 70%）。
 ```
 
 **禁止行为**：
-- 禁止收集身份证号/家庭住址/家庭收入
+- 禁止收集或存储任何联系方式、紧急联系人
+- 禁止记录真实姓名（含姓氏首字）、出生年月、住址、学校班级
 - 禁止"保证提分"承诺
-- 禁止在试讲课中夸大教学效果
-- 禁止自动发送跟进消息（需老师确认）
-- 禁止公开档案/案例暴露真实姓名
+- 禁止在试听中夸大教学效果
+- 禁止代老师发送跟进消息
+- 禁止在未满 14 周岁学员的 `grantedBy` 中缺少监护人
+- 禁止公开档案/案例出现真实姓名
 
 ---
 
-## 隐私与数据控制入口
+### 隐私与数据控制入口
+- 查看：「查看我的[学员档案]」
+- 更正：「更正我的[学员档案]」
+- 删除：「删除我的[学员档案]」（删除后不可恢复，会先确认一次）
+- 暂停：「这次不要记忆」/「暂停提醒」
+- 共享控制：「不要共享给其他SKILL」/「不要给家长看」
+- 导出：「导出我的[学员档案]」（以文本形式给出，便于转存）
 
-> 本 SKILL 读写的学员数据存于共享工作空间（`solo-teacher-workspace.schema.json`），涉及未成年人信息，须提供可执行的控制入口。老师本人、或应学员/家长要求，可随时说：
+学员/家长提出时同样适用，按学员化名定位：「查看 小A 的档案」「删除 小A 的全部数据」「导出 小A 的档案」。
 
-- **查看**："查看 [学员化名] 的工作空间记录 / 课表 / 作业 / 报告"
-- **更正**："更正 [学员化名] 的 [某字段]"（覆盖旧值，避免新旧冲突并存）
-- **删除**："删除 [学员化名] 的某条记录 / 全部数据"（流失学员应按约定周期删除）
-- **暂停记录**："这次不要记录 / 暂停记录 [学员化名]"
-- **取消跨 SKILL 共享**："不要把 [学员化名] 的数据共享给其他 SKILL"
-
-**校验要求**：跨 SKILL 共享或建档前，须确认 `consent.crossSkillSharing` / `consent.profileEnabled` 为 true；涉及未成年人敏感信息（真实姓名、出生年月、联系方式等）须经监护人单独同意，默认不收集、不写入（详见 `SECURITY_BASELINE.md`）。
+**校验要求**：建档前须确认 `consent.profileEnabled` 为 true，跨 SKILL 共享另需 `crossSkillSharing` 为 true；未满 14 周岁时 `grantedBy` 必须含监护人（`shared/vocab.md §8`）。真实姓名、出生年月、联系方式等敏感信息一律不收集、不写入（详见 `SECURITY_BASELINE.md`）。
 
 ---
 
 ## 十五、参考资源
 
-- `references/intake-interview-guide.md` — 5W 访谈话术库
-- `references/student-basic-info-form.md` — 学员基本信息表（必收字段模板）
+- `references/student-basic-info-form.md` — 学员基本信息表（必收字段与不收字段）
 - `references/needs-interview-5w-checklist.md` — 需求访谈 5W 提问清单
 - `references/needs-profile-card.md` — 需求画像卡模板
 - `references/diagnosis-card-template.md` — 学情诊断卡模板
@@ -475,6 +511,27 @@ max_round_limit: 15
 - `references/trial-observation-record.md` — 试听记录（5 维度观察）模板
 - `references/followup-scripts-three-stages.md` — 转化/续费/流失三阶段跟进节奏与话术库
 - `references/formal-student-profile-template.md` — 正式学员档案模板
+- `shared/vocab.md` — 授权位、置信度、学段（唯一来源）
+- `shared/grade-bands.md` — 课时长度参数
+
+---
+
+## 十六、输出前自检
+
+每次输出学员档案或试听方案前，逐条过一遍：
+
+- [ ] 是否只收了教学用得上的字段
+- [ ] 是否**没有**记录任何联系方式、紧急联系人、真实姓名、出生年月
+- [ ] 是否使用化名，且化名不含真实姓氏
+- [ ] `consent.profileEnabled` 是否为 true；未满 14 周岁时 `grantedBy` 是否含监护人
+- [ ] `availability[]` 是否只记时间、没记原因
+- [ ] 5W 访谈是否覆盖家长与学员双视角
+- [ ] 学情诊断是否基于实际做题过程，而不是家长转述
+- [ ] 试听观察结论是否标了 🔴 样本不足
+- [ ] 试讲是否诊断式而非表演式，时长是否与授课形式一致
+- [ ] 是否避免了"保证提分"类承诺
+- [ ] 续费只提到 50% / 70% 两个节点
+- [ ] 流失期话术是否体面（不强求挽留、不诋毁他人）
 
 ---
 

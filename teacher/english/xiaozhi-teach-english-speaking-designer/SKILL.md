@@ -1,27 +1,23 @@
 ---
 name: xiaozhi-teach-english-speaking-designer
 display_name: 英语口语活动设计
-version: 1.0.0
+version: 2.1.0
 author: 小智伴学
 category: 老师英语
+grade_bands:
+  - 小学高段
+  - 初中
 tags: [口语教学, 任务型, 真实情境, 互动, 英语老师]
 description: >
-  帮助英语老师把"练口语"升级为"系统化口语教学"。
-  当老师说"口语课怎么上"、"学员不敢开口"、
-  "口语活动怎么设计"、"对话练习"、
-  "口语任务"、"发音纠正"、"口语评估"时，
-  建议激活此SKILL。
-  核心工作流：口语目标（流利/准确/得体）→
-  输入准备（听力/词汇/情境）→
-  任务型活动（信息差/角色扮演/辩论）→
-  输出练习（独白/对话/讨论）→
-  反馈与纠正（重述式/同伴纠错）→
-  口语能力档案 → 与学生端口语教练
-  / 词汇 DNA / 学情分析师建立数据接口。
-  该版本基于"任务型教学法"（TBLT），
-  让学员在"做事中学英语"。
-compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozhi-teach-classroom-coach
+  英语口语活动设计：把"读课文、背对话"变成有任务、有情境、有反馈的口语课。
+  触发语："口语课怎么上"、"学员不敢开口"、"口语活动怎么设计"、"信息差任务怎么做"、"口语任务怎么分层"、"口语怎么纠错"、"口语评分表怎么用"。
+  核心工作流：口语目标（流利/准确/得体）→ 输入准备 → 任务型活动 → 输出练习 → 反馈与纠正 → 写回班级工作空间。任务时长按班额与课时排。
+  不处理：整卷四维测评的设计与能力画像（转英语综合测评）、听力材料选编与听法训练（转英语听力材料设计）、学员一对一的 AI 陪练对话（学生端英语口语陪练负责）。
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
+depends_on:
+  - xiaozhi-teach-lesson-planner
+  - xiaozhi-teach-student-analyzer
+  - xiaozhi-teach-classroom-coach
 id: openclaw:xiaozhi-teach-english-speaking-designer
 min_platform_version: "2.0"
 max_round_limit: 20
@@ -33,13 +29,31 @@ max_round_limit: 20
 
 ---
 
-## ⚠️ 技术实现边界声明
+> 技术边界：本 SKILL 依赖能力 [M, X, F]，无该能力时按 shared/platform-conventions.md 降级。
+> 无 X 时不输出跨次的口语能力变化统计，只呈现本次数据；无 F 时请老师粘贴评分表格。
 
-> **关于"AI 陪练"边界：** 本 SKILL 输出**口语活动设计**与**教学流程**；**不**替学员做"AI 陪练对话"（由口语陪练 SKILL 负责）。
->
-> **关于"材料版权"边界：** 口语任务素材必须标注 copyrightStatus（自有/改编/教材原文/CC 协议）；不复制未授权材料。
->
-> **关于"AI 评估"边界：** 本 SKILL **不**替老师给学员口语打分；只提供**评估框架**和**反馈模板**。
+**本 SKILL 不做的三件事：**
+- 不替老师给学员口语打分，只提供评估框架与反馈模板。
+- 不替学员做"AI 陪练对话"（学生端 `xiaozhi-english-speaking-coach` 负责）。
+- 口语任务素材必须标注 `copyrightStatus`（`自有` / `改编` / `公开可引用` / `仅存索引`）；不复制未授权材料。
+
+**⚠️ 发音评价的能力前提**：老师现场听学员说话时，发音判断由老师做。
+本 SKILL 输出的是任务与评分框架，**不对录音做音素级判断**；
+学生端要做发音反馈需平台具备语音评测能力（`shared/platform-conventions.md` 能力代号 `S`），
+仅有语音转写（`A`）时转写会把发音归一化掉，不得据此判定发音。
+
+**AI 生成的任务卡与题目**：按 `shared/ai-item-check.md` 自检（情境成立、角色分工清楚、
+双方确有信息差、语言点不超该学段），输出时标注 `【AI 生成，入库前请人工验算】`。
+
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 给出专业求助渠道（即时危险：110/120）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
+
+### 隐私与数据控制入口
+- 查看：「查看我的班级口语记录」
+- 更正：「更正我的班级口语记录」
+- 删除：「删除我的班级口语记录」（删除后不可恢复，会先确认一次）
+- 暂停：「这次不要记忆」/「暂停提醒」
+- 共享控制：「不要共享给其他SKILL」/「不要写回学生档案」
+- 导出：「导出我的班级口语记录」（以文本形式给出，便于转存）
 
 ---
 
@@ -180,19 +194,20 @@ max_round_limit: 20
 
 ```text
 ■ 选材
-  · 略高于学员水平（i+1）
-  · 长度：30 秒-3 分钟
-  · 主题：贴近生活
+  · 首听可懂约 90%（生词 ≤2-3%），语速按学段（小学高段 90-100 / 初一 100 /
+    初二 110 / 初三 120 词/分钟，与听力设计 SKILL 同一套口径）
+  · 长度：30 秒-2 分钟（作为口语任务的输入，不宜过长）
+  · 主题：贴近生活，且与后面的口语任务同一话题
 
 ■ 听法
   · 第一遍：泛听，抓主旨
   · 第二遍：精听，抓细节
   · 第三遍：模仿，复述
 
-■ 资源
-  · 教材配套音频
-  · CC 协议 podcast
-  · 自有改编材料
+■ 资源（每条填 copyrightStatus，见 shared/vocab.md §11）
+  · 教材配套音频（按学校授权范围课堂内使用）
+  · 条款允许教学使用的公开材料 → 记 `公开可引用`，存链接不存文件
+  · 老师自录 / 自有改编材料 → 记 `自有` / `改编`
 ```
 
 ### 5.3 词汇输入
@@ -220,10 +235,10 @@ max_round_limit: 20
   · 学员感兴趣的领域
 
 ■ 模拟情境
-  · 模拟面试
-  · 模拟旅行
+  · 社团招新面试（初中版；求职面试属 ⚠高中及以上情境）
+  · 模拟旅行、问路
   · 模拟购物
-  · 模拟演讲
+  · 班级演讲
 
 ■ 学员代入
   · 让学员"成为"角色
@@ -284,7 +299,7 @@ max_round_limit: 20
   · 任务 1：餐厅点餐（顾客/服务员）
   · 任务 2：酒店入住（客人/前台）
   · 任务 3：电话咨询（客户/客服）
-  · 任务 4：面试（面试官/求职者）
+  · 任务 4：社团招新面试（社长/申请者）——求职面试属 ⚠高中及以上情境
 
 ■ 优势
   · 学员"成为"角色
@@ -299,14 +314,28 @@ max_round_limit: 20
   · 学员持不同观点
   · 用英语论证
 
-■ 例子
-  · 任务 1：手机对学习的影响（正方/反方）
-  · 任务 2：远程工作好不好
-  · 任务 3：学生该不该有零花钱
+■ 例子（选学员真的有话说的议题）
+  · 任务 1：手机该不该带进校园（正方/反方）
+  · 任务 2：作业该不该分层布置
+  · 任务 3：课间十分钟该怎么用
 
 ■ 难度
   · 较高（需要论证）
-  · 适合中高级学员
+  · 适合已能连续说 5-6 句的学员；基础层先做信息差任务
+
+■ 课堂可行性（排辩论前先算这一步）
+  · 一节课 45 分钟，除去组织与讲评，可用于辩论的约 25-30 分钟
+  · 50 人班分 4-6 人一组 = 8-12 组，每组都上台不可能
+  · 三种可行排法：
+    ① 全班分组同时辩（推荐）：8-12 组同时进行，老师巡视
+       准备 5 分钟 + 组内辩论 10 分钟 + 全班分享 2 组 × 3 分钟 = 21 分钟
+       优点：每个学员都在说；缺点：老师只能抽听
+    ② 两组示范 + 其余观察记录：2 组上台各 8 分钟，
+       其余学员用观察表记录"哪句论证有力"，之后 5 分钟讨论
+       优点：可控；缺点：多数人这节课没开口，需下一节补
+    ③ 分两节课：第一节全班分组辩，第二节各组派代表复述本组结论
+  · ⚠️ 一组"自由辩论 10 分钟"只在排法②里成立；
+    排法①里 8-12 组同时说，10 分钟的自由辩论会失控，改为 6-8 分钟并给发言顺序卡
 ```
 
 ### 6.6 任务设计原则
@@ -384,17 +413,18 @@ max_round_limit: 20
 ### 7.4 讨论练习
 
 ```text
-■ 小组讨论
-  · 3-5 人一组
-  · 围绕主题讨论
+■ 小组讨论（大班的默认形式）
+  · 3-5 人一组，全班同时进行
+  · 围绕主题讨论；老师巡视，抽听 3-5 组
 
 ■ 圆桌讨论
-  · 全班一起讨论
-  · 老师引导
+  · 全班一起讨论，老师引导
+  · ⚠️ 40-50 人班里，一节课能发言的不超过 10 人——
+    只用于收尾汇总，不作为主要的开口机会
 
 ■ 立场讨论
-  · 学员持不同立场
-  · 用英语论证
+  · 学员持不同立场，用英语论证
+  · 时长与分组按 references/task-based-template.md §9 算
 ```
 
 ---
@@ -414,17 +444,30 @@ max_round_limit: 20
 └──────────┴────────────────────────┴──────────────┘
 ```
 
-### 8.2 重述式纠正
+### 8.2 重述式纠正（Recast）
 
 ```text
-■ 老师不直接说"错"
+■ 做法：老师用**正确形式把学员的话复述一遍**，继续对话，不评判对错
   · 学员："I go to school yesterday."
-  · 老师不直接说"I went"
-  · 而是："Oh, you went to school yesterday? When?"
+  · 老师："Oh, you **went** to school yesterday! What did you do there?"
+    → 复述时把 went 说重一点，然后用一个**推进内容**的问题接下去
+
+■ ❌ 常见的错误示范
+  · 学员："I go to school yesterday."
+    老师："Oh, you went to school yesterday? When?"
+    问题在哪：学员已经说了 yesterday，再问 When? 逻辑上说不通，
+    学员会以为自己的**内容**没说清，转去重复时间，反而注意不到动词被改了。
+  · 重述必须紧跟原句、只改错的那一处、其余照搬；
+    追问要推进到新信息，不能问学员刚说过的东西。
+
+■ 重述的局限（老师需要知道）
+  · 学员常把重述当成"老师在回应内容"，不一定注意到语言被改了
+  · 所以：重述适合流利度优先的任务型活动；
+    要确保学员注意到，改用引导式纠错或元语言提示（§3.3 / §3.4）
 
 ■ 让学员在"对话"中自己发现
   · 不打断学员说话
-  · 让学员"自然修正"
+  · 重述后如果学员自己改了口，明确肯定一句
 ```
 
 ### 8.3 纠错三原则
@@ -503,19 +546,33 @@ max_round_limit: 20
   （口语能力维度）  （口语素材入库）  （口语进步反馈）
 ```
 
-### 10.2 接口
+### 10.2 接口（唯一真实字段来源：`shared/class-teaching-workspace.schema.json`）
 
 ```text
 读：
-  lessonPlan.speakingTask   → 口语任务
-  studentAnalyzer.speakingLevel → 口语水平
+  classWorkspace.classProfile          → 学段、班额、课时（决定任务时长与分组方式）
+  classWorkspace.lessonPlans[]         → 本课教案与 segments（口语任务嵌在哪一段）
+  classWorkspace.interactionLogs[]     → 上一次课堂的实际用时与参与度
+  classWorkspace.itemScores[]          → 口语题得分（能力画像的唯一来源）
+  classWorkspace.studentTiers[]        → A/B/C 分层，用于给任务配难度变式
 
-写：
-  speakingDesigner.task     → 任务设计
-  speakingDesigner.feedback → 反馈记录
-  speakingDesigner.speakingProfile → 口语档案
-  → student-analyzer 接收
-  → resource-library 接收
+写（均为待老师确认的条目，确认后落库）：
+  classWorkspace.lessonPlans[].segments[]              → 口语活动的环节与分钟数
+  classWorkspace.lessonPlans[].segments[].tierVariants → A/B/C 三档任务变式
+  classWorkspace.examBlueprints[].items[]              → 口语评分条目（itemType = "口语"）
+                                                         AI 生成题 aiGenerated=true，
+                                                         老师验算后才可 verifiedByTeacher=true
+  classWorkspace.interactionLogs[]                     → 活动实际用时与观察到的共性问题
+                                                         （participationNote 只写整体，不点名）
+  classWorkspace.weaknessRank[]                        → 由口语表现归纳出的班级弱项
+
+写回学生档案（可选，需授权）：
+  handoverType = "teacher_writeback"，recipient = xiaozhi-learning-dna
+  前置：交接体中的授权快照 teacherWritebackConsent 必须为 true，否则丢弃并告知老师
+  内容：weakKnowledgePointUpdates 列表（subject = "英语"，
+        knowledgePoint 写具体语言点如"口语·第三人称单数"），note 只写低敏事实描述
+  ❌ 不写等级、不写学员真实姓名、不写"某某不爱说话"这类人格评价
+  ❌ 不写发音判断（本 SKILL 不做音素级判定）
 ```
 
 ---
@@ -539,7 +596,7 @@ max_round_limit: 20
 | 任务型活动 | 口语=背诵 |
 | 真实/模拟情境 | 口语=读课文 |
 | 重述式纠正 | 直接说"错" |
-| 学员敢说 > 准确 | 流利度让位准确性 |
+| 学员敢说 > 准确（基础层） | 因为怕错就不让学员开口 |
 | 口语能力档案累积 | 学员不积累 |
 | 学员化名 | 公开批评学员口语 |
 
@@ -554,15 +611,17 @@ max_round_limit: 20
     ──→ xiaozhi-teach-student-analyzer（口语能力维度）
     ──→ xiaozhi-teach-resource-library（口语素材入库）
     ──→ xiaozhi-teach-parent-communication（口语进步反馈）
-    ──→ 学生端 xiaozhi-english-speaking-coach（学员视角）
+    ──→ 学生端 xiaozhi-english-speaking-coach（学员视角；发音判定的能力前提两端一致）
 ```
 
 **禁止行为**：
 - 禁止 AI 替学员做口语任务
 - 禁止 AI 替老师做口语评估（只提供框架）
-- 禁止 AI 陪练对话（由口语陪练 SKILL 负责）
+- 禁止 AI 陪练对话（由学生端口语陪练 SKILL 负责）
 - 禁止公开学员口语录音
 - 禁止公开"某学员口语差"
+- 禁止未经 `teacherWritebackConsent` 写回学生档案
+- 禁止对录音做音素级发音判定（需语音评测能力，本 SKILL 不具备）
 
 ---
 

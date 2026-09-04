@@ -1,0 +1,24 @@
+{
+  "sessionId": "sess-demo-003",
+  "protocolVersion": "2.1.0",
+  "handoverType": "reminder_enqueue",
+  "sender": "xiaozhi-english-vocabulary-dna",
+  "recipient": "xiaozhi-im-reminder",
+  "consent": {
+    "crossSkillSharing": true,
+    "reminderConsent": true
+  },
+  "payload": {
+    "reminderData": {
+      "reminderId": "rem-vocab-20260512",
+      "type": "vocab_daily_card",
+      "scheduledTime": "2026-05-12T19:30:00+08:00",
+      "dueDate": "2026-05-12",
+      "content": "今日到期词卡 6 个：ambitious, curious, …",
+      "targetKnowledgePoint": "Unit 5 词汇",
+      "priority": 3,
+      "mergeable": true
+    }
+  },
+  "timestamp": "2026-05-11T21:00:00+08:00"
+}

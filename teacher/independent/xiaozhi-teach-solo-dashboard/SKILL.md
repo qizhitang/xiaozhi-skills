@@ -1,22 +1,25 @@
 ---
 name: xiaozhi-teach-solo-dashboard
 display_name: 独立教师工作台
-version: 1.0.0
+version: 2.1.0
 author: 小智伴学
 category: 独立教师
+grade_bands:
+  - 小学中段
+  - 小学高段
+  - 初中
+  - 高中
 tags: [独立教师, 工作台, 今日待办, 课表, 风险学员, 课时包, 续课, 运营闭环]
 description: >
-  帮助独立教师把分散在课表、学员卡、作业、家长沟通和课时包里的信息
-  整理成一个可执行的日工作台。
-  当老师说"今天我要做什么"、"帮我整理今天课表"、
-  "哪些学生需要跟进"、"独立教师工作台"、
-  "哪些学生续课节点到了"时，建议激活此SKILL。
-  核心工作流：读取当日数据 → 按 7 区块分类输出
-  → 自动标记风险学员 → 输出"今日最重要的三件事"。
-  该版本严格遵循 solo-teacher-workspace.schema.json 字段约束，
-  不编造学员状态，不自动发送家长消息。
-compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-teach-schedule-manager, xiaozhi-teach-lesson-log, xiaozhi-teach-homework-tracker
+  把独立教师分散在课表、学员卡、作业、家长沟通和课时包里的信息，只读聚合成一张可执行的日工作台。
+  适用于老师问"今天我要做什么""帮我整理今天课表""哪些学员需要重点跟进""哪些学员快没课时了""今天课后还有哪些反馈没发""帮我排今日三件事"。
+  流程：只读工作空间 → 按 7 区块归类 → 依字段数值标记风险学员 → 给出今日最重要的三件事。
+  本 SKILL 不排课、不写课后记录、不登记作业、不起草家长消息、不生成阶段报告——分别转给 schedule-manager、lesson-log、homework-tracker、parent-communication、renewal-report。
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
+depends_on:
+  - xiaozhi-teach-schedule-manager
+  - xiaozhi-teach-lesson-log
+  - xiaozhi-teach-homework-tracker
 id: openclaw:xiaozhi-teach-solo-dashboard
 min_platform_version: "2.0"
 max_round_limit: 20
@@ -28,13 +31,15 @@ max_round_limit: 20
 
 ---
 
-## ⚠️ 技术实现边界声明
+## 技术边界
 
-> **关于"工作空间数据"机制：** 本 SKILL 的所有数据**强依赖**于 `teacher/independent/schemas/solo-teacher-workspace.schema.json` 中定义的共享数据结构（学员卡 `studentCards`、课表 `lessonSchedule`、课后记录 `lessonLogs`、作业跟进 `homeworkFollowups`、家长沟通 `parentCommunicationLogs`、课时包 `coursePackageLedger`、阶段证据 `progressEvidence`）。本 SKILL 不直接连接第三方排课系统、收银系统、IM 系统。
->
-> **关于"风险标记"机制：** 风险学员的自动标记基于**客观字段数值**（如缺课次数、作业状态、剩余课时数），不基于老师主观印象；如需加入主观判断，须由老师显式声明并标注"主观判断"。
->
-> **关于"自动发送"边界：** 本 SKILL **不会**自动发送家长消息、IM 提醒、邮件。所有对外动作均需老师在 AI 输出后明确确认，再由老师手动触发。
+> 技术边界：本 SKILL 依赖能力 [M, K, X]，无该能力时按 shared/platform-conventions.md 降级。
+
+本 SKILL 的数据全部来自 `shared/solo-teacher-workspace.schema.json`；不连接第三方排课、收银、IM 系统。无 `X`（跨会话统计）时不输出"累计 N 次"类精确统计，改为"从记录看大致…"并标 🟡；无 `K`（日期感知）时先问今天日期再排今日工作台。
+
+本 SKILL **不生成题目**；老师在工作台里顺手要一道题时，先按 `shared/ai-item-check.md` 自检，并标注【AI 生成，入库前请人工验算】，入库交给 `xiaozhi-teach-resource-library`。
+
+风险信号一律由**字段数值**判定（缺课次数、逾期天数、剩余课时），不基于老师主观印象；老师要加入主观判断须显式标注 `[主观判断]`。本 SKILL 不发送任何家长消息、提醒或邮件，对外动作由老师确认后自行触发。
 
 ---
 
@@ -59,7 +64,7 @@ max_round_limit: 20
 
 本 SKILL 要解决的是：
 - **把 7 块分散信息整合成 1 张日工作台**：课表/课前/课后/作业/家长/课时包/今日三件事
-- **让风险自动可见**：基于字段数值自动标记，不用老师记
+- **让风险看得见**：按字段数值判定并附依据，不靠老师记
 - **让续课沟通有据可依**：基于课堂证据和课时包数据，不靠销售话术
 
 本 SKILL **不替代**具体教学设计；发现需要备课、作业、学情分析时，建议调用教师通用或学科专项 SKILL。
@@ -104,13 +109,13 @@ max_round_limit: 20
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ③ 自动标记风险学员        │
+                │ ③ 按字段数值标记风险学员  │
                 │  5 类信号（见 §六）        │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
                 │ ④ 输出"今日最重要的三件事"│
-                │  按紧急度+影响力自动排序  │
+                │  按紧急度+影响力排序，附依据│
                 └──────────────────────────┘
 ```
 
@@ -130,9 +135,11 @@ max_round_limit: 20
 
 ---
 
-## 六、风险学员自动标记逻辑
+## 六、风险学员标记逻辑
 
-基于 `solo-teacher-workspace.schema.json` 中的字段，本 SKILL 自动检测 5 类风险信号。
+基于 `solo-teacher-workspace.schema.json` 的字段值检测 5 类风险信号。全部为**只读派生**，不回写任何字段。
+
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 给出专业求助渠道（即时危险：110/120）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 ### 6.1 5 类风险信号
 
@@ -140,45 +147,55 @@ max_round_limit: 20
 风险① 缺课风险
   触发条件：lessonSchedule 中 status 为 absence/cancelled 累计 ≥ 2 次
   严重度：
-    2 次 = ⚠️ 中度
+    2 次 = 🟡 中度
     3 次及以上 = 🔴 高度
   建议动作：调课 / 补课 / 主动沟通原因
 
 风险② 作业拖延风险
-  触发条件：homeworkFollowups 中 status 为 overdue 累计 ≥ 3 次
+  触发条件：homeworkFollowups 中 overdueDays ≥ 1 的条目累计 ≥ 3 条
+  说明：overdueDays 由 dueDate 与当前日期派生（status 枚举中没有 overdue 这个值，
+        逾期与否一律看 overdueDays，不看 status）
   严重度：
-    3 次 = ⚠️ 中度
-    5 次及以上 = 🔴 高度
+    3 条 = 🟡 中度
+    5 条及以上 = 🔴 高度
+    单条 overdueDays ≥ 7 = 🔴 高度
   建议动作：拆分作业 / 减量 / 共同制定节奏
 
-风险③ 测评退步风险
-  触发条件：lessonLogs 中 masteryStatus 出现"需要重讲"或"仍需巩固"≥ 3 次
+风险③ 讲解重复风险
+  触发条件：lessonLogs 按 date 倒序取最近 5 条，其中 masteryStatus 为
+            "需要重讲"或"仍需巩固"≥ 3 条
   严重度：
-    3 次 = ⚠️ 中度
-    5 次及以上 = 🔴 高度
-  建议动作：调出 lesson-planner 重备 / 联系 student-analyzer 做诊断
+    3 条 = 🟡 中度
+    5 条 = 🔴 高度
+  建议动作：重新备下一节的切入点 / 用 lesson-log 的 perTopicMastery 定位到具体知识点
 
-风险④ 家长沉默风险
-  触发条件：parentCommunicationLogs 中近 14 天无 sent 状态记录
+风险④ 家长沟通间隔风险
+  触发条件：parentCommunicationLogs 中近 14 天无 sentStatus=sent 记录
   严重度：
-    14-21 天 = ⚠️ 中度
+    14-21 天 = 🟡 中度
     > 21 天 = 🔴 高度
-  建议动作：本周发轻触消息 / 课前 5 分钟电联
+  建议动作：本周发一条轻触消息 / 课前预留 5 分钟当面同步
+  前置：发任何家长内容前先查 consent.parentCommunicationAllowed
 
 风险⑤ 课时耗尽风险
-  触发条件：coursePackageLedger 中 remainingUnits ≤ 3
+  触发条件：coursePackageLedger 中 remainingUnits ≤ 3，或 expiryDate 距今 ≤ 7 天
   严重度：
-    3 课时 = ⚠️ 中度
+    3 课时 = 🟡 中度
     1-2 课时 = 🔴 高度
     0 课时 = ❌ 立即处理
-  建议动作：课前 1 周内主动同步续课
+  建议动作：提前一周与家长同步剩余课时事实，不催单
+  注意：remainingUnits 不含 pendingConfirmations 中未确认的条目，
+        若存在待确认条目，先提示"有 N 条课时待你确认"再谈风险等级
 ```
+
+> **"最近 N 条"的口径**：一律按 `lessonLogs[].date` 倒序取，不按写入顺序、不按 lessonId 排序。缺 `date` 的记录不参与"最近 N 条"计算，并在输出中提示老师补齐日期。
+> **顽固弱项阈值**不在本 SKILL 定义，按 `shared/vocab.md §5`；本 SKILL 只展示 homework-tracker 已判定的结果。
 
 ### 6.2 综合风险评级
 
 ```text
 每位学员综合风险 = MAX(各风险等级)
-  ⚠️ 中度 → 标记为"本周关注"
+  🟡 中度 → 标记为"本周关注"
   🔴 高度 → 标记为"今日必处理"
   ❌ 立即 → 标记为"暂停新内容，先解决"
 
@@ -194,9 +211,9 @@ max_round_limit: 20
 
 ```text
 ✅ 合规示例：
-  小D 风险② 作业拖延（⚠️ 中度）
-  依据：homeworkFollowups 中 status=overdue 出现 3 次
-       时间：[6-1] [6-2] [6-3]
+  小D 风险② 作业拖延（🟡 中度）
+  依据：homeworkFollowups 中 overdueDays ≥ 1 的条目 3 条
+       dueDate：[6-1] [6-2] [6-3]，当前逾期 4 / 3 / 1 天
   建议：拆分作业 / 减量
 
 ❌ 不合规示例：
@@ -210,50 +227,53 @@ max_round_limit: 20
 
 ### 7.1 读字段
 
+所有路径均为 `solo-teacher-workspace.schema.json` 的真实字段。
+
 ```text
-从 studentCards 读：
-  studentId, alias, gradeLevel, subjects
-  goals, primaryWeaknesses, learningPreferences
-  consent.parentCommunicationAllowed
+workspace.studentCards[]：
+  studentId, alias, gradeLevel, gradeBand, subjects, status
+  goals, primaryWeaknesses, learningPreferences, availability[]
+  guardianCommunicationPreference
+  consent.parentCommunicationAllowed / consent.emotionSharingWithParent
+  consent.retentionUntil
 
-从 lessonSchedule 读：
-  lessonId, studentId, startTime, status
-  筛选：今日 startTime 范围
+workspace.lessonSchedule[]：
+  lessonId, studentId, subject, startTime, durationMinutes, status, lessonGoal
+  筛选：今日 startTime 范围；status=trial 的在课表区块标"试听"
 
-从 lessonLogs 读：
-  completedContent, evidence
-  masteryStatus, nextLessonFocus
-  parentSummary (受 500 字符 hard cap)
-  consumeLessonUnits
+workspace.lessonLogs[]：
+  date（"最近 N 条"排序依据）, completedContent, evidence
+  masteryStatus, perTopicMastery[], studentReaction
+  nextLessonFocus, parentSummary（500 字符硬约束）
 
-从 homeworkFollowups 读：
-  task, dueDate, status
-  mainErrors, nextAction
+workspace.homeworkFollowups[]：
+  task, dueDate, status, overdueDays
+  mainErrors[].knowledgePoint / mainErrors[].dimension, nextAction
 
-从 parentCommunicationLogs 读：
-  scenario, factSummary (受 500 字符 hard cap)
+workspace.parentCommunicationLogs[]：
+  date, scenario, channel, factSummary（500 字符硬约束）
   actionSuggestion, sentStatus
   筛选：近 14 天 sentStatus=sent
 
-从 coursePackageLedger 读：
-  totalUnits, usedUnits, remainingUnits
-  renewalAttention
+workspace.coursePackageLedger[]：
+  totalUnits, usedUnits, remainingUnits, renewalAttention, expiryDate
+  pendingConfirmations[]（只读展示，本 SKILL 不确认、不扣减）
 
-从 progressEvidence 读：
-  evidenceType, description
-  confidenceLevel
+workspace.progressEvidence[]：
+  date, evidenceType, description, confidenceLevel
 ```
 
 ### 7.2 写字段
 
-本 SKILL **只读不写**——不直接修改学员卡、课时包等核心数据。
-
-**唯一允许的写动作**：
+本 SKILL **只读聚合，不写任何字段**，也不被其他 SKILL 依赖——它是终点，不是中枢。工作台里出现的每一条建议都是"请你去某个 SKILL 里做某件事"，由那个 SKILL 自己负责落库：
 
 ```text
-1. 生成"今日工作台"摘要 → 老师确认后 → 由 lesson-log 写入 lessonLog
-2. 生成"家长沟通素材" → 老师确认后 → 由 parent-communication 写入 parentCommunicationLogs
-3. 生成"续课建议" → 老师确认后 → 由 renewal-report 写入 progressEvidence
+工作台给出的建议            → 老师确认后到这里落库
+今天该补的课后记录          → xiaozhi-teach-lesson-log（写 lessonLogs）
+今天该发的家长反馈          → xiaozhi-teach-parent-communication（写 parentCommunicationLogs）
+需要跟进的作业              → xiaozhi-teach-homework-tracker（写 homeworkFollowups）
+需要调整的课表              → xiaozhi-teach-schedule-manager（写 lessonSchedule）
+到了续课节点的学员          → xiaozhi-teach-renewal-report（写 progressEvidence）
 ```
 
 ### 7.3 字段级防护
@@ -266,55 +286,46 @@ parentSummary / factSummary 字段硬约束：
   - 涉及家庭/财务/医疗/情感，使用低敏概括
   - 草稿态（sentStatus: draft）也不放宽防护
 
-consumeLessonUnits 字段：
-  - 课时消耗不自动写入
-  - 老师口头/书面确认后才生效
-  - 写入前必须明确"是否消耗 [N] 课时"
+课时台账（coursePackageLedger）：
+  - 本 SKILL 只读 remainingUnits / expiryDate / pendingConfirmations，不做任何扣减
+  - 若 pendingConfirmations 非空，工作台在"⑥ 课时包与续课节点"区块提示：
+      「[学员化名] 有 [N] 条课时待确认（[日期] 各 [X] 课时），
+        确认后剩余课时会从 [A] 变为 [B]。要现在去 lesson-log 确认吗？」
+  - 剩余课时的展示一律注明"未含 N 条待确认"，避免老师按虚高数字判断续课
+  - 老师在本 SKILL 里说"确认"时，本 SKILL 不落库，转交 lesson-log 执行
 ```
 
 ---
 
-## 八、协作流图
+## 八、本 SKILL 在独立教师包中的位置
 
-本 SKILL 是独立教师日常的"调度中枢"，与 8 个独立教师 SKILL 形成闭环。
+本 SKILL 是**只读聚合层，不被其他 SKILL 依赖**。其他 7 个 SKILL 各自独立读写工作空间，不需要先经过工作台；工作台只是把它们已经写下的东西在早上拼成一张纸。没有本 SKILL，其他 SKILL 照常工作。
 
 ```text
-                ┌────────────────────────┐
-                │ xiaozhi-teach-         │
-                │  student-intake        │
-                │ （试听+建档）          │
-                └───────────┬────────────┘
+             各 SKILL 各自读写工作空间（互不经由工作台）
+   ┌───────────────┬───────────────┬───────────────┬───────────────┐
+   │ student-      │ schedule-     │ lesson-log    │ homework-     │
+   │ intake        │ manager       │               │ tracker       │
+   │ →studentCards │ →lessonSchedule│ →lessonLogs  │ →homework     │
+   │               │               │  coursePackage│  Followups    │
+   └───────────────┴───────────────┴───────────────┴───────────────┘
+   ┌───────────────┬───────────────┬───────────────┐
+   │ parent-       │ renewal-      │ resource-     │
+   │ communication │ report        │ library       │
+   │ →parentComm   │ →progress     │ →resource     │
+   │  Logs         │  Evidence     │  LibraryIndex │
+   └───────────────┴───────────────┴───────────────┘
+                            │
+                     （只读，单向）
                             ↓
                 ┌────────────────────────┐
-                │ xiaozhi-teach-         │
-                │ schedule-manager       │←──── 排课/调课
-                │ （排课+课时）          │
-                └───────────┬────────────┘
-                            ↓
-                ┌────────────────────────┐
-        ┌──────▶│ xiaozhi-teach-         │◀────┐
-        │       │ solo-dashboard         │     │
-        │       │ （本 SKILL）           │     │
-        │       └────────┬───────────────┘     │
-        │                │                     │
-   备课/作业/学情/续课   今日三件事         课后反馈/作业/家长
-        │                ↓                     │
-        │   ┌────────────┴────────────┐       │
-        │   ↓            ↓            ↓       │
-        │ lesson-    homework-    parent-      │
-        │ planner    tracker      comm         │
-        │   │            │            │       │
-        │   └────────────┴────────────┘       │
-        │                ↓                     │
-        │   ┌────────────────────────┐       │
-        └───│ xiaozhi-teach-         │───────┘
-            │ renewal-report         │
-            │ （续课报告）           │
-            └────────┬───────────────┘
-                     ↓
-            xiaozhi-teach-resource-library
-            （资源复用）
+                │ solo-dashboard（本 SKILL）│
+                │  今日 7 区块 + 三件事    │
+                │  不写任何字段            │
+                └────────────────────────┘
 ```
+
+**读不到就说读不到**：某个 SKILL 还没记录时，对应区块写"暂无记录"，并提示去哪个 SKILL 补，不猜、不用其他区块的数据填充。
 
 ---
 
@@ -370,7 +381,7 @@ consumeLessonUnits 字段：
 | 风险标记给可追溯依据 | 风险标记无依据、无时间线 |
 | 续课建议基于学习证据 | 用焦虑话术催续课 |
 | 沉默家长轻触不施压 | 把"家长不回"当成敌意 |
-| 课时消耗等老师确认 | 自动写入课时台账 |
+| 课时只读展示并提示确认 | ❌ 由本 SKILL 改动课时台账 |
 | 主观判断显式标注 | 把感觉当成事实 |
 | 跨 SKILL 共享最小字段 | 把整个工作空间都推给其他 SKILL |
 
@@ -378,40 +389,44 @@ consumeLessonUnits 字段：
 
 ## 十一、与其他 SKILL 的协同清单
 
+本 SKILL 只读以下字段来源；箭头一律单向流入，工作台不向任何 SKILL 推数据、也不是它们的前置。
+
 ```text
-独立教师工作台
-    <── xiaozhi-teach-schedule-manager（课表+课时）
-    <── xiaozhi-teach-lesson-log（课堂+作业观察）
-    <── xiaozhi-teach-homework-tracker（作业状态）
-    ──→ xiaozhi-teach-lesson-planner（备课）
-    ──→ xiaozhi-teach-assignment-designer（作业设计）
-    ──→ xiaozhi-teach-student-analyzer（学情分析）
-    ──→ xiaozhi-teach-lesson-log（课后记录）
-    ──→ xiaozhi-teach-parent-communication（家长沟通）
-    ──→ xiaozhi-teach-renewal-report（续课报告）
+读 workspace.lessonSchedule        ← xiaozhi-teach-schedule-manager 写
+读 workspace.lessonLogs            ← xiaozhi-teach-lesson-log 写
+读 workspace.coursePackageLedger   ← xiaozhi-teach-lesson-log / schedule-manager 写
+读 workspace.homeworkFollowups     ← xiaozhi-teach-homework-tracker 写
+读 workspace.parentCommunicationLogs ← xiaozhi-teach-parent-communication 写
+读 workspace.progressEvidence      ← xiaozhi-teach-renewal-report / homework-tracker 写
+读 workspace.studentCards          ← xiaozhi-teach-student-intake 写
+读 workspace.resourceLibraryIndex  ← xiaozhi-teach-resource-library 写
+
+工作台的输出只有两种：给老师看的一页纸 + "该去哪个 SKILL 做哪件事"的指路。
 ```
 
+若同时装了教师通用包，可在"③ 课后待反馈"区块提示老师去备课/学情类 SKILL；未安装时不提示。
+
 **禁止行为**：
-- 禁止自动发送家长消息
-- 禁止自动写入课时台账
+- 禁止代老师发送家长消息、提醒或邮件
+- 禁止由本 SKILL 改动课时台账（含确认 `pendingConfirmations`）
 - 禁止把整个工作空间推给其他 SKILL
-- 禁止在家长沟通中使用真实姓名
+- 禁止在家长沟通素材中使用真实姓名
 - 禁止用焦虑话术催促续课
-- 禁止为未授权学员生成可分享报告
+- 禁止为未授权学员生成可分享报告（先查 `workspace.studentCards[].consent` 里的 `parentCommunicationAllowed`）
 
 ---
 
-## 隐私与数据控制入口
+### 隐私与数据控制入口
+- 查看：「查看我的[工作空间记录]」
+- 更正：「更正我的[记录]」
+- 删除：「删除我的[记录]」（删除后不可恢复，会先确认一次）
+- 暂停：「这次不要记忆」/「暂停提醒」
+- 共享控制：「不要共享给其他SKILL」/「不要给家长看」
+- 导出：「导出我的[工作空间记录]」（以文本形式给出，便于转存）
 
-> 本 SKILL 读写的学员数据存于共享工作空间（`solo-teacher-workspace.schema.json`），涉及未成年人信息，须提供可执行的控制入口。老师本人、或应学员/家长要求，可随时说：
+学员/家长提出时同样适用，按学员化名定位：「查看 小A 的记录」「删除 小A 的全部数据」。
 
-- **查看**："查看 [学员化名] 的工作空间记录 / 课表 / 作业 / 报告"
-- **更正**："更正 [学员化名] 的 [某字段]"（覆盖旧值，避免新旧冲突并存）
-- **删除**："删除 [学员化名] 的某条记录 / 全部数据"（流失学员应按约定周期删除）
-- **暂停记录**："这次不要记录 / 暂停记录 [学员化名]"
-- **取消跨 SKILL 共享**："不要把 [学员化名] 的数据共享给其他 SKILL"
-
-**校验要求**：跨 SKILL 共享或建档前，须确认 `consent.crossSkillSharing` / `consent.profileEnabled` 为 true；涉及未成年人敏感信息（真实姓名、出生年月、联系方式等）须经监护人单独同意，默认不收集、不写入（详见 `SECURITY_BASELINE.md`）。
+**校验要求**：跨 SKILL 共享或建档前，须确认 `consent.crossSkillSharing` / `consent.profileEnabled` 为 true；`consent.retentionUntil` 到期时提示老师删除该学员卡。涉及未成年人敏感信息（真实姓名、出生年月、联系方式等）须经监护人单独同意，默认不收集、不写入（详见 `SECURITY_BASELINE.md`）。
 
 ---
 
@@ -420,7 +435,7 @@ consumeLessonUnits 字段：
 - `references/dashboard-template.md` — 独立教师日工作台完整模板（可直接复制）
 - `references/daily-dashboard-block-templates.md` — 7 区块日工作台逐块输出模板（含占位符）
 - `references/daily-dashboard-full-sample.md` — 完整日工作台输出示例（7 区块齐全范例）
-- `../schemas/solo-teacher-workspace.schema.json` — 独立教师工作空间共享数据结构
+- `shared/solo-teacher-workspace.schema.json` — 独立教师工作空间共享数据结构
 
 ---
 

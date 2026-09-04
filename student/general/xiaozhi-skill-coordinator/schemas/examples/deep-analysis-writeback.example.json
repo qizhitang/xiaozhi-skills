@@ -1,0 +1,22 @@
+{
+  "sessionId": "sess-demo-002",
+  "protocolVersion": "2.1.0",
+  "handoverType": "deep_analysis_writeback",
+  "sender": "xiaozhi-math-error-dna",
+  "recipient": "xiaozhi-correction-notebook",
+  "consent": {
+    "crossSkillSharing": true
+  },
+  "payload": {
+    "deepAnalysisData": {
+      "errorId": "err-20260511-003",
+      "subject": "math",
+      "subtypeId": "B02",
+      "basicDimension": "概念模糊",
+      "rootCause": "不理解‘两点确定一条直线’与两个方程之间的对应",
+      "status": "顽固弱项",
+      "recommendedAction": "先做纯净版：给两点直接列方程组"
+    }
+  },
+  "timestamp": "2026-05-11T20:05:00+08:00"
+}
