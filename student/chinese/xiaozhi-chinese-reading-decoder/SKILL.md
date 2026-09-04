@@ -415,7 +415,7 @@ Step 4  错题三追问复盘
 阅读理解拆解师 SKILL
     ←── 学习DNA（读取已记录的阅读弱项，需 crossSkillSharing）
     ──→ 语文素材库（学生说"存入"时才存，不主动打断精读）
-    ──→ 文言文复活计划（文言文阅读题、古诗鉴赏题一律转它的答题规范模块）
+    ──→ 跨时空古文对话（文言文阅读题、古诗鉴赏题一律转它的答题规范模块）
     ──→ 语病追踪档案（答案里出现疑似语病时转它判定）
     ──→ 学习DNA（subject_profile_writeback）
     ──→ IM提醒（reminder_enqueue，需 reminderConsent；本 SKILL 不自己发提醒）

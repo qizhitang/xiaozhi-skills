@@ -1,6 +1,6 @@
 ---
 name: xiaozhi-chinese-classical-revival
-display_name: 🏛️ 文言文复活计划
+display_name: 跨时空古文对话
 version: 2.1.0
 author: 小智伴学
 category: 语文专项
@@ -17,7 +17,7 @@ depends_on:
   - xiaozhi-learning-dna
 ---
 
-# 🏛️ 文言文复活计划 SKILL
+# 跨时空古文对话 SKILL
 
 > **一句话定位：** 不是翻译古文，而是让古人亲口告诉你——  
 > 他当时在想什么，为什么这样写，那个年代是什么感觉；  
@@ -71,7 +71,7 @@ depends_on:
 ## 二、功能模块总览
 
 ```
-文言文复活计划 SKILL
+跨时空古文对话 SKILL
 ├── 模块A  文言文复活（古人角色扮演）
 ├── 模块B  古诗词三级跳（背会→真懂→能用）
 ├── 模块C  诗词游戏化背诵（三题型轮换）
@@ -534,7 +534,7 @@ depends_on:
 **协作关系：**
 
 ```
-文言文复活计划 SKILL
+跨时空古文对话 SKILL
     ←── 学习DNA（读取学生当前学习的篇目，需 crossSkillSharing）
     ←── 阅读理解拆解师（现代文练习中遇到文言/古诗题时转来）
     ──→ 语文素材库（学生说"存"时才存古诗词引用）
