@@ -34,7 +34,7 @@
 
 ### 三、校验体系
 
-`check-references.mjs` 此前只检查文件是否存在，导致"改了一处、同类问题在别处照旧"反复发生。新增 `check-skills.mjs`（14 类内容级检查）与 `validate-schemas.mjs`，接入 `npm run check`。
+`scripts/check-references.mjs` 此前只检查文件是否存在，导致"改了一处、同类问题在别处照旧"反复发生。新增 `scripts/check-skills.mjs`（14 类内容级检查）与 `scripts/validate-schemas.mjs`，接入 `npm run check`。
 
 首次运行基线为 482 项问题，整改后归零。
 

@@ -2,13 +2,13 @@
 
 > **面向中国 K12 的 AI 学习与教学 SKILL 集合 — 学生端 · 老师端**
 > 作者：小智伴学 ｜ 适用平台：OpenClaw / ClawHub ｜ 当前版本：**v2.1.0**
-> 全库 **57 个 SKILL**（学生端 31 + 老师端 26）+ 1 个开发者工具，统一词表、统一数据契约、内容级 CI 校验。
+> 全库 **57 个 SKILL**（学生端 31 + 老师端 26）+ 1 个开发者工具，**176 份 references**、**6 份共享约定**、**4 份 JSON Schema**（含 8 份示例）、**3 个校验脚本**。
 
 传统 AI 容易被当成"给答案的计算器"。这套 SKILL 库的目标，是把 AI 变成**追问思路的教练**和**减轻教师重复劳动的助手**，并让学生、老师、家长三方在**明确授权**的前提下共享必要的学习证据。
 
 ---
 
-## 🧭 设计底座（先读这四份）
+## 🧭 设计底座（先读这六份）
 
 全库所有 SKILL 只引用以下共享约定，不再各自定义术语、阈值或降级规则：
 
@@ -43,7 +43,7 @@ xiaozhi-skills/
 │   ├── math/        数学教学 3 个
 │   ├── english/     英语教学 3 个
 │   └── physics/     物理教学 3 个
-├── tools/           开发者工具（SKILL 创建教练，非学生学习任务）
+├── tools/           开发者工具（SKILL 编写工具，非学生学习任务）
 ├── scripts/         CI 校验脚本
 └── docs/            架构、安装指南、版本历史、评估报告
 ```
@@ -61,19 +61,19 @@ xiaozhi-skills/
 | ⏰ IM智能提醒 | `student/general/xiaozhi-im-reminder/` | 全库唯一的提醒发送方：队列 + 每日合并摘要 + 学段免打扰 | 小学中段–高中 |
 | 🎓 费曼学习法 | `student/general/xiaozhi-feynman-learning/` | 用"讲给小智听"验证真实理解，支架渐退 + 反依赖设计 | 小学中段–高中 |
 | 📊 每周学习复盘 | `student/general/xiaozhi-weekly-review/` | 基于证据的周复盘与成长曲线，家庭版需单独授权 | 小学中段–高中 |
-| 📝 康奈尔笔记 | `student/general/xiaozhi-cornell-notes/` | 笔记结构化与按需提示，小学高段有简化版 | 初中–高中 |
+| 📝 康奈尔笔记 | `student/general/xiaozhi-cornell-notes/` | 笔记结构化与按需提示，小学高段有两栏简化版 | 小学高段–高中 |
 | 🔗 学习系统协调器 | `student/general/xiaozhi-skill-coordinator/` | 跨 SKILL 路由（含学科判别）与交接协议校验 | 小学中段–高中 |
 | 🗓️ 30天学习计划制定师 | `student/general/xiaozhi-learning-plan/` | 基于真实数据的计划与执行监控，家庭看板受授权门控 | 小学高段–高中 |
 | ⏱️ 时间与专注力教练 | `student/general/xiaozhi-time-focus-coach/` | 时间记录、黄金时段、按学段参数化的番茄钟 | 小学中段–高中 |
 | 🔭 跨学科侦探周 | `student/general/xiaozhi-cross-subject-detective/` | 跨学科主题探究与概念图谱联结 | 小学高段–高中 |
-| ☕ 兴趣成长探索计划 | `student/general/xiaozhi-interest-explorer/` | 区分浅层喜好与真正兴趣，含 8 周试探版 | 小学高段–高中 |
+| ☕ 兴趣成长探索计划 | `student/general/xiaozhi-interest-explorer/` | 区分浅层喜好与真正兴趣，含 8 周试探版 | 小学中段–高中 |
 
 ### 学生端 · 学科专项（20）
 
 | 学科 | SKILL |
 |---|---|
 | 语文（`student/chinese/`） | 🖊️ 语文写作教练 ｜ 📖 阅读理解拆解师 ｜ 🏛️ 文言文复活计划 ｜ 📚 语文素材库 ｜ 🔍 语病追踪档案 |
-| 数学（`student/math/`） | 📐 数学解题教练 ｜ 🧬 数学错误DNA ｜ 💡 数学概念解释器 ｜ 📝 应用题建模教练 ｜ 🎯 思维梯度训练师 |
+| 数学（`student/math/`） | 📐 数学解题教练 ｜ 🧬 数学错误DNA ｜ 💡 数学概念解释器 ｜ 📝 应用题数学建模教练 ｜ 🎯 思维梯度训练师 |
 | 英语（`student/english/`） | 🎙️ 英语口语陪练 ｜ 📖 智能词汇DNA系统 ｜ 📝 英语语法突破教练 ｜ 🎧 个性化英语听力训练师 ｜ ✍️ 英语写作进化教练 |
 | 物理（`student/physics/`） | 🧲 物理解题教练 ｜ 🧬 物理错误DNA ｜ 💡 物理概念直觉器 ｜ 📐 物理建模教练 ｜ 🔬 物理实验思维教练 |
 
@@ -91,7 +91,7 @@ xiaozhi-skills/
 
 | 工具 | 目录 | 说明 |
 |---|---|---|
-| 🛠️ SKILL创建教练 | `tools/xiaozhi-skill-creator/` | 面向想自建 SKILL 的开发者与高中生，**不属于**学生日常学习任务 |
+| 🛠️ SKILL 编写工具 | `tools/xiaozhi-skill-creator/` | 面向想自建 SKILL 的开发者与高中生；不读档案、不发交接、不在收发方枚举内，**不属于**学生日常学习任务 |
 
 ---
 
@@ -128,9 +128,9 @@ npm run check
 
 | 脚本 | 检查什么 |
 |---|---|
-| `check-references.mjs` | 引用的 references / schemas 文件真实存在，无孤儿文件 |
-| `check-skills.mjs` | frontmatter 规范、依赖无环、词表一致、占位与重复文件、学段标注、控制入口与危机片段、接口路径存在于 schema、文档一致性 |
-| `validate-schemas.mjs` | 四份 schema 自身有效、examples 合规、枚举与 `shared/vocab.md` 一致 |
+| `scripts/check-references.mjs` | 引用的 references / schemas 文件真实存在，无孤儿文件 |
+| `scripts/check-skills.mjs` | frontmatter 规范、依赖无环、词表一致、占位与重复文件、学段标注、控制入口与危机片段、接口路径存在于 schema、文档一致性 |
+| `scripts/validate-schemas.mjs` | 四份 schema 自身有效、8 份 examples 合规、枚举与 `shared/vocab.md` 一致、结构与协议版本号等于 `package.json` |
 
 ---
 

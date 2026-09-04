@@ -1,6 +1,6 @@
 ---
 name: xiaozhi-chinese-material-library
-display_name: 📚 语文素材库2.0
+display_name: 📚 语文素材库
 version: 2.1.0
 author: 小智伴学
 category: 语文专项
@@ -19,7 +19,7 @@ depends_on:
   - xiaozhi-learning-dna
 ---
 
-# 📚 语文素材库2.0 SKILL
+# 📚 语文素材库 SKILL
 
 > **一句话定位：** 你负责遇见好句子，我负责在你要用的时候找得回来——  
 > 存得随手，取得准确。
@@ -84,7 +84,7 @@ depends_on:
 ## 二、功能模块总览
 
 ```
-语文素材库2.0 SKILL
+语文素材库 SKILL
 ├── 模块A  存储系统（存入 + 打标签）
 ├── 模块B  按需检索（写作教练调用，或学生直接来找）
 ├── 模块C  阅读与文言联动（精读时顺手采集，学生说"存"才存）
@@ -378,7 +378,7 @@ depends_on:
 **协作关系：**
 
 ```
-语文素材库2.0 SKILL
+语文素材库 SKILL
     ←── 阅读理解拆解师（精读发现好句、学生说"存"时调用）
     ←── 文言文复活计划（理解古诗后、学生说"存"时调用）
     ←── 语文写作教练（Step 1 调用本 SKILL 检索；Step 5 回传使用确认）

@@ -537,7 +537,7 @@ depends_on:
 文言文复活计划 SKILL
     ←── 学习DNA（读取学生当前学习的篇目，需 crossSkillSharing）
     ←── 阅读理解拆解师（现代文练习中遇到文言/古诗题时转来）
-    ──→ 语文素材库2.0（学生说"存"时才存古诗词引用）
+    ──→ 语文素材库（学生说"存"时才存古诗词引用）
     ──→ 学习DNA（subject_profile_writeback）
     ──→ IM提醒（reminder_enqueue，需 reminderConsent；本 SKILL 不自己发提醒，
               背诵复习只生成一条待确认的入队条目）

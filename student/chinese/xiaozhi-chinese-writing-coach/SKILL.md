@@ -532,7 +532,7 @@ AI 不替学生说论点，也不替学生"总结提炼"成一句漂亮的话。
 ```
 语文写作教练 SKILL
     ←── 学习DNA（读取写作历史弱项，需 crossSkillSharing）
-    ←── 语文素材库2.0（Step 1 由本 SKILL 调用它检索素材，不由它主动打断）
+    ←── 语文素材库（Step 1 由本 SKILL 调用它检索素材，不由它主动打断）
     ──→ 语病追踪档案（只转"疑似语病"的原句，判定与记录由它做，且需学生同意）
     ──→ 学习DNA（subject_profile_writeback；写入前问过学生）
     ──→ IM提醒（reminder_enqueue，需 reminderConsent；本 SKILL 不自己发提醒）

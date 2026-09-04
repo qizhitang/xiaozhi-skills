@@ -1,7 +1,7 @@
 # 🏛️ 系统架构与方法论
 
 本文档描述小智伴学 SKILL 库的完整清单、协作架构、数据契约、方法论依据与目录结构。当前版本 v2.1.0。
-全库 **57 个 SKILL**（学生端 31 + 老师端 26）+ 1 个开发者工具，**176 份 references**，**6 份共享约定**，**4 份 JSON Schema**（含 8 份示例），**3 个 CI 校验脚本**。
+全库 **57 个 SKILL**（学生端 31 + 老师端 26）+ 1 个开发者工具，**176 份 references**（其中开发者工具 1 份），**6 份共享约定**，**4 份 JSON Schema**（含 8 份示例），**3 个 CI 校验脚本**。
 
 ---
 
@@ -75,7 +75,7 @@ v2.1.0 的核心变化是把散落在各 SKILL 里的术语、阈值、降级规
 | 📐 数学解题教练 | 四步拍照法；**CLAW 内部化**（学生只答"你试到哪一步"）；S3 只出一轮同类题；五问链可选且与四步法互斥；S0 学科识别与 OCR 降级；提示阶梯 L6 |
 | 🧬 数学错误DNA | 通用四维 + B/C/R/M 子类型；**不自行计数**，只接收错题本推送；焦虑分级 + 危机例外 |
 | 💡 数学概念解释器 | 生活类比与几何直觉；类比失效边界；提示阶梯 L6 |
-| 📝 应用题建模教练 | 三步提取法 + 五类模型；增长率只讲 a(1+x)ⁿ 并点明 a(1+2x) 的差；公式名最早 L2 |
+| 📝 应用题数学建模教练 | 三步提取法 + 五类模型；增长率只讲 a(1+x)ⁿ 并点明 a(1+2x) 的差；公式名最早 L2 |
 | 🎯 思维梯度训练师 | **当前练习层级**（原"思维天花板"）；每层 2-3 题；提示阶梯 L4，超出即回退一层 |
 
 ### 2.4 学生端 · 英语（5）
@@ -141,7 +141,7 @@ v2.1.0 的核心变化是把散落在各 SKILL 里的术语、阈值、降级规
 
 ### 2.9 开发者工具（1）
 
-`tools/xiaozhi-skill-creator/`（SKILL 编写工具）：面向开发者与高中生，不读档案、不发交接、不在收发方枚举内；模板库第零节固定《安全与危机边界》七条。
+`tools/xiaozhi-skill-creator/`（🛠️ SKILL 编写工具）：面向开发者与高中生，不读档案、不发交接、不在收发方枚举内；模板库第零节固定《安全与危机边界》七条。
 
 ---
 
@@ -280,9 +280,9 @@ consentStatus
 
 | 脚本 | 检查项 |
 |---|---|
-| `check-references.mjs` | 引用文件存在；references 无孤儿 |
-| `check-skills.mjs` | F1 frontmatter（name/version/depends_on 列表/grade_bands）· F2 依赖无环 · F3 硬命令词与自动措辞 · R1 占位文件 · R2 跨文件重复 · V1 废弃词表 · V2 协调器命名 · P1 平台边界与控制入口 · S1 危机片段 · G1 高中术语标注 · A1 出题自检与示例题验算 · H1 提示阶梯 · I1 接口路径存在于 schema · D1 文档一致性 |
-| `validate-schemas.mjs` | 四份 schema 有效；8 份示例合规；枚举与 `shared/vocab.md` 一致；收发方覆盖全库；关键字段存在 |
+| `scripts/check-references.mjs` | 引用文件存在；references 无孤儿 |
+| `scripts/check-skills.mjs` | F1 frontmatter（name/version/depends_on 列表/grade_bands）· F2 依赖无环 · F3 硬命令词与自动措辞 · R1 占位文件 · R2 跨文件重复 · V1 废弃词表 · V2 协调器命名 · P1 平台边界与控制入口 · S1 危机片段 · G1 高中术语标注 · A1 出题自检与示例题验算 · H1 提示阶梯 · I1 接口路径存在于 schema · D1 文档一致性 |
+| `scripts/validate-schemas.mjs` | 四份 schema 有效；8 份示例合规；枚举与 `shared/vocab.md` 一致；收发方覆盖全库；关键字段存在 |
 
 ---
 
@@ -318,7 +318,7 @@ xiaozhi-skills/
 │   ├── independent/                 8 个 + schemas/（独立教师工作空间）
 │   └── chinese/  math/  english/  physics/    各 3 个
 └── tools/
-    └── xiaozhi-skill-creator/       开发者工具
+    └── xiaozhi-skill-creator/       开发者工具（SKILL 编写工具）
 ```
 
 每个 SKILL 目录的标准结构：
