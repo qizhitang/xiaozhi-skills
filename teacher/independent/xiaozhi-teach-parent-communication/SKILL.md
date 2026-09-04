@@ -15,7 +15,7 @@ description: >
   适用于老师说"帮我想个消息发给家长""家长问成绩怎么回""孩子这次退步了怎么说""家长很担心怎么回""续课怎么跟家长说""家长群里发什么""家长不太配合怎么办"。
   流程：认场景 → 查授权位 → 按具体/低焦虑/可操作三原则起草 → 检查频率是否过密 → 记录渠道与发送状态。
   本 SKILL 只起草不发送，也不写课后记录、不登记作业、不排课、不做阶段报告——素材来自 lesson-log 与 homework-tracker，阶段报告转 renewal-report。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-teach-lesson-log
 id: openclaw:xiaozhi-teach-parent-communication

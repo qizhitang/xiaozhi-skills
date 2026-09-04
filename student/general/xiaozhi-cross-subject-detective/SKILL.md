@@ -14,7 +14,7 @@ description: >
   学生说"跨学科侦探周"、"帮我联系不同学科的知识"、"丝绸之路能串哪些学科"、"我想做一个主题研究"、"历史和地理有什么关系"时可激活。
   流程是选题→多视角→逐科深潜→建立联结→整理项目记录，产出写进概念图谱。
   它不做单科解题（转对应学科教练）、不做错题分析（转错题本）、不替学生写研究报告。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
   - xiaozhi-cornell-notes

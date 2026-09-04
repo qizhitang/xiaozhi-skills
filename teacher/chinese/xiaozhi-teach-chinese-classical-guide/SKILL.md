@@ -14,7 +14,7 @@ description: >
   工作流：诵读正音 → 训诂（字词/句式/活用）→ 串讲 → 主题 → 文化背景与现代联结 → 班级古文积累记录。
   只输出教学框架与讨论问题，不逐字逐句串讲整篇、不提供完整现代文翻译、不代老师批改。
   现代文阅读教学转 xiaozhi-teach-chinese-reading-guide；作文教学转 xiaozhi-teach-chinese-writing-guide。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-teach-lesson-planner
   - xiaozhi-teach-student-analyzer

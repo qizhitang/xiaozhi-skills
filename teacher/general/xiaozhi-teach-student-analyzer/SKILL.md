@@ -14,7 +14,7 @@ description: >
   当老师说"帮我分析这次单元测评"、"这道题全班错了六成"、"班级数学两极分化怎么办"、"哪些知识点得分率最低"、"我要客观数据跟家长聊"时，建议激活此 SKILL。
   工作流：导入逐题分数 → 班级画像 → 知识点热力图 → 分层 → 教学调整建议。
   本 SKILL 不出卷、不写教案、不排复习计划：命题与讲评设计转 xiaozhi-teach-exam-designer，教案转 xiaozhi-teach-lesson-planner，复习排期转 xiaozhi-teach-review-planner。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-teach-exam-designer
 id: openclaw:xiaozhi-teach-student-analyzer

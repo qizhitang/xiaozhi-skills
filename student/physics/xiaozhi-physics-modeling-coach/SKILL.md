@@ -12,7 +12,7 @@ description: >
   触发语示例："这题该用哪个公式""浮力题什么时候用 F浮=G物""这道题算平均速度还是算速度""滑片右移后电流表怎么变""杠杆题从哪下手""同一类题换个情境我就不会了"。
   学科判别：需要判断"该套哪条物理规律、适用条件满不满足"时归本 SKILL；问概念含义转物理概念直觉器。
   不处理：完整解题流程与计算（转物理解题教练）、实验设计与数据处理（转物理实验思维教练）、错题归档与计数（转通用错题本）。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
   - xiaozhi-physics-error-dna

@@ -13,7 +13,7 @@ description: >
   把课堂笔记整理成能被再次用上的形式：左栏线索问题 + 右栏内容 + 底部一句话总结，并按学科课题归档。
   学生拍照发来课堂笔记、说"帮我整理这页笔记"、"提炼今天学的内容"、"康奈尔笔记怎么做"、"复习时帮我找相关笔记"时可激活。
   它只做笔记的整理、归档与调取，不讲新知识（转对应学科教练）、不分析错题（转错题本）、不验证理解（转费曼学习法）。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
 ---

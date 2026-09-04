@@ -15,7 +15,7 @@ description: >
   学生说“帮我建立学习档案”“你记得我什么”“我升初三了”“我物理受力分析最弱”“删除我的档案”时可激活。
   本 SKILL 只管档案的存取与授权：不做错题分析（转错题本）、不做理解验证（转费曼学习法）、不发提醒（转 IM 智能提醒）。
   未获同意时只使用当前会话信息，不建立跨会话档案。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 ---
 
 # 🧬 学习DNA SKILL

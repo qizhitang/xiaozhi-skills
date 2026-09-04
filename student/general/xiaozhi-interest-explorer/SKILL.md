@@ -15,7 +15,7 @@ description: >
   学生说"我不知道自己喜欢什么"、"帮我探索兴趣"、"我对编程/画画/生物感兴趣想深入了解"、"这个兴趣是真的吗"、"我想发现自己的特长"时可激活。
   记录四个维度：吸引我的内容、遇到困难时的反应、时间流逝感、外部反馈；判断依据是困难反应，不是喜好自评。
   它不做学科辅导（转对应学科 SKILL）、不做生涯规划或专业推荐、不做升学建议。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
 ---

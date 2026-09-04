@@ -15,7 +15,7 @@ description: >
   适用于老师说"排下周的课""把 [化名] 的课调到周四""[化名] 缺课要补""[化名] 请假""[化名] 还剩几课时""本周课表""这个时间排了谁""我下一节课是谁"。
   流程：读学员可上课时间段 → 生成周课表 → 检测老师/学员时间冲突 → 老师确认后写入课表 → 维护课时包剩余与到期。
   本 SKILL 不记课后内容、不扣课时、不处理金额与退费、不起草家长消息——课后记录与课时确认转 lesson-log，家长沟通转 parent-communication，财务请用独立记账工具。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-teach-student-intake
   - xiaozhi-teach-lesson-log

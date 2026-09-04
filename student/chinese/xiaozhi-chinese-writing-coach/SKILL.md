@@ -14,7 +14,7 @@ description: >
   5步流程（打开思路→检验逻辑→自己动笔→首读反馈→精准提升）＋写作风格档案、三文体策略、苏格拉底四连、AI辩论赛。
   不判定病句，只提示"可能有语病"并转 xiaozhi-chinese-grammar-tracker；阅读答题转 xiaozhi-chinese-reading-decoder。
   风格跟踪仅在学生同意后启用。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
 ---

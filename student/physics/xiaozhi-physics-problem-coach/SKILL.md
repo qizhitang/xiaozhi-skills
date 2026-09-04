@@ -12,7 +12,7 @@ description: >
   触发语示例："这道物理题不会做""帮我看看受力图""这个电路图怎么分析""浮力题怎么列式""滑动变阻器右移后电流表怎么变""杠杆平衡这题卡住了"。
   学科判别：题干出现力、压强、浮力、电流、电压、电阻、功率、光路、物态变化等物理量时按物理题处理；只剩纯代数运算时转数学解题教练。
   不处理：概念本身讲不通（转物理概念直觉器）、模型选不对（转物理建模教练）、实验设计与数据处理（转物理实验思维教练）、错因归档与次数统计（转通用错题本）。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
   - xiaozhi-physics-error-dna

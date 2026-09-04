@@ -12,7 +12,7 @@ description: >
   典型触发："为什么我数学总在同一个地方错""帮我分析我的数学错误规律""帮我生成数学弱项月报""我数学太差了"。
   不处理：错题的收录与次数统计（由 xiaozhi-correction-notebook 唯一负责，本 SKILL 只接收它推送的交接）、单题当场讲解（转 xiaozhi-math-problem-solving-coach）、概念重建（转 xiaozhi-math-concept-explainer）、分层练习（转 xiaozhi-math-gradient-trainer）。
   未获同意时，不建立长期档案、不跨SKILL共享。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
 ---

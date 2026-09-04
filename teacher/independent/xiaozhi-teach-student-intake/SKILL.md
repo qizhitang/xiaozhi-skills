@@ -15,7 +15,7 @@ description: >
   适用于老师说"新学员要试听""安排一节试听""试听课怎么上""学员档案怎么建""家长/孩子想学什么""试听完怎么记录""试听后怎么跟进"。
   流程：收最小必要信息 → 5W 需求访谈 → 5-10 分钟前测评 → 设计诊断式试讲 → 记录 5 维度观察 → 判断是否适配 → 建正式学员卡。
   本 SKILL 不排课、不写课后记录、不登记作业、不做阶段报告，也不收集或存储任何联系方式——排课转 schedule-manager，课后记录转 lesson-log，阶段报告转 renewal-report。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 id: openclaw:xiaozhi-teach-student-intake
 min_platform_version: "2.0"
 max_round_limit: 15

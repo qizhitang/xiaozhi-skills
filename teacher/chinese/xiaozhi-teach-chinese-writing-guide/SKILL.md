@@ -14,7 +14,7 @@ description: >
   工作流：写作任务设计（命题/半命题/情境）→ 过程引导（构思/起草/修改）→ 等级批改（一至四类文 × 内容/结构/语言/书写）→ 三维观察诊断 → 讲评设计 → 班级写作力记录。
   只输出批改标准与讲评设计，不代老师逐篇精批、不为学员代写作文。
   阅读教学转 xiaozhi-teach-chinese-reading-guide；文言文教学转 xiaozhi-teach-chinese-classical-guide。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-teach-lesson-planner
   - xiaozhi-teach-student-analyzer

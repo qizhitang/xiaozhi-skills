@@ -14,7 +14,7 @@ description: >
   当老师说"帮我安排期末复习计划"、"考前两周怎么排"、"数学单元复习怎么上"、"帮我梳理本章知识图谱"、"这几个知识点老混，怎么练"、"考前学生太紧张怎么办"时，建议激活此 SKILL。
   工作流：知识图谱 → 重难点 → 阶段策略 → 间隔回看与交叉练习排期 → 复习活动 → 考前状态。
   本 SKILL 只出复习"计划"，不出复习"作业"：具体题目与分层任务卡转 xiaozhi-teach-assignment-designer，复习卷转 xiaozhi-teach-exam-designer。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-teach-lesson-planner
   - xiaozhi-teach-student-analyzer

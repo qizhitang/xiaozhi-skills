@@ -14,7 +14,7 @@ description: >
   当老师说"帮我出一份单元测验"、"出一份月考卷"、"怎么控制试卷难度"、"这道数学题怎么改编"、"出一份带评分细则的物理卷"、"讲评课该先讲哪几道题"时，建议激活此 SKILL。
   工作流：定测评类型 → 双向细目表 → 选题改编 → 难度与认知层级配比 → 评分标准 → 讲评错题清单。
   本 SKILL 不算考后统计、不写教案：难度 P/区分度 D/信度由 xiaozhi-teach-student-analyzer 计算，讲评课教案由 xiaozhi-teach-lesson-planner 出。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 id: openclaw:xiaozhi-teach-exam-designer
 min_platform_version: "2.0"
 max_round_limit: 25

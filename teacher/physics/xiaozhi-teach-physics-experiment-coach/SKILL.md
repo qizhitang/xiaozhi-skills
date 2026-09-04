@@ -12,7 +12,7 @@ description: >
   触发语示例："测密度这节实验课怎么上""探究浮力大小的实验怎么设计""伏安法测电阻学生总接错线""实验数据处理该怎么讲""实验报告怎么批""器材只有 8 套，40 个人怎么分组"。
   学科判别：涉及初中物理器材、操作、变量控制、读数、数据表格、误差与实验报告时用本 SKILL；其他学科实验转对应学科 SKILL。
   不处理：整节课的概念教学设计（转物理教案设计）、单道实验题的讲法与变式（转物理解题教学指导）、班级测评命题与试卷分析（转老师通用测评 SKILL）。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-teach-physics-lesson-planner
   - xiaozhi-teach-student-analyzer

@@ -15,7 +15,7 @@ description: >
   学生说“帮我生成周报”“这周学习复盘”“总结一下这周”“下周重点是什么”“这个月学习情况怎么样”时可激活。
   它只做周维度：不生成月报（转学习系统协调器）、不做跨SKILL调度、不分析单道错题（转错题本）。
   家庭版需要学生授权后才生成，学生可以否决。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
 ---

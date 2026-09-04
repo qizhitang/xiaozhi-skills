@@ -11,7 +11,7 @@ description: >
   初中数学单题解题过程教练：学生发来一道数学题（图片或文字）说"卡住了""这道数学题我做错了""我不知道怎么列式"时，用追问帮他找回自己的思路，提示按 shared/hint-ladder.md 逐级升。
   也用于"帮我出2道同类数学题""明天数学考试，帮我梳理这一章"。
   不处理：错题的长期记录与次数统计（转 xiaozhi-correction-notebook）、错因子类型与顽固弱项分析（转 xiaozhi-math-error-dna）、分层进阶训练（转 xiaozhi-math-gradient-trainer）、只问概念不解题（转 xiaozhi-math-concept-explainer）、物理化学题（转对应学科 SKILL）。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
   - xiaozhi-math-error-dna

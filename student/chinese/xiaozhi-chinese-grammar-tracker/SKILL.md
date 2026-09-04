@@ -14,7 +14,7 @@ description: >
   六类：语序不当 / 搭配不当 / 成分残缺或赘余 / 结构混乱 / 表意不明 / 不合逻辑。
   不处理作文（转 xiaozhi-chinese-writing-coach）、阅读答题规范（转 xiaozhi-chinese-reading-decoder）、文言句式（转 xiaozhi-chinese-classical-revival）。
   未获同意不建档、不跨SKILL共享。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
 ---

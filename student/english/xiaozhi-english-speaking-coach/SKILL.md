@@ -13,7 +13,7 @@ description: >
   触发语："练口语"、"帮我练英语对话"、"我英语不敢开口"、"角色扮演"、"即兴演讲"、"帮我纠音"、"晨间热身"、"做口语复盘"，或用语音发来英语内容。
   核心工作流：晨间 5 分钟热身（打开→开场→聊天→复盘→存档）+ 三种训练场景（角色扮演/即兴演讲/纠音闭环）+ 四级追问 + 口语档案。
   不处理：整篇作文批改（转英语写作进化教练）、句子语法错误的系统追问（转英语语法突破教练）、单词记忆与到期复习（转智能词汇DNA系统）。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
 ---

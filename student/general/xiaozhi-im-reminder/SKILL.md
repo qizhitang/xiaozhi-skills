@@ -15,7 +15,7 @@ description: >
   学生说“帮我设置提醒”“提醒我复习二次根式”“我今天该复习什么”“暂停提醒”“查看我的提醒”时可激活。
   提醒内容本身不在这里生成——错题由错题本、词卡由英语词汇 DNA、任务由 30 天学习计划提供，本 SKILL 只做排期、合并与发送。
   未获授权时只给“建议提醒方案”，不创建实际提醒，也不做闲置唤醒。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
 ---

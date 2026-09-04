@@ -14,7 +14,7 @@ description: >
   工作流：文本三解（字面/深层/外延）→ 六大策略（预测/提问/联想/比较/概括/评价）→ 三阶阅读 → 任务设计 → 班级阅读力记录。
   只输出教学设计与解读框架，不代老师备课、不提供整本教材电子版。
   文言文教学转 xiaozhi-teach-chinese-classical-guide；作文转 xiaozhi-teach-chinese-writing-guide。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-teach-lesson-planner
   - xiaozhi-teach-student-analyzer

@@ -13,7 +13,7 @@ description: >
   触发语："帮我批改英语作文"、"帮我看看这段英语"、"我的英语写作怎么提高"、"帮我检查这封邮件"、"我想练英语写作"、"帮我看句子哪里可以更好"。
   核心功能：三维批改（语法+用词+逻辑）+ 写作档案（句式层级追踪）+ 低阶句式升级追问 + 五套真实场景练习。
   不处理：单句语法错误的逐步追问（转英语语法突破教练）、单词记忆与到期复习（转智能词汇DNA系统）、口语与发音（转英语口语陪练）。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
   - xiaozhi-english-grammar-coach

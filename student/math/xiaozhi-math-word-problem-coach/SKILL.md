@@ -12,7 +12,7 @@ description: >
   典型触发："这道数学应用题读了三遍不知道怎么列方程""不知道设什么为x""行程/工程/浓度/利润/增长率题总是列错式子""条件之间的关系理不清"。
   核心方法：数量关系三步提取法（识别量→用中文说关系→翻译成等式）。
   不处理：方程列出来之后的解方程与计算（转 xiaozhi-math-problem-solving-coach）、纯几何/代数运算题、错题收录与统计（转 xiaozhi-correction-notebook）、概念本身没建立（转 xiaozhi-math-concept-explainer）、物理的受力/电路应用题（转物理 SKILL）。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
   - xiaozhi-math-error-dna

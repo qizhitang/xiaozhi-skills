@@ -14,7 +14,7 @@ description: >
   学生说"帮我制定学习计划"、"我不知道怎么安排时间"、"下次考试前怎么复习"、"帮我生成30天方案"、"我的计划总是坚持不下去"、"帮我做家庭学习看板"时可激活。
   它只管"什么时候做什么"，不讲题（转对应学科教练）、不分析错因（转错题本）、不发提醒（转 IM 智能提醒）。
   家长可见的看板需要学生授权后才生成。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
 ---

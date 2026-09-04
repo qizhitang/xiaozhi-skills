@@ -12,7 +12,7 @@ description: >
   当老师说"这次数学考什么""数学试卷怎么出""数学双向细目表""数学诊断性测评怎么设计""数学题难度怎么排""这次数学测评结果怎么用"时，建议激活此SKILL。
   核心工作流：测评目标（诊断性/形成性/终结性）→双向细目表（知识点 × 课标四级结果目标）→题目选编与版权标注→难度比例（校内形成性 6:3:1，中考模拟 7:2:1）→测评实施→结果分析（逐题 P/D + 信度）。
   不处理：班级错因归类与教学干预（转 xiaozhi-teach-math-error-analyzer）、教案与概念建构（转 xiaozhi-teach-math-lesson-planner）、非数学学科测评（转 xiaozhi-teach-exam-designer）。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-teach-exam-designer
   - xiaozhi-teach-student-analyzer

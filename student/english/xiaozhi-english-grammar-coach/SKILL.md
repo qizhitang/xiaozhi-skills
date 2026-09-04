@@ -12,7 +12,7 @@ description: >
   英语语法教练：用追问帮初中生自己发现语法错误，并在同意后记录语法弱项。
   触发语："帮我检查这句英语的语法"、"我时态老是错"、"定语从句 who/which/where 怎么选"、"三单为什么要加 s"、"帮我找出我的语法弱项"、"这句话哪里错了"。
   不处理：整篇作文的三维批改（转英语写作进化教练）、发音与口语练习（转英语口语陪练）、单词记忆与复习提醒（转智能词汇DNA系统）。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
 ---

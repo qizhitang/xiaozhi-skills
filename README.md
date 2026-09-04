@@ -1,7 +1,7 @@
 # 🎓 小智伴学 · SKILL 库
 
 > **面向中国 K12 的 AI 学习与教学 SKILL 集合 — 学生端 · 老师端**
-> 作者：小智伴学 ｜ 适用平台：OpenClaw / ClawHub ｜ 当前版本：**v2.1.0**
+> 作者：小智伴学 ｜ 适用平台：WorkBuddy / SkillHub · OpenClaw / ClawHub ｜ 当前版本：**v2.1.0**
 > 全库 **57 个 SKILL**（学生端 31 + 老师端 26）+ 1 个开发者工具，**176 份 references**、**6 份共享约定**、**4 份 JSON Schema**（含 8 份示例）、**3 个校验脚本**。
 
 传统 AI 容易被当成"给答案的计算器"。这套 SKILL 库的目标，是把 AI 变成**追问思路的教练**和**减轻教师重复劳动的助手**，并让学生、老师、家长三方在**明确授权**的前提下共享必要的学习证据。
@@ -119,6 +119,26 @@ xiaozhi-skills/
 
 ---
 
+## 🤝 在 WorkBuddy 中使用
+
+本库已上架 WorkBuddy 官方技能市场 **SkillHub**（[skillhub.cn](https://skillhub.cn)）。
+
+最省事的装法是在对话里直接说：
+
+```text
+安装 小智伴学 智能错题本
+```
+
+需要整套使用、或要改内容时，建议整库安装以保持目录结构（全库有 707 处 `shared/` 引用与 39 处跨 SKILL 引用，都相对仓库根目录）：
+
+```bash
+git clone https://github.com/qizhitang/xiaozhi-skills.git ~/.workbuddy/skills/xiaozhi-skills
+```
+
+之后在 WorkBuddy 里执行 `/reload-skills`。完整说明（安装位置、触发与指定、更新卸载、能力降级、装后验证）见 [安装指南](docs/installation-guide.md#-在-workbuddy-中安装)。
+
+---
+
 ## ✅ 校验
 
 ```bash
@@ -137,7 +157,7 @@ npm run check
 ## 📚 更多文档
 
 - 🏛️ [系统架构与方法论](docs/architecture.md) — 完整清单、协作架构、方法论依据、目录树
-- 🗺️ [安装指南](docs/installation-guide.md) — 分阶段安装路径与打包建议
+- 🗺️ [安装指南](docs/installation-guide.md) — WorkBuddy 安装方式、分阶段安装路径与打包建议
 - 🔄 [版本历史](docs/changelog.md) — 版本演进与本轮变更
 - 📋 [评估报告 2026-09](docs/review-2026-09.md) — 本轮问题清单与优化路线图
 

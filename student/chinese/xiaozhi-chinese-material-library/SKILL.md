@@ -14,7 +14,7 @@ description: >
   功能：存储与打标签 / 按主题检索 / 精读与文言学习中的顺手采集 / 使用记录与月度小结。
   写作流程本身不在此——学生说"我要写作文"时由 xiaozhi-chinese-writing-coach 主导，
   它在 Step 1 调用本 SKILL 检索素材；本 SKILL 只在"存素材/找素材"这两类请求时自己触发，不打断写作流程。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
 ---

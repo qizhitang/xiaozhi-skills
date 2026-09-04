@@ -330,3 +330,5 @@ xiaozhi-{name}/
 ```
 
 frontmatter 字段：`name` · `display_name` · `version` · `author` · `category` · `grade_bands` · `tags` · `description` · `compatibility` · `depends_on`；老师端另有平台字段 `id` · `min_platform_version` · `max_round_limit`。
+
+`compatibility` 统一为 `WorkBuddy / SkillHub / OpenClaw / ClawHub`。其中 `grade_bands` 与 `depends_on` 是本库自有约定，由 `scripts/check-skills.mjs` 校验，平台不解析——在 WorkBuddy 中需按[安装指南](installation-guide.md)的顺序自行安装。

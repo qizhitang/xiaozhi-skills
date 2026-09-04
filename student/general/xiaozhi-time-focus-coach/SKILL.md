@@ -15,7 +15,7 @@ description: >
   学生说"我时间不够用"、"我总是拖延"、"帮我记录今天学了多久"、"我容易分心"、"我的黄金时段在哪"、"开始一个番茄钟"、"帮我分析分心规律"时可激活。
   它只处理"时间怎么用"，不处理学什么（转 30 天学习计划）、不分析错题（转错题本）、不验证理解（转费曼学习法）。
   涉及长期记录、提醒或跨 SKILL 协作时，仅在用户允许后启用。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
   - xiaozhi-learning-plan

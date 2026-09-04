@@ -12,7 +12,7 @@ description: >
   当老师说"这个数学概念怎么讲""数学教案怎么写""变式训练怎么设计""数学例题怎么选""数学概念怎么引入""学生这个数学概念总是混"时，建议激活此SKILL。
   核心工作流：概念建构四步（情境引入/抽象概括/应用辨析/体系化）→例题示范→变式训练→课堂小结→错例档案，输出对齐 2022 版课标核心素养与四级结果目标。
   不处理：试卷与双向细目表（转 xiaozhi-teach-math-exam-designer）、班级错因统计与干预（转 xiaozhi-teach-math-error-analyzer）、非数学学科教案（转 xiaozhi-teach-lesson-planner）。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-teach-lesson-planner
   - xiaozhi-teach-student-analyzer

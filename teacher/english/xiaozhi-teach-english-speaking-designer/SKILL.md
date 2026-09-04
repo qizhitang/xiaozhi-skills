@@ -13,7 +13,7 @@ description: >
   触发语："口语课怎么上"、"学员不敢开口"、"口语活动怎么设计"、"信息差任务怎么做"、"口语任务怎么分层"、"口语怎么纠错"、"口语评分表怎么用"。
   核心工作流：口语目标（流利/准确/得体）→ 输入准备 → 任务型活动 → 输出练习 → 反馈与纠正 → 写回班级工作空间。任务时长按班额与课时排。
   不处理：整卷四维测评的设计与能力画像（转英语综合测评）、听力材料选编与听法训练（转英语听力材料设计）、学员一对一的 AI 陪练对话（学生端英语口语陪练负责）。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-teach-lesson-planner
   - xiaozhi-teach-student-analyzer

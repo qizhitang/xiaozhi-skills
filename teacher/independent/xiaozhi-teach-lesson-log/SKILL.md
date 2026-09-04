@@ -15,7 +15,7 @@ description: >
   适用于老师说"课后总结一下""记一下这节课""[化名] 今天学得怎么样""这节课复盘""看下 [化名] 的学习轨迹""这节课消耗几课时""下节课接着讲什么"。
   流程：即时记 5 维度（学了什么/掌握度/课堂反应/进步/调整）→ 分知识点记掌握度 → 生成课时待确认条目 → 给下节课衔接点。
   本 SKILL 不排课、不登记作业、不写家长消息、不做阶段报告——分别转 schedule-manager、homework-tracker、parent-communication、renewal-report。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 id: openclaw:xiaozhi-teach-lesson-log
 min_platform_version: "2.0"
 max_round_limit: 15

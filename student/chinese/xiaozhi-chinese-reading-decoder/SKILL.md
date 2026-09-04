@@ -14,7 +14,7 @@ description: >
   覆盖记叙文、散文、议论文、说明文、非连续性文本的读法与答题规范。
   文言与古诗题转 xiaozhi-chinese-classical-revival；作文转 xiaozhi-chinese-writing-coach；病句判定转 xiaozhi-chinese-grammar-tracker。
   不在学生尝试之前给原题答案。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-learning-dna
 ---

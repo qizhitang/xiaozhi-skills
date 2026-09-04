@@ -12,7 +12,7 @@ description: >
   触发语示例："浮力这节课怎么设计""压强的概念怎么引入""欧姆定律用什么演示实验导入""凸透镜成像这节课 45 分钟怎么分配""这个概念学生总是搞混，怎么讲""比热容怎么让学生有感觉"。
   学科判别：备的是初中物理课（力、热、光、电、声）时用本 SKILL；其他学科的教案转对应学科 SKILL 或老师通用教案设计。
   不处理：单道题的讲法与变式（转物理解题教学指导）、实验课的器材清单与安全组织（转物理实验教学）、班级测评命题与试卷分析（转老师通用测评 SKILL）。
-compatibility: OpenClaw / ClawHub
+compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 depends_on:
   - xiaozhi-teach-lesson-planner
   - xiaozhi-teach-student-analyzer
