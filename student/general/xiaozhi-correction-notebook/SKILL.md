@@ -353,7 +353,7 @@ depends_on:
 | 学生流露学科焦虑（已排除危机信号） | `anxiety_trigger` | `anxietySignals[]` |
 | 学生请求深度错因分析 | `new_error` | 当前错题 + `historyRefs[]` |
 
-格式必须符合 `shared/handover-protocol.schema.json`；可直接对照 `../xiaozhi-skill-coordinator/schemas/examples/wrong-answer-handover.example.json`。
+格式必须符合 `shared/handover-protocol.schema.json`；可直接对照 `shared/wrong-answer-handover.example.json`。
 
 ```json
 {
@@ -393,7 +393,7 @@ depends_on:
 
 ### 9.3 接收：deep_analysis_writeback
 
-学科错误 DNA 完成深度分析后回写，格式见 `../xiaozhi-skill-coordinator/schemas/examples/deep-analysis-writeback.example.json`：
+学科错误 DNA 完成深度分析后回写，格式见 `shared/deep-analysis-writeback.example.json`：
 
 ```json
 {

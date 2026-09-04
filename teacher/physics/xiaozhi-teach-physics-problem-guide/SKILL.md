@@ -469,7 +469,7 @@ max_round_limit: 20
 
 ### 10.2 接口
 
-数据契约唯一来源：`teacher/general/schemas/class-teaching-workspace.schema.json`（根对象记作 `classWorkspace`）。
+数据契约唯一来源：`shared/class-teaching-workspace.schema.json`（根对象记作 `classWorkspace`）。
 
 ```text
 读：

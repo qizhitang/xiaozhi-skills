@@ -270,7 +270,7 @@ max_round_limit: 25
   · 时长：20-25 分钟（含播音）
   · 题型：听句选图（或短对话选答语）→ 对话理解 → 短文理解 → 听填信息
   · 语速：约 100-120 词/分钟（中考听力常见区间）
-  · 详细题型设计见 ../xiaozhi-teach-english-listening-designer
+  · 详细题型设计见「英语听力材料设计」SKILL
 
 ■ 口语（校内班级测评的现实约束见下）
   · 时长：单人 3-5 分钟（不是 10-15 分钟）
@@ -459,7 +459,7 @@ max_round_limit: 25
   （4 维能力画像）  （教学干预计划）  （4 维素材）
 ```
 
-### 10.2 接口（唯一真实字段来源：`teacher/general/schemas/class-teaching-workspace.schema.json`）
+### 10.2 接口（唯一真实字段来源：`shared/class-teaching-workspace.schema.json`）
 
 ```text
 读：

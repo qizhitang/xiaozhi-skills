@@ -89,7 +89,7 @@ depends_on:
 
 | 错误类型 | 定义 | 典型特征 | 根治方法 |
 |---------|-----|---------|---------|
-| 图景建立错误 | 不会将文字转化为物理图景 | 不画受力图就直接列公式；电路图画错 | 图景绘制专项训练；见 `../xiaozhi-physics-problem-coach/references/physics-diagram-guide.md` |
+| 图景建立错误 | 不会将文字转化为物理图景 | 不画受力图就直接列公式；电路图画错 | 图景绘制专项训练；见 `shared/physics-diagram-guide.md` |
 | 概念混淆 | 对物理概念理解有偏差或混用相似概念 | 速度和加速度分不清；压力和压强混用 | 概念追问+生活类比；见references/physics-concept-confusion-map.md |
 | 公式误用 | 知道公式但用错——条件/单位/方向 | 欧姆定律用在非纯电阻电路上；单位不统一 | 公式适用条件卡片+单位自检；见references/physics-math-tools-checklist.md |
 | 过程分析错误 | 物理过程分析不完整或阶段划分错误 | 多阶段运动只分析一段；电路状态变化没分析 | 过程拆分+逐段画图训练 |
@@ -476,7 +476,7 @@ subjectExtensions.physics.labSkills         —— 实验技能（由实验思�
 - `references/physics-error-dimension-table.md` — 物理错因维度表（五维子类型分类体系，含跨维度关联规则与交接契约）
 - `references/physics-concept-confusion-map.md` — 物理高频概念混淆对照表
 - `references/physics-math-tools-checklist.md` — 物理数学工具自检清单
-- `../xiaozhi-physics-problem-coach/references/physics-diagram-guide.md` — 四类物理图景绘制追问手册（与物理解题教练共用一份）
+- `shared/physics-diagram-guide.md` — 四类物理图景绘制追问手册（与物理解题教练共用一份）
 
 ---
 

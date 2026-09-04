@@ -27,14 +27,14 @@
 
 ## §2 学科子类型编码（学科层）
 
-子类型 ID = 学科前缀 + 两位数字，定义在各学科的 error-dimension-table 中；通用层只存 ID，不解释含义。
+子类型 ID = 学科前缀 + 两位数字，定义在各学科的错因维度表中；通用层只存 ID，不解释含义。引用方的技能包内若带有该表，文件名为 `shared/<学科>-error-dimension-table.md`。
 
 | 学科 | 前缀（维度） | 定义文件 |
 |---|---|---|
-| 数学 | `B`(概念) `C`(计算) `R`(读题) `M`(方法) | `student/math/xiaozhi-math-error-dna/references/math-error-dimension-table.md` |
-| 物理 | `P`(图景) `C`(概念) `F`(公式) `R`(过程) `T`(数学工具) | `student/physics/xiaozhi-physics-error-dna/references/physics-error-dimension-table.md` |
-| 英语 | `G`(语法) `V`(词汇) `T`(表达/中式) `P`(发音) `L`(听力) | `student/english/xiaozhi-english-grammar-coach/references/english-error-dimension-table.md` |
-| 语文 | `RC`(阅读) `AR`(答题规范) `WT`(写作) `CL`(文言) `LG`(语病) | `student/chinese/xiaozhi-chinese-reading-decoder/references/chinese-error-dimension-table.md` |
+| 数学 | `B`(概念) `C`(计算) `R`(读题) `M`(方法) | 数学错误DNA 的错因维度表 |
+| 物理 | `P`(图景) `C`(概念) `F`(公式) `R`(过程) `T`(数学工具) | 物理错误DNA 的错因维度表 |
+| 英语 | `G`(语法) `V`(词汇) `T`(表达/中式) `P`(发音) `L`(听力) | 英语语法突破教练 的错因维度表 |
+| 语文 | `RC`(阅读) `AR`(答题规范) `WT`(写作) `CL`(文言) `LG`(语病) | 阅读理解拆解师 的错因维度表 |
 
 学科维度 → 通用四维的映射：
 

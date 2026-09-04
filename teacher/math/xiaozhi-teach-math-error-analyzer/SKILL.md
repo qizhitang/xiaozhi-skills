@@ -461,7 +461,7 @@ max_round_limit: 25
   （错因 DNA）     （教学干预计划）  （错题案例库）
 ```
 
-### 9.2 接口（唯一契约：`teacher/general/schemas/class-teaching-workspace.schema.json`）
+### 9.2 接口（唯一契约：`shared/class-teaching-workspace.schema.json`）
 
 ```text
 读：

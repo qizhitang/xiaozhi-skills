@@ -531,7 +531,7 @@ max_round_limit: 20
   （听力能力维度）  （听力素材入库）  （听力进步反馈）
 ```
 
-### 11.2 接口（唯一真实字段来源：`teacher/general/schemas/class-teaching-workspace.schema.json`）
+### 11.2 接口（唯一真实字段来源：`shared/class-teaching-workspace.schema.json`）
 
 ```text
 读：

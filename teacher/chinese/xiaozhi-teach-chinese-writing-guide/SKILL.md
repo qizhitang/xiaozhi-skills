@@ -434,7 +434,7 @@ AI 生成的作文题：生成前按 shared/ai-item-check.md 自检（题意清�
 
 ### 9.2 接口
 
-数据契约为 `teacher/general/schemas/class-teaching-workspace.schema.json`，
+数据契约为 `shared/class-teaching-workspace.schema.json`，
 所有读写路径必须是该 schema 中真实存在的字段。
 
 ```text

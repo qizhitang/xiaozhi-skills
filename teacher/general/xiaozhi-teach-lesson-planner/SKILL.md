@@ -416,7 +416,7 @@ O  Organize → 顺序如何安排（按认知层次递进）
                 └────────────────┘
 ```
 
-### 9.2 数据接口（唯一契约：`teacher/general/schemas/class-teaching-workspace.schema.json`）
+### 9.2 数据接口（唯一契约：`shared/class-teaching-workspace.schema.json`）
 
 | classWorkspace 字段 | 谁写 | 本 SKILL |
 |---|---|---|

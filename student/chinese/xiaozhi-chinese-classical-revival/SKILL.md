@@ -548,7 +548,7 @@ depends_on:
 ## 十、参考资源
 
 - `references/classical-author-profiles.md` — 重点古人历史背景与情感档案库（覆盖部编初中重点篇目，含事实核查清单）
-- `../xiaozhi-chinese-reading-decoder/references/chinese-error-dimension-table.md` — 语文错因维度表（CL 子类型定义）
+- `shared/chinese-error-dimension-table.md` — 语文错因维度表（CL 子类型定义）
 
 ---
 

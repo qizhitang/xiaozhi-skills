@@ -439,7 +439,7 @@ max_round_limit: 30
   （数学思维维度）  （错例入库）      （数学进步反馈）
 ```
 
-### 9.2 接口（唯一契约：`teacher/general/schemas/class-teaching-workspace.schema.json`）
+### 9.2 接口（唯一契约：`shared/class-teaching-workspace.schema.json`）
 
 ```text
 读：

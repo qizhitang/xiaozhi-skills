@@ -468,7 +468,7 @@ D 的算法只有一套（27% 分组），见 xiaozhi-teach-student-analyzer SKI
                     （作业调整）
 ```
 
-### 10.2 数据接口（唯一契约：`teacher/general/schemas/class-teaching-workspace.schema.json`）
+### 10.2 数据接口（唯一契约：`shared/class-teaching-workspace.schema.json`）
 
 | classWorkspace 字段 | 谁写 | 本 SKILL |
 |---|---|---|

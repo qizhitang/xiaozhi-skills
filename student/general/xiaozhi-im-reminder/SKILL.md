@@ -116,7 +116,7 @@ depends_on:
 
 ## 四、入队接收规则（reminder_enqueue）
 
-其他 SKILL 通过 `shared/handover-protocol.schema.json` 的 `reminder_enqueue` 把提醒交给本 SKILL，示例见 `../xiaozhi-skill-coordinator/schemas/examples/reminder-enqueue.example.json`。
+其他 SKILL 通过 `shared/handover-protocol.schema.json` 的 `reminder_enqueue` 把提醒交给本 SKILL，示例见 `shared/reminder-enqueue.example.json`。
 
 收到一条 `reminderData` 后按顺序处理：
 

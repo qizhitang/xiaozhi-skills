@@ -394,7 +394,7 @@ Step 4：写作前提示
 ## 参考资源
 
 - `references/grammar-error-library.md` — 六类语病真实病句题库、检验口诀与高频误判清单
-- `../xiaozhi-chinese-reading-decoder/references/chinese-error-dimension-table.md` — 语文错因维度表（LG 子类型定义）
+- `shared/chinese-error-dimension-table.md` — 语文错因维度表（LG 子类型定义）
 
 ---
 

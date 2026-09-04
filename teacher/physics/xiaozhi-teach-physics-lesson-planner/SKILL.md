@@ -30,7 +30,7 @@ max_round_limit: 30
 
 > 技术边界：本 SKILL 依赖能力 [M, F, K]，无该能力时按 shared/platform-conventions.md 降级。
 > 特有降级话术：本 SKILL 输出教案框架与概念建构路径，不代替老师备课、不替老师讲题。
-> 演示/分组实验一律标注 `safetyLevel`（三档定义见 `../xiaozhi-teach-physics-experiment-coach/references/experiment-types.md`）；`safetyLevel: 高` 的实验只作演示、不进分组，且必须由老师现场把控。
+> 演示/分组实验一律标注 `safetyLevel`（三档定义见 `shared/experiment-types.md`）；`safetyLevel: 高` 的实验只作演示、不进分组，且必须由老师现场把控。
 > AI 生成的题与素材必须标注 `【AI 生成，入库前请人工验算】`，生成前按 shared/ai-item-check.md 自检。
 > 铁律"不替老师讲题"的准确表述：面向学生的提问链按 `shared/hint-ladder.md` 逐级升，本 SKILL 提供到 L4（半步）的提问设计，L5/L6 的完整示范由老师在课堂上决定。
 
@@ -545,7 +545,7 @@ max_round_limit: 30
 
 ### 11.2 接口
 
-数据契约唯一来源：`teacher/general/schemas/class-teaching-workspace.schema.json`（根对象记作 `classWorkspace`）。
+数据契约唯一来源：`shared/class-teaching-workspace.schema.json`（根对象记作 `classWorkspace`）。
 
 ```text
 读：

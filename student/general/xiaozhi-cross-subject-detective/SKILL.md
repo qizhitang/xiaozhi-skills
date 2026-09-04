@@ -252,7 +252,7 @@ depends_on:
   新增有向边（edges）：[sourceNodeId --relationType--> targetNodeId]
     relationType 只能取 requires / isParentOf / appliesTo / correlatesWith
   discoverySource 填 "跨学科侦探周"
-  可参考的联结模板见 ../xiaozhi-learning-dna/references/cross-subject-connections.md
+  可参考的联结模板见 shared/cross-subject-connections.md
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -327,7 +327,7 @@ depends_on:
 ## 参考资源
 
 - `references/detective-project-template.md` - 项目记录模板（五步流程、联结分级、写回字段对照）
-- `../xiaozhi-learning-dna/references/cross-subject-connections.md` - 可直接引用的跨科联结模板库
+- `shared/cross-subject-connections.md` - 可直接引用的跨科联结模板库
 - `shared/hint-ladder.md` - 提示阶梯（本 SKILL 默认最高级 L3）
 - `shared/grade-bands.md` - 各学段适用性
 - `shared/ai-item-check.md` - 深潜时若临时出一道验证题，生成前按此协议自检

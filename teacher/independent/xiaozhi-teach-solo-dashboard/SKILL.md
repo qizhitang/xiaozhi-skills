@@ -35,7 +35,7 @@ max_round_limit: 20
 
 > 技术边界：本 SKILL 依赖能力 [M, K, X]，无该能力时按 shared/platform-conventions.md 降级。
 
-本 SKILL 的数据全部来自 `teacher/independent/schemas/solo-teacher-workspace.schema.json`；不连接第三方排课、收银、IM 系统。无 `X`（跨会话统计）时不输出"累计 N 次"类精确统计，改为"从记录看大致…"并标 🟡；无 `K`（日期感知）时先问今天日期再排今日工作台。
+本 SKILL 的数据全部来自 `shared/solo-teacher-workspace.schema.json`；不连接第三方排课、收银、IM 系统。无 `X`（跨会话统计）时不输出"累计 N 次"类精确统计，改为"从记录看大致…"并标 🟡；无 `K`（日期感知）时先问今天日期再排今日工作台。
 
 本 SKILL **不生成题目**；老师在工作台里顺手要一道题时，先按 `shared/ai-item-check.md` 自检，并标注【AI 生成，入库前请人工验算】，入库交给 `xiaozhi-teach-resource-library`。
 
@@ -435,7 +435,7 @@ parentSummary / factSummary 字段硬约束：
 - `references/dashboard-template.md` — 独立教师日工作台完整模板（可直接复制）
 - `references/daily-dashboard-block-templates.md` — 7 区块日工作台逐块输出模板（含占位符）
 - `references/daily-dashboard-full-sample.md` — 完整日工作台输出示例（7 区块齐全范例）
-- `../schemas/solo-teacher-workspace.schema.json` — 独立教师工作空间共享数据结构
+- `shared/solo-teacher-workspace.schema.json` — 独立教师工作空间共享数据结构
 
 ---
 

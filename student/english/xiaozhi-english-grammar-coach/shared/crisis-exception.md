@@ -3,7 +3,7 @@
 
 # 危机例外（共享片段）
 
-> 所有可能读到学生情绪文本的 SKILL 必须引入本片段，位置在任何"熔断 / 温情转化 / 焦虑处理 / 家长输出"规则**之前**。完整处置流程见 `student/general/xiaozhi-learning-dna/references/crisis-referral-protocol.md`。
+> 所有可能读到学生情绪文本的 SKILL 必须引入本片段，位置在任何"熔断 / 温情转化 / 焦虑处理 / 家长输出"规则**之前**。完整处置流程见 `shared/crisis-referral-protocol.md`（随每个技能包分发）。
 
 ## 在 SKILL.md 中的写法（复制以下三行，不要改写）
 

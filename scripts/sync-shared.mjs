@@ -49,6 +49,63 @@ const CONTRACTS = [
     src: "student/english/xiaozhi-english-grammar-coach/references/english-error-dimension-table.md",
     owner: "xiaozhi-english-grammar-coach",
   },
+  {
+    as: "chinese-error-dimension-table.md",
+    src: "student/chinese/xiaozhi-chinese-reading-decoder/references/chinese-error-dimension-table.md",
+    owner: "xiaozhi-chinese-reading-decoder",
+  },
+  {
+    as: "physics-diagram-guide.md",
+    src: "student/physics/xiaozhi-physics-problem-coach/references/physics-diagram-guide.md",
+    owner: "xiaozhi-physics-problem-coach",
+  },
+  {
+    as: "ebbinghaus-schedule.md",
+    src: "student/general/xiaozhi-im-reminder/references/ebbinghaus-schedule.md",
+    owner: "xiaozhi-im-reminder",
+  },
+  {
+    as: "cross-subject-connections.md",
+    src: "student/general/xiaozhi-learning-dna/references/cross-subject-connections.md",
+    owner: "xiaozhi-learning-dna",
+  },
+  {
+    as: "experiment-types.md",
+    src: "teacher/physics/xiaozhi-teach-physics-experiment-coach/references/experiment-types.md",
+    owner: "xiaozhi-teach-physics-experiment-coach",
+  },
+  {
+    as: "class-teaching-workspace.schema.json",
+    src: "teacher/general/schemas/class-teaching-workspace.schema.json",
+    owner: null, // 包级 schema，不归属某个技能
+  },
+  {
+    as: "solo-teacher-workspace.schema.json",
+    src: "teacher/independent/schemas/solo-teacher-workspace.schema.json",
+    owner: null, // 包级 schema，不归属某个技能
+  },
+  {
+    as: "wrong-answer-handover.example.json",
+    src: "student/general/xiaozhi-skill-coordinator/schemas/examples/wrong-answer-handover.example.json",
+    owner: "xiaozhi-skill-coordinator",
+  },
+  {
+    as: "reminder-enqueue.example.json",
+    src: "student/general/xiaozhi-skill-coordinator/schemas/examples/reminder-enqueue.example.json",
+    owner: "xiaozhi-skill-coordinator",
+  },
+  {
+    as: "deep-analysis-writeback.example.json",
+    src: "student/general/xiaozhi-skill-coordinator/schemas/examples/deep-analysis-writeback.example.json",
+    owner: "xiaozhi-skill-coordinator",
+  },
+  {
+    // shared/crisis-exception.md 在每个包里都指向它，所以发给全部技能（含归属技能）
+    as: "crisis-referral-protocol.md",
+    src: "student/general/xiaozhi-learning-dna/references/crisis-referral-protocol.md",
+    owner: null,
+    toAll: true,
+  },
 ].map((c) => {
   const p = join(root, c.src);
   if (!existsSync(p)) { console.error(`❌ 契约源文件不存在：${c.src}`); process.exit(1); }
@@ -81,8 +138,10 @@ for (const dir of skillDirs) {
   // 本技能需要的文件 = 全库共享约定 + 正文引用到的跨技能契约
   const wanted = [...sources.map((s) => ({ name: s.name, body: s.body }))];
   for (const c of CONTRACTS) {
-    if (c.owner === skillName) continue;          // 归属技能用自己的原件
-    if (!skillText.includes(`shared/${c.as}`)) continue; // 没引用就不塞进包里
+    if (!c.toAll) {
+      if (c.owner === skillName) continue;               // 归属技能用自己的原件
+      if (!skillText.includes(`shared/${c.as}`)) continue; // 没引用就不塞进包里
+    }
     wanted.push({ name: c.as, body: c.body });
     contractCopies++;
   }

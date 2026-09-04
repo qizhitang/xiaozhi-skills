@@ -55,15 +55,17 @@ xiaozhi-correction-notebook/
 
 这样 `shared/vocab.md` 这类路径在两种场景下都能解析：整库使用时相对仓库根，单技能安装后相对技能目录。
 
-除这六份外，被多个技能引用的**跨技能契约**也按需分发到引用方的 `shared/` 下（共 38 份副本）：
+除这六份外，被跨技能引用的**契约与参考资料**也按需分发到引用方的 `shared/` 下（共 124 份副本，覆盖 13 类文件）：
 
-| 契约 | 源文件归属 | 分发给 |
+| 类别 | 文件 | 分发范围 |
 |---|---|---|
-| `handover-protocol.schema.json` | 学习系统协调器 | 引用交接协议的 24 个 SKILL |
-| `dna-profile.schema.json` | 学习DNA | 读写档案字段的 11 个 SKILL |
-| `english-error-dimension-table.md` | 英语语法突破教练 | 其余 4 个英语学生端 SKILL |
+| 数据契约 | `handover-protocol.schema.json`、`dna-profile.schema.json`、`class-teaching-workspace.schema.json`、`solo-teacher-workspace.schema.json` | 正文引用它的技能 |
+| 交接示例 | `wrong-answer-handover`、`reminder-enqueue`、`deep-analysis-writeback` 三份 `.example.json` | 错题本、IM 提醒 |
+| 学科错因维度表 | `english-error-dimension-table.md`、`chinese-error-dimension-table.md` | 同学科的其余技能 |
+| 参考资料 | `physics-diagram-guide.md`、`ebbinghaus-schedule.md`、`cross-subject-connections.md`、`experiment-types.md` | 引用方 |
+| 安全底线 | `crisis-referral-protocol.md` | **全部 58 个技能**（因为 `crisis-exception.md` 在每个包里都指向它）|
 
-源文件仍留在归属技能里，归属技能用自己的原件、不重复复制；只有正文真正引用的技能才会拿到副本，包不会无谓变大。
+源文件仍留在归属技能里，归属技能用自己的原件、不重复复制；除危机转介协议外，只有正文真正引用的技能才会拿到副本。单包体积平均 131 KB，最大 1.4 MB（学习DNA，因其 schema 本身较大）。
 
 副本由 `npm run sync:shared` 从源生成，Markdown 副本头部有"请勿直接编辑"横幅（JSON 为逐字节复制）；`npm run check` 会校验副本与源一致，并清理已不再引用的残留。**要改共享约定或契约，请改源文件再重新同步。**
 
@@ -81,7 +83,7 @@ git clone https://github.com/qizhitang/xiaozhi-skills.git <你的项目>/.workbu
 
 装好后在 WorkBuddy 里执行 `/reload-skills` 重新扫描技能目录。
 
-> ⚠️ **单技能安装的已知限制**：经上述分发后，仍有 **16 处跨技能引用**在单独安装时无法解析——3 处交接协议的示例 JSON、3 处语文错因维度表、2 处受力图指南、2 处跨学科联结、2 处遗忘曲线表，以及危机转介协议全文、初中实验清单、独立教师工作空间 schema 各 1 处。这些都是"想深入时可以去看"的补充材料，缺失不影响 SKILL 的主流程。需要完整体验请用整库安装，或把相关联的技能一并装上。
+> ✅ **单技能安装已完全自包含**：对全部 58 个技能做过模拟验证——把单个技能目录单独取出后，其 `SKILL.md` 与 `shared/` 副本中的文件引用**全部可解析，零断链**。整库安装仍然推荐给需要改内容或团队协作的场景，但不再是功能完整性的前提。
 
 ### 安装位置怎么选
 

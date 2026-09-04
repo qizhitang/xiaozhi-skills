@@ -477,7 +477,7 @@ max_round_limit: 20
 
 ### 10.2 接口
 
-数据契约为 `teacher/general/schemas/class-teaching-workspace.schema.json`，
+数据契约为 `shared/class-teaching-workspace.schema.json`，
 所有读写路径必须是该 schema 中真实存在的字段。
 
 ```text

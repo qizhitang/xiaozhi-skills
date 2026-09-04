@@ -536,7 +536,7 @@ Cronbach α（写入 classSummaries[].reliabilityAlpha）：
   （测评结果）       （错因分析）          （错题入库）
 ```
 
-### 11.2 接口（唯一契约：`teacher/general/schemas/class-teaching-workspace.schema.json`）
+### 11.2 接口（唯一契约：`shared/class-teaching-workspace.schema.json`）
 
 ```text
 读：

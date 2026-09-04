@@ -43,7 +43,7 @@ depends_on:
    艾宾浩斯 1885 年的原始实验用的是无意义音节的个人自测，
    真实学习材料的保留率因人、因内容差异很大，不能作为指标呈现给学生。
    曲线的说明与参数只在一处维护：
-   `student/general/xiaozhi-im-reminder/references/ebbinghaus-schedule.md`。
+   `shared/ebbinghaus-schedule.md`。
 
 **对外只有一个出口**：无论学生今天有多少词到期，本 SKILL 每天只贡献
 **1 张"今日到期词卡"**（shared/vocab.md §9），由 xiaozhi-im-reminder 合并进当日摘要发送。
@@ -462,7 +462,7 @@ schema 里的 vocabulary[].status（新词/学习中/复习中/已掌握）只�
 
 - `references/vocabulary-radar-topics.md` - 新词雷达话题模板（按话题 + 词表分组、四阶段预热模板与提示词，供模块C使用）
 - `shared/english-error-dimension-table.md` — 英语错因维度表（V01-V06 词汇子类型）
-- `student/general/xiaozhi-im-reminder/references/ebbinghaus-schedule.md` — 遗忘曲线说明与间隔参数（全库唯一一处）
+- `shared/ebbinghaus-schedule.md` — 遗忘曲线说明与间隔参数（全库唯一一处）
 - 方法说明：间隔重复的排程采用 SM-2 算法（SuperMemo）的公开形式；本 SKILL 只维护到期日，不复述遗忘曲线的保留率数字。
 
 ---

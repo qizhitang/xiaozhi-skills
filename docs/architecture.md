@@ -334,9 +334,11 @@ xiaozhi-{name}/
 `shared/` 下有两类文件，均由 `npm run sync:shared` 生成并由 CI 校验一致性：
 
 1. **全库共享约定**（6 份）：来自仓库根 `shared/`，每个 SKILL 都有。
-2. **跨技能契约**（按需，共 38 份副本）：源文件留在归属技能内，只分发给正文引用它的技能——`handover-protocol.schema.json`（协调器所有，发给 24 个）、`dna-profile.schema.json`（学习DNA 所有，发给 11 个）、`english-error-dimension-table.md`（语法教练所有，发给 4 个）。归属技能用自己的原件。
+2. **跨技能契约与参考资料**（按需，13 类共 124 份副本）：源文件留在归属技能内，只分发给正文引用它的技能——四份数据契约 schema、三份交接示例 JSON、两份学科错因维度表、四份参考资料（受力图指南、遗忘曲线表、跨学科联结、实验类型）。归属技能用自己的原件。唯一例外是 `crisis-referral-protocol.md`：因为 `crisis-exception.md` 在每个包里都指向它，故分发给全部 58 个技能。
 
 这样 `shared/vocab.md`、`shared/handover-protocol.schema.json` 这类路径在整库使用（相对仓库根）与单技能安装（相对技能目录）两种场景下都能解析。
+
+全部 58 个技能已做单技能安装模拟：单独取出任一技能目录后，`SKILL.md` 与 `shared/` 副本中的文件引用零断链。为此，`shared/vocab.md` 与 `shared/crisis-exception.md` 源文件中原有的仓库路径也已改写——它们会随副本进入 58 个包，留在里面会变成 337 处死链接。
 
 frontmatter 字段：`name` · `display_name` · `version` · `author` · `category` · `grade_bands` · `tags` · `description` · `compatibility` · `depends_on`；老师端另有平台字段 `id` · `min_platform_version` · `max_round_limit`。
 

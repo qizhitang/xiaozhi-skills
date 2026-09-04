@@ -542,7 +542,7 @@ AI 不替学生说论点，也不替学生"总结提炼"成一句漂亮的话。
 
 ## 十、参考资源
 
-- `../xiaozhi-chinese-reading-decoder/references/chinese-error-dimension-table.md` — 语文错因维度表（含写作思维 WT01-WT10 子类型与五步法的对应；全库唯一一份，修改只改那一处）
+- `shared/chinese-error-dimension-table.md` — 语文错因维度表（含写作思维 WT01-WT10 子类型与五步法的对应；全库唯一一份，修改只改那一处）
 - `references/writing-rubric.md` — 三文体批改维度与追问问题库
 - `references/debate-script-guide.md` — AI辩论赛话术与赛制详细操作手册
 - `references/writing-5step-statemachine.md` — 5步写作流程状态机定义（含中断恢复与分支场景）

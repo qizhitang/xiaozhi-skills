@@ -425,7 +425,7 @@ C 层任务（拔尖学生）：
 
 ## 九、与其他 SKILL 的数据接口
 
-老师通用 6 个 SKILL 共用同一份数据契约 `teacher/general/schemas/class-teaching-workspace.schema.json`，
+老师通用 6 个 SKILL 共用同一份数据契约 `shared/class-teaching-workspace.schema.json`，
 在正文中以 `classWorkspace.<字段>` 引用。**只允许出现该 schema 中真实存在的字段。**
 
 ### 9.1 读写权限表（本 SKILL 视角）

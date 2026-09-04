@@ -546,7 +546,7 @@ max_round_limit: 20
   （口语能力维度）  （口语素材入库）  （口语进步反馈）
 ```
 
-### 10.2 接口（唯一真实字段来源：`teacher/general/schemas/class-teaching-workspace.schema.json`）
+### 10.2 接口（唯一真实字段来源：`shared/class-teaching-workspace.schema.json`）
 
 ```text
 读：
