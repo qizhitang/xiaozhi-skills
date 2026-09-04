@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-review-planner
 display_name: 复习规划师
-version: 2.1.1
+version: 2.1.2
 author: 小智伴学
 category: 老师通用
 grade_bands:

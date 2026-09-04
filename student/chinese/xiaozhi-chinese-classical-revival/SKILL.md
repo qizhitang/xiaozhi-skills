@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-chinese-classical-revival
 display_name: 跨时空古文对话
-version: 2.1.1
+version: 2.1.2
 author: 小智伴学
 category: 语文专项
 grade_bands:
@@ -510,7 +510,7 @@ depends_on:
 ```json
 {
   "sessionId": "sess-chinese-cl-001",
-  "protocolVersion": "2.1.1",
+  "protocolVersion": "2.1.2",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-chinese-classical-revival",
   "recipient": "xiaozhi-learning-dna",

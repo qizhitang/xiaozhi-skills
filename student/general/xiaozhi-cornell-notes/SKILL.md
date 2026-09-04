@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-cornell-notes
 display_name: 📝 康奈尔笔记
-version: 2.1.1
+version: 2.1.2
 author: 小智伴学
 category: 通用核心
 grade_bands:

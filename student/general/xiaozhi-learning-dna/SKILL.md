@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-learning-dna
 display_name: 🧬 学习DNA
-version: 2.1.1
+version: 2.1.2
 author: 小智伴学
 category: 通用核心
 grade_bands:

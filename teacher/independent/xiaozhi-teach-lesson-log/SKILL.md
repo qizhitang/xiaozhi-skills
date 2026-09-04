@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-lesson-log
 display_name: 课后记录助手
-version: 2.1.1
+version: 2.1.2
 author: 小智伴学
 category: 独立教师
 grade_bands:

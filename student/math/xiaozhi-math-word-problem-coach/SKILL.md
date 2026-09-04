@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-math-word-problem-coach
 display_name: 📝 应用题数学建模教练
-version: 2.1.1
+version: 2.1.2
 author: 小智伴学
 category: 数学专项
 grade_bands:

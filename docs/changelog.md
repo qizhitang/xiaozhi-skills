@@ -1,9 +1,32 @@
 # 🔄 版本历史
 
-当前版本 **v2.1.1**。全库 57 个 SKILL（学生端 31 + 老师端 26）+ 1 个开发者工具，版本号统一。
+当前版本 **v2.1.2**。全库 57 个 SKILL（学生端 31 + 老师端 26）+ 1 个开发者工具，版本号统一。
 
 ---
 
+## v2.1.2 — 按扫描结果做的第二轮边界收敛
+
+v2.1.1 上架后 ClawHub 的判定是 **53 clean / 5 suspicious**（v2.1.0 是 44/13）。剩下 5 个的 GUIDANCE 指向四类具体根因，本版逐条修掉。
+
+### 一、旧的身份确认口径残留（7 处）
+
+v2.1.1 把 `shared/vocab.md §8` 规则 3 改成了受限模式，但**引用它的地方没跟着改**——各技能正文与 references、`SECURITY_BASELINE.md`、`docs/architecture.md` 仍写着“无法确认说话人时按学生本人处理”。扫描器直接点名 `learning-dna` 的建档模板“weakens identity checks for sensitive minors' records”。
+
+现全部对齐：确认说话人之前不读长期档案、不写任何记录、不执行删除、不变更授权位、不输出家长版内容。涉及 `learning-dna`、`learning-plan`、`weekly-review`、`skill-creator`（正文与模板库）、`SECURITY_BASELINE.md`、`docs/architecture.md`。
+
+> 这是 v2.1.1 的疏漏：只改了单一事实源，没改引用方。单一事实源能保证“定义只有一处”，但保证不了“没人复述过时的定义”。
+
+### 二、三处契约自相矛盾
+
+| 技能 | 矛盾 | 处置 |
+|---|---|---|
+| `teach-exam-designer` | 正文让它写 `itemStats.flag`，接口节又声明“本 SKILL 不写” | 改为生成待确认条目交 `student-analyzer`，本技能只在返修清单记题号 |
+| `teach-renewal-report` | 三处声明不执行删除，控制入口却给了“删除某学员全部记录” | 删除范围收窄为本技能写的 `progressEvidence[]`；学员卡、授权位、保留期与整档删除转 `student-intake` |
+| `physics-problem-coach` | 状态机声明 S0-S5 不读长期档案，考前 CLAW 模板 Step 6 却直读 `dna-profile` | 读前先过授权门并说明读什么、为什么读；未同意即跳过该步，不为凑流程去读档案 |
+
+扫描器对这三条的判词都是“instructions conflict / inconsistently allow”——它读的是全部文件，SKILL.md 里声明了边界而 references 里仍在教越界操作，不算划清边界。
+
+---
 ## v2.1.1 — 安全边界整改
 
 起因是 ClawHub 上架扫描（ClawScan + SkillSpector + 静态分析）对 v2.1.0 的判定：57 个技能中 44 个 clean、13 个 suspicious。三类根因，全部收敛在本版。

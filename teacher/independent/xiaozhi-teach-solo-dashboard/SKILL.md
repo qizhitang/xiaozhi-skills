@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-solo-dashboard
 display_name: 独立教师工作台
-version: 2.1.1
+version: 2.1.2
 author: 小智伴学
 category: 独立教师
 grade_bands:

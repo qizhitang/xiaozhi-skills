@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-english-assessment
 display_name: 英语综合测评
-version: 2.1.1
+version: 2.1.2
 author: 小智伴学
 category: 老师英语
 grade_bands:
@@ -494,7 +494,7 @@ max_round_limit: 25
 ```json
 {
   "sessionId": "sess-teach-eng-assess-001",
-  "protocolVersion": "2.1.1",
+  "protocolVersion": "2.1.2",
   "handoverType": "teacher_writeback",
   "sender": "xiaozhi-teach-english-assessment",
   "recipient": "xiaozhi-learning-dna",

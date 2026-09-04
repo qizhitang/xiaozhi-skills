@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-math-lesson-planner
 display_name: 数学教案设计
-version: 2.1.1
+version: 2.1.2
 author: 小智伴学
 category: 老师数学
 grade_bands:

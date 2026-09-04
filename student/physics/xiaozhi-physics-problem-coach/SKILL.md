@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-physics-problem-coach
 display_name: 🧲 物理解题教练
-version: 2.1.1
+version: 2.1.2
 author: 小智伴学
 category: 物理专项
 grade_bands:

@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-english-speaking-coach
 display_name: 🎙️ 英语口语陪练
-version: 2.1.1
+version: 2.1.2
 author: 小智伴学
 category: 英语专项
 grade_bands:
@@ -467,7 +467,7 @@ subjectExtensions.english.subtypes[] 里的 P 类条目一律不写，
 ```json
 {
   "sessionId": "sess-eng-speak-001",
-  "protocolVersion": "2.1.1",
+  "protocolVersion": "2.1.2",
   "handoverType": "profile_writeback",
   "sender": "xiaozhi-english-speaking-coach",
   "recipient": "xiaozhi-learning-dna",

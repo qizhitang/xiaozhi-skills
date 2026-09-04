@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-time-focus-coach
 display_name: ⏱️ 时间与专注力教练
-version: 2.1.1
+version: 2.1.2
 author: 小智伴学
 category: 通用核心
 grade_bands:

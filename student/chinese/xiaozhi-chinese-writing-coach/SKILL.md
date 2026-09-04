@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-chinese-writing-coach
 display_name: 🖊️ 语文写作教练
-version: 2.1.1
+version: 2.1.2
 author: 小智伴学
 category: 语文专项
 grade_bands:
@@ -502,7 +502,7 @@ AI 不替学生说论点，也不替学生"总结提炼"成一句漂亮的话。
 ```json
 {
   "sessionId": "sess-chinese-wt-001",
-  "protocolVersion": "2.1.1",
+  "protocolVersion": "2.1.2",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-chinese-writing-coach",
   "recipient": "xiaozhi-learning-dna",

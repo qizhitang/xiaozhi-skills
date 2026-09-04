@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-cross-subject-detective
 display_name: 🔭 跨学科侦探周
-version: 2.1.1
+version: 2.1.2
 author: 小智伴学
 category: 通用核心
 grade_bands:
