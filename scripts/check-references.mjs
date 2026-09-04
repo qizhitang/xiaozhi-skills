@@ -21,7 +21,7 @@ function walk(dir, acc = []) {
 }
 
 // 从正文中提取 references/schemas 引用（支持 ../ 与跨技能路径）
-const refPattern = /(?:\.\.\/)?(?:[\w-]+\/)*(?:references|schemas)\/[\w./-]+\.(?:md|json|js)/g;
+const refPattern = /(?:\.\.\/)?(?:[\w-]+\/)*(?:references|schemas|shared)\/[\w./-]+\.(?:md|json|js)/g;
 
 const dangling = [];
 const skillFiles = walk(repoRoot);

@@ -1,25 +1,23 @@
 ---
 name: xiaozhi-teach-resource-library
 display_name: 教学资源复用库
-version: 1.0.0
+version: 2.1.0
 author: 小智伴学
 category: 独立教师
+grade_bands:
+  - 小学中段
+  - 小学高段
+  - 初中
+  - 高中
 tags: [资源库, 讲义题库, 讲评话术, 错因案例, 教学复用, 独立教师]
 description: >
-  帮助独立教师把"每年从零备课"升级为"教学资产持续沉淀"。
-  当老师说"这道题讲过好几次了"、"帮我找一下 [X 讲义]"、
-  "这类错题怎么讲评"、"有没有类似题"、
-  "教过的案例"、"教学资源怎么管理"时，建议激活此SKILL。
-  核心工作流：资源分类入库（讲义/题库/讲评/案例/教案）→
-  标签化（学科/章节/难度/适用学员）→
-  检索与复用 → 学员匹配（基于学情）→
-  持续更新 → 与 xiaozhi-teach-lesson-planner
-  / assignment-designer / classroom-coach / exam-designer
-  / homework-tracker 建立数据接口。
-  该版本基于"教学资产是独立教师的核心壁垒"理念，
-  让 3 年经验 > 1 年经验 × 3 倍。
+  把独立教师散在文件夹、微信收藏和笔记本里的讲义、题目、讲评话术、错因案例收进一个可检索的库。
+  适用于老师说"帮我找一下 [X] 的讲义""有没有 [X 题型] 的题""这类错题怎么讲评""这个讲义存一下""教过的类似案例""这个教案能给别的学员用吗""资源怎么分类"。
+  流程：入库时打标签与版权状态 → 按知识点/难度检索 → 改编适配后复用 → 记录用过几次、效果如何。
+  本 SKILL 不出题、不备课、不批改、不联系家长——只管资源的存、找、改；AI 生成的题必须老师验算后才算入库。
 compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-teach-solo-dashboard, xiaozhi-teach-lesson-planner, xiaozhi-teach-assignment-designer, xiaozhi-teach-classroom-coach, xiaozhi-teach-exam-designer, xiaozhi-teach-homework-tracker
+depends_on:
+  - xiaozhi-teach-homework-tracker
 id: openclaw:xiaozhi-teach-resource-library
 min_platform_version: "2.0"
 max_round_limit: 20
@@ -31,13 +29,15 @@ max_round_limit: 20
 
 ---
 
-## ⚠️ 技术实现边界声明
+## 技术边界
 
-> **关于"版权"边界：** 资源库中**禁止**存储未授权的教辅原题、盗版扫描件；所有资源必须有 copyrightStatus 标注（自有/改编/公开可引用/仅存索引）。
->
-> **关于"学员案例"边界：** 学员案例入库必须**完全脱敏**（化名/模糊年级/去除可识别细节）；不允许反向追溯到具体学员。
->
-> **关于"自动推送"边界：** 资源库不主动推送资源到学员；老师根据需要检索复用。
+> 技术边界：本 SKILL 依赖能力 [M, F]，无该能力时按 shared/platform-conventions.md 降级。
+
+资源库不向学员推送任何东西，只在老师检索时给出候选。学员案例入库必须完全脱敏（化名、模糊学段、去掉可识别细节），不允许反查到具体学员。
+
+**版权**：每条资源必须有 `copyrightStatus`，取值只有 `shared/vocab.md §11` 的四档——`自有` / `改编` / `公开可引用` / `仅存索引`。**教辅原题与历年真题一律 `仅存索引`**，只记书名、页码、题号，不录入题干。禁止存储盗版扫描件与未授权转载的网络资源。
+
+**AI 生成的题**：本 SKILL 自己不出题，但会接收其他环节生成的题。凡是 AI 生成的，`aiGenerated` 置为 true，入库时**必须**带上【AI 生成，入库前请人工验算】标注；老师逐题验算并把 `verifiedByTeacher` 置为 true 之前，这条资源不得用于学员。生成规则见 `shared/ai-item-check.md`。
 
 ---
 
@@ -86,35 +86,53 @@ max_round_limit: 20
 
 ```text
                 ┌──────────────────────────┐
-                │ ① 资源分类入库            │
-                │  讲义/题库/讲评/案例/教案│
+                │ ① 入库                    │
+                │  分类 + 版权状态          │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ② 标签化                  │
-                │  学科/章节/难度/适用学员 │
+                │ ② AI 生成的先验算         │
+                │  aiGenerated=true         │
+                │  老师验算 → verifiedByTeacher│
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ③ 检索与匹配              │
-                │  关键词/学员画像/学情     │
+                │ ③ 打标签                  │
+                │  学科/知识点/难度/学段    │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ④ 复用                    │
-                │  调整后用于新场景         │
+                │ ④ 检索                    │
+                │  关键词/知识点/难度       │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ⑤ 写回 solo-dashboard     │
-                │  资源库索引               │
-                └────────────┬─────────────┘
-                             ↓
-                ┌──────────────────────────┐
-                │ ⑥ 持续更新                │
-                │  每次教学都是更新机会     │
+                │ ⑤ 改编适配后复用          │
+                │  记来源 + 记效果          │
                 └──────────────────────────┘
 ```
+
+### 3.1 AI 生成题的入库门槛
+
+```text
+生成时（在别的环节）：
+  按 shared/ai-item-check.md 自检——自解一遍、有解且唯一、
+  条件充分不多余、数值友好、学段内、与原题同维度
+
+到本 SKILL 入库时：
+  aiGenerated = true
+  verifiedByTeacher = false（默认）
+  标题或 usageNotes 带【AI 生成，入库前请人工验算】
+
+老师逐题验算后说"验过了"：
+  verifiedByTeacher = true，标注可去掉
+
+在 verifiedByTeacher 为 false 期间：
+  · 检索时这条资源标灰，附一句「待验算，先别直接给学员」
+  · 不进入"推荐给学员"的候选
+```
+
+**为什么卡这一道**：AI 生成的题看起来总是对的——格式规整、说法专业。真正的问题（条件矛盾、答案不唯一、超纲、数值算出无理数）要动笔算一遍才看得出来。这一道验算挡在库门口，比挡在学员面前便宜得多。
 
 ---
 
@@ -128,34 +146,42 @@ max_round_limit: 20
 
 ### 5.1 多维度标签
 
+对应 `workspace.resourceLibraryIndex[]` 的字段：
+
 ```text
-┌──────────┬──────────────┬──────────────┬──────────────┐
-│ 维度      │ 标签值示例                    │ 用途          │
-├──────────┼──────────────────────────────┼──────────────┤
-│ 学科      │ 数学/语文/英语/物理/...       │ 主分类        │
-│ 章节      │ 函数/几何/语法/...            │ 精确检索      │
-│ 知识点    │ 一次函数图象/定语从句/...      │ 精确定位      │
-│ 难度      │ 基础/中等/提升/挑战          │ 学员匹配      │
-│ 学员类型  │ 基础学员/拔尖学员/...        │ 复用建议      │
-│ 学段      │ 小学/初中/高中/...           │ 适用筛选      │
-│ 标签      │ 优秀/经典/必看/...            │ 主观标记      │
-└──────────┴──────────────────────────────┴──────────────┘
+┌──────────────────┬──────────────────────────────┬──────────────┐
+│ 字段              │ 取值                          │ 用途          │
+├──────────────────┼──────────────────────────────┼──────────────┤
+│ subject          │ 数学/语文/英语/物理/…         │ 主分类        │
+│ knowledgePoint   │ 一次函数图象/定语从句/…       │ 精确定位      │
+│ gradeLevel       │ 年级或学段                    │ 适用筛选      │
+│ difficulty       │ 基础/中等/提升/挑战（四档枚举）│ 难度匹配      │
+│ resourceType     │ 题目/讲义/课件/板书/讲评话术/ │ 类型筛选      │
+│                  │ 错因案例/家长话术（七档枚举） │              │
+│ copyrightStatus  │ 自有/改编/公开可引用/仅存索引 │ 版权（必填）  │
+│ aiGenerated      │ true / false                  │ 是否 AI 生成  │
+│ verifiedByTeacher│ true / false                  │ 老师是否验算过│
+│ usageNotes       │ 自由文本（≤500 字）           │ 用过几次、效果│
+└──────────────────┴──────────────────────────────┴──────────────┘
 ```
+
+**没有"学员类型"这个字段**。按"基础学员/拔尖学员"给资源贴适用人群，等于把学员分了层再把资源分了层，用起来看着方便，实际会让老师照着标签发题而不是照着这个孩子当前卡在哪里发题。要匹配就按 `knowledgePoint` + `difficulty` 匹配。
 
 ### 5.2 标签使用规则
 
 ```text
-■ 主标签（必填）
-  · 学科 + 章节 + 知识点
-  · 难度
+■ 必填
+  · resourceId / title / resourceType / copyrightStatus（schema required）
+  · knowledgePoint + difficulty（不填就检索不到，等于没存）
 
-■ 辅标签（推荐）
-  · 学员类型
-  · 标签（优秀/经典等）
+■ 推荐
+  · subject / gradeLevel
+  · aiGenerated（AI 生成的必须为 true）
 
-■ 自定义标签（可选）
-  · 老师个人标签
-  · 跨学科联结
+■ usageNotes 里写什么
+  · 用过几次、给什么情况的学员用过、效果如何
+  · 改编来源（"改自 R-001，把出租车换成快递"）
+  · AI 生成未验算时的【AI 生成，入库前请人工验算】标注
 ```
 
 ---
@@ -170,27 +196,34 @@ max_round_limit: 20
 排序：按相关度 / 使用频率 / 学员匹配度
 ```
 
-### 6.2 学员画像匹配
+### 6.2 按学员当前情况匹配
 
 ```text
-输入：学员画像（化名 + 学情摘要 + 需求）
-匹配：基于画像推荐最相关的资源
-输出：
-  · 讲义（适合 X 学段 X 难度）
-  · 题库（针对 X 知识点）
-  · 讲评话术（针对 X 错因）
-  · 错因案例（参考类似学员）
+输入：学员化名 + 当前卡住的知识点
+读：workspace.studentCards[].gradeBand / .primaryWeaknesses
+    workspace.homeworkFollowups[].mainErrors[].knowledgePoint / .dimension
+匹配：knowledgePoint 相同 + difficulty 与当前掌握度相称 +
+      gradeLevel 在该学员学段内
+输出（每条标明为什么推荐它）：
+  · [资源标题]（[类型]，[难度]）
+    推荐理由：针对 [知识点] 的 [dimension]，上次给 [场景] 用过
+    ⚠️ 待验算：aiGenerated=true 且 verifiedByTeacher=false 的标出来
+
+不做的事：
+  ❌ 按"这是基础学员"整批推荐一组资源
+  ❌ 推荐超出该学员 gradeBand 的内容（要用就标 ⚠高中 并说明是拓展）
 ```
 
 ### 6.3 错因案例检索
 
 ```text
-输入：错因（如"概念模糊"）
-匹配：所有相关错因案例
+输入：通用四维之一（概念模糊 / 计算失误 / 读题失误 / 方法用错，
+      见 shared/vocab.md §1）
+匹配：resourceType=错因案例 且 knowledgePoint 或维度相符的条目
 输出：
-  · 案例描述
-  · 应对动作
-  · 效果记录
+  · 案例描述（已脱敏，不含任何可识别到具体学员的细节）
+  · 当时的应对动作
+  · 效果记录（写事实，不写"效果很好"）
 ```
 
 ---
@@ -226,6 +259,7 @@ max_round_limit: 20
 ■ 改数（参数）
   原题 y=2x+1 → 改编 y=3x-2
   适合：同一知识点不同参数
+  ⚠️ 改完必须重算一遍：换个系数就可能算出无理数或负人数
 
 ■ 改问（设问角度）
   原题"求 X" → 改编"判断 X 是否正确"
@@ -234,15 +268,33 @@ max_round_limit: 20
 ■ 改情境（背景）
   原题"出租车" → 改编"网约车"
   适合：让题目更贴近学生生活
+  ⚠️ 换情境要检查量纲还合不合理（速度、单价、人数）
 
 ■ 改综合度
   单知识点 → 多知识点综合
-  适合：测评综合应用能力
+  适合：检验综合应用
+  ⚠️ 改成综合题后不再与原题同型，不能再当"同类题"用于弱项验证
+
+改编后一律按 shared/ai-item-check.md 复核：自解一遍、有解且唯一、
+条件充分不多余、数值友好、学段内。改编件的 copyrightStatus 记 `改编`，
+usageNotes 里写清原出处与改动点。
 ```
 
 ### 7.3 复用记录
 
-> 📎 完整模板见 `references/reuse-record-template.md`（资源使用次数/平均效果/最近使用 记录表）
+复用记录**不单独建表**，直接写进 `workspace.resourceLibraryIndex[].usageNotes`（≤500 字符）。一行一次，累积成这条资源的使用史：
+
+```text
+usageNotes 写法：
+  2026-09-04 小A 移项专项，8 题对 6；对"含参"仍卡，下次配纯净版
+  2026-09-11 小D 同知识点，直接做对，可作为攻克验证
+  改自 R-001（把出租车情境换成快递），已重算
+  【AI 生成，入库前请人工验算】← 验算后删掉这一行
+
+写事实，不写"效果很好""这题很经典"——
+后者三个月后回头看，等于什么都没说。
+超过 500 字符时保留最近几条，旧的合并成一句"此前用过 N 次"。
+```
 
 ---
 
@@ -250,28 +302,33 @@ max_round_limit: 20
 
 ### 8.1 资源版权分类
 
+四档取值来自 `shared/vocab.md §11`，本 SKILL 不另设分类。
+
 ```text
-✅ 自有（copyrightStatus: 自有）
-  老师原创或组内原创
+✅ 自有
+  老师自己写的
   完整存储
 
-✅ 改编（copyrightStatus: 改编）
+✅ 改编
   基于某资源改编
-  必须标注"原出处 + 改编点"
+  必须在 usageNotes 标注"原出处 + 改了什么"
 
-✅ 公开可引用（copyrightStatus: 公开可引用）
-  教材例题、CC 协议资源
+✅ 公开可引用
+  教材例题、明确开放授权（如 CC 协议）的资源
   完整存储，标注来源
 
-⚠️ 仅存索引（copyrightStatus: 仅存索引）
-  教辅原题只记题号和出处
-  不复制题干
+⚠️ 仅存索引
+  **教辅原题与历年真题一律归这一档**，没有例外
+  只记书名/卷名、页码、题号，不录入题干、不存扫描件
+  检索时给出"在哪本书第几页"，老师自己去翻
 
-❌ 禁止
-  未授权复制教辅原题
-  盗版扫描件
+❌ 禁止入库
+  未授权的教辅原题题干
+  盗版扫描件、拍照件
   未授权转载的网络资源
 ```
+
+**为什么真题也只存索引**：历年真题的汇编本同样有版权，"大家都在用"不构成授权。存索引不影响使用——老师手上有那本书，需要时按页码翻到即可；存题干则是在自己的库里做了一份未授权复制件。
 
 ### 8.2 版权标注模板
 
@@ -356,75 +413,70 @@ max_round_limit: 20
 
 ---
 
-## 十一、与上游/下游 SKILL 的协作
+## 十一、接口
 
-### 11.1 协作流图
+### 11.1 数据流
 
 ```text
-              ┌────────────────────────┐
-              │ 所有 SKILL 产生资源      │
-              │  讲义/题库/讲评/案例    │
-              └───────────┬────────────┘
-                          │
-                          ↓
-              ┌────────────────────────┐
-              │ xiaozhi-teach-         │
-              │  resource-library      │
-              │  （本 SKILL）           │
-              └───────────┬────────────┘
-                          │
-        ┌─────────────────┼─────────────────┐
-        ↓                 ↓                 ↓
-  lesson-planner  assignment-      classroom-coach
-  （教案复用）    designer          （讲评复用）
-                  （作业复用）
-                          │
-                          ↓
-              ┌────────────────────────┐
-              │ xiaozhi-teach-         │
-              │  exam-designer         │
-              │ （测评复用）           │
-              └────────────────────────┘
+  老师说"这个存一下" ──→ ┌────────────────────┐ ──→ 检索结果（带推荐理由）
+  老师说"帮我找…"   ──→ │ resource-library    │ ──→ 改编后的资源
+                        │ （本 SKILL）         │
+                        └─────────┬──────────┘
+                                  │ 只写这一处
+                          resourceLibraryIndex[]
 ```
 
-### 11.2 接口
+本 SKILL 不需要任何 SKILL 先跑，也不向任何 SKILL 推送。老师需要资源时来找，找到了自己拿走用。
+
+### 11.2 读写字段
 
 ```text
 读：
-  workspace.studentCards[].alias / gradeLevel / subjects /
-    goals / primaryWeaknesses / learningPreferences
-                                → 学员画像（匹配资源用）
-  workspace.lessonLogs[].completedContent / masteryStatus /
-    nextLessonFocus             → 课后记录（沉淀资源用）
-  错因分布                       → （派生视图，非存储字段：
-                                   由 workspace.homeworkFollowups[].mainErrors
-                                   实时聚合出的错因倾向）
+  workspace.studentCards[].alias / .gradeLevel / .gradeBand /
+      .subjects / .goals / .primaryWeaknesses
+                          → 匹配资源用（按知识点与难度，不按"学员类型"）
+  workspace.homeworkFollowups[].mainErrors[].knowledgePoint / .dimension
+                          → 按当前错因找对应的题与讲评话术
+  workspace.lessonLogs[].completedContent / .nextLessonFocus
+                          → 找下节课要用的材料
 
-写：
-  workspace.resourceLibraryIndex[].resourceId / title /
-    resourceType / subject / gradeLevel / knowledgePoint /
-    difficulty / copyrightStatus / usageNotes
-                                → 资源索引（唯一真实存储结构）
-  学员匹配结果                   → （派生视图，非存储字段：
-                                   由 workspace.resourceLibraryIndex[] 与
-                                   workspace.studentCards[] 学情实时匹配算出）
-  使用统计                       → （派生视图，非存储字段：
-                                   运行时对资源引用做的聚合，schema 不落地；
-                                   如需持久化只写回 resourceLibraryIndex[].usageNotes）
-  → 各 SKILL 按需检索
+写（唯一写入处）：
+  workspace.resourceLibraryIndex[].resourceId
+  workspace.resourceLibraryIndex[].title
+  workspace.resourceLibraryIndex[].resourceType   （七档枚举）
+  workspace.resourceLibraryIndex[].subject
+  workspace.resourceLibraryIndex[].gradeLevel
+  workspace.resourceLibraryIndex[].knowledgePoint
+  workspace.resourceLibraryIndex[].difficulty     （四档枚举）
+  workspace.resourceLibraryIndex[].copyrightStatus（四档枚举，必填）
+  workspace.resourceLibraryIndex[].aiGenerated    （AI 生成的必须 true）
+  workspace.resourceLibraryIndex[].verifiedByTeacher（老师验算后才 true）
+  workspace.resourceLibraryIndex[].usageNotes     （用过几次、效果、改编来源）
+
+派生视图（不落库）：
+  · 匹配结果   ← resourceLibraryIndex[] 与 studentCards[] / mainErrors[] 实时比对
+  · 使用统计   ← 运行时聚合；要留痕就写进 usageNotes，不新增字段
+
+不写：
+  · 题干原文（copyrightStatus=仅存索引 的资源只记出处）
+  · 任何学员可识别信息（案例一律脱敏）
 ```
+
+### 11.3 谁来读
+
+`xiaozhi-teach-solo-dashboard` 只读 `resourceLibraryIndex[]` 做展示。若装有教师通用包，备课、作业设计、命题类 SKILL 可以来检索本库；未安装时本库对独立教师日常照常可用。任何一方取走 `verifiedByTeacher=false` 的资源，都要带上【AI 生成，入库前请人工验算】的标注。
 
 ---
 
 ## 十二、字段级高敏信息防护
 
 ```text
-✅ 资源库中可存储：化名案例、聚合数据、改编后题目
-❌ 禁止：未授权教辅原题、盗版扫描件
-✅ 案例可保留：学科/知识点/错因/方法/效果
+✅ 可存储：化名案例、自有内容、改编件、公开可引用资源
+❌ 禁止：未授权教辅原题的题干、盗版扫描件、未授权转载
+✅ 案例可保留：学科/知识点/错因维度/应对方法/效果事实
 ❌ 不保留：真实姓名/学校/家长信息/家庭住址/联系方式
-✅ 检索基于：标签/关键词/学员画像
-❌ 检索不支持：反查具体学员
+✅ 检索基于：知识点、难度、类型、关键词
+❌ 检索不支持：反查具体学员（"这条案例是谁"）
 ```
 
 ---
@@ -433,58 +485,61 @@ max_round_limit: 20
 
 | ✅ 应该做 | ❌ 不能做 |
 |---------|---------|
-| 资源入库即打标签 | 资源存了不分类 |
-| 案例入库必脱敏 | 真实学员案例入库 |
-| 版权标注清晰 | 复制未授权教辅原题 |
-| 复用时调整适配 | 直接照搬不做修改 |
-| 使用后记录效果 | 用了不反馈 |
-| 高频资源标"经典" | 所有资源平等对待 |
-| 资源检索基于画像 | 学员匹配用固定模板 |
+| 入库即填 knowledgePoint + difficulty | 存了不打标签，等于没存 |
+| 案例入库前逐条脱敏 | 真实学员案例直接入库 |
+| 教辅/真题一律仅存索引 | 把题干抄进库里 |
+| AI 生成的标 aiGenerated | 混进库里看不出是 AI 写的 |
+| 老师验算后才 verifiedByTeacher | 未验算就发给学员 |
+| 改编后重新验算一遍 | 改完数字直接用 |
+| 用过之后写进 usageNotes | 用了不留痕，下次重新判断 |
+| 按知识点 + 难度匹配 | 按"基础学员/拔尖学员"整批推 |
 
 ---
 
 ## 十四、与其他 SKILL 的协同清单
 
 ```text
-教学资源复用库
-    <── 所有 SKILL 产生的资源（讲义/题库/讲评/案例/教案）
-    ──→ xiaozhi-teach-lesson-planner（教案复用）
-    ──→ xiaozhi-teach-assignment-designer（作业复用）
-    ──→ xiaozhi-teach-classroom-coach（讲评复用）
-    ──→ xiaozhi-teach-exam-designer（测评复用）
-    ──→ xiaozhi-teach-homework-tracker（错因案例复用）
-    ──→ xiaozhi-teach-solo-dashboard（资源索引）
+教学资源复用库（自成闭环，不需要前置 SKILL）
+    读 workspace.studentCards[]        ← student-intake 写
+    读 workspace.homeworkFollowups[]   ← homework-tracker 写
+    读 workspace.lessonLogs[]          ← lesson-log 写
+    写 workspace.resourceLibraryIndex[] ← 本 SKILL 唯一写入方
+
+  其他 SKILL 需要资源时直接读 resourceLibraryIndex[]，本 SKILL 不推送。
+  若装有教师通用包，备课/作业/命题类 SKILL 可来检索；未安装不影响使用。
 ```
 
 **禁止行为**：
-- 禁止存储未授权教辅原题
+- 禁止存储未授权教辅原题的题干或扫描件
 - 禁止学员案例不脱敏入库
-- 禁止资源入库不打标签
-- 禁止资源库检索反查具体学员
-- 禁止从资源库自动推送资源给学员
+- 禁止入库不填 `copyrightStatus`
+- 禁止 `verifiedByTeacher=false` 的 AI 生成题用于学员
+- 禁止通过资源库反查具体学员
+- 禁止向学员推送资源
 
 ---
 
-## 隐私与数据控制入口
+### 隐私与数据控制入口
+- 查看：「查看我的[资源库记录]」
+- 更正：「更正我的[资源库记录]」
+- 删除：「删除我的[资源库记录]」（删除后不可恢复，会先确认一次）
+- 暂停：「这次不要记忆」/「暂停提醒」
+- 共享控制：「不要共享给其他SKILL」/「不要给家长看」
+- 导出：「导出我的[资源库记录]」（以文本形式给出，便于转存）
 
-> 本 SKILL 读写的学员数据存于共享工作空间（`solo-teacher-workspace.schema.json`），涉及未成年人信息，须提供可执行的控制入口。老师本人、或应学员/家长要求，可随时说：
+学员/家长要求删除该学员相关数据时，一并检查资源库里的错因案例，把涉及该学员的条目删除或进一步脱敏。
 
-- **查看**："查看 [学员化名] 的工作空间记录 / 课表 / 作业 / 报告"
-- **更正**："更正 [学员化名] 的 [某字段]"（覆盖旧值，避免新旧冲突并存）
-- **删除**："删除 [学员化名] 的某条记录 / 全部数据"（流失学员应按约定周期删除）
-- **暂停记录**："这次不要记录 / 暂停记录 [学员化名]"
-- **取消跨 SKILL 共享**："不要把 [学员化名] 的数据共享给其他 SKILL"
-
-**校验要求**：跨 SKILL 共享或建档前，须确认 `consent.crossSkillSharing` / `consent.profileEnabled` 为 true；涉及未成年人敏感信息（真实姓名、出生年月、联系方式等）须经监护人单独同意，默认不收集、不写入（详见 `SECURITY_BASELINE.md`）。
+**校验要求**：案例类资源入库前须完成脱敏检查（§9.2）；跨 SKILL 共享前须确认 `consent.crossSkillSharing` 为 true。真实姓名、联系方式、学校信息一律不写入（详见 `SECURITY_BASELINE.md`）。
 
 ---
 
 ## 十五、参考资源
 
-- `references/resource-categorization.md` — 资源分类与标签模板
-- `references/resource-entry-examples.md` — 资源五大类：用途、入库要求与示例
+- `references/resource-categorization.md` — 资源分类、标签与检索
+- `references/resource-entry-examples.md` — 五大类资源的用途、入库要求与示例
 - `references/copyright-annotation-template.md` — 版权标注模板
-- `references/reuse-record-template.md` — 复用记录表模板
+- `shared/vocab.md` — 版权四档、错因四维（唯一来源）
+- `shared/ai-item-check.md` — AI 出题自检协议
 
 ---
 

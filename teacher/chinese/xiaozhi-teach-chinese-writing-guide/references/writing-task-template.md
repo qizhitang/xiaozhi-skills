@@ -1,6 +1,10 @@
 # 写作任务设计模板
 
-> 配合 `xiaozhi-teach-chinese-writing-guide` 使用。避免套路题、虚假情境、单一主题。
+> 适用学段：小学高段 / 初中。
+> 配合 `xiaozhi-teach-chinese-writing-guide` §4 使用。避免套路题、虚假情境、单一主题。
+> 每个题目须标注 copyrightStatus（自有 / 改编 / 公开可引用 / 仅存索引）；
+> AI 生成的题目先按 shared/ai-item-check.md 自检，并标【AI 生成，入库前请人工验算】。
+> 批改口径统一按 `three-dim-rubric.md`（一至四类文 × 内容/结构/语言/书写），本文件不另设评分标准。
 
 ## 1. 任务设计三原则
 

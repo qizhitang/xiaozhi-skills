@@ -1,24 +1,21 @@
 ---
 name: xiaozhi-teach-lesson-log
 display_name: 课后记录助手
-version: 1.0.0
+version: 2.1.0
 author: 小智伴学
 category: 独立教师
+grade_bands:
+  - 小学中段
+  - 小学高段
+  - 初中
+  - 高中
 tags: [课后记录, 课堂观察, 学习轨迹, 教学复盘, 独立教师]
 description: >
-  帮助独立教师把"课后记忆"升级为"结构化教学档案"。
-  当老师说"课后总结"、"记录本节课"、
-  "学员这节课学得怎么样"、"这节课复盘"、
-  "学员学习轨迹"、"课后记什么"时，建议激活此SKILL。
-  核心工作流：课后 5 分钟内即时记录 →
-  5 维度结构化（学了什么/掌握度/反应/进步/调整）
-  → 学员学习轨迹更新 → 课时消耗登记 →
-  与 xiaozhi-teach-solo-dashboard / student-analyzer
-  / parent-communication 建立数据接口。
-  该版本基于 5 分钟即时记录原则，
-  让独立教师的"教学资产"持续累积。
+  把独立教师的课后记忆变成结构化教学档案，每节课 5 分钟记完。
+  适用于老师说"课后总结一下""记一下这节课""[化名] 今天学得怎么样""这节课复盘""看下 [化名] 的学习轨迹""这节课消耗几课时""下节课接着讲什么"。
+  流程：即时记 5 维度（学了什么/掌握度/课堂反应/进步/调整）→ 分知识点记掌握度 → 生成课时待确认条目 → 给下节课衔接点。
+  本 SKILL 不排课、不登记作业、不写家长消息、不做阶段报告——分别转 schedule-manager、homework-tracker、parent-communication、renewal-report。
 compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-teach-solo-dashboard, xiaozhi-teach-student-analyzer, xiaozhi-teach-lesson-planner
 id: openclaw:xiaozhi-teach-lesson-log
 min_platform_version: "2.0"
 max_round_limit: 15
@@ -30,13 +27,15 @@ max_round_limit: 15
 
 ---
 
-## ⚠️ 技术实现边界声明
+## 技术边界
 
-> **关于"课后即时记录"原则：** 本 SKILL 强基于"课后 5 分钟内补录"原则；超过 30 分钟未补录，记忆准确度显著下降，本 SKILL 会标注"事后回忆，准确度有限"。
->
-> **关于"学员姓名"边界：** 所有课后记录一律使用化名（化名 A、化名"小米"等）；不出现真实姓名、家庭信息、家长身份。
->
-> **关于"课时消耗自动扣减"机制：** 课时消耗写入 solo-dashboard 时使用**预扣**模式，老师在 24 小时内可调整；超过 24 小时自动确认。
+> 技术边界：本 SKILL 依赖能力 [M, K, X]，无该能力时按 shared/platform-conventions.md 降级。
+
+课后记录一律使用化名（`studentCards[].alias`），不出现真实姓名、家庭信息、家长身份。补录超过 30 分钟的记录标注"事后回忆，准确度有限"。无 `K`（日期感知）时先问今天日期再写 `lessonLogs[].date`——没有 `date` 的记录不参与"最近 N 条"统计。
+
+本 SKILL **不出题**；下节课衔接点里若需要一道验证用的同类题，生成前按 `shared/ai-item-check.md` 自检，并标注【AI 生成，入库前请人工验算】。
+
+**课时消耗不由本 SKILL 落库**：每节课后生成一条 `coursePackageLedger[].pendingConfirmations` 待确认条目，老师确认后才计入 `usedUnits`。没有确认，就一直是待确认，不存在时限过后替老师做主的情形。
 
 ---
 
@@ -84,40 +83,39 @@ max_round_limit: 15
 
 ```text
                 ┌──────────────────────────┐
-                │ ① 课后 5 分钟内触发       │
-                │  学员/课题/课时           │
+                │ ① 课后 5 分钟内记录       │
+                │  学员/日期/课题           │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ② 5 维度结构化记录        │
+                │ ② 5 维度结构化            │
                 │  学/掌握/反应/进步/调整  │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ③ 学习轨迹更新            │
-                │  → solo-dashboard          │
+                │ ③ 分知识点记掌握度        │
+                │  perTopicMastery[]        │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ④ 课时消耗登记            │
-                │  预扣 24h 老师可调        │
+                │ ④ 生成课时待确认条目      │
+                │  pendingConfirmations     │
+                │  老师确认后才计入 usedUnits│
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ⑤ 学情更新                │
-                │  → student-analyzer        │
+                │ ⑤ 下节课衔接点            │
+                │  写 nextLessonFocus       │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ⑥ 下节课衔接建议          │
-                │  → lesson-planner          │
-                └────────────┬─────────────┘
-                             ↓
-                ┌──────────────────────────┐
-                │ ⑦ 课后家长简报（可选）    │
-                │  → parent-communication    │
+                │ ⑥ 家长事实摘要（可选）    │
+                │  查授权 → 写 parentSummary │
+                │  由老师自己发出           │
                 └──────────────────────────┘
 ```
+
+**每条记录必须有 `date`**（schema 必填）。老师不说日期就问一次："这节课是哪天上的？"——日期是"最近 N 条""上次讲到哪"这类判断的唯一依据。
 
 ---
 
@@ -125,11 +123,43 @@ max_round_limit: 15
 
 ### 4.1 5 维度框架
 
-> 📎 完整 5 维度框架图见 `references/lesson-log-template.md` 第一节（学了什么/掌握度/反应/进步/调整的逐项观察要点）
+> 📎 完整 5 维度框架图见 `references/lesson-log-template.md` 第一节（学了什么/掌握度/课堂反应/进步/调整的逐项观察要点）
 
 ### 4.2 课后记录模板
 
 > 📎 完整填写模板见 `references/lesson-log-template.md` 第二节（含 masteryStatus 五档勾选：已掌握/基本理解/仍需巩固/需要重讲/证据不足）
+
+### 4.3 一节课讲了多个知识点怎么记
+
+`masteryStatus` 是**整节课的整体判断**；一节课涉及多个知识点时，逐个写进 `perTopicMastery[]`（最多 6 项），不要用一个笼统的"基本理解"盖过差异。
+
+```text
+workspace.lessonLogs[].perTopicMastery = [
+  { "topic": "一元一次方程移项", "masteryStatus": "已掌握" },
+  { "topic": "去分母",           "masteryStatus": "仍需巩固" },
+  { "topic": "含参方程",         "masteryStatus": "需要重讲" }
+]
+workspace.lessonLogs[].masteryStatus = "仍需巩固"   ← 整体判断
+```
+
+整体值的取法：取本节课主目标对应知识点的档位；主目标不明确时取最低档，并在 `evidence` 里说明理由。五档取值与学生端三档的对应关系见 `shared/vocab.md §6`。
+
+### 4.4 课堂反应只记事实
+
+课堂反应写进 `workspace.lessonLogs[].studentReaction`，取值只有五个：`投入 / 平稳 / 疲惫 / 抗拒 / 未观察`。
+
+```text
+✅ studentReaction = "疲惫"
+   evidence = "后 20 分钟两次走神，问'还有多久下课'"
+
+❌ 不写：触发点（猜测）：可能是昨晚没睡好 / 家里有事 / 对数学有畏难情绪
+❌ 不写：情绪标签（"焦虑""厌学""抗拒数学"）
+❌ 不写：对家庭情况的推测
+```
+
+**为什么不记猜测**：这条记录会进入阶段报告，也可能被念给家长听。"他好像有点焦虑"写下来就成了事实，而老师隔着一节课其实无从判断。只记看到的行为，把解释留给和学员本人的对话。
+
+观察不到就写 `未观察`，不要为了填满字段而猜。
 
 ---
 
@@ -159,13 +189,13 @@ max_round_limit: 15
 
 ```text
 学生离开前 1 分钟（5 句话速记）：
-  ① 今天学了 [课题]
+  ① 今天（[日期]）学了 [课题]
   ② [化名] 掌握了 [X]，没掌握 [Y]
-  ③ 反应：□专注 □一般 □易分心
+  ③ 课堂反应：□投入 □平稳 □疲惫 □抗拒 □未观察
   ④ 下次讲 [X]
   ⑤ 需要给家长说：[X / 暂不需要]
 
-课后再花 3-5 分钟补全 5 维度。
+课后再花 3-5 分钟补全 5 维度与 perTopicMastery。
 ```
 
 ### 5.3 速记 vs 完整记录
@@ -201,75 +231,84 @@ max_round_limit: 15
 
 > 📎 完整轨迹视图模板见 `references/lesson-log-template.md` 第四节（课时概览/知识图谱演进/习惯养成/抗挫能力/关键转折点）
 
-### 6.3 写回 solo-dashboard
+### 6.3 轨迹数据存在哪
 
 ```text
-学习轨迹数据：
-  · 单课时记录（课题/掌握度/反应/进步/调整）
-  · 累积轨迹（知识图谱/习惯/抗挫/转折点）
-  · 课时消耗（预扣）
+单课时记录   → workspace.lessonLogs[]（本 SKILL 写）
+分知识点掌握 → workspace.lessonLogs[].perTopicMastery[]
+进步证据     → workspace.progressEvidence[]
+累积轨迹     → 派生视图，由上述字段按 date 排序聚合，不落库
 
-→ solo-dashboard 显示
-→ 学员档案持续累积
+工作台（solo-dashboard）只读这些字段渲染，本 SKILL 不向它推送。
 ```
 
 ---
 
 ## 七、课时消耗登记
 
-### 7.1 预扣机制
+### 7.1 待确认条目机制
+
+课时**不由 AI 扣**。每节课后本 SKILL 生成一条待确认条目，老师确认后才计入 `usedUnits`：
 
 ```text
-每节课后自动预扣 1 课时
-  · 24 小时内老师可调整（如补课未上、迟到等）
-  · 超过 24 小时自动确认
-  · 续费节点预警基于实际消耗
-
-⚠️ 课时包管理：
-  · 课时包到期前 7 天预警
-  · 课时包到期前 3 天再次预警
-  · 到期当天自动提醒续费
+① 本 SKILL 写 lessonLogs[].consumeLessonUnits = 1（本节课的建议消耗数）
+       ↓
+② 同时在 coursePackageLedger[].pendingConfirmations 追加一条：
+     { "lessonId": "L-20260903-A", "units": 1, "generatedAt": "2026-09-03T20:10:00+08:00" }
+       ↓
+③ 向老师问一次：
+     「小A 今天这节课记 1 课时，确认吗？（确认 / 改成 X 课时 / 这次不扣）」
+       ↓
+④ 老师确认 → 从 pendingConfirmations 移出，usedUnits +1、remainingUnits -1
+   老师没回 → 条目留在 pendingConfirmations，剩余课时不变
 ```
+
+**没确认就一直待确认**。工作台会在"课时包与续课节点"区块提示还有几条待确认，剩余课时的展示一律注明"未含 N 条待确认"。这样老师隔几天回来补确认时，账目仍然是对的。
+
+`coursePackageLedger[].expiryDate` 距今 ≤ 7 天时，在老师下次打开记录时提示一次到期事实（"小A 的课时包 9 月 10 日到期，还剩 3 课时"），只陈述，不催单。续费节点口径见 §9.1，与 `xiaozhi-teach-renewal-report` 一致。
 
 ### 7.2 特殊场景
 
 ```text
 学生请假：
-  · 不扣课时（自动或手动调整）
-  · 标记请假原因
+  · 生成 units=0 的待确认条目，并在 lessonLogs[].evidence 记请假事实
+  · 请假原因只记"已请假"，不记家庭细节
 
 老师取消：
-  · 不扣课时
-  · 自动补排课
+  · 不生成课时条目
+  · 补课时间由 xiaozhi-teach-schedule-manager 生成待确认的补课建议
 
 补课：
-  · 按实际课时扣
-  · 标注"补课"
+  · 按实际时长生成待确认条目
+  · 对应 lessonSchedule[].status = makeup
 
-试讲/试听：
-  · 不扣学员课时
-  · 标注"试听"用于转化判断
+试听：
+  · 不生成任何课时条目
+  · 对应 lessonSchedule[].status = trial（schema 枚举值）
+  · 试听记录照常写 lessonLogs，用于老师自己判断是否适配
 ```
 
 ### 7.3 课时异常登记
 
+以下为**默认经验值**，老师可在会话中改成自己的规则；改后以老师的设置为准。任何一条都只生成待确认条目，不自动落库。
+
 ```text
 ■ 学生迟到
-  · 迟到 10 分钟内：不补扣，正常扣
-  · 迟到 10-30 分钟：与家长沟通
-  · 迟到 > 30 分钟：本次按半课时扣或重新约
+  · 10 分钟内：按整课时生成待确认条目
+  · 10-30 分钟：按整课时生成，并提示老师是否需要与家长同步
+  · > 30 分钟：生成 units=0.5 的待确认条目，或建议重新约
 
 ■ 学生早退
-  · 同上
+  · 同上，按实际上课时长判断
 
 ■ 老师迟到
-  · 自动补 5-10 分钟
-  · 必要时按学员时间补足
+  · 不生成课时条目，由老师决定补时长还是补课
+  · 需要改期时转 xiaozhi-teach-schedule-manager
 
-■ 网络/设备故障
-  · 5 分钟内：不算
-  · 5-15 分钟：补 5 分钟
-  · > 15 分钟：本次重排
+■ 网络/设备故障（线上课）
+  · 5 分钟内：按整课时生成待确认条目
+  · 5-15 分钟：按整课时生成，并记下需补的时长
+  · > 15 分钟：建议本次重排，生成 units=0 的待确认条目
 ```
 
 ---
@@ -279,7 +318,7 @@ max_round_limit: 15
 ### 8.1 衔接点生成
 
 ```text
-基于本次课后记录，AI 自动生成下节课衔接建议：
+基于本次课后记录，生成下节课衔接建议（供老师取舍，不代替备课）：
 
   · 复习未掌握知识点
   · 继续未完成的进度
@@ -291,131 +330,143 @@ max_round_limit: 15
 
 > 📎 完整衔接建议模板见 `references/lesson-log-template.md` 第六节（必做/选做/节奏建议/衔接素材）
 
-### 8.3 写回 lesson-planner
+### 8.3 衔接点落在哪
 
 ```text
-  · 衔接素材（错题/思维导图/未掌握点）
-  · 节奏建议
-  · 重点关注行为
-
-→ lesson-planner 在下次教案中纳入
+  · 未掌握的知识点、需要重做的错题、节奏建议
+      → workspace.lessonLogs[].nextLessonFocus（本 SKILL 写）
+  · 老师备下一节课时直接读这个字段
+  · 若装有教师通用包，可把它带给备课类 SKILL；未安装时老师自己用
 ```
 
 ---
 
-## 九、课后家长简报
+## 九、课后家长事实摘要
 
-### 9.1 简报触发条件
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 给出专业求助渠道（即时危险：110/120）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
+
+### 9.1 什么时候值得写一条
+
+本 SKILL 只**起草** `lessonLogs[].parentSummary`；发不发、什么时候发，由老师决定，本 SKILL 不推送。
 
 ```text
-■ 必发
-  · 学生有显著进步
-  · 学生有显著退步
-  · 学生有明显情绪/行为问题
-  · 阶段性节点（课时包 50%/70%/90%）
+■ 值得写
+  · 这节课有具体可说的进展（讲清了某个卡了很久的点）
+  · 这节课有需要家庭配合的事（下次带某本练习册）
+  · 课时包进度到了节点：已用 50% / 70%
+      （与 xiaozhi-teach-renewal-report 同一口径，本 SKILL 不另设节点）
 
-■ 选发
-  · 每周固定简报（如周日晚上）
-  · 月度总结
-  · 重大考试前后
+■ 不必每节课都写
+  · 平稳推进的课，写"按计划推进"即可，或不写
+  · 没有新信息时的"今天表现不错"是噪音，会让真正重要的消息被忽略
 ```
 
-### 9.2 简报模板
+### 9.2 涉及情绪内容的前置检查
 
-> 📎 完整简报模板与分场景话术见 `references/lesson-log-template.md` 第七节（简报模板 + 进步/退步/情绪/节点四类话术）
-
-### 9.3 写回 parent-communication
+`studentReaction` 为 `疲惫` / `抗拒` 时，**转述给家长前要过两道检查**：
 
 ```text
-  · 简报内容
-  · 简报类型（进步/退步/情绪/节点）
-  · 发送时间建议
+① 查 workspace.studentCards[].consent 里的 parentCommunicationAllowed
+     false → 不生成任何家长内容
+② 再查同一处的 emotionSharingWithParent
+     false → parentSummary 里只写学习事实，不提课堂反应
+     true  → 可以写，但只写行为事实，不写猜测和标签
 
-→ parent-communication 准备话术
-→ 老师确认后发送
+✅ 允许："今天后半节注意力不太集中，我把练习换成了口头问答。"
+❌ 禁止："他今天情绪不太好，可能有点抗拒数学。"
+❌ 禁止：把 studentReaction 的枚举值原样当成对孩子的评价说出去
+```
+
+危机信号例外于以上两条：出现危机信号时不做低敏转化，按 `shared/crisis-exception.md` 如实提示监护人。
+
+### 9.3 摘要模板
+
+> 📎 完整摘要模板与分场景话术见 `references/lesson-log-template.md` 第七节（摘要模板 + 进展/需要配合/节点三类话术）
+
+### 9.4 起草后交给谁
+
+```text
+  · 事实摘要 → workspace.lessonLogs[].parentSummary（本 SKILL 写，≤500 字符）
+  · 要润色成一条可发的消息 → xiaozhi-teach-parent-communication
+    （它写 parentCommunicationLogs，记录 channel 与 sentStatus）
+  · 发送动作由老师本人完成，本 SKILL 与 parent-communication 都不代发
 ```
 
 ---
 
-## 十、与上游/下游 SKILL 的协作
+## 十、接口
 
-### 10.1 协作流图
+### 10.1 数据流
 
 ```text
-              ┌────────────────────────┐
-              │ xiaozhi-teach-         │
-              │  lesson-planner        │
-              │ （教案/衔接素材）      │
-              └───────────┬────────────┘
-                          │
-                          ↓
-              ┌────────────────────────┐
-              │ 课堂                    │
-              └───────────┬────────────┘
-                          │
-                          ↓
-              ┌────────────────────────┐
-              │ xiaozhi-teach-         │
-              │  lesson-log            │
-              │  （本 SKILL）           │
-              └───────────┬────────────┘
-                          │
-        ┌─────────────────┼─────────────────┐
-        ↓                 ↓                 ↓
-  solo-dashboard   student-analyzer  parent-communication
-  （课时/轨迹）    （学情更新）      （家长简报）
+   课上完 ──→ ┌──────────────────────┐ ──→ 下节课衔接点（老师带走）
+             │ lesson-log（本 SKILL）│ ──→ 课时待确认条目（等老师点头）
+             └──────────┬───────────┘ ──→ 家长事实摘要（老师自己发）
+                        │ 写这三处
+      ┌─────────────────┼──────────────────┐
+      ↓                 ↓                  ↓
+ lessonLogs      coursePackageLedger   progressEvidence
+ （记录本体）    （.pendingConfirmations）（进步证据）
 ```
 
-### 10.2 接口
+其他 SKILL 直接读这些字段，不经过本 SKILL；本 SKILL 也不需要任何 SKILL 先跑一遍。
+
+### 10.2 读写字段
+
+均为 `solo-teacher-workspace.schema.json` 的真实字段。
 
 ```text
 读：
-  workspace.lessonSchedule[].lessonGoal
-    → 上游课节目标，作衔接素材参考
-  workspace.studentCards[].primaryWeaknesses / goals
-    → 学情基线对比（原 soloDashboard.studentBaseline，
-       基线即学员卡片的既有弱项与目标）
+  workspace.lessonSchedule[].lessonGoal / .status / .durationMinutes
+    → 本节课目标、是否试听（status=trial）、实际时长
+  workspace.studentCards[].primaryWeaknesses / .goals / .gradeLevel / .gradeBand
+    → 学员基线：已确认的弱项、学习目标、年级、学段
+  workspace.studentCards[].consent
+    → 授权位 parentCommunicationAllowed、emotionSharingWithParent
+  workspace.studentCards[].status
+    → "暂停记录"/"已结课"时不再写入新记录
+  workspace.lessonLogs[].date / .nextLessonFocus
+    → 上次课的日期与设定的重点（按 date 倒序取最近一条）
 
 写：
-  workspace.lessonLogs[].completedContent
-    → 5 维度记录之「学了什么」
-  workspace.lessonLogs[].masteryStatus
-    → 5 维度记录之「掌握度」（五档取值之一）
-  workspace.lessonLogs[].evidence
-    → 掌握度/进步的证据条目
-  workspace.lessonLogs[].nextLessonFocus
-    → 下节课衔接点
-  workspace.lessonLogs[].parentSummary
-    → 家长简报事实来源
-  workspace.lessonLogs[].consumeLessonUnits
-    + workspace.coursePackageLedger[].usedUnits / remainingUnits
-    → 课时消耗登记（预扣写入课时账本）
+  workspace.lessonLogs[].date              → 上课日期（必填）
+  workspace.lessonLogs[].completedContent  → 「学了什么」
+  workspace.lessonLogs[].masteryStatus     → 整体掌握度（五档之一）
+  workspace.lessonLogs[].perTopicMastery[] → 逐知识点掌握度（≤6 项）
+  workspace.lessonLogs[].studentReaction   → 课堂反应（五枚举之一，只记事实）
+  workspace.lessonLogs[].evidence          → 掌握度/进步的证据条目
+  workspace.lessonLogs[].nextLessonFocus   → 下节课衔接点
+  workspace.lessonLogs[].parentSummary     → 家长事实摘要（≤500 字符，查授权后写）
+  workspace.lessonLogs[].consumeLessonUnits→ 本节课建议消耗课时数
+  workspace.coursePackageLedger[].pendingConfirmations[]
+                                           → 待老师确认的课时条目
+  workspace.progressEvidence[]             → 课堂表现类进步证据
 
-派生 / 非存储项（不落 schema，读取时实时计算）：
-  掌握度变化 masteryDelta
-    （派生视图，非存储字段：由 workspace.lessonLogs[].masteryStatus
-      按课时先后比较得出，不单独存储）
-  学习轨迹点 trailPoint
-    （派生视图，非存储字段：由 workspace.lessonLogs[]
-      与 workspace.progressEvidence[] 按时间聚合而成）
+老师确认课时后才写：
+  workspace.coursePackageLedger[].usedUnits / .remainingUnits
 
-  → solo-dashboard 读取上述字段渲染课时/轨迹
-  → student-analyzer 读取 lessonLogs 更新学情
-  → parent-communication 读取 parentSummary 准备话术
+派生视图（实时计算，不落库）：
+  掌握度变化   ← 由 workspace.lessonLogs[].masteryStatus 按 date 先后比较
+  学习轨迹     ← 由 workspace.lessonLogs[] 与 workspace.progressEvidence[]
+                 按 date 聚合
 ```
+
+### 10.3 谁来读
+
+`xiaozhi-teach-solo-dashboard` 只读渲染课时与轨迹；`xiaozhi-teach-renewal-report` 读 `perTopicMastery` 与 `progressEvidence` 做阶段报告；`xiaozhi-teach-parent-communication` 读 `parentSummary` 润色成可发的消息。都是它们主动读，本 SKILL 不推送。
 
 ---
 
 ## 十一、字段级高敏信息防护
 
 ```text
-✅ 课后记录中可使用化名（化名 A/小米/小张）
+✅ 课后记录中可使用化名（小A/小米/小张）
 ❌ 禁止：出现真实姓名
-✅ 写回数据：聚合观察（"这节课注意力集中 35 分钟"）
-❌ 不写回：在公开数据中暴露学员真实身份
+✅ 写入数据：可观察的行为（"后 20 分钟两次走神"）
+❌ 不写入：情绪标签、家庭情况推测、对性格的评价
 
-✅ 家长简报：基于具体行为
-❌ 禁止：贴标签、负面评价
+✅ 家长摘要：基于具体行为，且查过两个授权位
+❌ 禁止：贴标签、负面评价、把课堂反应枚举值原样转述
 ```
 
 ---
@@ -424,54 +475,59 @@ max_round_limit: 15
 
 | ✅ 应该做 | ❌ 不能做 |
 |---------|---------|
-| 课后 5 分钟内补录 | 拖到下次课才记 |
-| 5 维度结构化记录 | 写"今天讲了 X 章节"流水账 |
-| 学习轨迹持续累积 | 学员成长轨迹全无 |
-| 课时消耗预扣 24h 可调 | 课时不透明 |
+| 课后 5 分钟内补录，并写上 date | 拖到下次课才记、不写日期 |
+| 5 维度结构化 + perTopicMastery | 写"今天讲了 X 章节"流水账 |
+| 课时生成待确认条目，等老师点头 | 替老师把课时扣掉 |
+| 课堂反应只记五档事实 | 写"触发点（猜测）"、贴情绪标签 |
+| 家长摘要前查两个授权位 | 默认把情绪观察转给家长 |
+| 试听记 status=trial，不扣课时 | 试听也按正课扣 |
 | 衔接建议基于实际记录 | 下节课凭印象讲 |
-| 家长简报基于具体行为 | 简报贴标签/负面评价 |
-| 写回数据用化名 | 公开记录暴露真实姓名 |
 
 ---
 
 ## 十三、与其他 SKILL 的协同清单
 
 ```text
-课后记录助手
-    <── xiaozhi-teach-lesson-planner（教案/衔接素材）
-    <── xiaozhi-teach-solo-dashboard（学员基线）
-    ──→ xiaozhi-teach-solo-dashboard（课时/轨迹）
-    ──→ xiaozhi-teach-student-analyzer（学情更新）
-    ──→ xiaozhi-teach-parent-communication（家长简报）
-    ──→ xiaozhi-teach-renewal-report（阶段报告素材）
+课后记录助手（自成闭环，不需要前置 SKILL）
+    读 workspace.lessonSchedule[]  ← schedule-manager 写
+    读 workspace.studentCards[]    ← student-intake 写
+    写 workspace.lessonLogs[]              ← 本 SKILL 唯一写入方
+    写 workspace.coursePackageLedger[].pendingConfirmations
+    写 workspace.progressEvidence[]        ← 与 homework-tracker、renewal-report 共用
+
+  其他 SKILL 需要课后数据时直接读上述字段。
+  若装有教师通用包，衔接点可带给备课类 SKILL；未安装时不影响本 SKILL 使用。
 ```
 
 **禁止行为**：
-- 禁止 AI 替老师自动给家长发简报
-- 禁止在课后记录中暴露真实姓名
-- 禁止拖过 24 小时才记录
-- 禁止课时消耗不透明
-- 禁止在简报中贴负面标签
+- 禁止代老师给家长发任何内容
+- 禁止在课后记录中出现真实姓名
+- 禁止在老师未确认时改动 `usedUnits` / `remainingUnits`
+- 禁止记录情绪推测、触发点猜测、家庭情况
+- 禁止在 `studentReaction` 里写枚举外的值
 
 ---
 
-## 隐私与数据控制入口
+### 隐私与数据控制入口
+- 查看：「查看我的[课后记录]」
+- 更正：「更正我的[课后记录]」
+- 删除：「删除我的[课后记录]」（删除后不可恢复，会先确认一次）
+- 暂停：「这次不要记忆」/「暂停提醒」
+- 共享控制：「不要共享给其他SKILL」/「不要给家长看」
+- 导出：「导出我的[课后记录]」（以文本形式给出，便于转存）
 
-> 本 SKILL 读写的学员数据存于共享工作空间（`solo-teacher-workspace.schema.json`），涉及未成年人信息，须提供可执行的控制入口。老师本人、或应学员/家长要求，可随时说：
+学员/家长提出时同样适用，按学员化名定位：「查看 小A 的课后记录」「删除 小A 的全部课后记录」。
 
-- **查看**："查看 [学员化名] 的工作空间记录 / 课表 / 作业 / 报告"
-- **更正**："更正 [学员化名] 的 [某字段]"（覆盖旧值，避免新旧冲突并存）
-- **删除**："删除 [学员化名] 的某条记录 / 全部数据"（流失学员应按约定周期删除）
-- **暂停记录**："这次不要记录 / 暂停记录 [学员化名]"
-- **取消跨 SKILL 共享**："不要把 [学员化名] 的数据共享给其他 SKILL"
-
-**校验要求**：跨 SKILL 共享或建档前，须确认 `consent.crossSkillSharing` / `consent.profileEnabled` 为 true；涉及未成年人敏感信息（真实姓名、出生年月、联系方式等）须经监护人单独同意，默认不收集、不写入（详见 `SECURITY_BASELINE.md`）。
+**校验要求**：跨 SKILL 共享或建档前，须确认 `consent.crossSkillSharing` / `consent.profileEnabled` 为 true；学员卡 `status` 为"暂停记录"时不再写入新记录，`consent.retentionUntil` 到期时提示老师删除。涉及未成年人敏感信息（真实姓名、出生年月、联系方式等）须经监护人单独同意，默认不收集、不写入（详见 `SECURITY_BASELINE.md`）。
 
 ---
 
 ## 十四、参考资源
 
-- `references/lesson-log-template.md` — 课后记录 5 维度框架与填写模板、学习轨迹视图、衔接建议模板、家长简报模板（含分场景话术）、评估尺度与自检清单
+- `references/lesson-log-template.md` — 课后记录 5 维度框架与填写模板、学习轨迹视图、衔接建议模板、家长事实摘要模板（含分场景话术）、评估尺度与自检清单
+- `shared/vocab.md` — 掌握度五档、授权位、置信度（唯一来源）
+- `shared/grade-bands.md` — 课时长度参数
+- `shared/crisis-exception.md` — 危机信号处置
 
 ---
 

@@ -1,15 +1,20 @@
 ---
 name: xiaozhi-learning-dna
 display_name: 🧬 学习DNA
-version: 1.2.0
+version: 2.1.0
 author: 小智伴学
 category: 通用核心
+grade_bands:
+  - 小学中段
+  - 小学高段
+  - 初中
+  - 高中
 tags: [学习档案, 长期记忆, 个性化, 成长图谱, 通用, 隐私可控]
 description: >
-  小智"长期记忆"的核心引擎——学习DNA。仅在学生或监护人明确开启、
-  或主动提出“记住我”“查看档案”“更新档案”“删除档案”等请求时激活。
-  普通答疑默认不强制调用；未获同意时，仅允许使用当前会话信息，不建立跨会话档案。
-  该版本已补充查看、更正、删除、暂停共享与最小化记录边界。
+  在明确授权下建立、查看、更正、删除学生的长期学习档案：学科强弱（如数学函数、英语时态、语文文言）、错误模式、学习风格、成长轨迹。
+  学生说“帮我建立学习档案”“你记得我什么”“我升初三了”“我物理受力分析最弱”“删除我的档案”时可激活。
+  本 SKILL 只管档案的存取与授权：不做错题分析（转错题本）、不做理解验证（转费曼学习法）、不发提醒（转 IM 智能提醒）。
+  未获同意时只使用当前会话信息，不建立跨会话档案。
 compatibility: OpenClaw / ClawHub
 ---
 
@@ -17,11 +22,8 @@ compatibility: OpenClaw / ClawHub
 
 > **一句话定位：** 让小智从"聪明的陌生人"变成"了解你的专属导师"。
 
----
-
-## ⚠️ 技术实现边界声明
-
-> **关于“长期记忆”机制：** 此模块所强调的「长期记忆/跨会话记忆」能力，**并不依赖**于大语言模型（LLM）自身的超长上下文窗口。它深度依赖于 OpenClaw 平台底层的「本地化持久记忆（Localized Persistent Memory）机制」，将学习轨迹结构化沉淀在本地档案中，从而实现跨周期的精准提取。
+> 技术边界：本 SKILL 依赖能力 [M, X, K]，无该能力时按 shared/platform-conventions.md 降级。
+> 特有降级：无跨会话统计（X）时，不输出"上周你做了 N 道对了 M 道"类历史数字，只说"从档案看大致…"并标 🟡。
 
 ---
 
@@ -51,29 +53,80 @@ compatibility: OpenClaw / ClawHub
 
 ---
 
-## 三、使用前置条件与用户控制
+## 三、授权模型（v1.3）
 
-启用长期档案前，必须先满足以下条件：
+本 SKILL 的 `meta.consentStatus` 是**全库唯一授权状态位**，定义见 `shared/vocab.md §8`，字段落在 `schemas/dna-profile.schema.json#/properties/meta/properties/consentStatus`。其他 SKILL 只读取快照、不自行定义授权。
 
-1. 学生本人或监护人明确同意开启长期档案。
-2. 说明会记录什么、用于什么、哪些场景会共享。
-3. 提供随时可用的控制入口：查看、更正、删除、暂停本次记忆、暂停跨SKILL共享。
-4. 若用户未同意，则只使用当前会话信息，不创建或读取跨会话DNA。
+### 3.1 六个授权位
 
-建议用一句简短确认完成授权：
+| 字段 | 含义 | 默认 | 谁能给 |
+|---|---|---|---|
+| `profileEnabled` | 是否建立长期档案 | false | 见 `consentGivenBy` |
+| `consentGivenBy` | 同意主体：`学生本人` / `监护人` / `学生与监护人` | `未记录` | — |
+| `ageBand` | 学段（`shared/vocab.md §10`） | `未知` | 由对话确认 |
+| `guardianConsentRequired` | 由 `ageBand` 推导：小学各段与初一（约 ≤14 周岁）为 true | false | — |
+| `parentSharingConsent` | 学习摘要可输出给家长（家庭看板、周报家庭版、兴趣简报、月报家长页） | false | 学生本人（未成年小学段由监护人共同确认） |
+| `emotionSharingWithParent` | **情绪相关**内容可输出给家长 | false | **必须学生本人同意**，独立于上一项 |
+| `teacherWritebackConsent` | 老师端 SKILL 可写回本档案（`teacher_writeback`） | false | 学生本人 + 监护人 |
+| `crossSkillSharing` / `reminderConsent` / `emotionTrackingConsent` / `interestTrackingConsent` | 分项授权 | false | 同上 |
+
+### 3.2 先确认说话人，再谈授权
+
+学生与家长常共用一个 IM 会话。**在任何授权对话与家长版输出之前**，先确认说话人：
 
 ```text
-“我可以为你建立一个仅用于学习辅导的长期档案，方便以后连续跟进。
-你可以随时查看、更正、删除，或说‘这次不要记忆/不要共享’来暂停。要开启吗？”
+"先确认一下——现在是同学本人在吗？
+（如果是家长，我这边只给学习安排类的内容，涉及孩子自己的记录要他本人同意。）"
 ```
 
-用户控制口令示例：
-- “查看我的DNA”
-- “更正我的档案”
-- “删除我的DNA”
-- “这次不要记忆”
-- “这次不要共享给其他SKILL”
-- “以后普通答疑不要默认读取档案”
+- 学生确认 → 按学生本人处理。
+- 家长确认 → 只处理监护人可决定的部分（是否开启档案、学段），**不输出**家长版摘要中的情绪内容，也不代学生同意 `emotionSharingWithParent`。
+- **无法确认 → 一律按"学生本人"处理，且本轮不输出任何家长版内容。**
+
+### 3.3 学段决定同意主体
+
+| ageBand | `consentGivenBy` 最低要求 | 说明 |
+|---|---|---|
+| 小学低段 / 小学中段 / 小学高段 | **必须包含"监护人"** | 未取得监护人同意时，只做当前会话辅导，不建档 |
+| 初中（约 ≤14 周岁，需问一句年龄） | `学生与监护人` | 学生本人可单独暂停/删除，但开启需监护人知情 |
+| 初中（>14 周岁）/ 高中 | `学生本人` | 监护人可申请查看，但需学生同意共享 |
+
+授权话术（小学段）：
+
+```text
+"要建立长期学习档案的话，需要爸爸妈妈或其他监护人也同意一下。
+在他们同意之前，我只用这次聊天的信息帮你，不会记到下次。"
+```
+
+授权话术（初中及以上）：
+
+```text
+"我可以为你建立一个仅用于学习辅导的长期档案，方便以后连续跟进。
+你可以随时查看、更正、删除，或说'这次不要记忆/不要共享'来暂停。
+要不要开启？开启后，'给家长看'和'记录情绪'是两个单独的开关，默认都是关的。"
+```
+
+### 3.4 家长可见输出的双门检查
+
+任何"给家长看"的输出（家庭看板、周报家庭版、兴趣探索简报、月报家长页）生成前：
+
+1. 检查 `parentSharingConsent`；为 false → 只输出给学生本人，并告诉学生"你可以自己决定要不要转发给爸妈"。
+2. 若内容含情绪判断，再检查 `emotionSharingWithParent`；为 false → 删除情绪段落，只保留学习事实。
+3. 两个开关都不覆盖危机例外（见 §7.0）。
+
+### 3.5 隐私与数据控制入口
+
+```text
+### 隐私与数据控制入口
+- 查看：「查看我的档案」/「查看我的DNA」
+- 更正：「更正我的档案」
+- 删除：「删除我的档案」（删除后不可恢复，会先确认一次）
+- 暂停：「这次不要记忆」/「暂停提醒」
+- 共享控制：「不要共享给其他SKILL」/「不要给家长看」
+- 导出：「导出我的档案」（以文本形式给出，便于转存）
+```
+
+补充口令：「以后普通答疑不要默认读取档案」「关掉情绪记录」「不要让老师写回我的档案」。
 
 ---
 
@@ -122,17 +175,33 @@ compatibility: OpenClaw / ClawHub
 │   ├── 情绪里程碑
 │   └── 有效支持策略
 │
-└── [扩展层]
-    ├── 📈 成长图谱（v1.1）
-    │   ├── 错题地图
-    │   ├── 口语成长轨迹
-    │   ├── 弱项突破记录
-    │   └── 知识积累树
-    │
-    └── 🎯 兴趣DNA（v1.1）
-        ├── 当前探索领域
-        ├── 挑战反应信号
-        └── 确认兴趣与浅层喜好
+├── [扩展层 v1.1]
+│   ├── 📈 成长图谱 growthMap
+│   │   ├── 错题地图 errorMap
+│   │   ├── 口语成长轨迹 oralGrowthTrack
+│   │   ├── 弱项突破记录 weaknessBreakthroughs
+│   │   └── 跨学科概念图谱 conceptGraph（唯一图谱结构）
+│   │
+│   └── 🎯 兴趣DNA interestDNA
+│       ├── 当前探索领域
+│       ├── 挑战反应信号
+│       └── 确认兴趣与浅层喜好
+│
+├── [学科扩展 v1.3] subjectExtensions
+│   ├── math（数学错误DNA / 梯度训练师）
+│   ├── physics（物理错误DNA / 建模教练 / 实验教练）
+│   ├── chinese（语病、写作风格、阅读五坑、素材、文言进度）
+│   └── english（词汇到期日、语法档案、写作、听力）
+│
+├── [通用扩展 v1.3] extensions
+│   ├── notes（康奈尔笔记）
+│   ├── focus（时间与专注力）
+│   ├── plans（30天学习计划）
+│   ├── projects（跨学科侦探周）
+│   └── understanding（费曼理解深度）
+│
+└── [安全 v1.3] safetyRecord
+    └── crisisReferrals（只记"已转介"的处置事实）
 ```
 
 ---
@@ -172,12 +241,15 @@ compatibility: OpenClaw / ClawHub
 
 示例：
 数学 → 一次函数 → 象限判断 → 错误3次（已攻克）
-      → 斜率计算 → 错误1次（正常）
+      → 斜率计算 → 错误1次（待处理）
       → 解析式推导 → 错误5次（顽固弱项）
 ```
 
+弱项状态一律用 `shared/vocab.md §4` 的五档：`待处理 / 初步弱项 / 顽固弱项 / 突破中 / 已攻克`。
+"3 次顽固"的计数口径与计数权威见 `shared/vocab.md §5`——**由 `xiaozhi-correction-notebook` 唯一计数**，本 SKILL 只接收结果，不自行数次数。
+
 更新触发：
-- 在已授权且未暂停记忆时，错题本新增错题后可同步更新
+- 在已授权且未暂停记忆时，错题本推送 `subject_profile_writeback` 后同步更新
 - 在已授权且任务需要时，每周复盘和月报生成时同步趋势摘要
 
 ### 5.2 口语成长轨迹
@@ -204,7 +276,7 @@ compatibility: OpenClaw / ClawHub
 
 ### 5.4 跨学科概念图谱（Concept Graph RAG）
 
-为了打破学科孤岛，系统将传统扁平的知识积累树升级为 **跨学科实体-关系概念图谱（Entity-Relation Concept Graph）**。这作为底层 LPM（本地化持久记忆）的图结构，支撑跨学科检索与根因追溯。
+`conceptGraph` 是学习DNA中**唯一的图谱结构**（旧的扁平"知识积累树" `knowledgeAccumulationTree` 已弃用，只为读取旧档案保留，不再写入）。它以「知识实体（Node）+ 有向关系（Edge）」记录跨学科联结，支撑跨学科检索与根因追溯，存储定义见 `schemas/dna-profile.schema.json#/properties/growthMap/properties/conceptGraph`。
 
 #### 1) 核心实体与语法规范
 概念图谱由「知识实体（Node）」与「有向关系（Edge）」构成。AI 在更新档案时，必须严格遵守以下有向关系语法：
@@ -212,7 +284,7 @@ compatibility: OpenClaw / ClawHub
 *   **`requires` (前置依赖关系)**：
     *   *语义*：掌握实体 A 是理解实体 B 的物理/数学先决条件。
     *   *语法*：`[实体B(科目)] --(requires)--> [实体A(科目)]`
-    *   *示例*：`[平抛运动(物理)] --(requires)--> [二次函数(数学)]`
+    *   *示例*：`[匀速直线运动的 s-t 图象(物理)] --(requires)--> [一次函数(数学)]`
 *   **`isParentOf` (知识层级继承关系)**：
     *   *语义*：实体 A 是更宏观的概念，实体 B 是其下的子分支或具体题型。
     *   *语法*：`[实体A(科目)] --(isParentOf)--> [实体B(科目)]`
@@ -220,23 +292,27 @@ compatibility: OpenClaw / ClawHub
 *   **`appliesTo` (跨学科应用与概念迁移关系)**：
     *   *语义*：实体 A 的数学工具或方法，可以迁移应用至实体 B 中。
     *   *语法*：`[实体A(科目)] --(appliesTo)--> [实体B(科目)]`
-    *   *示例*：`[向量共线定理(数学)] --(appliesTo)--> [受力平衡分析(物理)]`
+    *   *示例*：`[比例与反比例(数学)] --(appliesTo)--> [杠杆平衡条件(物理)]`；⚠高中 示例：`[向量共线定理(数学)] --(appliesTo)--> [受力平衡分析(物理)]`
 *   **`correlatesWith` (跨学科对称与关联关系)**：
     *   *语义*：实体 A 与实体 B 存在直觉相似、逻辑平行或强关联。
     *   *语法*：`[实体A(科目)] --(correlatesWith)--> [实体B(科目)]`
     *   *示例*：`[文言文借代修辞(语文)] --(correlatesWith)--> [英语词汇指代与代词(英语)]`
 
-#### 2) 图谱存储格式（Markdown 节点化表达）
+#### 2) 图谱存储格式（对应 schema 的 nodes / edges）
 ```text
-■ 跨学科概念图谱
-  ├── 节点库：
-  │   ├── Node01: { 概念名称: "一次函数", 学科: "数学", 掌握级别: "真正掌握" }
-  │   ├── Node02: { 概念名称: "匀速直线运动", 学科: "物理", 掌握级别: "会解释" }
-  │   └── Node03: { 概念名称: "自变量与因变量", 学科: "数学", 掌握级别: "真正掌握" }
-  └── 边库（有向联结）：
-      ├── Edge01: [Node02(物理)] --(requires)--> [Node01(数学)] | 来源: 学习中自然发现
-      └── Edge02: [Node01(数学)] --(isParentOf)--> [Node03(数学)] | 来源: 侦探周项目DNA
+■ 跨学科概念图谱 conceptGraph
+  ├── nodes：
+  │   ├── Node01: { conceptName: "一次函数", subject: "数学", masteryLevel: "真正掌握" }
+  │   ├── Node02: { conceptName: "匀速直线运动", subject: "物理", masteryLevel: "会解释" }
+  │   └── Node03: { conceptName: "自变量与因变量", subject: "数学", masteryLevel: "真正掌握" }
+  └── edges（有向联结）：
+      ├── Edge01: Node02 --(requires)--> Node01 | discoverySource: 学习中自然发现
+      └── Edge02: Node01 --(isParentOf)--> Node03 | discoverySource: 跨学科侦探周
 ```
+
+掌握度只用三档 `会复述 / 会解释 / 真正掌握`（`shared/vocab.md §6`）。
+写入方式：其他 SKILL 发 `profile_writeback`（`updateTarget: "concept_graph"`，见 `../xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json`），本 SKILL 生成待确认条目，学生确认后落库。
+`references/cross-subject-connections.md` 提供可直接引用的联结模板。
 
 ---
 
@@ -261,11 +337,17 @@ compatibility: OpenClaw / ClawHub
 
 ---
 
-## 六.5、学习情绪维度（v1.2 新增）
+## 七、学习情绪维度（v1.2）
 
 > ⚠️ **边界声明：** 学习情绪维度**不是心理档案**，而是**学习状态观察**。  
 > 它关注的是"情绪如何影响学习行为"，而非诊断情绪本身。  
 > 此维度默认**关闭**，需学生或监护人**单独授权**（`emotionTrackingConsent`）才可记录。
+
+### 7.0 危机例外（先于本章一切规则）
+
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 给出专业求助渠道（即时危险：110/120）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
+
+完整处置流程见 `references/crisis-referral-protocol.md`。**处置事实写入 `safetyRecord.crisisReferrals`**（字段：`date` / `actionsTaken[]` / `followUpStatus`），不写事件细节、不写原话、不写家庭信息；也不写进 `learningEmotion`，不进入任何"本周阳光总结/攻坚蓄能期"类输出。
 
 ### 为什么需要学习情绪维度
 
@@ -297,13 +379,12 @@ compatibility: OpenClaw / ClawHub
   ❌ 不做心理诊断（如"抑郁倾向""焦虑症"等标签）
   ❌ 不记录非学习场景的情绪信息
 
-低敏化与安全过滤原则：
-  *   **⚠️ 危机例外（最高优先级，先于一切低敏转化）**：一旦出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等**超出学习支持范畴的危机信号**，**立即停止**低敏温情转化，**不得**把求救信号包装成"攻坚蓄能期"等安抚话术；必须按 `references/crisis-referral-protocol.md` 处置：稳住不评判 → 说明 AI 边界 → 如实、及时提示监护人/信任的成年人 → 提供专业求助渠道（如即时危险建议拨打 110/120）。宁可误报，不可漏报；长期档案只记"已转介"的处置事实，不留敏感细节。
+低敏化与安全过滤原则（危机例外见 §7.0，优先于以下全部规则）：
   *   **严禁标签化**：禁止使用“学困生”、“数理障碍”、“多动”等标签。
   *   **对内客观诊断，对外温情低敏（双通道输出）**：
       *   AI 内部状态判定：保持客观，以便精准匹配支架；
-      *   家庭/家长端看板输出：必须进行低敏转换，避免激化家长焦虑与家庭矛盾。
-  *   **中高预警焦虑指标过滤标准**：
+      *   家庭/家长端看板输出：先检查 parentSharingConsent，含情绪内容再检查 emotionSharingWithParent（§3.4）；通过后才做低敏转换，避免激化家长焦虑与家庭矛盾。
+  *   **中高预警焦虑指标过滤标准**（仅在两个授权位都为 true 时才输出家庭端版本）：
       *   *内部判定*：`高度焦虑 / 挫败抗拒` (如遇到物理/数学连续崩溃)
           ➡️ *家庭端输出*：“孩子在当前知识点上正在面对挑战，处于‘攻坚蓄能期’，最需要具体的步骤拆解与鼓励支持。”
       *   *内部判定*：`低落倾向 / 回避抗拒` (如拖延、抗拒不开始)
@@ -314,7 +395,7 @@ compatibility: OpenClaw / ClawHub
           ➡️ *家庭端输出*：“临考前处于‘信心重建期’，建议通过复习已掌握内容进行正向反馈。”
 ```
 
-### 6.5.1 当前情绪基线
+### 7.1 当前情绪基线
 
 ```
 情绪基线：学生最近一段时间的学习情绪整体状态
@@ -332,7 +413,7 @@ compatibility: OpenClaw / ClawHub
   → 情绪基线最多2周更新一次，不因单次对话大幅调整
 ```
 
-### 6.5.2 学科情绪关联图
+### 7.2 学科情绪关联图
 
 ```
 不同学科引发不同情绪——记录这种关联，帮助识别"是真的不会还是情绪在干扰"
@@ -359,7 +440,7 @@ compatibility: OpenClaw / ClawHub
   → 不把"学得慢"等同于"焦虑"——有的学生就是节奏慢
 ```
 
-### 6.5.3 焦虑触发因素
+### 7.3 焦虑触发因素
 
 ```
 从对话中识别的引发学习焦虑的具体场景——不是标签化诊断，而是场景化观察
@@ -387,7 +468,7 @@ compatibility: OpenClaw / ClawHub
   → 不在此处重复记录，仅标记关联
 ```
 
-### 6.5.4 学习动力状态
+### 7.4 学习动力状态
 
 ```
 学习动力状态：学生当前的学习驱动力和持续性
@@ -411,7 +492,7 @@ compatibility: OpenClaw / ClawHub
   回避困难内容 → 直接跳过或拖延
 ```
 
-### 6.5.5 情绪里程碑
+### 7.5 情绪里程碑
 
 ```
 情绪层面的重要转变时刻——跟能力里程碑一样重要
@@ -432,7 +513,7 @@ compatibility: OpenClaw / ClawHub
    从'不想做'到'帮我看看'，这个转变比做对一道题更重要。"
 ```
 
-### 6.5.6 有效支持策略
+### 7.6 有效支持策略
 
 ```
 记录哪些情绪支持方式对这个学生有效——不是"万能安慰"，而是"因人而异"
@@ -455,9 +536,9 @@ compatibility: OpenClaw / ClawHub
 
 ---
 
-## 七、行为规范
+## 八、行为规范
 
-### 7.1 首次激活
+### 8.1 首次激活
 
 第一次建档时，先完成简短授权确认，再按以下顺序自然提问，不要一次性表格轰炸：
 1. 年级和目前最头疼的学科
@@ -467,7 +548,7 @@ compatibility: OpenClaw / ClawHub
 
 反馈时必须用学生自己的语言复述确认，再写入档案。
 
-### 7.2 日常调取
+### 8.2 日常调取
 
 仅当满足以下全部条件时，才可在对话开始前轻量检查DNA：
 - 用户已开启长期档案
@@ -484,23 +565,26 @@ compatibility: OpenClaw / ClawHub
 "如果你愿意，我可以接着上次的学习进度继续；也可以完全按这次的新问题来。"
 ```
 
-### 7.3 自动更新规则
+### 8.3 档案更新触发（生成待确认条目）
 
 以下情况可触发DNA更新；若用户暂停记忆，则本次不写入长期档案：
 
-| 触发事件 | 更新内容 |
-|---------|---------|
-| 学生说“我懂了”且验证通过 | 可记录该知识点已掌握，降低复习优先级 |
-| 学生说“还是不明白” | 可临时加深该知识点薄弱标记，重要标签需后续验证 |
-| 连续3次同类错误 | 可识别为固定错误模式，并标注为“初步判断/趋势明显” |
-| 某知识点从顽固弱项变为已攻克 | 可写入弱项突破记录并标注里程碑 |
-| 费曼测试首次达到“真正掌握” | 可写入成长轨迹与理解深度记录 |
-| 连续7/14/30/100天有学习记录 | 可自动标注连续学习里程碑 |
-| 某学科连续改善 | 可写入学科成长里程碑 |
-| 兴趣探索结果更新 | 仅在用户同意记录兴趣偏好时同步兴趣DNA |
-| 跨学科侦探周生成项目DNA | 仅同步学习相关的跨科节点，不写入无关个人偏好 |
+| 触发事件 | 生成的待确认条目 | 落点字段 |
+|---------|---------|---------|
+| 学生说“我懂了”且验证通过 | 该知识点掌握度上调，降低复习优先级 | `subjectMap.weakKnowledgePoints[].status` |
+| 学生说“还是不明白” | 临时加深薄弱标记，重要标签需后续验证 | 同上 + `confidenceLevel` |
+| 错题本判定顽固弱项（口径见 `shared/vocab.md §5`） | 记录固定错误模式，标 🟡 初步趋势 | `errorPatterns.fixedErrorTypes[]` |
+| 某知识点从顽固弱项变为已攻克 | 写入弱项突破记录并标注里程碑 | `growthMap.weaknessBreakthroughs[]` |
+| 费曼测试达到“真正掌握” | 写入理解深度记录 | `extensions.understanding[]` |
+| 某学科连续三周改善 | 学科成长里程碑 | `growthTrack.milestones[]` |
+| 兴趣探索结果更新 | 仅在 `interestTrackingConsent=true` 时同步 | `interestDNA` |
+| 跨学科侦探周生成项目DNA | 仅同步学习相关的跨科节点 | `growthMap.conceptGraph` + `extensions.projects[]` |
+| 危机信号已按 §7.0 处置完毕 | 只写处置事实，不写细节 | `safetyRecord.crisisReferrals[]` |
 
-### 7.4 诚实性守护
+所有条目均为**待确认条目**：先用一句话复述给学生（"我打算这样记：…，可以吗？"），学生确认后才落库；学生说"不要记"就只留在本次会话。
+**不记录"连续使用 N 天"类里程碑**——使用时长不是学习成果（见 `references/growth-milestones.md`）。
+
+### 8.4 诚实性守护
 
 当学生说“懂了”但表现仍含糊时，不接受表面结论，必须做最小验证：
 
@@ -510,17 +594,19 @@ compatibility: OpenClaw / ClawHub
 这个知识点最核心的一步到底是什么？"
 ```
 
-### 7.5 数据驱动结论的置信度标示
+### 8.5 数据驱动结论的置信度标示
 
-凡是基于“连续N次”、“连续N天/周”得出的AI结论（如错题模式、兴趣判断、黄金时段等），必须在输出时附带【结论置信度】标签，防止学生或家长盲信：
+凡是基于“连续N次”、“连续N天/周”得出的AI结论（如错题模式、兴趣判断、黄金时段等），必须在输出时附带【结论置信度】标签，防止学生或家长盲信。三档定义与 schema 值见 `shared/vocab.md §7`：
 
-- **🟢 数据充分**：样本量足够，时间跨度合理（如两周以上的高频记录），规律可信。
-- **⚠️ 初步判断/趋势明显**：达到最低触发阈值（如连续3次错），但仍需警惕偶然因素或时间跨度过长/过短的影响。
-- **🔴 样本不足**：数据极少（如只用了2天），明确告知不能作为最终结论，仅供参考。
+| schema 值 | 标签 | 含义 | 使用规则 |
+|---|---|---|---|
+| `data_sufficient` | 🟢 数据充分 | ≥ 3 次独立观察且方向一致 | 可写入长期档案 |
+| `preliminary_trend` | 🟡 初步趋势 | 2 次观察或方向基本一致 | 可写入，输出时必须带标签 |
+| `insufficient_sample` | 🔴 样本不足 | 单次观察或互相矛盾 | 只在当前会话使用，不写入长期档案 |
 
 ---
 
-## 八、查看、更正、删除与暂停
+## 九、查看、更正、删除与暂停
 
 系统必须支持以下四类可执行控制：
 
@@ -546,18 +632,19 @@ compatibility: OpenClaw / ClawHub
 
 ---
 
-## 九、里程碑自动标注
+## 十、里程碑标注
 
-成长不是等学生主动说“我进步了”，而是系统主动帮他看见进步。
+成长不是等学生主动说“我进步了”，而是帮他看见自己没注意到的进步。里程碑一律**生成待确认条目**，学生确认后写入 `growthTrack.milestones[]`。
 
 ```text
-自动标注触发：
+标注触发（三类，全部要有可验证证据）：
 
-1. 顽固弱项 → 已攻克
-2. 费曼测试首次达到“真正掌握”
-3. 连续学习达到 7 / 14 / 30 / 100 天
-4. 某学科连续三周改善或连续两周完成率 > 80%
+1. 能力类：顽固弱项 → 已攻克（按 shared/vocab.md §5 的攻克标准）
+2. 能力类：费曼测试首次达到“真正掌握”
+3. 习惯类：首次主动说“让我先想想”、首次诚实说“我还不懂”、首次不靠提醒主动复习
 ```
+
+不作为里程碑：使用天数、连续打卡、对话次数、完成率百分比——这些是使用量，不是学习成果。
 
 推荐话术：
 
@@ -569,51 +656,60 @@ compatibility: OpenClaw / ClawHub
 
 ---
 
-## 十、与其他SKILL的协同
+## 十一、与其他SKILL的协同
 
-```text
-学习DNA
-    ├──→ 错题本（错误模式、弱项状态）
-    ├──→ IM智能提醒（活跃时段、优先级、复习状态）
-    ├──→ 费曼测试（知识点掌握程度、理解深度）
-    ├──→ 每周学习复盘（周报、成长曲线、里程碑）
-    ├──→ 30天学习计划制定师（真实目标、时间、薄弱点）
-    ├──→ 时间与专注力教练（黄金时段、注意力习惯）
-    ├──→ 跨学科侦探周（知识积累树、跨科节点）
-    ├──→ 兴趣成长探索计划（兴趣DNA）
-    ├──→ 数学错误DNA（数学弱项月报摘要、数学弱项突破状态）
-    └──→ 物理错误DNA（物理弱项月报摘要、物理弱项突破状态）
-```
+### 11.1 交接方式（只有一条通道）
 
-调用边界：
+所有读写都走 `../xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json`，本 SKILL 作为 `recipient` 接收以下 `handoverType`：
+
+| handoverType | 用途 | 写入落点 |
+|---|---|---|
+| `profile_writeback` | 通用层写回 | `growthMap.conceptGraph` / `learningEmotion` / `growthTrack.milestones` / `subjectMap.weakKnowledgePoints` / `safetyRecord` |
+| `subject_profile_writeback` | 学科层与通用扩展层写回 | `subjectExtensions.<subject>` / `extensions.<branch>` |
+| `teacher_writeback` | 老师端写回 | `subjectMap.weakKnowledgePoints`，且 `consent.teacherWritebackConsent` 必须为 true |
+
+每条交接的 `consent` 快照必填；接收后本 SKILL **再核对一次**当前 `meta.consentStatus`，不一致就丢弃并告知用户。
+
+### 11.2 协同白名单（未列入的 SKILL 默认不得读写本档案）
+
+**通用端（10）**
+
+| SKILL | 读 | 写 |
+|---|---|---|
+| `xiaozhi-correction-notebook` | 弱项状态、相关知识点 | `subjectMap.weakKnowledgePoints[]`、`errorPatterns.*`、`growthMap.errorMap[]` |
+| `xiaozhi-feynman-learning` | 待验证知识点、掌握状态 | `extensions.understanding[]` |
+| `xiaozhi-cornell-notes` | 学科与课题索引 | `extensions.notes` |
+| `xiaozhi-time-focus-coach` | 学习时段偏好 | `extensions.focus` |
+| `xiaozhi-learning-plan` | 当前目标、可用时间、弱项 | `extensions.plans[]` |
+| `xiaozhi-cross-subject-detective` | 各科掌握状态 | `extensions.projects[]`、`growthMap.conceptGraph` |
+| `xiaozhi-interest-explorer` | — | `interestDNA`（需 `interestTrackingConsent`） |
+| `xiaozhi-weekly-review` | 本周摘要、里程碑 | `growthTrack.*`（需用户同意） |
+| `xiaozhi-im-reminder` | 活跃时段摘要（需 `reminderConsent`） | 复习状态摘要 |
+| `xiaozhi-skill-coordinator` | 月报所需摘要 | 不写 |
+
+**学科端（20，各自只读写本学科分支）**
+
+| 学科 | SKILL | 只读写 |
+|---|---|---|
+| 数学 | `xiaozhi-math-error-dna`、`xiaozhi-math-gradient-trainer`、`xiaozhi-math-concept-explainer`、`xiaozhi-math-problem-solving-coach`、`xiaozhi-math-word-problem-coach` | `subjectExtensions.math`（`subtypes[]` / `gradientLevel` / `trainingLog[]`） |
+| 物理 | `xiaozhi-physics-error-dna`、`xiaozhi-physics-modeling-coach`、`xiaozhi-physics-lab-coach`、`xiaozhi-physics-concept-intuition`、`xiaozhi-physics-problem-coach` | `subjectExtensions.physics`（`subtypes[]` / `modelingProfile[]` / `labSkills[]`） |
+| 语文 | `xiaozhi-chinese-reading-decoder`、`xiaozhi-chinese-writing-coach`、`xiaozhi-chinese-grammar-tracker`、`xiaozhi-chinese-classical-revival`、`xiaozhi-chinese-material-library` | `subjectExtensions.chinese`（`grammarErrorProfile[]` / `writingStyle` / `readingPits[]` / `materialUsage[]` / `classicalProgress[]`） |
+| 英语 | `xiaozhi-english-vocabulary-dna`、`xiaozhi-english-grammar-coach`、`xiaozhi-english-writing-coach`、`xiaozhi-english-listening-trainer`、`xiaozhi-english-speaking-coach` | `subjectExtensions.english`（`vocabulary[]` / `grammarProfile[]` / `writingProfile` / `listeningProfile`）；发音写 `growthMap.oralGrowthTrack` |
+
+跨学科通用层（`subjectMap`、`growthMap.conceptGraph`）任何学科 SKILL 都不直接写，只能通过错题本或本 SKILL 落库。
+
+### 11.3 调用与共享边界
+
 - 不是“任何SKILL默认优先读取DNA”，只有在用户已开启档案且当前任务确有必要时才可读取
 - 不是“任何关键结果默认写回DNA”，只有学习相关、已验证、且未暂停记忆时才可写回
-- 未列入上方协作名单的SKILL，默认不得读取或写入DNA
-
-共享原则：
 - 只共享完成当前任务所需的最小字段，不传整份档案
-- 向 `IM智能提醒` 发送任何提醒相关信息前，需单独获得用户同意
+- 向 `xiaozhi-im-reminder` 提供任何提醒相关信息前，需 `reminderConsent`；提醒本身由 IM 提醒按 `shared/vocab.md §9` 统一发送
 - 若用户说“不要共享”，则其他SKILL只能使用当前会话信息，不得访问DNA
-
-最小字段白名单：
-- 错题本：错误模式、相关知识点、是否已攻克
-- 费曼测试：待验证知识点、掌握状态
-- 每周学习复盘：本周进展摘要、里程碑、待跟进项
-- 30天学习计划制定师：当前目标、可用时间、执行障碍
-- 时间与专注力教练：学习时段偏好、常见分心类型
-- 跨学科侦探周：学习相关跨科节点
-- 兴趣成长探索计划：仅用户同意记录的兴趣偏好
-- 数学错误DNA：数学弱项状态、数学突破里程碑（仅用户同意时写入）
-- 物理错误DNA：物理弱项状态、物理突破里程碑（仅用户同意时写入）
-
-禁止事项：
-- 不向未声明用途的第三方或未知SKILL传递DNA内容
-- 不为“方便”而转发完整档案
-- 不把提醒类共享视为默认授权
+- 不向未声明用途的第三方或未知SKILL传递DNA内容；不为“方便”而转发完整档案；不把提醒类共享视为默认授权
 
 ---
 
-## 十一、禁止行为
+## 十二、禁止行为
 
 | ❌ 禁止 | ✅ 替代 |
 |--------|--------|
@@ -622,21 +718,24 @@ compatibility: OpenClaw / ClawHub
 | 每次对话都重新让学生介绍自己 | 在已授权前提下，必要时轻量参考已知DNA |
 | 给出不区分人的通用建议 | 根据DNA调取个性化角度 |
 | 接受“我懂了”但不验证 | 用一道小题或一次复述确认 |
-| 只记失败，不记攻克时刻 | 自动标注里程碑和已攻克记录 |
+| 只记失败，不记攻克时刻 | 生成里程碑与已攻克记录的待确认条目 |
 | 把薄弱点写成“缺陷” | 把薄弱点写成“待解锁成就” |
 | 把未经验证的推测写成长期标签 | 标注置信度，或先放在当前会话不入档 |
 | 向其他SKILL或提醒模块发送完整档案 | 仅共享最小必要字段，并遵守用户授权 |
 
 ---
 
-## 十二、参考资源
+## 十三、参考资源
 
 - `references/dna-template.md` - 完整DNA填写模板
 - `references/growth-milestones.md` - 成长里程碑参考标准
-- `references/cross-subject-connections.md` - 跨学科概念关联标准模板库（20 例，供概念图谱 §5.4 填写参考）
-- `references/crisis-referral-protocol.md` - 危机识别与转介协议（全库安全底线，§6.5 危机例外的完整处置流程）
-- `schemas/dna-profile.schema.json` - 学习DNA JSON Schema（正式数据结构定义，覆盖全部六大维度 + v1.1扩展）
+- `references/cross-subject-connections.md` - 跨学科概念关联模板库（供概念图谱 §5.4 填写参考）
+- `references/crisis-referral-protocol.md` - 危机识别与转介协议（全库安全底线，§7.0 危机例外的完整处置流程）
+- `schemas/dna-profile.schema.json` - 学习DNA JSON Schema v1.3（六大维度 + v1.1/v1.2/v1.3 扩展）
+- `schemas/README.md` - schema 结构与授权模型说明
 - `schemas/examples/full-profile.example.json` - 完整档案示例数据
+- `shared/vocab.md` §1/§4/§5/§6/§7/§8/§10 - 词表、阈值与授权位的唯一来源
+- `shared/ai-item-check.md` - 本 SKILL 一般不出题；§8.4 诚实性守护若需要一道验证小题，生成前按此协议自检
 
 ---
 

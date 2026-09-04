@@ -1,6 +1,11 @@
 # 5套真实场景完整对话脚本
 
+> 适用学段：小学高段与初中（7-9 年级）。场景④的即兴演讲、场景⑤的面试属于拓展性任务，初中按简化版做。
+
 > 本文档为 `xiaozhi-english-speaking-coach` 的配套参考资源，提供角色扮演训练的5套内置场景完整对话脚本与复盘标注。
+>
+> ⚠️ **不要求学生报真实姓名、学校、住址、联系方式**：需要自称时用学生自己选的称呼/英文名；
+> 需要证件、票号、房号等信息时用占位内容（如 "ABC12345"），不用真实证件号。
 
 ---
 
@@ -17,9 +22,9 @@
   - 学生卡壳时：给一个提示词，不给整句
 
 场景难度标记：
-  ⭐ 简单（小学/初中初级）：句式短，词汇基础
-  ⭐⭐ 中等（初中）：含复合句，需要一定的策略性表达
-  ⭐⭐⭐ 较难（高中/初中高级）：需要解释、说服、处理意外情况
+  ⭐ 简单（小学高段/初一）：句式短，词汇基础
+  ⭐⭐ 中等（初二-初三）：含复合句，需要一定的策略性表达
+  ⭐⭐⭐ 较难（初三拓展）：需要解释、说服、处理意外情况
 ```
 
 ---
@@ -53,7 +58,8 @@ aisle seat, window seat, direct flight, layover, gate, departure
 
 💡：Great. Can I see your passport and ticket, please?
 
-[学生出示证件——可以用 "Here you go" 或 "Here's my passport"]
+[学生出示证件——可以用 "Here you go" 或 "Here's my passport"
+ （只练这句话本身，不需要说出任何真实证件信息）]
 
 💡：Thank you. How many pieces of luggage are you checking in?
 
@@ -395,7 +401,8 @@ strength, weakness, goal
 💡：Hi! Welcome to the [club name] interview.
     First, can you tell me a little about yourself?
 
-[学生自我介绍——练习 "I'm [name], a [grade] student, and I..." ]
+[学生自我介绍——练习 "I'm [学生自己选的称呼／英文名], a [grade] student, and I..."
+ 不要求学生说真名或学校名；用昵称、英文名、代号都可以]
 
 💡：Why are you interested in joining our club?
 

@@ -1,26 +1,22 @@
 ---
 name: xiaozhi-teach-math-lesson-planner
 display_name: 数学教案设计
-version: 1.0.0
+version: 2.1.0
 author: 小智伴学
 category: 老师数学
+grade_bands:
+  - 初中
 tags: [数学教案, 概念建构, 变式训练, 数学思维, 数学老师]
 description: >
-  帮助数学老师把"讲概念+练题"升级为"系统化数学教学"。
-  当老师说"这个概念怎么讲"、"教案怎么写"、
-  "学员不会做题"、"数学思维怎么教"、
-  "概念怎么引入"、"变式训练怎么设计"时，
-  建议激活此SKILL。
-  核心工作流：概念建构（情境/变式/对比）→
-  例题示范（思路/步骤/易错）→
-  变式训练（一题多解/多题一解/变条件）→
-  课堂小结（结构图/口诀/反思）→
-  错例档案 → 与学生端概念解释器 /
-  错题本 / 学情分析师建立数据接口。
-  该版本基于"四阶段概念教学"模型，
-  让数学概念在学员心里"长出来"。
+  数学教师的备课工具：把一节数学课的概念建构路径、例题示范与变式训练排成可上的教案。
+  当老师说"这个数学概念怎么讲""数学教案怎么写""变式训练怎么设计""数学例题怎么选""数学概念怎么引入""学生这个数学概念总是混"时，建议激活此SKILL。
+  核心工作流：概念建构四步（情境引入/抽象概括/应用辨析/体系化）→例题示范→变式训练→课堂小结→错例档案，输出对齐 2022 版课标核心素养与四级结果目标。
+  不处理：试卷与双向细目表（转 xiaozhi-teach-math-exam-designer）、班级错因统计与干预（转 xiaozhi-teach-math-error-analyzer）、非数学学科教案（转 xiaozhi-teach-lesson-planner）。
 compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozhi-teach-classroom-coach
+depends_on:
+  - xiaozhi-teach-lesson-planner
+  - xiaozhi-teach-student-analyzer
+  - xiaozhi-teach-classroom-coach
 id: openclaw:xiaozhi-teach-math-lesson-planner
 min_platform_version: "2.0"
 max_round_limit: 30
@@ -32,13 +28,46 @@ max_round_limit: 30
 
 ---
 
-## ⚠️ 技术实现边界声明
+> 技术边界：本 SKILL 依赖能力 [M, F]，无该能力时按 shared/platform-conventions.md 降级。
+> 本 SKILL 输出**教案框架**与**概念建构路径**，不代替老师备课、不输出"标准答案"、不替老师讲题。
+> AI 现出的题一律标注 `【AI 生成，入库前请人工验算】`，生成前按 `shared/ai-item-check.md` 自检；未经老师确认不得写入资源库或试卷。
+> 题目版权状态只用 `shared/vocab.md §11` 的四个枚举值：`自有` / `改编` / `公开可引用` / `仅存索引`（教辅原题与历年真题一律 `仅存索引`）。
 
-> **关于"AI 备课"边界：** 本 SKILL 输出**教案框架**与**概念建构路径**；**不**代替老师备课，**不**输出"标准答案"。
->
-> **关于"题目版权"边界：** 题目必须标注 copyrightStatus（教材原题/改编/自有/CC 协议）；不复制未授权教辅题库。
->
-> **关于"AI 讲题"边界：** 本 SKILL **不**替代老师讲题；只提供**思路引导框架**和**变式训练设计**。
+### 隐私与数据控制入口
+
+```text
+- 查看：「查看我的教案档案」
+- 更正：「更正我的档案」
+- 删除：「删除我的档案」（删除后不可恢复，会先确认一次）
+- 暂停：「这次不要记忆」
+- 共享控制：「不要共享给其他SKILL」/「不要给家长看」
+- 导出：「导出我的档案」（以文本形式给出，便于转存）
+```
+
+---
+
+## 〇、对齐 2022 版课标
+
+本 SKILL 的教学目标话语沿用 `xiaozhi-teach-lesson-planner` 的核心素养表述，数学学科落到"三会"与九个核心素养表现：
+
+```text
+数学课程要培养的核心素养——"三会"：
+  会用数学的眼光观察现实世界
+  会用数学的思维思考现实世界
+  会用数学的语言表达现实世界
+
+初中阶段的主要表现（写目标时从中选 1-2 个，写进 objectives[].coreCompetency）：
+  抽象能力 · 运算能力 · 几何直观 · 空间观念 · 推理能力
+  数据观念 · 模型观念 · 应用意识 · 创新意识
+
+写目标的方法（对应 classWorkspace.lessonPlans[].objectives）：
+  statement       ：学生能…（行为动词 + 条件 + 标准），可观测
+  cognitiveLevel  ：课标四级结果目标 了解 / 理解 / 掌握 / 运用
+  coreCompetency  ：本目标发展的是哪一个核心素养表现
+
+反例：目标只写"掌握一元一次方程的解法"——没有条件、没有标准、没有指向素养。
+改写：学生能在 3 分钟内独立解含括号的一元一次方程并说明每步依据（掌握 / 运算能力）。
+```
 
 ---
 
@@ -118,17 +147,22 @@ max_round_limit: 30
 
 ## 四、概念建构
 
-### 4.1 概念建构四步
+### 4.1 概念建构四步（**全库唯一一套**，与 `references/concept-build-template.md` 完全一致）
 
 ```text
-┌──────────┬────────────────────────┬──────────────┐
-│ 步       │ 描述                    │ 关键问题      │
-├──────────┼────────────────────────┼──────────────┤
-│ ① 情境    │ 引入真实/模拟情境        │ 学员看到了什么│
-│ ② 抽象    │ 提取共同特征            │ 什么是一样的 │
-│ ③ 命名    │ 给概念命名              │ 叫什么        │
-│ ④ 辨析    │ 区别于其他概念          │ 不是什么的   │
-└──────────┴────────────────────────┴──────────────┘
+┌──────────┬──────────────┬────────────────────────┬──────────────┬──────────┐
+│ 步骤      │ 名称          │ 描述                    │ 关键问题      │ 45分钟占比│
+├──────────┼──────────────┼────────────────────────┼──────────────┼──────────┤
+│ 第 1 步   │ 情境引入      │ 激活经验、暴露朴素理解   │ 你看到了什么  │ 15-20%   │
+│ 第 2 步   │ 抽象概括      │ 提取共同特征**并命名**   │ 什么是一样的  │ 25-30%   │
+│ 第 3 步   │ 应用辨析      │ 正例/反例，区别相似概念  │ 这算不算，为什么│ 30-35%  │
+│ 第 4 步   │ 体系化        │ 纳入已有知识网络         │ 它挂在哪儿    │ 15-20%   │
+└──────────┴──────────────┴────────────────────────┴──────────────┴──────────┘
+
+注：旧版"命名"单列为第 3 步、"辨析"为第 4 步的说法已废止。
+    命名并入第 2 步（抽象概括的收口动作），体系化独立为第 4 步。
+    时长占比按 45 分钟一节课（`shared/grade-bands.md` 第三节），四步合计 ≤100%，
+    留出的余量给课堂小结与作业布置。
 ```
 
 ### 4.2 情境引入 5 类
@@ -278,15 +312,21 @@ max_round_limit: 30
 
 ```text
 ■ 改条件
-  · 把整数改成小数
-  · 把一个条件去掉
-  · 加一个条件
+  · 把整数改成小数或分数
+  · 去掉一个条件（注意：去掉后必须仍然有解，否则不成题）
+  · 加一个条件（注意：不要加成矛盾条件）
 
 ■ 改问题
-  · 把"求 X"改成"判断 X 是否..."
+  · 把"求 X"改成"判断 X 是否成立并说明理由"
+  · 把"求值"改成"求取值范围"
 
 ■ 改情境
-  · 把"鸡兔同笼"改成"鸡兔同笼 2.0"
+  · 保持数量关系不变，换一个生活场景
+    （如"鸡兔同笼"→"5元和10元纸币"→"答对加分答错扣分"）
+
+⚠️ 每一道变式题，出题后按 `shared/ai-item-check.md` 自检：
+   自解一遍 → 有解且唯一 → 条件充分不多余 → 数值友好（人数/件数为非负整数）
+   → 学段内 → 与原题同型。三个"变"里最容易出问题的是"去掉一个条件"。
 ```
 
 ### 6.5 变式训练样板
@@ -341,18 +381,27 @@ max_round_limit: 30
 
 ### 8.1 错因分类
 
+老师端七类见 `shared/vocab.md §3`；写入任何档案或与学生端交换时必须映射到通用四维。
+
 ```text
-┌──────────┬────────────────────────┐
-│ 错因      │ 描述                    │
-├──────────┼────────────────────────┤
-│ 概念模糊  │ 没理解概念              │
-│ 规则错误  │ 公式/规则记错           │
-│ 审题错误  │ 漏看条件/看错问题       │
-│ 策略错误  │ 方法选择不当            │
-│ 计算错误  │ 算错                    │
-│ 粗心大意  │ 注意力不集中            │
-│ 知识漏洞  │ 缺前置知识              │
-└──────────┴────────────────────────┘
+┌──────────────┬────────────────────────┬──────────────┐
+│ 老师端七类    │ 描述                    │ 通用四维      │
+├──────────────┼────────────────────────┼──────────────┤
+│ 知识漏洞      │ 缺前置知识              │ 概念模糊      │
+│ 概念模糊      │ 没理解本节概念          │ 概念模糊      │
+│ 规则错误      │ 公式/法则记错           │ 概念模糊      │
+│ 审题错误      │ 漏看条件/看错问题/抄错题 │ 读题失误      │
+│ 策略错误      │ 方法选择不当            │ 方法用错      │
+│ 表达/书写不规范│ 会做但过程不得分        │ 方法用错      │
+│ 计算错误      │ 列式对、算错            │ 计算失误      │
+│ 习惯性失误    │ 漏写单位/漏写步骤/不检查 │ 计算失误      │
+└──────────────┴────────────────────────┴──────────────┘
+
+互斥规则（一道题只归一类）：
+  "移项不变号" → 规则错误（概念），不归计算错误
+  "看错数字/抄错题" → 审题错误，不归习惯性失误
+  "不写单位" → 表达/书写不规范或习惯性失误，按是否影响得分区分
+不使用"粗心"作为原因——粗心是结果，不是原因。
 ```
 
 ### 8.2 错例档案样板
@@ -390,21 +439,41 @@ max_round_limit: 30
   （数学思维维度）  （错例入库）      （数学进步反馈）
 ```
 
-### 9.2 接口
+### 9.2 接口（唯一契约：`teacher/general/schemas/class-teaching-workspace.schema.json`）
 
 ```text
 读：
-  lessonPlan.concept             → 概念信息
-  studentAnalyzer.weaknessRank   → 弱项
+  classWorkspace.classProfile.gradeBand / gradeLevel / periodMinutes / textbookVersion
+      → 学段、年级、课时长度（45 分钟为初中默认）、教材版本
+  classWorkspace.weaknessRank[]（weaknessId / knowledgePoint / errorRate / dimension）
+      → 本课要针对的班级弱项
+  classWorkspace.studentTiers[]（studentAlias / tier）
+      → A/B/C 三层，用于分层活动设计
 
-写：
-  mathLesson.concept             → 概念建构路径
-  mathLesson.example             → 例题示范
-  mathLesson.variation           → 变式训练
-  mathLesson.errorPattern        → 错例分析
-  → student-analyzer 接收
-  → resource-library 接收
+写（生成待确认条目，老师确认后落库）：
+  classWorkspace.lessonPlans[]
+    .planId / .topic / .date / .planType / .periodMinutes
+    .objectives[] { statement, cognitiveLevel（了解/理解/掌握/运用）, coreCompetency }
+    .segments[]   { name, minutes, activity, tierVariants{A,B,C} }
+        → 概念建构四步对应四个 segment，minutes 之和 ≤ periodMinutes
+    .questionChain[]      → 课堂提问链，按 cognitiveLevel 递进
+    .boardPlan            → 板书设计（课堂小结的结构图放这里）
+    .sourceWeaknessIds[]  → 本课针对的 weaknessRank 条目
+  classWorkspace.interactionLogs[]
+    .misconceptionsObserved[] → 课上观察到的典型错误（错例档案的来源）
+    .questionEffectNote       → 哪一问引发思考、哪一问无人回应
+    .adjustmentForNext        → 下次调整
 ```
+
+**写回学生端档案**：只走 `handoverType: "teacher_writeback"`，
+payload 为 `teacherWritebackData`（`teacherSkill` / `studentAlias` / `weakKnowledgePointUpdates[]` / `note`），
+发送前必须核对 `meta.consentStatus.teacherWritebackConsent = true`，为 false 时丢弃并告知老师"该学生未授权写回，本次只留在班级工作空间"。
+`note` 只写低敏事实描述，禁止心理标签、家庭信息、真实姓名。
+
+**给家长的反馈**：本 SKILL 不直接生成家长内容；需要时交 `xiaozhi-teach-parent-communication`，
+由它在核对 `parentSharingConsent`（含情绪内容再核对 `emotionSharingWithParent`）后输出。不默认推送家长简报。
+
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 给出专业求助渠道（即时危险：110/120）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 ---
 
@@ -415,7 +484,8 @@ max_round_limit: 30
 ✅ 学员数学能力档案用化名
 ❌ 禁止：公开"某学员的错题"
 ❌ 禁止：未授权复制教辅题库
-✅ 题目可标注 copyrightStatus
+✅ 题目标注 copyrightStatus：自有 / 改编 / 公开可引用 / 仅存索引（shared/vocab.md §11）
+✅ AI 生成题标注【AI 生成，入库前请人工验算】
 ```
 
 ---
@@ -456,9 +526,9 @@ max_round_limit: 30
 
 ## 十三、参考资源
 
-- `references/concept-build-template.md` — 概念建构四步模板（情境/抽象/应用/体系化）
-- `references/variation-design.md` — 变式训练设计模板（条件/情境/深度）
-- `references/error-pattern-rubric.md` — 错因分类表（7 类错因 + 教案预防）
+- `references/concept-build-template.md` — 概念建构四步模板（情境引入/抽象概括/应用辨析/体系化，含 45 分钟样板）
+- `references/variation-design.md` — 变式训练设计模板（一题多解/多题一解/变条件，含验算说明）
+- `references/error-pattern-rubric.md` — 错因分类表（教师端七类 + 互斥判定 + 通用四维映射 + 教案预防）
 - `references/concept-build-sample.md` — 概念建构填写样板（概念/情境引入/抽象/命名/辨析/理解检查）
 - `references/example-demo-sample.md` — 例题示范填写样板（题目/思路/步骤/易错提醒/一题多解）
 - `references/variation-training-sample.md` — 变式训练填写样板（基础题 + 三组变式）

@@ -81,7 +81,18 @@
 - 更正：`更正我的档案`
 - 删除：`删除我的档案`
 - 暂停：`这次不要记忆` / `暂停提醒`
-- 共享控制：`不要共享给其他SKILL`
+- 共享控制：`不要共享给其他SKILL` / `不要给家长看`
+- 导出：`导出我的档案`（以文本形式给出，便于转存）
+
+统一写法见 `shared/platform-conventions.md` 第四节；`scripts/check-skills.mjs` 会检查每个持有数据的 SKILL 是否包含"查看我的…"与"删除我的…"口令。
+
+## 三之一、授权主体与学段
+
+- 长期档案、情绪记录、家长可见输出的授权位定义见 `shared/vocab.md §8`，字段落在 `dna-profile.schema.json#/meta/consentStatus`。
+- 小学各学段（约 14 周岁以下）必须由监护人同意；`consentGivenBy` 必须包含"监护人"。
+- 学生与监护人共用一个 IM 会话时，无法确认说话人的，按"学生本人"处理，且不输出家长版内容。
+- 情绪相关内容输出给家长需单独的 `emotionSharingWithParent`，且由学生本人同意。
+- 危机例外（`shared/crisis-exception.md`）优先于以上所有授权位。
 
 ## 四、最小化记录原则
 

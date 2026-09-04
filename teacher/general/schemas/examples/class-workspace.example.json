@@ -1,0 +1,213 @@
+{
+  "classProfile": {
+    "classId": "8-3-math",
+    "subject": "数学",
+    "gradeBand": "初中",
+    "gradeLevel": "八年级",
+    "classSize": 42,
+    "periodMinutes": 45,
+    "textbookVersion": "人教版八年级下册",
+    "fullScore": 100
+  },
+  "lessonPlans": [
+    {
+      "planId": "lp-2026-03-09-01",
+      "topic": "一次函数的图象与性质",
+      "date": "2026-03-09",
+      "planType": "新授",
+      "periodMinutes": 45,
+      "objectives": [
+        {
+          "statement": "学生能在给定解析式后，用两点法在坐标系中画出一次函数图象，关键点标注正确",
+          "cognitiveLevel": "掌握",
+          "coreCompetency": "几何直观"
+        },
+        {
+          "statement": "学生能根据 k 的正负说出图象的升降趋势，并举出一个生活实例",
+          "cognitiveLevel": "理解",
+          "coreCompetency": "推理意识"
+        }
+      ],
+      "segments": [
+        {
+          "name": "导入",
+          "minutes": 5,
+          "activity": "用上节课作业中错误率最高的看图判断题引入认知冲突",
+          "tierVariants": { "A": "只判断升降", "B": "判断升降并说明理由", "C": "举反例检验结论" }
+        },
+        {
+          "name": "新授",
+          "minutes": 15,
+          "activity": "两点法画图示范 + 学生同步画一张"
+        },
+        {
+          "name": "练习",
+          "minutes": 12,
+          "activity": "分层任务卡：A 层 4 道套用题，B 层 3 道变式，C 层 2 道变式 + 1 道开放题"
+        },
+        { "name": "巩固", "minutes": 5, "activity": "错题对比：k>0 与 k<0 两张图并列" },
+        { "name": "总结", "minutes": 3, "activity": "学生用一句话说出 k 与 b 的作用" },
+        { "name": "作业", "minutes": 5, "activity": "布置分层作业并说明提交标准" }
+      ],
+      "questionChain": [
+        "y=kx+b 中 k 和 b 分别表示什么？",
+        "为什么 k>0 时图象从左往右上升？",
+        "如果 k=0，这条线还叫一次函数吗？",
+        "同一坐标系里画 y=2x+1 和 y=2x-3，你发现了什么？"
+      ],
+      "boardPlan": "主板：解析式—图象—性质三栏；副板左：两点法演算；副板右：学生展示",
+      "sourceWeaknessIds": ["wk-2026-01"]
+    }
+  ],
+  "interactionLogs": [
+    {
+      "logId": "il-2026-03-09-01",
+      "planId": "lp-2026-03-09-01",
+      "date": "2026-03-09",
+      "segmentTimings": [
+        { "name": "导入", "plannedMinutes": 5, "actualMinutes": 7 },
+        { "name": "新授", "plannedMinutes": 15, "actualMinutes": 16 },
+        { "name": "练习", "plannedMinutes": 12, "actualMinutes": 9 }
+      ],
+      "participationNote": "全班 42 人，主动举手约三分之一；小组任务中有 2 组未在限时内产出结论",
+      "questionEffectNote": "「如果 k=0 呢」引发最多讨论；「k 表示什么」无人回应，需前置复习",
+      "misconceptionsObserved": ["把 b 当作与 x 轴的交点", "认为 k 越大图象越靠上"],
+      "adjustmentForNext": "下节课开头用 3 分钟澄清 b 的几何意义"
+    }
+  ],
+  "homeworkAssignments": [
+    {
+      "assignmentId": "hw-2026-03-09-01",
+      "planId": "lp-2026-03-09-01",
+      "date": "2026-03-09",
+      "purpose": "巩固",
+      "tasks": [
+        { "taskNo": 1, "knowledgePoint": "一次函数概念", "cognitiveLevel": "了解", "difficultyBand": "基础", "tier": "A", "estimatedMinutes": 3 },
+        { "taskNo": 2, "knowledgePoint": "一次函数图象", "cognitiveLevel": "理解", "difficultyBand": "基础", "tier": "A", "estimatedMinutes": 4 },
+        { "taskNo": 3, "knowledgePoint": "k 的正负与图象升降", "cognitiveLevel": "理解", "difficultyBand": "基础", "tier": "B", "estimatedMinutes": 5 },
+        { "taskNo": 4, "knowledgePoint": "待定系数法求解析式", "cognitiveLevel": "掌握", "difficultyBand": "中等", "tier": "B", "estimatedMinutes": 8 },
+        { "taskNo": 5, "knowledgePoint": "一次函数的应用", "cognitiveLevel": "掌握", "difficultyBand": "中等", "tier": "C", "estimatedMinutes": 10 }
+      ],
+      "estimatedTotalMinutes": 30,
+      "completionSummary": {
+        "submitted": 39,
+        "total": 42,
+        "commonErrors": [
+          { "knowledgePoint": "待定系数法求解析式", "dimension": "方法用错", "teacherCategory": "策略错误", "count": 11 },
+          { "knowledgePoint": "k 的正负与图象升降", "dimension": "概念模糊", "teacherCategory": "知识漏洞", "count": 8 }
+        ]
+      }
+    }
+  ],
+  "examBlueprints": [
+    {
+      "examId": "ex-2026-03-16-unit4",
+      "title": "第四章 一次函数 单元测评",
+      "date": "2026-03-16",
+      "assessmentType": "形成性",
+      "durationMinutes": 40,
+      "fullScore": 50,
+      "difficultyRatio": "6:3:1",
+      "cognitiveRatio": { "了解": 16, "理解": 32, "掌握": 42, "运用": 10 },
+      "items": [
+        { "itemNo": 1, "itemType": "选择", "knowledgePoint": "一次函数概念", "cognitiveLevel": "了解", "difficultyBand": "基础", "score": 8, "expectedP": 0.9, "aiGenerated": false, "verifiedByTeacher": true },
+        { "itemNo": 2, "itemType": "选择", "knowledgePoint": "一次函数图象", "cognitiveLevel": "理解", "difficultyBand": "基础", "score": 8, "expectedP": 0.85, "aiGenerated": false, "verifiedByTeacher": true },
+        { "itemNo": 3, "itemType": "填空", "knowledgePoint": "k 的正负与图象升降", "cognitiveLevel": "理解", "difficultyBand": "基础", "score": 8, "expectedP": 0.8, "aiGenerated": true, "verifiedByTeacher": true },
+        { "itemNo": 4, "itemType": "解答", "knowledgePoint": "待定系数法求解析式", "cognitiveLevel": "掌握", "difficultyBand": "基础", "score": 6, "expectedP": 0.75, "aiGenerated": false, "verifiedByTeacher": true },
+        { "itemNo": 5, "itemType": "解答", "knowledgePoint": "一次函数的应用", "cognitiveLevel": "掌握", "difficultyBand": "中等", "score": 15, "expectedP": 0.6, "aiGenerated": false, "verifiedByTeacher": true },
+        { "itemNo": 6, "itemType": "解答", "knowledgePoint": "一次函数与二元一次方程的联系", "cognitiveLevel": "运用", "difficultyBand": "较难", "score": 5, "expectedP": 0.35, "aiGenerated": false, "verifiedByTeacher": true }
+      ]
+    }
+  ],
+  "itemScores": [
+    { "examId": "ex-2026-03-16-unit4", "studentAlias": "座号03", "itemNo": 1, "score": 8, "maxScore": 8 },
+    { "examId": "ex-2026-03-16-unit4", "studentAlias": "座号03", "itemNo": 2, "score": 8, "maxScore": 8 },
+    { "examId": "ex-2026-03-16-unit4", "studentAlias": "座号03", "itemNo": 3, "score": 4, "maxScore": 8 },
+    { "examId": "ex-2026-03-16-unit4", "studentAlias": "座号03", "itemNo": 4, "score": 6, "maxScore": 6 },
+    { "examId": "ex-2026-03-16-unit4", "studentAlias": "座号03", "itemNo": 5, "score": 9, "maxScore": 15 },
+    { "examId": "ex-2026-03-16-unit4", "studentAlias": "座号03", "itemNo": 6, "score": 0, "maxScore": 5 },
+    { "examId": "ex-2026-03-16-unit4", "studentAlias": "座号07", "itemNo": 1, "score": 8, "maxScore": 8 },
+    { "examId": "ex-2026-03-16-unit4", "studentAlias": "座号07", "itemNo": 2, "score": 4, "maxScore": 8 },
+    { "examId": "ex-2026-03-16-unit4", "studentAlias": "座号07", "itemNo": 3, "score": 8, "maxScore": 8 },
+    { "examId": "ex-2026-03-16-unit4", "studentAlias": "座号07", "itemNo": 4, "score": 3, "maxScore": 6 },
+    { "examId": "ex-2026-03-16-unit4", "studentAlias": "座号07", "itemNo": 5, "score": 6, "maxScore": 15 },
+    { "examId": "ex-2026-03-16-unit4", "studentAlias": "座号07", "itemNo": 6, "score": 0, "maxScore": 5 }
+  ],
+  "itemStats": [
+    { "examId": "ex-2026-03-16-unit4", "itemNo": 1, "pValue": 0.93, "dValue": 0.11, "groupingMethod": "27%", "flag": "正常" },
+    { "examId": "ex-2026-03-16-unit4", "itemNo": 2, "pValue": 0.81, "dValue": 0.24, "groupingMethod": "27%", "flag": "正常" },
+    { "examId": "ex-2026-03-16-unit4", "itemNo": 3, "pValue": 0.62, "dValue": 0.38, "groupingMethod": "27%", "flag": "正常" },
+    { "examId": "ex-2026-03-16-unit4", "itemNo": 4, "pValue": 0.71, "dValue": 0.33, "groupingMethod": "27%", "flag": "正常" },
+    { "examId": "ex-2026-03-16-unit4", "itemNo": 5, "pValue": 0.55, "dValue": 0.46, "groupingMethod": "27%", "flag": "正常" },
+    { "examId": "ex-2026-03-16-unit4", "itemNo": 6, "pValue": 0.18, "dValue": 0.09, "groupingMethod": "27%", "flag": "偏难" }
+  ],
+  "classSummaries": [
+    {
+      "examId": "ex-2026-03-16-unit4",
+      "sampleSize": 42,
+      "mean": 36.4,
+      "sd": 8.2,
+      "median": 37,
+      "meanRate": 0.728,
+      "distribution": [
+        { "band": "0-29", "count": 4 },
+        { "band": "30-34", "count": 8 },
+        { "band": "35-39", "count": 16 },
+        { "band": "40-44", "count": 9 },
+        { "band": "45-50", "count": 5 }
+      ],
+      "dataCompleteness": "逐题",
+      "reliabilityAlpha": 0.78,
+      "overallDifficulty": 0.728,
+      "analysisDate": "2026-03-17"
+    }
+  ],
+  "weaknessRank": [
+    {
+      "weaknessId": "wk-2026-01",
+      "knowledgePoint": "待定系数法求解析式",
+      "errorRate": 0.42,
+      "dimension": "方法用错",
+      "stubbornCount": 3,
+      "evidenceExamIds": ["ex-2026-03-16-unit4"],
+      "lastUpdated": "2026-03-17"
+    },
+    {
+      "weaknessId": "wk-2026-02",
+      "knowledgePoint": "一次函数与二元一次方程的联系",
+      "errorRate": 0.82,
+      "dimension": "概念模糊",
+      "stubbornCount": 1,
+      "evidenceExamIds": ["ex-2026-03-16-unit4"],
+      "lastUpdated": "2026-03-17"
+    }
+  ],
+  "studentTiers": [
+    { "studentAlias": "座号03", "tier": "B", "basis": "近 3 次测评平均得分率 0.70", "updatedAt": "2026-03-17" },
+    { "studentAlias": "座号07", "tier": "A", "basis": "近 3 次测评平均得分率 0.53", "updatedAt": "2026-03-17" }
+  ],
+  "reviewPlans": [
+    {
+      "reviewId": "rv-2026-04-midterm",
+      "targetExamId": "ex-2026-04-20-midterm",
+      "startDate": "2026-03-30",
+      "endDate": "2026-04-20",
+      "phases": [
+        { "name": "系统梳理", "daysToExam": ">14", "emphasis": "补学与弱项专项各占一半，建立知识框架", "newContentAllowed": true },
+        { "name": "强化整合", "daysToExam": "7-14", "emphasis": "综合练习 + 弱项强化", "newContentAllowed": false },
+        { "name": "冲刺提炼", "daysToExam": "3-7", "emphasis": "核心考点速览 + 错题清单确认", "newContentAllowed": false },
+        { "name": "信心建立", "daysToExam": "1-3", "emphasis": "只练做对过的同类题", "newContentAllowed": false },
+        { "name": "状态保持", "daysToExam": "0", "emphasis": "只讲流程与用品，不点弱项", "newContentAllowed": false }
+      ],
+      "spacingSchedule": [
+        { "knowledgePoint": "待定系数法求解析式", "reviewDates": ["2026-03-31", "2026-04-02", "2026-04-06", "2026-04-13"] },
+        { "knowledgePoint": "一次函数与二元一次方程的联系", "reviewDates": ["2026-04-01", "2026-04-03", "2026-04-07", "2026-04-14"] }
+      ],
+      "interleavingSets": [
+        ["一次函数的应用", "二元一次方程组的应用"],
+        ["一次函数图象", "反比例函数图象", "正比例函数图象"]
+      ],
+      "sourceWeaknessIds": ["wk-2026-01", "wk-2026-02"]
+    }
+  ]
+}

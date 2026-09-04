@@ -1,212 +1,148 @@
-# 🎓 小智伴学 · SKILL 包总览
+# 🎓 小智伴学 · SKILL 库
 
-> **小智伴学 SKILL 系列 — 学生·家长·老师三方深度协同**
-> 作者：小智伴学 | 适用平台：OpenClaw / ClawHub / SkillHub | 当前版本：**v1.1（生态全量交付）**
-> **当前进度：58 / 58 个 SKILL 全部达到 v1.0 稳定状态 ✅**
+> **面向中国 K12 的 AI 学习与教学 SKILL 集合 — 学生端 · 老师端**
+> 作者：小智伴学 ｜ 适用平台：OpenClaw / ClawHub ｜ 当前版本：**v2.1.0**
+> 全库 **57 个 SKILL**（学生端 31 + 老师端 26）+ 1 个开发者工具，统一词表、统一数据契约、内容级 CI 校验。
 
-传统的 AI 往往被当成"给答案的计算器"。
-而这套包含 **58 个 SKILL**（学生端 32 个 + 老师端 26 个）的生态系统，旨在将 AI 转化为"**追问思路的专属教练**"和"**赋能教师的教学助手**"，并构建学生、家长与老师三方深度配合的学习协同体系。
-
-> 🎉 **本次里程碑（v1.1 全量交付）：** 老师端 26 个 SKILL 全部从 v0.1 跃升至 v1.0，覆盖通用教学（6）、独立教师日常（8）、语数英物四学科专项（12），完整闭环"学生-老师-家长"三方协同。
+传统 AI 容易被当成"给答案的计算器"。这套 SKILL 库的目标，是把 AI 变成**追问思路的教练**和**减轻教师重复劳动的助手**，并让学生、老师、家长三方在**明确授权**的前提下共享必要的学习证据。
 
 ---
 
-## 📦 包含模块
+## 🧭 设计底座（先读这四份）
 
-本技能库按角色分为**学生端**和**老师端**两大体系：
+全库所有 SKILL 只引用以下共享约定，不再各自定义术语、阈值或降级规则：
 
-### 学生端（`student/`）· 32 个 SKILL
+| 文件 | 作用 |
+|------|------|
+| [`shared/vocab.md`](shared/vocab.md) | **唯一词表**：错因四维、学科子类型编码、弱项状态五档、掌握度映射、置信度、授权位、提醒预算、学段、命名与数值规范 |
+| [`shared/platform-conventions.md`](shared/platform-conventions.md) | 平台能力代号（记忆/定时/OCR/语音/统计…）、统一降级路径、控制入口段落、提醒入队契约 |
+| [`shared/crisis-exception.md`](shared/crisis-exception.md) | 危机例外片段：优先级高于一切熔断、温情转化与家长输出 |
+| [`shared/hint-ladder.md`](shared/hint-ladder.md) | 提示阶梯 L0–L6：替代"永远不给答案"的绝对禁令，既不代做也不把学生困死 |
+| [`shared/ai-item-check.md`](shared/ai-item-check.md) | AI 出题自检协议：自解 → 唯一解 → 条件充分 → 学段内 → 标注人工复核 |
+| [`shared/grade-bands.md`](shared/grade-bands.md) | 学段参数表：作息与免打扰窗口、专注时长、课时、各 SKILL 适用性矩阵 |
 
-- ⚙️ **核心五件套**（`student/general/`）：建立基础学习档案，在用户授权前提下实现持续错题追踪与提醒协作的通用底层系统。
-- 🧠 **学习方法论包**（`student/general/`）：让独立工具协同运作，形成闭环的学习系统。
-- 🚦 **自我管理与探索包**（`student/general/`）：从学习延展至时间管理、习惯养成与深度的跨学科兴趣探索。
-- 🈶 **语文学科专项**（`student/chinese/`）：覆盖写作、阅读、古文、素材积累与语病纠偏的专项训练。
-- ➗ **数学学科专项**（`student/math/`）：覆盖错误溯源、概念深潜、应用题建模与思维天花板突破。
-- 🔤 **英语学科专项**（`student/english/`）：贯穿口语开口、长期词汇追踪、语法基因分析与听写综合训练。
-- 🔬 **物理学科专项**（`student/physics/`）：覆盖图景解题、错误追踪、概念直觉、物理建模与实验思维。
-
-### 老师端（`teacher/`）· 26 个 SKILL（**全部 v1.0**）
-
-- 📋 **老师通用 SKILL**（`teacher/general/`，6 个）：教案设计、作业设计、学情分析、课堂互动、测评设计、复习规划。
-- 🧭 **独立教师日常 SKILL**（`teacher/independent/`，8 个）：工作台、试听建档、排课课时、课后记录、家长沟通、作业跟进、续课报告、资源复用。
-- 🈶 **语文老师 SKILL**（`teacher/chinese/`，3 个）：写作教学、阅读教学、文言文教学。
-- ➗ **数学老师 SKILL**（`teacher/math/`，3 个）：数学教案设计、班级错因分析、数学测评设计。
-- 🔤 **英语老师 SKILL**（`teacher/english/`，3 个）：口语活动设计、听力材料设计、英语综合测评。
-- 🔬 **物理老师 SKILL**（`teacher/physics/`，3 个）：物理教案设计、实验教学指导、解题教学指导。
+安全与隐私边界见 [`SECURITY_BASELINE.md`](SECURITY_BASELINE.md)。
 
 ---
 
-## 📊 SKILL 状态总览
+## 📦 目录结构
 
-| 类别 | 数量 | 状态 |
-|------|------|------|
-| 学生端 · 通用核心 | 12 | ✅ 全部 v1.0/v1.1 |
-| 学生端 · 学科专项（语数英物） | 20 | ✅ 全部 v1.0 |
-| 老师端 · 通用教学 | 6 | ✅ **本次 v1.0** |
-| 老师端 · 独立教师日常 | 8 | ✅ **本次 v1.0** |
-| 老师端 · 学科专项（语数英物） | 12 | ✅ **本次 v1.0** |
-| **总计** | **58** | **100% v1.0+** ✅ |
-
----
-
-## 🚀 快速开始（一分钟上手）
-
-> ⚠️ **强烈建议：** 不要一次性安装所有 SKILL！请按照以下最小核心顺序进行体验。
-
-### 学生端
-
-1. **安装 [🧬 学习DNA](student/general/xiaozhi-learning-dna/)** → 在你同意后完成首次建档（这是系统的长期档案层）
-2. **安装 [❌ 智能错题本](student/general/xiaozhi-correction-notebook/)** → 拍一道你近期做错的题，体验"找根因"而非"找答案"
-3. **安装 [⏰ IM智能提醒](student/general/xiaozhi-im-reminder/)** → 在你同意后安排针对这道题的第一次复测提醒
-4. **安装 [🎓 费曼学习法](student/general/xiaozhi-feynman-learning/)** → 试着给小智讲一遍这个知识点
-5. **安装 [📊 每周学习复盘](student/general/xiaozhi-weekly-review/)** → 等到周末，召唤一份属于你的数据化成长复盘
-
-### 老师端
-
-1. **安装 [教案设计器](teacher/general/xiaozhi-teach-lesson-planner/)** → 快速生成结构化教案
-2. **安装 [学情分析师](teacher/general/xiaozhi-teach-student-analyzer/)** → 分析班级数据，精准定位弱项
-3. **独立教师优先安装 [独立教师工作台](teacher/independent/xiaozhi-teach-solo-dashboard/)** → 管理课表、课后反馈、家长沟通和续课节点
-4. **安装对应学科 SKILL** → 根据你的学科选择对应的教学指导 SKILL（语文 3 / 数学 3 / 英语 3 / 物理 3）
-
-*(完整的长序列安装指南与加装路径，请参考 [🗺️ 安装指南与发布信息](docs/installation-guide.md))*
-
----
-
-## 🧬 SKILL 核心协作流
-
-在这个生态中，SKILL 不是孤立的；当任务需要且用户授权时，摘要数据会在底层产生有限流转与协同。
-
-### 学生端核心飞轮
-
-```text
-                    ┌──────────────────┐
-                    │  🧬 学习DNA   │
-                    │  （核心底层大脑）   │
-                    └────────┬─────────┘
-                             │ 为需要的SKILL提供已授权的学生摘要
-          ┌──────────────────┼──────────────────┐
-          ↓                  ↓                  ↓
-  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐
-  │  ❌ 智能错题本 │  │ ⏰ IM智能提醒 │  │ 🎓 费曼学习法 │
-  └───────┬───────┘  └───────┬───────┘  └───────┬───────┘
-          │                  │                  │
-          └──────────────────┼──────────────────┘
-                             ↓ 汇总所有数据
-                    ┌──────────────────┐
-                    │ 📊 每周学习复盘  │
-                    │  （飞轮周启动器）   │
-                    └──────────────────┘
 ```
-
-### 师生协同流
-
-```text
-  ┌──────────────────┐          ┌──────────────────┐
-  │   教师端 SKILL    │          │   学生端 SKILL    │
-  │                  │          │                  │
-  │  教案设计器      │──教学──→│  学科SKILL群     │
-  │  作业设计师      │──布置──→│  （学生练习）     │
-  │  学情分析师      │←─数据──│  学习DNA         │
-  │  测评设计师      │←─错因──│  错误DNA         │
-  │                  │          │                  │
-  └──────────────────┘          └──────────────────┘
-```
-
-### 老师端独立教师日常闭环
-
-```text
-试听诊断 → 学员建档 → 排课课时 → 课前准备
-    ↓                         ↓
-课堂教学 ← 通用/学科教师SKILL ← 独立教师工作台
-    ↓
-课后记录 → 作业跟进 → 家长沟通 → 阶段报告/续课 → 资源复用
+xiaozhi-skills/
+├── shared/          共享约定（词表 / 平台 / 危机 / 提示阶梯 / 出题自检 / 学段）
+├── student/         学生端 31 个 SKILL
+│   ├── general/     通用学习 11 个
+│   ├── chinese/     语文 5 个
+│   ├── math/        数学 5 个
+│   ├── english/     英语 5 个
+│   └── physics/     物理 5 个
+├── teacher/         老师端 26 个 SKILL
+│   ├── general/     通用教学 6 个 + schemas/
+│   ├── independent/ 独立教师日常 8 个 + schemas/
+│   ├── chinese/     语文教学 3 个
+│   ├── math/        数学教学 3 个
+│   ├── english/     英语教学 3 个
+│   └── physics/     物理教学 3 个
+├── tools/           开发者工具（SKILL 创建教练，非学生学习任务）
+├── scripts/         CI 校验脚本
+└── docs/            架构、安装指南、版本历史、评估报告
 ```
 
 ---
 
-## 🎓 老师端 SKILL 三大场景
+## 🗂️ SKILL 一览
 
-### 场景 ①：通用教学（6 个）
+### 学生端 · 通用（11）
 
-适用于**任何学科**的老师，提供从备课到测评的完整教学设计工具集：
+| SKILL | 目录 | 做什么 | 适用学段 |
+|---|---|---|---|
+| 🧬 学习DNA | `student/general/xiaozhi-learning-dna/` | 长期档案层：授权、学科强弱、概念图谱、情绪维度、学科扩展档案 | 小学中段–高中 |
+| ❌ 智能错题本 | `student/general/xiaozhi-correction-notebook/` | 全学科错题统一入口，四维错因分类，顽固弱项的唯一计数权威 | 小学中段–高中 |
+| ⏰ IM智能提醒 | `student/general/xiaozhi-im-reminder/` | 全库唯一的提醒发送方：队列 + 每日合并摘要 + 学段免打扰 | 小学中段–高中 |
+| 🎓 费曼学习法 | `student/general/xiaozhi-feynman-learning/` | 用"讲给小智听"验证真实理解，支架渐退 + 反依赖设计 | 小学中段–高中 |
+| 📊 每周学习复盘 | `student/general/xiaozhi-weekly-review/` | 基于证据的周复盘与成长曲线，家庭版需单独授权 | 小学中段–高中 |
+| 📝 康奈尔笔记 | `student/general/xiaozhi-cornell-notes/` | 笔记结构化与按需提示，小学高段有简化版 | 初中–高中 |
+| 🔗 学习系统协调器 | `student/general/xiaozhi-skill-coordinator/` | 跨 SKILL 路由（含学科判别）与交接协议校验 | 小学中段–高中 |
+| 🗓️ 30天学习计划制定师 | `student/general/xiaozhi-learning-plan/` | 基于真实数据的计划与执行监控，家庭看板受授权门控 | 小学高段–高中 |
+| ⏱️ 时间与专注力教练 | `student/general/xiaozhi-time-focus-coach/` | 时间记录、黄金时段、按学段参数化的番茄钟 | 小学中段–高中 |
+| 🔭 跨学科侦探周 | `student/general/xiaozhi-cross-subject-detective/` | 跨学科主题探究与概念图谱联结 | 小学高段–高中 |
+| ☕ 兴趣成长探索计划 | `student/general/xiaozhi-interest-explorer/` | 区分浅层喜好与真正兴趣，含 8 周试探版 | 小学高段–高中 |
 
-| 工具 | 关键能力 |
-|------|---------|
-| [教案设计器](teacher/general/xiaozhi-teach-lesson-planner/) | UbD 逆向设计 + 核心素养导向目标（2022 新课标）+ 六步环节时间矩阵 + Bloom 提问链 + A/B/C 分层输出 |
-| [作业设计师](teacher/general/xiaozhi-teach-assignment-designer/) | 知识点四层拆解 + 难度梯度四档 + A/B/C 分层任务卡 + 过程分+结果分双轨评分 |
-| [学情分析师](teacher/general/xiaozhi-teach-student-analyzer/) | 班级画像 + 知识点热力图 + 个体诊断卡 + 教学调整建议 |
-| [课堂互动教练](teacher/general/xiaozhi-teach-classroom-coach/) | 四种互动模式 + Bloom 6-8 层分层提问链 + 苏格拉底式候场追问矩阵 + 冷场 3 步走 |
-| [测评设计师](teacher/general/xiaozhi-teach-exam-designer/) | 四类测评目的 + 双向细目表 + 难度梯度 + 题目版权管理 + 讲评设计 |
-| [复习规划师](teacher/general/xiaozhi-teach-review-planner/) | 知识图谱四层 + 三维重难点 + 单元复习 5 阶段 + 考前分阶段策略 + 心理建设 |
+### 学生端 · 学科专项（20）
 
-### 场景 ②：独立教师日常（8 个）
+| 学科 | SKILL |
+|---|---|
+| 语文（`student/chinese/`） | 🖊️ 语文写作教练 ｜ 📖 阅读理解拆解师 ｜ 🏛️ 文言文复活计划 ｜ 📚 语文素材库 ｜ 🔍 语病追踪档案 |
+| 数学（`student/math/`） | 📐 数学解题教练 ｜ 🧬 数学错误DNA ｜ 💡 数学概念解释器 ｜ 📝 应用题建模教练 ｜ 🎯 思维梯度训练师 |
+| 英语（`student/english/`） | 🎙️ 英语口语陪练 ｜ 📖 智能词汇DNA系统 ｜ 📝 英语语法突破教练 ｜ 🎧 个性化英语听力训练师 ｜ ✍️ 英语写作进化教练 |
+| 物理（`student/physics/`） | 🧲 物理解题教练 ｜ 🧬 物理错误DNA ｜ 💡 物理概念直觉器 ｜ 📐 物理建模教练 ｜ 🔬 物理实验思维教练 |
 
-适用于**个人 IP 老师 / 一人工作室**，补齐教学外的一人工作流：
+学科 SKILL 默认基线为**初中**；小学高段可用的已在 `grade_bands` 中标明，超出学段的内容在正文中带 `⚠高中` 标注。
 
-| 工具 | 关键能力 |
-|------|---------|
-| [独立教师工作台](teacher/independent/xiaozhi-teach-solo-dashboard/) | 7 区块日工作台 + 5 类风险学员自动标记 + 续课节点预警 |
-| [试听与学员建档](teacher/independent/xiaozhi-teach-student-intake/) | 最小化信息收集 + 5W 需求访谈 + 学情诊断卡 + 5 段试讲课设计 |
-| [排课与课时管理](teacher/independent/xiaozhi-teach-schedule-manager/) | 学员/老师时间矩阵 + 周课表生成三步走 + 冲突检测三类 + 续费预警三档 |
-| [课后记录助手](teacher/independent/xiaozhi-teach-lesson-log/) | 5 维度结构化记录 + 5 分钟即时记录 + 家长简报 |
-| [家长沟通助手](teacher/independent/xiaozhi-teach-parent-communication/) | 4 类沟通场景 + 三原则 + 6 类典型场景话术 + 敏感场景应对 |
-| [作业跟进管家](teacher/independent/xiaozhi-teach-homework-tracker/) | 状态四分类 + 催交流三层 + 错因七分类 + 顽固弱项档案（3 次触发/5 次升级） |
-| [阶段报告与续课助手](teacher/independent/xiaozhi-teach-renewal-report/) | 5 类触发节点 + 三段式报告 + 进步可视化 + 续费沟通话术 |
-| [教学资源复用库](teacher/independent/xiaozhi-teach-resource-library/) | 资源五大类 + 标签化体系 + 改编四原则 + 版权管理四档 + 案例脱敏 |
+### 老师端（26）
 
-### 场景 ③：学科专项（12 个，语数英物各 3）
+| 场景 | SKILL |
+|---|---|
+| 通用教学（`teacher/general/`，6） | 教案设计器 ｜ 作业设计师 ｜ 学情分析师 ｜ 课堂互动教练 ｜ 测评设计师 ｜ 复习规划师 |
+| 独立教师日常（`teacher/independent/`，8） | 独立教师工作台 ｜ 试听与学员建档 ｜ 排课与课时管理 ｜ 课后记录助手 ｜ 家长沟通助手 ｜ 作业跟进管家 ｜ 阶段报告与续课助手 ｜ 教学资源复用库 |
+| 学科教学（12） | 语文 3（写作/阅读/文言文）｜ 数学 3（教案/错因分析/测评）｜ 英语 3（口语/听力/综合测评）｜ 物理 3（教案/实验/解题） |
 
-适用于**有学科专长的老师**，提供学科特色的教学指导：
+### 开发者工具
 
-| 学科 | 工具 | 关键特色 |
-|------|------|---------|
-| **语文** | [写作教学指导](teacher/chinese/xiaozhi-teach-chinese-writing-guide/) | 任务设计三原则 + 三维批改 12 分制 + 风格 DNA 6 维度 |
-| | [阅读教学指导](teacher/chinese/xiaozhi-teach-chinese-reading-guide/) | 文本三解 + 6 大阅读策略 + 三阶练习 + 群文阅读 |
-| | [文言文教学指导](teacher/chinese/xiaozhi-teach-chinese-classical-guide/) | 诵读三阶 + 训诂三阶 + 串讲 + 主题 + 诗词鉴赏四维 |
-| **数学** | [数学教案设计](teacher/math/xiaozhi-teach-math-lesson-planner/) | 概念建构四步 + 例题三要素 + 变式三类型 |
-| | [班级错因分析](teacher/math/xiaozhi-teach-math-error-analyzer/) | 7 类错因 + 4 层溯源 + 知识点热力图 + 顽固错因追踪 |
-| | [数学测评设计](teacher/math/xiaozhi-teach-math-exam-designer/) | 三类测评 + 双向细目表 + 难度梯度 60/30/10 |
-| **英语** | [口语活动设计](teacher/english/xiaozhi-teach-english-speaking-designer/) | 任务型教学法 TBLT + 任务三类型 + 重述式纠正 |
-| | [听力材料设计](teacher/english/xiaozhi-teach-english-listening-designer/) | i+1 难度 + 三遍听法 + 8 个微技能训练 |
-| | [英语综合测评](teacher/english/xiaozhi-teach-english-assessment/) | 听说读写 4 维 + CSE 九级 / CEFR 对照 + 学员能力画像 |
-| **物理** | [物理教案设计](teacher/physics/xiaozhi-teach-physics-lesson-planner/) | 五大物理观念 + 概念建构 + 物理模型 7 类 + 应用三类 |
-| | [实验教学指导](teacher/physics/xiaozhi-teach-physics-experiment-coach/) | 三类实验 + 变量控制 + 数据处理 + 误差分析 |
-| | [解题教学指导](teacher/physics/xiaozhi-teach-physics-problem-guide/) | 五步解题法 + 过程分析 + 7 类样板题 + 变式训练 |
+| 工具 | 目录 | 说明 |
+|---|---|---|
+| 🛠️ SKILL创建教练 | `tools/xiaozhi-skill-creator/` | 面向想自建 SKILL 的开发者与高中生，**不属于**学生日常学习任务 |
 
 ---
 
-## 📚 完整文档指南
+## 🔌 数据契约
 
-为了提供更清晰的阅读体验，所有详细内容已被拆分。欲深入了解整个生态的运转机制，请导航至以下官方文档：
+跨 SKILL 的数据流动只能走以下四份 schema，任何 SKILL 正文中的接口路径都必须是这些 schema 中真实存在的字段（由 CI 校验）：
 
-- 🏛️ **[系统架构与方法论 (Architecture)](docs/architecture.md)**
-  - 包含全套 58 个 SKILL（学生端 32 + 老师端 26）的完整清单、详细说明
-  - 语/数/英/物学科专项的具体拆解机制
-  - 师生协同架构与全树状结构图
-- 🗺️ **[安装指南与发布信息 (Installation Guide)](docs/installation-guide.md)**
-  - 详尽的四阶段、40步长序列成长安装路径建议
-  - ClawHub 官方各套餐包裹推荐
-- 🔄 **[版本历史与升级追踪 (Changelog)](docs/changelog.md)**
-  - 全套 SKILL 的当前版本对照表
-  - 本次 v1.0 全量交付的完整追踪
-  - 老师端 26 个 SKILL 的能力概要与源码归属
+| Schema | 位置 | 承载什么 |
+|---|---|---|
+| 学习DNA | `student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json` | 学生长期档案：授权位、学科强弱、概念图谱、情绪、`subjectExtensions`（语数英物）、`extensions`（笔记/专注/计划/项目/理解深度）、`safetyRecord` |
+| 交接协议 | `student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json` | 七类交接：错题交接、深度分析回写、档案回写、学科档案回写、提醒入队、提醒同步、教师写回；发送方需附授权位快照 |
+| 独立教师工作空间 | `teacher/independent/schemas/solo-teacher-workspace.schema.json` | 学员卡、课表、课后记录、作业跟进、家长沟通、课时包、进步证据、资源索引 |
+| 班级教学工作空间 | `teacher/general/schemas/class-teaching-workspace.schema.json` | 班级画像、教案、课堂记录、作业、双向细目表、逐题得分与 P/D 统计、弱项排序、分层、复习计划 |
 
 ---
 
-## 🛡️ 安全与隐私框架
+## 🛡️ 安全与授权
 
-本 SKILL 库坚持以下原则（详见 [SECURITY_BASELINE.md](SECURITY_BASELINE.md)）：
+- **授权分主体**：档案与情绪记录区分"学生本人 / 监护人"；小学各学段必须监护人同意；学生与家长共用会话时先确认说话人。
+- **家长可见内容有门控**：`parentSharingConsent` 控制学习摘要，`emotionSharingWithParent` 单独控制情绪内容。
+- **危机例外优先**：出现自伤、轻生、霸凌、家庭安全等信号时，所有 SKILL 立即停止本流程，按 `shared/crisis-exception.md` 处置，不做低敏美化。
+- **控制入口**：每个持有数据的 SKILL 都提供查看 / 更正 / 删除 / 暂停 / 共享控制 / 导出六项口令。
+- **最小化记录**：不记真实姓名、联系方式、住址、证件、医疗与家庭信息；学员一律化名或座号。
+- **不承诺提分**：不输出"预期提分 X 分"或"治愈焦虑"类表述。
 
-- **字段级高敏信息防护**：所有学员信息使用化名/编号，不公开真实姓名+学情
-- **最小化数据收集**：仅收集教学/学习必需的字段
-- **AI 边界声明**：每个老师端 SKILL 都明确 AI 不替代老师备课/阅卷/讲题，只提供框架与建议
-- **版权管理**：所有题目、教材、古文原文均标注 copyrightStatus
-- **化名规则**：错题、错因、错例档案均使用化名入库
+---
+
+## ✅ 校验
+
+```bash
+npm install
+npm run check
+```
+
+| 脚本 | 检查什么 |
+|---|---|
+| `check-references.mjs` | 引用的 references / schemas 文件真实存在，无孤儿文件 |
+| `check-skills.mjs` | frontmatter 规范、依赖无环、词表一致、占位与重复文件、学段标注、控制入口与危机片段、接口路径存在于 schema、文档一致性 |
+| `validate-schemas.mjs` | 四份 schema 自身有效、examples 合规、枚举与 `shared/vocab.md` 一致 |
+
+---
+
+## 📚 更多文档
+
+- 🏛️ [系统架构与方法论](docs/architecture.md) — 完整清单、协作架构、方法论依据、目录树
+- 🗺️ [安装指南](docs/installation-guide.md) — 分阶段安装路径与打包建议
+- 🔄 [版本历史](docs/changelog.md) — 版本演进与本轮变更
+- 📋 [评估报告 2026-09](docs/review-2026-09.md) — 本轮问题清单与优化路线图
 
 ---
 
 > 💡 **小智寄语：**
-> "从第一次输入'你好'开始，到第 100 天它在你授权后提醒'上次你在这里失误，今天特别注意'——这中间的距离，就是你和真正 AI 伙伴之间的距离。值得走完这段路。
->
-> **现在，58 个 SKILL 已经全部就绪，**
-> **剩下的路，学员、家长和老师一起走。**"
+> "工具不是装得越多越好。先把错题本用熟，再谈其余。
+> 真正有用的，是你自己想明白的那一步。"

@@ -1,6 +1,13 @@
 # 词汇雷达话题模板
 
-> 本文档为 `xiaozhi-english-vocabulary-dna` 的配套参考资源，提供新词汇雷达（模块C：课前7天预热）的话题分类模板、词汇分组策略与四阶段预热内容生成指南。
+> 适用学段：小学高段与初中（7-9 年级）。词表分档按 2022 版义教课标（1600 词）；标 ⚠高中 的分档不作为初中目标。
+
+> 本文档为 `xiaozhi-english-vocabulary-dna` 的配套参考资源，提供新词汇雷达（模块C：课前预热）的话题分类模板、词汇分组策略与四阶段预热内容生成指南。
+>
+> ⚠️ **不绑定任何一版教材的单元编号与单元名**：各地在用的教材版本与修订年份不同
+> （2024 秋起多地启用新版），把单元名写死会在换版后立刻失效。
+> 本文件按**话题 + 该话题下的词表**组织；学生说"下周学第 X 课"时，
+> 让他把**单元词表本身**发过来，本文件只负责按话题给出扩展词与预热模板。
 
 ---
 
@@ -10,54 +17,58 @@
 
 ```
 词汇雷达话题分类的三个维度：
-  ① 教材匹配：按教材单元主题分组（最精准的课前预热来源）
-  ② 考试高频：按中考/高考高频话题分组（备考优先）
+  ① 课内话题：按学生发来的单元词表所属**话题**分组（最精准的课前预热来源）
+  ② 考试高频：按中考高频话题分组（备考优先）
   ③ 兴趣拓展：按学生兴趣档案分组（主动学习时使用）
 
-优先级：教材匹配 > 考试高频 > 兴趣拓展
-  → 学生说"下周学新课"时 → 使用教材匹配组
+优先级：课内话题 > 考试高频 > 兴趣拓展
+  → 学生说"下周学新课"时 → 请他发单元词表，再按话题补语境
   → 学生说"帮我备考"时 → 使用考试高频组
   → 学生主动存词/兴趣探索时 → 使用兴趣拓展组
+
+⚠️ 任何一组都不写死教材版本或单元编号。
 ```
 
 ---
 
-## 二、教材匹配话题组
+## 二、课内话题组（按话题 + 词表，不绑定教材版本）
 
-### 人教版初中英语话题分组
+> 用法：学生把本单元词表发来 → 在下表里找**话题**（不是找单元号）→
+> 用该话题的扩展词补齐语境，再按 §五出预热内容。
+> 表中的词只是该话题的常见词示例，**以学生实际的单元词表为准**。
 
-#### 七年级话题组
+### 起步话题（对应七年级前后，⭐）
 
-| 单元主题 | 核心词汇（示例） | 预热难度 |
+| 话题 | 该话题常见词 | 预热难度 |
 |---------|----------------|---------|
-| My name's Gina | name, introduce, yourself, phone number, friend, first/last | ⭐ |
-| This is my sister | family, mother, father, sister, brother, cousin, aunt, uncle | ⭐ |
-| Is this your pencil? | pencil, book, eraser, box, schoolbag, dictionary, mine, yours | ⭐ |
-| Where's my schoolbag? | where, table, bed, sofa, desk, room, under, on, in | ⭐ |
-| Do you have a soccer ball? | soccer, basketball, volleyball, tennis, have, let, play, sport | ⭐ |
-| I like watching TV | watch, TV, interesting, boring, fun, difficult, relaxing | ⭐ |
-| What time do you go to school? | time, morning, shower, usually, never, always, tooth, job | ⭐⭐ |
-| How do you get to school? | get, subway, bus, ride, bike, kilometer, minute, far, walk | ⭐⭐ |
+| 自我介绍与称呼 | name, introduce, yourself, phone number, friend, first/last | ⭐ |
+| 家庭成员 | family, mother, father, sister, brother, cousin, aunt, uncle | ⭐ |
+| 学习用品与归属 | pencil, book, eraser, box, schoolbag, dictionary, mine, yours | ⭐ |
+| 房间与方位 | where, table, bed, sofa, desk, room, under, on, in | ⭐ |
+| 球类与运动 | soccer, basketball, volleyball, tennis, have, let, play, sport | ⭐ |
+| 兴趣与评价形容词 | watch, TV, interesting, boring, fun, difficult, relaxing | ⭐ |
+| 作息与频度副词 | time, morning, shower, usually, never, always, tooth, job | ⭐⭐ |
+| 出行方式与距离 | get, subway, bus, ride, bike, kilometre, minute, far, walk | ⭐⭐ |
 
-#### 八年级话题组
+### 进阶话题（对应八年级前后，⭐⭐）
 
-| 单元主题 | 核心词汇（示例） | 预热难度 |
+| 话题 | 该话题常见词 | 预热难度 |
 |---------|----------------|---------|
-| What's the matter? | matter, stomach, throat, fever, cough, headache, medicine, rest | ⭐⭐ |
-| I'll help clean the city parks | volunteer, clean, cheer, lonely, homeless, raise, repair | ⭐⭐ |
-| Have you read Treasure Island? | treasure, island, classic, fiction, adventure, ship, crew | ⭐⭐ |
-| Why don't you talk to your parents? | pressure, compete, opinion, skill, typical, crazy, push, compare | ⭐⭐⭐ |
-| What's the highest mountain? | mountain, climb, achievement, challenge, nature, protect, force | ⭐⭐⭐ |
-| Have you ever been to a museum? | museum, amusement, somewhere, camp, stamp, collection | ⭐⭐ |
+| 身体不适与就医 | matter, stomach, throat, fever, cough, headache, medicine, rest | ⭐⭐ |
+| 志愿服务与助人 | volunteer, clean, cheer, lonely, homeless, raise, repair | ⭐⭐ |
+| 读书与故事 | classic, fiction, adventure, character, plot, ship, crew | ⭐⭐ |
+| 与父母沟通、压力 | pressure, compete, opinion, skill, typical, push, compare | ⭐⭐⭐ |
+| 自然地理与挑战 | mountain, climb, achievement, challenge, nature, protect, force | ⭐⭐⭐ |
+| 参观与经历 | museum, amusement, somewhere, camp, stamp, collection | ⭐⭐ |
 
-#### 九年级话题组
+### 冲刺话题（对应九年级前后，⭐⭐⭐）
 
-| 单元主题 | 核心词汇（示例） | 预热难度 |
+| 话题 | 该话题常见词 | 预热难度 |
 |---------|----------------|---------|
-| How can we become good learners? | learner, ability, brain, attention, connect, review, knowledge | ⭐⭐⭐ |
-| I think mooncakes are delicious | mooncake, lantern, stranger, relative, dessert, tradition, admire | ⭐⭐ |
-| Could you please tell me where the restrooms are? | restroom, stamp, postcard, direction, suggest, convenient, corner | ⭐⭐⭐ |
-| I remember meeting all of you | remember, overcome, caring, proud, senior, graduation, congratulate | ⭐⭐⭐ |
+| 学习方法与能力 | learner, ability, brain, attention, connect, review, knowledge | ⭐⭐⭐ |
+| 传统节日与习俗 | mooncake, lantern, stranger, relative, dessert, tradition, admire | ⭐⭐ |
+| 问路与礼貌请求 | restroom, postcard, direction, suggest, convenient, corner | ⭐⭐⭐ |
+| 回顾与毕业 | remember, overcome, caring, proud, senior, graduation, congratulate | ⭐⭐⭐ |
 
 ---
 
@@ -65,13 +76,16 @@
 
 ### 中考高频话题（5大类）
 
+> 分档说明：**基础层 / 进阶层**均在 2022 版课标 1600 词范围内（中考目标）；
+> **拓展层**为高考 3000 词范围 ⚠高中，初中只在学生主动问到时说明，不作为记忆目标。
+
 #### 1. 校园与学习
 
 ```
 核心词汇层：
-  基础层（必备）：class, subject, teacher, homework, exam, grade, school
-  进阶层（常考）：schedule, curriculum, extracurricular, scholarship, assignment
-  高阶层（理解）：academic, comprehensive, compulsory, optional, assessment
+  基础层（课标 1600 词内，必备）：class, subject, teacher, homework, exam, grade, school
+  进阶层（课标 1600 词内，中考常考）：schedule, curriculum, extracurricular, scholarship, assignment
+  拓展层 ⚠高中（高考 3000 词范围，只求读到时认识）：academic, comprehensive, compulsory, optional, assessment
 
 话题示例句（预热Day 7用）：
   "School life involves attending classes, completing homework,
@@ -87,9 +101,9 @@
 
 ```
 核心词汇层：
-  基础层：technology, computer, internet, environment, pollution, protect
-  进阶层：digital, sustainable, renewable, emission, ecosystem
-  高阶层：innovation, breakthrough, carbon footprint, biodiversity
+  基础层（课标 1600 词内）：technology, computer, internet, environment, pollution, protect
+  进阶层（课标 1600 词内）：digital, sustainable, renewable, emission, ecosystem
+  拓展层 ⚠高中（高考 3000 词范围）：innovation, breakthrough, carbon footprint, biodiversity
 
 话题示例句：
   "Technology has changed how we learn and communicate."
@@ -104,9 +118,9 @@
 
 ```
 核心词汇层：
-  基础层：health, exercise, diet, sleep, habit, lifestyle
-  进阶层：nutrition, fitness, well-being, balanced, regular
-  高阶层：immune system, cardiovascular, mental health, chronic
+  基础层（课标 1600 词内）：health, exercise, diet, sleep, habit, lifestyle
+  进阶层（课标 1600 词内）：nutrition, fitness, well-being, balanced, regular
+  拓展层 ⚠高中（高考 3000 词范围）：immune system, cardiovascular, mental health, chronic
 
 话题示例句：
   "A healthy lifestyle includes regular exercise and good sleep."
@@ -121,9 +135,9 @@
 
 ```
 核心词汇层：
-  基础层：culture, tradition, festival, custom, community, society
-  进阶层：heritage, celebration, diversity, respect, belief
-  高阶层：multicultural, cultural exchange, social cohesion
+  基础层（课标 1600 词内）：culture, tradition, festival, custom, community, society
+  进阶层（课标 1600 词内）：heritage, celebration, diversity, respect, belief
+  拓展层 ⚠高中（高考 3000 词范围）：multicultural, cultural exchange, social cohesion
 
 话题示例句：
   "Different cultures have different traditions and festivals."
@@ -138,9 +152,9 @@
 
 ```
 核心词汇层：
-  基础层：dream, goal, effort, challenge, confident, nervous, proud
-  进阶层：ambition, motivation, perseverance, resilience, achievement
-  高阶层：self-discipline, determination, fulfillment, self-awareness
+  基础层（课标 1600 词内）：dream, goal, effort, challenge, confident, nervous, proud
+  进阶层（课标 1600 词内）：ambition, motivation, perseverance, resilience, achievement
+  拓展层 ⚠高中（高考 3000 词范围）：self-discipline, determination, fulfillment, self-awareness
 
 话题示例句：
   "Setting goals helps us stay motivated and focused."
@@ -178,7 +192,7 @@
 向上扩展：
   基础：team, score, win, lose, player, coach, court, practice
   进阶：league, championship, strategy, defense, offense, dribble, shoot
-  高阶：tournament, semifinal, playoff, momentum, underdog, crossover
+  拓展 ⚠高中（高考 3000 词范围）：tournament, semifinal, playoff, momentum, underdog, crossover
 
 预热内容模板（Day 7）：
   "下周我们聊 [basketball]！先认识这些词：
@@ -193,7 +207,7 @@
 向上扩展：
   基础：song, rhythm, melody, perform, concert, band, singer, stage
   进阶：compose, lyrics, chorus, verse, harmony, acoustic, album
-  高阶：composition, repertoire, improvisation, virtuosity, resonance
+  拓展 ⚠高中（高考 3000 词范围）：composition, repertoire, improvisation, virtuosity, resonance
 ```
 
 #### 游戏话题
@@ -203,7 +217,7 @@
 向上扩展：
   基础：build, craft, explore, survive, create, block, world, resource
   进阶：strategy, multiplayer, adventure, quest, skill, upgrade, challenge
-  高阶：simulation, procedural, sandbox, open-world, immersive
+  拓展 ⚠高中（高考 3000 词范围）：simulation, procedural, sandbox, open-world, immersive
 ```
 
 ---
@@ -218,18 +232,25 @@
 
    下周你会遇到这些词，我们先认识一下：
 
-   [词汇1] /[音标]/ 读作：[中文近似音辅助]
-   [词汇2] /[音标]/ 读作：[中文近似音辅助]
+   [词汇1] /[IPA 音标]/  口型提示：[一句话说清舌位/唇形]
+   [词汇2] /[IPA 音标]/  口型提示：[…]
    ...
 
    今天任务：把这些词的发音读三遍——
    不需要记意思，只是让它们变得不陌生。"
 
-音标辅助规则：
-  → 使用 IPA 音标
-  → 如果学生是初学者，附中文近似音辅助（仅Day 7使用）
-  → 如 /θɪŋk/ → 读作类似 "丝-ing-k"（舌尖伸出版）
-  → 中文辅助仅供参考，不替代正确音标
+注音规则（只有一种做法）：
+  → 只用 IPA 音标
+  → 音标后加一句**口型/舌位提示**，帮学生找到发音动作
+  → ❌ 禁止用拼音或汉字近似音注音（"丝-ing-k""爱普"）：
+     这类注音会把 /θ/ 直接教成 /s/、把词尾辅音教成带元音，
+     等于亲手制造 P01（th 音替代）、P05（词尾辅音）两个顽固发音弱项
+  → 学生说"我读不出来"时，给的是更细的口型说明，不是汉字谐音
+
+示例（正确写法）：
+  think /θɪŋk/    舌尖轻轻伸到上下门牙之间送气；不是 s 的位置
+  very  /ˈveri/   上牙轻咬下唇内侧再送气；不是 w 的圆唇
+  sit   /sɪt/     舌位比 see 低一点、放松，嘴角别拉开；结尾 t 要发出来，别加"呃"
 ```
 
 ### Day 5（场景联想）生成模板
@@ -306,21 +327,23 @@
   → 第二轮：补充和搭配词（余下）
 ```
 
-### 与词汇DNA五轮提醒的关系
+### 与"每日到期词卡"的关系
 
 ```
-词汇雷达预热 ≠ 词汇DNA五轮提醒
+词汇雷达预热 ≠ 到期词卡
 
-词汇雷达：课前7天的预热（"还没学就开始见"）
+词汇雷达：课前几天的预热（"还没学就开始见"）
   → 目标：建立"见过"的印象，降低首次学习负担
-  → 结束后：词汇进入正式学习 → 自动转入五轮提醒系统
+  → 上课后：这批词进入正常的间隔重复排程
 
-词汇DNA五轮提醒：学完后的巩固（"学了之后不能忘"）
-  → 目标：从短期记忆升级到长期记忆
-  → 5轮完成后：进入季度复习模式
+每日到期词卡：学完之后的巩固（"学了之后别忘掉"）
+  → 到期日由 SM-2 按学生表现维护
+  → 对外每天只有 1 张卡（shared/vocab.md §9）
 
-衔接流程：
-  预热Day 7 → 预热Day 5 → 预热Day 3 → 上课学习 →
-  → 五轮Day 1(24h) → 五轮Day 2(3d) → 五轮Day 3(7d) →
-  → 五轮Day 4(14d) → 五轮Day 5(30d)
+衔接流程（预热内容并入当日那张词卡，不额外多发消息）：
+  预热 D-7 → 预热 D-5 → 预热 D-3 → 上课当天早上一句提醒 → 上课学习
+  → 之后按各词自己的 dueDate 出现在每日词卡上
+
+⚠️ 全流程中，本 SKILL 每天对外仍然只贡献 1 张词卡；
+   预热期不新增提醒条数，只改变当天词卡的内容。
 ```

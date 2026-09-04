@@ -1,5 +1,7 @@
 # 五类语法错误详细分析与追问话术扩展库
 
+> 适用学段：初中（7-9 年级）为主，小学高段可用其中的时态与主谓一致部分；标 ⚠高中 的条目仅供初高衔接了解，不进初中练习与档案。
+
 ---
 
 ## 一、时态系统完整追问库
@@ -34,7 +36,7 @@
 
 ---
 
-### 现在完成时（中国学生最难掌握）
+### 现在完成时（初中高频难点）
 
 **核心区别：** 一般过去时 vs 现在完成时
 
@@ -50,18 +52,22 @@
 → 强调已经发生/目前状态：现在完成时（I have been to Beijing.）
 ```
 
-**追问示例：**
+**追问示例（注意：不要把 already + 过去时判为错）：**
 
 ```
 学生：I already finished my homework.
 
-追问1："'already'和现在完成时经常搭配——
-       你这里用的是一般过去时（finished）。
-       换成现在完成时，'finish'应该变成什么形式？"
+判定口径：这句话本身不是错句——美式英语里 already/just/yet 完全可以配一般过去时。
+  但国内教材与中考语料以英式用法为主，already/just/yet 倾向搭配现在完成时。
+  所以这里不说"你错了"，说的是"考试更倾向哪一种"。
+
+追问1："already 在你的课本里一般和哪个时态一起出现？
+       如果按课本的习惯写，'finish' 要变成什么形式？"
+→ have finished
 
 追问2："'I already finished'和'I have already finished'——
        感觉上有什么区别？
-       （提示：前者更像在说一个事实，后者更像在说对现在的影响）"
+       （提示：前者是在陈述一件过去发生的事，后者强调它对现在的影响）"
 
 追问3："用现在完成时造一个句子——
        说你已经完成了某件事，用 'already'。"
@@ -127,7 +133,13 @@ Step 3：确认动词形式（现在时第三人称单数加s/es）
 
 ## 三、介词搭配追问扩展
 
-### 场景联想法（替代死记硬背）
+### 场景联想法（记忆钩子，不是语法规则）
+
+> ⚠️ 使用说明：下面这些"空间感"说法是**帮助记忆的钩子**，不是可以推导搭配的规则。
+> 大量介词搭配无法用空间联想解释（interested **in** 与 good **at** 的差别、
+> depend **on** 与 rely **on** 的一致、married **to** 与中文"和…结婚"的错位），
+> 只能作为固定搭配记住。追问时可以用钩子帮学生留住印象，
+> **不要**告诉学生"按空间逻辑就能推出来"，也不要让学生用钩子去猜没学过的搭配。
 
 ```
 in：沉浸进去，在某个空间/时间范围内
@@ -152,30 +164,52 @@ for：为了，持续时间
 
 ### 高频错误介词对速查
 
-| 错误搭配 | 正确搭配 | 场景联想追问 |
+| 错误搭配 | 正确搭配 | 记忆钩子（仅助记） |
 |---------|---------|------------|
-| interested at | interested in | "兴趣是沉浸进去，还是指向一个点？" |
-| arrive to | arrive at/in | "到达是指向终点（at）还是进入某地（in）？" |
-| good on | good at | "擅长是精通某个技能点（at）" |
-| married with | married to | "婚姻是连接两人（to）" |
-| depend in | depend on | "依靠是站在...上面（on）" |
+| interested at | interested in | "兴趣是沉浸进去" |
+| arrive to | arrive at/in | "小地点用 at，大地点用 in" |
+| good on | good at | "擅长的是一个具体技能点" |
+| married with | married to | 无钩子，直接记：**married to**（中文"和…结婚"会误导成 with） |
+| depend in | depend on | "依靠是站在…上面" |
 
 ---
 
 ## 四、定语从句追问话术完整版
 
-### 关系词选择的完整判断树
+### 关系词选择的判断顺序：先看成分，再看先行词
+
+> ❌ 常见伪规则："先行词是地点就用 where、是时间就用 when"。
+> 按这条规则会把 `The city that I visited is beautiful.` 判成错句（其实是对的），
+> 也会让学生写出 `The day where I was born…`。
+> ✅ 正确顺序：**第一步永远是把从句单独拿出来，看它缺什么成分**；先行词只在第二步用来决定"人还是物"。
 
 ```
-先行词是人？
-├── 是 → who（主语）/ whom（宾语，正式）/ that（非正式）
-└── 否 → 先行词是物/事？
-         ├── 是 → which / that
-         └── 否 → 先行词是地点？
-                  ├── 是 → where（表示在那里）/ which/that（其他情况）
-                  └── 否 → 先行词是时间？
-                           ├── 是 → when（表示在那时）
-                           └── 否 → 先行词是原因？→ why
+Step 1（决定性）：把从句单独拿出来，看它缺哪个成分
+├── 缺主语位        → 关系词作主语      → 走 Step 2 选 who / which / that（不可省略）
+├── 缺宾语位        → 关系词作宾语      → 走 Step 2 选 whom/who/that / which/that（口语常省略）
+├── 缺介词的宾语    → 关系词作介词宾语  → 走 Step 2，或把介词提前（in which / with whom）
+├── 主语宾语都不缺，
+│   但缺"在哪儿/在何时/为什么"（状语）→ 关系副词 where / when / why（= 介词 + which）
+└── 主语宾语都不缺，也不缺状语        → 从句里有多余代词，删掉它
+
+Step 2（只决定用哪个词，不决定要不要 where/when）：先行词是人还是物？
+├── 人 → who / whom / that
+└── 物、事、地点、时间 → which / that
+```
+
+**同一个地点先行词，成分不同，关系词就不同：**
+
+```
+The city that I visited is beautiful.
+  从句 "I visited ___"：visited 是及物动词，缺宾语 → 关系词作宾语 → that/which（可省略）
+  ✅ 地点先行词照样用 that，不用 where
+
+The city where I was born is beautiful.
+  从句 "I was born"：主语有、动词不带宾语，缺的是"在哪儿" → 关系副词 where（= in which）
+  也可写成 The city that I was born in / The city in which I was born
+
+The day when we met was rainy.   （缺"在何时" → when）
+The day that we spent together was long.   （spent 缺宾语 → that）
 ```
 
 ### 从句中关系词充当成分的判断
@@ -239,7 +273,11 @@ My teacher, （a well-known poet）, writes beautifully.
 The city where I was born, which is now very developed, has changed a lot.
 → 从内到外逐层剥离
 
-结构④：分词短语
-（Finishing his homework）, he went out to play.
-→ 分词短语是"完成作业"，主语是he
+结构④：分词短语 ⚠高中（初中只作阅读时的识别，不要求学生写出来）
+（Having finished his homework）, he went out to play.
+→ 分词短语表示"作业已经写完了"，动作发生在主句之前，用 having done
+→ 主语必须和主句一致：这里做作业的和出去玩的都是 he
+→ ❌ 不要示范 "Finishing his homework, he went out"：
+   现在分词表示同时发生，"一边写作业一边出去玩"逻辑不通
+→ 初中阶段等价说法：After he finished his homework, he went out to play.
 ```

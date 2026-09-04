@@ -1,7 +1,17 @@
-# 低阶→高阶词汇升级对照表
+# 低阶→精准词汇升级对照表
 
-> 按词性和使用场景分类，供英语写作进化教练进行用词维度批改时参考。
+> 适用学段：初中（7-9 年级）。标 ⚠高中 的词属高考 3000 词范围，中考写作不必用，出现时只作说明。
+
+> 按词性分类，供英语写作进化教练在用词维度批改时参考。
 > 追问时先问学生"你觉得这两个词有什么区别"，再给出解释。
+>
+> **三条使用规则（否则这张表会帮倒忙）：**
+> 1. **不追求"高级"，只追求"准确"。** 一个用对的 `good` 好过一个用错的 `outstanding`。
+>    中考英语写作的评分看的是表达是否准确、连贯、切题，不是有没有生僻词。
+> 2. **优先用课标 1600 词表内的替换词**（下表未标 ⚠高中 的都在或接近这个范围）。
+>    标 ⚠高中 的词让学生认识即可，不鼓励往作文里塞。
+> 3. **不给学生成句。** 本表只给"词 → 词"的对应和差别说明；
+>    句子由学生自己写，教练按 `shared/hint-ladder.md` 最高到 L4（给半句）。
 
 ---
 
@@ -25,7 +35,11 @@
 | very important | crucial / essential / vital / critical | 非常重要 |
 | very difficult | challenging / demanding / complex | 非常困难 |
 | very easy | effortless / straightforward / simple | 非常容易 |
-| very interesting | fascinating / captivating / compelling | 非常有趣 |
+| very interesting | interesting enough to... / fascinating | 非常有趣 |
+
+> ⚠高中（高考 3000 词范围，认识即可，不要求写进作文）：
+> outstanding, remarkable, dreadful, enormous, substantial, negligible, trivial,
+> devastated, overjoyed, breathtaking, effortless, captivating, compelling, microscopic
 
 ---
 
@@ -59,6 +73,8 @@
 | show | reveal | 揭示（出人意料） |
 | show | indicate | 表明 |
 
+> ⚠高中（高考 3000 词范围）：obtain, acquire, proceed, navigate, demonstrate, reveal, indicate
+
 ---
 
 ## 三、副词和连词升级
@@ -80,7 +96,13 @@
 | so | as a result | 结果是 |
 | because | due to | 由于（后跟名词） |
 | because | as a result of | 因为（后跟名词短语） |
-| because | given that | 鉴于（正式） |
+| because | since | 既然、由于（后跟句子） |
+
+> ⚠高中（高考 3000 词范围）：nevertheless, on the contrary, furthermore, moreover,
+> consequently, as a result of, given that
+>
+> 初中写作够用的连接词就这几个：but / however / and / also / so / therefore /
+> because / for example / first, then, finally。**用对比用多更重要。**
 
 ---
 
@@ -89,41 +111,46 @@
 ### "I think" 的替换
 
 ```
-I think this is important.
-→ I believe this is crucial. （更有把握的观点）
-→ I would argue that... （提出论点）
-→ In my opinion, ... （表达个人立场）
-→ It seems to me that... （较谨慎的观点）
-→ There is no doubt that... （强调确定性）
+先判断学生想表达的确定程度，再选词——不是越"高级"越好：
+
+有把握的判断        → I believe / I am sure
+提出一个待论证的观点 → In my opinion / I would say
+不太确定            → It seems that / Maybe
+⚠高中：I would argue that / There is no doubt that
+
+⚠️ 注意：中考写作里 "I think" 本身没有错，用多了才需要换。
+   一篇 80-100 词的作文出现两次以上 "I think" 才提这一条。
 ```
 
-### 作文开头句替换
+### 开头与结尾：给方向，不给成句
 
 ```
-低阶开头：
-"In today's society, ..." （老套）
-"As we all know, ..." （泛泛）
-"Nowadays, ..." （常见但可接受）
+❌ 不给学生可以直接抄的整句。
+   "In light of the above, it becomes clear that…" 这类句子发下去，
+   学生会原样搬进每一篇作文——阅卷老师一眼看出是背的模板，
+   而且它和学生自己那几句简单句放在一起，风格明显割裂。
+   套话本身也不是加分点：中考写作评分看的是**内容要点是否写全、表达是否连贯**。
 
-升级开头：
-"[引用名言或有力陈述]..." （开门见山）
-"Imagine..." （场景引入）
-"Have you ever wondered...?" （问题引入）
-"The debate over [话题] has never been more relevant than today." （议题引入）
-```
+✅ 做法：指出这一句**承担什么功能**，让学生自己写。
 
-### 结尾句替换
+开头要做的事（三选一，学生自己写一句）：
+  · 直接说明写这封信/这篇文章的目的（应用文最常用）
+  · 给一个具体场景或一件小事切入
+  · 提一个问题引出话题
 
-```
-低阶结尾：
-"In conclusion, I think..." （过于简单）
-"So we can see that..." （不够有力）
+  追问示例："你这篇是写给谁看的？第一句就把'我为什么写这个'说出来，
+            试一句给我。"
 
-升级结尾：
-"In light of the above, it becomes clear that..." （归纳总结）
-"[重申主题]—this is not merely [小事], but [大意义]." （升华意义）
-"As [相关领域] continues to evolve, the importance of [主题] will only grow." （展望未来）
-```
+结尾要做的事（三选一，学生自己写一句）：
+  · 回到开头的目的，把话收住（应用文：期待回复/表示感谢）
+  · 用一句话说明这件事对"你"的意义
+  · 给一个具体建议或行动
+
+  追问示例："你开头说想邀请他参加，结尾要不要给一句具体的？
+            比如时间地点，或者一句期待。你来写。"
+
+⚠️ 学生实在写不出来时，按 shared/hint-ladder.md 走到 L4：
+   给半句（如 "I am writing to ___"），让他补完；不给整句。
 
 ---
 
@@ -132,18 +159,22 @@ I think this is important.
 ```
 发现 "very good" 时：
 "你用了 'very good'——
- 这里你想表达的是非常出色、令人印象深刻的意思吗？
- 如果是，英语里有个更精准的词：'outstanding'。
- 感觉上有什么不同？"
+ 你想说的是'做得很好'，还是'好得让人印象很深'？
+ 这两个意思英语里有不同的词。你先想想哪个更接近你的意思。"
+ → 学生答后再给对应的词，并说明差别；不一次性把 5 个词甩给他
 
-发现 "think" 时：
+发现 "think" 时（一篇里出现两次以上才提）：
 "你说 'I think'——
- 你是在表达一个猜测，还是一个有根据的判断？
- 如果有根据，可以用 'believe' 或 'argue'——
- 哪个更符合你的意思？"
+ 你是在表达一个猜测，还是一个你挺有把握的判断？
+ 有把握的话，英语里有更合适的说法。你猜猜是哪个？"
 
 发现重复词汇时：
-"我注意到 '[词汇]' 在这篇文章里出现了[N]次——
- 英语里避免重复是个好习惯。
- 你能想到1-2个表达相近意思的不同词吗？"
+"我注意到 '[词汇]' 在这篇里出现了 [N] 次——
+ 换一个不影响意思的说法，读起来会顺一些。
+ 你能想到 1 个吗？想不到我给你两个选项。"
+
+⚠️ 三条纪律：
+  · 每次批改最多提 2 处用词问题（和三维批改的"最多 2-3 处"一致）
+  · 先问学生的意思，再给词——不先给词让他选
+  · 学生给出的词只要用对了就肯定，不因为"不够高级"再往上推
 ```

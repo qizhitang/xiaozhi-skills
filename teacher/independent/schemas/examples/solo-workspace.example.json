@@ -1,0 +1,189 @@
+{
+  "teacherProfile": {
+    "teacherId": "T-0001",
+    "subjects": ["数学"],
+    "serviceModes": ["一对一", "小班"],
+    "deliveryChannels": ["线上", "线下"]
+  },
+  "studentCards": [
+    {
+      "studentId": "S-001",
+      "alias": "小A",
+      "gradeLevel": "八年级",
+      "gradeBand": "初中",
+      "status": "在读",
+      "subjects": ["数学"],
+      "goals": ["把一元一次方程的应用题做稳"],
+      "primaryWeaknesses": ["一元一次方程移项"],
+      "learningPreferences": ["先看一道例题再自己做", "步骤要写全"],
+      "availability": [
+        { "dayOfWeek": "周三", "startTime": "18:30", "endTime": "20:00" },
+        { "dayOfWeek": "周六", "startTime": "09:00", "endTime": "12:00" }
+      ],
+      "guardianCommunicationPreference": "微信文字",
+      "consent": {
+        "profileEnabled": true,
+        "crossSkillSharing": false,
+        "parentCommunicationAllowed": true,
+        "emotionSharingWithParent": false,
+        "grantedBy": "学生与监护人",
+        "grantedAt": "2026-03-01T10:00:00+08:00",
+        "retentionUntil": "2027-03-01"
+      }
+    },
+    {
+      "studentId": "S-002",
+      "alias": "小B",
+      "gradeLevel": "五年级",
+      "gradeBand": "小学高段",
+      "status": "在读",
+      "subjects": ["数学"],
+      "goals": ["计算少出错"],
+      "availability": [
+        { "dayOfWeek": "周日", "startTime": "10:00", "endTime": "11:30" }
+      ],
+      "guardianCommunicationPreference": "电话",
+      "consent": {
+        "profileEnabled": true,
+        "crossSkillSharing": false,
+        "parentCommunicationAllowed": true,
+        "emotionSharingWithParent": true,
+        "grantedBy": "监护人",
+        "grantedAt": "2026-05-12T19:30:00+08:00",
+        "retentionUntil": "2027-05-12"
+      }
+    }
+  ],
+  "lessonSchedule": [
+    {
+      "lessonId": "L-20260902-A",
+      "studentId": "S-001",
+      "subject": "数学",
+      "startTime": "2026-09-02T18:30:00+08:00",
+      "durationMinutes": 90,
+      "day_of_week": "周三",
+      "status": "completed",
+      "lessonGoal": "一元一次方程去分母"
+    },
+    {
+      "lessonId": "L-20260906-B",
+      "studentId": "S-002",
+      "subject": "数学",
+      "startTime": "2026-09-06T10:00:00+08:00",
+      "durationMinutes": 60,
+      "day_of_week": "周日",
+      "status": "trial",
+      "lessonGoal": "试听：看计算习惯"
+    }
+  ],
+  "lessonLogs": [
+    {
+      "logId": "LG-001",
+      "lessonId": "L-20260902-A",
+      "studentId": "S-001",
+      "date": "2026-09-02",
+      "completedContent": ["一元一次方程去分母", "移项复习"],
+      "evidence": ["去分母的 4 道练习自己做对 3 道", "移项时仍有 1 次没变号"],
+      "masteryStatus": "仍需巩固",
+      "perTopicMastery": [
+        { "topic": "去分母", "masteryStatus": "基本理解" },
+        { "topic": "移项变号", "masteryStatus": "仍需巩固" }
+      ],
+      "studentReaction": "平稳",
+      "nextLessonFocus": "先用纯净版最简题复查移项变号，再进应用题",
+      "parentSummary": "今天讲了去分母，4 道练习自己做对 3 道。移项变号还需要再练一次，下节课我会先复查这一点。",
+      "consumeLessonUnits": 1
+    }
+  ],
+  "homeworkFollowups": [
+    {
+      "homeworkId": "H-001",
+      "studentId": "S-001",
+      "task": "练习册 P32 第 1-8 题",
+      "dueDate": "2026-09-04",
+      "status": "已批改",
+      "overdueDays": 0,
+      "mainErrors": [
+        {
+          "knowledgePoint": "一元一次方程移项",
+          "dimension": "概念模糊",
+          "teacherCategory": "规则错误"
+        },
+        {
+          "knowledgePoint": "去分母通分",
+          "dimension": "计算失误",
+          "teacherCategory": "计算错误"
+        }
+      ],
+      "nextAction": "下节课前 10 分钟重做第 3、5 题，做对再进新内容"
+    }
+  ],
+  "parentCommunicationLogs": [
+    {
+      "communicationId": "PC-001",
+      "studentId": "S-001",
+      "date": "2026-09-02T21:00:00+08:00",
+      "scenario": "课后反馈",
+      "channel": "私聊文字",
+      "factSummary": "今天讲了去分母，4 道练习自己做对 3 道；移项变号还需再练一次。",
+      "actionSuggestion": "在家不用额外加练，下节课我先复查这一点。",
+      "sentStatus": "sent"
+    }
+  ],
+  "coursePackageLedger": [
+    {
+      "packageId": "P-001",
+      "studentId": "S-001",
+      "totalUnits": 20,
+      "usedUnits": 11,
+      "remainingUnits": 9,
+      "renewalAttention": false,
+      "expiryDate": "2026-12-31",
+      "pendingConfirmations": [
+        {
+          "lessonId": "L-20260902-A",
+          "units": 1,
+          "generatedAt": "2026-09-02T20:10:00+08:00"
+        }
+      ]
+    }
+  ],
+  "progressEvidence": [
+    {
+      "evidenceId": "PE-001",
+      "studentId": "S-001",
+      "date": "2026-09-04",
+      "evidenceType": "作业",
+      "description": "『一元一次方程移项』28 天内第 3 次记到概念模糊（8-21 / 8-28 / 9-04），等老师确认后再进重点弱项。",
+      "confidenceLevel": "data_sufficient"
+    }
+  ],
+  "resourceLibraryIndex": [
+    {
+      "resourceId": "R-001",
+      "title": "移项变号纯净版练习 8 题",
+      "resourceType": "题目",
+      "subject": "数学",
+      "gradeLevel": "八年级",
+      "knowledgePoint": "一元一次方程移项",
+      "difficulty": "基础",
+      "copyrightStatus": "自有",
+      "usageNotes": "用作换题型验证，做对两次且间隔 ≥ 3 天才算攻克",
+      "aiGenerated": true,
+      "verifiedByTeacher": true
+    },
+    {
+      "resourceId": "R-002",
+      "title": "某教辅八年级方程专题（仅记书名与页码）",
+      "resourceType": "题目",
+      "subject": "数学",
+      "gradeLevel": "八年级",
+      "knowledgePoint": "一元一次方程应用",
+      "difficulty": "中等",
+      "copyrightStatus": "仅存索引",
+      "usageNotes": "教辅原题，只记来源与页码，不录入题干",
+      "aiGenerated": false,
+      "verifiedByTeacher": true
+    }
+  ]
+}

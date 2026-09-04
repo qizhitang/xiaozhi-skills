@@ -1,25 +1,24 @@
 ---
 name: xiaozhi-teach-chinese-classical-guide
 display_name: 文言文教学指导
-version: 1.0.0
+version: 2.1.0
 author: 小智伴学
 category: 老师语文
+grade_bands:
+  - 小学高段
+  - 初中
 tags: [文言文, 古诗文, 诵读, 训诂, 串讲, 主题, 语文老师]
 description: >
-  帮助语文老师把"讲文言文"升级为"系统化文言文教学"。
-  当老师说"这篇文言文怎么讲"、"古诗怎么上"、
-  "学员读不懂文言文"、"实词虚词"、"文言翻译"、
-  "古文背诵"、"文言文主题"、"诗词鉴赏"时，
-  建议激活此SKILL。
-  核心工作流：诵读正音（断句/节奏/情感）→
-  训诂（字词/句式/语法）→
-  串讲（叙事/写景/说理）→
-  主题（思想/情感/价值）→
-  文化背景 → 与现代学员的生活联结
-  → 学员古文积累档案。
-  该版本基于"诵读+训诂+主题"三步法，让文言文不死。
+  面向语文老师的文言文与古诗词教学设计工具。
+  当老师说"这篇文言文怎么讲"、"古诗怎么上"、"学员读不懂文言文"、"实词虚词怎么教"、"文言翻译怎么带"、"古文背诵怎么落实"、"文言文主题怎么把握"、"诗词鉴赏怎么教"时，建议激活此SKILL。
+  工作流：诵读正音 → 训诂（字词/句式/活用）→ 串讲 → 主题 → 文化背景与现代联结 → 班级古文积累记录。
+  只输出教学框架与讨论问题，不逐字逐句串讲整篇、不提供完整现代文翻译、不代老师批改。
+  现代文阅读教学转 xiaozhi-teach-chinese-reading-guide；作文教学转 xiaozhi-teach-chinese-writing-guide。
 compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer, xiaozhi-teach-chinese-reading-guide
+depends_on:
+  - xiaozhi-teach-lesson-planner
+  - xiaozhi-teach-student-analyzer
+  - xiaozhi-teach-chinese-reading-guide
 id: openclaw:xiaozhi-teach-chinese-classical-guide
 min_platform_version: "2.0"
 max_round_limit: 20
@@ -31,13 +30,21 @@ max_round_limit: 20
 
 ---
 
-## ⚠️ 技术实现边界声明
+> 技术边界：本 SKILL 依赖能力 [M, V, F]，无该能力时按 shared/platform-conventions.md 降级。
+> 无语音合成（V）时不做示范朗读，节奏只能用文字标注（"关关/雎鸠"）；无文件能力（F）时档案表格改为对话内纯文本。
 
-> **关于"教材版权"边界：** 古文原文本身属于公有领域（作者去世 50+ 年）；但**教材版本的注释/翻译/设计**仍受版权保护。
->
-> **关于"AI 串讲"边界：** 本 SKILL 输出**串讲框架**与**主题解析**；**不**逐字逐句串讲整篇古文（由老师主导）。
->
-> **关于"AI 翻译"边界：** 本 SKILL **不**提供完整现代汉语翻译；只输出关键句段翻译框架（由老师主导）。
+**本 SKILL 的内容边界（不是平台能力问题，是产品定位）：**
+- 古文原文属公有领域；**教材版本的注释、翻译、助读设计仍受版权保护**，不复制。所有引用标注 `copyrightStatus`：`自有` / `改编` / `公开可引用` / `仅存索引`（教辅原题与历年真题一律 `仅存索引`）。
+- 只输出**串讲框架**与主题解析，不逐字逐句串讲整篇古文（由老师主导）。
+- 不提供完整现代汉语翻译，只输出关键句段的翻译框架。
+
+### 隐私与数据控制入口
+- 查看：「查看我的班级古文记录」
+- 更正：「更正我的班级古文记录」
+- 删除：「删除我的班级古文记录」（删除后不可恢复，会先确认一次）
+- 暂停：「这次不要记忆」/「暂停提醒」
+- 共享控制：「不要共享给其他SKILL」/「不要给家长看」
+- 导出：「导出我的班级古文记录」（以文本形式给出，便于转存）
 
 ---
 
@@ -109,8 +116,8 @@ max_round_limit: 20
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ⑥ 写回 student-analyzer   │
-                │  古文积累档案             │
+                │ ⑥ 更新 classWorkspace     │
+                │  文言弱项 / 分层          │
                 └──────────────────────────┘
 ```
 
@@ -220,7 +227,10 @@ max_round_limit: 20
   · 推断通用义
 ```
 
-### 5.3 虚词训诂 7 类
+### 5.3 课堂高频虚词 7 个
+
+> 这 7 个是课堂讲解的最小集；完整 20 个虚词速查见 `references/classical-vocab-quick-ref.md` §2，
+> 教研时用完整表，课堂上先讲这 7 个。
 
 ```text
 ┌──────────┬────────────────────────┬──────────────┐
@@ -236,25 +246,37 @@ max_round_limit: 20
 └──────────┴────────────────────────┴──────────────┘
 ```
 
-### 5.4 词类活用 4 类
+### 5.4 词类活用 6 类（例句均取自部编初中篇目）
 
 ```text
-① 动词作名词
-  · "追亡逐北"（亡=逃亡的人，北=败逃的人）
-  · 动词临时表示与该动作相关的人/事物
+① 名词作动词
+  · "一狼洞其中"（洞＝挖洞）——《狼》七上
+  · 名词处在谓语位置或后面带宾语时，活用为动词
 
-② 形容词作动词
-  · "耻学于师"（耻=以……为耻）
-  · 形容词带宾语，表动作或"以……为……"
-
-③ 名词作动词
-  · "吾师道也"（师=学习、从师）
-  · "驴不胜怒，蹄之"（蹄=用蹄踢）
-  · 名词处在谓语位置或带宾语时活用为动词
-
-④ 名词作状语
-  · "日积月累"（日/月=每天/每月）
+② 名词作状语
+  · "其一犬坐于前"（犬＝像狗一样）——《狼》七上
   · 名词直接修饰动词，作状语
+
+③ 形容词作动词
+  · "亲贤臣，远小人"（亲＝亲近，远＝疏远）——《出师表》九下
+  · 形容词带宾语，表动作
+
+④ 动词作名词
+  · "猛浪若奔"（奔＝飞奔的马）——《与朱元思书》八上
+  · 动词临时表示与该动作相关的人或事物
+
+⑤ 使动用法
+  · "无案牍之劳形"（劳＝使……劳累）——《陋室铭》七下
+  · 主语使宾语怎么样
+
+⑥ 意动用法
+  · "渔人甚异之"（异＝以……为奇怪）——《桃花源记》八下
+  · 主语认为宾语怎么样
+
+⚠️ 常见讲错的一处：
+  "吾师道也"（《师说》，⚠高中）的"师"是**名词作动词**（师＝学习、从师）；
+  同句的"道"是名词作宾语，**不是**动词活用为名词。若在课堂上举这个例子，
+  要说明它是高中篇目，并且只讲"师"这一处活用。
 ```
 
 ### 5.5 训诂教学法
@@ -273,8 +295,10 @@ max_round_limit: 20
   · 让学员体会"语言的变化"
 
 ■ 应用检验
-  · 完成 X 个例句翻译
+  · 完成 3-5 个例句翻译
   · 学以致用
+  · 例句由 AI 生成时，先按 shared/ai-item-check.md 自检（原文准确、在部编册次范围内、答案唯一），
+    输出时标注【AI 生成，入库前请人工验算】，老师确认后才可进课堂或资源库
 ```
 
 ---
@@ -496,18 +520,72 @@ max_round_limit: 20
 
 ### 11.2 接口
 
+数据契约为 `teacher/general/schemas/class-teaching-workspace.schema.json`，
+所有读写路径必须是该 schema 中真实存在的字段，不使用自定义命名空间。
+
 ```text
 读：
-  lessonPlan.text                → 古文信息
-  chineseReadingGuide.textThreeSolve → 现代文阅读基础
+  classWorkspace.classProfile.{gradeBand, gradeLevel, periodMinutes, textbookVersion}
+                                        → 学段、册次、课时长度（决定选篇与节奏）
+  classWorkspace.weaknessRank[]         → 班级弱项（knowledgePoint 如"文言实词""特殊句式"、
+                                          errorRate、dimension、stubbornCount）
+  classWorkspace.studentTiers[]         → A/B/C 分层，用于给诵读与翻译任务分档
 
-写：
-  classicalGuide.recite          → 诵读
-  classicalGuide.exegesis        → 训诂
-  classicalGuide.serialExplain   → 串讲
-  classicalGuide.theme           → 主题
-  classicalGuide.culture         → 文化
-  → student-analyzer 接收
+写（一律生成待确认条目，老师确认后落库）：
+  classWorkspace.lessonPlans[]          → 本篇文言文的教案
+      · objectives[]（statement + cognitiveLevel 了解/理解/掌握/运用 + coreCompetency）
+      · segments[]（name = 诵读正音 / 训诂 / 串讲 / 主题 / 文化联结，各段 minutes 与 tierVariants）
+      · questionChain[]                 → 主题讨论问题链
+      · boardPlan                       → 板书（含通假、活用、句式）
+      · sourceWeaknessIds[]             → 本课针对的 weaknessRank 条目
+  classWorkspace.interactionLogs[]      → 课后回填：段落实际用时、
+                                          misconceptionsObserved[]（如"把'何陋之有'当介宾后置"）
+  classWorkspace.homeworkAssignments[]  → 背诵与翻译任务（purpose = 巩固/补救）
+  classWorkspace.weaknessRank[]         → 依据课堂与作业表现更新文言类弱项
+```
+
+**写回学生个人档案（可选，需授权）：**
+
+若老师要把某个学员的文言进度写回学生端学习 DNA，必须走 `handover-protocol.schema.json`，
+且 `meta.consentStatus` 中的 `teacherWritebackConsent` 为 true；为 false 时不发送，
+并告诉老师"该学员未开启老师写回授权"。
+
+```json
+{
+  "sessionId": "sess-teach-cl-001",
+  "protocolVersion": "2.1.0",
+  "handoverType": "teacher_writeback",
+  "sender": "xiaozhi-teach-chinese-classical-guide",
+  "recipient": "xiaozhi-learning-dna",
+  "consent": { "crossSkillSharing": true, "teacherWritebackConsent": true },
+  "payload": {
+    "teacherWritebackData": {
+      "teacherSkill": "xiaozhi-teach-chinese-classical-guide",
+      "studentAlias": "小A",
+      "weakKnowledgePointUpdates": [
+        { "subject": "语文", "knowledgePoint": "文言特殊句式", "status": "突破中", "masteryLevel": "会解释" }
+      ],
+      "note": "课堂能还原三处倒装句，独立完成两句翻译"
+    }
+  },
+  "timestamp": "2026-09-03T17:30:00+08:00"
+}
+```
+
+> `note` 只写低敏事实描述，禁止真实姓名、家庭信息与心理标签。
+
+**家长反馈的授权检查（生成任何家长可见内容前）：**
+
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 给出专业求助渠道（即时危险：110/120）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
+
+> 老师转述学员的话时也适用：出现上述信号，不做"低敏转化"再发家长，如实提示监护人。
+
+```text
+⚠️ 在把学员的文言进步做成家长可见的内容之前，先核对：
+  · dna-profile 的 meta.consentStatus.parentSharingConsent = true？
+  · 内容里含情绪描述（如"孩子最近对文言文很抵触"）？→ 还需 emotionSharingWithParent = true
+  任一为 false → 只把内容给老师和学员本人，并告知"该学员未开启家长共享，这份反馈先不发家长"。
+  本 SKILL 不生成家长简报，只把素材交给 xiaozhi-teach-parent-communication，由它按授权处理。
 ```
 
 ---
@@ -547,7 +625,7 @@ max_round_limit: 20
     <── xiaozhi-teach-student-analyzer（学情/弱项）
     ──→ xiaozhi-teach-student-analyzer（古文积累档案）
     ──→ xiaozhi-teach-resource-library（古文素材入库）
-    ──→ xiaozhi-teach-parent-communication（古文进步反馈）
+    ──→ xiaozhi-teach-parent-communication（古文进步素材；发给家长前由它核对 parentSharingConsent）
     ──→ 学生端 xiaozhi-chinese-classical-revival（学员视角）
 ```
 
@@ -557,15 +635,18 @@ max_round_limit: 20
 - 禁止 AI 逐字逐句串讲整篇
 - 禁止未授权复制现代版本注释/翻译
 - 禁止公开学员古文积累排名
+- 禁止未核对 `parentSharingConsent` 就生成家长可见的学员评价
+- 禁止未核对 `teacherWritebackConsent` 就写回学生端档案
+- 禁止把高中篇目（⚠高中：《师说》《赤壁赋》等）当作初中考点布置
 
 ---
 
 ## 十五、参考资源
 
-- `references/classical-vocab-quick-ref.md` — 文言文常用实词虚词速查（30 实词 + 7 虚词）
+- `references/classical-vocab-quick-ref.md` — 文言常用实词虚词速查（30 实词 + 20 虚词；课堂高频 7 个见本文 §5.3）
 - `references/recitation-rhythm-guide.md` — 诵读三阶与节奏训练指南
 - `references/exegesis-method-card.md` — 训诂四法速查卡（字形/组词/语境/联想）
-- `references/poetry-image-catalog.md` — 诗词意象速查（30+ 常见意象寓意）
+- `references/poetry-image-catalog.md` — 诗词意象速查（常见意象寓意与典型诗句）
 - `references/serial-explain-sample-template.md` — 串讲样板完整填写模板
 - `references/theme-discussion-question-bank.md` — 主题讨论问题设计题库（思乡/爱国/山水/哲理四类）
 - `references/classical-accumulation-profile-template.md` — 学员古文积累档案完整填写模板

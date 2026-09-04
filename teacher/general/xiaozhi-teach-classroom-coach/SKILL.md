@@ -1,22 +1,23 @@
 ---
 name: xiaozhi-teach-classroom-coach
 display_name: 课堂互动教练
-version: 1.0.0
+version: 2.1.0
 author: 小智伴学
 category: 老师通用
+grade_bands:
+  - 小学中段
+  - 小学高段
+  - 初中
 tags: [课堂互动, 提问策略, 苏格拉底, 教学活动, 小组合作, 即时反馈, 老师工具]
 description: >
-  帮助老师从"单向讲授"升级为"思维驱动的互动课堂"。
-  当老师说"这节课怎么互动"、"帮我设计课堂提问"、
-  "学生不发言怎么办"、"这节课太沉闷"、
-  "小组活动怎么分组"、"怎么让差生也参与"时，建议激活此SKILL。
-  核心工作流：分析教学目标 → 设计 Bloom 分层提问链 + 苏格拉底追问 →
-  规划小组合作活动 → 预设学生反应与冷场应对 →
-  准备即时反馈机制 → 课后观察记录回写。
-  该版本与 xiaozhi-teach-lesson-planner / student-analyzer
-  建立接口，强基于教学目标和学情分层设计互动。
+  把"单向讲授"变成有追问、有参与路径的课堂。
+  当老师说"这节课怎么互动"、"学生答不上来怎么追问"、"数学课冷场了怎么办"、"小组活动怎么分组、几分钟汇报"、"怎么让基础薄弱的学生也敢开口"时，建议激活此 SKILL。
+  工作流：读目标与分层 → 候场追问 → 小组活动与计时 → 冷场应对 → 课后观察记录。
+  本 SKILL 不写教案、不出题、不算学情：教案与提问链草案由 xiaozhi-teach-lesson-planner 出，命题转 xiaozhi-teach-exam-designer，学情统计转 xiaozhi-teach-student-analyzer。
 compatibility: OpenClaw / ClawHub
-depends_on: xiaozhi-teach-lesson-planner, xiaozhi-teach-student-analyzer
+depends_on:
+  - xiaozhi-teach-lesson-planner
+  - xiaozhi-teach-student-analyzer
 id: openclaw:xiaozhi-teach-classroom-coach
 min_platform_version: "2.0"
 max_round_limit: 20
@@ -28,17 +29,28 @@ max_round_limit: 20
 
 ---
 
-## ⚠️ 技术实现边界声明
+> 技术边界：本 SKILL 依赖能力 [M, C]，无该能力时按 `shared/platform-conventions.md` 降级。
+> 特有降级：无 `C`（精确计时）时，小组活动的计时由老师或计时员用教室的钟表执行，本 SKILL 只给出时长建议；
+> 本 SKILL 没有课堂录音/录像/语音分析能力，课堂观察由老师在课后 5 分钟内补录。
 
-> **关于"互动模式自动选择"机制：** 本 SKILL 的互动策略选择**强依赖**于：
-> ① 教学目标（来自 lesson-planner）
-> ② 学情分层（来自 student-analyzer）
-> ③ 班级人数与教室条件
-> 在缺少上述输入时，输出"通用版互动模板"并明确标注"建议补充 X 输入后重新生成"。
->
-> **关于"自动观察学生"边界：** 本 SKILL **不**提供课堂自动录屏/语音分析能力；课堂观察需老师在课后 5 分钟内基于记忆补录。
->
-> **关于"叫学生发言"边界：** 本 SKILL 输出的"冷场应对"和"主动发言策略"仅供老师参考；老师有最终决定权；不允许 AI 替老师点名或要求学生发言。
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 给出专业求助渠道（即时危险：110/120）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
+
+**输入**：读 `classWorkspace.lessonPlans`（本节课目标与提问链草案）、`classWorkspace.studentTiers`（分层）、
+`classWorkspace.classProfile`（班额与课时长度）。缺其中任一项时输出"通用版互动模板"，并说明缺什么、补上会更准。
+
+**叫学生发言的边界**：本 SKILL 输出的冷场应对与参与路径仅供老师参考；点谁、什么时候点，由老师决定，AI 不替老师点名。
+
+**不出题**：课堂练习题请转 `xiaozhi-teach-exam-designer` 或学科教师端 SKILL。课上临时需要一道更简单的例子说明概念时，
+生成前按 `shared/ai-item-check.md` 自检，口头使用即可，不入库；若要入库须标注【AI 生成，入库前请人工验算】。
+
+### 隐私与数据控制入口
+
+- 查看：「查看我的课堂记录」
+- 更正：「更正我的课堂记录」
+- 删除：「删除我的课堂记录」（删除后不可恢复，会先确认一次）
+- 暂停：「这次不要记忆」
+- 共享控制：「不要共享给其他SKILL」/「不要给家长看」
+- 导出：「导出我的课堂记录」（以文本形式给出，便于转存）
 
 ---
 
@@ -77,6 +89,16 @@ max_round_limit: 20
 | 主动发言 | "怎么让基础学生也敢发言" |
 | 反馈机制 | "如何让学生知道自己答得对不对" |
 | 候场追问 | "学生答不上来怎么办" |
+| 课后记录 | "课后 5 分钟记点什么" |
+
+**本 SKILL 不接的相邻请求**：
+
+| 老师说 | 转给 |
+|---|---|
+| "帮我写这节课的教案 / 排环节时间 / 出提问链" | `xiaozhi-teach-lesson-planner`（出草案），本 SKILL 接着做候场追问与实施 |
+| "出一道课堂练习题 / 变式题" | `xiaozhi-teach-exam-designer` 或学科教师端 SKILL |
+| "算一下这次的得分率、谁该分到哪一层" | `xiaozhi-teach-student-analyzer` |
+| "课后作业怎么留" | `xiaozhi-teach-assignment-designer` |
 
 ---
 
@@ -137,25 +159,39 @@ max_round_limit: 20
 ### 4.1 模式选择规则
 
 ```text
+下面按 classProfile.periodMinutes = 45（初中基线）给出；
+小学 40 分钟档把小组合作压到 10 分钟、独立思考压到 2-3 分钟；
+其他档位见 shared/grade-bands.md 三与 lesson-planner SKILL.md §5.1。
+
 新授课（45 分钟）：
   全班互动 5min + 独立思考 3min + 小组合作 12min + 全班互动 5min
 
-复习课：
+复习课（45 分钟）：
   同桌互讲 5min + 独立思考 5min + 小组合作 15min + 全班互动 5min
 
-讲评课：
+讲评课（45 分钟）：
   独立思考 5min + 全班互动 10min + 同桌互讲 5min
+  （讲哪几道题由 exam-designer 的讲评错题清单决定，课时结构由 lesson-planner 排）
 ```
 
 ---
 
-## 五、Bloom 分层提问链设计
+## 五、提问链的课堂实施（草案来自 lesson-planner）
 
-> 命名说明：本节是按 Bloom 认知层级（记忆→理解→应用→分析→评价→创造）**预先设计**的分层提问链，本质是"提问的认知梯度"。真正的**苏格拉底式追问**是课堂上顺着学生自己的推理链即时追问、暴露矛盾（见 §5.2 候场追问矩阵），二者配合使用：先用 Bloom 链搭台阶，再用苏格拉底追问深挖。
+> **分工**：提问链**草案**由 `xiaozhi-teach-lesson-planner` 在备课时生成，写在
+> `classWorkspace.lessonPlans[].questionChain`。本 SKILL 的职责是**课堂实施**：
+> 给每个问题配候场追问、决定谁来答、冷场怎么办、答偏了怎么拉回来。
+>
+> 已有草案时，§5.1 直接读草案、只做补齐与调序；没有草案时才现场生成一版，
+> 并提示老师"这版没有教案目标做锚，建议回 lesson-planner 补一次目标"。
+>
+> 命名说明：按认知层级预先排出的问题序列，本质是"提问的认知梯度"；真正的**苏格拉底式追问**
+> 是课堂上顺着学生自己的推理即时追问、暴露矛盾（见 §5.2），二者配合：先搭台阶，再深挖。
 
-### 5.1 提问链生成器
+### 5.1 提问链（读草案 / 现场补齐）
 
-每节课至少设计 6-8 个核心提问，覆盖 Bloom 至少 4 层。
+每节课至少 6-8 个核心提问，覆盖认知层级至少 4 档。
+写进教案的层级标签用课标四级（了解/理解/掌握/运用），下面的六层是备课时的思维参照。
 
 ```text
 第 1 问（记忆）：让所有学生跟得上
@@ -223,27 +259,30 @@ max_round_limit: 20
 
 ### 6.1 小组规模与分组
 
+分层标签沿用 `classWorkspace.studentTiers` 的口径，不另起一套：
+**A = 需补基础，B = 达标，C = 可拓展**（依据近 3 次测评平均得分率）。
+
 ```text
-标准规模：4 人一组
-  · 1 个中等偏上学生（C 层）
-  · 1 个中等学生（B 层）
-  · 1-2 个基础学生（A 层）
-  · 1 个记录员（轮流担任）
+标准规模：4 人一组（4 个人，4 个角色，一人一职）
+  · 1 个 C 层（可拓展）
+  · 2 个 B 层（达标）
+  · 1 个 A 层（需补基础）
+  当某层人数不够时，就近替补，不要为了凑结构把学生贴标签。
 
 异质分组（最常用）：
-  · 按学情分层混合，促进互助
+  · 按 studentTiers 混合，促进互助
   · 适合：综合应用、难题探究
 
 同质分组（特定场景）：
-  · 同一分层一组
-  · 适合：拔尖学生拓展 / 基础学生补缺
+  · 同一层一组
+  · 适合：C 层拓展 / A 层补缺
 
 随机分组（活跃气氛）：
   · 抽签 / 报数 / 拼图分组
   · 适合：班级气氛沉闷时
 ```
 
-### 6.2 角色分配
+### 6.2 角色分配（4 人组 = 4 个角色，不多不少）
 
 ```text
 主持人：组织讨论节奏（不一定是组长）
@@ -252,16 +291,57 @@ max_round_limit: 20
 计时员：监控任务进度（提醒剩余时间）
 
 ⚠️ 规则：
-  · 每节课轮换不同角色，避免固定化
-  · 基础学生可先担任"计时员"或"记录员"等低门槛角色
-  · 不允许"组长包办"，所有组员必须发言至少 1 次
+  · 4 人组正好 4 个角色，一人一职；上一版把"记录员"额外列了一遍，
+    造成 4 人 5 职，实际执行时必然有人身兼两职或有人闲置。
+  · 5 人组：加"质疑员"（专门问"为什么"）；3 人组：主持人兼计时员。
+  · 每节课轮换不同角色，避免固定化。
+  · A 层学生可先担任计时员或记录员等低门槛角色，但不要长期固定在低门槛角色上。
+  · 不允许"组长包办"，所有组员至少发言 1 次。
 ```
 
-### 6.3 任务卡设计
+### 6.3 汇报时长按班额换算（不要照抄"12 分钟"）
+
+小组汇报最容易失控的地方是：组数 × 每组时长 早就超过了这节课能给的时间。
+先算清楚再定，不要拍脑袋。
+
+```text
+第 1 步：算组数
+  组数 = ⌈classProfile.classSize ÷ 每组人数⌉
+  例：45 人 ÷ 4 = 11.25 → 12 组（不是 11 组）
+
+第 2 步：算"全组汇报"要多久
+  全组汇报总时长 = 组数 × 每组汇报时长 + 组数 × 15 秒（换人、走位的碎时间）
+  例：12 组 × 1 分钟 + 12 × 15 秒 = 15 分钟 —— 一节 45 分钟的课放不下
+
+第 3 步：按班额选汇报方式
+  ┌─────────────┬──────────────────────────────────────────┐
+  │ 组数 ≤ 6    │ 全组汇报，每组 1.5-2 分钟                 │
+  │ （班额≤24） │ 总计 ≈ 10-13 分钟                         │
+  ├─────────────┼──────────────────────────────────────────┤
+  │ 组数 7-10   │ 抽 3-4 组汇报（每组 1.5 分钟），          │
+  │ （班额25-40）│ 其余组用"一句话补充/不同意见"轮流，各 20 秒│
+  │             │ 总计 ≈ 8-10 分钟                          │
+  ├─────────────┼──────────────────────────────────────────┤
+  │ 组数 ≥ 11   │ 不做全班口头汇报。改用：                  │
+  │ （班额≥41）  │ · 组间两两互评 3 分钟（同时进行，不占讲台）│
+  │             │ · 抽 2 组上台，各 2 分钟                   │
+  │             │ · 其余组把结论写在任务卡上交，课后老师看   │
+  │             │ 总计 ≈ 7-8 分钟                           │
+  └─────────────┴──────────────────────────────────────────┘
+
+第 4 步：讨论时长与汇报时长配比
+  讨论 : 汇报 ≈ 2 : 1（讨论 12 分钟就配 6 分钟汇报），
+  汇报时间超过讨论时间，说明这个任务不值得小组做。
+
+⚠️ 45 人的班：组数 12，别按"每组都讲 1 分钟"排——那是 15 分钟，
+   本节课的新授时间会被吃掉。走上表第三行。
+```
+
+### 6.4 任务卡设计
 
 > 📎 完整模板见 `references/group-task-card-and-scripts.md`（小组合作任务卡空白模板，含角色/必发言规则/汇报要求/提交物）
 
-### 6.4 小组合作的话术模板
+### 6.5 小组合作的话术模板
 
 > 📎 完整话术见 `references/group-task-card-and-scripts.md`（开场→中途提醒→结束→互评全流程话术模板）
 
@@ -407,17 +487,23 @@ max_round_limit: 20
 
 > 📎 完整模板见 `references/post-class-record-template.md`（互动效果/提问链效果/下节课调整方向三段式课后记录模板）
 
-### 10.2 回写 student-analyzer
+### 10.2 写入 interactionLogs
 
 ```text
-观察信号（聚合）：
-  · 主动发言学生占比
-  · 沉默学生分布
-  · 小组合作活跃度
-  · 关键问题的答对率
+课后 5 分钟内把观察写进 classWorkspace.interactionLogs（生成待确认条目，老师确认后落库）：
 
-→ 写回 student-analyzer 作为下次分层依据
-→ 不写回学生姓名（仅聚合数据）
+  logId                  本次记录 id
+  planId                 对应 lessonPlans 的 planId（把课堂记录挂回教案）
+  date                   日期
+  segmentTimings[]       各环节 计划分钟 vs 实际分钟（下次排课时间矩阵的依据）
+  participationNote      整体参与度的事实描述（"主动举手约三分之一"），不写个别学生姓名
+  questionEffectNote     哪一问引发最多讨论、哪一问无人回应（只记问题，不记谁答的）
+  misconceptionsObserved 课上暴露的错误理解（→ student-analyzer 的辅助证据）
+  adjustmentForNext      下节课的调整动作
+
+⚠️ interactionLogs 里没有"学生姓名"字段，这是设计上的选择而不是遗漏：
+   课堂印象是低置信度的单次观察，把它挂到具体学生名下容易固化标签。
+   要定位到个人的结论走 student-analyzer 的逐题数据。
 ```
 
 ---
@@ -454,19 +540,23 @@ max_round_limit: 20
   （作业配套）     （作业配合）       （课后回写）
 ```
 
-### 11.2 接口
+### 11.2 数据接口（唯一契约：`teacher/general/schemas/class-teaching-workspace.schema.json`）
+
+| classWorkspace 字段 | 谁写 | 本 SKILL |
+|---|---|---|
+| `classProfile` | 老师首次建档 | 读（classSize 定组数与汇报方式，periodMinutes 定活动时长） |
+| `lessonPlans` | `xiaozhi-teach-lesson-planner` | 读 objectives（提问目标）、questionChain（提问链草案）、segments 的 tierVariants（互动分层） |
+| `studentTiers` | `xiaozhi-teach-student-analyzer` | 读（异质分组、提问难度分配） |
+| `weaknessRank` | `xiaozhi-teach-student-analyzer` | 读（提问与追问的侧重点） |
+| `interactionLogs` | **本 SKILL 唯一写入** | 写 logId / planId / date / segmentTimings / participationNote / questionEffectNote / misconceptionsObserved / adjustmentForNext |
 
 ```text
-读：
-  lessonPlan.objectives           → 提问目标
-  lessonPlan.layeredTasks         → 互动分层
-  studentAnalyzer.distribution    → 学生分层
-  studentAnalyzer.weaknessRank    → 提问侧重点
-
-写：
-  interactionLog.activeStudents   → 主动发言统计
-  interactionLog.silentStudents   → 沉默学生聚合
-  interactionLog.questionEffect   → 提问效果
+两条边界：
+  · 本 SKILL 只写 interactionLogs，不写 studentTiers（分层是 student-analyzer 的字段），
+    也不写 lessonPlans（教案是 lesson-planner 的字段）。
+  · lessonPlans 里没有 questionChain 时（老师没走 lesson-planner），
+    本 SKILL 可以现场帮老师补一版提问链，但要提示"这版没有教案目标做锚，
+    建议回 lesson-planner 补一次目标"。
 ```
 
 ---
@@ -502,12 +592,13 @@ max_round_limit: 20
 
 ```text
 课堂互动教练
-    <── xiaozhi-teach-lesson-planner（教学目标）
-    <── xiaozhi-teach-student-analyzer（学情分层）
-    ──→ xiaozhi-teach-assignment-designer（作业配套）
-    ──→ xiaozhi-teach-homework-tracker（作业配合）
-    ──→ xiaozhi-teach-lesson-log（观察记录）
-    ──→ xiaozhi-teach-student-analyzer（聚合数据回写）
+    <── xiaozhi-teach-lesson-planner（lessonPlans：目标 + 提问链草案）
+    <── xiaozhi-teach-student-analyzer（studentTiers / weaknessRank）
+    <── xiaozhi-teach-exam-designer（讲评错题清单 → 讲评课的提问设计）
+    ──→ xiaozhi-teach-lesson-planner（interactionLogs：实际用时与卡点 → 下次教案）
+    ──→ xiaozhi-teach-student-analyzer（interactionLogs：课堂暴露的错误理解，作辅助证据）
+    ──→ xiaozhi-teach-assignment-designer（课上没消化的点 → 当天作业）
+    ··→ 若已安装独立教师包：xiaozhi-teach-lesson-log 可作可选补充（一对一/小班场景）
 ```
 
 **禁止行为**：
@@ -515,7 +606,8 @@ max_round_limit: 20
 - 禁止在冷场时批评学生
 - 禁止把"学生不发言"归因为"态度差"
 - 禁止在公开场合羞辱答错的学生
-- 禁止课后记录泄露学生姓名
+- 禁止在课堂记录里写学生姓名（interactionLogs 没有姓名字段）
+- 禁止用分层标签称呼学生（说"任务卡二"，不说"你是 B 层"）
 
 ---
 
