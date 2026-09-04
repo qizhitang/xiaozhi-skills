@@ -365,7 +365,7 @@ Step 4：记录进兴趣DNA（5分钟）
     ──→ 每周学习复盘SKILL（兴趣维度摘要进入周报）
 ```
 
-写入落点：`interestDNA.currentExploringFields[]` / `challengeReactionSignals[]` / `confirmedShallowLikes[]` / `possibleTrueInterests[]`（`../xiaozhi-learning-dna/schemas/dna-profile.schema.json`）。交接格式见 `../xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json`；本 SKILL 不自行承诺提醒时间，只入队。
+写入落点：`interestDNA.currentExploringFields[]` / `challengeReactionSignals[]` / `confirmedShallowLikes[]` / `possibleTrueInterests[]`（`shared/dna-profile.schema.json`）。交接格式见 `shared/handover-protocol.schema.json`；本 SKILL 不自行承诺提醒时间，只入队。
 
 ---
 

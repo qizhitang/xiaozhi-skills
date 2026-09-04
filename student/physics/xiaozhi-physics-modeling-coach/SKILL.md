@@ -364,7 +364,7 @@ depends_on:
 
 ## 六、与其他SKILL的协作
 
-数据契约只用 `student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json` 与 `student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json`。
+数据契约只用 `shared/dna-profile.schema.json` 与 `shared/handover-protocol.schema.json`。
 
 ```text
 物理建模教练

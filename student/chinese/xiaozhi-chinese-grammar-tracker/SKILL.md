@@ -342,7 +342,7 @@ Step 4：写作前提示
 
 ## 八、接口与协作
 
-**读写的档案字段（`student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json`）：**
+**读写的档案字段（`shared/dna-profile.schema.json`）：**
 
 ```
 读：meta.consentStatus.{profileEnabled, crossSkillSharing, parentSharingConsent}
@@ -352,7 +352,7 @@ Step 4：写作前提示
 写：subjectExtensions.chinese.subtypes[]   ← 语文 LG 子类型 ID（见错因维度表）
 ```
 
-**交接（`student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json`）：**
+**交接（`shared/handover-protocol.schema.json`）：**
 
 ```json
 {

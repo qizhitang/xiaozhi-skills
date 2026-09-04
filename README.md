@@ -138,7 +138,7 @@ git clone https://github.com/qizhitang/xiaozhi-skills.git ~/.workbuddy/skills/xi
 
 之后在 WorkBuddy 里执行 `/reload-skills`。
 
-每个技能包都自带 `shared/` 六份共享约定，因此**单技能安装也能正常工作**；仍有 41 处跨技能引用需整库安装才完整。完整说明（安装位置、触发与指定、更新卸载、能力降级、装后验证）见 [安装指南](docs/installation-guide.md#-在-workbuddy-中安装)。
+每个技能包都自带 `shared/` 六份共享约定，被多个技能引用的三份跨技能契约也按需随包分发，因此**单技能安装也能正常工作**；余下 16 处补充材料的引用需整库安装才完整。完整说明（安装位置、触发与指定、更新卸载、能力降级、装后验证）见 [安装指南](docs/installation-guide.md#-在-workbuddy-中安装)。
 
 ---
 

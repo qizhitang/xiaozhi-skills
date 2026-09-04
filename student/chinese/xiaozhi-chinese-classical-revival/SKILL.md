@@ -496,7 +496,7 @@ depends_on:
 
 ## 九、接口与协作
 
-**读写的档案字段（`student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json`）：**
+**读写的档案字段（`shared/dna-profile.schema.json`）：**
 
 ```
 读：meta.consentStatus.{profileEnabled, crossSkillSharing, reminderConsent}
@@ -505,7 +505,7 @@ depends_on:
 写：subjectExtensions.chinese.subtypes[]   ← CL 子类型 ID
 ```
 
-**交接（`student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json`）：**
+**交接（`shared/handover-protocol.schema.json`）：**
 
 ```json
 {

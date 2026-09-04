@@ -443,7 +443,7 @@ depends_on:
     --> xiaozhi-im-reminder（仅 reminder_enqueue 入队，按 shared/vocab.md §9 合并）
 ```
 
-**交接 JSON（错题 → 错题本，字段与 `student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json` 一致）：**
+**交接 JSON（错题 → 错题本，字段与 `shared/handover-protocol.schema.json` 一致）：**
 
 ```json
 {

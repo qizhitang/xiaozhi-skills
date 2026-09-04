@@ -20,6 +20,7 @@ const BANNER =
   "<!-- 本文件由 scripts/sync-shared.mjs 从仓库根 shared/ 自动生成，用于让单个技能包自包含。\n" +
   "     请勿直接编辑；需要修改请改仓库根目录下的同名文件，然后运行 npm run sync:shared -->\n\n";
 
+// 一、全库共享约定：仓库根 shared/*.md，分发到每个 SKILL
 const sources = readdirSync(sharedDir)
   .filter((f) => f.endsWith(".md"))
   .sort()
@@ -29,6 +30,30 @@ if (!sources.length) {
   console.error("❌ 仓库根 shared/ 下没有 .md 文件");
   process.exit(1);
 }
+
+// 二、跨技能契约：源文件留在归属技能内，只分发给正文引用它的技能（归属技能自己不复制）。
+// 新增一项只需在此加一行，并把 SKILL.md 里的引用写成 shared/<as>。
+const CONTRACTS = [
+  {
+    as: "handover-protocol.schema.json",
+    src: "student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json",
+    owner: "xiaozhi-skill-coordinator",
+  },
+  {
+    as: "dna-profile.schema.json",
+    src: "student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json",
+    owner: "xiaozhi-learning-dna",
+  },
+  {
+    as: "english-error-dimension-table.md",
+    src: "student/english/xiaozhi-english-grammar-coach/references/english-error-dimension-table.md",
+    owner: "xiaozhi-english-grammar-coach",
+  },
+].map((c) => {
+  const p = join(root, c.src);
+  if (!existsSync(p)) { console.error(`❌ 契约源文件不存在：${c.src}`); process.exit(1); }
+  return { ...c, body: readFileSync(p, "utf-8") };
+});
 
 // 收集全部 SKILL 目录
 function findSkillDirs(dir, acc = []) {
@@ -46,22 +71,37 @@ const skillDirs = findSkillDirs(root).sort();
 const rel = (p) => relative(root, p).replace(/\\/g, "/");
 let written = 0, stale = [], extra = [];
 
+let contractCopies = 0;
+
 for (const dir of skillDirs) {
   const target = join(dir, "shared");
+  const skillName = dir.split(/[\\/]/).pop();
+  const skillText = readFileSync(join(dir, "SKILL.md"), "utf-8");
+
+  // 本技能需要的文件 = 全库共享约定 + 正文引用到的跨技能契约
+  const wanted = [...sources.map((s) => ({ name: s.name, body: s.body }))];
+  for (const c of CONTRACTS) {
+    if (c.owner === skillName) continue;          // 归属技能用自己的原件
+    if (!skillText.includes(`shared/${c.as}`)) continue; // 没引用就不塞进包里
+    wanted.push({ name: c.as, body: c.body });
+    contractCopies++;
+  }
+
   if (!checkOnly && !existsSync(target)) mkdirSync(target, { recursive: true });
 
-  for (const { name, body } of sources) {
+  for (const { name, body } of wanted) {
     const dest = join(target, name);
-    const want = BANNER + body;
+    // JSON 不能带 HTML 注释横幅，逐字节复制；Markdown 加"请勿编辑"横幅
+    const want = name.endsWith(".json") ? body : BANNER + body;
     const cur = existsSync(dest) ? readFileSync(dest, "utf-8") : null;
     if (cur === want) continue;
     if (checkOnly) stale.push(`${rel(dest)}${cur === null ? "（缺失）" : "（与源不一致）"}`);
     else { writeFileSync(dest, want, "utf-8"); written++; }
   }
 
-  // 清理源里已删除的文件
+  // 清理不该在这里的文件（源已删除，或正文已不再引用）
   if (existsSync(target)) {
-    const allowed = new Set(sources.map((s) => s.name));
+    const allowed = new Set(wanted.map((w) => w.name));
     for (const f of readdirSync(target)) {
       if (allowed.has(f)) continue;
       if (checkOnly) extra.push(rel(join(target, f)));
@@ -84,7 +124,7 @@ if (checkOnly) {
     console.error("\n请运行 npm run sync:shared 后重新提交。\n");
     process.exit(1);
   }
-  console.log(`✅ 共享约定副本一致：${skillDirs.length} 个 SKILL × ${sources.length} 份（${sources.map((s) => s.name).join(", ")}）`);
+  console.log(`✅ 共享约定副本一致：${skillDirs.length} 个 SKILL × ${sources.length} 份共享约定 + ${contractCopies} 份跨技能契约副本`);
 } else {
-  console.log(`✅ 已同步：${skillDirs.length} 个 SKILL × ${sources.length} 份共享约定，写入/更新 ${written} 个文件`);
+  console.log(`✅ 已同步：${skillDirs.length} 个 SKILL × ${sources.length} 份共享约定 + ${contractCopies} 份跨技能契约副本，写入/更新 ${written} 个文件`);
 }

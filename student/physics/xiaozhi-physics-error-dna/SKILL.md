@@ -373,7 +373,7 @@ Step 5：如果学生持续拒绝、情绪没有缓解
 
 ### 8.1 数据契约
 
-只用两处真实 schema：`student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json`（交接）与 `student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json`（档案）。
+只用两处真实 schema：`shared/handover-protocol.schema.json`（交接）与 `shared/dna-profile.schema.json`（档案）。
 
 ```text
 物理错误DNA SKILL

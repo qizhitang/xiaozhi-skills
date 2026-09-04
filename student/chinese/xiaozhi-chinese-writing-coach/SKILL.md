@@ -485,7 +485,7 @@ AI 不替学生说论点，也不替学生"总结提炼"成一句漂亮的话。
 
 ## 九、接口与协作
 
-**读写的档案字段（`student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json`）：**
+**读写的档案字段（`shared/dna-profile.schema.json`）：**
 
 ```
 读：meta.consentStatus.{profileEnabled, crossSkillSharing, parentSharingConsent}
@@ -497,7 +497,7 @@ AI 不替学生说论点，也不替学生"总结提炼"成一句漂亮的话。
 写：subjectExtensions.chinese.subtypes[]              ← WT 子类型 ID
 ```
 
-**交接（`student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json`）：**
+**交接（`shared/handover-protocol.schema.json`）：**
 
 ```json
 {

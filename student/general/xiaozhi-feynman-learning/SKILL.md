@@ -221,7 +221,7 @@ depends_on:
 
 ## 六、理解深度记录
 
-每次测试结束后，生成一条待确认条目写回学习DNA的 `extensions.understanding[]`（`../xiaozhi-learning-dna/schemas/dna-profile.schema.json`），而不是只给口头反馈。写入前先确认 `crossSkillSharing`，走 `subject_profile_writeback`（`updateTarget: "extension"`）。
+每次测试结束后，生成一条待确认条目写回学习DNA的 `extensions.understanding[]`（`shared/dna-profile.schema.json`），而不是只给口头反馈。写入前先确认 `crossSkillSharing`，走 `subject_profile_writeback`（`updateTarget: "extension"`）。
 
 ### 6.1 三层标准（`shared/vocab.md §6`，全库唯一掌握度词表）
 
@@ -349,7 +349,7 @@ AI可以辅助思考，但不能替代思考。
     ──→ 学习系统协调器（联动判断与月报汇总）
 ```
 
-交接格式见 `../xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json`。本 SKILL 不自行承诺提醒时间，只入队。
+交接格式见 `shared/handover-protocol.schema.json`。本 SKILL 不自行承诺提醒时间，只入队。
 
 ---
 

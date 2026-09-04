@@ -434,8 +434,8 @@ SKILL 编写工具（开发者工具，不参与学生端运行时数据流）
 - `shared/hint-ladder.md` — 提示阶梯与默认最高级对照表
 - `shared/ai-item-check.md` — AI 出题自检协议
 - `shared/grade-bands.md` — 学段参数表
-- `student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json` — 档案字段定义
-- `student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json` — 七种交接类型
+- `shared/dna-profile.schema.json` — 档案字段定义
+- `shared/handover-protocol.schema.json` — 七种交接类型
 
 ---
 

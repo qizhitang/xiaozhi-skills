@@ -116,7 +116,7 @@ depends_on:
 
 ## 四、入队接收规则（reminder_enqueue）
 
-其他 SKILL 通过 `../xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json` 的 `reminder_enqueue` 把提醒交给本 SKILL，示例见 `../xiaozhi-skill-coordinator/schemas/examples/reminder-enqueue.example.json`。
+其他 SKILL 通过 `shared/handover-protocol.schema.json` 的 `reminder_enqueue` 把提醒交给本 SKILL，示例见 `../xiaozhi-skill-coordinator/schemas/examples/reminder-enqueue.example.json`。
 
 收到一条 `reminderData` 后按顺序处理：
 
@@ -410,7 +410,7 @@ IM智能提醒
 - `shared/vocab.md` §9 - 提醒预算唯一契约
 - `shared/ai-item-check.md` - 提醒里附带的变形题/小题，生成前按此协议自检
 - `shared/grade-bands.md` - 学段免打扰窗口与每日上限
-- `../xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json` - `reminder_enqueue` / `reminder_sync` 字段定义
+- `shared/handover-protocol.schema.json` - `reminder_enqueue` / `reminder_sync` 字段定义
 - **学术出处**：Ebbinghaus (1885) 遗忘曲线与间隔重复（Spaced Repetition）研究。
   本 SKILL 使用的是**固定间隔序列**（Day 1/3/7/14/30）+ 答对答错的手动升降级，
   **不是** SM-2 等自适应间隔算法；真正带 easeFactor 的间隔计算只在英语词汇 DNA 内部维护。

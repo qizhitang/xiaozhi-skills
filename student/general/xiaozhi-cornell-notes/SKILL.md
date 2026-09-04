@@ -237,7 +237,7 @@ extensions.notes.recurringGaps[]  ← 反复出现的笔记缺口（如"只记�
 extensions.notes.lastUpdated      ← YYYY-MM-DD
 ```
 
-走 `subject_profile_writeback`（`updateTarget: "extension"`），写前确认 `crossSkillSharing`；字段定义见 `../xiaozhi-learning-dna/schemas/dna-profile.schema.json`。
+走 `subject_profile_writeback`（`updateTarget: "extension"`），写前确认 `crossSkillSharing`；字段定义见 `shared/dna-profile.schema.json`。
 
 ### 笔记检索方式
 
@@ -435,7 +435,7 @@ Step 4：标注记忆状态
     ──→ 每周学习复盘SKILL（提供本周笔记健康数据）
 ```
 
-交接格式见 `../xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json`。本 SKILL 不自行承诺提醒时间，只入队。
+交接格式见 `shared/handover-protocol.schema.json`。本 SKILL 不自行承诺提醒时间，只入队。
 
 ---
 

@@ -385,7 +385,7 @@ depends_on:
     ──→ 学习系统协调器（仅传递全景月报所需摘要）
 ```
 
-交接格式见 `../xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json`。本 SKILL 不自行承诺提醒时间，只入队；发送节奏由 IM 智能提醒按 `shared/vocab.md §9` 与 `shared/grade-bands.md` 决定。
+交接格式见 `shared/handover-protocol.schema.json`。本 SKILL 不自行承诺提醒时间，只入队；发送节奏由 IM 智能提醒按 `shared/vocab.md §9` 与 `shared/grade-bands.md` 决定。
 
 ---
 

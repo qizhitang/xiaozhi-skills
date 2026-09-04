@@ -308,7 +308,7 @@ Step 3：标电流方向
 
 ## 七、接口与协作
 
-数据契约只用两处真实 schema：`student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json`（档案）与 `student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json`（交接）。
+数据契约只用两处真实 schema：`shared/dna-profile.schema.json`（档案）与 `shared/handover-protocol.schema.json`（交接）。
 
 **读**
 - `meta.consentStatus.profileEnabled` / `crossSkillSharing` / `reminderConsent` — 决定本次是否读写档案、是否可入队提醒

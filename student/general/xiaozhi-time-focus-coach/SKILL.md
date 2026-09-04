@@ -370,7 +370,7 @@ M10 情绪清理入口、分心原因记录、专注中断复盘都可能碰到�
 
 ### 档案结构
 
-档案落在学习DNA的 `extensions.focus`（`../xiaozhi-learning-dna/schemas/dna-profile.schema.json`），通过 `subject_profile_writeback`（`updateTarget: "extension"`）写入，写前确认 `crossSkillSharing`。完整填写模板见 `references/focus-archives-template.md`。
+档案落在学习DNA的 `extensions.focus`（`shared/dna-profile.schema.json`），通过 `subject_profile_writeback`（`updateTarget: "extension"`）写入，写前确认 `crossSkillSharing`。完整填写模板见 `references/focus-archives-template.md`。
 
 ```
 专注力履历档案（在用户同意后持续积累）
@@ -449,7 +449,7 @@ M10 情绪清理入口、分心原因记录、专注中断复盘都可能碰到�
     ──→ 每周学习复盘SKILL（提供时间维度和计划执行摘要）
 ```
 
-交接格式见 `../xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json`。本 SKILL 不自行承诺提醒时间，只入队；发送节奏由 IM 智能提醒按 `shared/vocab.md §9` 决定。
+交接格式见 `shared/handover-protocol.schema.json`。本 SKILL 不自行承诺提醒时间，只入队；发送节奏由 IM 智能提醒按 `shared/vocab.md §9` 决定。
 
 ---
 

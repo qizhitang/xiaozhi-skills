@@ -264,7 +264,7 @@ said → explained / argued / insisted
       lastUpdated, confidenceLevel }
   subjectExtensions.english.subtypes[]
     T01-T06 表达/中式英语子类型的状态与计数（定义见
-    ../xiaozhi-english-grammar-coach/references/english-error-dimension-table.md §六）
+    shared/english-error-dimension-table.md §六）
 
 写作中的**语法**错误不写在这里：G 类子类型由英语语法突破教练写入
 subjectExtensions.english.grammarProfile[]，本 SKILL 只把它转过去，避免重复记录。
@@ -484,7 +484,7 @@ subjectExtensions.english.grammarProfile[]，本 SKILL 只把它转过去，避�
 ## 十、参考资源
 
 - `references/vocabulary-upgrade.md` — 低阶→精准词汇升级对照表（按词性分类，标注课标 1600 词内/外）
-- `../xiaozhi-english-grammar-coach/references/english-error-dimension-table.md` — 英语错因维度表（T01-T06 表达/中式英语子类型）
+- `shared/english-error-dimension-table.md` — 英语错因维度表（T01-T06 表达/中式英语子类型）
 
 ---
 

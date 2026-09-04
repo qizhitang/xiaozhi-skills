@@ -320,7 +320,7 @@ depends_on:
     ──→ 兴趣成长探索计划（跨科联结中出现的兴趣信号）
 ```
 
-项目本身写入 `extensions.projects[]`（`projectId` / `theme` / `subjects[]` / `stage` / `startDate`，`stage` 取 选题/调查/联结/展示/完成）；联结写入 `growthMap.conceptGraph`。交接格式见 `../xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json`。
+项目本身写入 `extensions.projects[]`（`projectId` / `theme` / `subjects[]` / `stage` / `startDate`，`stage` 取 选题/调查/联结/展示/完成）；联结写入 `growthMap.conceptGraph`。交接格式见 `shared/handover-protocol.schema.json`。
 
 ---
 

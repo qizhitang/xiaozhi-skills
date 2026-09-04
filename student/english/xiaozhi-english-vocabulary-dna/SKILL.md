@@ -353,7 +353,7 @@ schema 里的 vocabulary[].status（新词/学习中/复习中/已掌握）只�
       status: 新词 / 学习中 / 复习中 / 已掌握 }
   subjectExtensions.english.subtypes[]
     V01-V06 词汇类子类型的状态与计数（子类型定义见
-    ../xiaozhi-english-grammar-coach/references/english-error-dimension-table.md §三）
+    shared/english-error-dimension-table.md §三）
 
 状态五档与"3 次顽固"口径：按 shared/vocab.md §4-§5
 掌握度：按 shared/vocab.md §6（会复述 / 会解释 / 真正掌握）
@@ -461,7 +461,7 @@ schema 里的 vocabulary[].status（新词/学习中/复习中/已掌握）只�
 ## 十、参考资源
 
 - `references/vocabulary-radar-topics.md` - 新词雷达话题模板（按话题 + 词表分组、四阶段预热模板与提示词，供模块C使用）
-- `../xiaozhi-english-grammar-coach/references/english-error-dimension-table.md` — 英语错因维度表（V01-V06 词汇子类型）
+- `shared/english-error-dimension-table.md` — 英语错因维度表（V01-V06 词汇子类型）
 - `student/general/xiaozhi-im-reminder/references/ebbinghaus-schedule.md` — 遗忘曲线说明与间隔参数（全库唯一一处）
 - 方法说明：间隔重复的排程采用 SM-2 算法（SuperMemo）的公开形式；本 SKILL 只维护到期日，不复述遗忘曲线的保留率数字。
 

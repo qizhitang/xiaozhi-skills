@@ -359,7 +359,7 @@ Step 4：记录进发音档案
     { phoneme: "th /θ/（think→sink）", subtypeId: "P01",
       occurrenceCount, isStubborn, improvementCurve, lastOccurrenceDate }
     · subtypeId 取值 P01-P09，定义见
-      ../xiaozhi-english-grammar-coach/references/english-error-dimension-table.md §四
+      shared/english-error-dimension-table.md §四
     · phoneme 写"音标 + 一个典型词"，不写自由描述串
     · ⚠️ 仅 channel = audio_with_scoring 时才写入本节
   growthMap.oralGrowthTrack.consecutiveWarmupDays   连续完成热身天数
@@ -480,7 +480,7 @@ Step 4：记录进发音档案
 - `references/roleplay-scripts.md` — 5套真实场景完整对话脚本
 - `references/pronunciation-issues.md` — 中国学生高频发音弱点与纠正方法（含音标与口型说明）
 - `references/morning-warmup-statemachine.md` — 晨间5分钟热身状态机定义（含通道判定、开口恐惧、卡壳、中断恢复）
-- `../xiaozhi-english-grammar-coach/references/english-error-dimension-table.md` — 英语错因维度表（P01-P09 发音子类型）
+- `shared/english-error-dimension-table.md` — 英语错因维度表（P01-P09 发音子类型）
 - 方法说明：苏格拉底式追问是通用教学法；本 SKILL 的"四级跳"（What happened / Why / What if / So what）为自定义的口语提问结构，不引用特定学术模型。
 - 出题自检：本 SKILL 不出考题；纠音闭环里即兴生成的练习句，按 `shared/ai-item-check.md` 自检（句子本身语法正确、目标音只考一个、不超出该学段词汇）后再给学生。
 

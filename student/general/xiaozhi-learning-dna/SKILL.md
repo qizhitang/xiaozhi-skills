@@ -311,7 +311,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 ```
 
 掌握度只用三档 `会复述 / 会解释 / 真正掌握`（`shared/vocab.md §6`）。
-写入方式：其他 SKILL 发 `profile_writeback`（`updateTarget: "concept_graph"`，见 `../xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json`），本 SKILL 生成待确认条目，学生确认后落库。
+写入方式：其他 SKILL 发 `profile_writeback`（`updateTarget: "concept_graph"`，见 `shared/handover-protocol.schema.json`），本 SKILL 生成待确认条目，学生确认后落库。
 `references/cross-subject-connections.md` 提供可直接引用的联结模板。
 
 ---
@@ -660,7 +660,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 
 ### 11.1 交接方式（只有一条通道）
 
-所有读写都走 `../xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json`，本 SKILL 作为 `recipient` 接收以下 `handoverType`：
+所有读写都走 `shared/handover-protocol.schema.json`，本 SKILL 作为 `recipient` 接收以下 `handoverType`：
 
 | handoverType | 用途 | 写入落点 |
 |---|---|---|

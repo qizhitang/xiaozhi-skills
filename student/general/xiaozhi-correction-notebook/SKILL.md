@@ -353,7 +353,7 @@ depends_on:
 | 学生流露学科焦虑（已排除危机信号） | `anxiety_trigger` | `anxietySignals[]` |
 | 学生请求深度错因分析 | `new_error` | 当前错题 + `historyRefs[]` |
 
-格式必须符合 `../xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json`；可直接对照 `../xiaozhi-skill-coordinator/schemas/examples/wrong-answer-handover.example.json`。
+格式必须符合 `shared/handover-protocol.schema.json`；可直接对照 `../xiaozhi-skill-coordinator/schemas/examples/wrong-answer-handover.example.json`。
 
 ```json
 {
@@ -463,7 +463,7 @@ depends_on:
 - `shared/hint-ladder.md` - 提示阶梯与"完整示例"出口（本 SKILL 默认最高级 L5）
 - `shared/ai-item-check.md` - 同类题/变形题/纯净版题生成前的自检协议
 - `shared/crisis-exception.md` - 危机例外三行片段与接入点
-- `../xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json` - 交接协议（含 `wrong_answer_handover` / `deep_analysis_writeback` / `reminder_enqueue`）
+- `shared/handover-protocol.schema.json` - 交接协议（含 `wrong_answer_handover` / `deep_analysis_writeback` / `reminder_enqueue`）
 
 ---
 

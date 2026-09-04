@@ -372,7 +372,7 @@ AI 内部识别意图并补齐参数；缺什么就问一句（每次只问一�
     { subtypeId: "L02", dimension: "读题失误", knowledgePoint, occurrenceCount,
       windowStart, status, lastOccurrenceDate, confidenceLevel }
 
-子类型 L01-L06 见 ../xiaozhi-english-grammar-coach/references/english-error-dimension-table.md §五
+子类型 L01-L06 见 shared/english-error-dimension-table.md §五
 状态五档与"3 次顽固"口径：按 shared/vocab.md §4-§5
 ```
 
@@ -436,7 +436,7 @@ AI 内部识别意图并补齐参数；缺什么就问一句（每次只问一�
 ## 九、参考资源
 
 - `references/listening-topic-templates.md` — 分学段分兴趣话题的听力材料生成模板、调节维度参数与提示词框架
-- `../xiaozhi-english-grammar-coach/references/english-error-dimension-table.md` — 英语错因维度表（L01-L06 听力子类型）
+- `shared/english-error-dimension-table.md` — 英语错因维度表（L01-L06 听力子类型）
 
 ---
 

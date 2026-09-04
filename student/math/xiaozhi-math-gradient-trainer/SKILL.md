@@ -399,7 +399,7 @@ Step 4：更新日记和档案
         按 shared/vocab.md §9 合并；本 SKILL 不承诺"我周末提醒你"）
 ```
 
-**写回示例（字段与 `student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json` 一致）：**
+**写回示例（字段与 `shared/handover-protocol.schema.json` 一致）：**
 
 ```json
 {
