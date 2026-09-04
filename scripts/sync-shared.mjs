@@ -126,6 +126,9 @@ function findSkillDirs(dir, acc = []) {
 const skillDirs = findSkillDirs(root).sort();
 
 const rel = (p) => relative(root, p).replace(/\\/g, "/");
+// 比较时统一行尾：git 的 autocrlf 会在检出时把 LF 转成 CRLF，
+// 逐字节比较会在 Windows 上误报“与源不一致”。
+const norm = (s) => s.split(String.fromCharCode(13)).join("");
 let written = 0, stale = [], extra = [];
 
 let contractCopies = 0;
@@ -153,7 +156,7 @@ for (const dir of skillDirs) {
     // JSON 不能带 HTML 注释横幅，逐字节复制；Markdown 加"请勿编辑"横幅
     const want = name.endsWith(".json") ? body : BANNER + body;
     const cur = existsSync(dest) ? readFileSync(dest, "utf-8") : null;
-    if (cur === want) continue;
+    if (cur !== null && norm(cur) === norm(want)) continue;
     if (checkOnly) stale.push(`${rel(dest)}${cur === null ? "（缺失）" : "（与源不一致）"}`);
     else { writeFileSync(dest, want, "utf-8"); written++; }
   }
