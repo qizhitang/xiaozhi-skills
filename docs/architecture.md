@@ -350,7 +350,9 @@ xiaozhi-{name}/
 `shared/` 下有两类文件，均由 `npm run sync:shared` 生成并由 CI 校验一致性：
 
 1. **全库共享约定**（6 份）：来自仓库根 `shared/`，每个 SKILL 都有。
-2. **跨技能契约与参考资料**（按需，13 类共 124 份副本）：源文件留在归属技能内，只分发给正文引用它的技能——四份数据契约 schema、三份交接示例 JSON、两份学科错因维度表、四份参考资料（受力图指南、遗忘曲线表、跨学科联结、实验类型）。归属技能用自己的原件。唯一例外是 `crisis-referral-protocol.md`：因为 `crisis-exception.md` 在每个包里都指向它，故分发给全部 58 个技能。
+2. **跨技能契约与参考资料**（按需，13 类共 132 份副本）：源文件留在归属技能内，只分发给正文引用它的技能——四份数据契约 schema、三份交接示例 JSON、两份学科错因维度表、四份参考资料（受力图指南、遗忘曲线表、跨学科联结、实验类型）。归属技能用自己的原件。唯一例外是 `crisis-referral-protocol.md`：因为 `crisis-exception.md` 在每个包里都指向它，故分发给全部 58 个技能。
+
+JSON 契约的副本不是原样复制：`sync-shared.mjs` 按目标技能**裁剪**——只保留该技能 SKILL.md 在非否定语境下提到的字段子树（档案 schema 的 `subjectExtensions.x` / `extensions.x`、工作空间的顶层集合、交接协议的类型/`payload` 分支/收发方），并在头部写 `x-distributed-to` 与 `x-skill-scope`。否定语境按行判定（“不读/不写/❌”在字段之前；行尾为顿号或冒号的列表把否定带到后续行；“字段 → 由 X 维护”整行视为否定）。这样做是因为市场的安全扫描把随包 schema 当成该技能自己的数据契约：一个笔记工具带着完整档案定义，会被判为越权；带着只含 `extensions.notes` 的副本，判定才与它的职责一致。`--check` 按同一规则重新生成后比对。
 
 这样 `shared/vocab.md`、`shared/handover-protocol.schema.json` 这类路径在整库使用（相对仓库根）与单技能安装（相对技能目录）两种场景下都能解析。
 

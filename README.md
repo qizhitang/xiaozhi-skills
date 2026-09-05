@@ -155,7 +155,7 @@ npm run check
 | `scripts/check-references.mjs` | 引用的 references / schemas 文件真实存在，无孤儿文件 |
 | `scripts/check-skills.mjs` | frontmatter 规范、依赖无环、词表一致、占位与重复文件、学段标注、控制入口与危机片段、接口路径存在于 schema、文档一致性 |
 | `scripts/validate-schemas.mjs` | 四份 schema 自身有效、8 份 examples 合规、枚举与 `shared/vocab.md` 一致、结构与协议版本号等于 `package.json` |
-| `scripts/sync-shared.mjs --check` | 每个 SKILL 目录内的 `shared/` 副本与仓库根源文件逐字节一致 |
+| `scripts/sync-shared.mjs --check` | 每个 SKILL 目录内的 `shared/` 副本与源一致：Markdown 逐字节（加横幅），JSON 契约按目标技能裁剪并带 `x-skill-scope`，检查时按同一规则重新生成再比对 |
 | `scripts/verify-examples.mjs` | references 里的 ```verify``` 断言逐条求值（示例题的关键数值结论交给 CI 算）；`check-skills` 的 A2 另查“示例题验算”日期不得早于文件最后一次实质提交 |
 | `scripts/gen-docs.mjs --check` | 文档与源码同步：`docs/skills-index.md` 由 frontmatter 生成且不落后；README / architecture 技能表的显示名、目录、学段与 frontmatter 一致；数量声明正确；安装指南的顺序不违反 `metadata.depends_on` |
 | `scripts/check-evals.mjs` | 每个 SKILL 都有回归用例：至少 1 条触发 + 1 条不触发；声明了能力代号的有降级用例；持有长期数据的有授权用例；会读到情绪文本的有危机用例；`route_to` 指向存在的 SKILL |
