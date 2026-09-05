@@ -1,6 +1,6 @@
 {
   "sessionId": "sess-demo-005",
-  "protocolVersion": "2.1.4",
+  "protocolVersion": "2.1.5",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-time-focus-coach",
   "recipient": "xiaozhi-learning-dna",

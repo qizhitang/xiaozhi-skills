@@ -102,7 +102,7 @@ const GRADE_BANDS = ["小学低段", "小学中段", "小学高段", "初中", "
 const TOP_KEYS = new Set(["name", "description", "license", "compatibility", "metadata", "allowed-tools", "id", "min_platform_version", "max_round_limit"]);
 const HARD_WORDS = /务必调用|必须激活|必须调用|凡是涉及|总是激活|始终激活/;
 const MARKETING = /覆盖.{0,6}\d{2}%.{0,4}场景|十倍|100%|基于艾宾浩斯|普通AI对话基于/;
-const AUTO_WORDS = /自动触发|自动写入|自动推送|自动预扣|自动确认|自动存入|静默检查|自动唤醒/;
+const AUTO_WORDS = /自动触发|自动写入|自动推送|自动预扣|自动确认|自动存入|静默检查|自动唤醒|自动检索|后台自动/;
 const DEPRECATED_VOCAB = [
   "概念理解错误", "审题习惯问题", "策略选择错误", "计算/操作失误",
   "已攻克（待验证）", "已攻克（待巩固）", "粗心大意",
@@ -215,7 +215,7 @@ for (const f of contentFiles) {
     }
     if (EMOTION_WORDS.test(text) && !/shared\/crisis-exception\.md|crisis-referral-protocol\.md/.test(text)) err("S1", rel(f), "涉及情绪/焦虑/家长输出，但未引用 shared/crisis-exception.md");
     if (/出题|生成.{0,4}题|同类题|变式题|纯净版/.test(text) && !/shared\/ai-item-check\.md/.test(text)) err("A1", rel(f), "会生成题目，但未引用 shared/ai-item-check.md");
-    if (/不给答案|不给完整|永远不|绝不.{0,6}答案|不直接给/.test(text) && !/shared\/hint-ladder\.md/.test(text)) err("H1", rel(f), "含“不给答案”类铁律，但未引用 shared/hint-ladder.md（提示阶梯与出口）");
+    if (/不给答案|不给完整|永远不.{0,8}(?:答案|讲解|解题|讲题)|绝不.{0,6}答案|不直接给/.test(text) && !/shared\/hint-ladder\.md/.test(text)) err("H1", rel(f), "含“不给答案”类铁律，但未引用 shared/hint-ladder.md（提示阶梯与出口）");
   }
 }
 

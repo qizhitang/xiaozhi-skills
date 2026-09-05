@@ -122,6 +122,7 @@
 | `parentSharingConsent` | 允许把学习摘要输出给家长/监护人（家庭看板、月报家长页、家长简报） | false |
 | `emotionSharingWithParent` | 允许把**情绪相关**内容输出给家长（独立于上一项，且必须学生本人同意）| false |
 | `teacherWritebackConsent` | 允许老师端 SKILL 写回学生档案 | false |
+| `parentCommunicationAllowed`（老师端） | 老师工作空间 `studentCards[].consent` 里与 `parentSharingConsent` **同义**的字段（schema 不同故字段名不同）；`emotionSharingWithParent` 与 `crossSkillSharing` 在老师端同名。老师端 SKILL 查这一组，语义与本表一致 | false |
 | `reminderConsent` / `emotionTrackingConsent` / `interestTrackingConsent` | 同现有 | false |
 
 规则：

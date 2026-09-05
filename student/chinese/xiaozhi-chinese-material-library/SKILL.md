@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 📚 语文素材库
-  version: 2.1.4
+  version: 2.1.5
   author: 小智伴学
   category: 语文专项
   grade_bands:
@@ -101,9 +101,11 @@ metadata:
 
 - "存入素材库"
 - "这句话存着"
-- "记一下这个"
 - "加入积累"
-- 精读时遇到好句，学生说"好，记下来"
+- 精读时遇到好句，学生说"这句存到素材库"
+
+**不作为存储触发**："记一下这个""好，记下来""记住了"——这些在普通辅导里太常见（可能是让 AI 记住上下文、也可能是自言自语）。
+听到这类话先问一句"要存进素材库吗？"，学生说"要"才存；不问就存等于替学生做了持久化决定。
 
 ### 存储操作格式
 
@@ -356,7 +358,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-chinese-mat-001",
-  "protocolVersion": "2.1.4",
+  "protocolVersion": "2.1.5",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-chinese-material-library",
   "recipient": "xiaozhi-learning-dna",

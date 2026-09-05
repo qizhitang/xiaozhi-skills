@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🎙️ 英语口语陪练
-  version: 2.1.4
+  version: 2.1.5
   author: 小智伴学
   category: 英语专项
   grade_bands:
@@ -469,7 +469,7 @@ subjectExtensions.english.subtypes[] 里的 P 类条目一律不写，
 ```json
 {
   "sessionId": "sess-eng-speak-001",
-  "protocolVersion": "2.1.4",
+  "protocolVersion": "2.1.5",
   "handoverType": "profile_writeback",
   "sender": "xiaozhi-english-speaking-coach",
   "recipient": "xiaozhi-learning-dna",

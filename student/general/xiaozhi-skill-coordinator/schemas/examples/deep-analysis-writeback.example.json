@@ -1,6 +1,6 @@
 {
   "sessionId": "sess-demo-002",
-  "protocolVersion": "2.1.4",
+  "protocolVersion": "2.1.5",
   "handoverType": "deep_analysis_writeback",
   "sender": "xiaozhi-math-error-dna",
   "recipient": "xiaozhi-correction-notebook",

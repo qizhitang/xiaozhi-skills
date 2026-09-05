@@ -1,6 +1,23 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xiaozhi-skills.openclaw.dev/schemas/handover-protocol.schema.json",
   "title": "XiaozhiMultiAgentHandoverProtocol",
+  "x-distributed-to": "xiaozhi-chinese-classical-revival",
+  "x-skill-scope": {
+    "note": "本副本随 xiaozhi-chinese-classical-revival 分发，仅供字段名参照。下列路径是该技能 SKILL.md 接口节提到的字段；哪些只读、哪些可写、要过哪个授权位，以 SKILL.md 为准。未列出的字段对它不可见、不可写。",
+    "paths": [
+      "consent",
+      "handoverType",
+      "payload",
+      "protocolVersion",
+      "recipient",
+      "reminder_enqueue",
+      "sender",
+      "sessionId",
+      "subject_profile_writeback",
+      "timestamp"
+    ]
+  },
   "description": "小智伴学多智能体协作与数据流转协议 (2.1.1)。sender/recipient 覆盖全库 58 个 SKILL；词表以 shared/vocab.md 为唯一来源。",
   "type": "object",
   "properties": {
@@ -9,10 +26,10 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.4）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.5）",
       "type": "string",
       "enum": [
-        "2.1.4"
+        "2.1.5"
       ]
     },
     "handoverType": {
@@ -754,7 +771,6 @@
     "payload",
     "timestamp"
   ],
-  "$id": "https://xiaozhi-skills.openclaw.dev/schemas/handover-protocol.schema.json",
   "allOf": [
     {
       "if": {

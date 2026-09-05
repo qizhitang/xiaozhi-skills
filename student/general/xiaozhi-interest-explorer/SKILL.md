@@ -11,7 +11,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: ☕ 兴趣成长探索计划
-  version: 2.1.4
+  version: 2.1.5
   author: 小智伴学
   category: 通用核心
   grade_bands:

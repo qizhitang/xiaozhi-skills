@@ -77,11 +77,13 @@ const CONTRACTS = [
   {
     as: "class-teaching-workspace.schema.json",
     src: "teacher/general/schemas/class-teaching-workspace.schema.json",
+    toDirs: ["teacher/general", "teacher/math", "teacher/physics", "teacher/chinese", "teacher/english"],
     owner: null, // 包级 schema，不归属某个技能
   },
   {
     as: "solo-teacher-workspace.schema.json",
     src: "teacher/independent/schemas/solo-teacher-workspace.schema.json",
+    toDirs: ["teacher/independent"],
     owner: null, // 包级 schema，不归属某个技能
   },
   {
@@ -129,6 +131,31 @@ const rel = (p) => relative(root, p).replace(/\\/g, "/");
 // 比较时统一行尾：git 的 autocrlf 会在检出时把 LF 转成 CRLF，
 // 逐字节比较会在 Windows 上误报“与源不一致”。
 const norm = (s) => s.split(String.fromCharCode(13)).join("");
+// schema 副本按目标技能标注可读写范围（JSON Schema 忽略 x- 开头的键）。
+// 依据：SKILL.md 正文里实际出现的顶层字段名 / subjectExtensions.x / extensions.x / 交接类型名。
+function scopeJson(name, body, skillName, skillText) {
+  let obj;
+  try { obj = JSON.parse(body); } catch { return body; }
+  const found = new Set();
+  const top = Object.keys(obj.properties || {});
+  for (const k of top) if (new RegExp(String.fromCharCode(92) + "b" + k + String.fromCharCode(92) + "b").test(skillText)) found.add(k);
+  for (const parent of ["subjectExtensions", "extensions"]) {
+    const sub = obj.properties && obj.properties[parent] && obj.properties[parent].properties;
+    if (sub) for (const k of Object.keys(sub)) if (skillText.includes(parent + "." + k)) { found.add(parent + "." + k); found.delete(parent); }
+  }
+  if (/handover-protocol/.test(name)) for (const m of skillText.matchAll(new RegExp(String.fromCharCode(92) + "b" + "[a-z]+(?:_[a-z]+)*_(?:handover|writeback|enqueue)" + String.fromCharCode(92) + "b", "g"))) found.add(m[0]);
+  const paths = [...found].sort();
+  const note = paths.length
+    ? `本副本随 ${skillName} 分发，仅供字段名参照。下列路径是该技能 SKILL.md 接口节提到的字段；哪些只读、哪些可写、要过哪个授权位，以 SKILL.md 为准。未列出的字段对它不可见、不可写。`
+    : `本副本随 ${skillName} 分发，仅供字段名参照。该技能不直接读写本 schema 定义的数据；要交换数据一律经 handover 且先过授权位。`;
+  const head = {};
+  for (const k of ["$schema", "$id", "title"]) if (k in obj) head[k] = obj[k];
+  head["x-distributed-to"] = skillName;
+  head["x-skill-scope"] = { note, paths };
+  for (const [k, v] of Object.entries(obj)) if (!(k in head)) head[k] = v;
+  return JSON.stringify(head, null, 2) + String.fromCharCode(10);
+}
+
 let written = 0, stale = [], extra = [];
 
 let contractCopies = 0;
@@ -143,7 +170,9 @@ for (const dir of skillDirs) {
   for (const c of CONTRACTS) {
     if (!c.toAll) {
       if (c.owner === skillName) continue;               // 归属技能用自己的原件
-      if (!skillText.includes(`shared/${c.as}`)) continue; // 没引用就不塞进包里
+      // 按目录分发的（老师端工作空间 schema）：该目录下的技能都读写工作空间，不看正文有没有写 shared/ 前缀
+      const inDirs = c.toDirs && c.toDirs.some((d) => rel(dir).startsWith(d + "/"));
+      if (!inDirs && !skillText.includes(`shared/${c.as}`)) continue; // 没引用就不塞进包里
     }
     wanted.push({ name: c.as, body: c.body });
     contractCopies++;
@@ -154,7 +183,7 @@ for (const dir of skillDirs) {
   for (const { name, body } of wanted) {
     const dest = join(target, name);
     // JSON 不能带 HTML 注释横幅，逐字节复制；Markdown 加"请勿编辑"横幅
-    const want = name.endsWith(".json") ? body : BANNER + body;
+    const want = name.endsWith(".schema.json") ? scopeJson(name, body, skillName, skillText) : name.endsWith(".json") ? body : BANNER + body;
     const cur = existsSync(dest) ? readFileSync(dest, "utf-8") : null;
     if (cur !== null && norm(cur) === norm(want)) continue;
     if (checkOnly) stale.push(`${rel(dest)}${cur === null ? "（缺失）" : "（与源不一致）"}`);

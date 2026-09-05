@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🔗 学习系统协调器
-  version: 2.1.4
+  version: 2.1.5
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -350,7 +350,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-demo-001",
-  "protocolVersion": "2.1.4",
+  "protocolVersion": "2.1.5",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-correction-notebook",
   "recipient": "xiaozhi-math-error-dna",
@@ -380,7 +380,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-demo-005",
-  "protocolVersion": "2.1.4",
+  "protocolVersion": "2.1.5",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-time-focus-coach",
   "recipient": "xiaozhi-learning-dna",

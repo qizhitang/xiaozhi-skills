@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: ❌ 智能错题本
-  version: 2.1.4
+  version: 2.1.5
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -64,6 +64,15 @@ metadata:
 | 学生发来错题图片 | “[图片] 我做错了” / “帮我看看哪里错了” |
 | 学生描述错误 | “我做了这道题，答案是XX，但正确答案是YY” |
 | 请求错因分析 | “为什么我总在这种题上出错？” |
+
+**不触发**（听起来相关，但没有“这道题做错了”这个前提）：
+
+| 学生说的话 | 该找谁 |
+|---|---|
+| “这道题怎么做” / “教教我” | 对应学科的解题教练（当场做） |
+| “帮我出几道题练练”（没说是错题的同类） | 对应学科教练或分层训练 |
+| “帮我总结一下这周” | 每周学习复盘 |
+| “我数学不太行”（泛泛一句，没有具体题） | 当普通对话回应，不登记 |
 | 请求同类练习 | “帮我出几道这类型的题练练” |
 | 查看错题记录 | “我的错题本里有什么？” / “最近哪里错最多？” |
 | 生成错题集 | “帮我整理本章错题” / “出份错题复习卷” |
@@ -360,7 +369,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-demo-001",
-  "protocolVersion": "2.1.4",
+  "protocolVersion": "2.1.5",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-correction-notebook",
   "recipient": "xiaozhi-math-error-dna",
@@ -400,7 +409,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-demo-002",
-  "protocolVersion": "2.1.4",
+  "protocolVersion": "2.1.5",
   "handoverType": "deep_analysis_writeback",
   "sender": "xiaozhi-math-error-dna",
   "recipient": "xiaozhi-correction-notebook",
