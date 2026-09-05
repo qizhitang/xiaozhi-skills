@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 复习规划师
-  version: 2.1.3
+  version: 2.1.4
   author: 小智伴学
   category: 老师通用
   grade_bands:

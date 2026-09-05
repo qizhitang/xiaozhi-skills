@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🖊️ 语文写作教练
-  version: 2.1.3
+  version: 2.1.4
   author: 小智伴学
   category: 语文专项
   grade_bands:
@@ -504,7 +504,7 @@ AI 不替学生说论点，也不替学生"总结提炼"成一句漂亮的话。
 ```json
 {
   "sessionId": "sess-chinese-wt-001",
-  "protocolVersion": "2.1.3",
+  "protocolVersion": "2.1.4",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-chinese-writing-coach",
   "recipient": "xiaozhi-learning-dna",

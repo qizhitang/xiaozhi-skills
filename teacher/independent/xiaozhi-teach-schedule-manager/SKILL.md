@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 排课与课时管理
-  version: 2.1.3
+  version: 2.1.4
   author: 小智伴学
   category: 独立教师
   grade_bands:

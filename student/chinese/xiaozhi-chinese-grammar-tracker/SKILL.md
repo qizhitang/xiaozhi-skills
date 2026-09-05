@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🔍 语病追踪档案
-  version: 2.1.3
+  version: 2.1.4
   author: 小智伴学
   category: 语文专项
   grade_bands:
@@ -359,7 +359,7 @@ Step 4：写作前提示
 ```json
 {
   "sessionId": "sess-chinese-lg-001",
-  "protocolVersion": "2.1.3",
+  "protocolVersion": "2.1.4",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-chinese-grammar-tracker",
   "recipient": "xiaozhi-learning-dna",
