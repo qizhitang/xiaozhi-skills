@@ -1,6 +1,6 @@
 {
   "sessionId": "sess-demo-003",
-  "protocolVersion": "2.1.6",
+  "protocolVersion": "2.1.7",
   "handoverType": "reminder_enqueue",
   "sender": "xiaozhi-english-vocabulary-dna",
   "recipient": "xiaozhi-im-reminder",

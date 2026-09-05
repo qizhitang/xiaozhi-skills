@@ -9,10 +9,10 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.6）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.7）",
       "type": "string",
       "enum": [
-        "2.1.6"
+        "2.1.7"
       ]
     },
     "handoverType": {
@@ -299,8 +299,10 @@
                 "subject_extension",
                 "extension",
                 "safety_record",
-                "weak_knowledge_points"
-              ]
+                "weak_knowledge_points",
+                "interest_dna"
+              ],
+              "description": "interest_dna：兴趣DNA（xiaozhi-interest-explorer 经 profile_writeback 写入 interestDNA，需 interestTrackingConsent）"
             },
             "graphUpdates": {
               "type": "array",
@@ -473,6 +475,11 @@
                   "status"
                 ]
               }
+            },
+            "interestUpdates": {
+              "type": "object",
+              "description": "updateTarget=interest_dna 时的补丁：只含 interestDNA 下的字段（currentExploringFields / challengeReactionSignals / confirmedShallowLikes / possibleTrueInterests），不得带其他分支。",
+              "additionalProperties": true
             }
           },
           "required": [

@@ -11,7 +11,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 阶段报告与续课助手
-  version: 2.1.6
+  version: 2.1.7
   author: 小智伴学
   category: 独立教师
   grade_bands:

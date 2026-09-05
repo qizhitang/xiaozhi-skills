@@ -20,10 +20,10 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.6）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.7）",
       "type": "string",
       "enum": [
-        "2.1.6"
+        "2.1.7"
       ]
     },
     "handoverType": {
@@ -195,13 +195,10 @@
               "type": "string",
               "enum": [
                 "concept_graph",
-                "emotion_dimension",
-                "growth_milestones",
-                "subject_extension",
-                "extension",
                 "safety_record",
                 "weak_knowledge_points"
-              ]
+              ],
+              "description": "interest_dna：兴趣DNA（xiaozhi-interest-explorer 经 profile_writeback 写入 interestDNA，需 interestTrackingConsent）"
             },
             "graphUpdates": {
               "type": "array",
@@ -257,79 +254,6 @@
                 ]
               }
             },
-            "emotionUpdates": {
-              "type": "object",
-              "properties": {
-                "baseline": {
-                  "type": "string",
-                  "enum": [
-                    "积极稳定",
-                    "波动中",
-                    "低落倾向",
-                    "焦虑明显"
-                  ]
-                },
-                "subjectEmotions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "subject": {
-                        "type": "string"
-                      },
-                      "emotionType": {
-                        "type": "string",
-                        "enum": [
-                          "自信愉悦",
-                          "平静专注",
-                          "紧张但能应对",
-                          "焦虑回避",
-                          "挫败抗拒"
-                        ]
-                      }
-                    },
-                    "required": [
-                      "subject",
-                      "emotionType"
-                    ]
-                  }
-                }
-              }
-            },
-            "milestone": {
-              "type": "object",
-              "properties": {
-                "milestoneName": {
-                  "type": "string"
-                },
-                "milestoneType": {
-                  "type": "string",
-                  "enum": [
-                    "weakness_solved",
-                    "feynman_mastered",
-                    "system_health_excellent"
-                  ]
-                },
-                "triggerDate": {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              },
-              "required": [
-                "milestoneName",
-                "milestoneType"
-              ]
-            },
-            "subjectExtensionPatch": {
-              "type": "object",
-              "description": "subject_extension 时：dna-profile.schema.json#/properties/subjectExtensions 的单学科分支片段（仅本学科）",
-              "additionalProperties": true
-            },
-            "extensionPatch": {
-              "type": "object",
-              "description": "extension 时：dna-profile.schema.json#/properties/extensions 的单分支片段",
-              "additionalProperties": true
-            },
             "safetyRecordEntry": {
               "type": "object",
               "description": "safety_record 时：dna-profile.schema.json#/properties/safetyRecord/crisisReferrals 的单条记录（只记处置事实）",
@@ -374,6 +298,11 @@
                   "status"
                 ]
               }
+            },
+            "interestUpdates": {
+              "type": "object",
+              "description": "updateTarget=interest_dna 时的补丁：只含 interestDNA 下的字段（currentExploringFields / challengeReactionSignals / confirmedShallowLikes / possibleTrueInterests），不得带其他分支。",
+              "additionalProperties": true
             }
           },
           "required": [
@@ -406,14 +335,7 @@
             "type": {
               "type": "string",
               "enum": [
-                "spaced_review",
-                "error_review",
-                "vocab_daily_card",
-                "scheduled_task",
-                "exploration_task",
-                "daily_confirmation",
-                "weekly_review",
-                "exam_day"
+                "error_review"
               ]
             },
             "scheduledTime": {
@@ -528,23 +450,9 @@
         "crossSkillSharing": {
           "type": "boolean"
         },
-        "emotionTrackingConsent": {
-          "type": "boolean",
-          "description": "情绪数据记录授权。updateTarget=emotion_dimension 时必须为 true"
-        },
-        "teacherWritebackConsent": {
-          "type": "boolean"
-        },
-        "reminderConsent": {
-          "type": "boolean"
-        },
         "parentSharingConsent": {
           "type": "boolean",
           "description": "允许把学习摘要输出给家长。生成任何家长可见内容前必须核对"
-        },
-        "emotionSharingWithParent": {
-          "type": "boolean",
-          "description": "允许把情绪相关内容输出给家长。独立于 parentSharingConsent，必须学生本人同意"
         },
         "verifiedAt": {
           "type": "string",

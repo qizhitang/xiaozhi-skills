@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 班级错因分析
-  version: 2.1.6
+  version: 2.1.7
   author: 小智伴学
   category: 老师数学
   grade_bands:

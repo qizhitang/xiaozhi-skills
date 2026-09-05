@@ -18,10 +18,10 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.6）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.7）",
       "type": "string",
       "enum": [
-        "2.1.6"
+        "2.1.7"
       ]
     },
     "handoverType": {
@@ -250,24 +250,6 @@
       "properties": {
         "crossSkillSharing": {
           "type": "boolean"
-        },
-        "emotionTrackingConsent": {
-          "type": "boolean",
-          "description": "情绪数据记录授权。updateTarget=emotion_dimension 时必须为 true"
-        },
-        "teacherWritebackConsent": {
-          "type": "boolean"
-        },
-        "reminderConsent": {
-          "type": "boolean"
-        },
-        "parentSharingConsent": {
-          "type": "boolean",
-          "description": "允许把学习摘要输出给家长。生成任何家长可见内容前必须核对"
-        },
-        "emotionSharingWithParent": {
-          "type": "boolean",
-          "description": "允许把情绪相关内容输出给家长。独立于 parentSharingConsent，必须学生本人同意"
         },
         "verifiedAt": {
           "type": "string",

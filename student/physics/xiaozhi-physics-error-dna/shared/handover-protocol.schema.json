@@ -20,10 +20,10 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.6）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.7）",
       "type": "string",
       "enum": [
-        "2.1.6"
+        "2.1.7"
       ]
     },
     "handoverType": {
@@ -191,140 +191,15 @@
             "updateTarget": {
               "type": "string",
               "enum": [
-                "concept_graph",
-                "emotion_dimension",
-                "growth_milestones",
                 "subject_extension",
-                "extension",
                 "safety_record",
                 "weak_knowledge_points"
-              ]
-            },
-            "graphUpdates": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "nodeId": {
-                    "type": "string"
-                  },
-                  "conceptName": {
-                    "type": "string"
-                  },
-                  "subject": {
-                    "type": "string"
-                  },
-                  "masteryLevel": {
-                    "type": "string",
-                    "enum": [
-                      "会复述",
-                      "会解释",
-                      "真正掌握"
-                    ]
-                  },
-                  "relationships": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "relationType": {
-                          "type": "string",
-                          "enum": [
-                            "requires",
-                            "isParentOf",
-                            "appliesTo",
-                            "correlatesWith"
-                          ]
-                        },
-                        "targetNodeId": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "relationType",
-                        "targetNodeId"
-                      ]
-                    }
-                  }
-                },
-                "required": [
-                  "conceptName",
-                  "subject",
-                  "masteryLevel"
-                ]
-              }
-            },
-            "emotionUpdates": {
-              "type": "object",
-              "properties": {
-                "baseline": {
-                  "type": "string",
-                  "enum": [
-                    "积极稳定",
-                    "波动中",
-                    "低落倾向",
-                    "焦虑明显"
-                  ]
-                },
-                "subjectEmotions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "subject": {
-                        "type": "string"
-                      },
-                      "emotionType": {
-                        "type": "string",
-                        "enum": [
-                          "自信愉悦",
-                          "平静专注",
-                          "紧张但能应对",
-                          "焦虑回避",
-                          "挫败抗拒"
-                        ]
-                      }
-                    },
-                    "required": [
-                      "subject",
-                      "emotionType"
-                    ]
-                  }
-                }
-              }
-            },
-            "milestone": {
-              "type": "object",
-              "properties": {
-                "milestoneName": {
-                  "type": "string"
-                },
-                "milestoneType": {
-                  "type": "string",
-                  "enum": [
-                    "weakness_solved",
-                    "feynman_mastered",
-                    "system_health_excellent"
-                  ]
-                },
-                "triggerDate": {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              },
-              "required": [
-                "milestoneName",
-                "milestoneType"
-              ]
+              ],
+              "description": "interest_dna：兴趣DNA（xiaozhi-interest-explorer 经 profile_writeback 写入 interestDNA，需 interestTrackingConsent）"
             },
             "subjectExtensionPatch": {
               "type": "object",
               "description": "subject_extension 时：dna-profile.schema.json#/properties/subjectExtensions 的单学科分支片段（仅本学科）",
-              "additionalProperties": true
-            },
-            "extensionPatch": {
-              "type": "object",
-              "description": "extension 时：dna-profile.schema.json#/properties/extensions 的单分支片段",
               "additionalProperties": true
             },
             "safetyRecordEntry": {
@@ -371,6 +246,11 @@
                   "status"
                 ]
               }
+            },
+            "interestUpdates": {
+              "type": "object",
+              "description": "updateTarget=interest_dna 时的补丁：只含 interestDNA 下的字段（currentExploringFields / challengeReactionSignals / confirmedShallowLikes / possibleTrueInterests），不得带其他分支。",
+              "additionalProperties": true
             }
           },
           "required": [
@@ -523,13 +403,6 @@
       "description": "发送方在发送前核对过的授权位快照（来自 dna-profile meta.consentStatus，见 shared/vocab.md §8）。接收方必须再次核对；任一相关位为 false 时丢弃该交接并告知用户",
       "properties": {
         "crossSkillSharing": {
-          "type": "boolean"
-        },
-        "emotionTrackingConsent": {
-          "type": "boolean",
-          "description": "情绪数据记录授权。updateTarget=emotion_dimension 时必须为 true"
-        },
-        "teacherWritebackConsent": {
           "type": "boolean"
         },
         "reminderConsent": {

@@ -4,12 +4,11 @@
   "title": "SoloTeacherWorkspace",
   "x-distributed-to": "xiaozhi-teach-lesson-log",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-teach-lesson-log 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的字段（共 6 项，删去 3 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
+    "note": "本副本随 xiaozhi-teach-lesson-log 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的字段（共 5 项，删去 4 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
     "paths": [
       "coursePackageLedger",
       "lessonLogs",
       "lessonSchedule",
-      "parentCommunicationLogs",
       "progressEvidence",
       "studentCards"
     ]
@@ -34,12 +33,6 @@
       "type": "array",
       "items": {
         "$ref": "#/$defs/lessonLog"
-      }
-    },
-    "parentCommunicationLogs": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/parentCommunication"
       }
     },
     "coursePackageLedger": {

@@ -8,7 +8,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 📝 英语语法突破教练
-  version: 2.1.6
+  version: 2.1.7
   author: 小智伴学
   category: 英语专项
   grade_bands:
@@ -399,7 +399,7 @@ AI 内部识别意图后进入追问模式；学生若明确说"直接告诉我"
 ```json
 {
   "sessionId": "sess-eng-grammar-001",
-  "protocolVersion": "2.1.6",
+  "protocolVersion": "2.1.7",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-english-grammar-coach",
   "recipient": "xiaozhi-learning-dna",

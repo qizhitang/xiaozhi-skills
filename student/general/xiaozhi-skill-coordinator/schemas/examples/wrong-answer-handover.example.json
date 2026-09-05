@@ -1,6 +1,6 @@
 {
   "sessionId": "sess-demo-001",
-  "protocolVersion": "2.1.6",
+  "protocolVersion": "2.1.7",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-correction-notebook",
   "recipient": "xiaozhi-math-error-dna",

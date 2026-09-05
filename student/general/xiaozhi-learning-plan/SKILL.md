@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🗓️ 30天学习计划制定师
-  version: 2.1.6
+  version: 2.1.7
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -505,7 +505,7 @@ metadata:
     ←── 学习DNA（已授权的历史学习数据摘要：弱项/节奏/可用时间）
     ←── 错题本SKILL（各科错题分布摘要）
     ←── 时间与专注力教练（黄金时段摘要）
-    ──→ 学习DNA（subject_profile_writeback → extensions.plans[]）
+    ──→ 学习DNA（subject_profile_writeback → extensions.plans[]；**只在学生说"把这份计划存进档案"且 crossSkillSharing 为 true 时**——排计划本身不写档案）
     ──→ IM智能提醒（reminder_enqueue：计划任务，由 IM 提醒统一发送）
     ──→ 学习系统协调器（月报所需的计划执行摘要）
     ──→ 每周学习复盘SKILL（提供本周计划完成率摘要）

@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: ✍️ 英语写作进化教练
-  version: 2.1.6
+  version: 2.1.7
   author: 小智伴学
   category: 英语专项
   grade_bands:
@@ -23,6 +23,8 @@ metadata:
 ---
 
 # ✍️ 英语写作进化教练 SKILL
+
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 > **一句话定位：** 你把作文交给传统AI，它给你改正确；  
 > 交给这个SKILL，它帮你变成一个更会写英语的人。  
@@ -48,6 +50,7 @@ metadata:
 
 提示阶梯（替代"永不给答案"）：
   不在学生尝试之前给出改好的句子；提示按 shared/hint-ladder.md 逐级升
+- `shared/ai-item-check.md` — 生成练习场景、示范句或改写建议时按此协议自检（有依据、不超学段、标注 AI 生成）
   （指出问题在哪 → 点名要用的手段 → 给半句让学生补完）。
   本 SKILL 默认最高级 L4；L5 仅用于**句式示范**——
   用一个换了内容的同型例句做示范，再让学生改自己那句。
@@ -281,7 +284,7 @@ subjectExtensions.english.grammarProfile[]，本 SKILL 只把它转过去，避�
 ```json
 {
   "sessionId": "sess-eng-write-001",
-  "protocolVersion": "2.1.6",
+  "protocolVersion": "2.1.7",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-english-writing-coach",
   "recipient": "xiaozhi-learning-dna",

@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 📚 语文素材库
-  version: 2.1.6
+  version: 2.1.7
   author: 小智伴学
   category: 语文专项
   grade_bands:
@@ -358,7 +358,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-chinese-mat-001",
-  "protocolVersion": "2.1.6",
+  "protocolVersion": "2.1.7",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-chinese-material-library",
   "recipient": "xiaozhi-learning-dna",

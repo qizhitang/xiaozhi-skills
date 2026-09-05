@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 💡 物理概念直觉器
-  version: 2.1.6
+  version: 2.1.7
   author: 小智伴学
   category: 物理专项
   grade_bands:

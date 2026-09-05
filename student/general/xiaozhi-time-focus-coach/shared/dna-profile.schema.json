@@ -9,7 +9,7 @@
       "extensions.focus"
     ]
   },
-  "description": "学习DNA —— 小智长期记忆核心引擎的数据结构定义。覆盖六大基础维度（基础信息、学科强弱、学习风格、错误模式、对话摘要、成长轨迹）、成长图谱与兴趣DNA、学习情绪，以及授权主体与学段、学科扩展档案 subjectExtensions、通用扩展档案 extensions、安全处置记录 safetyRecord。所有词表以 shared/vocab.md 为唯一来源。所有字段均为可选，默认只记录完成个性化辅导所必需的最小信息。本 schema 由 xiaozhi-learning-dna 定义并保管，它本身不产生错因、理解、情绪等判断，这些维度由对应技能经 handover 在授权后写入。其他技能随包附带的副本仅供字段名参照：各技能实际可读写的路径以副本顶部的 x-skill-scope 与其 SKILL.md 接口节为准。",
+  "description": "学习DNA —— 小智长期记忆核心引擎的数据结构定义。覆盖六大基础维度（基础信息、学科强弱、学习风格、错误模式、对话摘要、成长轨迹）、成长图谱与兴趣DNA、学习情绪，以及授权主体与学段、学科扩展档案 subjectExtensions、通用扩展档案 extensions、安全处置记录 safetyRecord。所有词表以 shared/vocab.md 为唯一来源。所有字段均为可选，默认只记录完成个性化辅导所必需的最小信息。本 schema 由 xiaozhi-learning-dna 定义并保管，错因、理解深度由对应技能经 handover 在授权后写入；学习情绪维度与成长里程碑由 xiaozhi-learning-dna 自己在各自授权位开启后产出。其他技能随包附带的副本仅供字段名参照：各技能实际可读写的路径以副本顶部的 x-skill-scope 与其 SKILL.md 接口节为准。",
   "type": "object",
   "additionalProperties": false,
   "properties": {

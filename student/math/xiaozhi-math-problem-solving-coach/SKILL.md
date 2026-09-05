@@ -2,13 +2,14 @@
 name: xiaozhi-math-problem-solving-coach
 description: >
   初中数学单题解题过程教练：学生发来一道数学题（图片或文字）说"卡住了""这道数学题我做错了""我不知道怎么列式"时，用追问帮他找回自己的思路，提示按 shared/hint-ladder.md 逐级升。
-  也用于"帮我出2道同类数学题""明天数学考试，帮我梳理这一章"。
+  也用于"帮我出2道同类数学题""明天数学考试，帮我梳理这一章"（考前梳理只在学生明确说考试在即时进入）。
+  默认只在当前会话工作：不读档案、不归档、不排提醒，这三项要学生当轮明确开启才做；含全库统一的数据控制入口与危机例外。
   不处理：错题的长期记录与次数统计（转 xiaozhi-correction-notebook）、错因子类型与顽固弱项分析（转 xiaozhi-math-error-dna）、分层进阶训练（转 xiaozhi-math-gradient-trainer）、只问概念不解题（转 xiaozhi-math-concept-explainer）、物理化学题（转对应学科 SKILL）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 📐 数学解题教练
-  version: 2.1.6
+  version: 2.1.7
   author: 小智伴学
   category: 数学专项
   grade_bands:
@@ -313,8 +314,8 @@ metadata:
     题型②（变形型）：[题目] → 陷阱：[常见错误]
     题型③（综合型）：[题目] → 难点：[思维跳跃处]
 
-三、弱项清单对照（向 xiaozhi-math-error-dna 取当前弱项清单）
-    → "你在这个模块记录在案的弱项是[X]，今天重点注意这个。"
+三、弱项清单对照（**读档案前先过授权门**：学生当轮同意 + crossSkillSharing 为 true，才向 xiaozhi-math-error-dna 取弱项清单；否则跳过本步，只用本次会话内的观察）
+    → "你在这个模块记录在案的弱项是[X]，今天重点注意这个。"（读之前先说清读什么、为什么读）
     → 无跨会话统计能力（X）时：不报"上周做了N道对了M道"，
       改为"从档案看大致集中在[X]"并标 🟡 初步趋势，不编造历史数字。
 ```
@@ -380,7 +381,7 @@ metadata:
 
 ## 五、模块B：考前快速梳理
 
-**触发识别：**
+**触发识别：**（须是学生**明确说出**考试在即或要梳理；本 SKILL 不看日历、不从日期推断考试临近）
 - "明天/后天考试"
 - "考前帮我梳理"
 - "快速过一遍[知识点]"
@@ -450,7 +451,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-20260903-001",
-  "protocolVersion": "2.1.6",
+  "protocolVersion": "2.1.7",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-math-problem-solving-coach",
   "recipient": "xiaozhi-correction-notebook",
