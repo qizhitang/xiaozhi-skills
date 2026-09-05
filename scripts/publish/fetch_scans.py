@@ -5,11 +5,15 @@
 逐个 `clawhub scan download`，解析 clawscan.json（判定）与 skillspector.json（逐条证据）。
 报告未生成的条目下次重跑会再试，不会被跳过。
 
+注意 ClawHub 的报告是分两步落地的：发布后约 3–5 分钟先写一份**只有判定与摘要的快照**（没有维度、
+skillspector.json 为 null），10–30 分钟后全量分析才补上维度与逐条证据。快照会被记下来但标为
+complete=false，重跑时会重新拉；不要拿快照当最终报告去对比。
+
 用法：
     python fetch_scans.py                              # 拉当前版本
     python fetch_scans.py --compare <上一版 summary.json>  # 拉完顺便打印翻转表
     python fetch_scans.py --only <slug> [<slug>...]    # 只拉几个
-退出码：0 全部拿到；1 仍有未生成的报告
+退出码：0 全部拿到且都是全量报告；1 仍有未生成或只有快照的报告（等几分钟再跑一次）
 """
 import json, os, subprocess, sys, time, zipfile
 
@@ -23,7 +27,8 @@ def summarize(zp):
     z = zipfile.ZipFile(zp)
     names = z.namelist()
     cs = (json.loads(z.read("clawscan.json")) if "clawscan.json" in names else None) or {}
-    sp = (json.loads(z.read("skillspector.json")) if "skillspector.json" in names else None) or {}
+    sp_raw = json.loads(z.read("skillspector.json")) if "skillspector.json" in names else None
+    sp = sp_raw or {}
     if not cs.get("status"):
         return None
     issues = []
@@ -36,7 +41,18 @@ def summarize(zp):
         "guidance": cs.get("guidance"),
         "spector_status": sp.get("status"),
         "spector_issues": issues,
+        # 快照阶段没有维度、skillspector 为 null；全量报告两者都有
+        "complete": bool(cs.get("dimensions")) and sp_raw is not None,
     }
+
+
+def final(e):
+    """这条记录是不是全量报告（旧汇总没有 complete 字段，按有无维度与 SkillSpector 判断）。"""
+    if not e or not e.get("clawscan"):
+        return False
+    if "complete" in e:
+        return bool(e["complete"])
+    return bool(e.get("dims")) and bool(e.get("spector_status"))
 
 
 def main():
@@ -55,8 +71,8 @@ def main():
     env = clawhub_env()
     cli = clawhub_cli()
 
-    todo = [k for k in sorted(pub) if (not only or k in only) and not (res.get(k) or {}).get("clawscan")]
-    log(f"v{ver}：清单 {len(pub)} 个，待拉 {len(todo)}（已有 {len(pub) - len(todo)}）")
+    todo = [k for k in sorted(pub) if (not only or k in only) and not final(res.get(k))]
+    log(f"v{ver}：清单 {len(pub)} 个，待拉 {len(todo)}（已有全量报告 {len(pub) - len(todo)}）")
     for i, name in enumerate(todo, 1):
         slug, rver = pub[name]["slug"], pub[name]["version"]
         zp = os.path.join(zdir, f"{slug}.zip")
@@ -67,7 +83,8 @@ def main():
         s = summarize(zp) if os.path.exists(zp) else None
         if s:
             res[name] = s
-            log(f"  [{i}/{len(todo)}] {name}: {s['clawscan']}  spector={len(s['spector_issues'])}")
+            log(f"  [{i}/{len(todo)}] {name}: {s['clawscan']}  spector={len(s['spector_issues'])}"
+                + ("" if s["complete"] else "  ← 只有快照，全量还没跑完，下次重跑再拉"))
         else:
             res[name] = {"clawscan": None, "error": ((r.stdout or "") + (r.stderr or "")).strip()[:160] or "报告未生成"}
             log(f"  [{i}/{len(todo)}] {name}: 未生成（下次重跑再试）")
@@ -80,6 +97,9 @@ def main():
     sus = sorted(k for k, v in res.items() if v.get("clawscan") == "suspicious")
     if sus:
         log("suspicious：" + ", ".join(sus))
+    snap = sorted(k for k, v in res.items() if v.get("clawscan") and not final(v))
+    if snap:
+        log(f"只有快照、还没全量 {len(snap)}：" + ", ".join(snap) + "  （等几分钟再跑一次）")
 
     if "--compare" in sys.argv:
         prev_path = sys.argv[sys.argv.index("--compare") + 1]
@@ -95,7 +115,9 @@ def main():
         print(f"  仍 suspicious {len(both)}：{sorted(both)}")
         if pend:
             print(f"  未出报告 {len(pend)}：{sorted(pend)}")
-    return 1 if dist.get("PENDING") else 0
+        if snap:
+            print(f"  只有快照 {len(snap)}：{sorted(snap)}")
+    return 1 if dist.get("PENDING") or snap else 0
 
 
 if __name__ == "__main__":

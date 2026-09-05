@@ -8,7 +8,8 @@
 
 读 fetch_scans.py 写的 <work>/scan_summary_<版本>.json。
 归类规则：
-  报告不完整   ClawScan 给了判定但没有维度、SkillSpector 缺席——扫描器故障，不是内容
+  报告不完整   只拉到了摘要快照（发布后 3–5 分钟先出，10–30 分钟后才补维度与 SkillSpector）——
+              重跑 fetch_scans.py 补齐再看，别据快照下结论
   仅摘要      有判定与摘要，但没有逐条可操作判定——按摘要看方向
   随包 schema  可操作判定全指向 shared/*.schema.json——是分发层（sync-shared 的裁剪）的事
   技能自身    可操作判定指向 SKILL.md / references——真实矛盾或触发过宽
@@ -37,7 +38,11 @@ def st(d, k):
 
 
 def degraded(v):
-    return v.get("clawscan") == "suspicious" and not (v.get("dims") or {}) and not v.get("spector_status")
+    if v.get("clawscan") != "suspicious":
+        return False
+    if "complete" in v:
+        return not v["complete"]
+    return not (v.get("dims") or {}) and not v.get("spector_status")
 
 
 def actionable(v):

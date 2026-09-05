@@ -12,8 +12,8 @@
 | `publish_skillhub.py` | 多轮发布到 SkillHub。它的配额一轮发不完（约 40 个/窗口，之后持续 429），所以尽力发一轮→休 30 分钟→再来，最多 40 轮。安全整改改动最大的 16 个老师端技能排最前。发完自动跑核对 |
 | `publish_clawhub.py` | 一轮发完 ClawHub，断点续跑。`xiaozhi-chinese-classical-revival` 的 slug 在 ClawHub 上重定向到一个审核隐藏的旧条目，只能就地发到 `chinese-classical-revival`，版本号映射为 `1000000.<patch>.0` |
 | `verify_publish.py` | 查 SkillHub 线上实际版本，与 `package.json` 比对，写 `verify-report.md` |
-| `fetch_scans.py` | 拉 ClawHub 对当前版本的安全扫描（ClawScan 判定 + SkillSpector 逐条证据），汇总成 `scan_summary_<版本>.json`；`--compare <上一版 summary>` 打印翻转表。报告未生成的条目重跑会再试 |
-| `compare_scans.py` | 两个版本的翻转表（转好 / 变差 / 仍 suspicious），把仍 suspicious 的按证据归类：报告不完整（扫描器故障）/ 仅摘要 / 随包 schema（分发层的事）/ 技能自身；`--evidence` 逐条列 file:line 与判词。SQP-3 与 AE1 不追 |
+| `fetch_scans.py` | 拉 ClawHub 对当前版本的安全扫描（ClawScan 判定 + SkillSpector 逐条证据），汇总成 `scan_summary_<版本>.json`；`--compare <上一版 summary>` 打印翻转表。ClawHub 发布后 3–5 分钟先落一份只有判定与摘要的快照，10–30 分钟后才补维度与逐条证据；快照记为 `complete: false`，重跑会重拉，直到退出码为 0 才算拉齐 |
+| `compare_scans.py` | 两个版本的翻转表（转好 / 变差 / 仍 suspicious），把仍 suspicious 的按证据归类：报告不完整（只拉到快照，重拉）/ 仅摘要 / 随包 schema（分发层的事）/ 技能自身；`--evidence` 逐条列 file:line 与判词。SQP-3 与 AE1 不追 |
 
 中间产物（打包目录、进度、日志、报告）默认写到 `~/.xiaozhi-publish/work/`，不进仓库——放仓库内会被 `check-references` 当成真技能扫到。可用 `XIAOZHI_PUBLISH_WORK` 改。
 
