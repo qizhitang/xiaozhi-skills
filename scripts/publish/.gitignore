@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+# 中间产物默认在 ~/.xiaozhi-publish/work/（见 _common.py）；这里兜底
+.work/
