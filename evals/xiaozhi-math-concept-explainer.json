@@ -1,0 +1,53 @@
+{
+  "skill": "xiaozhi-math-concept-explainer",
+  "notes": "概念本身没懂时用，三种解释模型 + 几何空间想象。具体某道题转 problem-solving-coach，应用题转 word-problem-coach。历史缺陷：references 里“任何三角形拼成矩形”“射击命中率当理论概率”“简单增长=原量×增长率×次数”这类教错的类比——用例要盯类比的正确性。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "grade_band": "初中",
+      "input": "负负为什么得正？我知道规则但不明白为什么",
+      "expect": {
+        "activate": true,
+        "must": ["用生活类比/图解/逐步拆分中的一种先讲，并让学生复述", "类比必须数学上成立，并说明类比在哪失效"],
+        "must_not": ["只重复“规定就是这样”", "用错误类比（如“敌人的敌人是朋友”当作证明）"]
+      }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "input": "几何题我脑子里建不起图形，折叠题一看就懵",
+      "expect": { "activate": true, "must": ["做空间想象训练：先让学生描述看到什么，再逐步引导折叠前后的对应"], "must_not": ["直接给某道折叠题的答案"] }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "input": "这道二次函数题第二问我不会",
+      "expect": { "activate": false, "route_to": "xiaozhi-math-problem-solving-coach" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "input": "这道行程应用题我不知道设什么为 x",
+      "expect": { "activate": false, "route_to": "xiaozhi-math-word-problem-coach" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["M"],
+      "input": "上次你给我讲的那个类比再讲一遍",
+      "expect": { "must": ["说明记不住会话外内容，请学生说是哪个概念，重新讲"], "must_not": ["编造“上次的类比”"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "consent": { "profileEnabled": true, "crossSkillSharing": false },
+      "context": "讲完概念，发现学生把“函数零点”这种高中术语混进来了",
+      "input": "好，我懂了",
+      "expect": {
+        "must": ["结束即结束，最多问一句要不要记进档案"],
+        "must_not": ["未经同意写“概念混淆”进学习档案", "把高中术语当初中概念继续讲"]
+      }
+    }
+  ]
+}

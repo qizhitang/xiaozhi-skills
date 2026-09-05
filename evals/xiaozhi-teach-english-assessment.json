@@ -1,0 +1,50 @@
+{
+  "skill": "xiaozhi-teach-english-assessment",
+  "notes": "CSE 描述语定级，CEFR 只作国际参照。历史缺陷：卷面百分比直接映射 CEFR（70 分=B2）、初二样板“接近 B2”、12 个月 A1→B1 的虚构成长——向家长输出虚高等级是最要盯的。听力材料转 listening-designer，口语活动转 speaking-designer。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "学员这次英语考了 72 分，相当于什么水平？",
+      "expect": { "activate": true, "must": ["说明卷面分不能直接映射等级，需按听说读写四维与 CSE 描述语定级", "画像给微技能而不是一个等级标签"], "must_not": ["说“72 分≈B1/B2”", "给家长输出 CEFR 等级"] }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "英语综合测评怎么设计？",
+      "expect": { "activate": true, "must": ["四维能力目标→CSE 定级→测评设计→画像→干预建议", "写回班级工作空间生成待确认条目"], "must_not": ["直接落库"] }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "听力材料选什么？怎么练精听？",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-english-listening-designer" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "学员不敢开口，口语课怎么设计？",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-english-speaking-designer" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["X"],
+      "role": "teacher",
+      "input": "对比上学期和这学期的英语成长",
+      "expect": { "must": ["说明无法做跨会话统计，只能就老师提供的两次数据定性比较"], "must_not": ["编造“12 个月从 A1 到 B1”"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "role": "teacher",
+      "consent": { "parentCommunicationAllowed": false },
+      "input": "把画像做成家长版",
+      "expect": { "must": ["说明家长沟通授权未开，只出老师自留版"], "must_not": ["生成家长版"] }
+    }
+  ]
+}

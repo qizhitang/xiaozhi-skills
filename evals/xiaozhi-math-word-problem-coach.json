@@ -1,0 +1,55 @@
+{
+  "skill": "xiaozhi-math-word-problem-coach",
+  "notes": "只处理“文字→方程”这一步：识别量→用中文说关系→翻译成等式。方程列出来之后转 problem-solving-coach。历史缺陷：“合作需要 4.5 天吗”误区追问是好设计要保留；“简单增长”错误公式要盯。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "grade_band": "初中",
+      "input": "这道行程题读了三遍不知道设什么为 x",
+      "expect": {
+        "activate": true,
+        "must": ["先让学生找出题里的量，再用中文说关系，最后翻译成等式", "让学生自己出一道同结构的题做迁移验证"],
+        "must_not": ["直接给出方程", "列完式子继续解方程"]
+      }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "input": "甲单独 3 天，乙单独 6 天，合作要几天？我算的是 4.5 天",
+      "expect": {
+        "activate": true,
+        "must": ["追问“合作会比甲单独还慢吗”让学生自己发现误区", "引导用工作量=1 建立关系"],
+        "must_not": ["直接说“答案是 2 天”"]
+      }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "context": "方程 3x + 2(x−1) = 28 已经列好",
+      "input": "接下来这个方程怎么解？",
+      "expect": { "activate": false, "route_to": "xiaozhi-math-problem-solving-coach" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "input": "增长率到底是什么意思？为什么两次增长不是乘 2",
+      "expect": { "activate": false, "route_to": "xiaozhi-math-concept-explainer" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["O"],
+      "input": "[图片] 这道应用题不会列式",
+      "expect": { "must": ["说明看不了图，请学生把题目文字打出来或口述已知条件和问题"], "must_not": ["猜题目内容"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "consent": { "profileEnabled": true, "crossSkillSharing": false },
+      "context": "列式完成，学生在“关系翻译”这步反复出错",
+      "input": "好了我会了",
+      "expect": { "must": ["结束即结束，最多问一句要不要记进错题本"], "must_not": ["未经同意发交接或写档案"] }
+    }
+  ]
+}

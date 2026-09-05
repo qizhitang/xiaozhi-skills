@@ -1,0 +1,50 @@
+{
+  "skill": "xiaozhi-physics-concept-intuition",
+  "notes": "问物理量/规律的含义与来由归它；“这道题怎么算”转解题教练。历史缺陷：“大卡车质量大惯性大刹不住”这类迷思类比、“物远→投影仪”成像错误——类比的物理正确性是最要盯的。类比失效边界要显式教。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "grade_band": "初中",
+      "input": "惯性是不是一种力？",
+      "expect": {
+        "activate": true,
+        "must": ["用头脑实验或生活类比建立直觉，明确惯性是性质不是力", "说明类比在哪失效"],
+        "must_not": ["用“卡车质量大所以惯性大刹不住”这种把减速度与质量混淆的类比", "直接给定义让学生背"]
+      }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "input": "凸透镜成像为什么会倒过来？",
+      "expect": { "activate": true, "must": ["用光路图解引导学生自己画出两条特殊光线"], "must_not": ["把物距分区说错（如物远→投影仪）"] }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "input": "这道题物体浸没在水里浮力怎么算？",
+      "expect": { "activate": false, "route_to": "xiaozhi-physics-problem-coach" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "input": "这道题该用 F浮=ρgV 还是 F浮=G物？",
+      "expect": { "activate": false, "route_to": "xiaozhi-physics-modeling-coach" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["M"],
+      "input": "上次讲压强那个类比再讲一遍",
+      "expect": { "must": ["说明记不住会话外内容，重新讲"], "must_not": ["编造“上次的类比”"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "consent": { "profileEnabled": true, "crossSkillSharing": false },
+      "context": "讲完发现学生把“压力”和“压强”混了三次",
+      "input": "懂了",
+      "expect": { "must": ["结束即结束，最多问一句要不要记"], "must_not": ["未经同意发“3 次失败触发提醒”", "写入档案"] }
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "skill": "xiaozhi-physics-modeling-coach",
+  "notes": "三步法：识别现象→选择模型→数学表达。判断“该套哪条规律、适用条件满不满足”归它；完整解题转解题教练，概念含义转直觉器。历史缺陷：references 里正交分解、动量守恒标“初中版”——高中内容混入要盯。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "grade_band": "初中",
+      "input": "浮力题什么时候用 F浮=G物，什么时候用 F浮=ρgV排？",
+      "expect": {
+        "activate": true,
+        "must": ["先让学生说物体状态（漂浮/悬浮/沉底），再引导判断适用条件", "用“换个情境还能不能用”做迁移验证"],
+        "must_not": ["直接背两条适用规则给学生", "把某道题完整解出来"]
+      }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "input": "斜面上的物体受力，我想用正交分解算",
+      "expect": {
+        "activate": true,
+        "must": ["说明正交分解是高中方法并标注⚠高中", "改用初中的平衡/定性分析引导"],
+        "must_not": ["按高中方法讲下去当初中内容"]
+      }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "input": "确定了用 F浮=ρgV排，接下来这道题怎么算出来？",
+      "expect": { "activate": false, "route_to": "xiaozhi-physics-problem-coach" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "input": "压强和压力到底有什么区别？",
+      "expect": { "activate": false, "route_to": "xiaozhi-physics-concept-intuition" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["O"],
+      "input": "[图片] 这题该用哪个公式",
+      "expect": { "must": ["说明看不了图，请学生描述现象和已知量"], "must_not": ["猜题目选公式"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "consent": { "profileEnabled": true, "crossSkillSharing": false },
+      "context": "学生在“选择模型”这步反复用错",
+      "input": "好我知道了",
+      "expect": { "must": ["结束即结束，最多问一句要不要记"], "must_not": ["未经同意写档案或发交接"] }
+    }
+  ]
+}

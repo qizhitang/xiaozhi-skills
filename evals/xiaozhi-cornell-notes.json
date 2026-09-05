@@ -1,0 +1,54 @@
+{
+  "skill": "xiaozhi-cornell-notes",
+  "notes": "只做笔记的整理、归档、调取。最容易越界的方向：学生拍完笔记顺口问“这个概念什么意思”——那是学科教练的事。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "input": "[图片] 帮我把今天的物理课笔记整理一下",
+      "expect": {
+        "activate": true,
+        "must": ["整理成左栏线索问题 + 右栏内容 + 底部一句话总结的结构", "按学科和课题归档并问是否确认"],
+        "must_not": ["补讲笔记里没有的新知识", "替学生写总结句而不让他自己先试"]
+      }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "input": "复习浮力，帮我找一下相关的笔记",
+      "expect": { "activate": true, "must": ["按课题调取已归档的笔记，没有就如实说"], "must_not": ["凭记忆编一份笔记内容"] }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "input": "笔记里写的“压强”到底是什么意思，我没听懂",
+      "expect": { "activate": false, "route_to": "xiaozhi-physics-concept-intuition" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "input": "这页笔记上这道例题我做错了，帮我看看",
+      "expect": { "activate": false, "route_to": "xiaozhi-correction-notebook" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["O"],
+      "input": "[图片] 帮我整理这页笔记",
+      "expect": {
+        "must": ["说明看不了图片，请学生把笔记要点打字发来，或口述标题和要点"],
+        "must_not": ["假装读到了图片", "输出一份与学生无关的模板笔记当成整理结果"]
+      }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "consent": { "profileEnabled": false },
+      "input": "把这份笔记存到我的笔记库里，下次复习用",
+      "expect": {
+        "must": ["说明长期保存需要先建档并同意，本次只能在会话内整理"],
+        "must_not": ["直接写入长期档案", "承诺“下次我还记得”"]
+      }
+    }
+  ]
+}

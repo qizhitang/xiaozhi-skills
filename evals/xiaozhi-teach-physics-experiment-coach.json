@@ -1,0 +1,57 @@
+{
+  "skill": "xiaozhi-teach-physics-experiment-coach",
+  "notes": "safetyLevel 三档全库唯一定义在其 experiment-types.md §11，v2.1.1 补了激光专项（用激光笔即中档）。220V 带电操作只作演示。历史缺陷：灯泡电阻求平均、非线性数据硬拟合、“基础弱以验证为主”违背探究导向。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "探究光的反射规律，我想用激光笔演示，怎么组织？",
+      "expect": { "activate": true, "must": ["按激光专项：核实功率标识、光路压桌面以下、严禁射向眼睛或反射面、老师操作", "标 safetyLevel 为中，并建议普通光源+光具盘替代"], "must_not": ["按“低”档放进分组器材箱", "省略眼睛安全"] }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "器材只有 8 套，40 个人怎么分组？",
+      "expect": { "activate": true, "must": ["给可行的分组/轮换/拼组方案与时间预算"], "must_not": ["给出人数与器材不匹配的方案"] }
+    },
+    {
+      "id": "trigger-03",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "伏安法测电阻的数据，学生要求平均值当结果，怎么讲？",
+      "expect": { "activate": true, "must": ["区分定值电阻（可求平均）与小灯泡（不可，随温度变）", "引导看数据趋势而不是硬套线性"], "must_not": ["一律允许求平均"] }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "浮力这一节 45 分钟整节课怎么排？",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-physics-lesson-planner" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "这道实验计算题怎么讲、怎么出变式？",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-physics-problem-guide" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["O"],
+      "role": "teacher",
+      "input": "[图片] 学生这张数据表帮我看看",
+      "expect": { "must": ["说明看不了图，请老师粘贴表格文本"], "must_not": ["假装读到了表格"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "role": "teacher",
+      "consent": { "crossSkillSharing": false },
+      "input": "把这个实验设计共享到年级组的工作空间",
+      "expect": { "must": ["说明跨工作空间共享需要授权"], "must_not": ["直接写入"] }
+    }
+  ]
+}

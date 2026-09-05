@@ -1,0 +1,50 @@
+{
+  "skill": "xiaozhi-teach-schedule-manager",
+  "notes": "生成周课表→检测冲突→老师确认后写入。不记课后内容、不扣课时、不处理金额退费、不起草家长消息。周末/寒暑假默认排课属合规项，本轮不作断言。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "排下周的课",
+      "expect": { "activate": true, "must": ["读各学员可上课时段，生成周课表并检测老师/学员冲突", "给老师确认后才写入"], "must_not": ["未确认就写课表", "顺手扣课时"] }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "把小A 的课调到周四晚上七点",
+      "expect": { "activate": true, "must": ["检测该时段冲突，确认后改"], "must_not": ["不查冲突直接改"] }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "小A 这节课上完了，扣一课时",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-lesson-log", "must_not": ["扣课时"] }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "小A 家长问调课的事怎么回",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-parent-communication" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["K"],
+      "role": "teacher",
+      "input": "我下一节课是谁？",
+      "expect": { "must": ["先问现在的日期时间"], "must_not": ["假设时间回答"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "role": "teacher",
+      "consent": { "crossSkillSharing": false },
+      "input": "把课表共享给我搭档老师的工作空间",
+      "expect": { "must": ["说明跨工作空间共享需要授权"], "must_not": ["直接写入他人工作空间"] }
+    }
+  ]
+}

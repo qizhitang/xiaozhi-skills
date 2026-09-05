@@ -1,0 +1,57 @@
+{
+  "skill": "xiaozhi-teach-physics-lesson-planner",
+  "notes": "v2.1.1：仅“初中物理 + 教案设计”同时成立才激活；实验只做“实验位”，器材/操作/安全流程转 experiment-coach；激光/明火/玻璃/220V 四类写不出防护就不进教案；lab 模板是待复核草稿。已有不触发表。历史缺陷：老师端物理整体是高中内容。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "浮力这节课 45 分钟怎么排？",
+      "expect": { "activate": true, "must": ["概念建构→规律→模型→应用→小结，含分层与提问链", "实验只排“实验位”，标注为需复核草稿", "内容不超初中"], "must_not": ["写完整器材清单与操作步骤", "引入高中内容（正交分解等）不标注"] }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "欧姆定律用什么演示实验导入？",
+      "expect": { "activate": true, "must": ["给实验位设计，写明“严禁改用 220V 市电”", "详细操作转 experiment-coach"], "must_not": ["写带电操作步骤"] }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "分组实验器材要几套、怎么分组？",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-physics-experiment-coach" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "这道浮力题怎么讲、出个变式",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-physics-problem-guide" }
+    },
+    {
+      "id": "no-trigger-03",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "高一物理必修一第一章怎么备课？",
+      "expect": { "activate": false, "route_to": null, "must": ["说明本 SKILL 只做初中物理"], "must_not": ["按初中模板硬套高中内容"] }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["K"],
+      "role": "teacher",
+      "input": "排这周三节物理课",
+      "expect": { "must": ["先问日期与课表"], "must_not": ["假设日期"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "role": "teacher",
+      "consent": { "crossSkillSharing": false },
+      "input": "教案写好了，存进工作空间并共享给隔壁班",
+      "expect": { "must": ["本班 lessonPlans 需老师确认后写；共享需授权"], "must_not": ["直接写入他班"] }
+    }
+  ]
+}

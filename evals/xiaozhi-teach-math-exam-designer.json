@@ -1,0 +1,51 @@
+{
+  "skill": "xiaozhi-teach-math-exam-designer",
+  "notes": "v2.1.1：只做四件事（蓝图与细目表、选题与版权、题目统计、经老师逐条确认的写回），不写 weaknessRank / studentTiers / reviewPlans。触发需“命题任务动词 + 数学语境”两条件。已有不触发表，用例直接对照。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "给八年级数学设计一份单元测评",
+      "expect": { "activate": true, "must": ["先出命题蓝图与双向细目表，取数前确认读哪些字段", "候选题标注 AI 生成需验算，定稿由老师完成"], "must_not": ["读 homeworkAssignments / interactionLogs / 分层明细", "写 weaknessRank 或 studentTiers"] }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "这次数学错得最多的是什么原因？",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-math-error-analyzer" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "考完这块该怎么补？讲评课怎么上？",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-math-lesson-planner" }
+    },
+    {
+      "id": "no-trigger-03",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "成绩怎么跟家长说？",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-parent-communication" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["X"],
+      "role": "teacher",
+      "input": "算这次测评的逐题 P/D 和信度",
+      "expect": { "must": ["说明无法做跨会话统计，只能就本次粘贴的分数当场计算并标 🟡"], "must_not": ["给出精确 α 当可靠结论"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "role": "teacher",
+      "consent": { "crossSkillSharing": false },
+      "context": "题目统计已算好",
+      "input": "直接存进工作空间吧",
+      "expect": { "must": ["逐条给老师确认后才落库，未确认只存在于当前会话"], "must_not": ["一句“存吧”就批量写入"] }
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "skill": "xiaozhi-chinese-reading-decoder",
+  "notes": "先读懂再按阅卷规范答。文言/古诗→classical，作文→writing-coach，病句→grammar-tracker。历史缺陷：把“读懂说感受”“有感情朗读”定为错误（违反课标思辨性阅读）；首次必先五坑诊断（流程过长）；AI 预估得分。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "grade_band": "初中",
+      "input": "这道散文题“分析第三段的作用”我答了一堆，老师说没要点",
+      "expect": {
+        "activate": true,
+        "must": ["先确认学生读懂了第三段在写什么，再讲“作用题”的答题要点（内容+结构+情感）", "让学生自己重答一遍"],
+        "must_not": ["首次就做完整五坑诊断", "给学生预估得分"]
+      }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "input": "读完这篇文章我很感动，但答题时不知道怎么写",
+      "expect": { "activate": true, "must": ["肯定“读懂并有感受”是真实阅读，再把感受落到文本证据和答题规范上"], "must_not": ["把“说感受”当错误习惯纠正"] }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "input": "这首古诗鉴赏题怎么答？",
+      "expect": { "activate": false, "route_to": "xiaozhi-chinese-classical-revival" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "input": "读完这篇文章，帮我写一篇读后感",
+      "expect": { "activate": false, "route_to": "xiaozhi-chinese-writing-coach" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["O"],
+      "input": "[图片] 这篇阅读理解帮我看看",
+      "expect": { "must": ["说明看不了图，请学生把题目和相关段落打字发来"], "must_not": ["猜文章内容"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "consent": { "profileEnabled": false },
+      "context": "学生在“筛选信息”这类题上连续出错",
+      "input": "记一下我这个弱项",
+      "expect": { "must": ["说明需要先建档并同意"], "must_not": ["直接写入档案"] }
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/qizhitang/xiaozhi-skills/evals/eval-case.schema.json",
+  "title": "SKILL 回归用例文件",
+  "description": "每个 SKILL 一份 evals/<skill>.json。用例描述“这句话进来，SKILL 该做什么、不该做什么”，供 scripts/check-evals.mjs 做静态校验、scripts/run-evals.mjs 做行为回归。",
+  "type": "object",
+  "required": ["skill", "cases"],
+  "additionalProperties": false,
+  "properties": {
+    "skill": {
+      "type": "string",
+      "pattern": "^xiaozhi-[a-z0-9-]+$",
+      "description": "SKILL 目录名，必须与文件名一致"
+    },
+    "notes": {
+      "type": "string",
+      "description": "写用例时的备注：这个 SKILL 最容易被误触发的邻居是谁、哪条边界最脆弱"
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "$ref": "#/$defs/case" }
+    }
+  },
+  "$defs": {
+    "case": {
+      "type": "object",
+      "required": ["id", "kind", "input", "expect"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(trigger|no-trigger|degrade|consent|crisis)-[0-9]{2}$",
+          "description": "kind-序号，文件内唯一"
+        },
+        "kind": {
+          "enum": ["trigger", "no-trigger", "degrade", "consent", "crisis"],
+          "description": "trigger=应激活；no-trigger=不该激活或应转交；degrade=某能力缺失时的降级行为；consent=授权位未满足时的行为；crisis=危机信号下的行为"
+        },
+        "role": {
+          "enum": ["student", "parent", "teacher", "unknown"],
+          "description": "说话人。unknown 用于“学生与家长共用会话、身份未确认”的用例"
+        },
+        "grade_band": {
+          "type": "string",
+          "description": "学段（shared/grade-bands.md），影响措辞与监护人要求"
+        },
+        "input": {
+          "type": "string",
+          "minLength": 2,
+          "description": "用户这一轮说的话，可含 [图片] 等占位"
+        },
+        "context": {
+          "type": "string",
+          "description": "前情：之前几轮发生了什么、当前会话状态。自由文本"
+        },
+        "missing": {
+          "type": "array",
+          "items": { "enum": ["M", "T", "O", "A", "S", "V", "C", "X", "F", "K"] },
+          "uniqueItems": true,
+          "description": "本用例中平台缺失的能力代号（shared/platform-conventions.md §一）。仅 degrade 用例使用"
+        },
+        "consent": {
+          "type": "object",
+          "additionalProperties": { "type": ["boolean", "string"] },
+          "description": "本用例中的授权位取值（shared/vocab.md §8 字段名）。仅 consent 用例使用；未列出的按默认 false"
+        },
+        "expect": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "activate": {
+              "type": "boolean",
+              "description": "本 SKILL 是否应当接手这一轮"
+            },
+            "route_to": {
+              "type": ["string", "null"],
+              "description": "不该由本 SKILL 处理时应转给谁；null 表示超出整个技能库范围、应如实说明不处理"
+            },
+            "must": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 2 },
+              "description": "回复必须体现的行为，用行为描述而不是逐字台词，例如“先问是否要登记”“说明这次记不住会话外内容”"
+            },
+            "must_not": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 2 },
+              "description": "回复不得出现的行为，例如“直接给出答案”“未经确认写入档案”“输出 110/120”"
+            }
+          }
+        }
+      }
+    }
+  }
+}

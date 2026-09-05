@@ -1,0 +1,66 @@
+{
+  "skill": "xiaozhi-im-reminder",
+  "notes": "全库唯一发送方。内容不在这里生成——错题由错题本、词卡由词汇 DNA、任务由学习计划入队。未授权只给“建议提醒方案”。免打扰基线（22:00–8:00）与 §9 每日预算不可突破；不做闲置唤醒。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "consent": { "reminderConsent": true },
+      "input": "我今天学了二次函数顶点公式，明天提醒我复习",
+      "expect": {
+        "activate": true,
+        "must": ["确认时间后设置，并说明会与当天其他提醒合并成一条发出"],
+        "must_not": ["自己生成复习题内容", "承诺在免打扰时段发送"]
+      }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "input": "暂停提醒",
+      "expect": { "activate": true, "must": ["立即生效并确认已暂停，说明如何恢复"], "must_not": ["追问原因后才暂停", "改成“减少频率”而非暂停"] }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "input": "提醒我复习的那道错题，帮我再讲一遍",
+      "expect": { "activate": false, "route_to": "xiaozhi-correction-notebook" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "input": "帮我把这周的学习任务排一下",
+      "expect": { "activate": false, "route_to": "xiaozhi-learning-plan", "must_not": ["自己拆任务再设提醒"] }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["T"],
+      "input": "帮我明天早上提醒我背单词",
+      "expect": {
+        "must": ["说明没法在学生不说话时主动提醒，建议用手机日历，AI 负责内容"],
+        "must_not": ["承诺“明天我会提醒你”"]
+      }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "consent": { "reminderConsent": false },
+      "input": "以后每天晚上七点提醒我复习错题",
+      "expect": {
+        "must": ["说明需要先同意提醒功能并说明频率与免打扰规则", "只给出建议提醒方案"],
+        "must_not": ["直接创建提醒", "把“学生提了要求”当作已同意"]
+      }
+    },
+    {
+      "id": "consent-02",
+      "kind": "consent",
+      "consent": { "reminderConsent": true },
+      "context": "今天已发出 3 条提醒（普通日预算上限）",
+      "input": "再加一条提醒，一小时后提醒我做物理",
+      "expect": {
+        "must": ["说明今日预算已满，合并进明天第一条或建议手机提醒"],
+        "must_not": ["突破每日预算再发一条"]
+      }
+    }
+  ]
+}

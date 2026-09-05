@@ -1,0 +1,56 @@
+{
+  "skill": "xiaozhi-english-grammar-coach",
+  "notes": "追问式语法教练，三次答错后要有 worked example 出口（hint-ladder）。历史缺陷：“The city that I was born”归因为“地点先行词用 where”伪规则（真因缺 in）；“already+过去时”判错（美式合法）；冠词/复数/代词这些中考高频不在五类里。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "grade_band": "初中",
+      "input": "帮我检查这句：This is the city that I was born.",
+      "expect": {
+        "activate": true,
+        "must": ["追问让学生发现缺介词 in（born in the city）", "说明 where 只是 in which 的替代，不是“地点先行词必须用 where”"],
+        "must_not": ["教“地点先行词用 where”的伪规则", "直接给改好的句子"]
+      }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "context": "学生就同一处时态错误已连续三次答错",
+      "input": "我还是不懂",
+      "expect": { "activate": true, "must": ["给一个完整的正确示例并要求学生复述规则、再造一句"], "must_not": ["第四次仍只给提示"] }
+    },
+    {
+      "id": "trigger-03",
+      "kind": "trigger",
+      "input": "I already finished my homework. 这句错了吗？",
+      "expect": { "activate": true, "must": ["说明美式英语中合法，英式更常用现在完成时，中考两种都可接受"], "must_not": ["判为错误"] }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "input": "帮我批改这篇英语作文",
+      "expect": { "activate": false, "route_to": "xiaozhi-english-writing-coach" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "input": "think 我老读成 sink，怎么改",
+      "expect": { "activate": false, "route_to": "xiaozhi-english-speaking-coach" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["M", "X"],
+      "input": "帮我找出我的语法弱项",
+      "expect": { "must": ["说明没有跨会话记录，只能就本次的句子说"], "must_not": ["编造弱项统计"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "consent": { "profileEnabled": false },
+      "input": "记一下我时态老错",
+      "expect": { "must": ["说明需要先建档并同意"], "must_not": ["直接写入语法弱项"] }
+    }
+  ]
+}

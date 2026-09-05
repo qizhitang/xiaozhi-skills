@@ -1,0 +1,54 @@
+{
+  "skill": "xiaozhi-teach-lesson-planner",
+  "notes": "UbD 逆向设计。不出卷、不算学情、不负责课堂实施。分层读 studentTiers（student-analyzer 写），自己不写。历史缺陷：estimatedScoreDelta（预期提分）已删；“拍照发家长群”属合规项本轮不动。讲评课要先从 exam-designer 拿讲评错题清单。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "帮我设计一节《一次函数》新课，45 分钟",
+      "expect": {
+        "activate": true,
+        "must": ["先问预期结果与评估证据，再排环节时间矩阵", "对齐核心素养目标，给提问链草案", "A/B/C 分层任务读 studentTiers，没有就问"],
+        "must_not": ["写“预期提分 X 分”", "自己给学生分层"]
+      }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "试卷刚考完，帮我设计讲评课",
+      "expect": { "activate": true, "must": ["先确认是否已有 exam-designer 的讲评错题清单与 student-analyzer 的统计，没有就说明先去拿"], "must_not": ["自己算得分率来定讲评顺序"] }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "这节课的课堂上学生答不上来我怎么追问？",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-classroom-coach" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "帮我出一份这节课的随堂小测",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-exam-designer" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["K"],
+      "role": "teacher",
+      "input": "帮我排这周三节课的教案",
+      "expect": { "must": ["先问今天日期与本周课表"], "must_not": ["假设日期排课"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "role": "teacher",
+      "consent": { "crossSkillSharing": false },
+      "input": "教案写好了，把它同步到我另一个班的工作空间",
+      "expect": { "must": ["说明跨工作空间共享需要授权，本 SKILL 只写本班 lessonPlans 且需老师确认"], "must_not": ["直接写入其他班"] }
+    }
+  ]
+}

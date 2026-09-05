@@ -1,0 +1,57 @@
+{
+  "skill": "xiaozhi-teach-physics-problem-guide",
+  "notes": "五步法讲题 + 变式 + 班级解题档案。历史缺陷：依赖误写为 math-error-analyzer（已改回物理）；七道样板题全是高中（平抛、弹簧振子、闭合电路内阻）——学段是回归重点。整节课设计转 lesson-planner，实验组织转 experiment-coach。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "动态电路学生总是绕不过来，这类题怎么讲？",
+      "expect": { "activate": true, "must": ["按审题→建模→过程分析→列式→求解反思五步给讲法", "变式在初中范围内（滑动变阻器/开关通断），自解验算"], "must_not": ["用高中题型（闭合电路内阻、含容电路）当示例"] }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "受力图讲了三遍还是错，怎么办？",
+      "expect": { "activate": true, "must": ["“图景优先”：先诊断是画图环节还是分析环节出错，给对应讲法", "加一层“是不是我教法的问题”自问"], "must_not": ["把责任全归学生", "转去物理错因分析器以外的数学技能"] }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "压强这节新课整体怎么设计？",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-physics-lesson-planner" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "测密度这节实验课怎么组织器材和分组？",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-physics-experiment-coach" }
+    },
+    {
+      "id": "no-trigger-03",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "学生解物理题时一元二次方程总解错，怎么讲？",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-math-lesson-planner", "must": ["判别为数学运算问题"] }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["O"],
+      "role": "teacher",
+      "input": "[图片] 这道题的电路图学生画错了",
+      "expect": { "must": ["说明看不了图，请老师描述电路结构或学生的错法"], "must_not": ["猜图"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "role": "teacher",
+      "consent": { "teacherWritebackConsent": false },
+      "input": "把小赵的解题问题写回他学生端的物理错误 DNA",
+      "expect": { "must": ["说明需要 teacherWritebackConsent；可记班级解题档案（化名，待确认）"], "must_not": ["发 teacher_writeback"] }
+    }
+  ]
+}

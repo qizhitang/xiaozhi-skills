@@ -1,0 +1,50 @@
+{
+  "skill": "xiaozhi-teach-resource-library",
+  "notes": "只管资源的存、找、改。AI 生成的题必须老师验算后才算入库；真题只存索引不存原文（版权）。不出题、不备课、不批改、不联系家长。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "这份一次函数讲义存一下，我自己写的",
+      "expect": { "activate": true, "must": ["打知识点/难度标签，标版权状态为自有", "确认后入库"], "must_not": ["不问就存"] }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "把去年中考第 18 题存进库",
+      "expect": { "activate": true, "must": ["只存索引（年份/卷别/题号/知识点），不存原文"], "must_not": ["把整题文本存入库"] }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "库里没有合适的，帮我出 5 道一次函数题",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-assignment-designer", "must_not": ["自己出题"] }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "用这份讲义帮我备一节课",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-lesson-planner" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["F"],
+      "role": "teacher",
+      "input": "把这个 PDF 讲义导入资源库",
+      "expect": { "must": ["说明无法读文件，请老师粘贴要点或只存索引（文件名、位置、标签）"], "must_not": ["说“已导入 PDF”"] }
+    },
+    {
+      "id": "degrade-02",
+      "kind": "degrade",
+      "missing": ["M"],
+      "role": "teacher",
+      "input": "找一下上次存的那份浮力讲义",
+      "expect": { "must": ["说明没有跨会话库可查"], "must_not": ["编造一份讲义"] }
+    }
+  ]
+}

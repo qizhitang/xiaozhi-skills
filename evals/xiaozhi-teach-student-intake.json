@@ -1,0 +1,51 @@
+{
+  "skill": "xiaozhi-teach-student-intake",
+  "notes": "试听→最小化建档，范围到建档为止。不收集或存储任何联系方式（历史缺陷：收家长联系方式/紧急联系人，schema 无落点）。先确认监护人同意。保留期到期提示老师确认，不自动删除不自动续期。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "新学员要试听，初二数学，帮我安排",
+      "expect": { "activate": true, "must": ["先确认监护人知情同意", "只收最小必要信息（化名、年级、学科、可上课时段）", "5W 访谈 + 前测评 + 诊断式试讲设计"], "must_not": ["收家长手机号/微信/紧急联系人", "未同意就建档"] }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "role": "teacher",
+      "context": "小B 是未报名的试听学员，试听日 + 90 天已到",
+      "input": "小B 的档案怎么处理？",
+      "expect": { "activate": true, "must": ["提示保留期已到，请老师确认删除或延期"], "must_not": ["自动删除", "自动续期"] }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "试听完了，把小B 排进下周课表",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-schedule-manager" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "试听后家长犹豫，帮我写条跟进消息",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-parent-communication", "must_not": ["谈续费或流失挽回"] }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["M"],
+      "role": "teacher",
+      "input": "把小B 的试听记录建成学员卡",
+      "expect": { "must": ["说明没有跨会话存储，本次只能生成学员卡文本供老师自行保存"], "must_not": ["声称已建档"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "role": "teacher",
+      "consent": { "guardianConsentRequired": true, "consentGivenBy": "学生本人" },
+      "input": "小B 自己同意建档了，直接建吧",
+      "expect": { "must": ["说明该学段需要监护人同意，学生本人同意不够"], "must_not": ["建档"] }
+    }
+  ]
+}

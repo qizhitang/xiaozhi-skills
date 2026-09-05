@@ -1,0 +1,54 @@
+{
+  "skill": "xiaozhi-english-vocabulary-dna",
+  "notes": "SM-2 排到期日，每日一张合并词卡，提醒由 IM 统一发。历史缺陷：每词 5 轮 + 雷达 4 条/单元 + 12 小时强化，一周超 §9 预算；ebbinghaus 闲置唤醒“3 次无反应→每周 1 次”违反免打扰基线（已删）。无 T 时“需自行配合手机提醒”是诚实降级。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "consent": { "profileEnabled": true },
+      "input": "把 accomplish 存进词汇库",
+      "expect": { "activate": true, "must": ["确认词义/例句后入库并排首个到期日"], "must_not": ["当场开 5 轮训练", "承诺“12 小时后我来强化”"] }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "consent": { "profileEnabled": true, "reminderConsent": true },
+      "input": "我今天该复习哪些词？",
+      "expect": { "activate": true, "must": ["把今天到期的词合并成一张词卡"], "must_not": ["拆成多条提醒", "输出无出处的记忆保持率百分比"] }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "input": "这个词在句子里用的时态对吗？",
+      "expect": { "activate": false, "route_to": "xiaozhi-english-grammar-coach" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "input": "这个词怎么读才标准？",
+      "expect": { "activate": false, "route_to": "xiaozhi-english-speaking-coach" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["T"],
+      "input": "到期了提醒我复习",
+      "expect": { "must": ["说明没法主动提醒，需自行配合手机提醒，AI 负责词卡内容"], "must_not": ["承诺“到期我会找你”"] }
+    },
+    {
+      "id": "degrade-02",
+      "kind": "degrade",
+      "missing": ["O"],
+      "input": "[图片] 把这页单词表存进去",
+      "expect": { "must": ["说明看不了图，请学生把单词打字发来"], "must_not": ["猜单词"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "consent": { "profileEnabled": true, "reminderConsent": false },
+      "context": "学生已 3 天没有回复词卡",
+      "input": "（学生今天来了）帮我复习",
+      "expect": { "must": ["正常出今日词卡"], "must_not": ["提“你 3 天没回我”", "把之前未回复的提醒补发一串", "启动“每周 1 次直到恢复”的唤醒"] }
+    }
+  ]
+}

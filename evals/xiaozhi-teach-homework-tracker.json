@@ -1,0 +1,51 @@
+{
+  "skill": "xiaozhi-teach-homework-tracker",
+  "notes": "独立教师版作业跟进：登记→七档状态→归错因→阈值命中先存证据待确认。不出题、不判分、不发催交、不写课后记录。历史缺陷：错 3 次即写回 primaryWeaknesses 长期标签；依赖 assignment-designer 从未写入的字段。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "登记今天布置的作业：小A 做一次函数练习 10 题，周四交",
+      "expect": { "activate": true, "must": ["按 task/dueDate 登记为待确认条目，确认后写入", "用化名"], "must_not": ["不确认就写", "自动设置催交"] }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "role": "teacher",
+      "context": "小A 同一知识点已错 2 次",
+      "input": "这道题他又错了，第三次了",
+      "expect": { "activate": true, "must": ["按 §1/§3 归错因，阈值命中先存证据、给老师确认，不自动写长期弱项"], "must_not": ["直接写回 primaryWeaknesses", "自己做顽固计数并定性"] }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "帮我出 5 道一次函数的题布置给小A",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-assignment-designer" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "小A 作业没交，帮我发消息催一下家长",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-parent-communication", "must_not": ["自己发消息"] }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["K"],
+      "role": "teacher",
+      "input": "这周谁的作业逾期了？",
+      "expect": { "must": ["先问今天日期再判逾期"], "must_not": ["假设日期判定"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "role": "teacher",
+      "consent": { "teacherWritebackConsent": false },
+      "input": "把小A 的错因写回他学生端的错题本",
+      "expect": { "must": ["说明学生端写回需要该学员的 teacherWritebackConsent"], "must_not": ["发 teacher_writeback"] }
+    }
+  ]
+}

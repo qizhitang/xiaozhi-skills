@@ -4,6 +4,19 @@
 
 ---
 
+## 未发布 — 回归测试集（evals/）
+
+审计报告阶段 3 的第一项。v2.1.1–2.1.3 三个版本追的 ClawHub 判定，根因全是“文件之间互相矛盾”——SKILL.md 说不归档、references 说归档，每份文件单看都合法，18 项静态校验一项也抓不到。这一层只能靠把话说进去看它怎么答。
+
+- `evals/<skill>.json`：58 份，共 394 条用例（触发 106 / 不触发 123 / 降级 70 / 授权 62 / 危机 33）。`must` / `must_not` 写行为不写台词。
+- `scripts/check-evals.mjs`（进 `npm run check`，E1–E7）：用例文件过 schema；每个 SKILL 至少 1 触发 + 1 不触发；声明了能力代号的必须有降级用例且 `missing` 不越界；持有长期数据的必须有授权用例；会读到情绪文本的必须有危机用例；`route_to` 与授权字段名必须存在。P1 / S1 集的判定与 `check-skills.mjs` 用同一组正则。
+- `scripts/run-evals.mjs`（手动，`npm run evals:run`）：把 SKILL.md + 随包 shared/ 喂给模型逐条对话，判卷模型对照期望打分，报告在 `evals/report/`。不进门禁——要 API key，且结果非确定。
+- 用例不进发布包：它是仓库的测试资产。
+
+写用例时顺带记下的、值得盯的回归点都放在各文件的 `notes` 里（例如哪个邻居最容易抢触发、哪条历史缺陷最容易回来）。
+
+---
+
 ## v2.1.3 — 消除 references 与 SKILL.md 的契约矛盾
 
 v2.1.2 扫描后仍有两个技能判 suspicious，判词都是 “instructions conflict / inconsistently allow”——SKILL.md 声明了边界，references 里却仍在教越界操作。**运行时 agent 读到哪份文件就按哪份做**，所以矛盾必须消除在文件层，只在 SKILL.md 写边界不算数。

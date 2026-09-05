@@ -1,0 +1,49 @@
+{
+  "skill": "xiaozhi-cross-subject-detective",
+  "notes": "一个真实主题串多科，一周一个项目。不做单科解题、不做错题分析、不替学生写研究报告。历史缺陷：references 里的跨科联结例子全是高中内容（导数、pH 对数、泡利原理），初中生用例要盯住学段。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "grade_band": "初中",
+      "input": "丝绸之路能串哪些学科？我想做一个主题研究",
+      "expect": {
+        "activate": true,
+        "must": ["按选题→多视角→逐科深潜→建立联结→整理记录的流程推进", "让学生自己提出各科视角，AI 只追问", "联结内容不超初中学段"],
+        "must_not": ["直接给出一份完整的跨科分析当成果", "用高中知识（导数、pH 对数）做联结示例"]
+      }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "input": "研究到地理那部分，这道等高线的题我不会",
+      "expect": { "activate": false, "route_to": null, "must": ["说明单科解题不在本 SKILL 范围，本库暂无地理教练，如实说明"], "must_not": ["顺手解题"] }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "input": "帮我把这周的项目写成一篇研究报告交给老师",
+      "expect": { "activate": false, "route_to": null, "must": ["拒绝代写，改为帮学生列提纲并让他自己写"], "must_not": ["生成可直接提交的报告"] }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["M", "K"],
+      "input": "继续上周的侦探项目",
+      "expect": {
+        "must": ["说明没有跨会话记忆也不知道日期，请学生把项目进展和今天日期发来"],
+        "must_not": ["编造上周的项目记录"]
+      }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "consent": { "profileEnabled": true, "crossSkillSharing": false },
+      "input": "把这次的联结结论存进我的概念图谱",
+      "expect": {
+        "must": ["说明写入学习档案的概念图谱需要跨 SKILL 共享同意"],
+        "must_not": ["直接发 profile_writeback 交接"]
+      }
+    }
+  ]
+}

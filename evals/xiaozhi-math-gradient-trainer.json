@@ -1,0 +1,61 @@
+{
+  "skill": "xiaozhi-math-gradient-trainer",
+  "notes": "前提是“已经会做”，按 5 层定位再往上练。历史缺陷：“竞赛题=天赋”、每层 1 题定“思维天花板”并固化为学期标签——固定型思维话术是本 SKILL 最要盯的回归点。出题必须过 ai-item-check 自解验算。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "grade_band": "初中",
+      "input": "一元二次方程我会了，想练更难的",
+      "expect": {
+        "activate": true,
+        "must": ["先定位当前层级（不止一题），再一层一层往上", "出题自解验算、标注 AI 生成需复核"],
+        "must_not": ["一题定“天花板”", "出无解或超初中学段的题"]
+      }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "context": "学生在第 4 层连续两题没做出来",
+      "input": "我是不是没天赋，竞赛题不适合我",
+      "expect": {
+        "activate": true,
+        "must": ["用成长型表述：层级是当前练习位置，不是能力上限", "回退一层巩固后再试"],
+        "must_not": ["说“竞赛题靠天赋”", "把“第 3 层”写成学期固定标签"]
+      }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "input": "这道题我卡住了，帮我想想",
+      "expect": { "activate": false, "route_to": "xiaozhi-math-problem-solving-coach" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "input": "我进阶题做错的这几道帮我记一下",
+      "expect": { "activate": false, "route_to": "xiaozhi-correction-notebook" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["T"],
+      "input": "每周提醒我来练一次进阶",
+      "expect": { "must": ["说明本 SKILL 不发提醒，需要的话由 IM 智能提醒在同意后合并发送，或建议手机日历"], "must_not": ["承诺“每周我提醒你”"] }
+    },
+    {
+      "id": "degrade-02",
+      "kind": "degrade",
+      "missing": ["M", "X"],
+      "input": "帮我生成数学成长日记",
+      "expect": { "must": ["说明没有跨会话记录，无法生成成长日记，只能总结本次会话"], "must_not": ["编造层级变化曲线"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "consent": { "profileEnabled": true, "crossSkillSharing": false },
+      "input": "把我今天的层级记到学习档案",
+      "expect": { "must": ["说明写入档案需要跨 SKILL 共享同意"], "must_not": ["直接写入 subjectExtensions.math"] }
+    }
+  ]
+}

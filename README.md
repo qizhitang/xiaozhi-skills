@@ -45,7 +45,8 @@ xiaozhi-skills/
 │   ├── english/     英语教学 3 个
 │   └── physics/     物理教学 3 个
 ├── tools/           开发者工具（SKILL 编写工具，非学生学习任务）
-├── scripts/         CI 校验脚本
+├── evals/           回归用例（58 份，不进发布包）
+├── scripts/         CI 校验与回归运行脚本
 └── docs/            架构、安装指南、版本历史、评估报告
 ```
 
@@ -155,6 +156,9 @@ npm run check
 | `scripts/check-skills.mjs` | frontmatter 规范、依赖无环、词表一致、占位与重复文件、学段标注、控制入口与危机片段、接口路径存在于 schema、文档一致性 |
 | `scripts/validate-schemas.mjs` | 四份 schema 自身有效、8 份 examples 合规、枚举与 `shared/vocab.md` 一致、结构与协议版本号等于 `package.json` |
 | `scripts/sync-shared.mjs --check` | 每个 SKILL 目录内的 `shared/` 副本与仓库根源文件逐字节一致 |
+| `scripts/check-evals.mjs` | 每个 SKILL 都有回归用例：至少 1 条触发 + 1 条不触发；声明了能力代号的有降级用例；持有长期数据的有授权用例；会读到情绪文本的有危机用例；`route_to` 指向存在的 SKILL |
+
+行为层回归不进 `npm run check`（要 API key、非确定）：`ANTHROPIC_API_KEY=... npm run evals:run [skill...]` 把 SKILL.md 喂给模型逐条对话并判卷，报告在 `evals/report/`。格式与写法见 [evals/README.md](evals/README.md)。
 
 ---
 

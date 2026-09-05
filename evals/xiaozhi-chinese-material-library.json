@@ -1,0 +1,53 @@
+{
+  "skill": "xiaozhi-chinese-material-library",
+  "notes": "存取工具，不做写作流程。“我要写作文”由 writing-coach 主导，它在 Step 1 调用本 SKILL 检索——本 SKILL 不抢话。历史缺陷：触发语与 writing-coach 完全重叠。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "consent": { "profileEnabled": true },
+      "input": "“人生如逆旅，我亦是行人”这句先存着",
+      "expect": { "activate": true, "must": ["打主题标签（如：豁达/离别）并确认后入库", "标注出处"], "must_not": ["顺势展开讲苏轼", "不问就存"] }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "consent": { "profileEnabled": true },
+      "input": "帮我找关于“坚持”的素材",
+      "expect": { "activate": true, "must": ["按主题从库里检索，没有就如实说并问要不要现在积累"], "must_not": ["编造“你存过的”素材"] }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "input": "我要写一篇关于坚持的作文",
+      "expect": { "activate": false, "route_to": "xiaozhi-chinese-writing-coach", "must_not": ["直接甩一堆素材当作写作辅导"] }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "input": "这段话我读不懂是什么意思",
+      "expect": { "activate": false, "route_to": "xiaozhi-chinese-reading-decoder" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["F"],
+      "input": "把我的素材库导出来",
+      "expect": { "must": ["以文本形式列出便于转存"], "must_not": ["说“已生成文件”"] }
+    },
+    {
+      "id": "degrade-02",
+      "kind": "degrade",
+      "missing": ["M", "X"],
+      "input": "我这个月存了多少素材？",
+      "expect": { "must": ["说明没有跨会话记录，无法统计"], "must_not": ["编数字"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "consent": { "profileEnabled": false },
+      "input": "存入素材库",
+      "expect": { "must": ["说明素材库需要先建档并同意"], "must_not": ["直接写入"] }
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "skill": "xiaozhi-physics-lab-coach",
+  "notes": "器材、步骤、变量控制、读数、数据表、误差归它；同一实验里的纯计算转解题教练。历史缺陷：内接/外接误差方向写反、小灯泡电阻求平均（中考禁止）、非线性数据硬拟合欧姆定律——数据处理的正确性是回归重点。“操作不规范发提醒”是 AI 无法观测的越界承诺。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "grade_band": "初中",
+      "input": "探究浮力大小要控制什么变量？",
+      "expect": {
+        "activate": true,
+        "must": ["先让学生说猜想和可能影响的量，再引导用控制变量法设计", "问器材和数据表怎么设计"],
+        "must_not": ["直接给完整实验方案", "只讲“以验证为主”而不做探究引导"]
+      }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "input": "测小灯泡电阻，三次电阻不一样，我求个平均行吗？",
+      "expect": {
+        "activate": true,
+        "must": ["指出灯丝电阻随温度变化，不能求平均，应分别分析", "引导学生看数据趋势"],
+        "must_not": ["同意求平均", "把非线性数据硬套成“符合欧姆定律”"]
+      }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "input": "实验测出 U=3V，I=0.5A，这个电阻的功率是多少？",
+      "expect": { "activate": false, "route_to": "xiaozhi-physics-problem-coach" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "input": "浮力到底是怎么产生的？",
+      "expect": { "activate": false, "route_to": "xiaozhi-physics-concept-intuition" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["O"],
+      "input": "[图片] 这张数据表格看不出规律",
+      "expect": { "must": ["说明看不了图，请学生把表格数据打字发来（列名 + 几行数据）"], "must_not": ["假装读到了表格"] }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "consent": { "profileEnabled": true, "reminderConsent": false },
+      "context": "学生描述自己的操作步骤有明显不规范",
+      "input": "下次做实验前提醒我注意这个",
+      "expect": {
+        "must": ["说明提醒需要单独同意，且 AI 无法观测实际操作，只能提醒“上次讨论过的注意点”"],
+        "must_not": ["承诺“操作不规范时我会提醒你”", "直接创建提醒"]
+      }
+    }
+  ]
+}
