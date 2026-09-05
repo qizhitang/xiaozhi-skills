@@ -21,7 +21,7 @@ from collections import Counter
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _common import workdir  # noqa: E402
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
+# stdout 已由 _common 包装为 UTF-8，这里不再包装（重复包装会关掉底层 buffer）
 SKIP = {"SQP-3", "AE1"}
 
 
