@@ -1,21 +1,23 @@
 ---
 name: xiaozhi-teach-physics-problem-guide
-display_name: 物理解题教学指导
-version: 2.1.3
-author: 小智伴学
-category: 老师物理
-grade_bands:
-  - 初中
-tags: [物理解题, 建模, 过程分析, 变式, 物理老师]
 description: >
   帮初中物理老师把"讲题"升级为系统化的解题教学：五步法（审题→建模→过程分析→列式→求解反思）加变式训练与班级解题档案。
   触发语示例："这道浮力题怎么讲""动态电路学生总是绕不过来""杠杆这一类题怎么设计变式""受力图讲了三遍还是错""这道题的一题多解怎么组织""电功率计算题怎么讲得透"。
   学科判别：题目涉及力、压强、浮力、电路、光学、物态变化等初中物理内容时用本 SKILL；数学运算类讲题转数学学科 SKILL。
   不处理：整节课的教学设计（转物理教案设计）、实验课的组织与器材（转物理实验教学）、班级测评命题与试卷分析（转老师通用测评 SKILL）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-teach-physics-lesson-planner
-  - xiaozhi-teach-student-analyzer
+license: MIT
+metadata:
+  display_name: 物理解题教学指导
+  version: 2.1.3
+  author: 小智伴学
+  category: 老师物理
+  grade_bands:
+    - 初中
+  tags: [物理解题, 建模, 过程分析, 变式, 物理老师]
+  depends_on:
+    - xiaozhi-teach-physics-lesson-planner
+    - xiaozhi-teach-student-analyzer
 id: openclaw:xiaozhi-teach-physics-problem-guide
 min_platform_version: "2.0"
 max_round_limit: 20

@@ -1,22 +1,24 @@
 ---
 name: xiaozhi-teach-lesson-planner
-display_name: 教案设计器
-version: 2.1.3
-author: 小智伴学
-category: 老师通用
-grade_bands:
-  - 小学中段
-  - 小学高段
-  - 初中
-tags: [教案, UbD逆向设计, 核心素养, Bloom提问链, 课堂环节, 分层输出, 老师工具]
 description: >
   用 UbD 逆向设计把"经验型备课"变成可观测的教学设计。
   当老师说"帮我设计一节《一次函数》新课"、"写一份物理教案"、"做一份分层教案"、"帮我设计一节讲评课"、"这节课的提问链草案"时，建议激活此 SKILL。
   工作流：预期结果 → 评估证据 → 核心素养目标 → 环节时间矩阵 → 提问链草案 → A/B/C 分层。
   本 SKILL 不出卷、不算学情、不负责课堂实施：命题转 xiaozhi-teach-exam-designer，学情统计转 xiaozhi-teach-student-analyzer，课堂提问与追问的实施转 xiaozhi-teach-classroom-coach。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-teach-student-analyzer
+license: MIT
+metadata:
+  display_name: 教案设计器
+  version: 2.1.3
+  author: 小智伴学
+  category: 老师通用
+  grade_bands:
+    - 小学中段
+    - 小学高段
+    - 初中
+  tags: [教案, UbD逆向设计, 核心素养, Bloom提问链, 课堂环节, 分层输出, 老师工具]
+  depends_on:
+    - xiaozhi-teach-student-analyzer
 id: openclaw:xiaozhi-teach-lesson-planner
 min_platform_version: "2.0"
 max_round_limit: 30

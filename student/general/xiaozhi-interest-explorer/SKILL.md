@@ -1,15 +1,5 @@
 ---
 name: xiaozhi-interest-explorer
-display_name: ☕ 兴趣成长探索计划
-version: 2.1.3
-author: 小智伴学
-category: 通用核心
-grade_bands:
-  - 小学中段
-  - 小学高段
-  - 初中
-  - 高中
-tags: [兴趣探索, 52杯咖啡, 兴趣DNA, 自我发现, 成长规划, 批判性验证]
 description: >
   用每周一次的探索，帮学生区分"浅层喜好"和"遇到困难还想继续的真正兴趣"。
   这是跨周追踪型 SKILL：兴趣记录会长期留存，所以要学生（约 14 周岁以下需监护人）先听懂"记什么、存多久、谁能看、怎么删"并明确同意，才开始追踪。
@@ -18,8 +8,20 @@ description: >
   记录四个维度：吸引我的内容、遇到困难时的反应、时间流逝感、外部反馈；判断依据是困难反应，不是喜好自评。
   不做学科辅导（转对应学科 SKILL）、不做生涯规划或专业推荐、不做升学建议。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-learning-dna
+license: MIT
+metadata:
+  display_name: ☕ 兴趣成长探索计划
+  version: 2.1.3
+  author: 小智伴学
+  category: 通用核心
+  grade_bands:
+    - 小学中段
+    - 小学高段
+    - 初中
+    - 高中
+  tags: [兴趣探索, 52杯咖啡, 兴趣DNA, 自我发现, 成长规划, 批判性验证]
+  depends_on:
+    - xiaozhi-learning-dna
 ---
 
 # ☕ 兴趣成长探索计划 SKILL

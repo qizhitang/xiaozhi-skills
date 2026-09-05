@@ -1,21 +1,22 @@
 ---
 name: xiaozhi-teach-exam-designer
-display_name: 测评设计师
-version: 2.1.3
-author: 小智伴学
-category: 老师通用
-grade_bands:
-  - 小学中段
-  - 小学高段
-  - 初中
-tags: [测评, 试卷设计, 双向细目表, 难度控制, 评分标准, 区分度, 老师工具]
 description: >
   帮老师把"拼凑试卷"变成"按双向细目表命题"。
   当老师**明确要求生成或修改命题产物**时建议激活：出一份单元测验/试卷、写双向细目表、调整试卷难度配比、改编某道题、写评分细则、按题目统计决定哪些题返修。
   **不激活**：只讨论考试结果与学情分析（转 `xiaozhi-teach-student-analyzer`）、只备讲评课的环节与提问（转 `xiaozhi-teach-lesson-planner` / `xiaozhi-teach-classroom-coach`）、布置作业（转 `xiaozhi-teach-assignment-designer`）、非命题的日常教学讨论。
-  工作流：定测评类型 → 双向细目表 → 选题改编 → 难度与认知层级配比 → 评分标准 → 讲评错题清单。
-  本 SKILL 不算考后统计、不写教案：难度 P/区分度 D/信度由 xiaozhi-teach-student-analyzer 计算，讲评课教案由 xiaozhi-teach-lesson-planner 出。
+  工作流：测评类型 → 双向细目表 → 选题改编 → 难度与认知层级配比 → 评分标准 → 讲评错题清单；考后 P/D/信度只读不算。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
+license: MIT
+metadata:
+  display_name: 测评设计师
+  version: 2.1.3
+  author: 小智伴学
+  category: 老师通用
+  grade_bands:
+    - 小学中段
+    - 小学高段
+    - 初中
+  tags: [测评, 试卷设计, 双向细目表, 难度控制, 评分标准, 区分度, 老师工具]
 id: openclaw:xiaozhi-teach-exam-designer
 min_platform_version: "2.0"
 max_round_limit: 25

@@ -1,21 +1,23 @@
 ---
 name: xiaozhi-learning-dna
-display_name: 🧬 学习DNA
-version: 2.1.3
-author: 小智伴学
-category: 通用核心
-grade_bands:
-  - 小学中段
-  - 小学高段
-  - 初中
-  - 高中
-tags: [学习档案, 长期记忆, 个性化, 成长图谱, 通用, 隐私可控]
 description: >
   学生长期学习档案系统（敏感未成年人数据，不是普通答疑助手）：在明确授权下建立、查看、更正、导出、删除学生档案——学科强弱、错误模式、学习风格、成长轨迹，以及需各自单独开关的学习情绪、兴趣信号、家长可见输出、老师写回、跨 SKILL 共享、危机转介事实。
   学生说“帮我建立学习档案”“你记得我什么”“我升初三了”“删除我的档案”“导出我的档案”时可激活；普通答疑、闲聊、单题讲解不激活本 SKILL。
   只管档案的存取与授权：不做错题分析（转错题本）、不做理解验证（转费曼学习法）、不发提醒（转 IM 智能提醒）。
   所有开关默认关闭；未获同意只用当前会话信息；约 14 周岁以下需监护人同意；说话人未确认时进入受限模式，不读不写不改授权。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
+license: MIT
+metadata:
+  display_name: 🧬 学习DNA
+  version: 2.1.3
+  author: 小智伴学
+  category: 通用核心
+  grade_bands:
+    - 小学中段
+    - 小学高段
+    - 初中
+    - 高中
+  tags: [学习档案, 长期记忆, 个性化, 成长图谱, 通用, 隐私可控]
 ---
 
 # 🧬 学习DNA SKILL

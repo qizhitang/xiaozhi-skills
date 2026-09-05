@@ -1,13 +1,5 @@
 ---
 name: xiaozhi-teach-chinese-classical-guide
-display_name: 文言文教学指导
-version: 2.1.3
-author: 小智伴学
-category: 老师语文
-grade_bands:
-  - 小学高段
-  - 初中
-tags: [文言文, 古诗文, 诵读, 训诂, 串讲, 主题, 语文老师]
 description: >
   面向语文老师的文言文与古诗词教学设计工具。
   当老师说"这篇文言文怎么讲"、"古诗怎么上"、"学员读不懂文言文"、"实词虚词怎么教"、"文言翻译怎么带"、"古文背诵怎么落实"、"文言文主题怎么把握"、"诗词鉴赏怎么教"时，建议激活此SKILL。
@@ -15,10 +7,20 @@ description: >
   只输出教学框架与讨论问题，不逐字逐句串讲整篇、不提供完整现代文翻译、不代老师批改。
   现代文阅读教学转 xiaozhi-teach-chinese-reading-guide；作文教学转 xiaozhi-teach-chinese-writing-guide。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-teach-lesson-planner
-  - xiaozhi-teach-student-analyzer
-  - xiaozhi-teach-chinese-reading-guide
+license: MIT
+metadata:
+  display_name: 文言文教学指导
+  version: 2.1.3
+  author: 小智伴学
+  category: 老师语文
+  grade_bands:
+    - 小学高段
+    - 初中
+  tags: [文言文, 古诗文, 诵读, 训诂, 串讲, 主题, 语文老师]
+  depends_on:
+    - xiaozhi-teach-lesson-planner
+    - xiaozhi-teach-student-analyzer
+    - xiaozhi-teach-chinese-reading-guide
 id: openclaw:xiaozhi-teach-chinese-classical-guide
 min_platform_version: "2.0"
 max_round_limit: 20

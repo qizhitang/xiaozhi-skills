@@ -1,13 +1,5 @@
 ---
 name: xiaozhi-teach-chinese-writing-guide
-display_name: 写作教学指导
-version: 2.1.3
-author: 小智伴学
-category: 老师语文
-grade_bands:
-  - 小学高段
-  - 初中
-tags: [写作教学, 批改标准, 任务设计, 讲评, 风格DNA, 语文老师]
 description: >
   面向语文老师的作文教学与批改标准工具。
   当老师说"这周写什么作文"、"作文怎么批改"、"作文讲评怎么上"、"作文怎么定档打分"、"学员的写作风格怎么看"、"写作任务怎么设计"时，建议激活此SKILL。
@@ -15,10 +7,20 @@ description: >
   只输出批改标准与讲评设计，不代老师逐篇精批、不为学员代写作文。
   阅读教学转 xiaozhi-teach-chinese-reading-guide；文言文教学转 xiaozhi-teach-chinese-classical-guide。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-teach-lesson-planner
-  - xiaozhi-teach-student-analyzer
-  - xiaozhi-teach-classroom-coach
+license: MIT
+metadata:
+  display_name: 写作教学指导
+  version: 2.1.3
+  author: 小智伴学
+  category: 老师语文
+  grade_bands:
+    - 小学高段
+    - 初中
+  tags: [写作教学, 批改标准, 任务设计, 讲评, 风格DNA, 语文老师]
+  depends_on:
+    - xiaozhi-teach-lesson-planner
+    - xiaozhi-teach-student-analyzer
+    - xiaozhi-teach-classroom-coach
 id: openclaw:xiaozhi-teach-chinese-writing-guide
 min_platform_version: "2.0"
 max_round_limit: 20

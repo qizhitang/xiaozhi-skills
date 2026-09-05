@@ -1,15 +1,5 @@
 ---
 name: xiaozhi-teach-lesson-log
-display_name: 课后记录助手
-version: 2.1.3
-author: 小智伴学
-category: 独立教师
-grade_bands:
-  - 小学中段
-  - 小学高段
-  - 初中
-  - 高中
-tags: [课后记录, 课堂观察, 学习轨迹, 教学复盘, 独立教师]
 description: >
   把独立教师的课后记忆变成结构化教学档案，每节课 5 分钟记完。
   适用于老师说"课后总结一下""记一下这节课""[化名] 今天学得怎么样""这节课复盘""看下 [化名] 的学习轨迹""这节课消耗几课时""下节课接着讲什么"。
@@ -18,6 +8,18 @@ description: >
   本 SKILL 不排课、不登记作业、不代发家长消息、不做阶段报告——分别转 schedule-manager、homework-tracker、parent-communication、renewal-report；
   家长事实摘要只起草成留在工作空间里的内部草稿，发不发由老师决定。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
+license: MIT
+metadata:
+  display_name: 课后记录助手
+  version: 2.1.3
+  author: 小智伴学
+  category: 独立教师
+  grade_bands:
+    - 小学中段
+    - 小学高段
+    - 初中
+    - 高中
+  tags: [课后记录, 课堂观察, 学习轨迹, 教学复盘, 独立教师]
 id: openclaw:xiaozhi-teach-lesson-log
 min_platform_version: "2.0"
 max_round_limit: 15

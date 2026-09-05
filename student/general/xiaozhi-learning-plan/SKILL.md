@@ -1,22 +1,24 @@
 ---
 name: xiaozhi-learning-plan
-display_name: 🗓️ 30天学习计划制定师
-version: 2.1.3
-author: 小智伴学
-category: 通用核心
-grade_bands:
-  - 小学高段
-  - 初中
-  - 高中
-tags: [学习计划, DNA驱动, 个性化方案, 家庭看板, 执行监控, 自我管理]
 description: >
   把学习目标拆成可执行的 30 天方案（小学高段用周计划版），并在学生开启后跟进执行偏差。
   学生说"帮我制定学习计划"、"我不知道怎么安排时间"、"下次考试前怎么复习"、"帮我生成30天方案"、"我的计划总是坚持不下去"、"帮我做家庭学习看板"时可激活。
   它只管"什么时候做什么"：直接用错题本给出的弱项摘要来排任务，自己不做错因归类与深度归因（转错题本）；不讲题（转对应学科教练）、不发提醒（转 IM 智能提醒）。
   三件事各自需要学生明确同意后才做，默认都关着：读学习档案摘要、生成家长可见看板、把任务放进提醒队列。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-learning-dna
+license: MIT
+metadata:
+  display_name: 🗓️ 30天学习计划制定师
+  version: 2.1.3
+  author: 小智伴学
+  category: 通用核心
+  grade_bands:
+    - 小学高段
+    - 初中
+    - 高中
+  tags: [学习计划, DNA驱动, 个性化方案, 家庭看板, 执行监控, 自我管理]
+  depends_on:
+    - xiaozhi-learning-dna
 ---
 
 # 🗓️ 30天学习计划制定师 SKILL

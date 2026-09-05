@@ -1,23 +1,25 @@
 ---
 name: xiaozhi-teach-english-listening-designer
-display_name: 英语听力材料设计
-version: 2.1.3
-author: 小智伴学
-category: 老师英语
-grade_bands:
-  - 小学高段
-  - 初中
-tags: [听力教学, 材料选编, 听法训练, 微技能, 英语老师]
 description: >
   英语听力教学设计：把"放一遍录音对答案"变成有目标、有策略、有微技能训练的听力课。
   触发语："听力课怎么上"、"听力材料选什么"、"学员听不懂"、"听力策略怎么教"、"听力微技能怎么练"、"精听泛听怎么分"、"听填信息怎么训练"。
   核心工作流：听力目标 → 材料选编（来源/难度/版权）→ 听前预测 → 听中分层 → 听后任务 → 微技能训练 → 写回班级工作空间。题型按中考听力四节结构排。
   不处理：整卷四维测评的设计与能力画像（转英语综合测评）、口语活动与纠错策略（转英语口语活动设计）、通用命题的难度与区分度分析（转 xiaozhi-teach-exam-designer）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-teach-lesson-planner
-  - xiaozhi-teach-student-analyzer
-  - xiaozhi-teach-classroom-coach
+license: MIT
+metadata:
+  display_name: 英语听力材料设计
+  version: 2.1.3
+  author: 小智伴学
+  category: 老师英语
+  grade_bands:
+    - 小学高段
+    - 初中
+  tags: [听力教学, 材料选编, 听法训练, 微技能, 英语老师]
+  depends_on:
+    - xiaozhi-teach-lesson-planner
+    - xiaozhi-teach-student-analyzer
+    - xiaozhi-teach-classroom-coach
 id: openclaw:xiaozhi-teach-english-listening-designer
 min_platform_version: "2.0"
 max_round_limit: 20

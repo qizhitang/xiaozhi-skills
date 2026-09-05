@@ -1,25 +1,27 @@
 ---
 name: xiaozhi-teach-math-exam-designer
-display_name: 数学测评设计
-version: 2.1.3
-author: 小智伴学
-category: 老师数学
-grade_bands:
-  - 初中
-tags: [测评设计, 双向细目表, 诊断性测评, 形成性测评, 数学老师]
 description: >
   数学教师的测评设计：用双向细目表把"凭感觉出数学卷"变成可诊断的命题。
   仅在老师提出明确的数学命题任务时建议激活，例如"给八年级数学出一份单元测评""做一张数学双向细目表""算这次数学测评的逐题 P/D"；泛泛聊数学、问某题怎么解、问学生近况都不激活。
   只做四件事：命题蓝图与双向细目表、题目选编与版权标注、题目统计（逐题 P/D 与信度）、经老师逐条确认后的写回。
   不做：错因归类与个体诊断（转 xiaozhi-teach-math-error-analyzer）、学员分层（转 xiaozhi-teach-student-analyzer）、补救与教学干预（转 xiaozhi-teach-math-lesson-planner）、家长沟通（转 xiaozhi-teach-parent-communication）、非数学学科测评（转 xiaozhi-teach-exam-designer）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-teach-exam-designer
-  - xiaozhi-teach-student-analyzer
-  - xiaozhi-teach-lesson-planner
-  - xiaozhi-teach-math-error-analyzer
-  - xiaozhi-teach-math-lesson-planner
-  - xiaozhi-teach-parent-communication
+license: MIT
+metadata:
+  display_name: 数学测评设计
+  version: 2.1.3
+  author: 小智伴学
+  category: 老师数学
+  grade_bands:
+    - 初中
+  tags: [测评设计, 双向细目表, 诊断性测评, 形成性测评, 数学老师]
+  depends_on:
+    - xiaozhi-teach-exam-designer
+    - xiaozhi-teach-student-analyzer
+    - xiaozhi-teach-lesson-planner
+    - xiaozhi-teach-math-error-analyzer
+    - xiaozhi-teach-math-lesson-planner
+    - xiaozhi-teach-parent-communication
 id: openclaw:xiaozhi-teach-math-exam-designer
 min_platform_version: "2.0"
 max_round_limit: 25

@@ -1,13 +1,5 @@
 ---
 name: xiaozhi-chinese-grammar-tracker
-display_name: 🔍 语病追踪档案
-version: 2.1.3
-author: 小智伴学
-category: 语文专项
-grade_bands:
-  - 小学高段
-  - 初中
-tags: [语病, 病句, 语法, 写作改错, 追踪档案, 语文]
 description: >
   语文病句专项教练：按中考六类病句判定，并在学生同意后建立语病档案。
   当学生说"这句话有语病吗"、"帮我改病句"、"病句题怎么做"、"搭配不当怎么判断"、"我写的句子读着别扭"、"帮我看语病改善了多少"时，建议激活此SKILL。
@@ -15,8 +7,18 @@ description: >
   不处理作文（转 xiaozhi-chinese-writing-coach）、阅读答题规范（转 xiaozhi-chinese-reading-decoder）、文言句式（转 xiaozhi-chinese-classical-revival）。
   未获同意不建档、不跨SKILL共享。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-learning-dna
+license: MIT
+metadata:
+  display_name: 🔍 语病追踪档案
+  version: 2.1.3
+  author: 小智伴学
+  category: 语文专项
+  grade_bands:
+    - 小学高段
+    - 初中
+  tags: [语病, 病句, 语法, 写作改错, 追踪档案, 语文]
+  depends_on:
+    - xiaozhi-learning-dna
 ---
 
 # 🔍 语病追踪档案 SKILL

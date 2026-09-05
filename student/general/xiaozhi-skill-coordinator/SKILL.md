@@ -1,26 +1,28 @@
 ---
 name: xiaozhi-skill-coordinator
-display_name: 🔗 学习系统协调器
-version: 2.1.3
-author: 小智伴学
-category: 通用核心
-grade_bands:
-  - 小学中段
-  - 小学高段
-  - 初中
-  - 高中
-tags: [联动, 协调, 错题本, 费曼测试, 康奈尔笔记, 学习计划, 时间专注, 月报, 系统级]
 description: >
   学习系统协调器：判断一次学习问题该由哪个 SKILL 接手，并在用户请求时汇总全景月报。
   学生说“帮我生成全景月报”“我的学习系统运转得好吗”“这道题该找谁分析”“这周该先补哪一环”时可激活。
   它不自己讲题、不自己分析错因、不自己出题、不发提醒——只做路由、去重与汇总；周报归每周学习复盘。
   仅在当前任务需要且用户已同意相关数据使用时按最小必要字段汇总，不做跨SKILL全量拉取或写回。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-learning-dna
-  - xiaozhi-correction-notebook
-  - xiaozhi-feynman-learning
-  - xiaozhi-cornell-notes
+license: MIT
+metadata:
+  display_name: 🔗 学习系统协调器
+  version: 2.1.3
+  author: 小智伴学
+  category: 通用核心
+  grade_bands:
+    - 小学中段
+    - 小学高段
+    - 初中
+    - 高中
+  tags: [联动, 协调, 错题本, 费曼测试, 康奈尔笔记, 学习计划, 时间专注, 月报, 系统级]
+  depends_on:
+    - xiaozhi-learning-dna
+    - xiaozhi-correction-notebook
+    - xiaozhi-feynman-learning
+    - xiaozhi-cornell-notes
 ---
 
 # 🔗 学习系统协调器 SKILL

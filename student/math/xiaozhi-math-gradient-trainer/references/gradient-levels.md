@@ -1,7 +1,7 @@
 # 初中数学各知识模块梯度分层参考
 
 > 适用学段：初中（7-9 年级）。
-> 示例题验算：2026-09-03
+> 示例题验算：2026-09-04
 > 每个知识点按 5 层给出题型描述与示例题，帮助小智判断学生**当前的练习层级**
 > （对应 `dna-profile.schema.json` 的 `subjectExtensions.math.gradientLevel.currentLevel`，取值 1-5）。
 >

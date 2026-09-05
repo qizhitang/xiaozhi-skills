@@ -4,7 +4,7 @@
 
 > ⚠️ **两条原则**
 > 1. SKILL 不是装得越多越好。先把 3-5 个用熟，再考虑加装。
-> 2. 安装顺序必须符合依赖关系：被依赖的 SKILL 先装。各 SKILL 的 `depends_on` 已在 frontmatter 中声明，且全库无循环依赖（由 `npm run check` 校验）。
+> 2. 安装顺序必须符合依赖关系：被依赖的 SKILL 先装。各 SKILL 的 `metadata.depends_on` 已在 frontmatter 中声明，且全库无循环依赖（由 `npm run check` 校验）。
 
 ---
 
@@ -100,7 +100,7 @@ git clone https://github.com/qizhitang/xiaozhi-skills.git <你的项目>/.workbu
 
 ### 安装顺序
 
-WorkBuddy 不会自动解析本库 frontmatter 里的 `depends_on`，请按后文的阶段顺序自行安装。最低要求：**先装学习DNA**，它是其他 SKILL 的档案层。
+WorkBuddy 不会自动解析本库 frontmatter 里的 `metadata.depends_on`，请按后文的阶段顺序自行安装。最低要求：**先装学习DNA**，它是其他 SKILL 的档案层。
 
 ### 更新与卸载
 
@@ -135,7 +135,7 @@ WorkBuddy 不会自动解析本库 frontmatter 里的 `depends_on`，请按后�
 
 ## 📐 先看学段
 
-各 SKILL 的 `grade_bands` 字段声明了适用学段，完整参数（作息、专注时长、课时、适用性矩阵）见 [`shared/grade-bands.md`](../shared/grade-bands.md)。
+各 SKILL 的 `metadata.grade_bands` 字段声明了适用学段，完整参数（作息、专注时长、课时、适用性矩阵）见 [`shared/grade-bands.md`](../shared/grade-bands.md)。
 
 | 学段 | 建议 |
 |---|---|

@@ -1,23 +1,25 @@
 ---
 name: xiaozhi-teach-homework-tracker
-display_name: 作业跟进管家
-version: 2.1.3
-author: 小智伴学
-category: 独立教师
-grade_bands:
-  - 小学中段
-  - 小学高段
-  - 初中
-  - 高中
-tags: [作业跟进, 错题回流, 状态追踪, 预诊断, 独立教师]
 description: >
   帮独立教师把作业从"收上来"变成"跟到底"：登记、追状态、归错因、导出下节课讲什么。
   适用于老师说"登记今天布置的作业""[化名] 的作业状态""这周谁没交""错题回流""下节课该讲什么""这道题他错第三次了""看下 [化名] 的作业画像"。
   流程：老师登记 task/dueDate → 追七档状态 → 按 shared/vocab.md §1/§3 归错因 → 阈值命中先存证据待老师确认。
   本 SKILL 不出题、不判分、不发催交消息、不写课后记录——分别转 assignment-designer、parent-communication、lesson-log。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-teach-lesson-log
+license: MIT
+metadata:
+  display_name: 作业跟进管家
+  version: 2.1.3
+  author: 小智伴学
+  category: 独立教师
+  grade_bands:
+    - 小学中段
+    - 小学高段
+    - 初中
+    - 高中
+  tags: [作业跟进, 错题回流, 状态追踪, 预诊断, 独立教师]
+  depends_on:
+    - xiaozhi-teach-lesson-log
 id: openclaw:xiaozhi-teach-homework-tracker
 min_platform_version: "2.0"
 max_round_limit: 12

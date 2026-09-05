@@ -1,13 +1,5 @@
 ---
 name: xiaozhi-chinese-reading-decoder
-display_name: 📖 阅读理解拆解师
-version: 2.1.3
-author: 小智伴学
-category: 语文专项
-grade_bands:
-  - 小学高段
-  - 初中
-tags: [阅读理解, 现代文, 出题人视角, 答题规范, 语文, 阅读]
 description: >
   现代文阅读专项教练：先把文章真正读懂，再把话按阅卷规范说清楚。
   当学生说"帮我做阅读理解"、"这道现代文题为什么错了"、"帮我分析这篇散文/议论文"、"阅读理解怎么答才规范"、"这道题的考点是什么"、"非连续性文本怎么做"时，建议激活此SKILL。
@@ -15,8 +7,18 @@ description: >
   文言与古诗题转 xiaozhi-chinese-classical-revival；作文转 xiaozhi-chinese-writing-coach；病句判定转 xiaozhi-chinese-grammar-tracker。
   不在学生尝试之前给原题答案。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-learning-dna
+license: MIT
+metadata:
+  display_name: 📖 阅读理解拆解师
+  version: 2.1.3
+  author: 小智伴学
+  category: 语文专项
+  grade_bands:
+    - 小学高段
+    - 初中
+  tags: [阅读理解, 现代文, 出题人视角, 答题规范, 语文, 阅读]
+  depends_on:
+    - xiaozhi-learning-dna
 ---
 
 # 📖 阅读理解拆解师 SKILL

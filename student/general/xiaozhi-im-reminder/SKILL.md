@@ -1,23 +1,25 @@
 ---
 name: xiaozhi-im-reminder
-display_name: ⏰ IM智能提醒
-version: 2.1.3
-author: 小智伴学
-category: 通用核心
-grade_bands:
-  - 小学中段
-  - 小学高段
-  - 初中
-  - 高中
-tags: [提醒, 复习队列, 间隔复习, 计划提醒, 探索提醒, 授权可控]
 description: >
   全库唯一的提醒发送方：把其他 SKILL 入队的复习、错题复测、计划任务、探索任务合并成每天一条摘要发出。
   学生说“帮我设置提醒”“提醒我复习二次根式”“我今天该复习什么”“暂停提醒”“查看我的提醒”时可激活。
   提醒内容本身不在这里生成——错题由错题本、词卡由英语词汇 DNA、任务由 30 天学习计划提供，本 SKILL 只做排期、合并与发送。
   未获授权时只给“建议提醒方案”，不创建实际提醒，也不做闲置唤醒。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-learning-dna
+license: MIT
+metadata:
+  display_name: ⏰ IM智能提醒
+  version: 2.1.3
+  author: 小智伴学
+  category: 通用核心
+  grade_bands:
+    - 小学中段
+    - 小学高段
+    - 初中
+    - 高中
+  tags: [提醒, 复习队列, 间隔复习, 计划提醒, 探索提醒, 授权可控]
+  depends_on:
+    - xiaozhi-learning-dna
 ---
 
 # ⏰ IM智能提醒 SKILL

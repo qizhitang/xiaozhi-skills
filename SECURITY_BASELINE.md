@@ -208,7 +208,7 @@
 6. 写入工作空间的字段是否在 JSON Schema 中设置了 `maxLength` / `enum` / `format` 等硬约束，并在 `description` 中显式声明高敏禁止项
 7. 相关 SKILL 的"边界"章节是否复述了 Schema 的字段级高敏禁止项
 8. 术语、阈值、状态词是否直接引用 `shared/vocab.md`，而不是在正文里另立一套
-9. 是否声明了 `grade_bands`，时间与时长类参数是否引用 `shared/grade-bands.md`
+9. 是否声明了 `metadata.grade_bands`，时间与时长类参数是否引用 `shared/grade-bands.md`
 10. 会读到情绪文本的 SKILL 是否引入了 `shared/crisis-exception.md` 片段
 11. 会生成题目的 SKILL 是否引用了 `shared/ai-item-check.md`
 12. 有"不给答案"类铁律的 SKILL 是否改用 `shared/hint-ladder.md` 的提示阶梯并声明默认上限

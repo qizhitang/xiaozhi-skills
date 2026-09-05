@@ -1,15 +1,5 @@
 ---
 name: xiaozhi-teach-student-intake
-display_name: 试听与学员建档
-version: 2.1.3
-author: 小智伴学
-category: 独立教师
-grade_bands:
-  - 小学中段
-  - 小学高段
-  - 初中
-  - 高中
-tags: [试听, 学员建档, 需求诊断, 试讲课, 转化跟进, 独立教师]
 description: >
   把试听从"体验课"变成一次双向诊断，并按最小化原则给新学员建档。
   适用于老师说"新学员要试听""安排一节试听""试听课怎么上""学员档案怎么建""家长/孩子想学什么""试听完怎么记录""试听后怎么跟进"。
@@ -17,6 +7,18 @@ description: >
   范围到建档为止：不排课、不写课后记录、不登记作业、不做阶段报告、不谈续费与流失挽回，也不收集或存储任何联系方式。
   排课与课节状态转 schedule-manager，课后记录转 lesson-log，续费/阶段报告/流失跟进转 renewal-report。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
+license: MIT
+metadata:
+  display_name: 试听与学员建档
+  version: 2.1.3
+  author: 小智伴学
+  category: 独立教师
+  grade_bands:
+    - 小学中段
+    - 小学高段
+    - 初中
+    - 高中
+  tags: [试听, 学员建档, 需求诊断, 试讲课, 转化跟进, 独立教师]
 id: openclaw:xiaozhi-teach-student-intake
 min_platform_version: "2.0"
 max_round_limit: 15

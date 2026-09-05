@@ -25,6 +25,18 @@
 
 剩下 16 份有验算声明但还没有断言的文件只给警告（X3），断言是逐题补的活，不一次做完。
 
+A2 顺带补了一条：**文件有未提交改动且声明日期早于今天**也报错。否则本地 `npm run check` 只看 git 历史，改完没提交时是绿的，提交后下一次才红——先绿后红是最容易被忽略的信号。
+
+### frontmatter 收敛到 Agent Skills 官方字段（阶段 3 第三项）
+
+58 个 SKILL.md 的顶层现在只有官方字段 `name` / `description` / `license` / `compatibility` / `metadata`（部分老师端技能另有平台加载字段 `id` / `min_platform_version` / `max_round_limit`，按 `shared/platform-conventions.md §六` 保留）。本库自有的 `display_name` / `version` / `author` / `category` / `grade_bands` / `tags` / `depends_on` 全部移入 `metadata:` 块；`license: MIT` 补为顶层字段。
+
+- `scripts/check-skills.mjs` F1 改为：顶层出现非官方、非平台字段即失败；`metadata` 七个字段齐全且 `version` 等于 `package.json`。
+- 发布打包（`stage.py`）把 `metadata` 投影回顶层——SkillHub 的 frontmatter 解析器只认顶层 `key: value`，ClawHub 也不读嵌套块。市场上看到的 frontmatter 与 v2.1.3 完全相同，只是仓库里的形态变了。
+- 文档与 `tools/xiaozhi-skill-creator` 里教的 frontmatter 写法同步更新。
+
+这一项不改任何技能行为，不单独发版；随下一次内容发布一起上架。
+
 ---
 
 ## v2.1.3 — 消除 references 与 SKILL.md 的契约矛盾

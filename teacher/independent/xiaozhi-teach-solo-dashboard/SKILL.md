@@ -1,25 +1,27 @@
 ---
 name: xiaozhi-teach-solo-dashboard
-display_name: 独立教师工作台
-version: 2.1.3
-author: 小智伴学
-category: 独立教师
-grade_bands:
-  - 小学中段
-  - 小学高段
-  - 初中
-  - 高中
-tags: [独立教师, 工作台, 今日待办, 课表, 风险学员, 课时包, 续课, 运营闭环]
 description: >
   把独立教师分散在课表、学员卡、作业、家长沟通和课时包里的信息，只读聚合成一张可执行的日工作台。
   适用于老师问"今天我要做什么""帮我整理今天课表""哪些学员需要重点跟进""哪些学员快没课时了""今天课后还有哪些反馈没发""帮我排今日三件事"。
   流程：只读工作空间 → 按 7 区块归类 → 依字段数值标记风险学员 → 给出今日最重要的三件事。
   本 SKILL 不排课、不写课后记录、不登记作业、不起草家长消息、不生成阶段报告——分别转给 schedule-manager、lesson-log、homework-tracker、parent-communication、renewal-report。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-teach-schedule-manager
-  - xiaozhi-teach-lesson-log
-  - xiaozhi-teach-homework-tracker
+license: MIT
+metadata:
+  display_name: 独立教师工作台
+  version: 2.1.3
+  author: 小智伴学
+  category: 独立教师
+  grade_bands:
+    - 小学中段
+    - 小学高段
+    - 初中
+    - 高中
+  tags: [独立教师, 工作台, 今日待办, 课表, 风险学员, 课时包, 续课, 运营闭环]
+  depends_on:
+    - xiaozhi-teach-schedule-manager
+    - xiaozhi-teach-lesson-log
+    - xiaozhi-teach-homework-tracker
 id: openclaw:xiaozhi-teach-solo-dashboard
 min_platform_version: "2.0"
 max_round_limit: 20

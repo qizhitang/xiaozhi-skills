@@ -1,23 +1,25 @@
 ---
 name: xiaozhi-weekly-review
-display_name: 📊 每周学习复盘
-version: 2.1.3
-author: 小智伴学
-category: 通用核心
-grade_bands:
-  - 小学中段
-  - 小学高段
-  - 初中
-  - 高中
-tags: [周复盘, 学习报告, 成长记录, 苏格拉底复盘, 成长曲线, 必装]
 description: >
   把一周零散的学习记录整理成有结论、有证据、有下一步的周报，并带学生做一次自我复盘。
   学生说“帮我生成周报”“这周学习复盘”“总结一下这周”“下周重点是什么”“这个月学习情况怎么样”时可激活。
   它只做周维度：不生成月报（转学习系统协调器）、不做跨SKILL调度、不分析单道错题（转错题本）。
   家庭版需要学生授权后才生成，学生可以否决。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-learning-dna
+license: MIT
+metadata:
+  display_name: 📊 每周学习复盘
+  version: 2.1.3
+  author: 小智伴学
+  category: 通用核心
+  grade_bands:
+    - 小学中段
+    - 小学高段
+    - 初中
+    - 高中
+  tags: [周复盘, 学习报告, 成长记录, 苏格拉底复盘, 成长曲线, 必装]
+  depends_on:
+    - xiaozhi-learning-dna
 ---
 
 # 📊 每周学习复盘 SKILL

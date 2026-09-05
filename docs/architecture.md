@@ -352,6 +352,6 @@ xiaozhi-{name}/
 
 全部 58 个技能已做单技能安装模拟：单独取出任一技能目录后，`SKILL.md` 与 `shared/` 副本中的文件引用零断链。为此，`shared/vocab.md` 与 `shared/crisis-exception.md` 源文件中原有的仓库路径也已改写——它们会随副本进入 58 个包，留在里面会变成 337 处死链接。
 
-frontmatter 字段：`name` · `display_name` · `version` · `author` · `category` · `grade_bands` · `tags` · `description` · `compatibility` · `depends_on`；老师端另有平台字段 `id` · `min_platform_version` · `max_round_limit`。
+frontmatter 顶层只有 Agent Skills 官方字段：`name` · `description` · `license` · `compatibility` · `metadata`；部分老师端技能另有平台加载字段 `id` · `min_platform_version` · `max_round_limit`。本库自有字段全部在 `metadata` 块内：`display_name` · `version` · `author` · `category` · `grade_bands` · `tags` · `depends_on`。
 
-`compatibility` 统一为 `WorkBuddy / SkillHub / OpenClaw / ClawHub`。其中 `grade_bands` 与 `depends_on` 是本库自有约定，由 `scripts/check-skills.mjs` 校验，平台不解析——在 WorkBuddy 中需按[安装指南](installation-guide.md)的顺序自行安装。
+`compatibility` 统一为 `WorkBuddy / SkillHub / OpenClaw / ClawHub`。其中 `metadata.grade_bands` 与 `metadata.depends_on` 是本库自有约定，由 `scripts/check-skills.mjs` 校验，平台不解析；发布时 `stage.py` 把 `metadata` 投影成各市场需要的顶层字段（SkillHub 的解析器只认顶层 `key: value`）——在 WorkBuddy 中需按[安装指南](installation-guide.md)的顺序自行安装。

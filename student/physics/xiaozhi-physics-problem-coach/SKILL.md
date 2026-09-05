@@ -1,12 +1,5 @@
 ---
 name: xiaozhi-physics-problem-coach
-display_name: 🧲 物理解题教练
-version: 2.1.3
-author: 小智伴学
-category: 物理专项
-grade_bands:
-  - 初中
-tags: [物理, 解题, 图景建立, 四步法, 苏格拉底, 受力分析, 电路分析, 必装]
 description: >
   初中物理解题教练，按四步法（读题画图→物理建模→列式计算→检验反思）陪学生走完当前这一道物理题。
   默认只在当前会话工作：不读写长期档案、不归档错题、不排提醒；这三项要学生（需要时含监护人）明确开启后才做。
@@ -15,9 +8,18 @@ description: >
   学科判别：题干出现力、压强、浮力、电流、电压、电阻、功率、光路、物态变化等物理量时按物理题处理；只剩纯代数运算时转数学解题教练。
   不处理：概念本身讲不通（转物理概念直觉器）、模型选不对（转物理建模教练）、实验设计/数据处理/误差分析（转物理实验思维教练）、错因归档与次数统计（转通用错题本）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-learning-dna
-  - xiaozhi-physics-error-dna
+license: MIT
+metadata:
+  display_name: 🧲 物理解题教练
+  version: 2.1.3
+  author: 小智伴学
+  category: 物理专项
+  grade_bands:
+    - 初中
+  tags: [物理, 解题, 图景建立, 四步法, 苏格拉底, 受力分析, 电路分析, 必装]
+  depends_on:
+    - xiaozhi-learning-dna
+    - xiaozhi-physics-error-dna
 ---
 
 # 🧲 物理解题教练 SKILL

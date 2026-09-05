@@ -1,22 +1,24 @@
 ---
 name: xiaozhi-feynman-learning
-display_name: 🎓 费曼学习法
-version: 2.1.3
-author: 小智伴学
-category: 通用核心
-grade_bands:
-  - 小学中段
-  - 小学高段
-  - 初中
-  - 高中
-tags: [费曼学习法, 深度理解, 自我检验, 苏格拉底追问, 批判性验证, 全科通用, 必装]
 description: >
   用"讲给小智听"来检验学生是否真的学会了某个概念（数学函数、物理受力、英语时态、语文文言实词都适用）。
   学生说“我来给你讲讲今天学的”“我觉得我懂了你测测我”“帮我检验一下我学没学会”“AI都讲明白了我应该会了吧”时可激活。
   产出是掌握度判定（会复述/会解释/真正掌握）与卡住位置，不做错因归档（转错题本）、不讲新知识（转对应学科教练）、不出成套练习。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-learning-dna
+license: MIT
+metadata:
+  display_name: 🎓 费曼学习法
+  version: 2.1.3
+  author: 小智伴学
+  category: 通用核心
+  grade_bands:
+    - 小学中段
+    - 小学高段
+    - 初中
+    - 高中
+  tags: [费曼学习法, 深度理解, 自我检验, 苏格拉底追问, 批判性验证, 全科通用, 必装]
+  depends_on:
+    - xiaozhi-learning-dna
 ---
 
 # 🎓 费曼学习法 SKILL

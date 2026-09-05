@@ -1,20 +1,22 @@
 ---
 name: xiaozhi-math-concept-explainer
-display_name: 💡 数学概念解释器
-version: 2.1.3
-author: 小智伴学
-category: 数学专项
-grade_bands:
-  - 初中
-tags: [数学, 概念理解, 几何空间, 类比, 直觉建立, 数学]
 description: >
   初中数学概念的理解与重建：学生不是卡在某道题，而是卡在"这个数学概念本身没懂"时用。
   典型触发："这个数学公式我知道但不明白为什么""负负为什么得正""一次函数和正比例有什么区别""几何题我脑子里建不起图形""这两个数学概念我总是混""用生活例子讲讲这个概念"。
   核心方法：三种解释模型（生活类比 / 图解可视化 / 逐步拆分）+ 几何空间想象训练。
   不处理：具体某道题怎么做（转 xiaozhi-math-problem-solving-coach）、应用题列式（转 xiaozhi-math-word-problem-coach）、错题收录与统计（转 xiaozhi-correction-notebook）、分层进阶练习（转 xiaozhi-math-gradient-trainer）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-learning-dna
+license: MIT
+metadata:
+  display_name: 💡 数学概念解释器
+  version: 2.1.3
+  author: 小智伴学
+  category: 数学专项
+  grade_bands:
+    - 初中
+  tags: [数学, 概念理解, 几何空间, 类比, 直觉建立, 数学]
+  depends_on:
+    - xiaozhi-learning-dna
 ---
 
 # 💡 数学概念解释器 SKILL

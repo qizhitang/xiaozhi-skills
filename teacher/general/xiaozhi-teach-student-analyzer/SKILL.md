@@ -1,22 +1,24 @@
 ---
 name: xiaozhi-teach-student-analyzer
-display_name: 学情分析师
-version: 2.1.3
-author: 小智伴学
-category: 老师通用
-grade_bands:
-  - 小学中段
-  - 小学高段
-  - 初中
-tags: [学情分析, 数据诊断, 班级报告, 弱项识别, 差异化教学, 老师工具]
 description: >
   把班级成绩表变成可执行的教学调整。
   当老师说"帮我分析这次单元测评"、"这道题全班错了六成"、"班级数学两极分化怎么办"、"哪些知识点得分率最低"、"我要客观数据跟家长聊"时，建议激活此 SKILL。
   工作流：导入逐题分数 → 班级画像 → 知识点热力图 → 分层 → 教学调整建议。
   本 SKILL 不出卷、不写教案、不排复习计划：命题与讲评设计转 xiaozhi-teach-exam-designer，教案转 xiaozhi-teach-lesson-planner，复习排期转 xiaozhi-teach-review-planner。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-teach-exam-designer
+license: MIT
+metadata:
+  display_name: 学情分析师
+  version: 2.1.3
+  author: 小智伴学
+  category: 老师通用
+  grade_bands:
+    - 小学中段
+    - 小学高段
+    - 初中
+  tags: [学情分析, 数据诊断, 班级报告, 弱项识别, 差异化教学, 老师工具]
+  depends_on:
+    - xiaozhi-teach-exam-designer
 id: openclaw:xiaozhi-teach-student-analyzer
 min_platform_version: "2.0"
 max_round_limit: 25

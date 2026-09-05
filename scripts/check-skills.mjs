@@ -2,7 +2,7 @@
 // 全库内容级校验（比 check-references.mjs 更进一步）。
 // 用法：node scripts/check-skills.mjs [--warn-only]
 // 检查项：
-//  F1 frontmatter：name==目录名、version==package.json、depends_on 为列表且存在、grade_bands 存在且合法
+//  F1 frontmatter：顶层只含官方字段 + 平台字段；name==目录名；license；metadata.{display_name,version,author,category,grade_bands,tags,depends_on} 齐全合法、version==package.json
 //  F2 depends_on 无环
 //  F3 description 无硬命令词/营销句；正文无"自动触发/自动写入/自动推送/自动预扣/自动确认"
 //  R1 references 非占位（≥15 行且不含"待补充"）
@@ -24,6 +24,13 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 // ---------- git helpers（A2 用；git 不可用时降级为跳过） ----------
 import { execFileSync } from "node:child_process";
 let gitOk = true;
+const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+function gitDirty(file) {
+  try {
+    const out = execFileSync("git", ["-c", "safe.directory=" + root.replaceAll(String.fromCharCode(92), "/"), "status", "--porcelain", "--", file], { cwd: root, encoding: "utf-8", stdio: ["ignore", "pipe", "ignore"] });
+    return out.trim().length > 0;
+  } catch { return false; }
+}
 function gitLog(file) {
   try {
     const out = execFileSync("git", ["-c", "safe.directory=" + root.replaceAll(String.fromCharCode(92), "/"), "log", "--format=%ad|%s", "--date=short", "--", file], { cwd: root, encoding: "utf-8", stdio: ["ignore", "pipe", "ignore"] });
@@ -65,6 +72,19 @@ function parseFrontmatter(text) {
       while (i < lines.length && (lines[i].startsWith("  ") || lines[i].trim() === "") && lines[i].trim() !== "---") { buf.push(lines[i].trim()); i++; }
       fm[key] = buf.join(val.startsWith(">") ? "" : "\n"); continue;
     }
+    if (val === "" && key === "metadata") { // nested map（Agent Skills 官方的自定义字段容器）
+      const md = {}; i++;
+      while (i < lines.length && /^  \S/.test(lines[i])) {
+        const mm = lines[i].match(/^  ([A-Za-z_][\w-]*):\s*(.*)$/);
+        if (!mm) { i++; continue; }
+        const k2 = mm[1]; const v2 = mm[2].trim();
+        if (v2 === "") { const l2 = []; i++; while (i < lines.length && /^    -\s+/.test(lines[i])) { l2.push(lines[i].replace(/^\s+-\s+/, "").trim()); i++; } md[k2] = l2; continue; }
+        if (v2.startsWith("[") && v2.endsWith("]")) md[k2] = v2.slice(1, -1).split(",").map((s) => s.trim().replace(/^["']|["']$/g, "")).filter(Boolean);
+        else md[k2] = v2.replace(/^["']|["']$/g, "");
+        i++;
+      }
+      fm.metadata = md; continue;
+    }
     if (val === "") { // block list
       const list = []; i++;
       while (i < lines.length && /^\s+-\s+/.test(lines[i])) { list.push(lines[i].replace(/^\s+-\s+/, "").trim()); i++; }
@@ -79,6 +99,7 @@ function parseFrontmatter(text) {
 }
 
 const GRADE_BANDS = ["小学低段", "小学中段", "小学高段", "初中", "高中"];
+const TOP_KEYS = new Set(["name", "description", "license", "compatibility", "metadata", "allowed-tools", "id", "min_platform_version", "max_round_limit"]);
 const HARD_WORDS = /务必调用|必须激活|必须调用|凡是涉及|总是激活|始终激活/;
 const MARKETING = /覆盖.{0,6}\d{2}%.{0,4}场景|十倍|100%|基于艾宾浩斯|普通AI对话基于/;
 const AUTO_WORDS = /自动触发|自动写入|自动推送|自动预扣|自动确认|自动存入|静默检查|自动唤醒/;
@@ -106,10 +127,16 @@ for (const f of skillFiles) {
   const { fm, body } = parsed;
   skills.set(dir, { fm, body, file: f, text });
   if (fm.name !== dir) err("F1", rel(f), `name(${fm.name}) ≠ 目录名(${dir})`);
-  if (fm.version !== REPO_VERSION) err("F1", rel(f), `version=${fm.version}，应为 ${REPO_VERSION}`);
-  if (fm.depends_on !== undefined && !Array.isArray(fm.depends_on)) err("F1", rel(f), "depends_on 必须是 YAML 列表");
-  if (!fm.grade_bands) err("F1", rel(f), "缺 grade_bands");
-  else if (!Array.isArray(fm.grade_bands) || fm.grade_bands.some((g) => !GRADE_BANDS.includes(g))) err("F1", rel(f), `grade_bands 非法：${JSON.stringify(fm.grade_bands)}`);
+  // 顶层只允许 Agent Skills 官方字段 + 平台加载字段（shared/platform-conventions.md §六）；本库自有字段一律放 metadata
+  for (const k of Object.keys(fm)) if (!TOP_KEYS.has(k)) err("F1", rel(f), `非官方顶层字段 ${k}，应放入 metadata`);
+  const md = fm.metadata || {};
+  if (!fm.metadata) err("F1", rel(f), "缺 metadata 块");
+  if (!fm.license) err("F1", rel(f), "缺 license");
+  for (const k of ["display_name", "version", "author", "category", "grade_bands", "tags"]) if (md[k] === undefined) err("F1", rel(f), `metadata 缺 ${k}`);
+  if (md.version !== REPO_VERSION) err("F1", rel(f), `metadata.version=${md.version}，应为 ${REPO_VERSION}`);
+  if (md.depends_on !== undefined && !Array.isArray(md.depends_on)) err("F1", rel(f), "metadata.depends_on 必须是 YAML 列表");
+  if (!md.grade_bands) err("F1", rel(f), "缺 metadata.grade_bands");
+  else if (!Array.isArray(md.grade_bands) || md.grade_bands.some((g) => !GRADE_BANDS.includes(g))) err("F1", rel(f), `grade_bands 非法：${JSON.stringify(md.grade_bands)}`);
   const desc = fm.description || "";
   if (HARD_WORDS.test(desc)) err("F3", rel(f), "description 含硬命令词（务必调用/必须激活/凡是涉及…）");
   if (MARKETING.test(desc)) err("F3", rel(f), "description 含营销/伪精确表述");
@@ -120,7 +147,7 @@ for (const f of skillFiles) {
 // depends_on exist + cycles
 const graph = new Map();
 for (const [name, s] of skills) {
-  const deps = Array.isArray(s.fm.depends_on) ? s.fm.depends_on : [];
+  const deps = Array.isArray(s.fm.metadata?.depends_on) ? s.fm.metadata.depends_on : [];
   graph.set(name, deps);
   for (const d of deps) if (!skills.has(d)) err("F1", rel(s.file), `depends_on 指向不存在的 SKILL：${d}`);
 }
@@ -158,6 +185,7 @@ for (const f of refFiles) {
     const logs = gitLog(f);
     const later = logs.filter((l) => l.date > decl[1] && !/升版|版本号|全库升版|bump/i.test(l.subject));
     if (later.length) err("A2", rel(f), `示例题验算声明为 ${decl[1]}，但此后有 ${later.length} 次实质改动（最近 ${later[0].date}），请逐题重新验算并更新日期`);
+    else if (gitDirty(f) && decl[1] < today()) err("A2", rel(f), `示例题验算声明为 ${decl[1]}，但文件有未提交改动，请验算后把日期更新为今天`);
   }
 }
 

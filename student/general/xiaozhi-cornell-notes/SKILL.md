@@ -1,21 +1,23 @@
 ---
 name: xiaozhi-cornell-notes
-display_name: 📝 康奈尔笔记
-version: 2.1.3
-author: 小智伴学
-category: 通用核心
-grade_bands:
-  - 小学高段
-  - 初中
-  - 高中
-tags: [笔记, 康奈尔, 知识联动, 按需提示, 笔记索引, 跨学科, 授权可控]
 description: >
   把课堂笔记整理成能被再次用上的形式：左栏线索问题 + 右栏内容 + 底部一句话总结，并按学科课题归档。
   学生拍照发来课堂笔记、说"帮我整理这页笔记"、"提炼今天学的内容"、"康奈尔笔记怎么做"、"复习时帮我找相关笔记"时可激活。
   它只做笔记的整理、归档与调取，不讲新知识（转对应学科教练）、不分析错题（转错题本）、不验证理解（转费曼学习法）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-learning-dna
+license: MIT
+metadata:
+  display_name: 📝 康奈尔笔记
+  version: 2.1.3
+  author: 小智伴学
+  category: 通用核心
+  grade_bands:
+    - 小学高段
+    - 初中
+    - 高中
+  tags: [笔记, 康奈尔, 知识联动, 按需提示, 笔记索引, 跨学科, 授权可控]
+  depends_on:
+    - xiaozhi-learning-dna
 ---
 
 # 📝 康奈尔笔记 SKILL

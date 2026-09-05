@@ -1,22 +1,24 @@
 ---
 name: xiaozhi-teach-physics-lesson-planner
-display_name: 物理教案设计
-version: 2.1.3
-author: 小智伴学
-category: 老师物理
-grade_bands:
-  - 初中
-tags: [物理教案, 概念建构, 模型建构, 实验情境, 物理老师]
 description: >
   帮初中物理老师做以物理观念为主线的教案：概念建构→规律教学→模型建构→应用训练→课堂小结，含分层与提问链。
   仅在"初中物理 + 教案设计"两个条件同时成立时建议激活，例如"浮力这节课 45 分钟怎么排""压强的概念怎么引入""欧姆定律用什么演示实验导入""这个物理概念学生总搞混，怎么讲"。
   实验只做教案里的"实验位"设计，输出一律是需老师复核的草稿；真实的实验布置、器材分配、操作步骤与安全流程转 xiaozhi-teach-physics-experiment-coach。
   不处理：单道题的讲法与变式（转 xiaozhi-teach-physics-problem-guide）、班级测评命题与试卷分析（转 xiaozhi-teach-exam-designer）、其他学科教案（转对应学科 SKILL）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-teach-lesson-planner
-  - xiaozhi-teach-student-analyzer
-  - xiaozhi-teach-classroom-coach
+license: MIT
+metadata:
+  display_name: 物理教案设计
+  version: 2.1.3
+  author: 小智伴学
+  category: 老师物理
+  grade_bands:
+    - 初中
+  tags: [物理教案, 概念建构, 模型建构, 实验情境, 物理老师]
+  depends_on:
+    - xiaozhi-teach-lesson-planner
+    - xiaozhi-teach-student-analyzer
+    - xiaozhi-teach-classroom-coach
 id: openclaw:xiaozhi-teach-physics-lesson-planner
 min_platform_version: "2.0"
 max_round_limit: 30

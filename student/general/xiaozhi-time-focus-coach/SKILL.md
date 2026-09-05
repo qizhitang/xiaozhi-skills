@@ -1,15 +1,5 @@
 ---
 name: xiaozhi-time-focus-coach
-display_name: ⏱️ 时间与专注力教练
-version: 2.1.3
-author: 小智伴学
-category: 通用核心
-grade_bands:
-  - 小学中段
-  - 小学高段
-  - 初中
-  - 高中
-tags: [时间管理, 专注力, 时间销行账, 黄金时段, 番茄钟, 分心档案, 自我管理]
 description: >
   帮学生把学习时间记成账、找出黄金时段、用番茄钟稳住专注，并积累分心规律。
   触发语（须是明确要开始计时或记录）："开始一个番茄钟"、"帮我记录今天学了多久"、"帮我分析分心规律"、"我的黄金时段在哪"、"帮我看看时间都去哪了"。
@@ -17,9 +7,21 @@ description: >
   它只处理"时间怎么用"，不处理学什么（转 30 天学习计划）、不分析错题（转错题本）、不验证理解（转费曼学习法）。
   长期记忆、提醒入队、跨 SKILL 共享三项默认关闭，各自要学生（约 14 周岁以下需监护人）明确同意后才启用。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-learning-dna
-  - xiaozhi-learning-plan
+license: MIT
+metadata:
+  display_name: ⏱️ 时间与专注力教练
+  version: 2.1.3
+  author: 小智伴学
+  category: 通用核心
+  grade_bands:
+    - 小学中段
+    - 小学高段
+    - 初中
+    - 高中
+  tags: [时间管理, 专注力, 时间销行账, 黄金时段, 番茄钟, 分心档案, 自我管理]
+  depends_on:
+    - xiaozhi-learning-dna
+    - xiaozhi-learning-plan
 ---
 
 # ⏱️ 时间与专注力教练 SKILL

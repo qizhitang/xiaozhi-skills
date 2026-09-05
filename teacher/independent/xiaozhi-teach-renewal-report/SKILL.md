@@ -1,15 +1,5 @@
 ---
 name: xiaozhi-teach-renewal-report
-display_name: 阶段报告与续课助手
-version: 2.1.3
-author: 小智伴学
-category: 独立教师
-grade_bands:
-  - 小学中段
-  - 小学高段
-  - 初中
-  - 高中
-tags: [阶段报告, 续费, 学习总结, 成长档案, 独立教师]
 description: >
   用学员真实的学习记录做一份阶段报告，让续课变成家长看完事实后的自主选择。
   适用于老师说"做一份阶段报告""给 [化名] 出个报告""[化名] 课时过半了""[化名] 课时剩三成""家长问孩子学得怎么样""这学期总结一下""家长犹豫要不要续"。
@@ -18,9 +8,21 @@ description: >
   本 SKILL 不记课后内容、不登记作业、不排课、不发消息，也不改学员状态、不执行删除——
   素材来自 lesson-log 与 homework-tracker，消息由老师自己发（措辞可交 parent-communication），档案变更转 student-intake。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-teach-lesson-log
-  - xiaozhi-teach-parent-communication
+license: MIT
+metadata:
+  display_name: 阶段报告与续课助手
+  version: 2.1.3
+  author: 小智伴学
+  category: 独立教师
+  grade_bands:
+    - 小学中段
+    - 小学高段
+    - 初中
+    - 高中
+  tags: [阶段报告, 续费, 学习总结, 成长档案, 独立教师]
+  depends_on:
+    - xiaozhi-teach-lesson-log
+    - xiaozhi-teach-parent-communication
 id: openclaw:xiaozhi-teach-renewal-report
 min_platform_version: "2.0"
 max_round_limit: 15

@@ -1,17 +1,19 @@
 ---
 name: xiaozhi-skill-creator
-display_name: 🛠️ SKILL 编写工具
-version: 2.1.3
-author: 小智伴学
-category: 开发者工具
-grade_bands:
-  - 高中
-tags: [开发者工具, SKILL编写, 四层结构, 提示词工程, 元SKILL]
 description: >
   写一个新 SKILL 时用的编写工具：四层结构（角色/规则/记忆/输出）、安全与隐私边界、五步落地流程、常见问题诊断。
   面向 SKILL 开发者与有编程/写提示词基础的高中生，在"我要新写一个学习类 SKILL""帮我把这个 SKILL 的规则写清楚""我的 SKILL 行为不稳定怎么排查""这个 SKILL 该记哪些字段"时使用。
   它不替你写具体学科内容、不做学习辅导、不生成练习题；本仓库的词表与阈值一律以 shared/vocab.md 为准。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
+license: MIT
+metadata:
+  display_name: 🛠️ SKILL 编写工具
+  version: 2.1.3
+  author: 小智伴学
+  category: 开发者工具
+  grade_bands:
+    - 高中
+  tags: [开发者工具, SKILL编写, 四层结构, 提示词工程, 元SKILL]
 ---
 
 # 🛠️ SKILL 编写工具
@@ -43,7 +45,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 ```
 一个可用的 SKILL = frontmatter + 四层结构 + 边界声明 + 交接契约
 
-frontmatter：name（等于目录名）/ version / grade_bands / depends_on / description
+frontmatter：顶层只写官方字段 name（等于目录名）/ description / license / compatibility；本库自有的 version / display_name / category / grade_bands / depends_on / tags 放进 `metadata:` 块
 四层结构：  角色层（它是谁）/ 规则层（它怎么做）/ 记忆层（它记什么）/ 输出层（它怎么回应）
 边界声明：  技术边界一行 + 控制入口段落 +（涉情绪时）危机例外三行
 交接契约：  只用 handover-protocol.schema.json 里已有的 handoverType 与字段

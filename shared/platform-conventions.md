@@ -69,4 +69,4 @@
 
 ## 六、平台字段
 
-frontmatter 中 `compatibility`、`id`、`min_platform_version`、`max_round_limit` 为平台加载字段，保留；平台机制描述不再写入 SKILL 正文。
+frontmatter 顶层只放 Agent Skills 官方字段（`name` / `description` / `license` / `compatibility` / `metadata`）与平台加载字段（`id` / `min_platform_version` / `max_round_limit`，仅部分老师端技能有）。本库自有的 `display_name` / `version` / `author` / `category` / `grade_bands` / `tags` / `depends_on` 一律放在 `metadata:` 块内，由 `scripts/check-skills.mjs` F1 校验；发布到各市场时由打包脚本按市场需要投影成顶层字段。平台机制描述不再写入 SKILL 正文。

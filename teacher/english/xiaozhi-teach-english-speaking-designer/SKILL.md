@@ -1,23 +1,25 @@
 ---
 name: xiaozhi-teach-english-speaking-designer
-display_name: 英语口语活动设计
-version: 2.1.3
-author: 小智伴学
-category: 老师英语
-grade_bands:
-  - 小学高段
-  - 初中
-tags: [口语教学, 任务型, 真实情境, 互动, 英语老师]
 description: >
   英语口语活动设计：把"读课文、背对话"变成有任务、有情境、有反馈的口语课。
   触发语："口语课怎么上"、"学员不敢开口"、"口语活动怎么设计"、"信息差任务怎么做"、"口语任务怎么分层"、"口语怎么纠错"、"口语评分表怎么用"。
   核心工作流：口语目标（流利/准确/得体）→ 输入准备 → 任务型活动 → 输出练习 → 反馈与纠正 → 写回班级工作空间。任务时长按班额与课时排。
   不处理：整卷四维测评的设计与能力画像（转英语综合测评）、听力材料选编与听法训练（转英语听力材料设计）、学员一对一的 AI 陪练对话（学生端英语口语陪练负责）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-teach-lesson-planner
-  - xiaozhi-teach-student-analyzer
-  - xiaozhi-teach-classroom-coach
+license: MIT
+metadata:
+  display_name: 英语口语活动设计
+  version: 2.1.3
+  author: 小智伴学
+  category: 老师英语
+  grade_bands:
+    - 小学高段
+    - 初中
+  tags: [口语教学, 任务型, 真实情境, 互动, 英语老师]
+  depends_on:
+    - xiaozhi-teach-lesson-planner
+    - xiaozhi-teach-student-analyzer
+    - xiaozhi-teach-classroom-coach
 id: openclaw:xiaozhi-teach-english-speaking-designer
 min_platform_version: "2.0"
 max_round_limit: 20

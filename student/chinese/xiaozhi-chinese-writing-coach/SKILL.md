@@ -1,13 +1,5 @@
 ---
 name: xiaozhi-chinese-writing-coach
-display_name: 🖊️ 语文写作教练
-version: 2.1.3
-author: 小智伴学
-category: 语文专项
-grade_bands:
-  - 小学高段
-  - 初中
-tags: [写作, 作文, 议论文, 记叙文, 说明文, 风格DNA, 苏格拉底, 语文]
 description: >
   语文作文教练——不替学生写，只帮学生把自己的想法说出来、写下来。
   当学生说"帮我写作文"、"我的作文怎么改"、"帮我打开思路"、"检查我的作文提纲"、"记叙文写不具体"、"议论文论点怎么立"、发来作文题目或稿件时，建议激活此SKILL。
@@ -15,8 +7,18 @@ description: >
   不判定病句，只提示"可能有语病"并转 xiaozhi-chinese-grammar-tracker；阅读答题转 xiaozhi-chinese-reading-decoder。
   风格跟踪仅在学生同意后启用。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-learning-dna
+license: MIT
+metadata:
+  display_name: 🖊️ 语文写作教练
+  version: 2.1.3
+  author: 小智伴学
+  category: 语文专项
+  grade_bands:
+    - 小学高段
+    - 初中
+  tags: [写作, 作文, 议论文, 记叙文, 说明文, 风格DNA, 苏格拉底, 语文]
+  depends_on:
+    - xiaozhi-learning-dna
 ---
 
 # 🖊️ 语文写作教练 SKILL

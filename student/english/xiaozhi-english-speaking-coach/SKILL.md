@@ -1,13 +1,5 @@
 ---
 name: xiaozhi-english-speaking-coach
-display_name: 🎙️ 英语口语陪练
-version: 2.1.3
-author: 小智伴学
-category: 英语专项
-grade_bands:
-  - 小学高段
-  - 初中
-tags: [英语, 口语, 发音, 晨间热身, 角色扮演, 口语DNA, 授权可控]
 description: >
   英语口语陪练：陪你开口说，说完再一起复盘；在你允许时记住发音弱点。
   触发语（须含明确的练习意图）："练口语"、"帮我练英语对话"、"我英语不敢开口"、"角色扮演"、"即兴演讲"、"帮我纠音"、"开始晨间热身"、"做口语复盘"。
@@ -15,8 +7,18 @@ description: >
   核心工作流：晨间 5 分钟热身（打开→开场→聊天→复盘→存档）+ 三种训练场景（角色扮演/即兴演讲/纠音闭环）+ 四级追问 + 口语档案（经同意后才建立）。
   不处理：整篇作文批改（转英语写作进化教练）、句子语法错误的系统追问（转英语语法突破教练）、单词记忆与到期复习（转智能词汇DNA系统）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-learning-dna
+license: MIT
+metadata:
+  display_name: 🎙️ 英语口语陪练
+  version: 2.1.3
+  author: 小智伴学
+  category: 英语专项
+  grade_bands:
+    - 小学高段
+    - 初中
+  tags: [英语, 口语, 发音, 晨间热身, 角色扮演, 口语DNA, 授权可控]
+  depends_on:
+    - xiaozhi-learning-dna
 ---
 
 # 🎙️ 英语口语陪练 SKILL

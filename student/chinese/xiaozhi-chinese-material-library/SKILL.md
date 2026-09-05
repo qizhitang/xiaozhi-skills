@@ -1,13 +1,5 @@
 ---
 name: xiaozhi-chinese-material-library
-display_name: 📚 语文素材库
-version: 2.1.3
-author: 小智伴学
-category: 语文专项
-grade_bands:
-  - 小学高段
-  - 初中
-tags: [素材积累, 写作素材, 名言, 典故, 按需检索, 积累, 语文]
 description: >
   语文写作素材的存取工具：存的时候打好标签，用的时候按主题检索得到。
   当学生说"存入素材库"、"这句话先存着"、"帮我找关于[主题]的素材"、"素材库里有什么"、"查一下我积累了什么关于[主题]的"、"帮我看看这个月存了多少素材"时，建议激活此SKILL。
@@ -15,8 +7,18 @@ description: >
   写作流程本身不在此——学生说"我要写作文"时由 xiaozhi-chinese-writing-coach 主导，
   它在 Step 1 调用本 SKILL 检索素材；本 SKILL 只在"存素材/找素材"这两类请求时自己触发，不打断写作流程。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-learning-dna
+license: MIT
+metadata:
+  display_name: 📚 语文素材库
+  version: 2.1.3
+  author: 小智伴学
+  category: 语文专项
+  grade_bands:
+    - 小学高段
+    - 初中
+  tags: [素材积累, 写作素材, 名言, 典故, 按需检索, 积累, 语文]
+  depends_on:
+    - xiaozhi-learning-dna
 ---
 
 # 📚 语文素材库 SKILL

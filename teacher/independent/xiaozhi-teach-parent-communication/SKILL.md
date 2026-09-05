@@ -1,15 +1,5 @@
 ---
 name: xiaozhi-teach-parent-communication
-display_name: 家长沟通助手
-version: 2.1.3
-author: 小智伴学
-category: 独立教师
-grade_bands:
-  - 小学中段
-  - 小学高段
-  - 初中
-  - 高中
-tags: [家长沟通, 简报, 反馈, 续费沟通, 独立教师, 沟通话术]
 description: >
   帮独立教师把"临时想起来发条消息"变成有节奏、不制造焦虑的家长沟通。
   适用于老师说"帮我想个消息发给家长""家长问成绩怎么回""孩子这次退步了怎么说""家长很担心怎么回""续课怎么跟家长说""家长群里发什么""家长不太配合怎么办"。
@@ -18,8 +8,20 @@ description: >
   不写课后记录、不登记作业、不排课、不做阶段报告，也不改学员档案（status、沟通偏好、授权位、保留期一概不动）——
   素材来自 lesson-log 与 homework-tracker，阶段报告转 renewal-report，档案改动转 student-intake。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-teach-lesson-log
+license: MIT
+metadata:
+  display_name: 家长沟通助手
+  version: 2.1.3
+  author: 小智伴学
+  category: 独立教师
+  grade_bands:
+    - 小学中段
+    - 小学高段
+    - 初中
+    - 高中
+  tags: [家长沟通, 简报, 反馈, 续费沟通, 独立教师, 沟通话术]
+  depends_on:
+    - xiaozhi-teach-lesson-log
 id: openclaw:xiaozhi-teach-parent-communication
 min_platform_version: "2.0"
 max_round_limit: 15

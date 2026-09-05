@@ -1,20 +1,22 @@
 ---
 name: xiaozhi-math-error-dna
-display_name: 🧬 数学错误DNA
-version: 2.1.3
-author: 小智伴学
-category: 数学专项
-grade_bands:
-  - 初中
-tags: [数学, 错题, 错误追踪, 弱项分析, 数学焦虑, 月报, 授权可控]
 description: >
   初中数学错题的根因深度分析：把错题本判定的通用四维，细化为数学子类型（B/C/R/M + 两位编码）并做跨维度关联。
   典型触发："为什么我数学总在同一个地方错""帮我分析我的数学错误规律""帮我生成数学弱项月报""我数学太差了"。
   不处理：错题的收录与次数统计（由 xiaozhi-correction-notebook 唯一负责，本 SKILL 只接收它推送的交接）、单题当场讲解（转 xiaozhi-math-problem-solving-coach）、概念重建（转 xiaozhi-math-concept-explainer）、分层练习（转 xiaozhi-math-gradient-trainer）。
   未获同意时，不建立长期档案、不跨SKILL共享。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-learning-dna
+license: MIT
+metadata:
+  display_name: 🧬 数学错误DNA
+  version: 2.1.3
+  author: 小智伴学
+  category: 数学专项
+  grade_bands:
+    - 初中
+  tags: [数学, 错题, 错误追踪, 弱项分析, 数学焦虑, 月报, 授权可控]
+  depends_on:
+    - xiaozhi-learning-dna
 ---
 
 # 🧬 数学错误DNA SKILL

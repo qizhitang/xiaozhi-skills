@@ -1,20 +1,22 @@
 ---
 name: xiaozhi-chinese-classical-revival
-display_name: 跨时空古文对话
-version: 2.1.3
-author: 小智伴学
-category: 语文专项
-grade_bands:
-  - 初中
-tags: [文言文, 古诗词, 古人扮演, 背诵, 诗词鉴赏, 语文, 经典]
 description: >
   文言文与古诗词专项：让古人开口，也把文言题、古诗鉴赏题的答法讲清楚。
   当学生说"帮我理解这首古诗"、"文言文读不懂"、"扮演苏轼/杜甫"、"这首词的写作背景"、"帮我背古诗默写"、"文言实词虚词怎么记"、"文言文阅读题怎么答"、"古诗鉴赏题怎么答"时，建议激活此SKILL。
   模块：古人角色扮演 + 三级跳（背会→真懂→能用）+ 游戏化背诵 + 场景匹配 + 文言基础与答题规范。
   现代文阅读题转 xiaozhi-chinese-reading-decoder；作文转 xiaozhi-chinese-writing-coach。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
-depends_on:
-  - xiaozhi-learning-dna
+license: MIT
+metadata:
+  display_name: 跨时空古文对话
+  version: 2.1.3
+  author: 小智伴学
+  category: 语文专项
+  grade_bands:
+    - 初中
+  tags: [文言文, 古诗词, 古人扮演, 背诵, 诗词鉴赏, 语文, 经典]
+  depends_on:
+    - xiaozhi-learning-dna
 ---
 
 # 跨时空古文对话 SKILL
