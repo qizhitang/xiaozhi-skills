@@ -318,7 +318,8 @@ xiaozhi-skills/
 │   ├── verify-examples.mjs          示例题机器断言（进 CI）
 │   ├── check-evals.mjs              回归用例静态校验（进 CI）
 │   ├── run-evals.mjs                行为回归运行器（手动）
-│   └── gen-docs.mjs                 生成技能索引 + 文档同步核对（进 CI）
+│   ├── gen-docs.mjs                 生成技能索引 + 文档同步核对（进 CI）
+│   └── publish/                     打包与发布到两个市场 + 线上版本核对（凭据留仓库外，见其 README）
 ├── docs/
 │   ├── architecture.md              本文档
 │   ├── installation-guide.md

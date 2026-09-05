@@ -1,121 +1,106 @@
 #!/usr/bin/env python3
-"""发布全库到 ClawHub。
+"""发布全库到 ClawHub。没有配额问题，一轮发完；已成功的跳过，可断点续跑。
 
-与 SkillHub 的差别：
-  - 没有发布配额，一轮能发完
-  - 会从 slug 自动生成英文显示名，所以必须显式传 --name，否则线上会变成
-    "Xiaozhi Chinese Grammar Tracker" 这类机翻名
-  - 少数 slug 有历史包袱：某个技能的 slug 重定向到一个被审核隐藏的目标，
-    2.1.x 号段不可用，只能在既有的高版本号上递增（见 SPECIAL）
-
-凭据由 ClawHub CLI 的配置文件提供，必须在仓库外（_common.clawhub_env 会拒绝
-仓库内的配置，因为那是明文 token）。
+ClawHub 的 token 由其 CLI 的配置文件持有（CLAWHUB_CONFIG_PATH，默认在仓库外的
+~/.xiaozhi-publish/clawhub-config.json）。本脚本只把路径交给 CLI，不读它的内容。
 
 用法：
-    python publish_clawhub.py            # 发全部
-    python publish_clawhub.py --dry-run  # 预览，不发布
-    python publish_clawhub.py <技能名>   # 只发一个
+    python publish_clawhub.py                 # 发全部
+    python publish_clawhub.py --dry-run       # 只打包并列出
+    python publish_clawhub.py --tag-latest    # 发完后把 latest 标到本版（版本号被更高的历史版本压住时用）
 """
-import json, os, re, subprocess, sys, time
+import json, os, re, shutil, subprocess, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _common import HERE, REPO, clawhub_cli, clawhub_env, log, version, workdir  # noqa: E402
 
-STAGE = workdir("staged")
+STAGE = workdir("staged-clawhub")
 DONE_FILE = os.path.join(workdir(), "published-clawhub.json")
-LOG = os.path.join(workdir(), "publish.log")
+LOG = os.path.join(workdir(), "publish-clawhub.log")
 
-# 目录名 -> (上架 slug, 版本号)。slug 被重定向/占用时在此固定。
-# chinese-classical-revival 的 xiaozhi- 前缀 slug 重定向到一个审核隐藏的目标，
-# 2.1.x 发不上去；线上已有 1000000.x 号段，只能在其上递增。
-SPECIAL_SLUG = {"xiaozhi-chinese-classical-revival": "chinese-classical-revival"}
-SPECIAL_VER = {"xiaozhi-chinese-classical-revival": None}  # None = 运行时按 --version 算
-
-
-def special_version(ver):
-    """把 2.1.4 映射成 1000000.4.0：主号固定，次号取 patch。"""
-    m = re.match(r"^\d+\.\d+\.(\d+)$", ver)
-    return f"1000000.{m.group(1)}.0" if m else "1000000.0.0"
+# 目录名 -> 线上 slug。xiaozhi-chinese-classical-revival 在 ClawHub 上的 slug 被重定向到
+# 一个审核隐藏的旧条目 chinese-classical-revival，只能就地发到那个 slug；且它的历史版本号
+# 是 1000000.0.0，所以本库的 2.1.N 在它那里映射为 1000000.N.0，否则 latest 会被压住。
+SLUG_MAP = {"xiaozhi-chinese-classical-revival": "chinese-classical-revival"}
 
 
-def display_name(path):
-    fm = open(os.path.join(path, "SKILL.md"), encoding="utf-8").read().split("---")[1]
-    m = re.search(r"^display_name:\s*(.+)$", fm, re.M)
-    return m.group(1).strip() if m else ""
+def remote_version(name, ver):
+    if name in SLUG_MAP:
+        patch = ver.split(".")[-1]
+        return f"1000000.{patch}.0"
+    return ver
 
 
 def restage(ver):
-    import shutil
     shutil.rmtree(STAGE, ignore_errors=True)
     r = subprocess.run([sys.executable, os.path.join(HERE, "stage.py"), STAGE],
                        capture_output=True, text=True, encoding="utf-8", cwd=REPO, timeout=600)
     if not os.path.isdir(STAGE) or not os.listdir(STAGE):
         log("打包失败：" + ((r.stdout or "") + (r.stderr or ""))[:400], LOG)
         sys.exit(1)
-    log(f"按仓库版本 {ver} 打包 {len(os.listdir(STAGE))} 个技能", LOG)
+    log(f"按仓库版本 {ver} 打包 {len(os.listdir(STAGE))} 个技能 -> {STAGE}", LOG)
+
+
+def display_name(path):
+    fm = open(os.path.join(path, "SKILL.md"), encoding="utf-8").read().split("---")[1]
+    m = re.search(r"^display_name:\s*(.+)$", fm, re.M)
+    return m.group(1).strip() if m else os.path.basename(path)
+
+
+def run_cli(args, env, timeout=300):
+    cmd = clawhub_cli() + args
+    r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", env=env, timeout=timeout)
+    return r.returncode, (r.stdout or ""), (r.stderr or "")
 
 
 def main():
     ver = version()
-    only = next((a for a in sys.argv[1:] if not a.startswith("-")), None)
-    dry = "--dry-run" in sys.argv
     restage(ver)
+    env = clawhub_env()
     changelog = f"v{ver}：详见仓库 docs/changelog.md"
-    cli, env = clawhub_cli(), clawhub_env()
-
     names = sorted(os.listdir(STAGE))
-    if only:
-        names = [n for n in names if n == only] or sys.exit(f"没有这个技能：{only}")
+
+    if "--dry-run" in sys.argv:
+        log(f"dry-run：{len(names)} 个待发", LOG)
+        for n in names[:8]:
+            print(f"  {n} -> slug={SLUG_MAP.get(n, n)} version={remote_version(n, ver)}")
+        return 0
+
     done = json.load(open(DONE_FILE, encoding="utf-8")) if os.path.exists(DONE_FILE) else {}
     done = {k: v for k, v in done.items() if v.get("repoVersion") == ver}
-    todo = [n for n in names if done.get(n, {}).get("ok") is not True]
-    log(f"ClawHub：共 {len(names)} 个，待发 {len(todo)}" + ("（dry-run）" if dry else ""), LOG)
 
-    for i, name in enumerate(todo, 1):
+    for i, name in enumerate(names, 1):
+        if done.get(name, {}).get("ok"):
+            continue
         path = os.path.join(STAGE, name)
-        slug = SPECIAL_SLUG.get(name, name)
-        v = special_version(ver) if name in SPECIAL_VER else ver
-        base = cli + ["skill", "publish", path, "--version", v, "--slug", slug,
-                      "--name", display_name(path), "--changelog", changelog, "--json"]
-        if dry:
-            base.append("--dry-run")
-        for attempt, args in enumerate([base, base + ["--force"]], 1):
-            try:
-                r = subprocess.run(args, capture_output=True, text=True,
-                                   encoding="utf-8", env=env, timeout=240)
-            except subprocess.TimeoutExpired:
-                done[name] = {"ok": False, "repoVersion": ver, "error": "timeout"}
-                log(f"  [{i}/{len(todo)}] x {name}：超时", LOG)
-                break
-            out = (r.stdout or "") + (r.stderr or "")
-            body = {}
-            for m in re.finditer(r"\{[\s\S]*?\n\}", out):
+        slug, rver, disp = SLUG_MAP.get(name, name), remote_version(name, ver), display_name(path)
+        code, out, err = run_cli(["skill", "publish", path, "--version", rver, "--slug", slug,
+                                  "--name", disp, "--changelog", changelog, "--json"], env)
+        body = {}
+        for line in reversed(out.strip().splitlines()):
+            if line.startswith("{"):
                 try:
-                    body = json.loads(m.group(0))
+                    body = json.loads(line)
+                    break
                 except Exception:
                     pass
-            if body.get("ok") or '"status": "published"' in out or (r.returncode == 0 and body):
-                done[name] = {"ok": True, "repoVersion": ver, "version": body.get("version"),
-                              "slug": body.get("slug"), "files": body.get("fileCount")}
-                log(f"  [{i}/{len(todo)}] OK {name} @{body.get('version')} "
-                    f"files={body.get('fileCount')} name={body.get('displayName')}", LOG)
-                break
-            if attempt == 1 and re.search(r"force|conflict|fingerprint", out, re.I):
-                log(f"  [{i}/{len(todo)}] .. {name} 需 --force，重试", LOG)
-                continue
-            done[name] = {"ok": False, "repoVersion": ver, "error": out.strip()[:220]}
-            log(f"  [{i}/{len(todo)}] x {name}：{out.strip()[:140]}", LOG)
-            break
-        if not dry:
-            json.dump(done, open(DONE_FILE, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-        time.sleep(1.2)
+        ok = code == 0 and not body.get("error")
+        done[name] = {"ok": ok, "repoVersion": ver, "version": rver, "slug": slug,
+                      "name": disp, "error": None if ok else (body.get("error") or err or out)[:200]}
+        log(f"[{i}/{len(names)}] {'OK' if ok else 'x '} {name} @{rver}" + ("" if ok else f": {done[name]['error'][:80]}"), LOG)
+        json.dump(done, open(DONE_FILE, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+        time.sleep(1.5)
 
-    ok = [k for k, v in done.items() if v.get("ok")]
-    bad = [(k, v.get("error")) for k, v in done.items() if not v.get("ok")]
-    log(f"ClawHub 收工：成功 {len(ok)}/{len(names)}，失败 {len(bad)}", LOG)
-    for k, e in bad:
-        log(f"  x {k}: {str(e)[:160]}", LOG)
-    return 0 if not bad else 1
+    ok_n = sum(1 for v in done.values() if v.get("ok"))
+    log(f"收工：成功 {ok_n}/{len(names)} @ {ver}", LOG)
+
+    if "--tag-latest" in sys.argv:
+        for name, v in done.items():
+            if not v.get("ok"):
+                continue
+            code, out, err = run_cli(["skill", "tag", v["slug"], v["version"], "--tag", "latest", "--yes"], env)
+            log(f"  tag latest {v['slug']} {v['version']}: {'OK' if code == 0 else (err or out)[:80]}", LOG)
+    return 0 if ok_n == len(names) else 1
 
 
 if __name__ == "__main__":

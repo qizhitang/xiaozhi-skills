@@ -8,3 +8,7 @@ package-lock.json
 **/schemas/package.json
 
 .qoder/
+
+# publish tooling: runtime artifacts stay out (default work dir is ~/.xiaozhi-publish/work, this guards local overrides)
+scripts/publish/.work/
+scripts/publish/__pycache__/

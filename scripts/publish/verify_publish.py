@@ -1,22 +1,23 @@
 #!/usr/bin/env python3
 """核对 SkillHub 线上版本与仓库是否一致。
 
-凭据运行时从 SkillHub CLI 自己维护的 ~/.skillhub/credentials.json 读取，
-本文件不存任何密钥，也不打印 token。
+凭据运行时从 SkillHub CLI 自己的 ~/.skillhub/credentials.json 读取——本文件不存任何密钥，
+也不把 token 打印或写入任何地方。
 
 用法：
-    python verify_publish.py          # 打印报告并写 .work/verify-report.md
+    python verify_publish.py          # 打印报告并写 <work>/verify-report.md
     python verify_publish.py --quiet  # 只写文件，打印一行结论
-退出码：0 全部一致；1 有落后/缺失；2 查询失败
+退出码：0 全一致；1 有落后/缺失；2 查询失败
 """
 import json, os, sys, time, urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from _common import skill_dirs, version, workdir  # noqa: E402
+from _common import HERE, skill_dirs, version, workdir  # noqa: E402
 
-CRED = os.environ.get("SKILLHUB_CREDENTIALS") or os.path.expanduser("~/.skillhub/credentials.json")
+CRED = os.path.expanduser("~/.skillhub/credentials.json")
 REPORT = os.path.join(workdir(), "verify-report.md")
 
+# 安全整改改动最大的老师端技能：这些没上线才是真风险（与 publish_skillhub.py 同一份）
 PRIORITY = {
     "xiaozhi-teach-student-intake", "xiaozhi-teach-renewal-report",
     "xiaozhi-teach-review-planner", "xiaozhi-teach-math-exam-designer",
@@ -30,11 +31,9 @@ PRIORITY = {
 
 
 def live_versions():
-    if not os.path.exists(CRED):
-        raise SystemExit(f"找不到 SkillHub 凭据：{CRED}（先用 CLI 登录，或设 SKILLHUB_CREDENTIALS）")
-    cred = json.load(open(CRED, encoding="utf-8"))["user"]
-    tok = cred["token"]
-    host = cred.get("host", "https://api.skillhub.cn").rstrip("/")
+    with open(CRED, encoding="utf-8") as f:
+        cred = json.load(f)["user"]
+    tok, host = cred["token"], cred.get("host", "https://api.skillhub.cn").rstrip("/")
     seen = {}
     for page in range(1, 12):
         req = urllib.request.Request(f"{host}/api/v1/dashboard/skills?limit=100&page={page}",
@@ -65,8 +64,7 @@ def main():
         live = live_versions()
     except Exception as e:
         line = f"查询失败：{e}"
-        open(REPORT, "w", encoding="utf-8").write(
-            f"# SkillHub 核对（{time.strftime('%Y-%m-%d %H:%M')}）\n\n{line}\n")
+        open(REPORT, "w", encoding="utf-8").write(f"# SkillHub 核对（{time.strftime('%Y-%m-%d %H:%M')}）\n\n{line}\n")
         print(line)
         return 2
 
@@ -83,16 +81,12 @@ def main():
     else:
         if stale:
             L += [f"## 落后的 {len(stale)} 个", "", "| 技能 | 线上版本 | 优先 |", "|---|---|---|"]
-            L += [f"| `{k}` | {v} | {'★' if k in PRIORITY else ''} |" for k, v in stale]
-            L.append("")
+            L += [f"| `{k}` | {v} | {'★' if k in PRIORITY else ''} |" for k, v in stale] + [""]
         if missing:
-            L += [f"## 线上没有的 {len(missing)} 个", ""]
-            L += [f"- `{k}`{'　★' if k in PRIORITY else ''}" for k in missing] + [""]
+            L += [f"## 线上没有的 {len(missing)} 个", ""] + [f"- `{k}`{'　★' if k in PRIORITY else ''}" for k in missing] + [""]
         if pri_bad:
             L += ["> ★ 是安全整改改动最大的老师端技能。这些没上线，意味着线上仍是整改前的行为。", ""]
-    here = os.path.dirname(os.path.abspath(__file__))
-    L += ["---", "", f"重跑发布：`python {os.path.join(here, 'publish_skillhub.py')}`",
-          f"日志：`{os.path.join(workdir(), 'publish.log')}`"]
+    L += ["---", "", f"重跑发布：`python {os.path.join(HERE, 'publish_skillhub.py')}`"]
     open(REPORT, "w", encoding="utf-8").write("\n".join(L) + "\n")
 
     if quiet:

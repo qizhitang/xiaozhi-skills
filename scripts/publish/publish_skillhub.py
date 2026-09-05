@@ -8,11 +8,11 @@
 凭据由 SkillHub CLI 自己维护（~/.skillhub/credentials.json），本脚本不碰 token。
 
 用法：
-    python publish_skillhub.py             # 发全部
+    python publish_skillhub.py             # 发全部（多轮，直到全成功或轮次用尽）
     python publish_skillhub.py --dry-run   # 只打包并列出顺序
-    python publish_skillhub.py --once      # 只跑一轮（配额探测用）
+    python publish_skillhub.py --once      # 只跑一轮（探配额用）
 """
-import json, os, subprocess, sys, time
+import json, os, shutil, subprocess, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _common import HERE, REPO, log, skillhub_cli, skillhub_env, version, workdir  # noqa: E402
@@ -36,14 +36,13 @@ PRIORITY = [
 
 
 def restage(ver):
-    import shutil
     shutil.rmtree(STAGE, ignore_errors=True)
     r = subprocess.run([sys.executable, os.path.join(HERE, "stage.py"), STAGE],
                        capture_output=True, text=True, encoding="utf-8", cwd=REPO, timeout=600)
     if not os.path.isdir(STAGE) or not os.listdir(STAGE):
         log("打包失败：" + ((r.stdout or "") + (r.stderr or ""))[:400], LOG)
         sys.exit(1)
-    log(f"按仓库版本 {ver} 打包 {len(os.listdir(STAGE))} 个技能", LOG)
+    log(f"按仓库版本 {ver} 打包 {len(os.listdir(STAGE))} 个技能 -> {STAGE}", LOG)
 
 
 def publish(path, changelog):
@@ -126,7 +125,7 @@ def main():
     bad = [n for n in PRIORITY if not done.get(n, {}).get("ok")]
     if bad:
         log(f"优先项仍未发出（{len(bad)}）：{bad}", LOG)
-    # 发完立刻核对线上实际版本
+    # 发完立刻核对线上实际版本，结论写进同一份日志
     try:
         r = subprocess.run([sys.executable, os.path.join(HERE, "verify_publish.py"), "--quiet"],
                            capture_output=True, text=True, encoding="utf-8", timeout=300)
