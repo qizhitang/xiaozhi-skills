@@ -16,8 +16,10 @@
   status：□在读 □暂停记录 □已结课 □待删除
   guardianCommunicationPreference：
     □微信文字 □微信语音 □电话 □线下面谈 □邮件 □不主动联系
+    → 只记“偏好的渠道类型”，不记账号、号码、邮箱；由家长沟通助手起草时参考
 
 ■ 可上课时间（availability[]）
+  → 本 SKILL 建档时代收，只记时间不记原因；写入后由排课与课时管理读取。本 SKILL 不据此排课
   ① [周   ] [  :  ]-[  :  ]
   ② [周   ] [  :  ]-[  :  ]
   单次课时长：[N] 分钟（参考 shared/grade-bands.md 三：
@@ -42,7 +44,7 @@
 
 ■ 课时包（coursePackageLedger[]）
   totalUnits：[N]     expiryDate：[YYYY-MM-DD]
-  续费节点：已用 50% / 70%（与 renewal-report 统一，不另设节点）
+  → 建档只填初始台账；续费节点不在本模板——由阶段报告与续课助手按其自身规则读取台账，本 SKILL 不谈续费
 
 ■ 授权（consent）
   profileEnabled：□是 □否

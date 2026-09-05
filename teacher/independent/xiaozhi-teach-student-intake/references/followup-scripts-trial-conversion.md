@@ -2,7 +2,7 @@
 
 > 适用学段：小学中段 / 小学高段 / 初中 / 高中
 > 配合 `xiaozhi-teach-student-intake` §9.1 使用。
-> **本文件只覆盖"试听 → 报名"这一段。** 学员报名之后的跟进不在建档技能里：续费节点沟通、家长犹豫时的回应、阶段报告、流失挽回与体面结束，全部交 `xiaozhi-teach-renewal-report`；缺课跟进、改期与补课交 `xiaozhi-teach-schedule-manager`。老师在这里问起那些场景时，说明该找哪个技能，不要在本文件里现编话术。
+> **本文件只覆盖"试听 → 报名"这一段。** 报名后“建正式学员卡”仍由本 SKILL 完成——那是建档的最后一步，不是跟进； 学员报名之后的跟进不在建档技能里：续费节点沟通、家长犹豫时的回应、阶段报告、流失挽回与体面结束，全部交 `xiaozhi-teach-renewal-report`；缺课跟进、改期与补课交 `xiaozhi-teach-schedule-manager`。老师在这里问起那些场景时，说明该找哪个技能，不要在本文件里现编话术。
 > 所有话术**由老师本人发出**，本 SKILL 只起草。起草前查 `studentCards[].consent` 的 `parentCommunicationAllowed`；为 false 时不生成任何家长内容。
 
 ---

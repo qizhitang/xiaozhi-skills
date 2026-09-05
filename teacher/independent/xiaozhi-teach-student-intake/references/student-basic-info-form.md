@@ -16,7 +16,8 @@
   goals[]（学习目标）：[   ]（用学员/家长自己的话，一到两条）
   status：□在读（默认）□暂停记录 □已结课 □待删除
 
-■ 可上课时间（availability[]，排课的唯一依据）
+■ 可上课时间（availability[]）
+  → 本 SKILL 建档时代收，写入后由排课与课时管理作为排课依据读取；本 SKILL 自己不排课
   ① dayOfWeek [周   ]  startTime [  :  ]  endTime [  :  ]
   ② dayOfWeek [周   ]  startTime [  :  ]  endTime [  :  ]
   ③ dayOfWeek [周   ]  startTime [  :  ]  endTime [  :  ]
