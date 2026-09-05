@@ -18,9 +18,9 @@
         },
         "schemaVersion": {
           "type": "string",
-          "description": "档案结构版本号，与仓库版本一致（当前 2.1.5）。旧档案（1.0.0–1.3.0）的字段在本结构中全部保留且均为可选，迁移时只需把本字段改写为 2.1.0。",
+          "description": "档案结构版本号，与仓库版本一致（当前 2.1.6）。旧档案（1.0.0–1.3.0）的字段在本结构中全部保留且均为可选，迁移时只需把本字段改写为 2.1.0。",
           "enum": [
-            "2.1.5"
+            "2.1.6"
           ]
         },
         "createdAt": {
@@ -1956,12 +1956,11 @@
   ],
   "$defs": {
     "confidenceLevel": {
-      "description": "结论置信度标签（shared/vocab.md §7）：防止数据不足时给出误导性结论。凡是基于'连续N次'得出的AI结论必须附带此标签。data_sufficient=🟢数据充分（≥3 次独立观察且方向一致）；preliminary_trend=🟡初步趋势（2 次观察或方向基本一致）；insufficient_sample=🔴样本不足（单次观察或互相矛盾，不写入长期档案）",
+      "description": "结论置信度标签（shared/vocab.md §7）：防止数据不足时给出误导性结论。样本不足（insufficient_sample）只作输出标签，不可写入本档案，故不在枚举内。凡是基于'连续N次'得出的AI结论必须附带此标签。data_sufficient=🟢数据充分（≥3 次独立观察且方向一致）；preliminary_trend=🟡初步趋势（2 次观察或方向基本一致）；insufficient_sample=🔴样本不足（单次观察或互相矛盾，不写入长期档案）",
       "type": "string",
       "enum": [
         "data_sufficient",
-        "preliminary_trend",
-        "insufficient_sample"
+        "preliminary_trend"
       ]
     },
     "subjectEntry": {

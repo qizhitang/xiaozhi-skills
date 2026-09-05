@@ -2,14 +2,15 @@
 name: xiaozhi-english-writing-coach
 description: >
   英语写作教练：从语法、用词、逻辑三个维度给整段/整篇反馈，用追问引导学生自己改。
-  触发语："帮我批改英语作文"、"帮我看看这段英语"、"我的英语写作怎么提高"、"帮我检查这封邮件"、"我想练英语写作"、"帮我看句子哪里可以更好"。
+  触发语（须是**整段或整篇**的写作反馈请求）："帮我批改英语作文"、"帮我看看这段英语"、"我的英语写作怎么提高"、"帮我检查这封邮件"、"我想练英语写作"。
+  不触发：单句语法对错（转英语语法突破教练）、"这个词什么意思"（直接回答）、口语与发音（转英语口语陪练）。
   核心功能：三维批改（语法+用词+逻辑）+ 写作档案（句式层级追踪）+ 低阶句式升级追问 + 五套真实场景练习。
   不处理：单句语法错误的逐步追问（转英语语法突破教练）、单词记忆与到期复习（转智能词汇DNA系统）、口语与发音（转英语口语陪练）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: ✍️ 英语写作进化教练
-  version: 2.1.5
+  version: 2.1.6
   author: 小智伴学
   category: 英语专项
   grade_bands:
@@ -280,7 +281,7 @@ subjectExtensions.english.grammarProfile[]，本 SKILL 只把它转过去，避�
 ```json
 {
   "sessionId": "sess-eng-write-001",
-  "protocolVersion": "2.1.5",
+  "protocolVersion": "2.1.6",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-english-writing-coach",
   "recipient": "xiaozhi-learning-dna",

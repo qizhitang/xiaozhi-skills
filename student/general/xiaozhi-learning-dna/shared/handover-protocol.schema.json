@@ -4,12 +4,9 @@
   "title": "XiaozhiMultiAgentHandoverProtocol",
   "x-distributed-to": "xiaozhi-learning-dna",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-learning-dna 分发，仅供字段名参照。下列路径是该技能 SKILL.md 接口节提到的字段；哪些只读、哪些可写、要过哪个授权位，以 SKILL.md 为准。未列出的字段对它不可见、不可写。",
+    "note": "本副本随 xiaozhi-learning-dna 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的交接类型（共 3 项，删去 0 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
     "paths": [
-      "consent",
-      "handoverType",
       "profile_writeback",
-      "recipient",
       "subject_profile_writeback",
       "teacher_writeback"
     ]
@@ -22,22 +19,18 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.5）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.6）",
       "type": "string",
       "enum": [
-        "2.1.5"
+        "2.1.6"
       ]
     },
     "handoverType": {
       "description": "交接类型：wrong_answer_handover=错题本→学科错误DNA；deep_analysis_writeback=学科错误DNA→错题本回写；profile_writeback=写入学习DNA通用层；subject_profile_writeback=写入学习DNA subjectExtensions/extensions；reminder_enqueue=向IM提醒入队（唯一允许的提醒方式）；reminder_sync=IM提醒回报状态；teacher_writeback=老师端写回学生档案（需 consent.teacherWritebackConsent）",
       "type": "string",
       "enum": [
-        "wrong_answer_handover",
-        "deep_analysis_writeback",
         "profile_writeback",
         "subject_profile_writeback",
-        "reminder_enqueue",
-        "reminder_sync",
         "teacher_writeback"
       ]
     },
@@ -45,63 +38,7 @@
       "description": "发送数据的源SKILL名称",
       "type": "string",
       "enum": [
-        "xiaozhi-chinese-classical-revival",
-        "xiaozhi-chinese-grammar-tracker",
-        "xiaozhi-chinese-material-library",
-        "xiaozhi-chinese-reading-decoder",
-        "xiaozhi-chinese-writing-coach",
-        "xiaozhi-english-grammar-coach",
-        "xiaozhi-english-listening-trainer",
-        "xiaozhi-english-speaking-coach",
-        "xiaozhi-english-vocabulary-dna",
-        "xiaozhi-english-writing-coach",
-        "xiaozhi-cornell-notes",
-        "xiaozhi-correction-notebook",
-        "xiaozhi-cross-subject-detective",
-        "xiaozhi-feynman-learning",
-        "xiaozhi-im-reminder",
-        "xiaozhi-interest-explorer",
-        "xiaozhi-learning-dna",
-        "xiaozhi-learning-plan",
-        "xiaozhi-skill-coordinator",
-        "xiaozhi-time-focus-coach",
-        "xiaozhi-weekly-review",
-        "xiaozhi-math-concept-explainer",
-        "xiaozhi-math-error-dna",
-        "xiaozhi-math-gradient-trainer",
-        "xiaozhi-math-problem-solving-coach",
-        "xiaozhi-math-word-problem-coach",
-        "xiaozhi-physics-concept-intuition",
-        "xiaozhi-physics-error-dna",
-        "xiaozhi-physics-lab-coach",
-        "xiaozhi-physics-modeling-coach",
-        "xiaozhi-physics-problem-coach",
-        "xiaozhi-teach-chinese-classical-guide",
-        "xiaozhi-teach-chinese-reading-guide",
-        "xiaozhi-teach-chinese-writing-guide",
-        "xiaozhi-teach-english-assessment",
-        "xiaozhi-teach-english-listening-designer",
-        "xiaozhi-teach-english-speaking-designer",
-        "xiaozhi-teach-assignment-designer",
-        "xiaozhi-teach-classroom-coach",
-        "xiaozhi-teach-exam-designer",
-        "xiaozhi-teach-lesson-planner",
-        "xiaozhi-teach-review-planner",
-        "xiaozhi-teach-student-analyzer",
-        "xiaozhi-teach-homework-tracker",
-        "xiaozhi-teach-lesson-log",
-        "xiaozhi-teach-parent-communication",
-        "xiaozhi-teach-renewal-report",
-        "xiaozhi-teach-resource-library",
-        "xiaozhi-teach-schedule-manager",
-        "xiaozhi-teach-solo-dashboard",
-        "xiaozhi-teach-student-intake",
-        "xiaozhi-teach-math-error-analyzer",
-        "xiaozhi-teach-math-exam-designer",
-        "xiaozhi-teach-math-lesson-planner",
-        "xiaozhi-teach-physics-experiment-coach",
-        "xiaozhi-teach-physics-lesson-planner",
-        "xiaozhi-teach-physics-problem-guide"
+        "xiaozhi-learning-dna"
       ]
     },
     "recipient": {
@@ -124,7 +61,6 @@
         "xiaozhi-feynman-learning",
         "xiaozhi-im-reminder",
         "xiaozhi-interest-explorer",
-        "xiaozhi-learning-dna",
         "xiaozhi-learning-plan",
         "xiaozhi-skill-coordinator",
         "xiaozhi-time-focus-coach",
@@ -138,167 +74,13 @@
         "xiaozhi-physics-error-dna",
         "xiaozhi-physics-lab-coach",
         "xiaozhi-physics-modeling-coach",
-        "xiaozhi-physics-problem-coach",
-        "xiaozhi-teach-chinese-classical-guide",
-        "xiaozhi-teach-chinese-reading-guide",
-        "xiaozhi-teach-chinese-writing-guide",
-        "xiaozhi-teach-english-assessment",
-        "xiaozhi-teach-english-listening-designer",
-        "xiaozhi-teach-english-speaking-designer",
-        "xiaozhi-teach-assignment-designer",
-        "xiaozhi-teach-classroom-coach",
-        "xiaozhi-teach-exam-designer",
-        "xiaozhi-teach-lesson-planner",
-        "xiaozhi-teach-review-planner",
-        "xiaozhi-teach-student-analyzer",
-        "xiaozhi-teach-homework-tracker",
-        "xiaozhi-teach-lesson-log",
-        "xiaozhi-teach-parent-communication",
-        "xiaozhi-teach-renewal-report",
-        "xiaozhi-teach-resource-library",
-        "xiaozhi-teach-schedule-manager",
-        "xiaozhi-teach-solo-dashboard",
-        "xiaozhi-teach-student-intake",
-        "xiaozhi-teach-math-error-analyzer",
-        "xiaozhi-teach-math-exam-designer",
-        "xiaozhi-teach-math-lesson-planner",
-        "xiaozhi-teach-physics-experiment-coach",
-        "xiaozhi-teach-physics-lesson-planner",
-        "xiaozhi-teach-physics-problem-guide"
+        "xiaozhi-physics-problem-coach"
       ]
     },
     "payload": {
       "description": "数据负载主体，结构根据 handoverType 动态变化",
       "type": "object",
       "properties": {
-        "wrongAnswerData": {
-          "description": "错题交接专属结构。在 handoverType='wrong_answer_handover' 时必填",
-          "type": "object",
-          "properties": {
-            "errorId": {
-              "type": "string"
-            },
-            "subject": {
-              "type": "string",
-              "enum": [
-                "math",
-                "physics",
-                "chinese",
-                "english",
-                "other"
-              ]
-            },
-            "concept": {
-              "type": "string"
-            },
-            "handoverTrigger": {
-              "type": "string",
-              "enum": [
-                "new_error",
-                "stubborn_weakness",
-                "anxiety_trigger"
-              ]
-            },
-            "basicDimension": {
-              "type": "string",
-              "enum": [
-                "概念模糊",
-                "计算失误",
-                "读题失误",
-                "方法用错"
-              ],
-              "description": "通用四维（shared/vocab.md §1）。所有学科必填"
-            },
-            "surfaceInfo": {
-              "type": "object",
-              "properties": {
-                "questionAbstract": {
-                  "type": "string"
-                },
-                "studentAnswer": {
-                  "type": "string"
-                },
-                "correctAnswer": {
-                  "type": "string"
-                },
-                "surfaceRootCause": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "questionAbstract",
-                "studentAnswer",
-                "surfaceRootCause"
-              ]
-            },
-            "anxietySignals": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "physicsBasicDimension": {
-              "type": "string",
-              "enum": [
-                "图景建立(P)",
-                "概念混淆(C)",
-                "公式误用(F)",
-                "过程分析错误(R)",
-                "数学工具错误(T)"
-              ],
-              "description": "物理五维（仅 subject=physics 时可用）"
-            },
-            "judgmentClue": {
-              "type": "string"
-            },
-            "historyRefs": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "subtypeId": {
-              "type": "string",
-              "pattern": "^(RC|AR|WT|CL|LG|[A-Z])[0-9]{2}$",
-              "description": "学科子类型编码（shared/vocab.md §2），可选"
-            },
-            "chineseDimension": {
-              "type": "string",
-              "enum": [
-                "阅读理解(RC)",
-                "答题规范(AR)",
-                "写作(WT)",
-                "文言文(CL)",
-                "语病(LG)"
-              ],
-              "description": "语文五维（仅 subject=chinese 时可用）"
-            },
-            "englishDimension": {
-              "type": "string",
-              "enum": [
-                "语法(G)",
-                "词汇(V)",
-                "表达/中式英语(T)",
-                "发音(P)",
-                "听力(L)"
-              ],
-              "description": "英语五维（仅 subject=english 时可用）"
-            },
-            "occurrenceCountInWindow": {
-              "type": "integer",
-              "minimum": 1,
-              "description": "错题本按 shared/vocab.md §5 口径统计的 28 天内累计次数（错题本为唯一计数权威）"
-            }
-          },
-          "required": [
-            "errorId",
-            "subject",
-            "concept",
-            "handoverTrigger",
-            "basicDimension",
-            "surfaceInfo"
-          ]
-        },
         "profileData": {
           "description": "DNA回写专属结构。在 handoverType='profile_writeback' 时必填",
           "type": "object",
@@ -508,123 +290,6 @@
             }
           ]
         },
-        "reminderData": {
-          "description": "提醒同步专属结构。在 handoverType='reminder_sync' 时必填",
-          "type": "object",
-          "properties": {
-            "reminderId": {
-              "type": "string"
-            },
-            "type": {
-              "type": "string",
-              "enum": [
-                "spaced_review",
-                "error_review",
-                "vocab_daily_card",
-                "scheduled_task",
-                "exploration_task",
-                "daily_confirmation",
-                "weekly_review",
-                "exam_day"
-              ]
-            },
-            "scheduledTime": {
-              "type": "string",
-              "format": "date-time"
-            },
-            "content": {
-              "type": "string"
-            },
-            "targetKnowledgePoint": {
-              "type": "string"
-            },
-            "priority": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 5,
-              "description": "1 最高。IM提醒按 shared/vocab.md §9 合并为每日摘要"
-            },
-            "mergeable": {
-              "type": "boolean",
-              "default": true,
-              "description": "是否可并入每日合并摘要；false 表示申请即时提醒（每日最多 1 条）"
-            },
-            "dueDate": {
-              "type": "string",
-              "format": "date"
-            }
-          },
-          "required": [
-            "reminderId",
-            "type",
-            "scheduledTime",
-            "content"
-          ]
-        },
-        "deepAnalysisData": {
-          "type": "object",
-          "additionalProperties": false,
-          "description": "deep_analysis_writeback 专属：学科错误DNA→错题本回写结构",
-          "properties": {
-            "errorId": {
-              "type": "string",
-              "maxLength": 60
-            },
-            "subject": {
-              "type": "string",
-              "enum": [
-                "math",
-                "physics",
-                "chinese",
-                "english",
-                "other"
-              ]
-            },
-            "subtypeId": {
-              "type": "string",
-              "pattern": "^(RC|AR|WT|CL|LG|[A-Z])[0-9]{2}$"
-            },
-            "basicDimension": {
-              "type": "string",
-              "enum": [
-                "概念模糊",
-                "计算失误",
-                "读题失误",
-                "方法用错"
-              ]
-            },
-            "rootCause": {
-              "type": "string",
-              "maxLength": 300,
-              "description": "根因一句话，不含原始对话"
-            },
-            "status": {
-              "type": "string",
-              "enum": [
-                "待处理",
-                "初步弱项",
-                "突破中",
-                "顽固弱项",
-                "已攻克"
-              ]
-            },
-            "crackedVerification": {
-              "type": "string",
-              "maxLength": 200,
-              "description": "攻克时的验证方式（shared/vocab.md §5）"
-            },
-            "recommendedAction": {
-              "type": "string",
-              "maxLength": 200
-            }
-          },
-          "required": [
-            "errorId",
-            "subject",
-            "basicDimension",
-            "status"
-          ]
-        },
         "teacherWritebackData": {
           "type": "object",
           "additionalProperties": false,
@@ -772,42 +437,6 @@
       "if": {
         "properties": {
           "handoverType": {
-            "const": "wrong_answer_handover"
-          }
-        }
-      },
-      "then": {
-        "properties": {
-          "payload": {
-            "required": [
-              "wrongAnswerData"
-            ]
-          }
-        }
-      }
-    },
-    {
-      "if": {
-        "properties": {
-          "handoverType": {
-            "const": "deep_analysis_writeback"
-          }
-        }
-      },
-      "then": {
-        "properties": {
-          "payload": {
-            "required": [
-              "deepAnalysisData"
-            ]
-          }
-        }
-      }
-    },
-    {
-      "if": {
-        "properties": {
-          "handoverType": {
             "enum": [
               "profile_writeback",
               "subject_profile_writeback"
@@ -820,27 +449,6 @@
           "payload": {
             "required": [
               "profileData"
-            ]
-          }
-        }
-      }
-    },
-    {
-      "if": {
-        "properties": {
-          "handoverType": {
-            "enum": [
-              "reminder_enqueue",
-              "reminder_sync"
-            ]
-          }
-        }
-      },
-      "then": {
-        "properties": {
-          "payload": {
-            "required": [
-              "reminderData"
             ]
           }
         }

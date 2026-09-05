@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 班级错因分析
-  version: 2.1.5
+  version: 2.1.6
   author: 小智伴学
   category: 老师数学
   grade_bands:
@@ -105,6 +105,8 @@ max_round_limit: 25
 ---
 
 ## 二、触发时机
+
+**触发前提**：手上有**具体的错题或作业/测评的作答数据**。老师泛泛说"最近错得多""下次课讲什么"而没有题、没有数据时，先问"哪次作业/测评？能把错题或逐题得分发我吗"，不进入分析。
 
 | 触发场景 | 示例语句 |
 |---------|---------|

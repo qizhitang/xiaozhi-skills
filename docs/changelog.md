@@ -1,9 +1,35 @@
 # 🔄 版本历史
 
-当前版本 **v2.1.5**。全库 57 个 SKILL（学生端 31 + 老师端 26）+ 1 个开发者工具，版本号统一。
+当前版本 **v2.1.6**。全库 57 个 SKILL（学生端 31 + 老师端 26）+ 1 个开发者工具，版本号统一。
 
 ---
 
+## v2.1.6 — 随包 schema 按技能裁剪；五处会话内/档案的边界说清
+
+v2.1.5 的判定是 **34 clean / 24 suspicious**——比 2.1.4 还差。逐条读证据后发现两件事：
+
+1. `x-skill-scope` 对档案 schema有效（判定里不再指向 `shared/dna-profile.schema.json`），但它是按“正文提到”生成的，把“❌ 不读：homeworkAssignments、reviewPlans…”这种**否定列表**也当成了访问声明——扫描器读到的就是“该技能声明可访问 homework、interactionLogs、studentTiers…”。
+2. 扫描器明说：在窄范围声明旁边附一份完整 schema，本身就是 confused-deputy 风险。
+
+### 处置：否定语境识别 + 副本裁剪
+
+- 提取规则改为逐行判定：字段前有 不读/不写/❌/不碰… 即否定；行尾为 、：, 的列表把否定带到下一行（三行以上的列表也跟着）；“字段 → 由 X 维护”这类所有权行整行视为否定。
+- **副本只保留该技能在非否定语境提到的子树**：档案 schema 只留 `subjectExtensions.x` / `extensions.x` 等被点名的分支；工作空间 schema 只留点名的顶层集合；交接协议副本把 `handoverType` 枚举、`allOf` 的 if/then、`payload` 分支都裁到该技能真正收发的类型，`sender` 固定为本技能，`recipient` 只留正文提到的对方。
+- 效果：康奈尔笔记的档案副本只剩 `extensions.notes`；语病追踪的交接副本只剩 `subject_profile_writeback` 一种类型、一个 payload 分支、4 个收件方（原先 7 种、5 分支、57 个）；数学测评设计的工作空间副本不再含 `interactionLogs` / `reviewPlans`。
+
+### 五处真实边界（逐条改）
+
+| 技能 | 问题 | 处置 |
+|---|---|---|
+| `learning-plan` §6.3 | “家长翻译层”把顽固弱项、计划延宕、情绪状态翻译给家长——与 description“只管什么时候做什么”和“看板只含任务与完成情况”都矛盾 | 整节替换为“看板里没有的东西”：不做诊断翻译、不转述情绪；错因的家长输出归错题本自己的授权门 |
+| `cornell-notes` | 模块E 笔记健康报告有调取次数/回应次数的长期统计，与新加的“不写入长期档案”打架；触发场景③像是本 SKILL 主动推送 | description 交代“使用情况报告”；模块E 前提 `profileEnabled`、只记两个计数；③ 明确为 IM 提醒的动作且需 reminderConsent |
+| `feynman` / `physics-problem-coach` / `chinese-writing-coach` | 状态机的“中断恢复”写成跨会话续接，与“默认只在当前会话”矛盾 | 三处都改为**同一会话内**恢复，会话结束即丢弃；写作草稿要学生说“存起来”才经交接写入 |
+| `learning-dna` | 建档模板让“我懂了”上调掌握度、里程碑参考让本 SKILL“识别”行为——与“存储与授权层、不自己产生判断”矛盾；置信度枚举含 vocab §7 说不可入档的 `insufficient_sample` | “我懂了”只触发一句“要不要做费曼验证”；里程碑只在档案里**已写入的证据**满足标准时生成待确认条目；枚举去掉该值 |
+| `physics-problem-coach` 苏格拉底指南 §九 | 表头说实验设计/方法/数据/误差转出，下面的追问库却在教控制变量 | 段落替换为“认出即转出”+ 计算题例外的三句追问 |
+
+另：`chinese-writing-coach`、`english-writing-coach`、`teach-chinese-writing-guide`、`teach-math-error-analyzer` 补触发负例；`student-intake` 三份模板把 availability / 渠道偏好 / 续费节点的归属改正（不动续费政策文字）；`resource-library` 的 usageNotes 不再记学员化名与分数。
+
+---
 ## v2.1.5 — 按 v2.1.4 扫描整改：随包 schema 的角色说明 + 五处真实矛盾
 
 v2.1.4 的 ClawHub 判定是 **35 clean / 17 suspicious**（v2.1.3 为 56 / 2）。远超噪声底线，是系统性翻转。逐条读 SkillSpector 的 file:line 证据后分成四类：

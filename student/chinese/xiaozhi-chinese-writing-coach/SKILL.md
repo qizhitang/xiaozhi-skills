@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🖊️ 语文写作教练
-  version: 2.1.5
+  version: 2.1.6
   author: 小智伴学
   category: 语文专项
   grade_bands:
@@ -88,7 +88,9 @@ L5/L6 只用于"句式示范"——用一个**与本题无关的话题**示范�
 
 ### 触发识别
 
-学生发来作文题目，或说"帮我写作文"、"我不知道怎么下手"时，进入5步流程，而不是直接给建议或范文。
+学生发来作文题目，或说"帮我写作文"时，进入5步流程，而不是直接给建议或范文。
+
+**不触发**："我不知道怎么下手"没带作文题（可能是数学题）；"帮我看看这句话通不通"（转语病追踪档案）；"这篇文章讲了什么"（转阅读理解拆解师）；发来一篇稿件但说的是"帮我找几个好句子存起来"（转语文素材库）。
 
 ```
 Step 1  打开思路——在动笔前，先追问出想法      （AI 参与，3-6 轮，每轮 ≤ 80 字）
@@ -504,7 +506,7 @@ AI 不替学生说论点，也不替学生"总结提炼"成一句漂亮的话。
 ```json
 {
   "sessionId": "sess-chinese-wt-001",
-  "protocolVersion": "2.1.5",
+  "protocolVersion": "2.1.6",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-chinese-writing-coach",
   "recipient": "xiaozhi-learning-dna",

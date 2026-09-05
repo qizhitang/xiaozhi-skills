@@ -40,12 +40,12 @@ stateDiagram-v2
 
     S_FALLBACK --> S_EVALUATE : 当前跳标记为未通过，进入评估
 
-    S1_JUMP1 --> S_PAUSED : 学生离线或中断
+    S1_JUMP1 --> S_PAUSED : 同一会话内的中断（如危机例外、学生说先停一下）
     S2_JUMP2 --> S_PAUSED
     S3_JUMP3 --> S_PAUSED
     S4_JUMP4 --> S_PAUSED
     S5_CRITICAL --> S_PAUSED
-    S_PAUSED --> S1_JUMP1 : 恢复时从断点跳继续
+    S_PAUSED --> S1_JUMP1 : 同一会话内恢复时从断点跳继续；会话结束即丢弃，下次从第一跳重来
     S_PAUSED --> S2_JUMP2
     S_PAUSED --> S3_JUMP3
     S_PAUSED --> S4_JUMP4

@@ -4,7 +4,7 @@
   "title": "SoloTeacherWorkspace",
   "x-distributed-to": "xiaozhi-teach-solo-dashboard",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-teach-solo-dashboard 分发，仅供字段名参照。下列路径是该技能 SKILL.md 接口节提到的字段；哪些只读、哪些可写、要过哪个授权位，以 SKILL.md 为准。未列出的字段对它不可见、不可写。",
+    "note": "本副本随 xiaozhi-teach-solo-dashboard 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的字段（共 8 项，删去 1 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
     "paths": [
       "coursePackageLedger",
       "homeworkFollowups",
@@ -20,44 +20,6 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "teacherProfile": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "teacherId": {
-          "type": "string"
-        },
-        "subjects": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "serviceModes": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "一对一",
-              "小班"
-            ]
-          }
-        },
-        "deliveryChannels": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "线上",
-              "线下"
-            ]
-          }
-        }
-      },
-      "required": [
-        "teacherId"
-      ]
-    },
     "studentCards": {
       "type": "array",
       "items": {
@@ -107,9 +69,7 @@
       }
     }
   },
-  "required": [
-    "teacherProfile"
-  ],
+  "required": [],
   "$defs": {
     "studentCard": {
       "type": "object",

@@ -22,8 +22,8 @@ MANIFEST = os.path.join(workdir(), "published-clawhub.json")
 def summarize(zp):
     z = zipfile.ZipFile(zp)
     names = z.namelist()
-    cs = json.loads(z.read("clawscan.json")) if "clawscan.json" in names else {}
-    sp = json.loads(z.read("skillspector.json")) if "skillspector.json" in names else {}
+    cs = (json.loads(z.read("clawscan.json")) if "clawscan.json" in names else None) or {}
+    sp = (json.loads(z.read("skillspector.json")) if "skillspector.json" in names else None) or {}
     if not cs.get("status"):
         return None
     issues = []

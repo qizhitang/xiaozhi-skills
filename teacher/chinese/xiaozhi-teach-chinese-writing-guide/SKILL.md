@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 写作教学指导
-  version: 2.1.5
+  version: 2.1.6
   author: 小智伴学
   category: 老师语文
   grade_bands:
@@ -90,6 +90,8 @@ max_round_limit: 20
 | 写作过程 | "学员不会写怎么办" / "写不出来" |
 | 写作修改 | "学员作文怎么改" / "二稿" |
 | 写作素材 | "学员没东西写" |
+
+**触发前提**：老师在谈**写作教学**（任务、批改、讲评、修改）。"写不出来""没东西写"单独出现时先问一句是哪位学员的哪次写作，不进入流程；"这篇课文怎么讲"转阅读教学指导，"文言文怎么讲"转文言文教学指导，"学员的作文错别字多"里的病句判定不在本 SKILL。
 
 ---
 
@@ -470,7 +472,7 @@ AI 生成的作文题：生成前按 shared/ai-item-check.md 自检（题意清�
 ```json
 {
   "sessionId": "sess-teach-wt-001",
-  "protocolVersion": "2.1.5",
+  "protocolVersion": "2.1.6",
   "handoverType": "teacher_writeback",
   "sender": "xiaozhi-teach-chinese-writing-guide",
   "recipient": "xiaozhi-learning-dna",

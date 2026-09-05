@@ -8,7 +8,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🛠️ SKILL 编写工具
-  version: 2.1.5
+  version: 2.1.6
   author: 小智伴学
   category: 开发者工具
   grade_bands:

@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 📊 每周学习复盘
-  version: 2.1.5
+  version: 2.1.6
   author: 小智伴学
   category: 通用核心
   grade_bands:

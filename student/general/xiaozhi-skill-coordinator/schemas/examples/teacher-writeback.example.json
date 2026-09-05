@@ -1,6 +1,6 @@
 {
   "sessionId": "sess-demo-004",
-  "protocolVersion": "2.1.5",
+  "protocolVersion": "2.1.6",
   "handoverType": "teacher_writeback",
   "sender": "xiaozhi-teach-math-error-analyzer",
   "recipient": "xiaozhi-learning-dna",

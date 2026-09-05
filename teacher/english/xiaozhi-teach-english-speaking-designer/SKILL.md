@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 英语口语活动设计
-  version: 2.1.5
+  version: 2.1.6
   author: 小智伴学
   category: 老师英语
   grade_bands:
