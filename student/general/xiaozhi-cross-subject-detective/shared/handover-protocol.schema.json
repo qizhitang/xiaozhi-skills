@@ -18,14 +18,14 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.7）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.8）",
       "type": "string",
       "enum": [
-        "2.1.7"
+        "2.1.8"
       ]
     },
     "handoverType": {
-      "description": "交接类型：wrong_answer_handover=错题本→学科错误DNA；deep_analysis_writeback=学科错误DNA→错题本回写；profile_writeback=写入学习DNA通用层；subject_profile_writeback=写入学习DNA subjectExtensions/extensions；reminder_enqueue=向IM提醒入队（唯一允许的提醒方式）；reminder_sync=IM提醒回报状态；teacher_writeback=老师端写回学生档案（需 consent.teacherWritebackConsent）",
+      "description": "profile_writeback=写入学习DNA通用层；subject_profile_writeback=写入学习DNA subjectExtensions/extensions",
       "type": "string",
       "enum": [
         "profile_writeback",
@@ -43,7 +43,6 @@
       "description": "接收数据的目标SKILL名称",
       "type": "string",
       "enum": [
-        "xiaozhi-cornell-notes",
         "xiaozhi-learning-dna"
       ]
     },

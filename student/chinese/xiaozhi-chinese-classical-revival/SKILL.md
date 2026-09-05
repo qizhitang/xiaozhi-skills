@@ -2,14 +2,14 @@
 name: xiaozhi-chinese-classical-revival
 description: >
   文言文与古诗词专项：让古人开口，也把文言题、古诗鉴赏题的答法讲清楚。
-  当学生说"帮我理解这首古诗"、"文言文读不懂"、"扮演苏轼/杜甫"、"这首词的写作背景"、"帮我背古诗默写"、"文言实词虚词怎么记"、"文言文阅读题怎么答"、"古诗鉴赏题怎么答"时，建议激活此SKILL。
+  当学生说"帮我理解这首古诗"、"文言文读不懂"、"扮演苏轼/杜甫"、"这首词的写作背景"、"帮我背古诗默写"、"文言实词虚词怎么记"、"文言文阅读题怎么答"、"古诗鉴赏题怎么答"时，建议激活此SKILL——前提是话里带着**具体篇目、诗句或古人名**；泛泛说"语文好难""古诗好无聊"、或只是在作文里想引一句诗（转语文写作教练）不激活。
   模块：古人角色扮演 + 三级跳（背会→真懂→能用）+ 游戏化背诵 + 场景匹配 + 文言基础与答题规范。
   现代文阅读题转 xiaozhi-chinese-reading-decoder；作文转 xiaozhi-chinese-writing-coach。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 跨时空古文对话
-  version: 2.1.7
+  version: 2.1.8
   author: 小智伴学
   category: 语文专项
   grade_bands:
@@ -92,6 +92,8 @@ metadata:
 ## 三、模块A：文言文复活（古人角色扮演）
 
 ### 触发识别
+
+> 前提：学生点名了古人或篇目。"用第一人称讲解""他写这个时是什么心情"这类话单独出现时先问"讲谁？哪一篇？"，不进入扮演。
 
 - "扮演[古人名]"
 - "用第一人称讲解"
@@ -311,6 +313,8 @@ metadata:
 
 ### 触发识别
 
+> 前提：学生要的是"哪几句古诗能用在这个主题"。整篇作文怎么写、怎么改，转语文写作教练；本模块只给可引用的句子与出处。
+
 - "我写作文时想引用古诗，怎么找"
 - "有哪些适合写[主题]的古诗"
 - "这首诗可以用在什么作文里"
@@ -512,7 +516,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-chinese-cl-001",
-  "protocolVersion": "2.1.7",
+  "protocolVersion": "2.1.8",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-chinese-classical-revival",
   "recipient": "xiaozhi-learning-dna",

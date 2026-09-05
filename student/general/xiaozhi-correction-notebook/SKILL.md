@@ -2,14 +2,14 @@
 name: xiaozhi-correction-notebook
 description: >
   全科错题的归档、错因定位与弱项计数中枢。
-  学生说“我这道题做错了”“帮我分析错误原因”“出一道同类题”“我的错题本里有什么”“帮我整理本章错题”，或发来错题图片并说明做错了时可激活。
+  学生说“我这道题做错了”“帮我分析错误原因”“出一道同类题”“我的错题本里有什么”“帮我整理本章错题”，或发来错题图片并说明做错了时可激活——前提是**有一道具体做错的题**；泛泛说"我总出错""帮我总结一下"而没有题，先问题目，不登记、不分析。
   错因分四维（概念模糊/计算失误/读题失误/方法用错），并按 shared/vocab.md §5 唯一计数“28 天内同一知识点同一维度累计 3 次”。
   数学、物理、语文、英语的深度子类型定位不在此处，交给对应学科的错误 DNA；理解是否到位交给费曼学习法，提醒由 IM 智能提醒发送。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: ❌ 智能错题本
-  version: 2.1.7
+  version: 2.1.8
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -369,7 +369,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-demo-001",
-  "protocolVersion": "2.1.7",
+  "protocolVersion": "2.1.8",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-correction-notebook",
   "recipient": "xiaozhi-math-error-dna",
@@ -409,7 +409,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-demo-002",
-  "protocolVersion": "2.1.7",
+  "protocolVersion": "2.1.8",
   "handoverType": "deep_analysis_writeback",
   "sender": "xiaozhi-math-error-dna",
   "recipient": "xiaozhi-correction-notebook",

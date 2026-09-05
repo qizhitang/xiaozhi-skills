@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 物理教案设计
-  version: 2.1.7
+  version: 2.1.8
   author: 小智伴学
   category: 老师物理
   grade_bands:

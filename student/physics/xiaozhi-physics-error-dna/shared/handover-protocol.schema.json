@@ -20,14 +20,14 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.7）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.8）",
       "type": "string",
       "enum": [
-        "2.1.7"
+        "2.1.8"
       ]
     },
     "handoverType": {
-      "description": "交接类型：wrong_answer_handover=错题本→学科错误DNA；deep_analysis_writeback=学科错误DNA→错题本回写；profile_writeback=写入学习DNA通用层；subject_profile_writeback=写入学习DNA subjectExtensions/extensions；reminder_enqueue=向IM提醒入队（唯一允许的提醒方式）；reminder_sync=IM提醒回报状态；teacher_writeback=老师端写回学生档案（需 consent.teacherWritebackConsent）",
+      "description": "deep_analysis_writeback=学科错误DNA→错题本回写；subject_profile_writeback=写入学习DNA subjectExtensions/extensions；reminder_enqueue=向IM提醒入队（唯一允许的提醒方式）",
       "type": "string",
       "enum": [
         "wrong_answer_handover",
@@ -49,7 +49,9 @@
       "enum": [
         "xiaozhi-correction-notebook",
         "xiaozhi-im-reminder",
-        "xiaozhi-learning-dna"
+        "xiaozhi-learning-dna",
+        "xiaozhi-math-error-dna",
+        "xiaozhi-physics-error-dna"
       ]
     },
     "payload": {
@@ -66,11 +68,7 @@
             "subject": {
               "type": "string",
               "enum": [
-                "math",
-                "physics",
-                "chinese",
-                "english",
-                "other"
+                "physics"
               ]
             },
             "concept": {
@@ -147,28 +145,6 @@
               "pattern": "^(RC|AR|WT|CL|LG|[A-Z])[0-9]{2}$",
               "description": "学科子类型编码（shared/vocab.md §2），可选"
             },
-            "chineseDimension": {
-              "type": "string",
-              "enum": [
-                "阅读理解(RC)",
-                "答题规范(AR)",
-                "写作(WT)",
-                "文言文(CL)",
-                "语病(LG)"
-              ],
-              "description": "语文五维（仅 subject=chinese 时可用）"
-            },
-            "englishDimension": {
-              "type": "string",
-              "enum": [
-                "语法(G)",
-                "词汇(V)",
-                "表达/中式英语(T)",
-                "发音(P)",
-                "听力(L)"
-              ],
-              "description": "英语五维（仅 subject=english 时可用）"
-            },
             "occurrenceCountInWindow": {
               "type": "integer",
               "minimum": 1,
@@ -199,8 +175,13 @@
             },
             "subjectExtensionPatch": {
               "type": "object",
-              "description": "subject_extension 时：dna-profile.schema.json#/properties/subjectExtensions 的单学科分支片段（仅本学科）",
-              "additionalProperties": true
+              "description": "subject_extension 时：只允许本学科分支 subjectExtensions.physics",
+              "properties": {
+                "physics": {
+                  "type": "object"
+                }
+              },
+              "additionalProperties": false
             },
             "safetyRecordEntry": {
               "type": "object",
@@ -478,7 +459,6 @@
         "properties": {
           "handoverType": {
             "enum": [
-              "profile_writeback",
               "subject_profile_writeback"
             ]
           }
@@ -499,8 +479,7 @@
         "properties": {
           "handoverType": {
             "enum": [
-              "reminder_enqueue",
-              "reminder_sync"
+              "reminder_enqueue"
             ]
           }
         }

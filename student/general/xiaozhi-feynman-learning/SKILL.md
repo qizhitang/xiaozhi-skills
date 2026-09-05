@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🎓 费曼学习法
-  version: 2.1.7
+  version: 2.1.8
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -224,6 +224,8 @@ metadata:
 
 ## 六、理解深度记录
 
+> **先过同意门再谈记录**：本节的“记录”默认只在会话内存在；只有学生本轮明确说“记下来”、且 `crossSkillSharing` 为 true，才把掌握度等级与卡点类型经 `subject_profile_writeback` 交给学习DNA。学生原话不进档案。不是“每次测试后自动生成写回”。
+
 每次测试结束后，生成一条待确认条目写回学习DNA的 `extensions.understanding[]`（`shared/dna-profile.schema.json`），而不是只给口头反馈。写入前先确认 `crossSkillSharing`，走 `subject_profile_writeback`（`updateTarget: "extension"`）。
 
 ### 6.1 三层标准（`shared/vocab.md §6`，全库唯一掌握度词表）
@@ -341,6 +343,8 @@ AI可以辅助思考，但不能替代思考。
 ---
 
 ## 十二、与其他SKILL的协作
+
+> 下图的每一条交接都是**可选加项**，只在学生当轮同意后发生：写回需 `crossSkillSharing`，提醒需 `reminderConsent` 且学生这次说“要”；周报、月报由对应 SKILL 在学生请求时读取，本 SKILL 不主动推送。
 
 ```text
 费曼测试

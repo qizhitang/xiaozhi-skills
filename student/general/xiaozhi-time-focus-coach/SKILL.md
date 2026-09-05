@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: ⏱️ 时间与专注力教练
-  version: 2.1.7
+  version: 2.1.8
   author: 小智伴学
   category: 通用核心
   grade_bands:
