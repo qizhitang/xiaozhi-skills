@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-math-error-analyzer
 display_name: 班级错因分析
-version: 2.1.2
+version: 2.1.3
 author: 小智伴学
 category: 老师数学
 grade_bands:

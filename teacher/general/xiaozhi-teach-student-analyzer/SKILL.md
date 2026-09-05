@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-student-analyzer
 display_name: 学情分析师
-version: 2.1.2
+version: 2.1.3
 author: 小智伴学
 category: 老师通用
 grade_bands:

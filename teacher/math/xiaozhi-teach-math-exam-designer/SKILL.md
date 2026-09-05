@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-math-exam-designer
 display_name: 数学测评设计
-version: 2.1.2
+version: 2.1.3
 author: 小智伴学
 category: 老师数学
 grade_bands:

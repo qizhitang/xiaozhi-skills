@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-resource-library
 display_name: 教学资源复用库
-version: 2.1.2
+version: 2.1.3
 author: 小智伴学
 category: 独立教师
 grade_bands:

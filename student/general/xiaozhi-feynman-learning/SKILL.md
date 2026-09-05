@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-feynman-learning
 display_name: 🎓 费曼学习法
-version: 2.1.2
+version: 2.1.3
 author: 小智伴学
 category: 通用核心
 grade_bands:

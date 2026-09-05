@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-physics-lesson-planner
 display_name: 物理教案设计
-version: 2.1.2
+version: 2.1.3
 author: 小智伴学
 category: 老师物理
 grade_bands:

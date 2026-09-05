@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-exam-designer
 display_name: 测评设计师
-version: 2.1.2
+version: 2.1.3
 author: 小智伴学
 category: 老师通用
 grade_bands:
@@ -11,7 +11,8 @@ grade_bands:
 tags: [测评, 试卷设计, 双向细目表, 难度控制, 评分标准, 区分度, 老师工具]
 description: >
   帮老师把"拼凑试卷"变成"按双向细目表命题"。
-  当老师说"帮我出一份单元测验"、"出一份月考卷"、"怎么控制试卷难度"、"这道数学题怎么改编"、"出一份带评分细则的物理卷"、"讲评课该先讲哪几道题"时，建议激活此 SKILL。
+  当老师**明确要求生成或修改命题产物**时建议激活：出一份单元测验/试卷、写双向细目表、调整试卷难度配比、改编某道题、写评分细则、按题目统计决定哪些题返修。
+  **不激活**：只讨论考试结果与学情分析（转 `xiaozhi-teach-student-analyzer`）、只备讲评课的环节与提问（转 `xiaozhi-teach-lesson-planner` / `xiaozhi-teach-classroom-coach`）、布置作业（转 `xiaozhi-teach-assignment-designer`）、非命题的日常教学讨论。
   工作流：定测评类型 → 双向细目表 → 选题改编 → 难度与认知层级配比 → 评分标准 → 讲评错题清单。
   本 SKILL 不算考后统计、不写教案：难度 P/区分度 D/信度由 xiaozhi-teach-student-analyzer 计算，讲评课教案由 xiaozhi-teach-lesson-planner 出。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
@@ -81,7 +82,9 @@ max_round_limit: 25
 - **让每道题都对应明确测评目标**：双向细目表驱动出题
 - **让难度梯度可设计**：根据测评目的调整 P 值和 D 值
 - **让评分标准可复制**：过程分+结果分双轨，不同老师改出来差异小
-- **让测评数据反哺教学**：得分率回写 student-analyzer
+- **让测评数据反哺教学**：考后读 `xiaozhi-teach-student-analyzer` 算好的得分率与题目统计，
+  据此决定题目怎么返修、下次难度基线定多少。**本 SKILL 不回写任何考后统计**——
+  P / D / α / 分布 / 热力图 / 个人成绩 / 排名一律由 student-analyzer 计算并写入。
 
 ---
 
@@ -144,8 +147,8 @@ max_round_limit: 25
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ⑦ 写回 student-analyzer   │
-                │  得分率 → 知识点热力图    │
+                │ ⑦ 读 student-analyzer     │
+                │  只读统计，不回写         │
                 └──────────────────────────┘
 ```
 

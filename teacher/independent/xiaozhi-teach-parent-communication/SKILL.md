@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-parent-communication
 display_name: 家长沟通助手
-version: 2.1.2
+version: 2.1.3
 author: 小智伴学
 category: 独立教师
 grade_bands:

@@ -1,9 +1,45 @@
 # 🔄 版本历史
 
-当前版本 **v2.1.2**。全库 57 个 SKILL（学生端 31 + 老师端 26）+ 1 个开发者工具，版本号统一。
+当前版本 **v2.1.3**。全库 57 个 SKILL（学生端 31 + 老师端 26）+ 1 个开发者工具，版本号统一。
 
 ---
 
+## v2.1.3 — 消除 references 与 SKILL.md 的契约矛盾
+
+v2.1.2 扫描后仍有两个技能判 suspicious，判词都是 “instructions conflict / inconsistently allow”——SKILL.md 声明了边界，references 里却仍在教越界操作。**运行时 agent 读到哪份文件就按哪份做**，所以矛盾必须消除在文件层，只在 SKILL.md 写边界不算数。
+
+### `physics-problem-coach`（11 处）
+
+该技能声明“默认只在当前会话工作、不写任何持久数据”，但：
+
+| 文件 | 原本写的 | 改成 |
+|---|---|---|
+| `physics-socrates-guide.md` | 卡壳超 3 次“记录卡壳点到物理错误DNA” | 会话内标记；归档走 S6_ASK_ARCHIVE 同意门 |
+| 同上 | “记录到学习DNA：迁移能力优秀” | 当场口头肯定，不写长期能力画像 |
+| 同上 | 实验题三层次追问 | 收窄为“实验作背景的计算题”；实验设计/方法/数据/误差四类转出 |
+| `claw-templates-physics.md` | Step 5“错误归档”、Step 7 反复卡壳即归档 | 改为会话内归类，默认不归档 |
+| 同上 | Step 7 交接写成常规步骤 | 默认不做；需同时满足学生明确要求 + `crossSkillSharing` + 监护人同意位 |
+| 同上 | 对比表“归档优先级”列 | 改名“会话内错误归类（非归档指令）” |
+| `physics-4step-statemachine.md` | 把“实验题分析”“帮我复习电学”路由进本技能 | 前者标明为转介模板；后者收窄为当前题目的快速梳理，跨题复习转 `learning-plan` |
+| 同上 | 归档同时推送物理错误DNA / 学习DNA / 通用错题本 | 唯一出口是通用错题本；下游分发由它按各自授权位负责 |
+| `physics-diagram-guide.md` | 与 `physics-error-dna` 共用却未区分权限 | 文件头声明两个技能的边界不同；第六节归错误档案技能使用，教练只当会话内归类表 |
+
+### `teach-exam-designer`（2 处）
+
+接口节写着“itemStats 本 SKILL 不写”，另两处却说要回写：
+
+- 定位段的“得分率回写 student-analyzer” → 改为只读统计做题目返修，明写 P / D / α / 分布 / 热力图 / 个人成绩 / 排名一律不回写
+- 流程图第 ⑦ 步“写回 student-analyzer” → 改为“读 student-analyzer，只读统计不回写”
+
+另按 SQP-1 收窄触发条件：加了“不激活”负例（只讨论学情分析、只备讲评课、布置作业、日常教学讨论均不触发）。
+
+### 关于扫描判定的一点记录
+
+v2.1.1 → v2.1.2 之间，有 4 个技能（`cornell-notes`、`teach-schedule-manager`、`teach-solo-dashboard`、`time-focus-coach`）的全部改动只有 `version:` 一行，判定却从 clean 变成 suspicious。ClawScan 是 LLM 判定，同样内容重扫结果会变，存在约 4-6 个技能的噪声底线。因此本版的目标不是“全部 clean”，而是消除真实存在的契约矛盾——那是无论扫描器怎么判都该修的缺陷。
+
+未采纳的两类判定：**SQP-3** 反对全库只有中文、要求提供语言选择，这与产品定位（面向中国大陆的中文 K12）冲突；**AE1** 的判词是扫描器自己没读完 `shared/vocab.md`，属其检查限制，该文件已随每个包分发。
+
+---
 ## v2.1.2 — 按扫描结果做的第二轮边界收敛
 
 v2.1.1 上架后 ClawHub 的判定是 **53 clean / 5 suspicious**（v2.1.0 是 44/13）。剩下 5 个的 GUIDANCE 指向四类具体根因，本版逐条修掉。

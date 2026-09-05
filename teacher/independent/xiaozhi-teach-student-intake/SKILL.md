@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-student-intake
 display_name: 试听与学员建档
-version: 2.1.2
+version: 2.1.3
 author: 小智伴学
 category: 独立教师
 grade_bands:

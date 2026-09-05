@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-skill-coordinator
 display_name: 🔗 学习系统协调器
-version: 2.1.2
+version: 2.1.3
 author: 小智伴学
 category: 通用核心
 grade_bands:
@@ -348,7 +348,7 @@ depends_on:
 ```json
 {
   "sessionId": "sess-demo-001",
-  "protocolVersion": "2.1.2",
+  "protocolVersion": "2.1.3",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-correction-notebook",
   "recipient": "xiaozhi-math-error-dna",
@@ -378,7 +378,7 @@ depends_on:
 ```json
 {
   "sessionId": "sess-demo-005",
-  "protocolVersion": "2.1.2",
+  "protocolVersion": "2.1.3",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-time-focus-coach",
   "recipient": "xiaozhi-learning-dna",

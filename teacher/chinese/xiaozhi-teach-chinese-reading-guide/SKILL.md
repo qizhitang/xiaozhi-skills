@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-chinese-reading-guide
 display_name: 阅读教学指导
-version: 2.1.2
+version: 2.1.3
 author: 小智伴学
 category: 老师语文
 grade_bands:
@@ -513,7 +513,7 @@ max_round_limit: 20
 ```json
 {
   "sessionId": "sess-teach-rc-001",
-  "protocolVersion": "2.1.2",
+  "protocolVersion": "2.1.3",
   "handoverType": "teacher_writeback",
   "sender": "xiaozhi-teach-chinese-reading-guide",
   "recipient": "xiaozhi-learning-dna",

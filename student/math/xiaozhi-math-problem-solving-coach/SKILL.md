@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-math-problem-solving-coach
 display_name: 📐 数学解题教练
-version: 2.1.2
+version: 2.1.3
 author: 小智伴学
 category: 数学专项
 grade_bands:
@@ -448,7 +448,7 @@ depends_on:
 ```json
 {
   "sessionId": "sess-20260903-001",
-  "protocolVersion": "2.1.2",
+  "protocolVersion": "2.1.3",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-math-problem-solving-coach",
   "recipient": "xiaozhi-correction-notebook",

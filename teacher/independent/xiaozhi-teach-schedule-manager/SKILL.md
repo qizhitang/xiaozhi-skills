@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-teach-schedule-manager
 display_name: 排课与课时管理
-version: 2.1.2
+version: 2.1.3
 author: 小智伴学
 category: 独立教师
 grade_bands:

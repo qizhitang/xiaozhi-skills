@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-weekly-review
 display_name: 📊 每周学习复盘
-version: 2.1.2
+version: 2.1.3
 author: 小智伴学
 category: 通用核心
 grade_bands:

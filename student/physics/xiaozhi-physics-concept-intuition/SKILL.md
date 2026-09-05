@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-physics-concept-intuition
 display_name: 💡 物理概念直觉器
-version: 2.1.2
+version: 2.1.3
 author: 小智伴学
 category: 物理专项
 grade_bands:
