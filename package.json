@@ -4,14 +4,15 @@
   "private": true,
   "description": "小智伴学 K12 SKILL 库：全库校验脚本与 schema 验证",
   "scripts": {
-    "check": "node scripts/check-references.mjs && node scripts/check-skills.mjs && node scripts/validate-schemas.mjs && node scripts/sync-shared.mjs --check && node scripts/check-evals.mjs",
+    "check": "node scripts/check-references.mjs && node scripts/check-skills.mjs && node scripts/validate-schemas.mjs && node scripts/sync-shared.mjs --check && node scripts/verify-examples.mjs && node scripts/check-evals.mjs",
     "check:refs": "node scripts/check-references.mjs",
     "check:skills": "node scripts/check-skills.mjs",
     "check:schemas": "node scripts/validate-schemas.mjs",
     "check:shared": "node scripts/sync-shared.mjs --check",
     "sync:shared": "node scripts/sync-shared.mjs",
     "check:evals": "node scripts/check-evals.mjs",
-    "evals:run": "node scripts/run-evals.mjs"
+    "evals:run": "node scripts/run-evals.mjs",
+    "verify:examples": "node scripts/verify-examples.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1",

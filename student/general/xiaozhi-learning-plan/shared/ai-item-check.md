@@ -23,4 +23,14 @@
 
 ## 三、示例题回归
 
-references 中的示例题视同 AI 生成题：每次修改 references 后，按本协议逐题验算一遍；CI 中 `scripts/check-skills.mjs` 会检查含"示例题"章节的文件是否声明了"已验算日期"。写法：在文件顶部加一行 `> 示例题验算：YYYY-MM-DD`。
+references 中的示例题视同 AI 生成题：每次修改 references 后，按本协议逐题验算一遍。CI 有三道检查：
+
+1. **声明**（A1）：含示例题的文件顶部须有一行 `> 示例题验算：YYYY-MM-DD`。
+2. **不得过期**（A2）：声明日期不得早于文件最后一次实质提交（纯升版提交不算）。改了题没重新验算、没更新日期，CI 直接失败——日期是承诺，不是装饰。
+3. **机器断言**（`scripts/verify-examples.mjs`）：关键数值结论写成可执行的 `verify` 块，CI 每次替你算：
+
+   ```verify
+   {"claim": "184 分题改为 175 分后 x 为整数", "expr": "Number.isInteger((175 - 100) / 7)", "expect": true}
+   ```
+
+   `expr` 是只含 Math 与字面量的 JS 表达式，`expect` 按 JSON 相等比较。历史上出过的病题（无解、非整数解、不成题）都应留一条断言，题目一改断言就红。

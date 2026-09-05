@@ -15,11 +15,22 @@
 //  I1 老师端接口路径根字段必须存在于 schema
 //  D1 docs 版本号与 package.json 一致；docs 中 SKILL 名称与目录一致
 //  A1 含"示例题"的 references 必须有"示例题验算：YYYY-MM-DD"声明（警告）
+//  A2 验算日期不得早于文件最后一次实质提交（git；纯升版提交不算）
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, dirname, resolve, relative, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+// ---------- git helpers（A2 用；git 不可用时降级为跳过） ----------
+import { execFileSync } from "node:child_process";
+let gitOk = true;
+function gitLog(file) {
+  try {
+    const out = execFileSync("git", ["-c", "safe.directory=" + root.replaceAll(String.fromCharCode(92), "/"), "log", "--format=%ad|%s", "--date=short", "--", file], { cwd: root, encoding: "utf-8", stdio: ["ignore", "pipe", "ignore"] });
+    return out.trim().split(String.fromCharCode(10)).filter(Boolean).map((l) => { const i = l.indexOf("|"); return { date: l.slice(0, i), subject: l.slice(i + 1) }; });
+  } catch { gitOk = false; return []; }
+}
+
 const warnOnly = process.argv.includes("--warn-only");
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf-8"));
 const REPO_VERSION = pkg.version;
@@ -141,6 +152,13 @@ for (const f of refFiles) {
   }
   // A1
   if (/示例题|例题|样板题/.test(text) && /^\s*(\d+[.、)]|例\s*\d|题目[:：])/m.test(text) && !/示例题验算[:：]\s*\d{4}-\d{2}-\d{2}/.test(text)) warn("A1", rel(f), "含示例题但无“示例题验算：YYYY-MM-DD”声明（shared/ai-item-check.md §3）");
+  // A2：验算日期不得早于文件最后一次实质提交（纯升版提交不算）——否则"验算日期"只是装饰
+  const decl = text.match(/示例题验算[:：]\s*(\d{4}-\d{2}-\d{2})/);
+  if (decl && gitOk) {
+    const logs = gitLog(f);
+    const later = logs.filter((l) => l.date > decl[1] && !/升版|版本号|全库升版|bump/i.test(l.subject));
+    if (later.length) err("A2", rel(f), `示例题验算声明为 ${decl[1]}，但此后有 ${later.length} 次实质改动（最近 ${later[0].date}），请逐题重新验算并更新日期`);
+  }
 }
 
 // ---------- V1/V2/P1/S1/G1 content scans ----------
