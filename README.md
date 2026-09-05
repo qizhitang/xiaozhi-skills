@@ -157,6 +157,7 @@ npm run check
 | `scripts/validate-schemas.mjs` | 四份 schema 自身有效、8 份 examples 合规、枚举与 `shared/vocab.md` 一致、结构与协议版本号等于 `package.json` |
 | `scripts/sync-shared.mjs --check` | 每个 SKILL 目录内的 `shared/` 副本与仓库根源文件逐字节一致 |
 | `scripts/verify-examples.mjs` | references 里的 ```verify``` 断言逐条求值（示例题的关键数值结论交给 CI 算）；`check-skills` 的 A2 另查“示例题验算”日期不得早于文件最后一次实质提交 |
+| `scripts/gen-docs.mjs --check` | 文档与源码同步：`docs/skills-index.md` 由 frontmatter 生成且不落后；README / architecture 技能表的显示名、目录、学段与 frontmatter 一致；数量声明正确；安装指南的顺序不违反 `metadata.depends_on` |
 | `scripts/check-evals.mjs` | 每个 SKILL 都有回归用例：至少 1 条触发 + 1 条不触发；声明了能力代号的有降级用例；持有长期数据的有授权用例；会读到情绪文本的有危机用例；`route_to` 指向存在的 SKILL |
 
 行为层回归不进 `npm run check`（要 API key、非确定）：`ANTHROPIC_API_KEY=... npm run evals:run [skill...]` 把 SKILL.md 喂给模型逐条对话并判卷，报告在 `evals/report/`。格式与写法见 [evals/README.md](evals/README.md)。
@@ -165,6 +166,7 @@ npm run check
 
 ## 📚 更多文档
 
+- [技能索引](docs/skills-index.md) — 全库 58 个技能的显示名 / 目录 / 学段 / 依赖，由 `npm run docs:gen` 从 frontmatter 生成
 - 🏛️ [系统架构与方法论](docs/architecture.md) — 完整清单、协作架构、方法论依据、目录树
 - 🗺️ [安装指南](docs/installation-guide.md) — WorkBuddy 安装方式、分阶段安装路径与打包建议
 - 🔄 [版本历史](docs/changelog.md) — 版本演进与本轮变更

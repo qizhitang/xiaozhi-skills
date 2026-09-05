@@ -285,6 +285,7 @@ consentStatus
 | `scripts/validate-schemas.mjs` | 四份 schema 有效；8 份示例合规；枚举与 `shared/vocab.md` 一致；收发方覆盖全库；关键字段存在；结构与协议版本号等于 `package.json` |
 | `scripts/sync-shared.mjs --check` | 58 个 SKILL 目录内的 `shared/` 副本与仓库根源文件一致（缺失、被改、残留均报错）|
 | `scripts/verify-examples.mjs` | X1 ```verify``` 块为合法 JSON（claim / expr / expect）· X2 expr 只含 Math 与字面量，求值结果等于 expect · X3 有验算声明却无断言的文件给警告。配合 `check-skills` 的 A2：验算日期早于最后一次实质提交即失败 |
+| `scripts/gen-docs.mjs --check` | D2 `docs/skills-index.md` 与 frontmatter 生成结果一致 · D3 README / architecture 技能表：显示名 == `metadata.display_name`、反引号目录存在、学段列 == `grade_bands` 区间、改名残留报错 · D4 数量声明（全库 / 学生端 / 老师端 / references）与实际一致 · D5 安装指南顺序不违反 `metadata.depends_on` |
 | `scripts/check-evals.mjs` | E1 用例文件过 schema、id 唯一 · E2 至少 1 触发 + 1 不触发 · E3 有能力代号即有降级用例且 `missing` 不越界 · E4 持有长期数据即有授权用例 · E5 会读情绪文本即有危机用例 · E6 `route_to` 与授权字段名存在 · E7 每条用例有断言 |
 
 静态校验盖不住“文件之间互相矛盾”（SKILL.md 说不归档、references 说归档）——每份文件单看都合法。`evals/` 下每个 SKILL 一份回归用例（触发 / 不触发 / 降级 / 授权 / 危机五种），`scripts/run-evals.mjs` 把 SKILL.md 与随包 shared/ 喂给模型逐条对话、再由判卷模型对照期望打分。它不进 `npm run check`：要 API key，结果非确定，用途是发现回归而不是当门禁。
@@ -316,11 +317,13 @@ xiaozhi-skills/
 │   ├── sync-shared.mjs
 │   ├── verify-examples.mjs          示例题机器断言（进 CI）
 │   ├── check-evals.mjs              回归用例静态校验（进 CI）
-│   └── run-evals.mjs                行为回归运行器（手动）
+│   ├── run-evals.mjs                行为回归运行器（手动）
+│   └── gen-docs.mjs                 生成技能索引 + 文档同步核对（进 CI）
 ├── docs/
 │   ├── architecture.md              本文档
 │   ├── installation-guide.md
 │   ├── changelog.md
+│   ├── skills-index.md              由 frontmatter 生成，勿手改
 │   ├── review-2026-09.md            本轮评估报告
 │   └── archive/                     历史报告
 ├── student/

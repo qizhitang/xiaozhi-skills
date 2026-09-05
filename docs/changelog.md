@@ -37,6 +37,15 @@ A2 顺带补了一条：**文件有未提交改动且声明日期早于今天**�
 
 这一项不改任何技能行为，不单独发版；随下一次内容发布一起上架。
 
+### 文档与源码同步机制（阶段 3 第四项）
+
+原条目写的是“changelog 由脚本从 frontmatter 生成”。做的时候发现 changelog 与 README / architecture 里的技能描述都是人写的判断，不该由脚本生成；能从 frontmatter 推出来的只有显示名、目录、学段、依赖、数量。所以拆成两件事：**能推的生成，手写的核对**。
+
+- `docs/skills-index.md`：`npm run docs:gen` 从 58 个 SKILL.md 的 `metadata` 生成，勿手改。
+- `scripts/gen-docs.mjs --check`（进 `npm run check`，D2–D5）：索引不落后于 frontmatter；README / architecture 技能表的显示名、目录、学段列与 frontmatter 一致，改名后的残留显示名报错；“全库 N 个 SKILL / N 份 references”等数量声明与实际一致；**安装指南的顺序不违反 `metadata.depends_on`**。
+
+D5 上线即抓到 8 处：安装指南把教案设计器排在学情分析师前、学情分析师排在测评设计师前、独立教师工作台排在它聚合的三个技能前——都是审计报告第 47 条“安装顺序与 depends_on 冲突”的同类问题，改了依赖没改指南。已按依赖重排，并在指南里写明为什么这样排。
+
 ---
 
 ## v2.1.3 — 消除 references 与 SKILL.md 的契约矛盾
