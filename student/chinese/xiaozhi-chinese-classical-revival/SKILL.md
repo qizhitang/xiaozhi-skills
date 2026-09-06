@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 跨时空古文对话
-  version: 2.1.9
+  version: 2.1.10
   author: 小智伴学
   category: 语文专项
   grade_bands:
@@ -516,7 +516,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-chinese-cl-001",
-  "protocolVersion": "2.1.9",
+  "protocolVersion": "2.1.10",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-chinese-classical-revival",
   "recipient": "xiaozhi-learning-dna",

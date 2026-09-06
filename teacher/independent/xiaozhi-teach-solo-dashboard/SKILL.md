@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 独立教师工作台
-  version: 2.1.9
+  version: 2.1.10
   author: 小智伴学
   category: 独立教师
   grade_bands:
@@ -418,13 +418,13 @@ parentSummary / factSummary 字段硬约束：
 
 ---
 
-### 隐私与数据控制入口
-- 查看：「查看我的[工作空间记录]」
-- 更正：「更正我的[记录]」
-- 删除：「删除我的[记录]」（删除后不可恢复，会先确认一次）
-- 暂停：「这次不要记忆」/「暂停提醒」
-- 共享控制：「不要共享给其他SKILL」/「不要给家长看」
-- 导出：「导出我的[工作空间记录]」（以文本形式给出，便于转存）
+### 隐私与数据控制入口（本 SKILL 只读，改动一律转写入方）
+- 查看：「查看我的[工作空间记录]」——本 SKILL 直接展示
+- 导出：「导出我的[工作空间记录]」（以文本形式给出，便于转存）——本 SKILL 直接给出
+- 更正：「更正我的[记录]」——本 SKILL 不写任何字段，如实转到写入方执行：学员卡与授权位 → student-intake，课后记录 → lesson-log，作业 → homework-tracker，家长沟通记录 → parent-communication，阶段证据 → renewal-report
+- 删除：「删除我的[记录]」——同上转写入方，由老师在那里确认（删除后不可恢复）
+- 暂停：「这次不要记忆」/「暂停提醒」——本 SKILL 本就不写、不提醒；转写入方生效
+- 共享控制：「不要共享给其他SKILL」/「不要给家长看」——本 SKILL 生成任何可分享内容前先查授权位；改动授权位转 student-intake
 
 学员/家长提出时同样适用，按学员化名定位：「查看 小A 的记录」「删除 小A 的全部数据」。
 

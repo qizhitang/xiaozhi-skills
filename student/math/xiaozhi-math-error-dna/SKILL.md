@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🧬 数学错误DNA
-  version: 2.1.9
+  version: 2.1.10
   author: 小智伴学
   category: 数学专项
   grade_bands:
@@ -416,7 +416,7 @@ handoverTrigger = "anxiety_trigger"（焦虑信号转交）
 ```json
 {
   "sessionId": "sess-20260903-002",
-  "protocolVersion": "2.1.9",
+  "protocolVersion": "2.1.10",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-correction-notebook",
   "recipient": "xiaozhi-math-error-dna",
@@ -450,7 +450,7 @@ handoverTrigger = "anxiety_trigger"（焦虑信号转交）
 ```json
 {
   "sessionId": "sess-20260903-002",
-  "protocolVersion": "2.1.9",
+  "protocolVersion": "2.1.10",
   "handoverType": "deep_analysis_writeback",
   "sender": "xiaozhi-math-error-dna",
   "recipient": "xiaozhi-correction-notebook",

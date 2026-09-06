@@ -4,13 +4,24 @@
   "title": "ClassTeachingWorkspace",
   "x-distributed-to": "xiaozhi-teach-english-assessment",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-teach-english-assessment 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的字段（共 7 项，删去 4 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
+    "note": "本副本随 xiaozhi-teach-english-assessment 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：只读 classProfile、classSummaries、itemScores、itemStats；写 examBlueprints、reviewPlans、weaknessRank（各字段只留声明列出的子字段；删去 4 个顶层字段）。完整定义在归属技能处。",
     "paths": [
       "classProfile",
       "classSummaries",
       "examBlueprints",
       "itemScores",
       "itemStats",
+      "reviewPlans",
+      "weaknessRank"
+    ],
+    "reads": [
+      "classProfile",
+      "classSummaries",
+      "itemScores",
+      "itemStats"
+    ],
+    "writes": [
+      "examBlueprints",
       "reviewPlans",
       "weaknessRank"
     ]

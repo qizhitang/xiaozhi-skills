@@ -3,13 +3,13 @@ name: xiaozhi-cornell-notes
 description: >
   把课堂笔记整理成能被再次用上的形式：左栏线索问题 + 右栏内容 + 底部一句话总结，并按学科课题归档。
   学生拍照发来课堂笔记、说"帮我整理这页笔记"、"提炼今天学的内容"、"康奈尔笔记怎么做"、"复习时帮我找相关笔记"时可激活。
-  它只做笔记的整理、归档与调取，以及（开启档案后、学生要求时）一份笔记使用情况报告——哪些笔记被调取过、哪些从没用过；开启跨 SKILL 共享后，只把笔记数量与反复出现的缺口这两项汇总写进学习DNA 的 extensions.notes，不传笔记全文。
+  它只做笔记的整理、归档与调取，以及（开启档案后、学生要求时）一份笔记使用情况报告——哪些笔记被调取过、哪些从没用过；开启跨 SKILL 共享后，只把笔记数量与反复出现的缺口这两项汇总写进学习DNA 的 extensions.notes，不传笔记全文；复习提醒只在学生同意时经 IM 提醒发送。
   不讲新知识（转对应学科教练）、不分析错题（转错题本）、不验证理解（转费曼学习法）；自测的回忆状态只在会话内用，不留存。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 📝 康奈尔笔记
-  version: 2.1.9
+  version: 2.1.10
   author: 小智伴学
   category: 通用核心
   grade_bands:

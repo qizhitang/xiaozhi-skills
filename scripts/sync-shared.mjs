@@ -156,6 +156,38 @@ function mentioned(skillText, key) {
   }
   return false;
 }
+// SKILL.md 里的“读：/写：”声明块（老师端工作区技能都有）：随后缩进列出 workspace.xxx / classWorkspace.xxx 路径，
+// 路径后面的 .a / .b、或下一行的 a / b / c 是子字段。返回 { read: Map<顶层键, Set<子字段>>, write: 同 }
+function parseReadWrite(skillText) {
+  const out = { read: new Map(), write: new Map() };
+  let mode = null, lastKey = null;
+  for (const raw of skillText.split(String.fromCharCode(10))) {
+    const line = raw.replace(/\r$/, "");
+    const head = line.match(/^\s*(读|写)(?:[（(][^）)]*[）)])?[：:]\s*(.*)$/);
+    let body;
+    if (head) { mode = head[1] === "读" ? "read" : "write"; lastKey = null; body = head[2]; if (!body) continue; }
+    else if (!mode) continue;
+    else if (!/^\s/.test(line) || /^\s*$/.test(line)) { mode = null; lastKey = null; continue; }
+    else body = line;
+    if (/^\s*→/.test(body)) continue;                                   // 解释行
+    const map = out[mode];
+    const addFields = (seg, key) => {
+      if (!key) return;
+      const set = map.get(key) || new Set(); map.set(key, set);
+      for (const f of seg.matchAll(/(?:^|[\s./（(、,，›])([a-z][A-Za-z0-9_]*)(?=\s*(?:\[\]|[\s/）),，、›（({}]|$))/g)) set.add(f[1]);
+    };
+    const re = /(?:workspace|classWorkspace)\.([A-Za-z][A-Za-z0-9]*)/g;
+    let m, cursor = 0;
+    while ((m = re.exec(body))) {
+      if (cursor < m.index && lastKey) addFields(body.slice(cursor, m.index), lastKey);
+      cursor = m.index + m[0].length;
+      if (/(不写|不读|不碰|不改|不含|不动|❌)\s*$/.test(body.slice(0, m.index))) { lastKey = null; continue; }   // 否定语境里的键不算
+      lastKey = m[1]; if (!map.has(lastKey)) map.set(lastKey, new Set());
+    }
+    if (lastKey) addFields(body.slice(cursor), lastKey);
+  }
+  return out;
+}
 function scopeJson(name, body, skillName, skillText, dirRel) {
   let obj;
   try { obj = JSON.parse(body); } catch { return body; }
@@ -170,6 +202,35 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
       continue;
     }
     if (mentioned(skillText, k)) { keep.add(k); paths.push(k); }
+  }
+  // 工作区 schema：SKILL.md 有显式“读：/写：”声明块时以它为准（比“提到过”精确），并把只读/写分开写进 x-skill-scope；
+  // 声明里列了子字段的键，只留列出的子字段（加上 required）；只写了键名的整块保留
+  let rwScope = null;
+  if (/-workspace\.schema\.json$/.test(name)) {
+    const rw = parseReadWrite(skillText);
+    const rk = [...rw.read.keys()].filter((k) => k in props), wk = [...rw.write.keys()].filter((k) => k in props);
+    if (rk.length || wk.length) {
+      keep.clear(); paths.length = 0;
+      for (const k of new Set([...rk, ...wk])) { keep.add(k); paths.push(k); }
+      rwScope = { reads: rk.filter((k) => !wk.includes(k)).sort(), writes: wk.sort() };
+      const wanted = new Map();   // 被引用的定义对象 → 该保留的子字段（同一定义被多个键引用时取并集）
+      for (const k of keep) {
+        const fields = new Set([...(rw.read.get(k) || []), ...(rw.write.get(k) || [])]);
+        if (!fields.size) continue;
+        const node = props[k];
+        const target = (node && node.type === "array" && node.items) ? node.items : node;
+        const resolved = target && typeof target.$ref === "string" && target.$ref.startsWith("#/$defs/") ? (obj.$defs || {})[target.$ref.slice(8)] : target;
+        if (!resolved || !resolved.properties) continue;
+        const set = wanted.get(resolved) || new Set(); wanted.set(resolved, set);
+        fields.forEach((f) => set.add(f));
+      }
+      for (const [def, fields] of wanted) {
+        const have = Object.keys(def.properties).filter((f) => fields.has(f));
+        if (!have.length) continue;
+        const keepF = new Set([...have, ...(Array.isArray(def.required) ? def.required : [])]);
+        def.properties = Object.fromEntries(Object.entries(def.properties).filter(([f]) => keepF.has(f)));
+      }
+    }
   }
   // 交接协议：按正文提到的交接类型裁剪枚举与 if/then
   let kinds = null;
@@ -188,7 +249,7 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
       if (props.payload && props.payload.properties && needed.size) props.payload = { ...props.payload, properties: Object.fromEntries(Object.entries(props.payload.properties).filter(([k]) => needed.has(k))) };
       // 再裁一层：profileData.updateTarget 枚举 + 对应子字段、reminderData.type 枚举、consent 字段
       const pp = props.payload && props.payload.properties;
-      const TARGET_FIELD = { concept_graph: "graphUpdates", emotion_dimension: "emotionUpdates", growth_milestones: "milestone", subject_extension: "subjectExtensionPatch", extension: "extensionPatch", safety_record: "safetyRecordEntry", weak_knowledge_points: "weakKnowledgePointUpdates" };
+      const TARGET_FIELD = { concept_graph: "graphUpdates", emotion_dimension: "emotionUpdates", growth_milestones: "milestone", subject_extension: "subjectExtensionPatch", extension: "extensionPatch", safety_record: "safetyRecordEntry", weak_knowledge_points: "weakKnowledgePointUpdates", interest_dna: "interestUpdates" };
       const TARGET_KIND = (v) => (v === "subject_extension" || v === "extension") ? "subject_profile_writeback" : "profile_writeback";
       let keptTargets = null;   // 本副本最终保留的写回目标（没有 profileData 的副本为 null）
       if (pp && pp.profileData && pp.profileData.properties && pp.profileData.properties.updateTarget && Array.isArray(pp.profileData.properties.updateTarget.enum)) {
@@ -263,6 +324,10 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
         const segs = props.handoverType.description.split("；").filter((s) => kinds.some((k) => s.trim().startsWith(k + "=")));
         if (segs.length) props.handoverType = { ...props.handoverType, description: segs.join("；") };
       }
+      // payload 各分支的说明文字里的交接类型名也按保留类型改写（主文件里写的是 profile_writeback / reminder_sync 的旧口径）
+      const pp3 = props.payload && props.payload.properties;
+      if (pp3 && pp3.profileData) { const wb = kinds.filter((k) => k === "profile_writeback" || k === "subject_profile_writeback"); if (wb.length) pp3.profileData = { ...pp3.profileData, description: `DNA回写专属结构。handoverType 为 ${wb.join(" / ")} 时必填` }; }
+      if (pp3 && pp3.reminderData) { const rk = kinds.filter((k) => /^reminder_/.test(k)); if (rk.length) pp3.reminderData = { ...pp3.reminderData, description: `提醒专属结构。handoverType 为 ${rk.join(" / ")} 时必填` }; }
       // if 用 enum 写法的条件分支：把 if 里的枚举也裁到保留类型
       if (Array.isArray(obj.allOf)) obj.allOf = obj.allOf.map((c) => {
         const h = c && c.if && c.if.properties && c.if.properties.handoverType;
@@ -288,7 +353,7 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
         const fixed = new Set(kinds.flatMap((k) => DEST[k] || []));
         const openKinds = kinds.filter((k) => !(DEST[k] || []).length);   // 路由表没定目的地的类型（reminder_sync）
         const men = openKinds.length ? props.recipient.enum.filter((r) => r !== skillName && mentioned(skillText, r)) : [];
-        const rs = props.recipient.enum.filter((r) => fixed.has(r) || men.includes(r));
+        const rs = props.recipient.enum.filter((r) => (fixed.has(r) || men.includes(r)) && r !== skillName);   // 不会发给自己
         if (rs.length) props.recipient = { ...props.recipient, enum: rs };
       }
       // sender 就是本技能；recipient 只留正文（非否定语境）提到的技能，一个都没提到就保留全表
@@ -299,13 +364,15 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
   const pruned = Object.fromEntries(Object.entries(props).filter(([k]) => keep.has(k)));
   const droppedN = top.length - Object.keys(pruned).length;
   const scopeList = kinds ? kinds : paths.sort();
-  const note = scopeList.length
+  const note = rwScope
+    ? `本副本随 ${skillName} 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：只读 ${rwScope.reads.join("、") || "无"}；写 ${rwScope.writes.join("、") || "无"}（各字段只留声明列出的子字段；删去 ${droppedN} 个顶层字段）。完整定义在归属技能处。`
+    : scopeList.length
     ? `本副本随 ${skillName} 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的${kinds ? "交接类型" : "字段"}（共 ${scopeList.length} 项，删去 ${droppedN} 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。`
     : `本副本随 ${skillName} 分发。该技能正文没有在非否定语境下提到本 schema 的任何字段——它不直接读写这份数据，副本仅为交接契约的类型参照；已删去全部 ${droppedN} 个数据字段。`;
   const head = {};
   for (const k of ["$schema", "$id", "title"]) if (k in obj) head[k] = obj[k];
   head["x-distributed-to"] = skillName;
-  head["x-skill-scope"] = { note, paths: scopeList };
+  head["x-skill-scope"] = rwScope ? { note, paths: scopeList, ...rwScope } : { note, paths: scopeList };
   for (const [k, v] of Object.entries(obj)) if (!(k in head)) head[k] = (k === "properties") ? pruned : (k === "required" && Array.isArray(v)) ? v.filter((r) => keep.has(r)) : v;
   // $defs 只留被保留部分（递归）引用到的定义：没人引用的定义会被扫描器读成“这个技能还带着这些数据结构”
   if (head.$defs && typeof head.$defs === "object") {

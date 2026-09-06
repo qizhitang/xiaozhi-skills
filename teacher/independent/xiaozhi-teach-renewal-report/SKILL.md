@@ -5,13 +5,13 @@ description: >
   适用于老师说"做一份阶段报告""给 [化名] 出个报告""[化名] 课时过半了""[化名] 课时剩三成""家长问孩子学得怎么样""这学期总结一下""家长犹豫要不要续"。
   流程：汇总课后记录与作业错因 → 写事实/进步/计划三段 → 无逐知识点分数时只出定性判断 → 给续课建议与话术。
   出报告前须先指定学员化名；它会读这名学员跨月的学习记录，家长可见的内容一律先过授权检查。
-  本 SKILL 不记课后内容、不登记作业、不排课、不发消息，也不改学员状态、不执行删除——
+  本 SKILL 不记课后内容、不登记作业、不排课、不发消息，也不改学员状态、不删学员档案（只删本 SKILL 自己写的阶段证据）——
   素材来自 lesson-log 与 homework-tracker，消息由老师自己发（措辞可交 parent-communication），档案变更转 student-intake。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 阶段报告与续课助手
-  version: 2.1.9
+  version: 2.1.10
   author: 小智伴学
   category: 独立教师
   grade_bands:

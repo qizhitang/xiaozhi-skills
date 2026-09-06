@@ -4,7 +4,7 @@
   "title": "ClassTeachingWorkspace",
   "x-distributed-to": "xiaozhi-teach-math-error-analyzer",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-teach-math-error-analyzer 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的字段（共 7 项，删去 4 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
+    "note": "本副本随 xiaozhi-teach-math-error-analyzer 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：只读 classProfile、examBlueprints、itemScores、itemStats；写 homeworkAssignments、interactionLogs、weaknessRank（各字段只留声明列出的子字段；删去 4 个顶层字段）。完整定义在归属技能处。",
     "paths": [
       "classProfile",
       "examBlueprints",
@@ -12,6 +12,17 @@
       "interactionLogs",
       "itemScores",
       "itemStats",
+      "weaknessRank"
+    ],
+    "reads": [
+      "classProfile",
+      "examBlueprints",
+      "itemScores",
+      "itemStats"
+    ],
+    "writes": [
+      "homeworkAssignments",
+      "interactionLogs",
       "weaknessRank"
     ]
   },
@@ -85,11 +96,6 @@
             "高中"
           ]
         },
-        "gradeLevel": {
-          "type": "string",
-          "maxLength": 10,
-          "description": "如 八年级"
-        },
         "classSize": {
           "type": "integer",
           "minimum": 1,
@@ -106,10 +112,6 @@
             90
           ],
           "description": "一节课分钟数（小学默认 40，初中默认 45）"
-        },
-        "textbookVersion": {
-          "type": "string",
-          "maxLength": 40
         },
         "fullScore": {
           "type": "integer",
@@ -172,45 +174,12 @@
           "type": "string",
           "format": "date"
         },
-        "segmentTimings": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "name": {
-                "type": "string",
-                "maxLength": 40
-              },
-              "plannedMinutes": {
-                "type": "integer"
-              },
-              "actualMinutes": {
-                "type": "integer"
-              }
-            }
-          }
-        },
-        "participationNote": {
-          "type": "string",
-          "maxLength": 300,
-          "description": "整体参与度的事实描述；不记录个别学生姓名"
-        },
-        "questionEffectNote": {
-          "type": "string",
-          "maxLength": 300,
-          "description": "提问链效果：哪一问引发最多思考、哪一问无人回应；只记问题本身，不记学生"
-        },
         "misconceptionsObserved": {
           "type": "array",
           "items": {
             "type": "string",
             "maxLength": 100
           }
-        },
-        "adjustmentForNext": {
-          "type": "string",
-          "maxLength": 300
         }
       },
       "required": [
@@ -224,10 +193,6 @@
       "additionalProperties": false,
       "properties": {
         "assignmentId": {
-          "type": "string",
-          "maxLength": 40
-        },
-        "planId": {
           "type": "string",
           "maxLength": 40
         },
@@ -284,12 +249,6 @@
               "estimatedMinutes"
             ]
           }
-        },
-        "estimatedTotalMinutes": {
-          "type": "integer",
-          "minimum": 0,
-          "maximum": 120,
-          "description": "本科目本次作业预计总时长；全科总量按学段封顶由老师协调"
         },
         "completionSummary": {
           "type": "object",
@@ -371,10 +330,6 @@
           "type": "string",
           "maxLength": 80
         },
-        "date": {
-          "type": "string",
-          "format": "date"
-        },
         "assessmentType": {
           "type": "string",
           "enum": [
@@ -383,47 +338,10 @@
             "终结性"
           ]
         },
-        "durationMinutes": {
-          "type": "integer",
-          "minimum": 10,
-          "maximum": 150
-        },
         "fullScore": {
           "type": "integer",
           "minimum": 10,
           "maximum": 150
-        },
-        "difficultyRatio": {
-          "type": "string",
-          "pattern": "^[0-9]+:[0-9]+:[0-9]+$",
-          "description": "基础:中等:较难，如 6:3:1"
-        },
-        "cognitiveRatio": {
-          "type": "object",
-          "additionalProperties": false,
-          "description": "四级认知层级的分值占比（%），四项之和应为 100。层级取值见 cognitiveLevel",
-          "properties": {
-            "了解": {
-              "type": "integer",
-              "minimum": 0,
-              "maximum": 100
-            },
-            "理解": {
-              "type": "integer",
-              "minimum": 0,
-              "maximum": 100
-            },
-            "掌握": {
-              "type": "integer",
-              "minimum": 0,
-              "maximum": 100
-            },
-            "运用": {
-              "type": "integer",
-              "minimum": 0,
-              "maximum": 100
-            }
-          }
         },
         "items": {
           "type": "array",
@@ -614,11 +532,6 @@
             "读题失误",
             "方法用错"
           ]
-        },
-        "stubbornCount": {
-          "type": "integer",
-          "minimum": 0,
-          "description": "近 4 次测评中错误率 >30% 的次数（shared/vocab.md §5 老师端口径）"
         },
         "evidenceExamIds": {
           "type": "array",

@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🗓️ 30天学习计划制定师
-  version: 2.1.9
+  version: 2.1.10
   author: 小智伴学
   category: 通用核心
   grade_bands:

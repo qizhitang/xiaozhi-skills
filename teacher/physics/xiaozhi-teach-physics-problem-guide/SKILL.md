@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 物理解题教学指导
-  version: 2.1.9
+  version: 2.1.10
   author: 小智伴学
   category: 老师物理
   grade_bands:

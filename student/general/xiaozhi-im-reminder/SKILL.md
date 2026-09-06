@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: ⏰ IM智能提醒
-  version: 2.1.9
+  version: 2.1.10
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -432,4 +432,4 @@ IM智能提醒
 > 💡 **小智说：**
 > "提醒不是催你，而是帮你把重要的事从‘我知道’变成‘我做了’。  
 >  知识需要提醒，计划需要提醒，探索也需要提醒。  
->  我会在你最容易忘、最容易拖、最容易中断的时候出现。"
+>  我只在你同意的时间、以你同意的方式出现——不多说一句，也不自己冒出来。"

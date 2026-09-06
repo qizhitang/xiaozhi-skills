@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 作业跟进管家
-  version: 2.1.9
+  version: 2.1.10
   author: 小智伴学
   category: 独立教师
   grade_bands:
@@ -484,7 +484,7 @@ max_round_limit: 12
 ### 隐私与数据控制入口
 - 查看：「查看我的[作业记录]」
 - 更正：「更正我的[作业记录]」
-- 删除：「删除我的[作业记录]」（删除后不可恢复，会先确认一次）
+- 删除：「删除我的[作业记录]」——据此写进学员卡的弱项条目与阶段证据一并列出，老师确认后同删；删除后不可恢复
 - 暂停：「这次不要记忆」/「暂停提醒」
 - 共享控制：「不要共享给其他SKILL」/「不要给家长看」
 - 导出：「导出我的[作业记录]」（以文本形式给出，便于转存）

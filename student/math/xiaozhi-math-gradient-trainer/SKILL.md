@@ -4,11 +4,12 @@ description: >
   初中数学分层进阶练习：在某个知识点已经会做的前提下，按 5 层难度定位当前练习层级，再一层一层往上练。
   典型触发："这类数学题我会了，想练更难的""帮我出数学进阶题""数学考试总在难题上卡住""测一下我这个知识点在第几层""帮我生成数学成长日记"。
   不处理：一道具体题目的当场引导（转 xiaozhi-math-problem-solving-coach）、错题收录与次数统计（转 xiaozhi-correction-notebook）、错因子类型分析（转 xiaozhi-math-error-dna）、概念没建立时的重讲（转 xiaozhi-math-concept-explainer）。
+  每周检测提醒只在学生同意时经 reminder_enqueue 交 IM 提醒，本 SKILL 不自己提醒。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🎯 思维梯度训练师
-  version: 2.1.9
+  version: 2.1.10
   author: 小智伴学
   category: 数学专项
   grade_bands:
@@ -406,7 +407,7 @@ Step 4：更新日记和档案
 ```json
 {
   "sessionId": "sess-20260903-003",
-  "protocolVersion": "2.1.9",
+  "protocolVersion": "2.1.10",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-math-gradient-trainer",
   "recipient": "xiaozhi-learning-dna",

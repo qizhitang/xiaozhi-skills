@@ -4,13 +4,23 @@
   "title": "ClassTeachingWorkspace",
   "x-distributed-to": "xiaozhi-teach-chinese-classical-guide",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-teach-chinese-classical-guide 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的字段（共 6 项，删去 5 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
+    "note": "本副本随 xiaozhi-teach-chinese-classical-guide 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：只读 classProfile、studentTiers；写 homeworkAssignments、interactionLogs、lessonPlans、weaknessRank（各字段只留声明列出的子字段；删去 5 个顶层字段）。完整定义在归属技能处。",
     "paths": [
       "classProfile",
       "homeworkAssignments",
       "interactionLogs",
       "lessonPlans",
       "studentTiers",
+      "weaknessRank"
+    ],
+    "reads": [
+      "classProfile",
+      "studentTiers"
+    ],
+    "writes": [
+      "homeworkAssignments",
+      "interactionLogs",
+      "lessonPlans",
       "weaknessRank"
     ]
   },
@@ -83,11 +93,6 @@
           "maxLength": 10,
           "description": "如 八年级"
         },
-        "classSize": {
-          "type": "integer",
-          "minimum": 1,
-          "maximum": 80
-        },
         "periodMinutes": {
           "type": "integer",
           "enum": [
@@ -103,15 +108,6 @@
         "textbookVersion": {
           "type": "string",
           "maxLength": 40
-        },
-        "fullScore": {
-          "type": "integer",
-          "enum": [
-            100,
-            120,
-            150
-          ],
-          "description": "本学科常用卷面满分，学情分析的阈值按此换算"
         }
       },
       "required": [
@@ -160,21 +156,6 @@
         "topic": {
           "type": "string",
           "maxLength": 80
-        },
-        "date": {
-          "type": "string",
-          "format": "date"
-        },
-        "planType": {
-          "type": "string",
-          "enum": [
-            "新授",
-            "复习",
-            "讲评",
-            "单元起始",
-            "单元总结"
-          ],
-          "description": "讲评课的错题清单与讲评顺序来自 exam-designer；本字段用于区分教案类型"
         },
         "periodMinutes": {
           "type": "integer",
@@ -302,45 +283,12 @@
           "type": "string",
           "format": "date"
         },
-        "segmentTimings": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "name": {
-                "type": "string",
-                "maxLength": 40
-              },
-              "plannedMinutes": {
-                "type": "integer"
-              },
-              "actualMinutes": {
-                "type": "integer"
-              }
-            }
-          }
-        },
-        "participationNote": {
-          "type": "string",
-          "maxLength": 300,
-          "description": "整体参与度的事实描述；不记录个别学生姓名"
-        },
-        "questionEffectNote": {
-          "type": "string",
-          "maxLength": 300,
-          "description": "提问链效果：哪一问引发最多思考、哪一问无人回应；只记问题本身，不记学生"
-        },
         "misconceptionsObserved": {
           "type": "array",
           "items": {
             "type": "string",
             "maxLength": 100
           }
-        },
-        "adjustmentForNext": {
-          "type": "string",
-          "maxLength": 300
         }
       },
       "required": [
@@ -354,10 +302,6 @@
       "additionalProperties": false,
       "properties": {
         "assignmentId": {
-          "type": "string",
-          "maxLength": 40
-        },
-        "planId": {
           "type": "string",
           "maxLength": 40
         },
@@ -414,32 +358,6 @@
               "estimatedMinutes"
             ]
           }
-        },
-        "estimatedTotalMinutes": {
-          "type": "integer",
-          "minimum": 0,
-          "maximum": 120,
-          "description": "本科目本次作业预计总时长；全科总量按学段封顶由老师协调"
-        },
-        "completionSummary": {
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "submitted": {
-              "type": "integer",
-              "minimum": 0
-            },
-            "total": {
-              "type": "integer",
-              "minimum": 0
-            },
-            "commonErrors": {
-              "type": "array",
-              "items": {
-                "$ref": "#/$defs/errorTally"
-              }
-            }
-          }
         }
       },
       "required": [
@@ -447,46 +365,6 @@
         "date",
         "purpose",
         "tasks"
-      ]
-    },
-    "errorTally": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "knowledgePoint": {
-          "type": "string",
-          "maxLength": 60
-        },
-        "dimension": {
-          "type": "string",
-          "enum": [
-            "概念模糊",
-            "计算失误",
-            "读题失误",
-            "方法用错"
-          ]
-        },
-        "teacherCategory": {
-          "type": "string",
-          "enum": [
-            "知识漏洞",
-            "规则错误",
-            "计算错误",
-            "审题错误",
-            "策略错误",
-            "表达/书写不规范",
-            "习惯性失误"
-          ]
-        },
-        "count": {
-          "type": "integer",
-          "minimum": 0
-        }
-      },
-      "required": [
-        "knowledgePoint",
-        "dimension",
-        "count"
       ]
     },
     "weaknessEntry": {
@@ -519,17 +397,6 @@
           "type": "integer",
           "minimum": 0,
           "description": "近 4 次测评中错误率 >30% 的次数（shared/vocab.md §5 老师端口径）"
-        },
-        "evidenceExamIds": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "maxLength": 40
-          }
-        },
-        "lastUpdated": {
-          "type": "string",
-          "format": "date"
         }
       },
       "required": [

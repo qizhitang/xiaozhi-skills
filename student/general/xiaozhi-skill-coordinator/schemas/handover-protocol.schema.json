@@ -9,10 +9,10 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.9）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.10）",
       "type": "string",
       "enum": [
-        "2.1.9"
+        "2.1.10"
       ]
     },
     "handoverType": {
@@ -287,7 +287,7 @@
           ]
         },
         "profileData": {
-          "description": "DNA回写专属结构。在 handoverType='profile_writeback' 时必填",
+          "description": "DNA回写专属结构。handoverType 为 profile_writeback / subject_profile_writeback 时必填",
           "type": "object",
           "properties": {
             "updateTarget": {
@@ -503,7 +503,7 @@
           ]
         },
         "reminderData": {
-          "description": "提醒同步专属结构。在 handoverType='reminder_sync' 时必填",
+          "description": "提醒专属结构。handoverType 为 reminder_enqueue / reminder_sync 时必填",
           "type": "object",
           "properties": {
             "reminderId": {

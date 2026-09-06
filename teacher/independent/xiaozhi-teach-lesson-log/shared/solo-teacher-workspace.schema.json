@@ -4,13 +4,22 @@
   "title": "SoloTeacherWorkspace",
   "x-distributed-to": "xiaozhi-teach-lesson-log",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-teach-lesson-log 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的字段（共 5 项，删去 4 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
+    "note": "本副本随 xiaozhi-teach-lesson-log 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：只读 lessonSchedule、studentCards；写 coursePackageLedger、lessonLogs、progressEvidence（各字段只留声明列出的子字段；删去 4 个顶层字段）。完整定义在归属技能处。",
     "paths": [
       "coursePackageLedger",
       "lessonLogs",
       "lessonSchedule",
       "progressEvidence",
       "studentCards"
+    ],
+    "reads": [
+      "lessonSchedule",
+      "studentCards"
+    ],
+    "writes": [
+      "coursePackageLedger",
+      "lessonLogs",
+      "progressEvidence"
     ]
   },
   "description": "独立教师工作空间数据结构。用于低敏记录学员卡、课表、课后记录、作业跟进、家长沟通、课时包和阶段证据。",
@@ -64,13 +73,6 @@
         "gradeLevel": {
           "type": "string"
         },
-        "subjects": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "maxLength": 100
-          }
-        },
         "goals": {
           "type": "array",
           "items": {
@@ -86,64 +88,6 @@
             "maxLength": 60
           },
           "description": "仅在老师确认后写入；由作业跟进自动建议的弱项先进入 progressEvidence（shared/vocab.md §5）"
-        },
-        "learningPreferences": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "maxLength": 100
-          },
-          "description": "学习方式偏好（如喜欢先看例题、需要多写步骤）。不用于排课，时间冲突检测一律读 availability[]"
-        },
-        "availability": {
-          "type": "array",
-          "maxItems": 21,
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "dayOfWeek": {
-                "type": "string",
-                "enum": [
-                  "周一",
-                  "周二",
-                  "周三",
-                  "周四",
-                  "周五",
-                  "周六",
-                  "周日"
-                ]
-              },
-              "startTime": {
-                "type": "string",
-                "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$",
-                "description": "24 小时制 HH:MM"
-              },
-              "endTime": {
-                "type": "string",
-                "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$",
-                "description": "24 小时制 HH:MM，须晚于 startTime"
-              }
-            },
-            "required": [
-              "dayOfWeek",
-              "startTime",
-              "endTime"
-            ]
-          },
-          "description": "学员每周可上课时间段，排课冲突检测的唯一依据。只记时间，不记原因（不写“周三要上钢琴课”）"
-        },
-        "guardianCommunicationPreference": {
-          "type": "string",
-          "enum": [
-            "微信文字",
-            "微信语音",
-            "电话",
-            "线下面谈",
-            "邮件",
-            "不主动联系"
-          ],
-          "description": "仅记录偏好的沟通方式，禁止填写任何联系方式（电话号码、微信号、邮箱地址）"
         },
         "consent": {
           "type": "object",
@@ -237,26 +181,6 @@
           "type": "integer",
           "minimum": 15
         },
-        "day_of_week": {
-          "type": "string",
-          "enum": [
-            "周一",
-            "周二",
-            "周三",
-            "周四",
-            "周五",
-            "周六",
-            "周日",
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday"
-          ],
-          "description": "兼容中英文的排课星期枚举，中文优先"
-        },
         "status": {
           "type": "string",
           "enum": [
@@ -327,11 +251,6 @@
           "type": "string",
           "maxLength": 500,
           "description": "面向家长的事实摘要，受 500 字符硬约束。禁止写入真实姓名、家庭住址、身份证件、联系电话、账户信息、医疗诊断、心理标签、家庭纠纷、财务细节等高敏信息。"
-        },
-        "consumeLessonUnits": {
-          "type": "number",
-          "minimum": 0,
-          "description": "本节课消耗课时数。由 SKILL 生成为待确认条目，老师确认后才写入课时台账"
         },
         "date": {
           "type": "string",
@@ -408,15 +327,6 @@
         "remainingUnits": {
           "type": "number",
           "minimum": 0
-        },
-        "renewalAttention": {
-          "type": "boolean",
-          "default": false
-        },
-        "expiryDate": {
-          "type": "string",
-          "format": "date",
-          "description": "课时包到期日，用于‘到期前 7 天’提示"
         },
         "pendingConfirmations": {
           "type": "array",

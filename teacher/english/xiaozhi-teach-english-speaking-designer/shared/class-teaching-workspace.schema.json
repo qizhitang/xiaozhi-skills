@@ -4,7 +4,7 @@
   "title": "ClassTeachingWorkspace",
   "x-distributed-to": "xiaozhi-teach-english-speaking-designer",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-teach-english-speaking-designer 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的字段（共 7 项，删去 4 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
+    "note": "本副本随 xiaozhi-teach-english-speaking-designer 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：只读 classProfile、itemScores、studentTiers；写 examBlueprints、interactionLogs、lessonPlans、weaknessRank（各字段只留声明列出的子字段；删去 4 个顶层字段）。完整定义在归属技能处。",
     "paths": [
       "classProfile",
       "examBlueprints",
@@ -12,6 +12,17 @@
       "itemScores",
       "lessonPlans",
       "studentTiers",
+      "weaknessRank"
+    ],
+    "reads": [
+      "classProfile",
+      "itemScores",
+      "studentTiers"
+    ],
+    "writes": [
+      "examBlueprints",
+      "interactionLogs",
+      "lessonPlans",
       "weaknessRank"
     ]
   },
@@ -168,21 +179,6 @@
           "type": "string",
           "maxLength": 80
         },
-        "date": {
-          "type": "string",
-          "format": "date"
-        },
-        "planType": {
-          "type": "string",
-          "enum": [
-            "新授",
-            "复习",
-            "讲评",
-            "单元起始",
-            "单元总结"
-          ],
-          "description": "讲评课的错题清单与讲评顺序来自 exam-designer；本字段用于区分教案类型"
-        },
         "periodMinutes": {
           "type": "integer",
           "enum": [
@@ -264,26 +260,6 @@
               "minutes"
             ]
           }
-        },
-        "questionChain": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "maxLength": 200
-          },
-          "description": "课堂提问链，按 cognitiveLevel 递进"
-        },
-        "boardPlan": {
-          "type": "string",
-          "maxLength": 500
-        },
-        "sourceWeaknessIds": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "maxLength": 40
-          },
-          "description": "本课针对的 weaknessRank 条目"
         }
       },
       "required": [
@@ -309,45 +285,10 @@
           "type": "string",
           "format": "date"
         },
-        "segmentTimings": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "name": {
-                "type": "string",
-                "maxLength": 40
-              },
-              "plannedMinutes": {
-                "type": "integer"
-              },
-              "actualMinutes": {
-                "type": "integer"
-              }
-            }
-          }
-        },
         "participationNote": {
           "type": "string",
           "maxLength": 300,
           "description": "整体参与度的事实描述；不记录个别学生姓名"
-        },
-        "questionEffectNote": {
-          "type": "string",
-          "maxLength": 300,
-          "description": "提问链效果：哪一问引发最多思考、哪一问无人回应；只记问题本身，不记学生"
-        },
-        "misconceptionsObserved": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "maxLength": 100
-          }
-        },
-        "adjustmentForNext": {
-          "type": "string",
-          "maxLength": 300
         }
       },
       "required": [
@@ -368,10 +309,6 @@
           "type": "string",
           "maxLength": 80
         },
-        "date": {
-          "type": "string",
-          "format": "date"
-        },
         "assessmentType": {
           "type": "string",
           "enum": [
@@ -380,47 +317,10 @@
             "终结性"
           ]
         },
-        "durationMinutes": {
-          "type": "integer",
-          "minimum": 10,
-          "maximum": 150
-        },
         "fullScore": {
           "type": "integer",
           "minimum": 10,
           "maximum": 150
-        },
-        "difficultyRatio": {
-          "type": "string",
-          "pattern": "^[0-9]+:[0-9]+:[0-9]+$",
-          "description": "基础:中等:较难，如 6:3:1"
-        },
-        "cognitiveRatio": {
-          "type": "object",
-          "additionalProperties": false,
-          "description": "四级认知层级的分值占比（%），四项之和应为 100。层级取值见 cognitiveLevel",
-          "properties": {
-            "了解": {
-              "type": "integer",
-              "minimum": 0,
-              "maximum": 100
-            },
-            "理解": {
-              "type": "integer",
-              "minimum": 0,
-              "maximum": 100
-            },
-            "掌握": {
-              "type": "integer",
-              "minimum": 0,
-              "maximum": 100
-            },
-            "运用": {
-              "type": "integer",
-              "minimum": 0,
-              "maximum": 100
-            }
-          }
         },
         "items": {
           "type": "array",

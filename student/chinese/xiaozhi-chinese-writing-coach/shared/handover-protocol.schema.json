@@ -17,10 +17,10 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.9）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.10）",
       "type": "string",
       "enum": [
-        "2.1.9"
+        "2.1.10"
       ]
     },
     "handoverType": {
@@ -49,7 +49,7 @@
       "type": "object",
       "properties": {
         "profileData": {
-          "description": "DNA回写专属结构。在 handoverType='profile_writeback' 时必填",
+          "description": "DNA回写专属结构。handoverType 为 subject_profile_writeback 时必填",
           "type": "object",
           "properties": {
             "updateTarget": {
@@ -67,11 +67,6 @@
                 }
               },
               "additionalProperties": false
-            },
-            "interestUpdates": {
-              "type": "object",
-              "description": "updateTarget=interest_dna 时的补丁：只含 interestDNA 下的字段（currentExploringFields / challengeReactionSignals / confirmedShallowLikes / possibleTrueInterests），不得带其他分支。",
-              "additionalProperties": true
             }
           },
           "required": [
