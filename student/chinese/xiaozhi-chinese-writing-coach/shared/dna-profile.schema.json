@@ -26,9 +26,9 @@
         },
         "schemaVersion": {
           "type": "string",
-          "description": "档案结构版本号，与仓库版本一致（当前 2.1.8）。旧档案（1.0.0–1.3.0）的字段在本结构中全部保留且均为可选，迁移时只需把本字段改写为 2.1.0。",
+          "description": "档案结构版本号，与仓库版本一致（当前 2.1.9）。旧档案（1.0.0–1.3.0）的字段在本结构中全部保留且均为可选，迁移时只需把本字段改写为 2.1.0。",
           "enum": [
-            "2.1.8"
+            "2.1.9"
           ]
         },
         "createdAt": {
@@ -308,45 +308,6 @@
         "preliminary_trend"
       ]
     },
-    "subjectEntry": {
-      "description": "学科条目：用于强项和弱项列表",
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "subject": {
-          "type": "string",
-          "description": "学科名称",
-          "examples": [
-            "语文",
-            "数学",
-            "英语",
-            "物理",
-            "化学",
-            "生物",
-            "历史",
-            "地理",
-            "政治"
-          ]
-        },
-        "chapters": {
-          "type": "array",
-          "description": "具体章节或知识点",
-          "items": {
-            "type": "string"
-          }
-        },
-        "rootCause": {
-          "type": "string",
-          "description": "薄弱的根本原因（仅弱项使用）"
-        },
-        "confidenceLevel": {
-          "$ref": "#/$defs/confidenceLevel"
-        }
-      },
-      "required": [
-        "subject"
-      ]
-    },
     "errorDimension": {
       "type": "string",
       "enum": [
@@ -367,15 +328,6 @@
         "已攻克"
       ],
       "description": "弱项状态五档（shared/vocab.md §4）"
-    },
-    "masteryLevel": {
-      "type": "string",
-      "enum": [
-        "会复述",
-        "会解释",
-        "真正掌握"
-      ],
-      "description": "掌握度三档（shared/vocab.md §6）"
     },
     "ageBand": {
       "type": "string",

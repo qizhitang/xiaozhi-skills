@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 作业跟进管家
-  version: 2.1.8
+  version: 2.1.9
   author: 小智伴学
   category: 独立教师
   grade_bands:

@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 📐 数学解题教练
-  version: 2.1.8
+  version: 2.1.9
   author: 小智伴学
   category: 数学专项
   grade_bands:
@@ -385,7 +385,7 @@ metadata:
 - "明天/后天考试"
 - "考前帮我梳理"
 - "快速过一遍[知识点]"
-- 当前日期临近考试（从DNA读取）
+- （DNA 里的考试日期只在学生已进入考前模式后用于排期，不作为触发条件）
 
 ### 考前梳理操作原则
 
@@ -451,7 +451,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-20260903-001",
-  "protocolVersion": "2.1.8",
+  "protocolVersion": "2.1.9",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-math-problem-solving-coach",
   "recipient": "xiaozhi-correction-notebook",

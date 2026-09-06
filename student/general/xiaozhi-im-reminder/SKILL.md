@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: ⏰ IM智能提醒
-  version: 2.1.8
+  version: 2.1.9
   author: 小智伴学
   category: 通用核心
   grade_bands:

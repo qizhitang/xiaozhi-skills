@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: ⏱️ 时间与专注力教练
-  version: 2.1.8
+  version: 2.1.9
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -229,10 +229,10 @@ metadata:
 小智提供建议，学生做最终决策：
 
 "你今天有[X]分钟的高效学习窗口。
- 根据你的DNA和今日计划，建议分配：
+ 根据你今天列的任务和你过去的专注记录（extensions.focus），建议这样分配时段——学什么由你定：
  
- · [弱项学科]：[X]分钟（优先，因为这周有考试）
- · [次要学科]：[X]分钟（维持性练习）
+ · [你说要优先的任务]：[X]分钟（你说这周有考试）
+ · [第二件任务]：[X]分钟
  · 费曼测试/错题复盘：[X]分钟（保证质量）
  
  你同意这个分配吗？

@@ -18,14 +18,14 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.8）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.9）",
       "type": "string",
       "enum": [
-        "2.1.8"
+        "2.1.9"
       ]
     },
     "handoverType": {
-      "description": "profile_writeback=写入学习DNA通用层；reminder_enqueue=向IM提醒入队（唯一允许的提醒方式）",
+      "description": "profile_writeback=写入学习DNA通用层；reminder_enqueue=向IM提醒入队（唯一允许的提醒方式，需 consent.reminderConsent）",
       "type": "string",
       "enum": [
         "profile_writeback",
@@ -58,12 +58,8 @@
             "updateTarget": {
               "type": "string",
               "enum": [
-                "growth_milestones",
-                "safety_record",
-                "weak_knowledge_points",
-                "interest_dna"
-              ],
-              "description": "interest_dna：兴趣DNA（xiaozhi-interest-explorer 经 profile_writeback 写入 interestDNA，需 interestTrackingConsent）"
+                "growth_milestones"
+              ]
             },
             "milestone": {
               "type": "object",
@@ -89,51 +85,6 @@
                 "milestoneType"
               ]
             },
-            "safetyRecordEntry": {
-              "type": "object",
-              "description": "safety_record 时：dna-profile.schema.json#/properties/safetyRecord/crisisReferrals 的单条记录（只记处置事实）",
-              "additionalProperties": true
-            },
-            "weakKnowledgePointUpdates": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "subject": {
-                    "type": "string",
-                    "maxLength": 20
-                  },
-                  "knowledgePoint": {
-                    "type": "string",
-                    "maxLength": 100
-                  },
-                  "status": {
-                    "type": "string",
-                    "enum": [
-                      "待处理",
-                      "初步弱项",
-                      "突破中",
-                      "顽固弱项",
-                      "已攻克"
-                    ]
-                  },
-                  "confidenceLevel": {
-                    "type": "string",
-                    "enum": [
-                      "data_sufficient",
-                      "preliminary_trend",
-                      "insufficient_sample"
-                    ]
-                  }
-                },
-                "required": [
-                  "subject",
-                  "knowledgePoint",
-                  "status"
-                ]
-              }
-            },
             "interestUpdates": {
               "type": "object",
               "description": "updateTarget=interest_dna 时的补丁：只含 interestDNA 下的字段（currentExploringFields / challengeReactionSignals / confirmedShallowLikes / possibleTrueInterests），不得带其他分支。",
@@ -142,22 +93,6 @@
           },
           "required": [
             "updateTarget"
-          ],
-          "allOf": [
-            {
-              "if": {
-                "properties": {
-                  "updateTarget": {
-                    "const": "emotion_dimension"
-                  }
-                }
-              },
-              "then": {
-                "required": [
-                  "emotionUpdates"
-                ]
-              }
-            }
           ]
         },
         "reminderData": {
@@ -222,6 +157,10 @@
       "properties": {
         "crossSkillSharing": {
           "type": "boolean"
+        },
+        "reminderConsent": {
+          "type": "boolean",
+          "description": "提醒授权。handoverType=reminder_enqueue 时必须为 true"
         },
         "parentSharingConsent": {
           "type": "boolean",
@@ -294,26 +233,9 @@
     },
     {
       "if": {
-        "required": [
-          "payload"
-        ],
         "properties": {
-          "payload": {
-            "required": [
-              "profileData"
-            ],
-            "properties": {
-              "profileData": {
-                "required": [
-                  "updateTarget"
-                ],
-                "properties": {
-                  "updateTarget": {
-                    "const": "emotion_dimension"
-                  }
-                }
-              }
-            }
+          "handoverType": {
+            "const": "reminder_enqueue"
           }
         }
       },
@@ -321,12 +243,12 @@
         "properties": {
           "consent": {
             "properties": {
-              "emotionTrackingConsent": {
+              "reminderConsent": {
                 "const": true
               }
             },
             "required": [
-              "emotionTrackingConsent"
+              "reminderConsent"
             ]
           }
         }

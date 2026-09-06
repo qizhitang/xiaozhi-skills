@@ -15,6 +15,7 @@
 //  I1 老师端接口路径根字段必须存在于 schema
 //  D1 docs 版本号与 package.json 一致；docs 中 SKILL 名称与目录一致
 //  A1 含"示例题"的 references 必须有"示例题验算：YYYY-MM-DD"声明（警告）
+//  Z1 正文与契约不得含零宽/方向控制/BOM 等不可见字符（组合 emoji 请换单码位）——扫描器把它们当作元数据投毒信号
 //  A2 验算日期不得早于文件最后一次实质提交（git；纯升版提交不算）
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, dirname, resolve, relative, basename } from "node:path";
@@ -57,6 +58,15 @@ function walk(dir, acc = []) {
 const allFiles = walk(root);
 const skillFiles = allFiles.filter((f) => basename(f) === "SKILL.md");
 const refFiles = allFiles.filter((f) => /[\\/]references[\\/]/.test(f) && f.endsWith(".md"));
+// ---------- Z1 不可见字符 ----------
+const INVISIBLE = /[\u200B-\u200F\u2028-\u202E\u2060-\u2064\u2066-\u2069\uFEFF\u00AD\u180E\u034F]/g;
+for (const f of allFiles.filter((f) => /\.(md|json|ya?ml|txt)$/.test(f))) {
+  const hits = [...readFileSync(f, "utf-8").matchAll(INVISIBLE)];
+  if (!hits.length) continue;
+  const cps = [...new Set(hits.map((m) => "U+" + m[0].codePointAt(0).toString(16).toUpperCase().padStart(4, "0")))];
+  err("Z1", rel(f), `含不可见字符 ${cps.join(" ")}（${hits.length} 处）——组合 emoji 换成单码位，正文不得有零宽字符`);
+}
+
 
 // ---------- minimal YAML frontmatter parser ----------
 function parseFrontmatter(text) {

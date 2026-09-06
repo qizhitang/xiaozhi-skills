@@ -18,14 +18,14 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.8）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.9）",
       "type": "string",
       "enum": [
-        "2.1.8"
+        "2.1.9"
       ]
     },
     "handoverType": {
-      "description": "profile_writeback=写入学习DNA通用层；reminder_enqueue=向IM提醒入队（唯一允许的提醒方式）",
+      "description": "profile_writeback=写入学习DNA通用层；reminder_enqueue=向IM提醒入队（唯一允许的提醒方式，需 consent.reminderConsent）",
       "type": "string",
       "enum": [
         "profile_writeback",
@@ -58,15 +58,9 @@
             "updateTarget": {
               "type": "string",
               "enum": [
-                "safety_record",
                 "interest_dna"
               ],
               "description": "interest_dna：兴趣DNA（xiaozhi-interest-explorer 经 profile_writeback 写入 interestDNA，需 interestTrackingConsent）"
-            },
-            "safetyRecordEntry": {
-              "type": "object",
-              "description": "safety_record 时：dna-profile.schema.json#/properties/safetyRecord/crisisReferrals 的单条记录（只记处置事实）",
-              "additionalProperties": true
             },
             "interestUpdates": {
               "type": "object",
@@ -76,22 +70,6 @@
           },
           "required": [
             "updateTarget"
-          ],
-          "allOf": [
-            {
-              "if": {
-                "properties": {
-                  "updateTarget": {
-                    "const": "emotion_dimension"
-                  }
-                }
-              },
-              "then": {
-                "required": [
-                  "emotionUpdates"
-                ]
-              }
-            }
           ]
         },
         "reminderData": {
@@ -154,6 +132,14 @@
       "properties": {
         "crossSkillSharing": {
           "type": "boolean"
+        },
+        "reminderConsent": {
+          "type": "boolean",
+          "description": "提醒授权。handoverType=reminder_enqueue 时必须为 true"
+        },
+        "interestTrackingConsent": {
+          "type": "boolean",
+          "description": "兴趣DNA写入授权。updateTarget=interest_dna 时必须为 true"
         },
         "parentSharingConsent": {
           "type": "boolean",
@@ -226,6 +212,29 @@
     },
     {
       "if": {
+        "properties": {
+          "handoverType": {
+            "const": "reminder_enqueue"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "consent": {
+            "properties": {
+              "reminderConsent": {
+                "const": true
+              }
+            },
+            "required": [
+              "reminderConsent"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
         "required": [
           "payload"
         ],
@@ -241,7 +250,7 @@
                 ],
                 "properties": {
                   "updateTarget": {
-                    "const": "emotion_dimension"
+                    "const": "interest_dna"
                   }
                 }
               }
@@ -253,12 +262,12 @@
         "properties": {
           "consent": {
             "properties": {
-              "emotionTrackingConsent": {
+              "interestTrackingConsent": {
                 "const": true
               }
             },
             "required": [
-              "emotionTrackingConsent"
+              "interestTrackingConsent"
             ]
           }
         }

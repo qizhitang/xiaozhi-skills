@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🎧 个性化英语听力训练师
-  version: 2.1.8
+  version: 2.1.9
   author: 小智伴学
   category: 英语专项
   grade_bands:
@@ -383,7 +383,7 @@ AI 内部识别意图并补齐参数；缺什么就问一句（每次只问一�
 ```json
 {
   "sessionId": "sess-eng-listen-001",
-  "protocolVersion": "2.1.8",
+  "protocolVersion": "2.1.9",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-english-listening-trainer",
   "recipient": "xiaozhi-learning-dna",

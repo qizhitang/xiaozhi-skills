@@ -8,7 +8,7 @@
     "paths": [
       "wrong_answer_handover",
       "deep_analysis_writeback",
-      "subject_profile_writeback",
+      "profile_writeback",
       "reminder_enqueue"
     ]
   },
@@ -20,19 +20,19 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.8）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.9）",
       "type": "string",
       "enum": [
-        "2.1.8"
+        "2.1.9"
       ]
     },
     "handoverType": {
-      "description": "deep_analysis_writeback=学科错误DNA→错题本回写；subject_profile_writeback=写入学习DNA subjectExtensions/extensions；reminder_enqueue=向IM提醒入队（唯一允许的提醒方式）",
+      "description": "deep_analysis_writeback=学科错误DNA→错题本回写；profile_writeback=写入学习DNA通用层；reminder_enqueue=向IM提醒入队（唯一允许的提醒方式，需 consent.reminderConsent）",
       "type": "string",
       "enum": [
         "wrong_answer_handover",
         "deep_analysis_writeback",
-        "subject_profile_writeback",
+        "profile_writeback",
         "reminder_enqueue"
       ]
     },
@@ -193,70 +193,8 @@
             "updateTarget": {
               "type": "string",
               "enum": [
-                "concept_graph",
-                "safety_record",
                 "weak_knowledge_points"
-              ],
-              "description": "interest_dna：兴趣DNA（xiaozhi-interest-explorer 经 profile_writeback 写入 interestDNA，需 interestTrackingConsent）"
-            },
-            "graphUpdates": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "nodeId": {
-                    "type": "string"
-                  },
-                  "conceptName": {
-                    "type": "string"
-                  },
-                  "subject": {
-                    "type": "string"
-                  },
-                  "masteryLevel": {
-                    "type": "string",
-                    "enum": [
-                      "会复述",
-                      "会解释",
-                      "真正掌握"
-                    ]
-                  },
-                  "relationships": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "relationType": {
-                          "type": "string",
-                          "enum": [
-                            "requires",
-                            "isParentOf",
-                            "appliesTo",
-                            "correlatesWith"
-                          ]
-                        },
-                        "targetNodeId": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "relationType",
-                        "targetNodeId"
-                      ]
-                    }
-                  }
-                },
-                "required": [
-                  "conceptName",
-                  "subject",
-                  "masteryLevel"
-                ]
-              }
-            },
-            "safetyRecordEntry": {
-              "type": "object",
-              "description": "safety_record 时：dna-profile.schema.json#/properties/safetyRecord/crisisReferrals 的单条记录（只记处置事实）",
-              "additionalProperties": true
+              ]
             },
             "weakKnowledgePointUpdates": {
               "type": "array",
@@ -306,22 +244,6 @@
           },
           "required": [
             "updateTarget"
-          ],
-          "allOf": [
-            {
-              "if": {
-                "properties": {
-                  "updateTarget": {
-                    "const": "emotion_dimension"
-                  }
-                }
-              },
-              "then": {
-                "required": [
-                  "emotionUpdates"
-                ]
-              }
-            }
           ]
         },
         "reminderData": {
@@ -449,6 +371,10 @@
         "crossSkillSharing": {
           "type": "boolean"
         },
+        "reminderConsent": {
+          "type": "boolean",
+          "description": "提醒授权。handoverType=reminder_enqueue 时必须为 true"
+        },
         "parentSharingConsent": {
           "type": "boolean",
           "description": "允许把学习摘要输出给家长。生成任何家长可见内容前必须核对"
@@ -515,7 +441,7 @@
         "properties": {
           "handoverType": {
             "enum": [
-              "subject_profile_writeback"
+              "profile_writeback"
             ]
           }
         }
@@ -552,26 +478,9 @@
     },
     {
       "if": {
-        "required": [
-          "payload"
-        ],
         "properties": {
-          "payload": {
-            "required": [
-              "profileData"
-            ],
-            "properties": {
-              "profileData": {
-                "required": [
-                  "updateTarget"
-                ],
-                "properties": {
-                  "updateTarget": {
-                    "const": "emotion_dimension"
-                  }
-                }
-              }
-            }
+          "handoverType": {
+            "const": "reminder_enqueue"
           }
         }
       },
@@ -579,12 +488,12 @@
         "properties": {
           "consent": {
             "properties": {
-              "emotionTrackingConsent": {
+              "reminderConsent": {
                 "const": true
               }
             },
             "required": [
-              "emotionTrackingConsent"
+              "reminderConsent"
             ]
           }
         }

@@ -18,10 +18,10 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.8）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.9）",
       "type": "string",
       "enum": [
-        "2.1.8"
+        "2.1.9"
       ]
     },
     "handoverType": {
@@ -58,10 +58,8 @@
               "type": "string",
               "enum": [
                 "concept_graph",
-                "extension",
-                "interest_dna"
-              ],
-              "description": "interest_dna：兴趣DNA（xiaozhi-interest-explorer 经 profile_writeback 写入 interestDNA，需 interestTrackingConsent）"
+                "extension"
+              ]
             },
             "graphUpdates": {
               "type": "array",
@@ -130,22 +128,6 @@
           },
           "required": [
             "updateTarget"
-          ],
-          "allOf": [
-            {
-              "if": {
-                "properties": {
-                  "updateTarget": {
-                    "const": "emotion_dimension"
-                  }
-                }
-              },
-              "then": {
-                "required": [
-                  "emotionUpdates"
-                ]
-              }
-            }
           ]
         }
       }
@@ -200,46 +182,6 @@
           "payload": {
             "required": [
               "profileData"
-            ]
-          }
-        }
-      }
-    },
-    {
-      "if": {
-        "required": [
-          "payload"
-        ],
-        "properties": {
-          "payload": {
-            "required": [
-              "profileData"
-            ],
-            "properties": {
-              "profileData": {
-                "required": [
-                  "updateTarget"
-                ],
-                "properties": {
-                  "updateTarget": {
-                    "const": "emotion_dimension"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "then": {
-        "properties": {
-          "consent": {
-            "properties": {
-              "emotionTrackingConsent": {
-                "const": true
-              }
-            },
-            "required": [
-              "emotionTrackingConsent"
             ]
           }
         }

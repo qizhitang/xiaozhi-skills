@@ -18,14 +18,14 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.8）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.9）",
       "type": "string",
       "enum": [
-        "2.1.8"
+        "2.1.9"
       ]
     },
     "handoverType": {
-      "description": "reminder_enqueue=向IM提醒入队（唯一允许的提醒方式）",
+      "description": "reminder_enqueue=向IM提醒入队（唯一允许的提醒方式，需 consent.reminderConsent）",
       "type": "string",
       "enum": [
         "wrong_answer_handover",
@@ -154,13 +154,6 @@
             "type": {
               "type": "string",
               "enum": [
-                "spaced_review",
-                "error_review",
-                "vocab_daily_card",
-                "scheduled_task",
-                "exploration_task",
-                "daily_confirmation",
-                "weekly_review",
                 "exam_day"
               ]
             },
@@ -211,6 +204,10 @@
       "properties": {
         "crossSkillSharing": {
           "type": "boolean"
+        },
+        "reminderConsent": {
+          "type": "boolean",
+          "description": "提醒授权。handoverType=reminder_enqueue 时必须为 true"
         },
         "verifiedAt": {
           "type": "string",
@@ -273,26 +270,9 @@
     },
     {
       "if": {
-        "required": [
-          "payload"
-        ],
         "properties": {
-          "payload": {
-            "required": [
-              "profileData"
-            ],
-            "properties": {
-              "profileData": {
-                "required": [
-                  "updateTarget"
-                ],
-                "properties": {
-                  "updateTarget": {
-                    "const": "emotion_dimension"
-                  }
-                }
-              }
-            }
+          "handoverType": {
+            "const": "reminder_enqueue"
           }
         }
       },
@@ -300,12 +280,12 @@
         "properties": {
           "consent": {
             "properties": {
-              "emotionTrackingConsent": {
+              "reminderConsent": {
                 "const": true
               }
             },
             "required": [
-              "emotionTrackingConsent"
+              "reminderConsent"
             ]
           }
         }

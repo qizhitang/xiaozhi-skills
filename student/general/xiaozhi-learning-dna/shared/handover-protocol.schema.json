@@ -19,10 +19,10 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.8）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.9）",
       "type": "string",
       "enum": [
-        "2.1.8"
+        "2.1.9"
       ]
     },
     "handoverType": {
@@ -64,7 +64,6 @@
                 "growth_milestones",
                 "subject_extension",
                 "extension",
-                "safety_record",
                 "weak_knowledge_points",
                 "interest_dna"
               ],
@@ -195,11 +194,6 @@
             "extensionPatch": {
               "type": "object",
               "description": "extension 时：dna-profile.schema.json#/properties/extensions 的单分支片段",
-              "additionalProperties": true
-            },
-            "safetyRecordEntry": {
-              "type": "object",
-              "description": "safety_record 时：dna-profile.schema.json#/properties/safetyRecord/crisisReferrals 的单条记录（只记处置事实）",
               "additionalProperties": true
             },
             "weakKnowledgePointUpdates": {
@@ -379,8 +373,9 @@
         "teacherWritebackConsent": {
           "type": "boolean"
         },
-        "reminderConsent": {
-          "type": "boolean"
+        "interestTrackingConsent": {
+          "type": "boolean",
+          "description": "兴趣DNA写入授权。updateTarget=interest_dna 时必须为 true"
         },
         "parentSharingConsent": {
           "type": "boolean",
@@ -495,6 +490,46 @@
             },
             "required": [
               "emotionTrackingConsent"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "payload"
+        ],
+        "properties": {
+          "payload": {
+            "required": [
+              "profileData"
+            ],
+            "properties": {
+              "profileData": {
+                "required": [
+                  "updateTarget"
+                ],
+                "properties": {
+                  "updateTarget": {
+                    "const": "interest_dna"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "consent": {
+            "properties": {
+              "interestTrackingConsent": {
+                "const": true
+              }
+            },
+            "required": [
+              "interestTrackingConsent"
             ]
           }
         }

@@ -185,7 +185,7 @@
 前提：`parentSharingConsent = true`；含情绪内容的段落另需 `emotionSharingWithParent = true`；学生随时可否决。
 
 ```
-👨‍👩‍👧‍👦 [昵称] 的本周家庭成长报告
+👪 [昵称] 的本周家庭成长报告
 [日期范围]
 
 一、这周的具体进展

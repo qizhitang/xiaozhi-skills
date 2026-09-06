@@ -300,69 +300,6 @@
         "objectives"
       ]
     },
-    "interactionLog": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "logId": {
-          "type": "string",
-          "maxLength": 40
-        },
-        "planId": {
-          "type": "string",
-          "maxLength": 40
-        },
-        "date": {
-          "type": "string",
-          "format": "date"
-        },
-        "segmentTimings": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "name": {
-                "type": "string",
-                "maxLength": 40
-              },
-              "plannedMinutes": {
-                "type": "integer"
-              },
-              "actualMinutes": {
-                "type": "integer"
-              }
-            }
-          }
-        },
-        "participationNote": {
-          "type": "string",
-          "maxLength": 300,
-          "description": "整体参与度的事实描述；不记录个别学生姓名"
-        },
-        "questionEffectNote": {
-          "type": "string",
-          "maxLength": 300,
-          "description": "提问链效果：哪一问引发最多思考、哪一问无人回应；只记问题本身，不记学生"
-        },
-        "misconceptionsObserved": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "maxLength": 100
-          }
-        },
-        "adjustmentForNext": {
-          "type": "string",
-          "maxLength": 300
-        }
-      },
-      "required": [
-        "logId",
-        "planId",
-        "date"
-      ]
-    },
     "homeworkAssignment": {
       "type": "object",
       "additionalProperties": false,
@@ -649,40 +586,6 @@
         "items"
       ]
     },
-    "itemScore": {
-      "type": "object",
-      "additionalProperties": false,
-      "description": "逐题得分。studentAlias 用化名/座号。学情分析的热力图与顽固弱项均以此为唯一来源；只有总分时不可生成逐知识点分析",
-      "properties": {
-        "examId": {
-          "type": "string",
-          "maxLength": 40
-        },
-        "studentAlias": {
-          "type": "string",
-          "maxLength": 20
-        },
-        "itemNo": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "score": {
-          "type": "number",
-          "minimum": 0
-        },
-        "maxScore": {
-          "type": "number",
-          "minimum": 0
-        }
-      },
-      "required": [
-        "examId",
-        "studentAlias",
-        "itemNo",
-        "score",
-        "maxScore"
-      ]
-    },
     "itemStat": {
       "type": "object",
       "additionalProperties": false,
@@ -860,32 +763,6 @@
         "weaknessId",
         "knowledgePoint",
         "errorRate"
-      ]
-    },
-    "studentTier": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "studentAlias": {
-          "type": "string",
-          "maxLength": 20
-        },
-        "tier": {
-          "$ref": "#/$defs/tier"
-        },
-        "basis": {
-          "type": "string",
-          "maxLength": 100,
-          "description": "如 近 3 次测评平均得分率 0.62"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date"
-        }
-      },
-      "required": [
-        "studentAlias",
-        "tier"
       ]
     },
     "reviewPlan": {

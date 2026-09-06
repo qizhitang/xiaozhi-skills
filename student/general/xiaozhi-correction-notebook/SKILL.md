@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: ❌ 智能错题本
-  version: 2.1.8
+  version: 2.1.9
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -229,7 +229,7 @@ metadata:
 
 命中后：
 1. 明确告诉学生"这不是一次偶然错误"，并说明依据（哪三次、什么维度、多长时间跨度）
-2. 生成 `subject_profile_writeback` 待确认条目，更新学习DNA的弱项状态
+2. 生成 `profile_writeback`（`updateTarget: weak_knowledge_points`）待确认条目，更新学习DNA的弱项状态
 3. 推送 `wrong_answer_handover`（`handoverTrigger: "stubborn_weakness"`）给对应学科错误 DNA，由学科端执行专项突破；本 SKILL **不再独立生成递进练习、不独立发提醒**
 4. 必要时建议触发费曼测试
 5. 在周报或月报中高亮，并附 🟢/🟡/🔴 置信度标签（`shared/vocab.md §7`）
@@ -343,7 +343,7 @@ metadata:
     ←── 学习DNA（已授权的历史弱项状态摘要）
     ──→ 各学科错误 DNA：wrong_answer_handover
     ←── 各学科错误 DNA：deep_analysis_writeback
-    ──→ 学习DNA：subject_profile_writeback（弱项状态、错题地图）
+    ──→ 学习DNA：profile_writeback（updateTarget: weak_knowledge_points——弱项状态、错题地图）
     ──→ IM智能提醒：reminder_enqueue（本 SKILL 不自己发提醒）
     ──→ 费曼学习法（概念类与顽固弱项的理解验证）
     ──→ 每周学习复盘 / 学习系统协调器（错题趋势摘要）
@@ -369,7 +369,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-demo-001",
-  "protocolVersion": "2.1.8",
+  "protocolVersion": "2.1.9",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-correction-notebook",
   "recipient": "xiaozhi-math-error-dna",
@@ -409,7 +409,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-demo-002",
-  "protocolVersion": "2.1.8",
+  "protocolVersion": "2.1.9",
   "handoverType": "deep_analysis_writeback",
   "sender": "xiaozhi-math-error-dna",
   "recipient": "xiaozhi-correction-notebook",
@@ -447,7 +447,7 @@ metadata:
 
 ### 9.5 写回学习DNA
 
-顽固弱项确认、状态变更、攻克时，生成 `subject_profile_writeback` 待确认条目，落到 `subjectMap.weakKnowledgePoints[]` 与 `growthMap.errorMap[]`；学生确认后由 `xiaozhi-learning-dna` 落库。含情绪判断的内容不进入家长可见输出，除非 `parentSharingConsent` 与 `emotionSharingWithParent` 同时为 true。
+顽固弱项确认、状态变更、攻克时，生成 `profile_writeback`（`updateTarget: weak_knowledge_points`）待确认条目，落到 `subjectMap.weakKnowledgePoints[]` 与 `growthMap.errorMap[]`；学生确认后由 `xiaozhi-learning-dna` 落库。含情绪判断的内容不进入家长可见输出，除非 `parentSharingConsent` 与 `emotionSharingWithParent` 同时为 true。
 
 各科错因的判定线索、常见表现与子类型对照，见 `references/error-analysis-framework.md`（本节只保留协议，不重复学科细节）。
 

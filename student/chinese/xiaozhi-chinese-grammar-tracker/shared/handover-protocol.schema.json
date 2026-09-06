@@ -17,10 +17,10 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.8）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.9）",
       "type": "string",
       "enum": [
-        "2.1.8"
+        "2.1.9"
       ]
     },
     "handoverType": {
@@ -55,10 +55,8 @@
             "updateTarget": {
               "type": "string",
               "enum": [
-                "subject_extension",
-                "weak_knowledge_points"
-              ],
-              "description": "interest_dna：兴趣DNA（xiaozhi-interest-explorer 经 profile_writeback 写入 interestDNA，需 interestTrackingConsent）"
+                "subject_extension"
+              ]
             },
             "subjectExtensionPatch": {
               "type": "object",
@@ -70,46 +68,6 @@
               },
               "additionalProperties": false
             },
-            "weakKnowledgePointUpdates": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "subject": {
-                    "type": "string",
-                    "maxLength": 20
-                  },
-                  "knowledgePoint": {
-                    "type": "string",
-                    "maxLength": 100
-                  },
-                  "status": {
-                    "type": "string",
-                    "enum": [
-                      "待处理",
-                      "初步弱项",
-                      "突破中",
-                      "顽固弱项",
-                      "已攻克"
-                    ]
-                  },
-                  "confidenceLevel": {
-                    "type": "string",
-                    "enum": [
-                      "data_sufficient",
-                      "preliminary_trend",
-                      "insufficient_sample"
-                    ]
-                  }
-                },
-                "required": [
-                  "subject",
-                  "knowledgePoint",
-                  "status"
-                ]
-              }
-            },
             "interestUpdates": {
               "type": "object",
               "description": "updateTarget=interest_dna 时的补丁：只含 interestDNA 下的字段（currentExploringFields / challengeReactionSignals / confirmedShallowLikes / possibleTrueInterests），不得带其他分支。",
@@ -118,22 +76,6 @@
           },
           "required": [
             "updateTarget"
-          ],
-          "allOf": [
-            {
-              "if": {
-                "properties": {
-                  "updateTarget": {
-                    "const": "emotion_dimension"
-                  }
-                }
-              },
-              "then": {
-                "required": [
-                  "emotionUpdates"
-                ]
-              }
-            }
           ]
         }
       }
@@ -191,46 +133,6 @@
           "payload": {
             "required": [
               "profileData"
-            ]
-          }
-        }
-      }
-    },
-    {
-      "if": {
-        "required": [
-          "payload"
-        ],
-        "properties": {
-          "payload": {
-            "required": [
-              "profileData"
-            ],
-            "properties": {
-              "profileData": {
-                "required": [
-                  "updateTarget"
-                ],
-                "properties": {
-                  "updateTarget": {
-                    "const": "emotion_dimension"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "then": {
-        "properties": {
-          "consent": {
-            "properties": {
-              "emotionTrackingConsent": {
-                "const": true
-              }
-            },
-            "required": [
-              "emotionTrackingConsent"
             ]
           }
         }

@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🎓 费曼学习法
-  version: 2.1.8
+  version: 2.1.9
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -118,7 +118,7 @@ metadata:
 
 **熔断前必须先做危机信号检查**：学生说"太难了""放弃了""我不行"时，先判断这是**学习挫败**还是**危机信号**——
 - 只针对当前这道题/这个知识点、没有指向自我否定与安全问题 → 学习挫败，走下面的一级支架熔断；
-- 出现自伤、轻生、被伤害、持续绝望、家庭安全等内容 → **不进入熔断流程**，立即按上面的危机例外处置，并把处置事实写入 `safetyRecord`。
+- 出现自伤、轻生、被伤害、持续绝望、家庭安全等内容 → **不进入熔断流程**，立即按上面的危机例外处置；处置事实由学习DNA 记入 `safetyRecord`（档案已开启时），本 SKILL 不写。
 
 在教学交互中，系统采用 **动态支架渐退机制（Scaffolding Fading）**：根据学生的认知负荷与情感状态调整启发式追问的“陡峭度”，在学生明显挫败时进入“情绪熔断”。
 
@@ -224,9 +224,9 @@ metadata:
 
 ## 六、理解深度记录
 
-> **先过同意门再谈记录**：本节的“记录”默认只在会话内存在；只有学生本轮明确说“记下来”、且 `crossSkillSharing` 为 true，才把掌握度等级与卡点类型经 `subject_profile_writeback` 交给学习DNA。学生原话不进档案。不是“每次测试后自动生成写回”。
+> **先过同意门再谈记录**：本节的“记录”默认只在会话内存在；学生原话不进档案。
 
-每次测试结束后，生成一条待确认条目写回学习DNA的 `extensions.understanding[]`（`shared/dna-profile.schema.json`），而不是只给口头反馈。写入前先确认 `crossSkillSharing`，走 `subject_profile_writeback`（`updateTarget: "extension"`）。
+测试结束后只给口头反馈和等级。**只有学生本轮明确说“记下来”、且 `crossSkillSharing` 为 true**，才生成一条待确认条目，经 `subject_profile_writeback`（`updateTarget: "extension"`）写入学习DNA的 `extensions.understanding[]`（`shared/dna-profile.schema.json`）；没说就不生成、不写。
 
 ### 6.1 三层标准（`shared/vocab.md §6`，全库唯一掌握度词表）
 

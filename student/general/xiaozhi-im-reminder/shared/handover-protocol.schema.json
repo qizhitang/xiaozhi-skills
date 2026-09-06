@@ -18,14 +18,14 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.8）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.9）",
       "type": "string",
       "enum": [
-        "2.1.8"
+        "2.1.9"
       ]
     },
     "handoverType": {
-      "description": "reminder_enqueue=向IM提醒入队（唯一允许的提醒方式）；reminder_sync=IM提醒回报状态",
+      "description": "reminder_enqueue=向IM提醒入队（唯一允许的提醒方式，需 consent.reminderConsent）；reminder_sync=IM提醒回报状态",
       "type": "string",
       "enum": [
         "reminder_enqueue",
@@ -120,7 +120,8 @@
           "type": "boolean"
         },
         "reminderConsent": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "提醒授权。handoverType=reminder_enqueue 时必须为 true"
         },
         "verifiedAt": {
           "type": "string",
@@ -166,26 +167,9 @@
     },
     {
       "if": {
-        "required": [
-          "payload"
-        ],
         "properties": {
-          "payload": {
-            "required": [
-              "profileData"
-            ],
-            "properties": {
-              "profileData": {
-                "required": [
-                  "updateTarget"
-                ],
-                "properties": {
-                  "updateTarget": {
-                    "const": "emotion_dimension"
-                  }
-                }
-              }
-            }
+          "handoverType": {
+            "const": "reminder_enqueue"
           }
         }
       },
@@ -193,12 +177,12 @@
         "properties": {
           "consent": {
             "properties": {
-              "emotionTrackingConsent": {
+              "reminderConsent": {
                 "const": true
               }
             },
             "required": [
-              "emotionTrackingConsent"
+              "reminderConsent"
             ]
           }
         }

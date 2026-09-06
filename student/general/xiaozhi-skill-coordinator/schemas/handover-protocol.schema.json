@@ -9,14 +9,14 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.8）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.9）",
       "type": "string",
       "enum": [
-        "2.1.8"
+        "2.1.9"
       ]
     },
     "handoverType": {
-      "description": "交接类型：wrong_answer_handover=错题本→学科错误DNA；deep_analysis_writeback=学科错误DNA→错题本回写；profile_writeback=写入学习DNA通用层；subject_profile_writeback=写入学习DNA subjectExtensions/extensions；reminder_enqueue=向IM提醒入队（唯一允许的提醒方式）；reminder_sync=IM提醒回报状态；teacher_writeback=老师端写回学生档案（需 consent.teacherWritebackConsent）",
+      "description": "交接类型：wrong_answer_handover=错题本→学科错误DNA；deep_analysis_writeback=学科错误DNA→错题本回写；profile_writeback=写入学习DNA通用层；subject_profile_writeback=写入学习DNA subjectExtensions/extensions；reminder_enqueue=向IM提醒入队（唯一允许的提醒方式，需 consent.reminderConsent）；reminder_sync=IM提醒回报状态；teacher_writeback=老师端写回学生档案（需 consent.teacherWritebackConsent）",
       "type": "string",
       "enum": [
         "wrong_answer_handover",
@@ -731,7 +731,12 @@
           "type": "boolean"
         },
         "reminderConsent": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "提醒授权。handoverType=reminder_enqueue 时必须为 true"
+        },
+        "interestTrackingConsent": {
+          "type": "boolean",
+          "description": "兴趣DNA写入授权。updateTarget=interest_dna 时必须为 true"
         },
         "parentSharingConsent": {
           "type": "boolean",
@@ -904,6 +909,69 @@
             },
             "required": [
               "emotionTrackingConsent"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "handoverType": {
+            "const": "reminder_enqueue"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "consent": {
+            "properties": {
+              "reminderConsent": {
+                "const": true
+              }
+            },
+            "required": [
+              "reminderConsent"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "payload"
+        ],
+        "properties": {
+          "payload": {
+            "required": [
+              "profileData"
+            ],
+            "properties": {
+              "profileData": {
+                "required": [
+                  "updateTarget"
+                ],
+                "properties": {
+                  "updateTarget": {
+                    "const": "interest_dna"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "consent": {
+            "properties": {
+              "interestTrackingConsent": {
+                "const": true
+              }
+            },
+            "required": [
+              "interestTrackingConsent"
             ]
           }
         }
