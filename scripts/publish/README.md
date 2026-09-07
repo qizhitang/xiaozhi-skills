@@ -10,7 +10,7 @@
 |---|---|
 | `stage.py` | 把仓库形态打包成市场形态：`metadata.*` 投影回顶层（两个市场的解析器只认顶层 `key: value`），折叠 description 展平，补 slug / displayName / summary，version 取 `package.json` |
 | `publish_skillhub.py` | 多轮发布到 SkillHub。它的配额一轮发不完（约 40 个/窗口，之后持续 429），所以尽力发一轮→休 30 分钟→再来，最多 40 轮。安全整改改动最大的 16 个老师端技能排最前。发完自动跑核对 |
-| （SkillHub 限流） | 实测约 **100 次发布 / 滚动 24 小时**：2026-09-05 早 08:00 发完 58 个，晚 21:31 再发只成功 42 个就一直“发布频率过高”，到次日 08:20 窗口滚过才放行。多轮循环会自己等（每 30 分钟一轮、最多 40 轮），但同一天发两个版本要有心理准备；两次全量发布间隔 ≥ 24 小时最稳 |
+| （SkillHub 限流） | 会出现“发布频率过高”，但规律不明：2026-09-05 早 08:00 发完 58 个，晚 21:31 再发只成功 42 个，之后每半小时试一次都被拒，直到次日 08:20 才放行剩下 16 个；而 09-06 晚 19:37（距上次发布 11 小时）58 个一轮全过。多轮循环会自己等（每 30 分钟一轮、最多 40 轮），遇到限流不用干预，等它跑完看 verify-report |
 | `publish_clawhub.py` | 一轮发完 ClawHub，断点续跑。`xiaozhi-chinese-classical-revival` 的 slug 在 ClawHub 上重定向到一个审核隐藏的旧条目，只能就地发到 `chinese-classical-revival`，版本号映射为 `1000000.<patch>.0` |
 | `verify_publish.py` | 查 SkillHub 线上实际版本，与 `package.json` 比对，写 `verify-report.md` |
 | `fetch_scans.py` | 拉 ClawHub 对当前版本的安全扫描（ClawScan 判定 + SkillSpector 逐条证据），汇总成 `scan_summary_<版本>.json`；`--compare <上一版 summary>` 打印翻转表。ClawHub 发布后 3–5 分钟先落一份只有判定与摘要的快照，10–30 分钟后才补维度与逐条证据；快照记为 `complete: false`，重跑会重拉，直到退出码为 0 才算拉齐 |
