@@ -1,7 +1,7 @@
 {
   "$comment": "示例：xiaozhi-math-error-dna → xiaozhi-correction-notebook（deep_analysis_writeback）。收发双方都是其他 SKILL；xiaozhi-skill-coordinator 只定义协议、校验格式、按路由表分发，自己不发写回、不存档案。",
   "sessionId": "sess-demo-002",
-  "protocolVersion": "2.1.11",
+  "protocolVersion": "2.1.12",
   "handoverType": "deep_analysis_writeback",
   "sender": "xiaozhi-math-error-dna",
   "recipient": "xiaozhi-correction-notebook",

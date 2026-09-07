@@ -4,13 +4,14 @@
   "title": "LearningDNAProfile",
   "x-distributed-to": "xiaozhi-physics-modeling-coach",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-physics-modeling-coach 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的字段（共 2 项，删去 11 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
+    "note": "本副本随 xiaozhi-physics-modeling-coach 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的字段（共 3 项，删去 11 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
     "paths": [
       "meta",
-      "subjectExtensions.physics"
+      "subjectExtensions.physics.modelingProfile",
+      "subjectExtensions.physics.subtypes"
     ]
   },
-  "description": "学习DNA 档案结构——随 xiaozhi-physics-modeling-coach 分发的裁剪副本，只含 meta、subjectExtensions.physics；完整定义见 xiaozhi-learning-dna/schemas/dna-profile.schema.json",
+  "description": "学习DNA 档案结构——随 xiaozhi-physics-modeling-coach 分发的裁剪副本，只含 meta、subjectExtensions.physics.modelingProfile、subjectExtensions.physics.subtypes；完整定义见 xiaozhi-learning-dna/schemas/dna-profile.schema.json",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -26,9 +27,9 @@
         },
         "schemaVersion": {
           "type": "string",
-          "description": "档案结构版本号，与仓库版本一致（当前 2.1.11）。旧档案（1.0.0–1.3.0）的字段在本结构中全部保留且均为可选，迁移时只需把本字段改写为 2.1.0。",
+          "description": "档案结构版本号，与仓库版本一致（当前 2.1.12）。旧档案（1.0.0–1.3.0）的字段在本结构中全部保留且均为可选，迁移时只需把本字段改写为 2.1.0。",
           "enum": [
-            "2.1.11"
+            "2.1.12"
           ]
         },
         "createdAt": {
@@ -165,30 +166,6 @@
                 },
                 "required": [
                   "model",
-                  "status"
-                ]
-              }
-            },
-            "labSkills": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "skill": {
-                    "type": "string",
-                    "maxLength": 60
-                  },
-                  "status": {
-                    "$ref": "#/$defs/masteryLevel"
-                  },
-                  "lastDate": {
-                    "type": "string",
-                    "format": "date"
-                  }
-                },
-                "required": [
-                  "skill",
                   "status"
                 ]
               }

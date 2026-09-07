@@ -9,11 +9,11 @@
       "interestDNA",
       "meta",
       "safetyRecord",
-      "subjectExtensions.physics",
+      "subjectExtensions.physics.subtypes",
       "subjectMap"
     ]
   },
-  "description": "学习DNA 档案结构——随 xiaozhi-physics-problem-coach 分发的裁剪副本，只含 interestDNA、meta、safetyRecord、subjectExtensions.physics、subjectMap；完整定义见 xiaozhi-learning-dna/schemas/dna-profile.schema.json",
+  "description": "学习DNA 档案结构——随 xiaozhi-physics-problem-coach 分发的裁剪副本，只含 interestDNA、meta、safetyRecord、subjectExtensions.physics.subtypes、subjectMap；完整定义见 xiaozhi-learning-dna/schemas/dna-profile.schema.json",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -29,9 +29,9 @@
         },
         "schemaVersion": {
           "type": "string",
-          "description": "档案结构版本号，与仓库版本一致（当前 2.1.11）。旧档案（1.0.0–1.3.0）的字段在本结构中全部保留且均为可选，迁移时只需把本字段改写为 2.1.0。",
+          "description": "档案结构版本号，与仓库版本一致（当前 2.1.12）。旧档案（1.0.0–1.3.0）的字段在本结构中全部保留且均为可选，迁移时只需把本字段改写为 2.1.0。",
           "enum": [
-            "2.1.11"
+            "2.1.12"
           ]
         },
         "createdAt": {
@@ -289,55 +289,6 @@
           "properties": {
             "subtypes": {
               "$ref": "#/$defs/subjectSubtypeMap"
-            },
-            "modelingProfile": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "model": {
-                    "type": "string",
-                    "maxLength": 60,
-                    "description": "物理模型名（如 匀速直线运动/浮力平衡/串并联电路）"
-                  },
-                  "status": {
-                    "$ref": "#/$defs/masteryLevel"
-                  },
-                  "lastDate": {
-                    "type": "string",
-                    "format": "date"
-                  }
-                },
-                "required": [
-                  "model",
-                  "status"
-                ]
-              }
-            },
-            "labSkills": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "skill": {
-                    "type": "string",
-                    "maxLength": 60
-                  },
-                  "status": {
-                    "$ref": "#/$defs/masteryLevel"
-                  },
-                  "lastDate": {
-                    "type": "string",
-                    "format": "date"
-                  }
-                },
-                "required": [
-                  "skill",
-                  "status"
-                ]
-              }
             }
           }
         }
@@ -460,15 +411,6 @@
         "已攻克"
       ],
       "description": "弱项状态五档（shared/vocab.md §4）"
-    },
-    "masteryLevel": {
-      "type": "string",
-      "enum": [
-        "会复述",
-        "会解释",
-        "真正掌握"
-      ],
-      "description": "掌握度三档（shared/vocab.md §6）"
     },
     "ageBand": {
       "type": "string",

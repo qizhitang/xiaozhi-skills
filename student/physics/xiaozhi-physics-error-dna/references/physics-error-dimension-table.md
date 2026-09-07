@@ -452,7 +452,7 @@ C06(电学概念混淆) + F06(多公式联立错误)
 ```json
 {
   "sessionId": "sess-2026-09-03-01",
-  "protocolVersion": "2.1.11",
+  "protocolVersion": "2.1.12",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-correction-notebook",
   "recipient": "xiaozhi-physics-error-dna",

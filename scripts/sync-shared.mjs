@@ -212,7 +212,26 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
   for (const k of top) {
     if (isDna && (k === "subjectExtensions" || k === "extensions") && props[k] && props[k].properties) {
       const subs = Object.keys(props[k].properties).filter((s) => mentioned(skillText, k + "." + s));
-      if (subs.length) { keep.add(k); subs.forEach((s) => paths.push(k + "." + s)); props[k] = { ...props[k], properties: Object.fromEntries(subs.map((s) => [s, props[k].properties[s]])) }; }
+      if (subs.length) {
+        keep.add(k);
+        const kept = {};
+        for (const s of subs) {
+          let inner = props[k].properties[s];
+          // 学科分支内的子项（语文的 grammarErrorProfile / writingStyle / readingPits / materialUsage …）也只留正文提到的；
+          // 一个都没提到就整支保留（不知道它用哪些）
+          if (k === "subjectExtensions" && inner && inner.properties) {
+            const all = Object.keys(inner.properties);
+            const ks = all.filter((f) => mentioned(skillText, f) || mentioned(skillText, s + "." + f));
+            if (ks.length && ks.length < all.length) {
+              const keepF = new Set([...ks, ...(Array.isArray(inner.required) ? inner.required : [])]);
+              inner = { ...inner, properties: Object.fromEntries(Object.entries(inner.properties).filter(([f]) => keepF.has(f))) };
+              ks.forEach((f) => paths.push(k + "." + s + "." + f));
+            } else paths.push(k + "." + s);
+          } else paths.push(k + "." + s);
+          kept[s] = inner;
+        }
+        props[k] = { ...props[k], properties: kept };
+      }
       continue;
     }
     if (mentioned(skillText, k)) { keep.add(k); paths.push(k); }

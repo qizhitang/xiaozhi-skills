@@ -352,7 +352,7 @@
         "consumeLessonUnits": {
           "type": "number",
           "minimum": 0,
-          "description": "本节课消耗课时数。由 SKILL 生成为待确认条目，老师确认后才写入课时台账"
+          "description": "本节课消耗课时数。由 xiaozhi-teach-lesson-log 生成为待确认条目，老师确认后才写入课时台账；排课与课时管理、续费报告等其他 SKILL 只读"
         },
         "date": {
           "type": "string",

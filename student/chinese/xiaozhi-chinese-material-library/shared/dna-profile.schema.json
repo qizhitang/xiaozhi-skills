@@ -7,10 +7,10 @@
     "note": "本副本随 xiaozhi-chinese-material-library 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的字段（共 2 项，删去 11 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
     "paths": [
       "meta",
-      "subjectExtensions.chinese"
+      "subjectExtensions.chinese.materialUsage"
     ]
   },
-  "description": "学习DNA 档案结构——随 xiaozhi-chinese-material-library 分发的裁剪副本，只含 meta、subjectExtensions.chinese；完整定义见 xiaozhi-learning-dna/schemas/dna-profile.schema.json",
+  "description": "学习DNA 档案结构——随 xiaozhi-chinese-material-library 分发的裁剪副本，只含 meta、subjectExtensions.chinese.materialUsage；完整定义见 xiaozhi-learning-dna/schemas/dna-profile.schema.json",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -26,9 +26,9 @@
         },
         "schemaVersion": {
           "type": "string",
-          "description": "档案结构版本号，与仓库版本一致（当前 2.1.11）。旧档案（1.0.0–1.3.0）的字段在本结构中全部保留且均为可选，迁移时只需把本字段改写为 2.1.0。",
+          "description": "档案结构版本号，与仓库版本一致（当前 2.1.12）。旧档案（1.0.0–1.3.0）的字段在本结构中全部保留且均为可选，迁移时只需把本字段改写为 2.1.0。",
           "enum": [
-            "2.1.11"
+            "2.1.12"
           ]
         },
         "createdAt": {
@@ -141,101 +141,6 @@
           "additionalProperties": false,
           "description": "语文五个学生端 SKILL 的学科层档案（语病档案、写作风格、阅读五坑、素材使用、文言进度）",
           "properties": {
-            "subtypes": {
-              "$ref": "#/$defs/subjectSubtypeMap"
-            },
-            "grammarErrorProfile": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "errorType": {
-                    "type": "string",
-                    "enum": [
-                      "搭配不当",
-                      "成分残缺",
-                      "语序不当",
-                      "结构混乱",
-                      "表意不明",
-                      "不合逻辑",
-                      "赘余"
-                    ]
-                  },
-                  "occurrenceCount": {
-                    "type": "integer",
-                    "minimum": 0
-                  },
-                  "status": {
-                    "$ref": "#/$defs/weaknessStatus"
-                  },
-                  "lastDate": {
-                    "type": "string",
-                    "format": "date"
-                  }
-                },
-                "required": [
-                  "errorType",
-                  "status"
-                ]
-              }
-            },
-            "writingStyle": {
-              "type": "object",
-              "additionalProperties": false,
-              "properties": {
-                "strengths": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "maxLength": 60
-                  }
-                },
-                "recurringIssues": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "maxLength": 60
-                  }
-                },
-                "preferredGenre": {
-                  "type": "string",
-                  "maxLength": 30
-                },
-                "lastUpdated": {
-                  "type": "string",
-                  "format": "date"
-                },
-                "confidenceLevel": {
-                  "$ref": "#/$defs/confidenceLevel"
-                }
-              }
-            },
-            "readingPits": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "pit": {
-                    "type": "string",
-                    "maxLength": 30,
-                    "description": "五坑之一的名称"
-                  },
-                  "status": {
-                    "$ref": "#/$defs/weaknessStatus"
-                  },
-                  "lastDate": {
-                    "type": "string",
-                    "format": "date"
-                  }
-                },
-                "required": [
-                  "pit",
-                  "status"
-                ]
-              }
-            },
             "materialUsage": {
               "type": "array",
               "items": {
@@ -259,37 +164,6 @@
                   "materialId"
                 ]
               }
-            },
-            "classicalProgress": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "maxLength": 60,
-                    "description": "篇目名"
-                  },
-                  "stage": {
-                    "type": "string",
-                    "enum": [
-                      "能读通",
-                      "能翻译",
-                      "能背诵",
-                      "能鉴赏"
-                    ]
-                  },
-                  "lastDate": {
-                    "type": "string",
-                    "format": "date"
-                  }
-                },
-                "required": [
-                  "text",
-                  "stage"
-                ]
-              }
             }
           }
         }
@@ -300,35 +174,6 @@
     "meta"
   ],
   "$defs": {
-    "confidenceLevel": {
-      "description": "结论置信度标签（shared/vocab.md §7）：防止数据不足时给出误导性结论。样本不足（insufficient_sample）只作输出标签，不可写入本档案，故不在枚举内。凡是基于'连续N次'得出的AI结论必须附带此标签。data_sufficient=🟢数据充分（≥3 次独立观察且方向一致）；preliminary_trend=🟡初步趋势（2 次观察或方向基本一致）；insufficient_sample=🔴样本不足（单次观察或互相矛盾，不写入长期档案）",
-      "type": "string",
-      "enum": [
-        "data_sufficient",
-        "preliminary_trend"
-      ]
-    },
-    "errorDimension": {
-      "type": "string",
-      "enum": [
-        "概念模糊",
-        "计算失误",
-        "读题失误",
-        "方法用错"
-      ],
-      "description": "错因基础四维（shared/vocab.md §1）。学科子类型见 subtypeId"
-    },
-    "weaknessStatus": {
-      "type": "string",
-      "enum": [
-        "待处理",
-        "初步弱项",
-        "突破中",
-        "顽固弱项",
-        "已攻克"
-      ],
-      "description": "弱项状态五档（shared/vocab.md §4）"
-    },
     "ageBand": {
       "type": "string",
       "enum": [
@@ -340,55 +185,6 @@
         "未知"
       ],
       "description": "学段（shared/vocab.md §10）"
-    },
-    "subtypeRecord": {
-      "type": "object",
-      "additionalProperties": false,
-      "description": "学科子类型记录（shared/vocab.md §2）。通用层只存 ID，不解释含义",
-      "properties": {
-        "subtypeId": {
-          "type": "string",
-          "pattern": "^(RC|AR|WT|CL|LG|[A-Z])[0-9]{2}$",
-          "description": "学科子类型编码，如 B03 / P02 / G05 / RC01"
-        },
-        "dimension": {
-          "$ref": "#/$defs/errorDimension"
-        },
-        "knowledgePoint": {
-          "type": "string",
-          "maxLength": 100
-        },
-        "occurrenceCount": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "windowStart": {
-          "type": "string",
-          "format": "date",
-          "description": "28 天滚动窗口起点（shared/vocab.md §5）"
-        },
-        "status": {
-          "$ref": "#/$defs/weaknessStatus"
-        },
-        "lastOccurrenceDate": {
-          "type": "string",
-          "format": "date"
-        },
-        "confidenceLevel": {
-          "$ref": "#/$defs/confidenceLevel"
-        }
-      },
-      "required": [
-        "subtypeId",
-        "knowledgePoint",
-        "status"
-      ]
-    },
-    "subjectSubtypeMap": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/subtypeRecord"
-      }
     }
   }
 }

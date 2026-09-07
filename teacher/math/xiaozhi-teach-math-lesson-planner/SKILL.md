@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 数学教案设计
-  version: 2.1.11
+  version: 2.1.12
   author: 小智伴学
   category: 老师数学
   grade_bands:
