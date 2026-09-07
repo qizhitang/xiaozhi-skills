@@ -1,6 +1,7 @@
 {
+  "$comment": "示例：xiaozhi-teach-math-error-analyzer → xiaozhi-learning-dna（teacher_writeback）。收发双方都是其他 SKILL；xiaozhi-skill-coordinator 只定义协议、校验格式、按路由表分发，自己不发写回、不存档案。",
   "sessionId": "sess-demo-004",
-  "protocolVersion": "2.1.10",
+  "protocolVersion": "2.1.11",
   "handoverType": "teacher_writeback",
   "sender": "xiaozhi-teach-math-error-analyzer",
   "recipient": "xiaozhi-learning-dna",

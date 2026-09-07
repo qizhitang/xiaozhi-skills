@@ -4,7 +4,7 @@
   "title": "XiaozhiMultiAgentHandoverProtocol",
   "x-distributed-to": "xiaozhi-im-reminder",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-im-reminder 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的交接类型（共 2 项，删去 0 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
+    "note": "本副本随 xiaozhi-im-reminder 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的交接类型（共 2 项，删去 0 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。本技能是接收方：sender 为各写入方，recipient 为自己；保留全部写回目标与字段以校验来件。",
     "paths": [
       "reminder_enqueue",
       "reminder_sync"
@@ -18,10 +18,10 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.10）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.11）",
       "type": "string",
       "enum": [
-        "2.1.10"
+        "2.1.11"
       ]
     },
     "handoverType": {
@@ -36,13 +36,69 @@
       "description": "发送数据的源SKILL名称",
       "type": "string",
       "enum": [
-        "xiaozhi-im-reminder"
+        "xiaozhi-chinese-classical-revival",
+        "xiaozhi-chinese-grammar-tracker",
+        "xiaozhi-chinese-material-library",
+        "xiaozhi-chinese-reading-decoder",
+        "xiaozhi-chinese-writing-coach",
+        "xiaozhi-english-grammar-coach",
+        "xiaozhi-english-listening-trainer",
+        "xiaozhi-english-speaking-coach",
+        "xiaozhi-english-vocabulary-dna",
+        "xiaozhi-english-writing-coach",
+        "xiaozhi-cornell-notes",
+        "xiaozhi-correction-notebook",
+        "xiaozhi-cross-subject-detective",
+        "xiaozhi-feynman-learning",
+        "xiaozhi-interest-explorer",
+        "xiaozhi-learning-dna",
+        "xiaozhi-learning-plan",
+        "xiaozhi-skill-coordinator",
+        "xiaozhi-time-focus-coach",
+        "xiaozhi-weekly-review",
+        "xiaozhi-math-concept-explainer",
+        "xiaozhi-math-error-dna",
+        "xiaozhi-math-gradient-trainer",
+        "xiaozhi-math-problem-solving-coach",
+        "xiaozhi-math-word-problem-coach",
+        "xiaozhi-physics-concept-intuition",
+        "xiaozhi-physics-error-dna",
+        "xiaozhi-physics-lab-coach",
+        "xiaozhi-physics-modeling-coach",
+        "xiaozhi-physics-problem-coach",
+        "xiaozhi-teach-chinese-classical-guide",
+        "xiaozhi-teach-chinese-reading-guide",
+        "xiaozhi-teach-chinese-writing-guide",
+        "xiaozhi-teach-english-assessment",
+        "xiaozhi-teach-english-listening-designer",
+        "xiaozhi-teach-english-speaking-designer",
+        "xiaozhi-teach-assignment-designer",
+        "xiaozhi-teach-classroom-coach",
+        "xiaozhi-teach-exam-designer",
+        "xiaozhi-teach-lesson-planner",
+        "xiaozhi-teach-review-planner",
+        "xiaozhi-teach-student-analyzer",
+        "xiaozhi-teach-homework-tracker",
+        "xiaozhi-teach-lesson-log",
+        "xiaozhi-teach-parent-communication",
+        "xiaozhi-teach-renewal-report",
+        "xiaozhi-teach-resource-library",
+        "xiaozhi-teach-schedule-manager",
+        "xiaozhi-teach-solo-dashboard",
+        "xiaozhi-teach-student-intake",
+        "xiaozhi-teach-math-error-analyzer",
+        "xiaozhi-teach-math-exam-designer",
+        "xiaozhi-teach-math-lesson-planner",
+        "xiaozhi-teach-physics-experiment-coach",
+        "xiaozhi-teach-physics-lesson-planner",
+        "xiaozhi-teach-physics-problem-guide"
       ]
     },
     "recipient": {
       "description": "接收数据的目标SKILL名称",
       "type": "string",
       "enum": [
+        "xiaozhi-im-reminder",
         "xiaozhi-learning-dna"
       ]
     },
@@ -116,7 +172,9 @@
       "description": "发送方在发送前核对过的授权位快照（来自 dna-profile meta.consentStatus，见 shared/vocab.md §8）。接收方必须再次核对；任一相关位为 false 时丢弃该交接并告知用户",
       "properties": {
         "crossSkillSharing": {
-          "type": "boolean"
+          "type": "boolean",
+          "const": true,
+          "description": "跨 SKILL 共享授权。任何交接都必须为 true：为 false 的交接不得发出，接收方收到即丢弃并告知用户（shared/vocab.md §8）"
         },
         "reminderConsent": {
           "type": "boolean",

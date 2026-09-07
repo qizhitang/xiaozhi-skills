@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 试听与学员建档
-  version: 2.1.10
+  version: 2.1.11
   author: 小智伴学
   category: 独立教师
   grade_bands:
@@ -568,7 +568,7 @@ max_round_limit: 15
 - 共享控制：「不要共享给其他SKILL」/「不要给家长看」
 - 导出：「导出我的[学员档案]」（以文本形式给出，便于转存）
 
-学员/家长提出时同样适用，按学员化名定位：「查看 小A 的档案」「删除 小A 的全部数据」「导出 小A 的档案」。
+学员/家长提出时同样适用（由老师核实请求人身份后代为执行），按学员化名定位：「查看 小A 的档案」「删除 小A 的全部数据」「导出 小A 的档案」。
 
 **校验要求**：建档前须确认 `consent.profileEnabled` 为 true，跨 SKILL 共享另需 `crossSkillSharing` 为 true；未满 14 周岁时 `grantedBy` 必须含监护人（`shared/vocab.md §8`）。真实姓名、出生年月、联系方式等敏感信息一律不收集、不写入（详见 `SECURITY_BASELINE.md`）。
 

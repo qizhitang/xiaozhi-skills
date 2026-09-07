@@ -11,7 +11,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 阶段报告与续课助手
-  version: 2.1.10
+  version: 2.1.11
   author: 小智伴学
   category: 独立教师
   grade_bands:
@@ -556,7 +556,7 @@ lessonLogs[].evidence 里，就不要凭印象补进时间线。
 - 共享控制：「不要共享给其他SKILL」/「不要给家长看」
 - 导出：「导出我的[阶段报告记录]」（以文本形式给出，便于转存）
 
-学员/家长提出时同样适用，按学员化名定位：「查看 小A 的阶段证据」「删除 小A 的阶段证据」。
+学员/家长提出时同样适用（由老师核实请求人身份后代为执行），按学员化名定位：「查看 小A 的阶段证据」「删除 小A 的阶段证据」。
 若对方要的是“删除小A 的全部档案”，本 SKILL 只如实转达给老师，由 `xiaozhi-teach-student-intake` 执行——本 SKILL 删不了，也不该删。
 
 **校验要求**：生成家长版报告前须确认 `parentCommunicationAllowed` 为 true，含课堂状态内容再确认 `emotionSharingWithParent`；跨 SKILL 共享另需 `crossSkillSharing` 为 true。真实姓名、出生年月、联系方式一律不写入（详见 `SECURITY_BASELINE.md`）。

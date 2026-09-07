@@ -4,7 +4,7 @@
   "title": "XiaozhiMultiAgentHandoverProtocol",
   "x-distributed-to": "xiaozhi-learning-dna",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-learning-dna 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的交接类型（共 3 项，删去 0 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
+    "note": "本副本随 xiaozhi-learning-dna 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的交接类型（共 3 项，删去 0 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。本技能是接收方：sender 为各写入方，recipient 为自己；保留全部写回目标与字段以校验来件。",
     "paths": [
       "profile_writeback",
       "subject_profile_writeback",
@@ -19,10 +19,10 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.10）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.11）",
       "type": "string",
       "enum": [
-        "2.1.10"
+        "2.1.11"
       ]
     },
     "handoverType": {
@@ -36,13 +36,6 @@
     },
     "sender": {
       "description": "发送数据的源SKILL名称",
-      "type": "string",
-      "enum": [
-        "xiaozhi-learning-dna"
-      ]
-    },
-    "recipient": {
-      "description": "接收数据的目标SKILL名称",
       "type": "string",
       "enum": [
         "xiaozhi-chinese-classical-revival",
@@ -61,7 +54,6 @@
         "xiaozhi-feynman-learning",
         "xiaozhi-im-reminder",
         "xiaozhi-interest-explorer",
-        "xiaozhi-learning-dna",
         "xiaozhi-learning-plan",
         "xiaozhi-skill-coordinator",
         "xiaozhi-time-focus-coach",
@@ -102,6 +94,13 @@
         "xiaozhi-teach-physics-experiment-coach",
         "xiaozhi-teach-physics-lesson-planner",
         "xiaozhi-teach-physics-problem-guide"
+      ]
+    },
+    "recipient": {
+      "description": "接收数据的目标SKILL名称",
+      "type": "string",
+      "enum": [
+        "xiaozhi-learning-dna"
       ]
     },
     "payload": {
@@ -249,8 +248,25 @@
             },
             "extensionPatch": {
               "type": "object",
-              "description": "extension 时：dna-profile.schema.json#/properties/extensions 的单分支片段",
-              "additionalProperties": true
+              "description": "extension 时：只允许写 extensions.notes、extensions.focus、extensions.plans、extensions.projects、extensions.understanding",
+              "properties": {
+                "notes": {
+                  "type": "object"
+                },
+                "focus": {
+                  "type": "object"
+                },
+                "plans": {
+                  "type": "object"
+                },
+                "projects": {
+                  "type": "object"
+                },
+                "understanding": {
+                  "type": "object"
+                }
+              },
+              "additionalProperties": false
             },
             "weakKnowledgePointUpdates": {
               "type": "array",
@@ -420,7 +436,9 @@
       "description": "发送方在发送前核对过的授权位快照（来自 dna-profile meta.consentStatus，见 shared/vocab.md §8）。接收方必须再次核对；任一相关位为 false 时丢弃该交接并告知用户",
       "properties": {
         "crossSkillSharing": {
-          "type": "boolean"
+          "type": "boolean",
+          "const": true,
+          "description": "跨 SKILL 共享授权。任何交接都必须为 true：为 false 的交接不得发出，接收方收到即丢弃并告知用户（shared/vocab.md §8）"
         },
         "emotionTrackingConsent": {
           "type": "boolean",

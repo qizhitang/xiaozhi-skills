@@ -2,7 +2,7 @@
 """把仓库版本号从 OLD 改成 NEW（D1：任何已发布内容的改动都要升版本）。
 
 用法：
-    python scripts/publish/bump_version.py <旧版本> <新版本>     # 例：2.1.9 2.1.10
+    python scripts/publish/bump_version.py <旧版本> <新版本>     # 例：1.2.3 1.2.4
 
 改哪些：package.json / package-lock.json、各 SKILL.md 的 metadata.version 与示例里的 protocolVersion、
 schemas/examples 与 references 里的 protocolVersion / schemaVersion、两个主 schema 的版本枚举与说明、

@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 独立教师工作台
-  version: 2.1.10
+  version: 2.1.11
   author: 小智伴学
   category: 独立教师
   grade_bands:
@@ -426,7 +426,7 @@ parentSummary / factSummary 字段硬约束：
 - 暂停：「这次不要记忆」/「暂停提醒」——本 SKILL 本就不写、不提醒；转写入方生效
 - 共享控制：「不要共享给其他SKILL」/「不要给家长看」——本 SKILL 生成任何可分享内容前先查授权位；改动授权位转 student-intake
 
-学员/家长提出时同样适用，按学员化名定位：「查看 小A 的记录」「删除 小A 的全部数据」。
+学员/家长提出时同样适用（由老师核实请求人身份后代为执行），按学员化名定位：「查看 小A 的记录」「删除 小A 的全部数据」。
 
 **校验要求**：跨 SKILL 共享或建档前，须确认 `consent.crossSkillSharing` / `consent.profileEnabled` 为 true；`consent.retentionUntil` 到期时提示老师删除该学员卡。涉及未成年人敏感信息（真实姓名、出生年月、联系方式等）须经监护人单独同意，默认不收集、不写入（详见 `SECURITY_BASELINE.md`）。
 

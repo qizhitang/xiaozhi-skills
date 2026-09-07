@@ -158,17 +158,31 @@ function mentioned(skillText, key) {
 }
 // SKILL.md 里的“读：/写：”声明块（老师端工作区技能都有）：随后缩进列出 workspace.xxx / classWorkspace.xxx 路径，
 // 路径后面的 .a / .b、或下一行的 a / b / c 是子字段。返回 { read: Map<顶层键, Set<子字段>>, write: 同 }
+// 学习DNA 档案主 schema（裁剪写回副本的扩展分支时要看它有哪些子分支）
+const DNA_MASTER = (() => { let cached; return () => { if (cached !== undefined) return cached; const c = CONTRACTS.find((x) => x.as === "dna-profile.schema.json"); try { cached = c ? JSON.parse(c.body) : null; } catch { cached = null; } return cached; }; })();
+// SKILL.md 里的“读：/写：”声明块（老师端工作区技能都有）：随后缩进列出 workspace.xxx / classWorkspace.xxx 路径，
+// 路径后面的 .a / .b、或下一行的 a / b / c 是子字段。声明头的括号说明可以跨行（“写（一律先生成待确认条目，↵ …）：”）。
+// 返回 { read: Map<顶层键, Set<子字段>>, write: 同 }
 function parseReadWrite(skillText) {
   const out = { read: new Map(), write: new Map() };
-  let mode = null, lastKey = null;
+  let mode = null, lastKey = null, inHeader = false;
   for (const raw of skillText.split(String.fromCharCode(10))) {
     const line = raw.replace(/\r$/, "");
-    const head = line.match(/^\s*(读|写)(?:[（(][^）)]*[）)])?[：:]\s*(.*)$/);
     let body;
-    if (head) { mode = head[1] === "读" ? "read" : "write"; lastKey = null; body = head[2]; if (!body) continue; }
-    else if (!mode) continue;
-    else if (!/^\s/.test(line) || /^\s*$/.test(line)) { mode = null; lastKey = null; continue; }
-    else body = line;
+    if (inHeader) {
+      if (!/[）)]\s*[：:]/.test(line)) continue;           // 还在说明括号里
+      inHeader = false; lastKey = null;
+      body = line.replace(/^[^：:]*[）)]\s*[：:]\s*/, "");
+      if (!body.trim()) continue;
+    } else {
+      const head = line.match(/^\s*(读|写)(?:[（(][^）)]*[）)])?[：:]\s*(.*)$/);
+      const openHead = head ? null : line.match(/^\s*(读|写)[（(]/);
+      if (head) { mode = head[1] === "读" ? "read" : "write"; lastKey = null; body = head[2]; if (!body) continue; }
+      else if (openHead) { mode = openHead[1] === "读" ? "read" : "write"; lastKey = null; inHeader = true; continue; }
+      else if (!mode) continue;
+      else if (!/^\s/.test(line) || /^\s*$/.test(line)) { mode = null; lastKey = null; continue; }
+      else body = line;
+    }
     if (/^\s*→/.test(body)) continue;                                   // 解释行
     const map = out[mode];
     const addFields = (seg, key) => {
@@ -205,22 +219,27 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
   }
   // 工作区 schema：SKILL.md 有显式“读：/写：”声明块时以它为准（比“提到过”精确），并把只读/写分开写进 x-skill-scope；
   // 声明里列了子字段的键，只留列出的子字段（加上 required）；只写了键名的整块保留
-  let rwScope = null;
+  let rwScope = null, roleNote = "";
+  const RECEIVERS = { "xiaozhi-learning-dna": true, "xiaozhi-im-reminder": true };
   if (/-workspace\.schema\.json$/.test(name)) {
     const rw = parseReadWrite(skillText);
     const rk = [...rw.read.keys()].filter((k) => k in props), wk = [...rw.write.keys()].filter((k) => k in props);
     if (rk.length || wk.length) {
       keep.clear(); paths.length = 0;
       for (const k of new Set([...rk, ...wk])) { keep.add(k); paths.push(k); }
-      rwScope = { reads: rk.filter((k) => !wk.includes(k)).sort(), writes: wk.sort() };
+      rwScope = { reads: rk.slice().sort(), writes: wk.slice().sort(), fields: {} };
       const wanted = new Map();   // 被引用的定义对象 → 该保留的子字段（同一定义被多个键引用时取并集）
       for (const k of keep) {
-        const fields = new Set([...(rw.read.get(k) || []), ...(rw.write.get(k) || [])]);
-        if (!fields.size) continue;
+        const rf = [...(rw.read.get(k) || [])], wf = [...(rw.write.get(k) || [])];
+        const fields = new Set([...rf, ...wf]);
         const node = props[k];
         const target = (node && node.type === "array" && node.items) ? node.items : node;
         const resolved = target && typeof target.$ref === "string" && target.$ref.startsWith("#/$defs/") ? (obj.$defs || {})[target.$ref.slice(8)] : target;
         if (!resolved || !resolved.properties) continue;
+        const has = (f) => f in resolved.properties;
+        const info = {}; if (rf.some(has)) info.reads = rf.filter(has); if (wf.some(has)) info.writes = wf.filter(has);
+        if (Object.keys(info).length) rwScope.fields[k] = info;
+        if (!fields.size) continue;
         const set = wanted.get(resolved) || new Set(); wanted.set(resolved, set);
         fields.forEach((f) => set.add(f));
       }
@@ -276,6 +295,13 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
           const dropF = new Set(allT.filter((v) => !keepT.includes(v)).map((v) => TARGET_FIELD[v]).filter(Boolean));
           const sub = Object.fromEntries(Object.entries(pp.profileData.properties).filter(([k]) => !dropF.has(k)));
           sub.updateTarget = { ...pp.profileData.properties.updateTarget, enum: keepT };
+          // extension 时：extensionPatch 只开放正文提到的 extensions.<分支>（与档案副本的裁剪口径一致）
+          const dnaM = DNA_MASTER();
+          const extDefs = dnaM && dnaM.properties && dnaM.properties.extensions && dnaM.properties.extensions.properties;
+          if (sub.extensionPatch && extDefs) {
+            const subs = Object.keys(extDefs).filter((s) => mentioned(skillText, "extensions." + s));
+            if (subs.length) sub.extensionPatch = { type: "object", description: `extension 时：只允许写 ${subs.map((s) => "extensions." + s).join("、")}`, properties: Object.fromEntries(subs.map((s) => [s, { type: "object" }])), additionalProperties: false };
+          }
           // updateTarget 的说明文字按“目标：说明；目标：说明”分段，只留保留目标那几段
           const ud = pp.profileData.properties.updateTarget.description;
           if (typeof ud === "string") {
@@ -345,7 +371,11 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
         pp2.wrongAnswerData = { ...pp2.wrongAnswerData, properties: wp, required: Array.isArray(pp2.wrongAnswerData.required) ? pp2.wrongAnswerData.required.filter((r) => r in wp) : pp2.wrongAnswerData.required };
       }
       if (subj && pp2 && pp2.profileData && pp2.profileData.properties && pp2.profileData.properties.subjectExtensionPatch) {
-        pp2.profileData.properties.subjectExtensionPatch = { type: "object", description: `subject_extension 时：只允许本学科分支 subjectExtensions.${subj}`, properties: { [subj]: { type: "object" } }, additionalProperties: false };
+        const dnaS = DNA_MASTER();
+        const subDefs = dnaS && dnaS.properties && dnaS.properties.subjectExtensions && dnaS.properties.subjectExtensions.properties && dnaS.properties.subjectExtensions.properties[subj] && dnaS.properties.subjectExtensions.properties[subj].properties;
+        const subKeys = subDefs ? Object.keys(subDefs).filter((k) => mentioned(skillText, k) || mentioned(skillText, subj + "." + k)) : [];
+        const branch = subKeys.length ? { type: "object", properties: Object.fromEntries(subKeys.map((k) => [k, { type: "object" }])), additionalProperties: false } : { type: "object" };
+        pp2.profileData.properties.subjectExtensionPatch = { type: "object", description: `subject_extension 时：只允许本学科分支 subjectExtensions.${subj}${subKeys.length ? "，且只写 " + subKeys.join("、") : ""}`, properties: { [subj]: branch }, additionalProperties: false };
       }
       // 收件方：按协议的固定路由——写回档案只能到学习DNA，错题交接只能到错题本，提醒只能到 IM 提醒
       const DEST = { wrong_answer_handover: ["xiaozhi-correction-notebook", "xiaozhi-math-error-dna", "xiaozhi-physics-error-dna"], deep_analysis_writeback: ["xiaozhi-correction-notebook"], profile_writeback: ["xiaozhi-learning-dna"], subject_profile_writeback: ["xiaozhi-learning-dna"], reminder_enqueue: ["xiaozhi-im-reminder"], reminder_sync: [], teacher_writeback: ["xiaozhi-learning-dna"] };
@@ -356,8 +386,13 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
         const rs = props.recipient.enum.filter((r) => (fixed.has(r) || men.includes(r)) && r !== skillName);   // 不会发给自己
         if (rs.length) props.recipient = { ...props.recipient, enum: rs };
       }
-      // sender 就是本技能；recipient 只留正文（非否定语境）提到的技能，一个都没提到就保留全表
-      if (props.sender && Array.isArray(props.sender.enum) && props.sender.enum.includes(skillName)) props.sender = { ...props.sender, enum: [skillName] };
+      // 纯接收方（学习DNA 收写回、IM 提醒收入队）：sender 是各写入方，recipient 是自己；其余技能 sender 就是自己
+      if (RECEIVERS[skillName]) {
+        const senders = (props.sender && Array.isArray(props.sender.enum) ? props.sender.enum : []).filter((s) => s !== skillName);
+        if (props.sender && senders.length) props.sender = { ...props.sender, enum: senders };
+        if (props.recipient && Array.isArray(props.recipient.enum)) props.recipient = { ...props.recipient, enum: skillName === "xiaozhi-learning-dna" ? [skillName] : [...new Set([skillName, ...props.recipient.enum])] };
+        roleNote = `本技能是接收方：sender 为各写入方，recipient 为自己；保留全部写回目标与字段以校验来件。`;
+      } else if (props.sender && Array.isArray(props.sender.enum) && props.sender.enum.includes(skillName)) props.sender = { ...props.sender, enum: [skillName] };
 
     }
   }
@@ -365,10 +400,11 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
   const droppedN = top.length - Object.keys(pruned).length;
   const scopeList = kinds ? kinds : paths.sort();
   const note = rwScope
-    ? `本副本随 ${skillName} 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：只读 ${rwScope.reads.join("、") || "无"}；写 ${rwScope.writes.join("、") || "无"}（各字段只留声明列出的子字段；删去 ${droppedN} 个顶层字段）。完整定义在归属技能处。`
+    ? `本副本随 ${skillName} 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：读 ${rwScope.reads.join("、") || "无"}；写 ${rwScope.writes.join("、") || "无"}（同一键既读又写时，读/写各自的子字段列在 x-skill-scope.fields；各字段只留声明列出的子字段；删去 ${droppedN} 个顶层字段）。完整定义在归属技能处。${roleNote}`
     : scopeList.length
-    ? `本副本随 ${skillName} 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的${kinds ? "交接类型" : "字段"}（共 ${scopeList.length} 项，删去 ${droppedN} 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。`
+    ? `本副本随 ${skillName} 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的${kinds ? "交接类型" : "字段"}（共 ${scopeList.length} 项，删去 ${droppedN} 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。${roleNote}`
     : `本副本随 ${skillName} 分发。该技能正文没有在非否定语境下提到本 schema 的任何字段——它不直接读写这份数据，副本仅为交接契约的类型参照；已删去全部 ${droppedN} 个数据字段。`;
+  if (isDna && paths.length) obj.description = `学习DNA 档案结构——随 ${skillName} 分发的裁剪副本，只含 ${paths.join("、")}；完整定义见 xiaozhi-learning-dna/schemas/dna-profile.schema.json`;
   const head = {};
   for (const k of ["$schema", "$id", "title"]) if (k in obj) head[k] = obj[k];
   head["x-distributed-to"] = skillName;

@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 作业跟进管家
-  version: 2.1.10
+  version: 2.1.11
   author: 小智伴学
   category: 独立教师
   grade_bands:
@@ -489,7 +489,7 @@ max_round_limit: 12
 - 共享控制：「不要共享给其他SKILL」/「不要给家长看」
 - 导出：「导出我的[作业记录]」（以文本形式给出，便于转存）
 
-学员/家长提出时同样适用，按学员化名定位：「查看 小A 的作业记录」「删除 小A 的全部作业记录」。
+学员/家长提出时同样适用（由老师核实请求人身份后代为执行），按学员化名定位：「查看 小A 的作业记录」「删除 小A 的全部作业记录」。
 
 **校验要求**：跨 SKILL 共享或建档前，须确认 `consent.crossSkillSharing` / `consent.profileEnabled` 为 true；学员卡 `status` 为"暂停记录"时不再写入新条目。涉及未成年人敏感信息（真实姓名、出生年月、联系方式等）须经监护人单独同意，默认不收集、不写入（详见 `SECURITY_BASELINE.md`）。
 

@@ -8,7 +8,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🛠️ SKILL 编写工具
-  version: 2.1.10
+  version: 2.1.11
   author: 小智伴学
   category: 开发者工具
   grade_bands:
@@ -221,7 +221,7 @@ SKILL 编写工具
 1. 【触发-行为规则】
 2. 【固定流程规则，每步写明轮次预算】
 3. 【边界规则：提示按 shared/hint-ladder.md，默认最高级 L__】
-4. 【退出规则：两轮无回复即收尾并归档】
+4. 【退出规则：两轮无回复即收尾，不归档】
 5. 语气：【温和/严谨/追问式】
 
 《安全与隐私边界》

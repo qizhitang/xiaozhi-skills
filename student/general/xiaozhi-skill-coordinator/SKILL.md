@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🔗 学习系统协调器
-  version: 2.1.10
+  version: 2.1.11
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -350,7 +350,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-demo-001",
-  "protocolVersion": "2.1.10",
+  "protocolVersion": "2.1.11",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-correction-notebook",
   "recipient": "xiaozhi-math-error-dna",
@@ -380,7 +380,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-demo-005",
-  "protocolVersion": "2.1.10",
+  "protocolVersion": "2.1.11",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-time-focus-coach",
   "recipient": "xiaozhi-learning-dna",
@@ -428,7 +428,7 @@ metadata:
 
 - `references/one-week-linkage-record.md` - 完整的一周联动实录案例
 - `schemas/handover-protocol.schema.json` - 七种 handoverType 的字段定义
-- `schemas/examples/` - 七类交接的合法示例
+- `schemas/examples/` - 七类交接的合法示例（收发双方都是其他 SKILL；协调器只定义协议、校验格式、按路由表分发，自己不发写回、不存档案）
 - `shared/vocab.md` §5（3 次口径）/ §8（授权位）/ §9（提醒预算）/ §11（命名）
 - `shared/crisis-exception.md` - 危机例外三行片段
 - `shared/ai-item-check.md` - 本 SKILL 不出题；被路由到的 SKILL 出题前按此协议自检

@@ -4,7 +4,7 @@
   "title": "ClassTeachingWorkspace",
   "x-distributed-to": "xiaozhi-teach-physics-experiment-coach",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-teach-physics-experiment-coach 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：只读 classProfile、interactionLogs、studentTiers；写 homeworkAssignments、lessonPlans、weaknessRank（各字段只留声明列出的子字段；删去 5 个顶层字段）。完整定义在归属技能处。",
+    "note": "本副本随 xiaozhi-teach-physics-experiment-coach 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：读 classProfile、interactionLogs、lessonPlans、studentTiers、weaknessRank；写 homeworkAssignments、lessonPlans、weaknessRank（同一键既读又写时，读/写各自的子字段列在 x-skill-scope.fields；各字段只留声明列出的子字段；删去 5 个顶层字段）。完整定义在归属技能处。",
     "paths": [
       "classProfile",
       "homeworkAssignments",
@@ -16,13 +16,46 @@
     "reads": [
       "classProfile",
       "interactionLogs",
-      "studentTiers"
+      "lessonPlans",
+      "studentTiers",
+      "weaknessRank"
     ],
     "writes": [
       "homeworkAssignments",
       "lessonPlans",
       "weaknessRank"
-    ]
+    ],
+    "fields": {
+      "classProfile": {
+        "reads": [
+          "classSize",
+          "periodMinutes"
+        ]
+      },
+      "lessonPlans": {
+        "reads": [
+          "topic",
+          "objectives",
+          "segments"
+        ],
+        "writes": [
+          "segments",
+          "questionChain"
+        ]
+      },
+      "interactionLogs": {
+        "reads": [
+          "segmentTimings",
+          "misconceptionsObserved",
+          "adjustmentForNext"
+        ]
+      },
+      "homeworkAssignments": {
+        "writes": [
+          "tasks"
+        ]
+      }
+    }
   },
   "description": "班级教学工作空间：老师通用 6 个 SKILL（教案、课堂、作业、测评、复习、学情）与学科教师 SKILL 之间的唯一数据契约。所有接口路径必须是本文件中的真实字段。学生只用化名/座号，不记真实姓名与联系方式。词表以 shared/vocab.md 为准。",
   "type": "object",

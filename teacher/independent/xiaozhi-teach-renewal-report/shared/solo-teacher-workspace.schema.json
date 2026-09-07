@@ -4,7 +4,7 @@
   "title": "SoloTeacherWorkspace",
   "x-distributed-to": "xiaozhi-teach-renewal-report",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-teach-renewal-report 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：只读 coursePackageLedger、homeworkFollowups、lessonLogs、parentCommunicationLogs、studentCards；写 progressEvidence（各字段只留声明列出的子字段；删去 3 个顶层字段）。完整定义在归属技能处。",
+    "note": "本副本随 xiaozhi-teach-renewal-report 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：读 coursePackageLedger、homeworkFollowups、lessonLogs、parentCommunicationLogs、progressEvidence、studentCards；写 progressEvidence（同一键既读又写时，读/写各自的子字段列在 x-skill-scope.fields；各字段只留声明列出的子字段；删去 3 个顶层字段）。完整定义在归属技能处。",
     "paths": [
       "coursePackageLedger",
       "homeworkFollowups",
@@ -18,11 +18,70 @@
       "homeworkFollowups",
       "lessonLogs",
       "parentCommunicationLogs",
+      "progressEvidence",
       "studentCards"
     ],
     "writes": [
       "progressEvidence"
-    ]
+    ],
+    "fields": {
+      "lessonLogs": {
+        "reads": [
+          "date",
+          "completedContent",
+          "masteryStatus",
+          "perTopicMastery",
+          "nextLessonFocus",
+          "studentReaction"
+        ]
+      },
+      "homeworkFollowups": {
+        "reads": [
+          "mainErrors",
+          "status",
+          "overdueDays"
+        ]
+      },
+      "progressEvidence": {
+        "reads": [
+          "description",
+          "date",
+          "confidenceLevel"
+        ],
+        "writes": [
+          "evidenceId",
+          "studentId",
+          "date",
+          "evidenceType",
+          "description",
+          "confidenceLevel"
+        ]
+      },
+      "studentCards": {
+        "reads": [
+          "goals",
+          "primaryWeaknesses",
+          "alias",
+          "gradeBand",
+          "consent"
+        ]
+      },
+      "coursePackageLedger": {
+        "reads": [
+          "usedUnits",
+          "totalUnits",
+          "remainingUnits",
+          "expiryDate",
+          "pendingConfirmations"
+        ]
+      },
+      "parentCommunicationLogs": {
+        "reads": [
+          "factSummary",
+          "date"
+        ]
+      }
+    }
   },
   "description": "独立教师工作空间数据结构。用于低敏记录学员卡、课表、课后记录、作业跟进、家长沟通、课时包和阶段证据。",
   "type": "object",

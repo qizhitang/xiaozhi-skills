@@ -4,9 +4,12 @@
   "title": "ClassTeachingWorkspace",
   "x-distributed-to": "xiaozhi-teach-math-exam-designer",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-teach-math-exam-designer 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：只读 classProfile、lessonPlans、studentTiers、weaknessRank；写 无（各字段只留声明列出的子字段；删去 7 个顶层字段）。完整定义在归属技能处。",
+    "note": "本副本随 xiaozhi-teach-math-exam-designer 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：读 classProfile、lessonPlans、studentTiers、weaknessRank；写 classSummaries、examBlueprints、itemStats（同一键既读又写时，读/写各自的子字段列在 x-skill-scope.fields；各字段只留声明列出的子字段；删去 4 个顶层字段）。完整定义在归属技能处。",
     "paths": [
       "classProfile",
+      "classSummaries",
+      "examBlueprints",
+      "itemStats",
       "lessonPlans",
       "studentTiers",
       "weaknessRank"
@@ -17,7 +20,75 @@
       "studentTiers",
       "weaknessRank"
     ],
-    "writes": []
+    "writes": [
+      "classSummaries",
+      "examBlueprints",
+      "itemStats"
+    ],
+    "fields": {
+      "classProfile": {
+        "reads": [
+          "gradeBand",
+          "gradeLevel",
+          "classSize",
+          "fullScore"
+        ]
+      },
+      "weaknessRank": {
+        "reads": [
+          "knowledgePoint",
+          "errorRate",
+          "dimension",
+          "stubbornCount"
+        ]
+      },
+      "studentTiers": {
+        "reads": [
+          "tier"
+        ]
+      },
+      "lessonPlans": {
+        "reads": [
+          "topic",
+          "objectives"
+        ]
+      },
+      "examBlueprints": {
+        "writes": [
+          "examId",
+          "title",
+          "date",
+          "assessmentType",
+          "durationMinutes",
+          "fullScore",
+          "difficultyRatio",
+          "items"
+        ]
+      },
+      "itemStats": {
+        "writes": [
+          "examId",
+          "itemNo",
+          "pValue",
+          "dValue",
+          "groupingMethod",
+          "flag"
+        ]
+      },
+      "classSummaries": {
+        "writes": [
+          "sampleSize",
+          "mean",
+          "sd",
+          "median",
+          "meanRate",
+          "distribution",
+          "reliabilityAlpha",
+          "overallDifficulty",
+          "analysisDate"
+        ]
+      }
+    }
   },
   "description": "班级教学工作空间：老师通用 6 个 SKILL（教案、课堂、作业、测评、复习、学情）与学科教师 SKILL 之间的唯一数据契约。所有接口路径必须是本文件中的真实字段。学生只用化名/座号，不记真实姓名与联系方式。词表以 shared/vocab.md 为准。",
   "type": "object",
@@ -30,6 +101,24 @@
       "type": "array",
       "items": {
         "$ref": "#/$defs/lessonPlan"
+      }
+    },
+    "examBlueprints": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/examBlueprint"
+      }
+    },
+    "itemStats": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/itemStat"
+      }
+    },
+    "classSummaries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/classSummary"
       }
     },
     "weaknessRank": {
@@ -120,6 +209,15 @@
       ],
       "description": "2022 版课标结果目标四级。与 Bloom 对照：了解≈记忆，理解≈理解，掌握≈应用，运用≈分析/评价/创造"
     },
+    "difficultyBand": {
+      "type": "string",
+      "enum": [
+        "基础",
+        "中等",
+        "较难"
+      ],
+      "description": "难度档。校内形成性默认 6:3:1，期末/模拟按 7:2:1"
+    },
     "tier": {
       "type": "string",
       "enum": [
@@ -185,6 +283,246 @@
         "topic",
         "periodMinutes",
         "objectives"
+      ]
+    },
+    "examBlueprint": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "examId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "assessmentType": {
+          "type": "string",
+          "enum": [
+            "诊断性",
+            "形成性",
+            "终结性"
+          ]
+        },
+        "durationMinutes": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 150
+        },
+        "fullScore": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 150
+        },
+        "difficultyRatio": {
+          "type": "string",
+          "pattern": "^[0-9]+:[0-9]+:[0-9]+$",
+          "description": "基础:中等:较难，如 6:3:1"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "itemNo": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "itemType": {
+                "type": "string",
+                "enum": [
+                  "选择",
+                  "填空",
+                  "判断",
+                  "计算",
+                  "解答",
+                  "作图",
+                  "实验",
+                  "阅读",
+                  "写作",
+                  "听力",
+                  "口语",
+                  "其他"
+                ]
+              },
+              "knowledgePoint": {
+                "type": "string",
+                "maxLength": 60
+              },
+              "cognitiveLevel": {
+                "$ref": "#/$defs/cognitiveLevel"
+              },
+              "difficultyBand": {
+                "$ref": "#/$defs/difficultyBand"
+              },
+              "score": {
+                "type": "number",
+                "minimum": 0
+              },
+              "expectedP": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1,
+                "description": "预期难度 P（得分率）"
+              },
+              "resourceId": {
+                "type": "string",
+                "maxLength": 40
+              },
+              "aiGenerated": {
+                "type": "boolean",
+                "default": false
+              },
+              "verifiedByTeacher": {
+                "type": "boolean",
+                "default": false,
+                "description": "AI 生成题必须人工验算后才能为 true；未验算的题不得进入试卷"
+              }
+            },
+            "required": [
+              "itemNo",
+              "itemType",
+              "knowledgePoint",
+              "cognitiveLevel",
+              "difficultyBand",
+              "score"
+            ]
+          }
+        }
+      },
+      "required": [
+        "examId",
+        "title",
+        "assessmentType",
+        "fullScore",
+        "items"
+      ]
+    },
+    "itemStat": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "examId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "itemNo": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "pValue": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "难度 = 平均得分 / 满分"
+        },
+        "dValue": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1,
+          "description": "区分度 = 高分组得分率 − 低分组得分率；分组按总分前后 27%"
+        },
+        "groupingMethod": {
+          "type": "string",
+          "enum": [
+            "27%",
+            "上下各半"
+          ],
+          "default": "27%"
+        },
+        "flag": {
+          "type": "string",
+          "enum": [
+            "正常",
+            "偏难",
+            "偏易",
+            "区分度低",
+            "疑似错题"
+          ],
+          "description": "基础题允许 D<0.2；只对中等/较难题要求 D≥0.2"
+        }
+      },
+      "required": [
+        "examId",
+        "itemNo",
+        "pValue"
+      ]
+    },
+    "classSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "examId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "sampleSize": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "mean": {
+          "type": "number"
+        },
+        "sd": {
+          "type": "number",
+          "minimum": 0
+        },
+        "median": {
+          "type": "number"
+        },
+        "meanRate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "平均得分率（跨满分制可比）"
+        },
+        "distribution": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "band": {
+                "type": "string",
+                "maxLength": 20
+              },
+              "count": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "band",
+              "count"
+            ]
+          }
+        },
+        "reliabilityAlpha": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Cronbach α；需要逐题分数，样本 <20 时标注参考价值有限"
+        },
+        "overallDifficulty": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "analysisDate": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": [
+        "examId",
+        "sampleSize",
+        "meanRate"
       ]
     },
     "weaknessEntry": {

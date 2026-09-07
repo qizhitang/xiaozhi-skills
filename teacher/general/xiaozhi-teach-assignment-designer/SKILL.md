@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 作业设计师
-  version: 2.1.10
+  version: 2.1.11
   author: 小智伴学
   category: 老师通用
   grade_bands:

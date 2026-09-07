@@ -48,5 +48,6 @@
 ■ 写回学生端（可选）
   · 是否已核对 teacherWritebackConsent = true：□ 是  □ 否
   · 否 → 本档案只留在班级工作空间，不写回学生端
+  · 是 → 只写 weakKnowledgePointUpdates 与 ≤200 字低敏 note（不含原话、家庭信息、真实姓名），字段见 handover-protocol 的 teacherWritebackData；学生端的保留与删除按学习DNA 的规则
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```

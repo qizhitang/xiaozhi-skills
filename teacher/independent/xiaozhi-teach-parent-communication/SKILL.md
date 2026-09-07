@@ -11,7 +11,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 家长沟通助手
-  version: 2.1.10
+  version: 2.1.11
   author: 小智伴学
   category: 独立教师
   grade_bands:
@@ -548,7 +548,7 @@ max_round_limit: 15
 - 共享控制：「不要共享给其他SKILL」/「不要给家长看」
 - 导出：「导出我的[沟通记录]」（以文本形式给出，便于转存）
 
-学员/家长提出时同样适用，按学员化名定位：「查看 小A 的沟通记录」「以后不要给家长看 小A 的情绪观察」。后者要把 `emotionSharingWithParent` 关掉——**授权位由 `xiaozhi-teach-student-intake` 的档案流程改**，本 SKILL 收到这类要求时如实转达给老师，并从这一刻起不再起草任何涉及课堂状态的内容（不等改完）。
+学员/家长提出时同样适用（由老师核实请求人身份后代为执行），按学员化名定位：「查看 小A 的沟通记录」「以后不要给家长看 小A 的情绪观察」。后者要把 `emotionSharingWithParent` 关掉——**授权位由 `xiaozhi-teach-student-intake` 的档案流程改**，本 SKILL 收到这类要求时如实转达给老师，并从这一刻起不再起草任何涉及课堂状态的内容（不等改完）。
 
 **校验要求**：起草家长内容前须确认 `parentCommunicationAllowed` 为 true，含情绪内容再确认 `emotionSharingWithParent`；跨 SKILL 共享另需 `crossSkillSharing` 为 true。真实姓名、联系方式、家庭信息一律不写入（详见 `SECURITY_BASELINE.md`）。
 

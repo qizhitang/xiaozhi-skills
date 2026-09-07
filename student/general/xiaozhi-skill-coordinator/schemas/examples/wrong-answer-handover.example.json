@@ -1,6 +1,7 @@
 {
+  "$comment": "示例：xiaozhi-correction-notebook → xiaozhi-math-error-dna（wrong_answer_handover）。收发双方都是其他 SKILL；xiaozhi-skill-coordinator 只定义协议、校验格式、按路由表分发，自己不发写回、不存档案。",
   "sessionId": "sess-demo-001",
-  "protocolVersion": "2.1.10",
+  "protocolVersion": "2.1.11",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-correction-notebook",
   "recipient": "xiaozhi-math-error-dna",

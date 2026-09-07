@@ -1,7 +1,7 @@
 # 资源五大类：用途、入库要求与示例
 
 > 适用学段：小学中段 / 小学高段 / 初中 / 高中
-> 示例题验算：2026-09-03
+> 示例题验算：2026-09-06
 > 配合 `xiaozhi-teach-resource-library` §四使用。标签与检索规则见 `resource-categorization.md`，版权格式见 `copyright-annotation-template.md`。
 > 字段名以 `solo-teacher-workspace.schema.json` 的 `resourceIndexItem` 为准；`resourceType` 只能取七档枚举之一：题目 / 讲义 / 课件 / 板书 / 讲评话术 / 错因案例 / 家长话术。
 
@@ -29,7 +29,7 @@
   gradeLevel：八年级
   copyrightStatus：自有
   aiGenerated：false
-  usageNotes：2026-09-04 小A 用过，图象平移部分讲得偏快，下次拆成两步
+  usageNotes：上周某学员用过，图象平移部分讲得偏快，下次拆成两步
 ```
 
 ⚠️ 不记"适用学员类型"，也不记"关联学员化名"——前者会导致照标签发讲义，后者让资源库和学员卡对得上号，脱敏就白做了。
@@ -105,7 +105,7 @@
   copyrightStatus：自有
   usageNotes：话术——"这道题的关键是 [概念]，你能用一句话
               给我讲一遍这个概念吗？"
-              2026-09-04 小A 用过：能复述定义但说不清适用条件，
+              上周某学员用过：能复述定义但说不清适用条件，
               据此判断为概念模糊而非计算失误。
 ```
 
@@ -157,7 +157,7 @@
   gradeLevel：八年级
   copyrightStatus：自有
   usageNotes：关联 R-H001（讲义）、R-Q001（题）。
-              2026-09-04 小A 用过：图象与解析式对照的那一栏最有用，
+              上周某学员用过：图象与解析式对照的那一栏最有用，
               左侧的定义罗列可以删掉。
 ```
 

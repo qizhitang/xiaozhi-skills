@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 📐 数学解题教练
-  version: 2.1.10
+  version: 2.1.11
   author: 小智伴学
   category: 数学专项
   grade_bands:
@@ -85,7 +85,7 @@ metadata:
 | Step 3 追问 + 同类题 | ≤3 轮追问 + 1 道同类题 | ≤120 字 | 3 轮后仍卡 → 升到 L5/L6 收尾，不再追问 |
 | 可选五问链 | 2-3 问，≤6 分钟 | ≤80 字 | 与 Step 3 二选一，不在同一道题上都做 |
 
-> **两轮无回复即收尾**：学生连续两轮没有回复，输出一句话小结（这道题的卡点 + 下一步做什么）并归档，不继续追问、不再追加提醒。
+> **两轮无回复即收尾**：学生连续两轮没有回复，输出一句话小结（这道题的卡点 + 下一步做什么），不归档（学生本轮说"记下来"才生成交接条目）、不继续追问、不再追加提醒。
 > **快速模式**：学生说"我赶时间/直接说重点"时，跳过 Step 1 的展开追问，用"你试到哪一步？"一问 + 一次 L2-L4 提示 + 1 道同类题收尾。
 
 ---
@@ -451,7 +451,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-20260903-001",
-  "protocolVersion": "2.1.10",
+  "protocolVersion": "2.1.11",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-math-problem-solving-coach",
   "recipient": "xiaozhi-correction-notebook",

@@ -4,7 +4,7 @@
   "title": "ClassTeachingWorkspace",
   "x-distributed-to": "xiaozhi-teach-english-speaking-designer",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-teach-english-speaking-designer 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：只读 classProfile、itemScores、studentTiers；写 examBlueprints、interactionLogs、lessonPlans、weaknessRank（各字段只留声明列出的子字段；删去 4 个顶层字段）。完整定义在归属技能处。",
+    "note": "本副本随 xiaozhi-teach-english-speaking-designer 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：读 classProfile、interactionLogs、itemScores、lessonPlans、studentTiers；写 examBlueprints、interactionLogs、lessonPlans、weaknessRank（同一键既读又写时，读/写各自的子字段列在 x-skill-scope.fields；各字段只留声明列出的子字段；删去 4 个顶层字段）。完整定义在归属技能处。",
     "paths": [
       "classProfile",
       "examBlueprints",
@@ -16,7 +16,9 @@
     ],
     "reads": [
       "classProfile",
+      "interactionLogs",
       "itemScores",
+      "lessonPlans",
       "studentTiers"
     ],
     "writes": [
@@ -24,7 +26,27 @@
       "interactionLogs",
       "lessonPlans",
       "weaknessRank"
-    ]
+    ],
+    "fields": {
+      "lessonPlans": {
+        "reads": [
+          "segments"
+        ],
+        "writes": [
+          "segments"
+        ]
+      },
+      "interactionLogs": {
+        "writes": [
+          "participationNote"
+        ]
+      },
+      "examBlueprints": {
+        "writes": [
+          "items"
+        ]
+      }
+    }
   },
   "description": "班级教学工作空间：老师通用 6 个 SKILL（教案、课堂、作业、测评、复习、学情）与学科教师 SKILL 之间的唯一数据契约。所有接口路径必须是本文件中的真实字段。学生只用化名/座号，不记真实姓名与联系方式。词表以 shared/vocab.md 为准。",
   "type": "object",

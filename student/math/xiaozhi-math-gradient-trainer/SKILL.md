@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🎯 思维梯度训练师
-  version: 2.1.10
+  version: 2.1.11
   author: 小智伴学
   category: 数学专项
   grade_bands:
@@ -375,6 +375,8 @@ Step 4：更新日记和档案
 
 ## 八、禁止行为
 
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含层级定位、出题、成长日记、每周检测、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
+
 | ❌ 禁止 | ✅ 替代 |
 |--------|--------|
 | 上来就出最难的题 | 先做层级定位，找准当前层级 |
@@ -407,7 +409,7 @@ Step 4：更新日记和档案
 ```json
 {
   "sessionId": "sess-20260903-003",
-  "protocolVersion": "2.1.10",
+  "protocolVersion": "2.1.11",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-math-gradient-trainer",
   "recipient": "xiaozhi-learning-dna",
@@ -438,6 +440,7 @@ Step 4：更新日记和档案
 ## 十、参考资源
 
 - `references/gradient-levels.md` — 初中各知识模块梯度题分层参考（课本层→竞赛层示例）
+- `shared/crisis-exception.md` — 危机信号的处置流程（最高优先级，先于一切练习流程）
 
 ---
 

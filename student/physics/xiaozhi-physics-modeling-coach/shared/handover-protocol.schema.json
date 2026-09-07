@@ -18,10 +18,10 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.10）",
+      "description": "协议版本，与仓库版本一致（当前 2.1.11）",
       "type": "string",
       "enum": [
-        "2.1.10"
+        "2.1.11"
       ]
     },
     "handoverType": {
@@ -63,10 +63,19 @@
             },
             "subjectExtensionPatch": {
               "type": "object",
-              "description": "subject_extension 时：只允许本学科分支 subjectExtensions.physics",
+              "description": "subject_extension 时：只允许本学科分支 subjectExtensions.physics，且只写 subtypes、modelingProfile",
               "properties": {
                 "physics": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "subtypes": {
+                      "type": "object"
+                    },
+                    "modelingProfile": {
+                      "type": "object"
+                    }
+                  },
+                  "additionalProperties": false
                 }
               },
               "additionalProperties": false
@@ -142,7 +151,9 @@
       "description": "发送方在发送前核对过的授权位快照（来自 dna-profile meta.consentStatus，见 shared/vocab.md §8）。接收方必须再次核对；任一相关位为 false 时丢弃该交接并告知用户",
       "properties": {
         "crossSkillSharing": {
-          "type": "boolean"
+          "type": "boolean",
+          "const": true,
+          "description": "跨 SKILL 共享授权。任何交接都必须为 true：为 false 的交接不得发出，接收方收到即丢弃并告知用户（shared/vocab.md §8）"
         },
         "reminderConsent": {
           "type": "boolean",
