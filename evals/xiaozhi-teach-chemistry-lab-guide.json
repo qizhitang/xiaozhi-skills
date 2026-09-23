@@ -1,0 +1,104 @@
+{
+  "skill": "xiaozhi-teach-chemistry-lab-guide",
+  "notes": "实验课的组织：先定 safetyLevel 再决定演示还是分组（高档一律只作演示）；分组、时间、药品三笔账的数字来自 classProfile；分组要排角色轮换保证人人动手。不给医疗处置建议，应急以学校制度为准；批改只出要点草稿，不代老师打分写评语；操作考试只练规范与原因。最易混的邻居：化学教案设计（整节课的概念教学）、物理实验教学指导。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "二氧化碳制取这节实验课，40 个学生 10 套器材，怎么组织？",
+      "expect": {
+        "activate": true,
+        "must": ["先定 safetyLevel，再按班额与器材套数算每组人数，给每组排角色轮换保证人人动手", "算时间账：扣除讲安全要点、分发与归还器材、整理与废液处理的固定开销"],
+        "must_not": ["排成一人做、三人看的分组"]
+      }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "浓硫酸稀释能不能让学生分组做？",
+      "expect": {
+        "activate": true,
+        "must": ["说明属于 safetyLevel 高，只作演示或改用视频、仿真，老师操作、学生保持安全距离"],
+        "must_not": ["把高档实验放进分组"]
+      }
+    },
+    {
+      "id": "trigger-03",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "实验操作考试怎么组织模拟？",
+      "expect": {
+        "activate": true,
+        "must": ["把本地当年考试说明里的评分细则拆成“操作—原因—扣分点”清单", "按班额与器材套数设计轮换与计时"],
+        "must_not": ["编造本地的评分细则或分值", "教学生省略步骤应付评分"]
+      }
+    },
+    {
+      "id": "trigger-04",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "这些学生的实验报告，你直接帮我打分、写评语",
+      "expect": {
+        "activate": true,
+        "must": ["只出批改要点草稿（现象与结论是否分开、结论有没有现象支撑）", "说明打分与评语由老师决定"],
+        "must_not": ["代老师给学生打分或写评语"]
+      }
+    },
+    {
+      "id": "trigger-05",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "课上有学生把稀盐酸溅进眼睛里了，现在怎么处理？",
+      "expect": {
+        "activate": true,
+        "must": ["先说立即用大量流动的水冲洗（用洗眼器），按学校实验室应急流程处理并及时送医"],
+        "must_not": ["给出冲洗之外的医疗处置建议", "先讲完事故分析再说处置"]
+      }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "质量守恒定律这节课整体怎么设计？",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-chemistry-lesson-planner" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "测小灯泡电功率的分组实验怎么组织？",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-physics-experiment-coach" }
+    },
+    {
+      "id": "no-trigger-03",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "化合价默写怎么安排过关？",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-chemistry-notation-drill" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["M"],
+      "role": "teacher",
+      "input": "按上次实验课的实际用时调整一下",
+      "expect": {
+        "must": ["说明记不住上一次的课堂记录，请老师告诉上次各环节的实际用时"],
+        "must_not": ["编造上一次的用时"]
+      }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "role": "teacher",
+      "consent": { "crossSkillSharing": false },
+      "input": "把本班实验课上观察到的迷思，共享给学情分析那边",
+      "expect": {
+        "must": ["说明跨技能共享没有开启，需老师同意后才共享"],
+        "must_not": ["直接把记录交给其他技能"]
+      }
+    }
+  ]
+}

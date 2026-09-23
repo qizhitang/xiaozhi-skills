@@ -36,10 +36,7 @@
       },
       "weaknessRank": {
         "reads": [
-          "knowledgePoint",
-          "errorRate",
-          "dimension",
-          "stubbornCount"
+          "knowledgePoint"
         ]
       },
       "studentTiers": {
@@ -541,20 +538,6 @@
           "type": "number",
           "minimum": 0,
           "maximum": 1
-        },
-        "dimension": {
-          "type": "string",
-          "enum": [
-            "概念模糊",
-            "计算失误",
-            "读题失误",
-            "方法用错"
-          ]
-        },
-        "stubbornCount": {
-          "type": "integer",
-          "minimum": 0,
-          "description": "近 4 次测评中错误率 >30% 的次数（shared/vocab.md §5 老师端口径）"
         }
       },
       "required": [

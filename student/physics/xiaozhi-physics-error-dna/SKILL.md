@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-physics-error-dna
 description: >
-  初中物理错题的根因分析与档案系统，做物理五维（图景/概念/公式/过程/数学工具）子类型定位与弱项报告。
+  初中到高一的物理错题根因分析与档案系统（高中部分目前覆盖高一必修第一册），做物理五维（图景/概念/公式/过程/数学工具）子类型定位与弱项报告。
   触发语示例："我为什么总在受力分析上出错""浮力题老是错在哪""电学题每次都算错""帮我分析物理错误规律""我物理是不是没天赋"。
   学科判别：错题涉及力、压强、浮力、电路、光路、物态变化等物理量时归本 SKILL；纯代数与几何错因转数学错误DNA。
   不处理：错题的初始收录与 28 天累计计数（由通用错题本唯一负责）、解题过程引导（转物理解题教练）、概念重建（转物理概念直觉器）。
@@ -9,11 +9,12 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🧬 物理错误DNA
-  version: 2.1.13
+  version: 2.2.0
   author: 小智伴学
   category: 物理专项
   grade_bands:
     - 初中
+    - 高中
   tags: [物理, 错题, 错误追踪, 弱项分析, 图景诊断, 物理焦虑, 月报, 授权可控]
   depends_on:
     - xiaozhi-learning-dna
@@ -36,6 +37,17 @@ metadata:
 - 暂停：「这次不要记忆」/「暂停提醒」
 - 共享控制：「不要共享给其他SKILL」/「不要给家长看」
 - 导出：「导出我的物理错误档案」（以文本形式给出，便于转存）
+
+---
+
+## 〇、学段与范围
+
+| 学段 | 范围 |
+|---|---|
+| 初中（八、九年级） | 本 SKILL 的主体：维度表第二至六节的子类型 |
+| 高中 | 目前覆盖高一必修第一册（运动的描述、匀变速直线运动、相互作用、牛顿运动定律），用维度表第十节的子类型；更后面的高中内容如实说明暂不覆盖，只做通用四维分类 |
+
+学生是高中生时，授权后先看 `basicInfo.subjectSelection`：没有选考物理的学生按学业水平合格性考试的深度分析，不推选考难度的突破题。
 
 ---
 
@@ -376,7 +388,7 @@ Step 5：如果学生持续拒绝、情绪没有缓解
 
 ### 8.1 数据契约
 
-只用两处真实 schema：`shared/handover-protocol.schema.json`（交接）与 `shared/dna-profile.schema.json`（档案）。
+只用两处真实 schema：`shared/handover-protocol.schema.json`（交接）与 `shared/dna-profile.schema.json`（档案）。授权后读取的档案字段：授权位本身、`subjectExtensions.physics.subtypes[]`、高中学生的 `basicInfo.subjectSelection`。
 
 ```text
 物理错误DNA SKILL
@@ -416,7 +428,7 @@ Step 5：如果学生持续拒绝、情绪没有缓解
 ```json
 {
   "sessionId": "sess-2026-09-03-01",
-  "protocolVersion": "2.1.13",
+  "protocolVersion": "2.2.0",
   "handoverType": "deep_analysis_writeback",
   "sender": "xiaozhi-physics-error-dna",
   "recipient": "xiaozhi-correction-notebook",
@@ -476,7 +488,7 @@ subjectExtensions.physics.labSkills         —— 实验技能（由实验思�
 
 ## 九、参考资源
 
-- `references/physics-error-dimension-table.md` — 物理错因维度表（五维子类型分类体系，含跨维度关联规则与交接契约）
+- `references/physics-error-dimension-table.md` — 物理错因维度表（五维子类型分类体系，含跨维度关联规则与交接契约；第十节为高一必修第一册的子类型）
 - `references/physics-concept-confusion-map.md` — 物理高频概念混淆对照表
 - `references/physics-math-tools-checklist.md` — 物理数学工具自检清单
 - `shared/physics-diagram-guide.md` — 四类物理图景绘制追问手册（与物理解题教练共用一份）

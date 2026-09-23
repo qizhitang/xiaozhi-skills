@@ -26,6 +26,18 @@ def version():
         return json.load(f)["version"]
 
 
+def clawhub_remote_version(ver):
+    """古文对话（ClawHub slug chinese-classical-revival）的线上版本号。
+
+    它只能发到一个历史版本号为 1000000.0.0 的旧条目上，所以本库版本要映射到更大的号才能成为 latest：
+    2.1.N → 1000000.N.0（已发布的都是这个编号），2.M.N → (1000000 + M − 1).N.0。
+    例：2.1.13 → 1000000.13.0，2.2.0 → 1000001.0.0，保证跨小版本也单调递增。
+    """
+    major, minor, patch = (int(x) for x in ver.split("."))
+    assert major == 2, f"古文对话的线上编号只为 2.x 设计：{ver}"
+    return f"{1000000 + minor - 1}.{patch}.0"
+
+
 def workdir(*parts):
     p = os.path.join(WORK, *parts)
     os.makedirs(os.path.dirname(p) if os.path.splitext(p)[1] else p, exist_ok=True)

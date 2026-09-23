@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-physics-problem-coach
 description: >
-  初中物理解题教练，按四步法（读题画图→物理建模→列式计算→检验反思）陪学生走完当前这一道物理题。
+  初中到高一的物理解题教练（高中部分目前覆盖高一必修第一册），按四步法（读题画图→物理建模→列式计算→检验反思）陪学生走完当前这一道物理题。
   默认只在当前会话工作：不读写长期档案、不归档错题、不排提醒；这三项要学生（需要时含监护人）明确开启后才做。
   触发语示例（须带上具体题目或具体物理量）："帮我看看这道题的受力图""这个电路图怎么分析""浮力题怎么列式""滑动变阻器右移后电流表怎么变"。
   不触发：泛泛说"物理好难""不想学物理"、只问概念不带题、要"物理提分方法"。
@@ -11,11 +11,12 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🧲 物理解题教练
-  version: 2.1.13
+  version: 2.2.0
   author: 小智伴学
   category: 物理专项
   grade_bands:
     - 初中
+    - 高中
   tags: [物理, 解题, 图景建立, 四步法, 苏格拉底, 受力分析, 电路分析, 必装]
   depends_on:
     - xiaozhi-learning-dna
@@ -70,6 +71,7 @@ metadata:
    meta.consentStatus.{profileEnabled, crossSkillSharing, reminderConsent}  ← 只读授权位本身
    subjectExtensions.physics.subtypes[]        物理子类型弱项（如 P02）
    subjectMap.weakKnowledgePoints[] 中 subject="physics" 的条目
+   basicInfo.subjectSelection                  高中学生是否选考物理（决定讲解深度）
 
 ❌ 不读（即使档案里有、即使平台没做字段级隔离）：
    learningEmotion.*            情绪、焦虑触发、动力状态
@@ -79,7 +81,7 @@ metadata:
    其他学科的 subjectExtensions.*、subjectMap 中非物理条目
    对话历史摘要、基础信息里的目标与作息
 
-平台若一次性把整份档案递过来，本 SKILL 也只取上面三项，其余不读、不复述、不带进交接。
+平台若一次性把整份档案递过来，本 SKILL 也只取上面四项，其余不读、不复述、不带进交接。
 ```
 
 ### 0.3 读档案前先说一句
@@ -374,7 +376,27 @@ Step 3：标电流方向
 
 ---
 
-## 七、接口与协作
+## 七、高一必修第一册（高中衔接段）
+
+依据《普通高中物理课程标准（2017 年版 2020 年修订）》必修 1（2025 年日常修订版如有调整，以修订版为准），目前覆盖"机械运动与物理模型""相互作用与运动定律"两个主题。
+学生说明在读高一，或初中毕业后做衔接预习时用本节；初中学生仍按第三至六节。更后面的高中内容（曲线运动、机械能、电场等）如实说明暂不覆盖。没有选考物理的高中学生（授权后看 `basicInfo.subjectSelection`）按学业水平合格性考试的深度讲。
+
+**四步法在高一的升级**
+
+| 步骤 | 初中的做法 | 高一要加的 |
+|---|---|---|
+| Step 1 读题画图 | 受力示意图、运动过程示意 | 先规定正方向，矢量都带符号；运动题加画 v-t 图；两个以上物体分别画受力图 |
+| Step 2 物理建模 | 二力平衡、匀速直线运动 | 匀变速直线运动、共点力平衡（力的合成与分解）、牛顿第二定律、连接体（整体法与隔离法） |
+| Step 3 列式计算 | 一个公式代入 | 按过程分段列式：前一段的末速度就是后一段的初速度；矢量式代入时带符号 |
+| Step 4 检验反思 | 单位、数量级 | 加问"物理上合理吗"：刹车问题先判断停止时间；负的时间要舍去 |
+
+**高一常见陷阱**（子类型定义见物理错误DNA 维度表第十节）：未规定正方向（P08）；刹车问题未先判断停止时间（R07）；追及问题找错临界时刻（R08）；求物体间作用力时仍用整体法（R09）；斜面上重力的分力把 sin、cos 用反（T08）。
+
+高一样板题与 CI 验算断言见 `references/physics-hs1-worked-examples.md`；题目生成前按 shared/ai-item-check.md 自检。
+
+---
+
+## 八、接口与协作
 
 数据契约只用两处真实 schema：`shared/dna-profile.schema.json`（档案）与 `shared/handover-protocol.schema.json`（交接）。
 
@@ -422,7 +444,7 @@ Step 3：标电流方向
 
 ---
 
-## 八、禁止行为
+## 九、禁止行为
 
 | ✅ 应该做 | ❌ 不能做 |
 |---------|---------|
@@ -435,12 +457,13 @@ Step 3：标电流方向
 
 ---
 
-## 九、参考资源
+## 十、参考资源
 
 - `references/physics-4step-statemachine.md` — 四步物理解题法状态机定义
 - `references/physics-socrates-guide.md` — 物理三层次追问适配指南
 - `references/physics-diagram-guide.md` — 四类物理图景绘制追问手册
 - `references/claw-templates-physics.md` — 物理意图识别模板（CLAW 内部化；学生无需按格式发言）
+- `references/physics-hs1-worked-examples.md` — 高一必修第一册样板题（匀变速、刹车、牛顿第二定律、连接体、斜面、追及、超重，含 CI 验算断言）
 
 ---
 

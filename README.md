@@ -1,8 +1,8 @@
 # 🎓 小智伴学 · SKILL 库
 
 > **面向中国 K12 的 AI 学习与教学 SKILL 集合 — 学生端 · 老师端**
-> 作者：小智伴学 ｜ 适用平台：WorkBuddy / SkillHub · OpenClaw / ClawHub ｜ 当前版本：**v2.1.13**
-> 全库 **57 个 SKILL**（学生端 31 + 老师端 26）+ 1 个开发者工具，**177 份 references**、**6 份共享约定**、**4 份 JSON Schema**（含 8 份示例）、**3 个校验脚本**。
+> 作者：小智伴学 ｜ 适用平台：WorkBuddy / SkillHub · OpenClaw / ClawHub ｜ 当前版本：**v2.2.0**
+> 全库 **66 个 SKILL**（学生端 37 + 老师端 29）+ 1 个开发者工具，**190 份 references**、**6 份共享约定**、**4 份 JSON Schema**（含 8 份示例）、**3 个校验脚本**。
 
 传统 AI 容易被当成"给答案的计算器"。这套 SKILL 库的目标，是把 AI 变成**追问思路的教练**和**减轻教师重复劳动的助手**，并让学生、老师、家长三方在**明确授权**的前提下共享必要的学习证据。
 
@@ -31,21 +31,24 @@
 xiaozhi-skills/
 ├── shared/          共享约定源文件（词表 / 平台 / 危机 / 提示阶梯 / 出题自检 / 学段）
 │                   —— 由 npm run sync:shared 同步进每个 SKILL 目录，使单技能包自包含
-├── student/         学生端 31 个 SKILL
-│   ├── general/     通用学习 11 个
+│   └── contracts/   跨学科契约源文件（实验安全），只分发给引用它的 SKILL
+├── student/         学生端 37 个 SKILL
+│   ├── general/     通用学习 12 个
 │   ├── chinese/     语文 5 个
 │   ├── math/        数学 5 个
 │   ├── english/     英语 5 个
-│   └── physics/     物理 5 个
-├── teacher/         老师端 26 个 SKILL
+│   ├── physics/     物理 5 个（初中 + 高一必修第一册）
+│   └── chemistry/   化学 5 个（初中 + 高中必修起点）
+├── teacher/         老师端 29 个 SKILL
 │   ├── general/     通用教学 6 个 + schemas/
 │   ├── independent/ 独立教师日常 8 个 + schemas/
 │   ├── chinese/     语文教学 3 个
 │   ├── math/        数学教学 3 个
 │   ├── english/     英语教学 3 个
-│   └── physics/     物理教学 3 个
+│   ├── physics/     物理教学 3 个
+│   └── chemistry/   化学教学 3 个
 ├── tools/           开发者工具（SKILL 编写工具，非学生学习任务）
-├── evals/           回归用例（58 份，不进发布包）
+├── evals/           回归用例（67 份，不进发布包）
 ├── scripts/         CI 校验与回归运行脚本
 └── docs/            架构、安装指南、版本历史、评估报告
 ```
@@ -54,7 +57,7 @@ xiaozhi-skills/
 
 ## 🗂️ SKILL 一览
 
-### 学生端 · 通用（11）
+### 学生端 · 通用（12）
 
 | SKILL | 目录 | 做什么 | 适用学段 |
 |---|---|---|---|
@@ -69,8 +72,9 @@ xiaozhi-skills/
 | ⏱️ 时间与专注力教练 | `student/general/xiaozhi-time-focus-coach/` | 时间记录、黄金时段、按学段参数化的番茄钟 | 小学中段–高中 |
 | 🔭 跨学科侦探周 | `student/general/xiaozhi-cross-subject-detective/` | 跨学科主题探究与概念图谱联结 | 小学高段–高中 |
 | ☕ 兴趣成长探索计划 | `student/general/xiaozhi-interest-explorer/` | 区分浅层喜好与真正兴趣，含 8 周试探版 | 小学中段–高中 |
+| 🌉 初高衔接规划师 | `student/general/xiaozhi-bridge-planner/` | 中考后到高一上学期：诊断数理化英的衔接缺口，先补地基、再看高一第一章入口，具体内容交给学科技能 | 初中–高中 |
 
-### 学生端 · 学科专项（20）
+### 学生端 · 学科专项（25）
 
 | 学科 | SKILL |
 |---|---|
@@ -78,16 +82,17 @@ xiaozhi-skills/
 | 数学（`student/math/`） | 📐 数学解题教练 ｜ 🧬 数学错误DNA ｜ 💡 数学概念解释器 ｜ 📝 应用题数学建模教练 ｜ 🎯 思维梯度训练师 |
 | 英语（`student/english/`） | 🎙️ 英语口语陪练 ｜ 📖 智能词汇DNA系统 ｜ 📝 英语语法突破教练 ｜ 🎧 个性化英语听力训练师 ｜ ✍️ 英语写作进化教练 |
 | 物理（`student/physics/`） | 🧲 物理解题教练 ｜ 🧬 物理错误DNA ｜ 💡 物理概念直觉器 ｜ 📐 物理建模教练 ｜ 🔬 物理实验思维教练 |
+| 化学（`student/chemistry/`） | ⚗️ 化学解题教练 ｜ 🧬 化学错误DNA ｜ 🔤 化学用语与方程式教练 ｜ 💎 微观世界想象器 ｜ 🧪 化学实验探究教练 |
 
-学科 SKILL 默认基线为**初中**；小学高段可用的已在 `metadata.grade_bands` 中标明，超出学段的内容在正文中带 `⚠高中` 标注。
+学科 SKILL 默认基线为**初中**；小学高段可用的已在 `metadata.grade_bands` 中标明，超出学段的内容在正文中带 `⚠高中` 标注。物理、化学的学生端声明了高中学段：高中章节按高中课标写，不逐行标注，目前物理覆盖高一必修第一册，化学覆盖高中必修起点（物质的量、氧化还原、离子反应）。化学开课的年级各地不同，技能先问学校教没教过，不按年级号一刀切（`shared/grade-bands.md` §四）。
 
-### 老师端（26）
+### 老师端（29）
 
 | 场景 | SKILL |
 |---|---|
 | 通用教学（`teacher/general/`，6） | 教案设计器 ｜ 作业设计师 ｜ 学情分析师 ｜ 课堂互动教练 ｜ 测评设计师 ｜ 复习规划师 |
 | 独立教师日常（`teacher/independent/`，8） | 独立教师工作台 ｜ 试听与学员建档 ｜ 排课与课时管理 ｜ 课后记录助手 ｜ 家长沟通助手 ｜ 作业跟进管家 ｜ 阶段报告与续课助手 ｜ 教学资源复用库 |
-| 学科教学（12） | 语文 3（写作/阅读/文言文）｜ 数学 3（教案/错因分析/测评）｜ 英语 3（口语/听力/综合测评）｜ 物理 3（教案/实验/解题） |
+| 学科教学（15） | 语文 3（写作/阅读/文言文）｜ 数学 3（教案/错因分析/测评）｜ 英语 3（口语/听力/综合测评）｜ 物理 3（教案/实验/解题）｜ 化学 3（教案/实验/化学用语过关） |
 
 ### 开发者工具
 
@@ -103,7 +108,7 @@ xiaozhi-skills/
 
 | Schema | 位置 | 承载什么 |
 |---|---|---|
-| 学习DNA | `student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json` | 学生长期档案：授权位、学科强弱、概念图谱、情绪、`subjectExtensions`（语数英物）、`extensions`（笔记/专注/计划/项目/理解深度）、`safetyRecord` |
+| 学习DNA | `student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json` | 学生长期档案：授权位、学科强弱、概念图谱、情绪、`subjectExtensions`（语数英物化）、`extensions`（笔记/专注/计划/项目/理解深度）、`safetyRecord` |
 | 交接协议 | `student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json` | 七类交接：错题交接、深度分析回写、档案回写、学科档案回写、提醒入队、提醒同步、教师写回；发送方需附授权位快照 |
 | 独立教师工作空间 | `teacher/independent/schemas/solo-teacher-workspace.schema.json` | 学员卡、课表、课后记录、作业跟进、家长沟通、课时包、进步证据、资源索引 |
 | 班级教学工作空间 | `teacher/general/schemas/class-teaching-workspace.schema.json` | 班级画像、教案、课堂记录、作业、双向细目表、逐题得分与 P/D 统计、弱项排序、分层、复习计划 |
@@ -120,6 +125,7 @@ xiaozhi-skills/
 - **小学须有成人在场**：小学各学段须有家长或老师陪同使用（`shared/vocab.md` §8 规则 4）。
 - **考试中不讲题**：学生说明正在考试或测验时不讲该题，约好考完再复盘；考完的题照常讲（`shared/hint-ladder.md` §〇）。
 - **试题保密**：启用前的统考试题属国家秘密，会出题、组卷或存卷的老师端 SKILL 不接收、不入库（[`SECURITY_BASELINE.md`](SECURITY_BASELINE.md) 4.2）。
+- **实验安全**：理化实验的 `safetyLevel` 三档、跨学科硬红线与化学必守规范只在 [`shared/contracts/lab-safety.md`](shared/contracts/lab-safety.md) 定义一次。不给学生在家操作的危险实验步骤，不指导混用家用化学品，高档实验只讲不练、由老师演示。
 - **不承诺提分**：不输出"预期提分 X 分"或"治愈焦虑"类表述。
 
 ---
@@ -155,7 +161,7 @@ git clone https://github.com/qizhitang/xiaozhi-skills.git ~/.workbuddy/skills/xi
 
 之后在 WorkBuddy 里执行 `/reload-skills`。
 
-每个技能包都自带 `shared/` 六份共享约定，跨技能引用的契约与参考资料也按需随包分发，**单技能安装已完全自包含**（58 个技能全部模拟验证，零断链）。完整说明（安装位置、触发与指定、更新卸载、能力降级、装后验证）见 [安装指南](docs/installation-guide.md#-在-workbuddy-中安装)。
+每个技能包都自带 `shared/` 六份共享约定，跨技能引用的契约与参考资料也按需随包分发，**单技能安装已完全自包含**（67 个技能全部模拟验证：`SKILL.md` 与 `shared/` 副本中的引用零断链）。完整说明（安装位置、触发与指定、更新卸载、能力降级、装后验证）见 [安装指南](docs/installation-guide.md#-在-workbuddy-中安装)。
 
 ---
 
@@ -184,12 +190,12 @@ npm run check
 
 ## 📚 更多文档
 
-- [技能索引](docs/skills-index.md) — 全库 58 个技能的显示名 / 目录 / 学段 / 依赖，由 `npm run docs:gen` 从 frontmatter 生成
+- [技能索引](docs/skills-index.md) — 全库 67 个技能的显示名 / 目录 / 学段 / 依赖，由 `npm run docs:gen` 从 frontmatter 生成
 - 🏛️ [系统架构与方法论](docs/architecture.md) — 完整清单、协作架构、方法论依据、目录树
 - 🗺️ [安装指南](docs/installation-guide.md) — WorkBuddy 安装方式、分阶段安装路径与打包建议
 - 🔄 [版本历史](docs/changelog.md) — 版本演进与本轮变更
 - 📋 [评估报告 2026-09](docs/review-2026-09.md) — 本轮问题清单与优化路线图
-- 🧭 [学科扩展路线图](docs/roadmap-new-subjects.md) — 按各地中考与高考学科要求重排：物理高中化、化学、历史、高中生物与地理（第零批已完成，其余规划中）
+- 🧭 [学科扩展路线图](docs/roadmap-new-subjects.md) — 按各地中考与高考学科要求重排：物理高中化、化学、历史、高中生物与地理（第零批随 v2.1.13、第一批随 v2.2.0 发布；其余规划中）
 
 ---
 

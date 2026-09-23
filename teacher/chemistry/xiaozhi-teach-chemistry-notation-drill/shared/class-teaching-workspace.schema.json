@@ -1,0 +1,470 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xiaozhi-skills.openclaw.dev/schemas/class-teaching-workspace.schema.json",
+  "title": "ClassTeachingWorkspace",
+  "x-distributed-to": "xiaozhi-teach-chemistry-notation-drill",
+  "x-skill-scope": {
+    "note": "本副本随 xiaozhi-teach-chemistry-notation-drill 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：读 classProfile、reviewPlans、studentTiers、weaknessRank；写 homeworkAssignments（同一键既读又写时，读/写各自的子字段列在 x-skill-scope.fields；各字段只留声明列出的子字段；删去 6 个顶层字段）。完整定义在归属技能处。",
+    "paths": [
+      "classProfile",
+      "homeworkAssignments",
+      "reviewPlans",
+      "studentTiers",
+      "weaknessRank"
+    ],
+    "reads": [
+      "classProfile",
+      "reviewPlans",
+      "studentTiers",
+      "weaknessRank"
+    ],
+    "writes": [
+      "homeworkAssignments"
+    ],
+    "fields": {
+      "homeworkAssignments": {
+        "writes": [
+          "purpose",
+          "tasks",
+          "completionSummary"
+        ]
+      }
+    }
+  },
+  "description": "班级教学工作空间：老师通用 6 个 SKILL（教案、课堂、作业、测评、复习、学情）与学科教师 SKILL 之间的唯一数据契约。所有接口路径必须是本文件中的真实字段。学生只用化名/座号，不记真实姓名与联系方式。词表以 shared/vocab.md 为准。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "classProfile": {
+      "$ref": "#/$defs/classProfile"
+    },
+    "homeworkAssignments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/homeworkAssignment"
+      }
+    },
+    "weaknessRank": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/weaknessEntry"
+      }
+    },
+    "studentTiers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/studentTier"
+      }
+    },
+    "reviewPlans": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/reviewPlan"
+      }
+    }
+  },
+  "required": [
+    "classProfile"
+  ],
+  "$defs": {
+    "classProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "classId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "subject": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "gradeBand": {
+          "type": "string",
+          "enum": [
+            "小学低段",
+            "小学中段",
+            "小学高段",
+            "初中",
+            "高中"
+          ]
+        },
+        "gradeLevel": {
+          "type": "string",
+          "maxLength": 10,
+          "description": "如 八年级"
+        },
+        "classSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 80
+        },
+        "periodMinutes": {
+          "type": "integer",
+          "enum": [
+            30,
+            35,
+            40,
+            45,
+            60,
+            90
+          ],
+          "description": "一节课分钟数（小学默认 40，初中默认 45）"
+        },
+        "textbookVersion": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "fullScore": {
+          "type": "integer",
+          "enum": [
+            100,
+            120,
+            150
+          ],
+          "description": "本学科常用卷面满分，学情分析的阈值按此换算"
+        }
+      },
+      "required": [
+        "classId",
+        "subject",
+        "gradeBand",
+        "periodMinutes"
+      ]
+    },
+    "cognitiveLevel": {
+      "type": "string",
+      "enum": [
+        "了解",
+        "理解",
+        "掌握",
+        "运用"
+      ],
+      "description": "2022 版课标结果目标四级。与 Bloom 对照：了解≈记忆，理解≈理解，掌握≈应用，运用≈分析/评价/创造"
+    },
+    "difficultyBand": {
+      "type": "string",
+      "enum": [
+        "基础",
+        "中等",
+        "较难"
+      ],
+      "description": "难度档。校内形成性默认 6:3:1，期末/模拟按 7:2:1"
+    },
+    "tier": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C"
+      ],
+      "description": "A=需补基础，B=达标，C=可拓展。依据近 3 次测评得分率，课前可得"
+    },
+    "homeworkAssignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "assignmentId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "purpose": {
+          "type": "string",
+          "enum": [
+            "诊断",
+            "巩固",
+            "补救",
+            "拓展"
+          ]
+        },
+        "tasks": {
+          "type": "array",
+          "maxItems": 12,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "taskNo": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "knowledgePoint": {
+                "type": "string",
+                "maxLength": 60
+              },
+              "cognitiveLevel": {
+                "$ref": "#/$defs/cognitiveLevel"
+              },
+              "difficultyBand": {
+                "$ref": "#/$defs/difficultyBand"
+              },
+              "tier": {
+                "$ref": "#/$defs/tier"
+              },
+              "estimatedMinutes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 60
+              },
+              "resourceId": {
+                "type": "string",
+                "maxLength": 40
+              }
+            },
+            "required": [
+              "taskNo",
+              "knowledgePoint",
+              "estimatedMinutes"
+            ]
+          }
+        },
+        "completionSummary": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "submitted": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "total": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "commonErrors": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/errorTally"
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "assignmentId",
+        "date",
+        "purpose",
+        "tasks"
+      ]
+    },
+    "errorTally": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "knowledgePoint": {
+          "type": "string",
+          "maxLength": 60
+        },
+        "dimension": {
+          "type": "string",
+          "enum": [
+            "概念模糊",
+            "计算失误",
+            "读题失误",
+            "方法用错"
+          ]
+        },
+        "teacherCategory": {
+          "type": "string",
+          "enum": [
+            "知识漏洞",
+            "规则错误",
+            "计算错误",
+            "审题错误",
+            "策略错误",
+            "表达/书写不规范",
+            "习惯性失误"
+          ]
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "knowledgePoint",
+        "dimension",
+        "count"
+      ]
+    },
+    "weaknessEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "weaknessId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "knowledgePoint": {
+          "type": "string",
+          "maxLength": 60
+        },
+        "errorRate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "dimension": {
+          "type": "string",
+          "enum": [
+            "概念模糊",
+            "计算失误",
+            "读题失误",
+            "方法用错"
+          ]
+        },
+        "stubbornCount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "近 4 次测评中错误率 >30% 的次数（shared/vocab.md §5 老师端口径）"
+        },
+        "evidenceExamIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 40
+          }
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": [
+        "weaknessId",
+        "knowledgePoint",
+        "errorRate"
+      ]
+    },
+    "studentTier": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "studentAlias": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "tier": {
+          "$ref": "#/$defs/tier"
+        },
+        "basis": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "如 近 3 次测评平均得分率 0.62"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": [
+        "studentAlias",
+        "tier"
+      ]
+    },
+    "reviewPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "reviewId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "targetExamId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "phases": {
+          "type": "array",
+          "description": "按距考天数倒推的阶段。距考 3 天内不得引入新内容；考试当天只做状态保持，不点弱项",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "maxLength": 40
+              },
+              "daysToExam": {
+                "type": "string",
+                "maxLength": 20,
+                "description": "如 >14 / 7-14 / 3-7 / 1-3 / 0"
+              },
+              "emphasis": {
+                "type": "string",
+                "maxLength": 200
+              },
+              "newContentAllowed": {
+                "type": "boolean",
+                "default": true
+              }
+            },
+            "required": [
+              "name",
+              "daysToExam"
+            ]
+          }
+        },
+        "spacingSchedule": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "knowledgePoint": {
+                "type": "string",
+                "maxLength": 60
+              },
+              "reviewDates": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "date"
+                }
+              }
+            },
+            "required": [
+              "knowledgePoint",
+              "reviewDates"
+            ]
+          },
+          "description": "按 1/3/7/14 天回看排布"
+        },
+        "interleavingSets": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 60
+            }
+          },
+          "description": "交叉练习组合：每组 2-3 个易混知识点混排"
+        },
+        "sourceWeaknessIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 40
+          }
+        }
+      },
+      "required": [
+        "reviewId",
+        "startDate",
+        "endDate"
+      ]
+    }
+  }
+}

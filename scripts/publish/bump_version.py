@@ -38,7 +38,8 @@ def main():
     sub("package.json", [(f'"version": "{old}"', f'"version": "{new}"')])
     sub("package-lock.json", [(f'"version": "{old}"', f'"version": "{new}"')])
     for root, ds, fs in os.walk("."):
-        ds[:] = [d for d in ds if d not in ("node_modules", ".git", ".work", "__pycache__", "docs", "shared")]
+        # 点开头的目录一律跳过：.claude/worktrees 下是其他会话的独立工作区，不能一起改
+        ds[:] = [d for d in ds if d not in ("node_modules", "__pycache__", "docs", "shared") and not d.startswith(".")]
         if "/shared" in root.replace(os.sep, "/"):
             continue
         for f in fs:
@@ -59,7 +60,7 @@ def main():
     print(f"{old} → {new}：改动 {len(changed)} 个文件")
     left = []
     for root, ds, fs in os.walk("."):
-        ds[:] = [d for d in ds if d not in ("node_modules", ".git", ".work", "__pycache__")]
+        ds[:] = [d for d in ds if d not in ("node_modules", "__pycache__") and not d.startswith(".")]
         for f in fs:
             p = os.path.join(root, f).replace(os.sep, "/")
             if not f.endswith((".md", ".json", ".mjs", ".js", ".py")) or "/shared/" in p or p.endswith(("docs/changelog.md", "docs/skills-index.md")):

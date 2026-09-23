@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 📐 数学解题教练
-  version: 2.1.13
+  version: 2.2.0
   author: 小智伴学
   category: 数学专项
   grade_bands:
@@ -452,7 +452,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-20260903-001",
-  "protocolVersion": "2.1.13",
+  "protocolVersion": "2.2.0",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-math-problem-solving-coach",
   "recipient": "xiaozhi-correction-notebook",

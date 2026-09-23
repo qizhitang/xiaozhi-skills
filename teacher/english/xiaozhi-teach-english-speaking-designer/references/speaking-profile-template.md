@@ -59,6 +59,7 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-> 写入位置：`classWorkspace.itemScores[]`（口语题得分）、`classWorkspace.weaknessRank[]`（弱项条目）、
+> 读取：`classWorkspace.itemScores[]`（口语题得分，画像的唯一来源；只读，本 SKILL 不写得分）。
+> 写入位置（待老师确认后落库）：`classWorkspace.weaknessRank[]`（弱项条目）、
 > `classWorkspace.interactionLogs[].participationNote`（整体参与度，不点名）。
 > 写回学生个人档案需 `teacherWritebackConsent = true`，只写语言点弱项与掌握度。

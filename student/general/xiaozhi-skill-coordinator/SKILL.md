@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🔗 学习系统协调器
-  version: 2.1.13
+  version: 2.2.0
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -89,6 +89,7 @@ metadata:
 |---|---|---|
 | 数学 | 方程、函数、解析式、几何证明、概率、比例；单位 cm/cm²/°；图片含坐标系、几何图形、算式竖式 | `xiaozhi-math-error-dna`（错题）/ `xiaozhi-math-problem-solving-coach`（当下这道题）|
 | 物理 | 受力、电路、浮力、压强、功、速度、电流；单位 N/Pa/m·s⁻¹/A/V/Ω/J/W；图片含受力示意图、电路图、光路图、刻度尺 | `xiaozhi-physics-error-dna` / `xiaozhi-physics-problem-coach` |
+| 化学 | 化学式、元素符号、化学方程式、化合价、酸碱盐、溶液浓度、溶质质量分数；图片含实验装置（试管、集气瓶、酒精灯）、微观示意图、推断框图 | `xiaozhi-chemistry-error-dna` / `xiaozhi-chemistry-problem-coach` |
 | 英语 | 时态、从句、单词、词组、听力、口语、作文；出现连续英文句子；图片含英文题干或短文 | `xiaozhi-english-grammar-coach` / `xiaozhi-english-vocabulary-dna` |
 | 语文 | 阅读理解、赏析、修辞、文言、病句、作文、古诗；图片含大段中文短文、文言篇目 | `xiaozhi-chinese-reading-decoder` / `xiaozhi-chinese-writing-coach` / `xiaozhi-chinese-grammar-tracker` |
 | 跨科 / 不确定 | 主题类问题（丝绸之路、气候变化）、"这两科好像有关系" | `xiaozhi-cross-subject-detective` |
@@ -96,7 +97,11 @@ metadata:
 判别规则：
 - **单位优先于关键词**：出现 N / Pa / Ω 一律先按物理判。
 - **图片特征优先于文字**：电路图判物理，坐标系判数学。
-- **判不准就问一句**："这题是数学还是物理的？"——不要凭猜测路由。
+- **化学与物理看有没有新物质生成**：发生了化学变化（有新物质生成）判化学，只有物态、形状、运动的变化判物理；溶液密度、气体压强这类交叉题，出现化学式或元素符号即判化学。
+- **年级门**：化学开课的年级各地不同（见 shared/grade-bands.md §四）。七、八年级学生问化学，先问一句学校教没教过：没教过就说明还没开课，不路由到化学技能；教过（如五四制八年级、浙江等地《科学》课里的化学内容）就正常路由。
+- **选科门**：高中学生问物理或化学时，授权后先看 `basicInfo.subjectSelection`，没有就问一句"你是物理类还是历史类，选没选化学"；没有选考该科的，告诉接手技能按学业水平合格性考试的深度讲。
+- **初高衔接**：初中毕业到高一上学期、问"暑假怎么预习高中""高一跟不上怎么补"的，转 `xiaozhi-bridge-planner`。
+- **判不准就问一句**："这题是数学、物理还是化学的？"——不要凭猜测路由。
 - 学科端只经**错题本**接收错题交接（`wrong_answer_handover`），本 SKILL 不越过错题本直接推送。
 
 ### 3.2 环节判别（第二步）
@@ -351,7 +356,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-demo-001",
-  "protocolVersion": "2.1.13",
+  "protocolVersion": "2.2.0",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-correction-notebook",
   "recipient": "xiaozhi-math-error-dna",
@@ -381,7 +386,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-demo-005",
-  "protocolVersion": "2.1.13",
+  "protocolVersion": "2.2.0",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-time-focus-coach",
   "recipient": "xiaozhi-learning-dna",

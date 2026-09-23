@@ -12,7 +12,7 @@ ClawHub 的 token 由其 CLI 的配置文件持有（CLAWHUB_CONFIG_PATH，默�
 import json, os, re, shutil, subprocess, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from _common import HERE, REPO, clawhub_cli, clawhub_env, log, version, workdir  # noqa: E402
+from _common import HERE, REPO, clawhub_cli, clawhub_env, clawhub_remote_version, log, version, workdir  # noqa: E402
 
 STAGE = workdir("staged-clawhub")
 DONE_FILE = os.path.join(workdir(), "published-clawhub.json")
@@ -20,15 +20,13 @@ LOG = os.path.join(workdir(), "publish-clawhub.log")
 
 # 目录名 -> 线上 slug。xiaozhi-chinese-classical-revival 在 ClawHub 上的 slug 被重定向到
 # 一个审核隐藏的旧条目 chinese-classical-revival，只能就地发到那个 slug；且它的历史版本号
-# 是 1000000.0.0，所以本库的 2.1.N 在它那里映射为 1000000.N.0，否则 latest 会被压住。
+# 是 1000000.0.0，所以本库版本在它那里要映射成更大的号，否则 latest 会被压住
+# （2.1.N → 1000000.N.0，2.2.0 → 1000001.0.0，见 _common.clawhub_remote_version）。
 SLUG_MAP = {"xiaozhi-chinese-classical-revival": "chinese-classical-revival"}
 
 
 def remote_version(name, ver):
-    if name in SLUG_MAP:
-        patch = ver.split(".")[-1]
-        return f"1000000.{patch}.0"
-    return ver
+    return clawhub_remote_version(ver) if name in SLUG_MAP else ver
 
 
 def restage(ver):

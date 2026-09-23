@@ -18,10 +18,10 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.13）",
+      "description": "协议版本，与仓库版本一致（当前 2.2.0）",
       "type": "string",
       "enum": [
-        "2.1.13"
+        "2.2.0"
       ]
     },
     "handoverType": {
@@ -46,7 +46,8 @@
         "xiaozhi-correction-notebook",
         "xiaozhi-im-reminder",
         "xiaozhi-math-error-dna",
-        "xiaozhi-physics-error-dna"
+        "xiaozhi-physics-error-dna",
+        "xiaozhi-chemistry-error-dna"
       ]
     },
     "payload": {
@@ -126,7 +127,7 @@
             },
             "subtypeId": {
               "type": "string",
-              "pattern": "^(RC|AR|WT|CL|LG|[A-Z])[0-9]{2}$",
+              "pattern": "^(RC|AR|WT|CL|LG|H[SMCREQ]|[A-Z])[0-9]{2}$",
               "description": "学科子类型编码（shared/vocab.md §2），可选"
             },
             "occurrenceCountInWindow": {

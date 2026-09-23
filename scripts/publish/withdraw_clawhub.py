@@ -8,26 +8,30 @@
     python scripts/publish/withdraw_clawhub.py 2.1.4 2.1.11             # 预演：只列出会撤哪些
     python scripts/publish/withdraw_clawhub.py 2.1.4 2.1.11 --yes       # 真撤（可中断，重跑续跑）
     python scripts/publish/withdraw_clawhub.py 2.1.4 2.1.11 --yes --only xiaozhi-cornell-notes ...
+    python scripts/publish/withdraw_clawhub.py 2.0.x                    # 按系列：线上版本号形如 2.0.N 的全撤
+    python scripts/publish/withdraw_clawhub.py 99999.0.x --yes
 
 区间按仓库版本写（含两端）。`chinese-classical-revival` 在线上用 1000000.N.0 编号，脚本按
-published-clawhub.json 里记的线上版本号自动换算。latest 指向的版本一律跳过，不会误撤。
-进度写 <work>/withdrawn-clawhub.json，重跑只处理还没撤的。
+published-clawhub.json 里记的线上版本号自动换算。系列写法（A.B.x）不换算，直接匹配线上版本号：
+古文对话的 2.0.x 在线上就叫 2.0.0 / 2.0.1（1000000.N.0 编号是 2.1.0 以后才有的），区间写法会把它换算错。
+latest 指向的版本一律跳过，不会误撤。进度写 <work>/withdrawn-clawhub.json，重跑只处理还没撤的。
 """
 import json, os, re, subprocess, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from _common import clawhub_cli, clawhub_env, log, workdir  # noqa: E402
+from _common import clawhub_cli, clawhub_env, clawhub_remote_version, log, workdir  # noqa: E402
 
 MANIFEST = os.path.join(workdir(), "published-clawhub.json")
 PROGRESS = os.path.join(workdir(), "withdrawn-clawhub.json")
 VER_RE = re.compile(r"^\d+\.\d+\.\d+$")
+SERIES_RE = re.compile(r"^(\d+)\.(\d+)\.x$")
 
 
 def repo_to_remote(entry, ver):
     """本库 2.1.N 在这个技能的线上编号里叫什么（按清单里记的线上版本号推断）。"""
-    online = entry.get("version") or ""
-    if online.startswith("1000000."):
-        return f"1000000.{ver.split('.')[-1]}.0"
+    head = (entry.get("version") or "").split(".")[0]
+    if head.isdigit() and int(head) >= 1000000:     # 古文对话：1000000.N.0 / 1000001.N.0 …
+        return clawhub_remote_version(ver)
     return ver
 
 
@@ -50,9 +54,9 @@ def main():
         args = [a for a in args if a not in only]
     else:
         only = None
-    if len(args) != 2 or not all(VER_RE.match(a) for a in args):
+    series = SERIES_RE.match(args[0]) if len(args) == 1 else None
+    if not series and (len(args) != 2 or not all(VER_RE.match(a) for a in args)):
         sys.exit(__doc__)
-    lo, hi = args
     apply = "--yes" in sys.argv
     if not os.path.exists(MANIFEST):
         sys.exit(f"没有发布清单：{MANIFEST}")
@@ -63,11 +67,17 @@ def main():
     def key(v):
         return tuple(int(x) for x in v.split("."))
 
-    want = [f"{'.'.join(lo.split('.')[:-1])}.{n}" for n in range(int(lo.split(".")[-1]), int(hi.split(".")[-1]) + 1)]
-    assert key(lo) <= key(hi), "区间反了"
+    if series:
+        pat = re.compile(rf"^{series.group(1)}\.{series.group(2)}\.\d+$")
+        label = f"系列 {args[0]}（按线上版本号匹配）"
+    else:
+        lo, hi = args
+        want = [f"{'.'.join(lo.split('.')[:-1])}.{n}" for n in range(int(lo.split(".")[-1]), int(hi.split(".")[-1]) + 1)]
+        assert key(lo) <= key(hi), "区间反了"
+        label = f"{lo}–{hi}（{len(want)} 个版本）"
     done = json.load(open(PROGRESS, encoding="utf-8")) if os.path.exists(PROGRESS) else {}
     env, cli = clawhub_env(), clawhub_cli()
-    log(f"{'撤回' if apply else '预演'} {lo}–{hi}（{len(want)} 个版本）× {len(pub)} 个技能"
+    log(f"{'撤回' if apply else '预演'} {label} × {len(pub)} 个技能"
         + ("" if apply else "  ← 没带 --yes，只列不撤"))
 
     plan, skipped = [], []
@@ -77,9 +87,13 @@ def main():
         if online is None:
             skipped.append(f"{slug}: 取版本列表失败 {err}")
             continue
-        targets = [repo_to_remote(pub[name], v) for v in want]
-        hit = [v for v in targets if v in online and v != latest]
-        miss = [v for v in targets if v not in online]
+        if series:
+            hit = [v for v in online if pat.match(v) and v != latest]
+            miss = []
+        else:
+            targets = [repo_to_remote(pub[name], v) for v in want]
+            hit = [v for v in targets if v in online and v != latest]
+            miss = [v for v in targets if v not in online]
         for v in hit:
             if not done.get(f"{slug}@{v}"):
                 plan.append((slug, v))

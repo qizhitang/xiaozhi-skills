@@ -134,10 +134,11 @@ const HS_TERMS = [
   "物质的量", "摩尔质量", "气体摩尔体积", "阿伏加德罗", "氧化还原反应", "离子方程式", "化学平衡", "原电池", "电解池", "盖斯定律",
 ];
 // T1：会出题、组卷或存放试卷的老师端技能（SECURITY_BASELINE.md 4.2；新增同类技能时加进来）
-const EXAM_SKILLS = new Set(["xiaozhi-teach-exam-designer", "xiaozhi-teach-math-exam-designer", "xiaozhi-teach-english-assessment", "xiaozhi-teach-english-listening-designer", "xiaozhi-teach-assignment-designer", "xiaozhi-teach-resource-library"]);
+const EXAM_SKILLS = new Set(["xiaozhi-teach-exam-designer", "xiaozhi-teach-math-exam-designer", "xiaozhi-teach-english-assessment", "xiaozhi-teach-english-listening-designer", "xiaozhi-teach-assignment-designer", "xiaozhi-teach-resource-library", "xiaozhi-teach-chemistry-notation-drill"]);
 // G1 章节豁免：标题命中即整节免标，直到出现同级或更高级标题
 const HS_SECTION_ANY = /初高衔接/;               // 任何技能
-const HS_SECTION_NATIVE = /高中|高一|高二|高三/;   // 仅 grade_bands 含 高中 的技能，且标题不能同时写“初中”（如“初中与高中”是混合章节）
+const HS_SECTION_NATIVE = /高中|高一|高二|高三/;   // 仅 grade_bands 含 高中 的技能，且标题不能同时写初中标记（如“初中与高中”“九年级与高中”是混合章节）
+const JUNIOR_MARK = /初中|[七八九]年级/;
 const HS_OK = /⚠高中|⚠️高中|初高衔接|高中拓展|高中内容|【高中】|高中必修|高中选修|（高中）|\(高中\)|非课标|已删|不在课标/;
 
 // ---------- F1/F2/F3 frontmatter & body ----------
@@ -230,7 +231,7 @@ for (const f of contentFiles) {
   const parts = rel(f).split("/"), ri = parts.lastIndexOf("references");
   const owner = skills.get(isSkill ? basename(dirname(f)) : ri > 0 ? parts[ri - 1] : "");
   const native = !!owner && (owner.fm.metadata?.grade_bands || []).includes("高中");
-  const exemptHeading = (t) => HS_SECTION_ANY.test(t) || (native && HS_SECTION_NATIVE.test(t) && !/初中/.test(t));
+  const exemptHeading = (t) => HS_SECTION_ANY.test(t) || (native && HS_SECTION_NATIVE.test(t) && !JUNIOR_MARK.test(t));
   const secStack = []; let inFence = false;
   lines.forEach((l, i) => {
     if (/^\s*(```|~~~)/.test(l)) inFence = !inFence;

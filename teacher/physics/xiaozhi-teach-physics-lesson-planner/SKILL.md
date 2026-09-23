@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 物理教案设计
-  version: 2.1.13
+  version: 2.2.0
   author: 小智伴学
   category: 老师物理
   grade_bands:
@@ -69,7 +69,7 @@ max_round_limit: 30
   改为"此处需要一个实验，方案请找〔物理实验教学指导〕"。
 ```
 
-> 演示/分组实验一律标注 `safetyLevel`（三档定义见 `shared/experiment-types.md`）；`safetyLevel: 高` 的实验只作演示、不进分组，且必须由老师现场把控。判不准时往高一档写。
+> 演示/分组实验一律标注 `safetyLevel`（三档定义见 `shared/lab-safety.md`；物理实验的逐项档位与激光专项见 `shared/experiment-types.md`）；`safetyLevel: 高` 的实验只作演示、不进分组，且必须由老师现场把控。判不准时往高一档写。
 
 ### 隐私与数据控制入口
 - 查看：「查看我的班级物理档案」

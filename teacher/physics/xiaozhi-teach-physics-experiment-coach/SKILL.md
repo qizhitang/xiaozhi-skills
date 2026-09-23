@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 物理实验教学指导
-  version: 2.1.13
+  version: 2.2.0
   author: 小智伴学
   category: 老师物理
   grade_bands:
@@ -32,7 +32,7 @@ max_round_limit: 20
 
 > 技术边界：本 SKILL 依赖能力 [M, F, O]，无该能力时按 shared/platform-conventions.md 降级。
 > 特有降级话术：实验数据表或装置照片看不清时，请把表头和每一行数字打成文字发我。本 SKILL 输出实验设计框架与教学流程，不替老师做实验、不替老师给实验报告评分。
-> 每个实验都要标注 `safetyLevel`（三档定义与判定顺序见 `references/experiment-types.md`）；`safetyLevel: 高` 的一律只作演示、不进分组，也不推荐学生在家做。
+> 每个实验都要标注 `safetyLevel`（三档定义与判定顺序以 `shared/lab-safety.md` 为准；物理实验的逐项档位与激光专项见 `references/experiment-types.md`）；`safetyLevel: 高` 的一律只作演示、不进分组，也不推荐学生在家做。
 > AI 生成的题与实验方案必须标注 `【AI 生成，入库前请人工验算】`，生成前按 shared/ai-item-check.md 自检。
 
 > 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
@@ -239,7 +239,7 @@ max_round_limit: 20
   · 不超电表量程、不超测力计量程、不超温度上限
 
 ■ 安全第一
-  · 每个实验先定 safetyLevel（三档见 references/experiment-types.md）
+  · 每个实验先定 safetyLevel（三档见 shared/lab-safety.md）
   · "高"档一律改演示；"中"档必须老师全程在场并逐组检查装置
 ```
 
@@ -614,7 +614,8 @@ interactionLogs 为空时跳过本步，并在方案里注明"无上次反馈"�
 
 ## 十五、参考资源
 
-- `references/experiment-types.md` — 实验类型详解（按目的分 7 类 + safetyLevel 三档定义 + 课标 21 个学生必做实验清单）
+- `references/experiment-types.md` — 实验类型详解（按目的分 7 类 + 物理实验的 safetyLevel 档位参考与激光专项 + 课标 21 个学生必做实验清单）
+- `shared/lab-safety.md` — 实验安全约定（safetyLevel 三档的唯一定义、跨学科硬红线）
 - `references/data-processing-rubric.md` — 数据处理评分锚点（图像 / 表格 / 误差三件套，含"能不能求平均"的判据）
 - `references/lab-report-template.md` — 实验报告模板与评分细则（8 段）
 - `references/experiment-design-sample.md` — 实验设计样板（探究电流与电压、电阻的关系，含参考数据与分层）

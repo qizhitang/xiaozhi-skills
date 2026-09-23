@@ -17,10 +17,10 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.13）",
+      "description": "协议版本，与仓库版本一致（当前 2.2.0）",
       "type": "string",
       "enum": [
-        "2.1.13"
+        "2.2.0"
       ]
     },
     "handoverType": {
@@ -52,6 +52,7 @@
         "xiaozhi-interest-explorer",
         "xiaozhi-learning-dna",
         "xiaozhi-learning-plan",
+        "xiaozhi-bridge-planner",
         "xiaozhi-skill-coordinator",
         "xiaozhi-time-focus-coach",
         "xiaozhi-weekly-review",
@@ -65,6 +66,11 @@
         "xiaozhi-physics-lab-coach",
         "xiaozhi-physics-modeling-coach",
         "xiaozhi-physics-problem-coach",
+        "xiaozhi-chemistry-error-dna",
+        "xiaozhi-chemistry-lab-coach",
+        "xiaozhi-chemistry-micro-visualizer",
+        "xiaozhi-chemistry-notation-coach",
+        "xiaozhi-chemistry-problem-coach",
         "xiaozhi-teach-chinese-classical-guide",
         "xiaozhi-teach-chinese-reading-guide",
         "xiaozhi-teach-chinese-writing-guide",
@@ -90,7 +96,10 @@
         "xiaozhi-teach-math-lesson-planner",
         "xiaozhi-teach-physics-experiment-coach",
         "xiaozhi-teach-physics-lesson-planner",
-        "xiaozhi-teach-physics-problem-guide"
+        "xiaozhi-teach-physics-problem-guide",
+        "xiaozhi-teach-chemistry-lab-guide",
+        "xiaozhi-teach-chemistry-lesson-planner",
+        "xiaozhi-teach-chemistry-notation-drill"
       ]
     },
     "recipient": {

@@ -20,10 +20,10 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.1.13）",
+      "description": "协议版本，与仓库版本一致（当前 2.2.0）",
       "type": "string",
       "enum": [
-        "2.1.13"
+        "2.2.0"
       ]
     },
     "handoverType": {
@@ -50,7 +50,8 @@
         "xiaozhi-im-reminder",
         "xiaozhi-learning-dna",
         "xiaozhi-math-error-dna",
-        "xiaozhi-physics-error-dna"
+        "xiaozhi-physics-error-dna",
+        "xiaozhi-chemistry-error-dna"
       ]
     },
     "payload": {
@@ -69,6 +70,7 @@
               "enum": [
                 "math",
                 "physics",
+                "chemistry",
                 "chinese",
                 "english",
                 "other"
@@ -134,6 +136,18 @@
               ],
               "description": "物理五维（仅 subject=physics 时可用）"
             },
+            "chemistryDimension": {
+              "type": "string",
+              "enum": [
+                "符号表征(HS)",
+                "微观表征(HM)",
+                "宏观概念(HC)",
+                "读题与条件(HR)",
+                "实验与探究(HE)",
+                "定量计算(HQ)"
+              ],
+              "description": "化学六维（仅 subject=chemistry 时可用；shared/vocab.md §2）"
+            },
             "judgmentClue": {
               "type": "string"
             },
@@ -145,7 +159,7 @@
             },
             "subtypeId": {
               "type": "string",
-              "pattern": "^(RC|AR|WT|CL|LG|[A-Z])[0-9]{2}$",
+              "pattern": "^(RC|AR|WT|CL|LG|H[SMCREQ]|[A-Z])[0-9]{2}$",
               "description": "学科子类型编码（shared/vocab.md §2），可选"
             },
             "chineseDimension": {
@@ -300,6 +314,7 @@
               "enum": [
                 "math",
                 "physics",
+                "chemistry",
                 "chinese",
                 "english",
                 "other"
@@ -307,7 +322,7 @@
             },
             "subtypeId": {
               "type": "string",
-              "pattern": "^(RC|AR|WT|CL|LG|[A-Z])[0-9]{2}$"
+              "pattern": "^(RC|AR|WT|CL|LG|H[SMCREQ]|[A-Z])[0-9]{2}$"
             },
             "basicDimension": {
               "type": "string",

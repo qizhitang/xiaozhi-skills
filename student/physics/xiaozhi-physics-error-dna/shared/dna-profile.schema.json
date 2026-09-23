@@ -4,13 +4,14 @@
   "title": "LearningDNAProfile",
   "x-distributed-to": "xiaozhi-physics-error-dna",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-physics-error-dna 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的字段（共 2 项，删去 11 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
+    "note": "本副本随 xiaozhi-physics-error-dna 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的字段（共 3 项，删去 10 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
     "paths": [
+      "basicInfo",
       "meta",
       "subjectExtensions.physics"
     ]
   },
-  "description": "学习DNA 档案结构——随 xiaozhi-physics-error-dna 分发的裁剪副本，只含 meta、subjectExtensions.physics；完整定义见 xiaozhi-learning-dna/schemas/dna-profile.schema.json",
+  "description": "学习DNA 档案结构——随 xiaozhi-physics-error-dna 分发的裁剪副本，只含 basicInfo、meta、subjectExtensions.physics；完整定义见 xiaozhi-learning-dna/schemas/dna-profile.schema.json",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -26,9 +27,9 @@
         },
         "schemaVersion": {
           "type": "string",
-          "description": "档案结构版本号，与仓库版本一致（当前 2.1.13）。旧档案（1.0.0–1.3.0）的字段在本结构中全部保留且均为可选，迁移时只需把本字段改写为 2.1.0。",
+          "description": "档案结构版本号，与仓库版本一致（当前 2.2.0）。旧档案（1.0.0–1.3.0）的字段在本结构中全部保留且均为可选，迁移时只需把本字段改写为 2.1.0。",
           "enum": [
-            "2.1.13"
+            "2.2.0"
           ]
         },
         "createdAt": {
@@ -131,10 +132,170 @@
         "consentStatus"
       ]
     },
+    "basicInfo": {
+      "description": "一、基础信息：年级、目标、可用时间等与学生身份和学习安排相关的低敏信息",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "gradeLevel": {
+          "type": "string",
+          "description": "年级或学段（粗粒度，不记录学校班级全称）",
+          "examples": [
+            "小学四年级",
+            "初一",
+            "初三",
+            "高一"
+          ]
+        },
+        "subjectSelection": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "高中选科（shared/vocab.md §10）。只在高中学生自述时记录，不追问；供协调器的选科门使用——未选考的科目按学业水平合格性考试深度处理，不推选考难度",
+          "properties": {
+            "examMode": {
+              "type": "string",
+              "enum": [
+                "3+1+2",
+                "3+3",
+                "未定"
+              ],
+              "description": "所在省份的高考模式"
+            },
+            "firstChoice": {
+              "type": "string",
+              "enum": [
+                "物理",
+                "历史"
+              ],
+              "description": "首选科目，仅 3+1+2"
+            },
+            "electives": {
+              "type": "array",
+              "description": "再选 / 选考科目：3+1+2 从化学、生物学、地理、思想政治中选 2；3+3 选 3（技术仅浙江）",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "物理",
+                  "化学",
+                  "生物学",
+                  "历史",
+                  "地理",
+                  "思想政治",
+                  "技术"
+                ]
+              },
+              "uniqueItems": true,
+              "maxItems": 3
+            },
+            "decidedAt": {
+              "type": "string",
+              "format": "date",
+              "description": "选科确定日期"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "examMode": {
+                    "const": "3+1+2"
+                  }
+                },
+                "required": [
+                  "examMode"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "electives": {
+                    "maxItems": 2,
+                    "items": {
+                      "enum": [
+                        "化学",
+                        "生物学",
+                        "地理",
+                        "思想政治"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "examMode": {
+                    "const": "3+3"
+                  }
+                },
+                "required": [
+                  "examMode"
+                ]
+              },
+              "then": {
+                "not": {
+                  "required": [
+                    "firstChoice"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "shortTermGoal": {
+          "type": "string",
+          "description": "短期学习目标（具体可衡量，如'下次月考数学过80分'）",
+          "maxLength": 200
+        },
+        "longTermGoal": {
+          "type": "string",
+          "description": "长期学习目标或方向",
+          "maxLength": 200
+        },
+        "availableStudyTime": {
+          "type": "string",
+          "description": "可用学习时间的粗粒度描述（不记录精确作息）",
+          "examples": [
+            "晚饭后1小时",
+            "周末上午2小时",
+            "每天30分钟碎片时间"
+          ]
+        },
+        "upcomingExams": {
+          "type": "array",
+          "description": "近期重要考试节点",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "examName": {
+                "type": "string",
+                "description": "考试名称",
+                "maxLength": 100
+              },
+              "subject": {
+                "type": "string",
+                "description": "相关学科"
+              },
+              "estimatedDate": {
+                "type": "string",
+                "format": "date",
+                "description": "预计考试日期"
+              }
+            },
+            "required": [
+              "examName",
+              "subject"
+            ]
+          },
+          "maxItems": 5
+        }
+      }
+    },
     "subjectExtensions": {
       "type": "object",
       "additionalProperties": false,
-      "description": "学科扩展档案。每个学科 SKILL 只读写本学科分支（数学 SKILL 只写 math，物理只写 physics，语文只写 chinese，英语只写 english），且受 consentStatus.crossSkillSharing 约束。写入一律经 handover 的 subject_profile_writeback",
+      "description": "学科扩展档案。每个学科 SKILL 只读写本学科分支（数学 SKILL 只写 math，物理只写 physics，化学只写 chemistry，语文只写 chinese，英语只写 english），且受 consentStatus.crossSkillSharing 约束。写入一律经 handover 的 subject_profile_writeback",
       "properties": {
         "physics": {
           "type": "object",
@@ -259,7 +420,7 @@
       "properties": {
         "subtypeId": {
           "type": "string",
-          "pattern": "^(RC|AR|WT|CL|LG|[A-Z])[0-9]{2}$",
+          "pattern": "^(RC|AR|WT|CL|LG|H[SMCREQ]|[A-Z])[0-9]{2}$",
           "description": "学科子类型编码，如 B03 / P02 / G05 / RC01"
         },
         "dimension": {

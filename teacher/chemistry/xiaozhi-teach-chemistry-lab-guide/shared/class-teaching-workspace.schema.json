@@ -1,0 +1,427 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xiaozhi-skills.openclaw.dev/schemas/class-teaching-workspace.schema.json",
+  "title": "ClassTeachingWorkspace",
+  "x-distributed-to": "xiaozhi-teach-chemistry-lab-guide",
+  "x-skill-scope": {
+    "note": "本副本随 xiaozhi-teach-chemistry-lab-guide 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：读 classProfile、interactionLogs、lessonPlans、studentTiers；写 homeworkAssignments、lessonPlans（同一键既读又写时，读/写各自的子字段列在 x-skill-scope.fields；各字段只留声明列出的子字段；删去 6 个顶层字段）。完整定义在归属技能处。",
+    "paths": [
+      "classProfile",
+      "homeworkAssignments",
+      "interactionLogs",
+      "lessonPlans",
+      "studentTiers"
+    ],
+    "reads": [
+      "classProfile",
+      "interactionLogs",
+      "lessonPlans",
+      "studentTiers"
+    ],
+    "writes": [
+      "homeworkAssignments",
+      "lessonPlans"
+    ],
+    "fields": {
+      "classProfile": {
+        "reads": [
+          "classSize"
+        ]
+      },
+      "lessonPlans": {
+        "reads": [
+          "topic",
+          "objectives",
+          "segments"
+        ],
+        "writes": [
+          "segments",
+          "questionChain"
+        ]
+      },
+      "interactionLogs": {
+        "reads": [
+          "segmentTimings",
+          "misconceptionsObserved",
+          "adjustmentForNext"
+        ]
+      },
+      "homeworkAssignments": {
+        "writes": [
+          "tasks"
+        ]
+      }
+    }
+  },
+  "description": "班级教学工作空间：老师通用 6 个 SKILL（教案、课堂、作业、测评、复习、学情）与学科教师 SKILL 之间的唯一数据契约。所有接口路径必须是本文件中的真实字段。学生只用化名/座号，不记真实姓名与联系方式。词表以 shared/vocab.md 为准。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "classProfile": {
+      "$ref": "#/$defs/classProfile"
+    },
+    "lessonPlans": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/lessonPlan"
+      }
+    },
+    "interactionLogs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/interactionLog"
+      }
+    },
+    "homeworkAssignments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/homeworkAssignment"
+      }
+    },
+    "studentTiers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/studentTier"
+      }
+    }
+  },
+  "required": [
+    "classProfile"
+  ],
+  "$defs": {
+    "classProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "classId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "subject": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "gradeBand": {
+          "type": "string",
+          "enum": [
+            "小学低段",
+            "小学中段",
+            "小学高段",
+            "初中",
+            "高中"
+          ]
+        },
+        "classSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 80
+        },
+        "periodMinutes": {
+          "type": "integer",
+          "enum": [
+            30,
+            35,
+            40,
+            45,
+            60,
+            90
+          ],
+          "description": "一节课分钟数（小学默认 40，初中默认 45）"
+        }
+      },
+      "required": [
+        "classId",
+        "subject",
+        "gradeBand",
+        "periodMinutes"
+      ]
+    },
+    "cognitiveLevel": {
+      "type": "string",
+      "enum": [
+        "了解",
+        "理解",
+        "掌握",
+        "运用"
+      ],
+      "description": "2022 版课标结果目标四级。与 Bloom 对照：了解≈记忆，理解≈理解，掌握≈应用，运用≈分析/评价/创造"
+    },
+    "difficultyBand": {
+      "type": "string",
+      "enum": [
+        "基础",
+        "中等",
+        "较难"
+      ],
+      "description": "难度档。校内形成性默认 6:3:1，期末/模拟按 7:2:1"
+    },
+    "tier": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C"
+      ],
+      "description": "A=需补基础，B=达标，C=可拓展。依据近 3 次测评得分率，课前可得"
+    },
+    "lessonPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "planId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "topic": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "periodMinutes": {
+          "type": "integer",
+          "enum": [
+            30,
+            35,
+            40,
+            45,
+            60,
+            90
+          ]
+        },
+        "objectives": {
+          "type": "array",
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "statement": {
+                "type": "string",
+                "maxLength": 120,
+                "description": "可观测目标：学生能…（行为动词 + 条件 + 标准）"
+              },
+              "cognitiveLevel": {
+                "$ref": "#/$defs/cognitiveLevel"
+              },
+              "coreCompetency": {
+                "type": "string",
+                "maxLength": 40,
+                "description": "对应课标核心素养表现，如 运算能力/推理意识/物理观念"
+              }
+            },
+            "required": [
+              "statement",
+              "cognitiveLevel"
+            ]
+          }
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "maxLength": 40
+              },
+              "minutes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 90
+              },
+              "activity": {
+                "type": "string",
+                "maxLength": 300
+              },
+              "tierVariants": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "A": {
+                    "type": "string",
+                    "maxLength": 200
+                  },
+                  "B": {
+                    "type": "string",
+                    "maxLength": 200
+                  },
+                  "C": {
+                    "type": "string",
+                    "maxLength": 200
+                  }
+                }
+              }
+            },
+            "required": [
+              "name",
+              "minutes"
+            ]
+          }
+        },
+        "questionChain": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "description": "课堂提问链，按 cognitiveLevel 递进"
+        }
+      },
+      "required": [
+        "planId",
+        "topic",
+        "periodMinutes",
+        "objectives"
+      ]
+    },
+    "interactionLog": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "logId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "planId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "segmentTimings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "maxLength": 40
+              },
+              "plannedMinutes": {
+                "type": "integer"
+              },
+              "actualMinutes": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "misconceptionsObserved": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 100
+          }
+        },
+        "adjustmentForNext": {
+          "type": "string",
+          "maxLength": 300
+        }
+      },
+      "required": [
+        "logId",
+        "planId",
+        "date"
+      ]
+    },
+    "homeworkAssignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "assignmentId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "purpose": {
+          "type": "string",
+          "enum": [
+            "诊断",
+            "巩固",
+            "补救",
+            "拓展"
+          ]
+        },
+        "tasks": {
+          "type": "array",
+          "maxItems": 12,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "taskNo": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "knowledgePoint": {
+                "type": "string",
+                "maxLength": 60
+              },
+              "cognitiveLevel": {
+                "$ref": "#/$defs/cognitiveLevel"
+              },
+              "difficultyBand": {
+                "$ref": "#/$defs/difficultyBand"
+              },
+              "tier": {
+                "$ref": "#/$defs/tier"
+              },
+              "estimatedMinutes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 60
+              },
+              "resourceId": {
+                "type": "string",
+                "maxLength": 40
+              }
+            },
+            "required": [
+              "taskNo",
+              "knowledgePoint",
+              "estimatedMinutes"
+            ]
+          }
+        }
+      },
+      "required": [
+        "assignmentId",
+        "date",
+        "purpose",
+        "tasks"
+      ]
+    },
+    "studentTier": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "studentAlias": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "tier": {
+          "$ref": "#/$defs/tier"
+        },
+        "basis": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "如 近 3 次测评平均得分率 0.62"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": [
+        "studentAlias",
+        "tier"
+      ]
+    }
+  }
+}

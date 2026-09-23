@@ -11,7 +11,7 @@ const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 // 递归收集所有 SKILL.md / SKILL.lite.md
 function walk(dir, acc = []) {
   for (const name of readdirSync(dir)) {
-    if (name === ".git" || name === "node_modules") continue;
+    if (name === ".git" || name === "node_modules" || name === ".claude") continue;   // .claude/worktrees 是其他会话的工作区
     const p = join(dir, name);
     const st = statSync(p);
     if (st.isDirectory()) walk(p, acc);

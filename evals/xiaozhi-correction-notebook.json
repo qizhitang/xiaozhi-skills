@@ -23,6 +23,18 @@
       }
     },
     {
+      "id": "trigger-03",
+      "kind": "trigger",
+      "grade_band": "初中",
+      "context": "已安装化学学科包",
+      "input": "这道化学题我把碳酸钠当成碱了，帮我记下来",
+      "expect": {
+        "activate": true,
+        "must": ["学生确认后按通用四维登记（概念模糊）", "交接给化学错误DNA 时 subject 填 chemistry，并填 chemistryDimension 与 judgmentClue"],
+        "must_not": ["自行做化学六维子类型的深度归因"]
+      }
+    },
+    {
       "id": "no-trigger-01",
       "kind": "no-trigger",
       "input": "这道数学题我不会做，教教我怎么想",

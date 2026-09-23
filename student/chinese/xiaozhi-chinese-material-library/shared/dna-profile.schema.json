@@ -26,9 +26,9 @@
         },
         "schemaVersion": {
           "type": "string",
-          "description": "档案结构版本号，与仓库版本一致（当前 2.1.13）。旧档案（1.0.0–1.3.0）的字段在本结构中全部保留且均为可选，迁移时只需把本字段改写为 2.1.0。",
+          "description": "档案结构版本号，与仓库版本一致（当前 2.2.0）。旧档案（1.0.0–1.3.0）的字段在本结构中全部保留且均为可选，迁移时只需把本字段改写为 2.1.0。",
           "enum": [
-            "2.1.13"
+            "2.2.0"
           ]
         },
         "createdAt": {
@@ -134,7 +134,7 @@
     "subjectExtensions": {
       "type": "object",
       "additionalProperties": false,
-      "description": "学科扩展档案。每个学科 SKILL 只读写本学科分支（数学 SKILL 只写 math，物理只写 physics，语文只写 chinese，英语只写 english），且受 consentStatus.crossSkillSharing 约束。写入一律经 handover 的 subject_profile_writeback",
+      "description": "学科扩展档案。每个学科 SKILL 只读写本学科分支（数学 SKILL 只写 math，物理只写 physics，化学只写 chemistry，语文只写 chinese，英语只写 english），且受 consentStatus.crossSkillSharing 约束。写入一律经 handover 的 subject_profile_writeback",
       "properties": {
         "chinese": {
           "type": "object",

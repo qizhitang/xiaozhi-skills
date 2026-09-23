@@ -60,6 +60,17 @@ const CONTRACTS = [
     owner: "xiaozhi-physics-problem-coach",
   },
   {
+    as: "chemistry-error-dimension-table.md",
+    src: "student/chemistry/xiaozhi-chemistry-error-dna/references/chemistry-error-dimension-table.md",
+    owner: "xiaozhi-chemistry-error-dna",
+  },
+  {
+    // 理化生实验安全口径：不属于某个技能，也不发给全部技能，只发给正文引用了 shared/lab-safety.md 的技能
+    as: "lab-safety.md",
+    src: "shared/contracts/lab-safety.md",
+    owner: null,
+  },
+  {
     as: "ebbinghaus-schedule.md",
     src: "student/general/xiaozhi-im-reminder/references/ebbinghaus-schedule.md",
     owner: "xiaozhi-im-reminder",
@@ -77,7 +88,7 @@ const CONTRACTS = [
   {
     as: "class-teaching-workspace.schema.json",
     src: "teacher/general/schemas/class-teaching-workspace.schema.json",
-    toDirs: ["teacher/general", "teacher/math", "teacher/physics", "teacher/chinese", "teacher/english"],
+    toDirs: ["teacher/general", "teacher/math", "teacher/physics", "teacher/chemistry", "teacher/chinese", "teacher/english"],
     owner: null, // 包级 schema，不归属某个技能
   },
   {
@@ -165,25 +176,29 @@ const DNA_MASTER = (() => { let cached; return () => { if (cached !== undefined)
 // 返回 { read: Map<顶层键, Set<子字段>>, write: 同 }
 function parseReadWrite(skillText) {
   const out = { read: new Map(), write: new Map() };
-  let mode = null, lastKey = null, inHeader = false;
+  let mode = null, lastKey = null, inHeader = false, explain = false;
   for (const raw of skillText.split(String.fromCharCode(10))) {
     const line = raw.replace(/\r$/, "");
     let body;
     if (inHeader) {
       if (!/[）)]\s*[：:]/.test(line)) continue;           // 还在说明括号里
-      inHeader = false; lastKey = null;
+      inHeader = false; lastKey = null; explain = false;
       body = line.replace(/^[^：:]*[）)]\s*[：:]\s*/, "");
       if (!body.trim()) continue;
     } else {
       const head = line.match(/^\s*(读|写)(?:[（(][^）)]*[）)])?[：:]\s*(.*)$/);
       const openHead = head ? null : line.match(/^\s*(读|写)[（(]/);
-      if (head) { mode = head[1] === "读" ? "read" : "write"; lastKey = null; body = head[2]; if (!body) continue; }
-      else if (openHead) { mode = openHead[1] === "读" ? "read" : "write"; lastKey = null; inHeader = true; continue; }
+      if (head) { mode = head[1] === "读" ? "read" : "write"; lastKey = null; explain = false; body = head[2]; if (!body) continue; }
+      else if (openHead) { mode = openHead[1] === "读" ? "read" : "write"; lastKey = null; explain = false; inHeader = true; continue; }
       else if (!mode) continue;
-      else if (!/^\s/.test(line) || /^\s*$/.test(line)) { mode = null; lastKey = null; continue; }
+      else if (!/^\s/.test(line) || /^\s*$/.test(line)) { mode = null; lastKey = null; explain = false; continue; }
       else body = line;
     }
-    if (/^\s*→/.test(body)) continue;                                   // 解释行
+    if (/^\s*→/.test(body)) { explain = true; continue; }              // 解释行
+    // 解释行折到下一行的续行（本行既没有新路径、也不是 .a 开头的子字段行）仍是解释，不是子字段。例：“→ 只取知识点名…；↵
+    // errorRate / dimension / stubbornCount 属错因域，本 SKILL 不读”——否定词在字段名之后，按子字段收就把不读的字段写进了读范围
+    if (explain && !/(?:workspace|classWorkspace)\./.test(body) && !/^\s*\.[A-Za-z]/.test(body)) continue;
+    explain = false;
     const map = out[mode];
     const addFields = (seg, key) => {
       if (!key) return;
@@ -380,12 +395,12 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
         return c;
       });
       // 学科技能：错题交接的 subject 枚举与学科维度字段只留本学科
-      const subj = (dirRel.match(/^(?:student|teacher)\/(math|physics|chinese|english)\//) || [])[1];
+      const subj = (dirRel.match(/^(?:student|teacher)\/(math|physics|chemistry|chinese|english)\//) || [])[1];
       const pp2 = props.payload && props.payload.properties;
       if (subj && pp2 && pp2.wrongAnswerData && pp2.wrongAnswerData.properties) {
         const wp = { ...pp2.wrongAnswerData.properties };
         if (wp.subject && Array.isArray(wp.subject.enum)) wp.subject = { ...wp.subject, enum: [subj] };
-        const own = { physics: "physicsBasicDimension", chinese: "chineseDimension", english: "englishDimension", math: null }[subj];
+        const own = { physics: "physicsBasicDimension", chemistry: "chemistryDimension", chinese: "chineseDimension", english: "englishDimension", math: null }[subj];
         for (const k of Object.keys(wp)) if (/Dimension$/.test(k) && k !== "basicDimension" && k !== own) delete wp[k];
         pp2.wrongAnswerData = { ...pp2.wrongAnswerData, properties: wp, required: Array.isArray(pp2.wrongAnswerData.required) ? pp2.wrongAnswerData.required.filter((r) => r in wp) : pp2.wrongAnswerData.required };
       }
@@ -397,7 +412,7 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
         pp2.profileData.properties.subjectExtensionPatch = { type: "object", description: `subject_extension 时：只允许本学科分支 subjectExtensions.${subj}${subKeys.length ? "，且只写 " + subKeys.join("、") : ""}`, properties: { [subj]: branch }, additionalProperties: false };
       }
       // 收件方：按协议的固定路由——写回档案只能到学习DNA，错题交接只能到错题本，提醒只能到 IM 提醒
-      const DEST = { wrong_answer_handover: ["xiaozhi-correction-notebook", "xiaozhi-math-error-dna", "xiaozhi-physics-error-dna"], deep_analysis_writeback: ["xiaozhi-correction-notebook"], profile_writeback: ["xiaozhi-learning-dna"], subject_profile_writeback: ["xiaozhi-learning-dna"], reminder_enqueue: ["xiaozhi-im-reminder"], reminder_sync: [], teacher_writeback: ["xiaozhi-learning-dna"] };
+      const DEST = { wrong_answer_handover: ["xiaozhi-correction-notebook", "xiaozhi-math-error-dna", "xiaozhi-physics-error-dna", "xiaozhi-chemistry-error-dna"], deep_analysis_writeback: ["xiaozhi-correction-notebook"], profile_writeback: ["xiaozhi-learning-dna"], subject_profile_writeback: ["xiaozhi-learning-dna"], reminder_enqueue: ["xiaozhi-im-reminder"], reminder_sync: [], teacher_writeback: ["xiaozhi-learning-dna"] };
       if (props.recipient && Array.isArray(props.recipient.enum)) {
         const fixed = new Set(kinds.flatMap((k) => DEST[k] || []));
         const openKinds = kinds.filter((k) => !(DEST[k] || []).length);   // 路由表没定目的地的类型（reminder_sync）

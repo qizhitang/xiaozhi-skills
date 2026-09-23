@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🧬 学习DNA
-  version: 2.1.13
+  version: 2.2.0
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -239,6 +239,7 @@ metadata:
 📋 学习DNA
 ├── 🏫 基础信息
 │   ├── 年级 / 学段
+│   ├── 高中选科（考试模式、首选与再选科目；只在学生自述时记录）
 │   ├── 当前目标（短期 / 长期）
 │   └── 可用学习时间（仅粗粒度，如“晚饭后1小时”）
 │
@@ -290,6 +291,7 @@ metadata:
 ├── [学科扩展] subjectExtensions
 │   ├── math（数学错误DNA / 梯度训练师）
 │   ├── physics（物理错误DNA / 建模教练 / 实验教练）
+│   ├── chemistry（化学错误DNA / 用语与方程式教练 / 实验探究教练）
 │   ├── chinese（语病、写作风格、阅读五坑、素材、文言进度）
 │   └── english（词汇到期日、语法档案、写作、听力）
 │
@@ -782,7 +784,7 @@ metadata:
 
 ### 11.2 协同白名单（未列入的 SKILL 默认不得读写本档案）
 
-**通用端（10）**
+**通用端（11）**
 
 | SKILL | 读 | 写 |
 |---|---|---|
@@ -796,13 +798,15 @@ metadata:
 | `xiaozhi-weekly-review` | 本周摘要、里程碑 | `growthTrack.*`（需用户同意） |
 | `xiaozhi-im-reminder` | 活跃时段摘要（需 `reminderConsent`） | 复习状态摘要 |
 | `xiaozhi-skill-coordinator` | 月报所需摘要 | 不写 |
+| `xiaozhi-bridge-planner` | 年级、高中选科、数理化英的弱项（需 `profileEnabled`） | 不写（存计划转 `xiaozhi-learning-plan`） |
 
-**学科端（20，各自只读写本学科分支）**
+**学科端（25，各自只读写本学科分支）**
 
 | 学科 | SKILL | 只读写 |
 |---|---|---|
 | 数学 | `xiaozhi-math-error-dna`、`xiaozhi-math-gradient-trainer`、`xiaozhi-math-concept-explainer`、`xiaozhi-math-problem-solving-coach`、`xiaozhi-math-word-problem-coach` | `subjectExtensions.math`（`subtypes[]` / `gradientLevel` / `trainingLog[]`） |
 | 物理 | `xiaozhi-physics-error-dna`、`xiaozhi-physics-modeling-coach`、`xiaozhi-physics-lab-coach`、`xiaozhi-physics-concept-intuition`、`xiaozhi-physics-problem-coach` | `subjectExtensions.physics`（`subtypes[]` / `modelingProfile[]` / `labSkills[]`） |
+| 化学 | `xiaozhi-chemistry-error-dna`、`xiaozhi-chemistry-notation-coach`、`xiaozhi-chemistry-lab-coach`、`xiaozhi-chemistry-micro-visualizer`、`xiaozhi-chemistry-problem-coach` | `subjectExtensions.chemistry`（`subtypes[]` / `notationProfile[]` / `reactionTypes[]` / `labSkills[]`） |
 | 语文 | `xiaozhi-chinese-reading-decoder`、`xiaozhi-chinese-writing-coach`、`xiaozhi-chinese-grammar-tracker`、`xiaozhi-chinese-classical-revival`、`xiaozhi-chinese-material-library` | `subjectExtensions.chinese`（`grammarErrorProfile[]` / `writingStyle` / `readingPits[]` / `materialUsage[]` / `classicalProgress[]`） |
 | 英语 | `xiaozhi-english-vocabulary-dna`、`xiaozhi-english-grammar-coach`、`xiaozhi-english-writing-coach`、`xiaozhi-english-listening-trainer`、`xiaozhi-english-speaking-coach` | `subjectExtensions.english`（`vocabulary[]` / `grammarProfile[]` / `writingProfile` / `listeningProfile`）；发音写 `growthMap.oralGrowthTrack` |
 
