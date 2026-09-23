@@ -53,6 +53,7 @@
         "xiaozhi-learning-dna",
         "xiaozhi-learning-plan",
         "xiaozhi-bridge-planner",
+        "xiaozhi-openbook-coach",
         "xiaozhi-skill-coordinator",
         "xiaozhi-time-focus-coach",
         "xiaozhi-weekly-review",
@@ -71,6 +72,9 @@
         "xiaozhi-chemistry-micro-visualizer",
         "xiaozhi-chemistry-notation-coach",
         "xiaozhi-chemistry-problem-coach",
+        "xiaozhi-history-essay-coach",
+        "xiaozhi-history-source-analyzer",
+        "xiaozhi-history-timeline-builder",
         "xiaozhi-teach-chinese-classical-guide",
         "xiaozhi-teach-chinese-reading-guide",
         "xiaozhi-teach-chinese-writing-guide",
@@ -99,7 +103,9 @@
         "xiaozhi-teach-physics-problem-guide",
         "xiaozhi-teach-chemistry-lab-guide",
         "xiaozhi-teach-chemistry-lesson-planner",
-        "xiaozhi-teach-chemistry-notation-drill"
+        "xiaozhi-teach-chemistry-notation-drill",
+        "xiaozhi-teach-history-assessment-guide",
+        "xiaozhi-teach-history-lesson-planner"
       ]
     },
     "recipient": {

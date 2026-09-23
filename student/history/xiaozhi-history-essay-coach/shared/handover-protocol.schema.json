@@ -1,0 +1,271 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xiaozhi-skills.openclaw.dev/schemas/handover-protocol.schema.json",
+  "title": "XiaozhiMultiAgentHandoverProtocol",
+  "x-distributed-to": "xiaozhi-history-essay-coach",
+  "x-skill-scope": {
+    "note": "本副本随 xiaozhi-history-essay-coach 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的交接类型（共 2 项，删去 0 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
+    "paths": [
+      "wrong_answer_handover",
+      "subject_profile_writeback"
+    ]
+  },
+  "description": "小智伴学多智能体协作与数据流转协议 (2.1.1)。sender/recipient 覆盖全库 58 个 SKILL；词表以 shared/vocab.md 为唯一来源。",
+  "type": "object",
+  "properties": {
+    "sessionId": {
+      "description": "当前会话的唯一ID标识，用于跟踪跨智能体对话流",
+      "type": "string"
+    },
+    "protocolVersion": {
+      "description": "协议版本，与仓库版本一致（当前 2.2.0）",
+      "type": "string",
+      "enum": [
+        "2.2.0"
+      ]
+    },
+    "handoverType": {
+      "description": "subject_profile_writeback=写入学习DNA subjectExtensions/extensions",
+      "type": "string",
+      "enum": [
+        "wrong_answer_handover",
+        "subject_profile_writeback"
+      ]
+    },
+    "sender": {
+      "description": "发送数据的源SKILL名称",
+      "type": "string",
+      "enum": [
+        "xiaozhi-history-essay-coach"
+      ]
+    },
+    "recipient": {
+      "description": "接收数据的目标SKILL名称",
+      "type": "string",
+      "enum": [
+        "xiaozhi-correction-notebook",
+        "xiaozhi-learning-dna",
+        "xiaozhi-math-error-dna",
+        "xiaozhi-physics-error-dna",
+        "xiaozhi-chemistry-error-dna",
+        "xiaozhi-history-source-analyzer"
+      ]
+    },
+    "payload": {
+      "description": "数据负载主体，结构根据 handoverType 动态变化",
+      "type": "object",
+      "properties": {
+        "wrongAnswerData": {
+          "description": "错题交接专属结构。在 handoverType='wrong_answer_handover' 时必填",
+          "type": "object",
+          "properties": {
+            "errorId": {
+              "type": "string"
+            },
+            "subject": {
+              "type": "string",
+              "enum": [
+                "history"
+              ]
+            },
+            "concept": {
+              "type": "string"
+            },
+            "handoverTrigger": {
+              "type": "string",
+              "enum": [
+                "new_error",
+                "stubborn_weakness",
+                "anxiety_trigger"
+              ]
+            },
+            "basicDimension": {
+              "type": "string",
+              "enum": [
+                "概念模糊",
+                "计算失误",
+                "读题失误",
+                "方法用错"
+              ],
+              "description": "通用四维（shared/vocab.md §1）。所有学科必填"
+            },
+            "surfaceInfo": {
+              "type": "object",
+              "properties": {
+                "questionAbstract": {
+                  "type": "string"
+                },
+                "studentAnswer": {
+                  "type": "string"
+                },
+                "correctAnswer": {
+                  "type": "string"
+                },
+                "surfaceRootCause": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "questionAbstract",
+                "studentAnswer",
+                "surfaceRootCause"
+              ]
+            },
+            "anxietySignals": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "historyDimension": {
+              "type": "string",
+              "enum": [
+                "史料信息提取(LS)",
+                "时空定位(LT)",
+                "史实与概念混淆(LK)",
+                "论证结构(LA)",
+                "表述规范(LE)"
+              ],
+              "description": "历史五维（仅 subject=history 时可用；shared/vocab.md §2）"
+            },
+            "judgmentClue": {
+              "type": "string"
+            },
+            "historyRefs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "subtypeId": {
+              "type": "string",
+              "pattern": "^(RC|AR|WT|CL|LG|H[SMCREQ]|L[STKAE]|[A-Z])[0-9]{2}$",
+              "description": "学科子类型编码（shared/vocab.md §2），可选"
+            },
+            "occurrenceCountInWindow": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "错题本按 shared/vocab.md §5 口径统计的 28 天内累计次数（错题本为唯一计数权威）"
+            }
+          },
+          "required": [
+            "errorId",
+            "subject",
+            "concept",
+            "handoverTrigger",
+            "basicDimension",
+            "surfaceInfo"
+          ]
+        },
+        "profileData": {
+          "description": "DNA回写专属结构。handoverType 为 subject_profile_writeback 时必填",
+          "type": "object",
+          "properties": {
+            "updateTarget": {
+              "type": "string",
+              "enum": [
+                "subject_extension"
+              ]
+            },
+            "subjectExtensionPatch": {
+              "type": "object",
+              "description": "subject_extension 时：只允许本学科分支 subjectExtensions.history，且只写 subtypes、essaySkills",
+              "properties": {
+                "history": {
+                  "type": "object",
+                  "properties": {
+                    "subtypes": {
+                      "type": "object"
+                    },
+                    "essaySkills": {
+                      "type": "object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "updateTarget"
+          ]
+        }
+      }
+    },
+    "timestamp": {
+      "description": "ISO-8601格式的时间戳",
+      "type": "string",
+      "format": "date-time"
+    },
+    "consent": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "发送方在发送前核对过的授权位快照（来自 dna-profile meta.consentStatus，见 shared/vocab.md §8）。接收方必须再次核对；任一相关位为 false 时丢弃该交接并告知用户",
+      "properties": {
+        "crossSkillSharing": {
+          "type": "boolean",
+          "const": true,
+          "description": "跨 SKILL 共享授权。任何交接都必须为 true：为 false 的交接不得发出，接收方收到即丢弃并告知用户（shared/vocab.md §8）"
+        },
+        "verifiedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "crossSkillSharing"
+      ]
+    }
+  },
+  "required": [
+    "sessionId",
+    "protocolVersion",
+    "handoverType",
+    "sender",
+    "recipient",
+    "consent",
+    "payload",
+    "timestamp"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "handoverType": {
+            "const": "wrong_answer_handover"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "required": [
+              "wrongAnswerData"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "handoverType": {
+            "enum": [
+              "subject_profile_writeback"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "required": [
+              "profileData"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

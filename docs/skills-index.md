@@ -2,9 +2,9 @@
 
 > 由 `scripts/gen-docs.mjs --write` 从各 SKILL.md 的 frontmatter 生成，**请勿手改**；CI 用 `--check` 核对。
 
-全库 66 个 SKILL（学生端 37 + 老师端 29）+ 1 个开发者工具，190 份 references。
+全库 72 个 SKILL（学生端 41 + 老师端 31）+ 1 个开发者工具，197 份 references。
 
-## 学生端 · 通用（12）
+## 学生端 · 通用（13）
 
 | SKILL | 目录名 | 分类 | 适用学段 | 依赖 | 版本 |
 |---|---|---|---|---|---|
@@ -17,6 +17,7 @@
 | ☕ 兴趣成长探索计划 | `xiaozhi-interest-explorer` | 通用核心 | 小学中段、小学高段、初中、高中 | `xiaozhi-learning-dna` | 2.2.0 |
 | 🧬 学习DNA | `xiaozhi-learning-dna` | 通用核心 | 小学中段、小学高段、初中、高中 | — | 2.2.0 |
 | 🗓️ 30天学习计划制定师 | `xiaozhi-learning-plan` | 通用核心 | 小学高段、初中、高中 | `xiaozhi-learning-dna` | 2.2.0 |
+| 🔖 开卷答题教练 | `xiaozhi-openbook-coach` | 通用核心 | 初中 | — | 2.2.0 |
 | 🔗 学习系统协调器 | `xiaozhi-skill-coordinator` | 通用核心 | 小学中段、小学高段、初中、高中 | `xiaozhi-learning-dna`、`xiaozhi-correction-notebook`、`xiaozhi-feynman-learning`、`xiaozhi-cornell-notes` | 2.2.0 |
 | ⏱️ 时间与专注力教练 | `xiaozhi-time-focus-coach` | 通用核心 | 小学中段、小学高段、初中、高中 | `xiaozhi-learning-dna`、`xiaozhi-learning-plan` | 2.2.0 |
 | 📊 每周学习复盘 | `xiaozhi-weekly-review` | 通用核心 | 小学中段、小学高段、初中、高中 | `xiaozhi-learning-dna` | 2.2.0 |
@@ -70,6 +71,14 @@
 | 💎 微观世界想象器 | `xiaozhi-chemistry-micro-visualizer` | 化学专项 | 初中、高中 | `xiaozhi-learning-dna` | 2.2.0 |
 | 🔤 化学用语与方程式教练 | `xiaozhi-chemistry-notation-coach` | 化学专项 | 初中、高中 | `xiaozhi-learning-dna` | 2.2.0 |
 | ⚗️ 化学解题教练 | `xiaozhi-chemistry-problem-coach` | 化学专项 | 初中、高中 | `xiaozhi-learning-dna`、`xiaozhi-chemistry-error-dna` | 2.2.0 |
+
+## 学生端 · 历史（3）
+
+| SKILL | 目录名 | 分类 | 适用学段 | 依赖 | 版本 |
+|---|---|---|---|---|---|
+| ⚖️ 历史论述题教练 | `xiaozhi-history-essay-coach` | 历史专项 | 初中、高中 | `xiaozhi-learning-dna` | 2.2.0 |
+| 📜 历史材料解析题教练 | `xiaozhi-history-source-analyzer` | 历史专项 | 初中、高中 | `xiaozhi-learning-dna` | 2.2.0 |
+| 🧭 时空线索构建器 | `xiaozhi-history-timeline-builder` | 历史专项 | 初中、高中 | `xiaozhi-learning-dna` | 2.2.0 |
 
 ## 老师端 · 通用教学（6）
 
@@ -134,6 +143,13 @@
 | 化学实验教学指导 | `xiaozhi-teach-chemistry-lab-guide` | 老师化学 | 初中、高中 | `xiaozhi-teach-chemistry-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.2.0 |
 | 化学教案设计 | `xiaozhi-teach-chemistry-lesson-planner` | 老师化学 | 初中、高中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.2.0 |
 | 化学用语过关训练设计 | `xiaozhi-teach-chemistry-notation-drill` | 老师化学 | 初中、高中 | `xiaozhi-teach-assignment-designer`、`xiaozhi-teach-review-planner` | 2.2.0 |
+
+## 老师端 · 历史（2）
+
+| SKILL | 目录名 | 分类 | 适用学段 | 依赖 | 版本 |
+|---|---|---|---|---|---|
+| 历史命题与答题规范指导 | `xiaozhi-teach-history-assessment-guide` | 老师历史 | 初中、高中 | `xiaozhi-teach-exam-designer`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-history-lesson-planner` | 2.2.0 |
+| 历史教案设计 | `xiaozhi-teach-history-lesson-planner` | 老师历史 | 初中、高中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.2.0 |
 
 ## 开发者工具（1）
 

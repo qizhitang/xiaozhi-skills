@@ -57,6 +57,7 @@
         "xiaozhi-learning-dna",
         "xiaozhi-learning-plan",
         "xiaozhi-bridge-planner",
+        "xiaozhi-openbook-coach",
         "xiaozhi-skill-coordinator",
         "xiaozhi-time-focus-coach",
         "xiaozhi-weekly-review",
@@ -75,6 +76,9 @@
         "xiaozhi-chemistry-micro-visualizer",
         "xiaozhi-chemistry-notation-coach",
         "xiaozhi-chemistry-problem-coach",
+        "xiaozhi-history-essay-coach",
+        "xiaozhi-history-source-analyzer",
+        "xiaozhi-history-timeline-builder",
         "xiaozhi-teach-chinese-classical-guide",
         "xiaozhi-teach-chinese-reading-guide",
         "xiaozhi-teach-chinese-writing-guide",
@@ -103,7 +107,9 @@
         "xiaozhi-teach-physics-problem-guide",
         "xiaozhi-teach-chemistry-lab-guide",
         "xiaozhi-teach-chemistry-lesson-planner",
-        "xiaozhi-teach-chemistry-notation-drill"
+        "xiaozhi-teach-chemistry-notation-drill",
+        "xiaozhi-teach-history-assessment-guide",
+        "xiaozhi-teach-history-lesson-planner"
       ]
     },
     "recipient": {
@@ -129,6 +135,7 @@
         "xiaozhi-learning-dna",
         "xiaozhi-learning-plan",
         "xiaozhi-bridge-planner",
+        "xiaozhi-openbook-coach",
         "xiaozhi-skill-coordinator",
         "xiaozhi-time-focus-coach",
         "xiaozhi-weekly-review",
@@ -147,6 +154,9 @@
         "xiaozhi-chemistry-micro-visualizer",
         "xiaozhi-chemistry-notation-coach",
         "xiaozhi-chemistry-problem-coach",
+        "xiaozhi-history-essay-coach",
+        "xiaozhi-history-source-analyzer",
+        "xiaozhi-history-timeline-builder",
         "xiaozhi-teach-chinese-classical-guide",
         "xiaozhi-teach-chinese-reading-guide",
         "xiaozhi-teach-chinese-writing-guide",
@@ -175,7 +185,9 @@
         "xiaozhi-teach-physics-problem-guide",
         "xiaozhi-teach-chemistry-lab-guide",
         "xiaozhi-teach-chemistry-lesson-planner",
-        "xiaozhi-teach-chemistry-notation-drill"
+        "xiaozhi-teach-chemistry-notation-drill",
+        "xiaozhi-teach-history-assessment-guide",
+        "xiaozhi-teach-history-lesson-planner"
       ]
     },
     "payload": {
@@ -195,6 +207,7 @@
                 "math",
                 "physics",
                 "chemistry",
+                "history",
                 "chinese",
                 "english",
                 "other"
@@ -272,6 +285,17 @@
               ],
               "description": "化学六维（仅 subject=chemistry 时可用；shared/vocab.md §2）"
             },
+            "historyDimension": {
+              "type": "string",
+              "enum": [
+                "史料信息提取(LS)",
+                "时空定位(LT)",
+                "史实与概念混淆(LK)",
+                "论证结构(LA)",
+                "表述规范(LE)"
+              ],
+              "description": "历史五维（仅 subject=history 时可用；shared/vocab.md §2）"
+            },
             "judgmentClue": {
               "type": "string"
             },
@@ -283,7 +307,7 @@
             },
             "subtypeId": {
               "type": "string",
-              "pattern": "^(RC|AR|WT|CL|LG|H[SMCREQ]|[A-Z])[0-9]{2}$",
+              "pattern": "^(RC|AR|WT|CL|LG|H[SMCREQ]|L[STKAE]|[A-Z])[0-9]{2}$",
               "description": "学科子类型编码（shared/vocab.md §2），可选"
             },
             "chineseDimension": {
@@ -607,6 +631,7 @@
                 "math",
                 "physics",
                 "chemistry",
+                "history",
                 "chinese",
                 "english",
                 "other"
@@ -614,7 +639,7 @@
             },
             "subtypeId": {
               "type": "string",
-              "pattern": "^(RC|AR|WT|CL|LG|H[SMCREQ]|[A-Z])[0-9]{2}$"
+              "pattern": "^(RC|AR|WT|CL|LG|H[SMCREQ]|L[STKAE]|[A-Z])[0-9]{2}$"
             },
             "basicDimension": {
               "type": "string",
@@ -693,7 +718,9 @@
                 "xiaozhi-teach-physics-problem-guide",
                 "xiaozhi-teach-chemistry-lab-guide",
                 "xiaozhi-teach-chemistry-lesson-planner",
-                "xiaozhi-teach-chemistry-notation-drill"
+                "xiaozhi-teach-chemistry-notation-drill",
+                "xiaozhi-teach-history-assessment-guide",
+                "xiaozhi-teach-history-lesson-planner"
               ]
             },
             "studentAlias": {

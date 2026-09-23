@@ -1,0 +1,375 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xiaozhi-skills.openclaw.dev/schemas/class-teaching-workspace.schema.json",
+  "title": "ClassTeachingWorkspace",
+  "x-distributed-to": "xiaozhi-teach-history-assessment-guide",
+  "x-skill-scope": {
+    "note": "本副本随 xiaozhi-teach-history-assessment-guide 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：读 classProfile、lessonPlans、weaknessRank；写 examBlueprints（同一键既读又写时，读/写各自的子字段列在 x-skill-scope.fields；各字段只留声明列出的子字段；删去 7 个顶层字段）。完整定义在归属技能处。",
+    "paths": [
+      "classProfile",
+      "examBlueprints",
+      "lessonPlans",
+      "weaknessRank"
+    ],
+    "reads": [
+      "classProfile",
+      "lessonPlans",
+      "weaknessRank"
+    ],
+    "writes": [
+      "examBlueprints"
+    ],
+    "fields": {
+      "lessonPlans": {
+        "reads": [
+          "topic",
+          "objectives"
+        ]
+      },
+      "examBlueprints": {
+        "writes": [
+          "examId",
+          "title",
+          "assessmentType",
+          "fullScore",
+          "durationMinutes",
+          "items"
+        ]
+      }
+    }
+  },
+  "description": "班级教学工作空间：老师通用 6 个 SKILL（教案、课堂、作业、测评、复习、学情）与学科教师 SKILL 之间的唯一数据契约。所有接口路径必须是本文件中的真实字段。学生只用化名/座号，不记真实姓名与联系方式。词表以 shared/vocab.md 为准。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "classProfile": {
+      "$ref": "#/$defs/classProfile"
+    },
+    "lessonPlans": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/lessonPlan"
+      }
+    },
+    "examBlueprints": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/examBlueprint"
+      }
+    },
+    "weaknessRank": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/weaknessEntry"
+      }
+    }
+  },
+  "required": [
+    "classProfile"
+  ],
+  "$defs": {
+    "classProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "classId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "subject": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "gradeBand": {
+          "type": "string",
+          "enum": [
+            "小学低段",
+            "小学中段",
+            "小学高段",
+            "初中",
+            "高中"
+          ]
+        },
+        "gradeLevel": {
+          "type": "string",
+          "maxLength": 10,
+          "description": "如 八年级"
+        },
+        "classSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 80
+        },
+        "periodMinutes": {
+          "type": "integer",
+          "enum": [
+            30,
+            35,
+            40,
+            45,
+            60,
+            90
+          ],
+          "description": "一节课分钟数（小学默认 40，初中默认 45）"
+        },
+        "textbookVersion": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "fullScore": {
+          "type": "integer",
+          "enum": [
+            100,
+            120,
+            150
+          ],
+          "description": "本学科常用卷面满分，学情分析的阈值按此换算"
+        }
+      },
+      "required": [
+        "classId",
+        "subject",
+        "gradeBand",
+        "periodMinutes"
+      ]
+    },
+    "cognitiveLevel": {
+      "type": "string",
+      "enum": [
+        "了解",
+        "理解",
+        "掌握",
+        "运用"
+      ],
+      "description": "2022 版课标结果目标四级。与 Bloom 对照：了解≈记忆，理解≈理解，掌握≈应用，运用≈分析/评价/创造"
+    },
+    "difficultyBand": {
+      "type": "string",
+      "enum": [
+        "基础",
+        "中等",
+        "较难"
+      ],
+      "description": "难度档。校内形成性默认 6:3:1，期末/模拟按 7:2:1"
+    },
+    "lessonPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "planId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "topic": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "periodMinutes": {
+          "type": "integer",
+          "enum": [
+            30,
+            35,
+            40,
+            45,
+            60,
+            90
+          ]
+        },
+        "objectives": {
+          "type": "array",
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "statement": {
+                "type": "string",
+                "maxLength": 120,
+                "description": "可观测目标：学生能…（行为动词 + 条件 + 标准）"
+              },
+              "cognitiveLevel": {
+                "$ref": "#/$defs/cognitiveLevel"
+              },
+              "coreCompetency": {
+                "type": "string",
+                "maxLength": 40,
+                "description": "对应课标核心素养表现，如 运算能力/推理意识/物理观念"
+              }
+            },
+            "required": [
+              "statement",
+              "cognitiveLevel"
+            ]
+          }
+        }
+      },
+      "required": [
+        "planId",
+        "topic",
+        "periodMinutes",
+        "objectives"
+      ]
+    },
+    "examBlueprint": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "examId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "assessmentType": {
+          "type": "string",
+          "enum": [
+            "诊断性",
+            "形成性",
+            "终结性"
+          ]
+        },
+        "durationMinutes": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 150
+        },
+        "fullScore": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 150
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "itemNo": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "itemType": {
+                "type": "string",
+                "enum": [
+                  "选择",
+                  "填空",
+                  "判断",
+                  "计算",
+                  "解答",
+                  "作图",
+                  "实验",
+                  "阅读",
+                  "写作",
+                  "听力",
+                  "口语",
+                  "材料解析",
+                  "论述",
+                  "其他"
+                ]
+              },
+              "knowledgePoint": {
+                "type": "string",
+                "maxLength": 60
+              },
+              "cognitiveLevel": {
+                "$ref": "#/$defs/cognitiveLevel"
+              },
+              "difficultyBand": {
+                "$ref": "#/$defs/difficultyBand"
+              },
+              "score": {
+                "type": "number",
+                "minimum": 0
+              },
+              "expectedP": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1,
+                "description": "预期难度 P（得分率）"
+              },
+              "resourceId": {
+                "type": "string",
+                "maxLength": 40
+              },
+              "aiGenerated": {
+                "type": "boolean",
+                "default": false
+              },
+              "verifiedByTeacher": {
+                "type": "boolean",
+                "default": false,
+                "description": "AI 生成题必须人工验算后才能为 true；未验算的题不得进入试卷"
+              }
+            },
+            "required": [
+              "itemNo",
+              "itemType",
+              "knowledgePoint",
+              "cognitiveLevel",
+              "difficultyBand",
+              "score"
+            ]
+          }
+        }
+      },
+      "required": [
+        "examId",
+        "title",
+        "assessmentType",
+        "fullScore",
+        "items"
+      ]
+    },
+    "weaknessEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "weaknessId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "knowledgePoint": {
+          "type": "string",
+          "maxLength": 60
+        },
+        "errorRate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "dimension": {
+          "type": "string",
+          "enum": [
+            "概念模糊",
+            "计算失误",
+            "读题失误",
+            "方法用错"
+          ]
+        },
+        "stubbornCount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "近 4 次测评中错误率 >30% 的次数（shared/vocab.md §5 老师端口径）"
+        },
+        "evidenceExamIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 40
+          }
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": [
+        "weaknessId",
+        "knowledgePoint",
+        "errorRate"
+      ]
+    }
+  }
+}

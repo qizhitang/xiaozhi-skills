@@ -1,7 +1,7 @@
 # 🏛️ 系统架构与方法论
 
 本文档描述小智伴学 SKILL 库的完整清单、协作架构、数据契约、方法论依据与目录结构。当前版本 v2.2.0。
-全库 **66 个 SKILL**（学生端 37 + 老师端 29）+ 1 个开发者工具，**190 份 references**（其中开发者工具 1 份），**6 份共享约定**，**4 份 JSON Schema**（含 8 份示例），**3 个 CI 校验脚本**。
+全库 **72 个 SKILL**（学生端 41 + 老师端 31）+ 1 个开发者工具，**197 份 references**（其中开发者工具 1 份），**6 份共享约定**，**4 份 JSON Schema**（含 8 份示例），**3 个 CI 校验脚本**。
 
 ---
 
@@ -30,7 +30,7 @@ v2.1.0 的核心变化是把散落在各 SKILL 里的术语、阈值、降级规
 | M | 方法用错 | 概念清楚、读题无误，但选错工具/路径 |
 
 判定顺序 R → C → M → K；一道错题只记一个主维度，学科层再记一个子类型 ID。
-学科子类型前缀：数学 B/C/R/M，物理 P/C/F/R/T，英语 G/V/T/P/L，语文 RC/AR/WT/CL/LG，化学 HS/HM/HC/HR/HE/HQ（两字母，避免与已有单字母前缀撞码）。
+学科子类型前缀：数学 B/C/R/M，物理 P/C/F/R/T，英语 G/V/T/P/L，语文 RC/AR/WT/CL/LG，化学 HS/HM/HC/HR/HE/HQ，历史 LS/LT/LK/LA/LE（两字母，避免与已有单字母前缀撞码）。
 
 ### 1.2 弱项状态五档与"3 次顽固"口径（vocab §4-§5）
 
@@ -44,11 +44,11 @@ v2.1.0 的核心变化是把散落在各 SKILL 里的术语、阈值、降级规
 
 ## 二、SKILL 清单
 
-### 2.1 学生端 · 通用（12）
+### 2.1 学生端 · 通用（13）
 
 | SKILL | 目录 | 核心能力（v2.2.0 现状） | 适用学段 |
 |---|---|---|---|
-| 🧬 学习DNA | `student/general/xiaozhi-learning-dna/` | 长期档案层；六位授权模型 + 说话人确认；概念图谱为唯一图谱结构；五科扩展档案与五类通用扩展；高中选科；危机处置事实 | 小学中段–高中 |
+| 🧬 学习DNA | `student/general/xiaozhi-learning-dna/` | 长期档案层；六位授权模型 + 说话人确认；概念图谱为唯一图谱结构；六科扩展档案与五类通用扩展；高中选科；危机处置事实 | 小学中段–高中 |
 | ❌ 智能错题本 | `student/general/xiaozhi-correction-notebook/` | 全学科统一入口；**"3 次顽固"唯一计数权威**；快速记录模式（≤2 轮）与轮次预算（≤6 轮）；提示阶梯默认 L5 | 小学中段–高中 |
 | ⏰ IM智能提醒 | `student/general/xiaozhi-im-reminder/` | **全库唯一提醒发送方**；每日 1 条合并摘要 + 最多 1 条即时；学段免打扰表；无回应即暂停 | 小学中段–高中 |
 | 🎓 费曼学习法 | `student/general/xiaozhi-feynman-learning/` | 五跳验证；**熔断前先做危机信号检查**；小学段跳过第五跳不封顶评级；写回理解深度 | 小学中段–高中 |
@@ -60,6 +60,7 @@ v2.1.0 的核心变化是把散落在各 SKILL 里的术语、阈值、降级规
 | 🔭 跨学科侦探周 | `student/general/xiaozhi-cross-subject-detective/` | 跨学科探究；写入概念图谱四种关系与项目档案；提示阶梯默认 L3 | 小学高段–高中 |
 | ☕ 兴趣成长探索计划 | `student/general/xiaozhi-interest-explorer/` | 长周期探索 + **8 周试探版**（小学中/高段）；家长简报改按需生成；删同龄人比较 | 小学中段–高中 |
 | 🌉 初高衔接规划师 | `student/general/xiaozhi-bridge-planner/` | 中考后到高一上学期期中；数理化英逐科自查 → 排计划（先地基、再看高一第一章入口、每周留休息日）；读档案与入队提醒两道门默认关；不替学生选科；具体内容转学科技能，不写档案 | 初中–高中 |
+| 🔖 开卷答题教练 | `student/general/xiaozhi-openbook-coach/` | 初中开卷考试的方法：三级索引、30 秒定位训练、考场时间分配、“材料信息 + 教材原文观点 + 两者联系”；只教方法，不产出道法观点；考试进行中不帮 | 初中 |
 
 ### 2.2 学生端 · 语文（5）
 
@@ -115,7 +116,17 @@ v2.1.0 的核心变化是把散落在各 SKILL 里的术语、阈值、降级规
 
 化学学生端 `grade_bands` 含初中与高中：初中按《义务教育化学课程标准（2022 年版）》，高中按《普通高中化学课程标准（2017 年版 2025 年修订）》必修起点。化学开课的年级各地不同（六三制一般九年级，五四制八年级，浙江等地在综合的《科学》课里分散学），七、八年级学生先问学校教没教过，不按年级号一刀切。
 
-### 2.7 老师端 · 通用教学（6）
+### 2.7 学生端 · 历史（3）
+
+| SKILL | 核心能力 |
+|---|---|
+| 📜 历史材料解析题教练 | 四步法：读出处 → 提取信息 → 结合所学 → 得出结论；设问词与答题规范；持有历史错因维度表（LS/LT/LK/LA/LE），接收错题本的历史交接；提示阶梯 L5 |
+| 🧭 时空线索构建器 | 纪年换算（含 CI 验算断言）、时间轴、中外对照表、四种历史联系、历史地图识读；高中的通史框架与时空尺度 |
+| ⚖️ 历史论述题教练 | “自拟观点、史论结合”的开放性试题；课标样题的四级评分标准与四项检查清单；不替学生拟观点，提示阶梯 L4 |
+
+历史学生端 `grade_bands` 含初中与高中：初中按《义务教育历史课程标准（2022 年版）》，高中按《普通高中历史课程标准日常修订版（2017 年版 2025 年修订）》。三个技能以方法为主（史料实证、时空观念、历史解释），史事与评价口径以课程标准和统编教材为准，不引入争议性解读（`SECURITY_BASELINE.md` 4.4）。
+
+### 2.8 老师端 · 通用教学（6）
 
 | SKILL | 核心能力 |
 |---|---|
@@ -126,7 +137,7 @@ v2.1.0 的核心变化是把散落在各 SKILL 里的术语、阈值、降级规
 | 测评设计师 | 双向细目表；能力层级**课标四级 + Bloom 对照**；难度比例场景化（形成性 6:3:1 / 终结性·模拟 7:2:1）；AI 生成题须人工验算 |
 | 复习规划师 | 知识图谱；**间隔回看 1/3/7/14 天 + 交叉练习**；考前分阶段；睡眠按学段；考试当天不点弱项 |
 
-### 2.8 老师端 · 独立教师日常（8）
+### 2.9 老师端 · 独立教师日常（8）
 
 | SKILL | 核心能力 |
 |---|---|
@@ -139,7 +150,7 @@ v2.1.0 的核心变化是把散落在各 SKILL 里的术语、阈值、降级规
 | 阶段报告与续课助手 | 三段式报告；无逐知识点分数时只出定性且每格带依据；节点统一 50%/70% |
 | 教学资源复用库 | 资源分类与检索；**AI 生成题入库门槛**；版权四档，教辅与真题一律"仅存索引" |
 
-### 2.9 老师端 · 学科教学（15）
+### 2.10 老师端 · 学科教学（17）
 
 | 学科 | SKILL | 核心能力 |
 |---|---|---|
@@ -158,8 +169,10 @@ v2.1.0 的核心变化是把散落在各 SKILL 里的术语、阈值、降级规
 | 化学 | 化学教案设计 | 宏观—微观—符号三重表征闭环；课时紧张时按课标五个学习主题做单元统筹；实验只做“实验位”并标 safetyLevel，高档只演示；高中必修起点衔接课 |
 | | 化学实验教学指导 | 按 safetyLevel 定演示还是分组；分组、时间、药品三笔账（数字取自 classProfile）；实验报告批改只出要点草稿；实验操作考试组织；初中 8 个 + 高中必修 2 个必做实验的组织要点 |
 | | 化学用语过关训练设计 | 五级过关贯穿全年、分段推进；过关卡一张只考一级；没过关的针对性小卡 + 间隔回看，不罚抄；试题保密 |
+| 历史 | 历史教案设计 | 时空定位 → 史料探究 → 历史解释 → 认识与迁移；史料选用规范（可信出处、删节标省略号、不用伪史料）；初中七个板块与高中纲要 25 个专题的单元统筹 |
+| | 历史命题与答题规范指导 | 按课标流程命题；开放题用分层次评分标准；答题规范讲评按五维归类；试题保密 |
 
-### 2.10 开发者工具（1）
+### 2.11 开发者工具（1）
 
 `tools/xiaozhi-skill-creator/`（🛠️ SKILL 编写工具）：面向开发者与高中生，不读档案、不发交接、不在收发方枚举内；模板库第零节固定《安全与危机边界》七条。
 
@@ -171,7 +184,7 @@ v2.1.0 的核心变化是把散落在各 SKILL 里的术语、阈值、降级规
 
 | Schema | 位置 | 承载 |
 |---|---|---|
-| 学习DNA | `student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json` | 授权位、学科强弱、学习风格、错误模式、对话摘要、成长轨迹、成长图谱（概念图谱 + 口语轨迹）、兴趣、学习情绪、**五科扩展档案**、**五类通用扩展**、**安全处置记录** |
+| 学习DNA | `student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json` | 授权位、学科强弱、学习风格、错误模式、对话摘要、成长轨迹、成长图谱（概念图谱 + 口语轨迹）、兴趣、学习情绪、**六科扩展档案**、**五类通用扩展**、**安全处置记录** |
 | 交接协议 | `student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json` | 七种交接类型、全库收发方枚举、授权位快照、条件必填校验 |
 | 独立教师工作空间 | `teacher/independent/schemas/solo-teacher-workspace.schema.json` | 学员卡（含可用时段）、课表、课后记录、作业跟进、家长沟通、课时包（含待确认条目）、进步证据、资源索引 |
 | 班级教学工作空间 | `teacher/general/schemas/class-teaching-workspace.schema.json` | 班级画像、教案、课堂记录、作业、双向细目表、逐题得分、题目统计、班级汇总、弱项排序、分层、复习计划 |
@@ -185,6 +198,7 @@ subjectExtensions.chinese   ← 语文 5 个 SKILL
 subjectExtensions.english   ← 英语 5 个 SKILL（发音写 growthMap.oralGrowthTrack）
 subjectExtensions.chemistry ← 化学错误DNA（subtypes）、化学用语与方程式教练（notationProfile、reactionTypes）、
                               化学实验探究教练（labSkills）；化学解题教练与微观世界想象器不写
+subjectExtensions.history   ← 历史材料解析题教练（subtypes）、时空线索构建器（timeFrames）、历史论述题教练（essaySkills）
 extensions.understanding    ← 费曼学习法
 extensions.notes            ← 康奈尔笔记
 extensions.focus            ← 时间与专注力教练
@@ -196,7 +210,7 @@ subjectMap / errorPatterns / growthMap.errorMap  ← 智能错题本
 safetyRecord                ← 任何触发危机例外的 SKILL（只记处置事实）
 ```
 
-协同白名单共 **36 个 SKILL**（通用 11 + 学科 25），未列入者默认不得读写档案。老师端经 `teacher_writeback` 写入，需 `teacherWritebackConsent`。
+协同白名单共 **39 个 SKILL**（通用 11 + 学科 28），未列入者默认不得读写档案。老师端经 `teacher_writeback` 写入，需 `teacherWritebackConsent`。
 
 ### 3.3 七种交接类型
 
@@ -227,7 +241,7 @@ safetyRecord                ← 任何触发危机例外的 SKILL（只记处置
   （唯一计数权威）          （理解与结构化）           （自我管理）
         │ wrong_answer_handover                    │
         ↓                                          │
-  学科错误DNA（数学/物理/化学）                     │
+  学科错误DNA（数学/物理/化学/历史）                │
         │ deep_analysis_writeback                   │
         └───────────────┬───────────────────────────┘
                         ↓ reminder_enqueue（唯一提醒通道）
@@ -237,7 +251,7 @@ safetyRecord                ← 任何触发危机例外的 SKILL（只记处置
               📊 每周学习复盘 / 🔗 学习系统协调器
 ```
 
-学习系统协调器负责路由，包含**学科判别**：单位优先（N/Pa/Ω → 物理），图片优先（电路图/受力图 → 物理），化学与物理看有没有新物质生成，判不准就问。化学有年级门（开课年级各地不同，先问学校教没教过），高中物理、化学有选科门（按 `basicInfo.subjectSelection` 定合格考还是选考的深度）；中考后到高一上学期的衔接问题转初高衔接规划师。
+学习系统协调器负责路由，包含**学科判别**：单位优先（N/Pa/Ω → 物理），图片优先（电路图/受力图 → 物理），化学与物理看有没有新物质生成，判不准就问。化学有年级门（开课年级各地不同，先问学校教没教过），高中物理、化学、历史有选科门（按 `basicInfo.subjectSelection` 定合格考还是选考的深度）；中考后到高一上学期的衔接问题转初高衔接规划师。历史与语文看问的是史实还是语言；开卷考试的方法转开卷答题教练，道德与法治的题目本身本库不讲。
 
 ### 4.2 师生协同
 
@@ -268,6 +282,7 @@ safetyRecord                ← 任何触发危机例外的 SKILL（只记处置
 | 错因交叉判定（纯净版题/换题型） | 诊断需可证伪，而非贴标签 | 四科错因维度表 |
 | 图景优先与类比失效边界 | 物理教育研究中的迷思概念与桥接类比 | 物理解题教练、概念直觉器 |
 | 宏观—微观—符号三重表征 | 化学教育研究中的 Johnstone 化学三角与粒子观迷思概念 | 化学五个学生端技能、化学教案设计 |
+| 论从史出、史料实证 | 历史课程标准的史料实证与历史解释素养；课标考试样题的分层评分 | 历史三个学生端技能、历史命题与答题规范指导 |
 | 写作过程教学（构思/起草/修改分离） | 过程写作法 | 语文与英语写作教练 |
 | 可理解输入 i+1 | 二语习得输入假说 | 英语听力训练师 |
 | 重述式纠正与纠错时机 | 二语习得纠错反馈研究 | 英语口语活动设计 |
@@ -302,6 +317,7 @@ consentStatus
 - 小学各学段须有家长或老师在场（`shared/vocab.md` §8 规则 4）；学生说明正在考试或测验时不讲该题（`shared/hint-ladder.md` §〇）。每个学生端 SKILL 都有一行"使用前提"引用这两条（CI 项 G2）。
 - 启用前的统考试题不输入、不入库；会出题、组卷或存卷的老师端 SKILL 都有"试题保密"段（CI 项 T1）。
 - 实验安全以 `shared/contracts/lab-safety.md` 为唯一口径：不给学生在家操作的危险实验步骤，不指导混用家用化学品，不教绕过规范，高档实验只讲不练、由老师演示。
+- 历史评价与史观以课程标准和统编教材为准，论述题不替学生给观点；开卷答题教练只教方法，不产出道德与法治的观点（`SECURITY_BASELINE.md` 4.4，CI 项 B1）。
 
 ---
 
@@ -310,9 +326,9 @@ consentStatus
 | 脚本 | 检查项 |
 |---|---|
 | `scripts/check-references.mjs` | 引用文件存在；references 无孤儿；SKILL.md、references/、shared/ 里写到的路径都落在本技能目录内（单独安装可解析：指向别的技能的，有随包副本写 `shared/<文件>`，没有的只写技能名） |
-| `scripts/check-skills.mjs` | F1 frontmatter（name/version/depends_on 列表/grade_bands）· F2 依赖无环 · F3 硬命令词与自动措辞 · R1 占位文件 · R2 跨文件重复 · V1 废弃词表 · V2 协调器命名 · P1 平台边界与控制入口 · S1 危机片段（学生端一律）· G1 高中术语标注（"初高衔接"章节豁免；声明了高中学段的技能，其高中章节豁免，标题同时写初中或七至九年级的算混合章节、不豁免） · G2 学生端使用前提 · T1 老师端试题保密 · T2 老师端教学主体边界 · A1 出题自检与示例题验算 · H1 提示阶梯 · I1 接口路径存在于 schema · D1 文档一致性 |
+| `scripts/check-skills.mjs` | F1 frontmatter（name/version/depends_on 列表/grade_bands）· F2 依赖无环 · F3 硬命令词与自动措辞 · R1 占位文件 · R2 跨文件重复 · V1 废弃词表 · V2 协调器命名 · P1 平台边界与控制入口 · S1 危机片段（学生端一律）· G1 高中术语标注（"初高衔接"章节豁免；声明了高中学段的技能，其高中章节豁免，标题同时写初中或七至九年级的算混合章节、不豁免） · G2 学生端使用前提 · T1 老师端试题保密 · T2 老师端教学主体边界 · B1 历史与开卷的内容边界 · A1 出题自检与示例题验算 · H1 提示阶梯 · I1 接口路径存在于 schema · D1 文档一致性 |
 | `scripts/validate-schemas.mjs` | 四份 schema 有效；8 份示例合规；枚举与 `shared/vocab.md` 一致；收发方覆盖全库；关键字段存在；结构与协议版本号等于 `package.json` |
-| `scripts/sync-shared.mjs --check` | 67 个 SKILL 目录内的 `shared/` 副本与仓库根源文件一致（缺失、被改、残留均报错）|
+| `scripts/sync-shared.mjs --check` | 73 个 SKILL 目录内的 `shared/` 副本与仓库根源文件一致（缺失、被改、残留均报错）|
 | `scripts/verify-examples.mjs` | X1 ```verify``` 块为合法 JSON（claim / expr / expect）· X2 expr 只含 Math 与字面量，求值结果等于 expect · X3 有验算声明却无断言的文件给警告。配合 `check-skills` 的 A2：验算日期早于最后一次实质提交即失败 |
 | `scripts/gen-docs.mjs --check` | D2 `docs/skills-index.md` 与 frontmatter 生成结果一致 · D3 README / architecture 技能表：显示名 == `metadata.display_name`、反引号目录存在、学段列 == `grade_bands` 区间、改名残留报错 · D4 数量声明（全库 / 学生端 / 老师端 / references）与实际一致 · D5 安装指南顺序不违反 `metadata.depends_on` |
 | `scripts/check-evals.mjs` | E1 用例文件过 schema、id 唯一 · E2 至少 1 触发 + 1 不触发 · E3 有能力代号即有降级用例且 `missing` 不越界 · E4 持有长期数据即有授权用例 · E5 学生端一律、会读情绪文本的也要有危机用例 · E6 `route_to` 与授权字段名存在 · E7 每条用例有断言 |
@@ -342,7 +358,7 @@ xiaozhi-skills/
 ├── evals/                           回归用例，每个 SKILL 一份（不进发布包）
 │   ├── README.md
 │   ├── eval-case.schema.json
-│   └── xiaozhi-*.json               67 份
+│   └── xiaozhi-*.json               73 份
 ├── scripts/
 │   ├── check-references.mjs
 │   ├── check-skills.mjs
@@ -361,12 +377,14 @@ xiaozhi-skills/
 │   ├── review-2026-09.md            本轮评估报告
 │   └── archive/                     历史报告
 ├── student/
-│   ├── general/                     12 个（含 learning-dna/schemas、skill-coordinator/schemas）
+│   ├── general/                     13 个（含 learning-dna/schemas、skill-coordinator/schemas）
 │   ├── chinese/  math/  english/  physics/  chemistry/    各 5 个
+│   ├── history/                     3 个
 ├── teacher/
 │   ├── general/                     6 个 + schemas/（班级教学工作空间）
 │   ├── independent/                 8 个 + schemas/（独立教师工作空间）
-│   └── chinese/  math/  english/  physics/  chemistry/    各 3 个
+│   ├── chinese/  math/  english/  physics/  chemistry/    各 3 个
+│   └── history/                     2 个
 └── tools/
     └── xiaozhi-skill-creator/       开发者工具（SKILL 编写工具）
 ```
@@ -383,13 +401,13 @@ xiaozhi-{name}/
 `shared/` 下有两类文件，均由 `npm run sync:shared` 生成并由 CI 校验一致性：
 
 1. **全库共享约定**（6 份）：来自仓库根 `shared/`，每个 SKILL 都有。
-2. **跨技能契约与参考资料**（按需，15 类共 167 份副本）：只分发给正文引用它的技能——四份数据契约 schema、三份交接示例 JSON、三份学科错因维度表（英语、语文、化学）、四份参考资料（受力图指南、遗忘曲线表、跨学科联结、实验类型），源文件留在归属技能内，归属技能用自己的原件；另有一份跨学科约定（实验安全），源文件在仓库根 `shared/contracts/`，没有归属技能。唯一例外是 `crisis-referral-protocol.md`：因为 `crisis-exception.md` 在每个包里都指向它，故分发给全部 67 个技能。
+2. **跨技能契约与参考资料**（按需，16 类共 183 份副本）：只分发给正文引用它的技能——四份数据契约 schema、三份交接示例 JSON、四份学科错因维度表（英语、语文、化学、历史）、四份参考资料（受力图指南、遗忘曲线表、跨学科联结、实验类型），源文件留在归属技能内，归属技能用自己的原件；另有一份跨学科约定（实验安全），源文件在仓库根 `shared/contracts/`，没有归属技能。唯一例外是 `crisis-referral-protocol.md`：因为 `crisis-exception.md` 在每个包里都指向它，故分发给全部 73 个技能。
 
 JSON 契约的副本不是原样复制：`sync-shared.mjs` 按目标技能**裁剪**——只保留该技能 SKILL.md 在非否定语境下提到的字段子树（档案 schema 的 `subjectExtensions.x` / `extensions.x`、工作空间的顶层集合、交接协议的类型/`payload` 分支/收发方），并在头部写 `x-distributed-to` 与 `x-skill-scope`。否定语境按行判定（“不读/不写/❌”在字段之前；行尾为顿号或冒号的列表把否定带到后续行；“字段 → 由 X 维护”整行视为否定）。这样做是因为市场的安全扫描把随包 schema 当成该技能自己的数据契约：一个笔记工具带着完整档案定义，会被判为越权；带着只含 `extensions.notes` 的副本，判定才与它的职责一致。`--check` 按同一规则重新生成后比对。
 
 这样 `shared/vocab.md`、`shared/handover-protocol.schema.json` 这类路径在整库使用（相对仓库根）与单技能安装（相对技能目录）两种场景下都能解析。
 
-全部 67 个技能已做单技能安装模拟：单独取出任一技能目录后，`SKILL.md` 与 `shared/` 副本中的文件引用零断链。为此，`shared/vocab.md` 与 `shared/crisis-exception.md` 源文件中原有的仓库路径也已改写——它们会随副本进入每个包，留在里面会变成死链接（v2.1.0 改写时共 337 处）。
+全部 73 个技能的 `SKILL.md`、`references/` 与 `shared/` 副本中的文件引用，都由 `scripts/check-references.mjs` 核对落在本技能目录内，单技能安装零断链。为此，`shared/vocab.md` 与 `shared/crisis-exception.md` 源文件中原有的仓库路径也已改写——它们会随副本进入每个包，留在里面会变成死链接（v2.1.0 改写时共 337 处）。
 
 frontmatter 顶层只有 Agent Skills 官方字段：`name` · `description` · `license` · `compatibility` · `metadata`；部分老师端技能另有平台加载字段 `id` · `min_platform_version` · `max_round_limit`。本库自有字段全部在 `metadata` 块内：`display_name` · `version` · `author` · `category` · `grade_bands` · `tags` · `depends_on`。
 

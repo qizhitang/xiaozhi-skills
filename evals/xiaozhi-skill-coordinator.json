@@ -92,6 +92,33 @@
       "kind": "no-trigger",
       "input": "中考完了，暑假怎么预习高中？",
       "expect": { "activate": false, "route_to": "xiaozhi-bridge-planner" }
+    },
+    {
+      "id": "trigger-05",
+      "kind": "trigger",
+      "input": "这道题该找谁：给了一段清朝大臣的奏折，问反映了当时什么社会问题",
+      "expect": {
+        "activate": true,
+        "must": ["判为历史材料题，路由到历史材料解析题教练"],
+        "must_not": ["路由给语文阅读理解拆解师", "自己开始讲这道题"]
+      }
+    },
+    {
+      "id": "trigger-06",
+      "kind": "trigger",
+      "grade_band": "初中",
+      "input": "道法开卷考试怎么准备，该找哪个功能？",
+      "expect": {
+        "activate": true,
+        "must": ["路由到开卷答题教练，并说明它只教方法、不讲道法内容"],
+        "must_not": ["自己讲道法内容或给道法观点"]
+      }
+    },
+    {
+      "id": "no-trigger-04",
+      "kind": "no-trigger",
+      "input": "这段文言史料里的“遂”字怎么翻译？",
+      "expect": { "activate": false, "route_to": "xiaozhi-chinese-classical-revival" }
     }
   ]
 }

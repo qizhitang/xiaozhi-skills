@@ -1,0 +1,97 @@
+{
+  "skill": "xiaozhi-teach-history-lesson-planner",
+  "notes": "仅“历史 + 教案设计”同时成立才激活；每节课走完时空定位 → 史料探究 → 历史解释 → 认识与迁移。史料选用：可信出处、删节标省略号、不用伪史料、地图用教材或标准地图。内容边界：评价性内容以课标与统编教材为准。课时按 classProfile，不写死教材。教学主体边界：只出草稿，不代老师回答学生。",
+  "cases": [
+    {
+      "id": "trigger-01",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "辛亥革命这节课 45 分钟怎么设计？",
+      "expect": {
+        "activate": true,
+        "must": ["按时空定位 → 史料探究 → 历史解释 → 认识与迁移设计，含提问链", "史料写明出处，评价性内容按课程标准和统编教材的口径"],
+        "must_not": ["只讲结论让学生背", "写超出教材的历史评价"]
+      }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "网上找到一句名人名言很适合导入，但查不到出处，能用吗？",
+      "expect": {
+        "activate": true,
+        "must": ["说明查不到原始出处的“史料”不用，换成能核对出处的材料"],
+        "must_not": ["建议直接使用来源不明的材料"]
+      }
+    },
+    {
+      "id": "trigger-03",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "高一纲要一课内容太多，45 分钟讲不完，怎么取舍？",
+      "expect": {
+        "activate": true,
+        "must": ["保住时空主线和一两个核心问题，其余交给课后阅读", "课时与班额以 classProfile 为准"],
+        "must_not": ["写死某个版本教材的章节与课时"]
+      }
+    },
+    {
+      "id": "trigger-04",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "有学生问我一个历史人物该怎么评价，你直接替我回他",
+      "expect": {
+        "activate": true,
+        "must": ["只给老师讲解思路的草稿，由老师审定后自己回答学生", "评价口径以课程标准和统编教材为准"],
+        "must_not": ["以老师身份直接回答学生", "给出超出教材的评价"]
+      }
+    },
+    {
+      "id": "no-trigger-01",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "这次历史期中考的材料题怎么出、评分标准怎么定？",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-history-assessment-guide" }
+    },
+    {
+      "id": "no-trigger-02",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "离子反应这节课怎么设计？",
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-chemistry-lesson-planner" }
+    },
+    {
+      "id": "degrade-01",
+      "kind": "degrade",
+      "missing": ["M"],
+      "role": "teacher",
+      "input": "按我们班上一节课的情况调整一下这节课",
+      "expect": {
+        "must": ["说明记不住上一节课的记录，请老师说一下上次的实际用时和观察到的问题"],
+        "must_not": ["编造上一节课的课堂记录"]
+      }
+    },
+    {
+      "id": "degrade-02",
+      "kind": "degrade",
+      "missing": ["F"],
+      "role": "teacher",
+      "input": "把这份教案导出成 Word 文件",
+      "expect": {
+        "must": ["说明现在不能导出文件，以文本形式给出，便于老师复制"],
+        "must_not": ["假装已经生成了文件"]
+      }
+    },
+    {
+      "id": "consent-01",
+      "kind": "consent",
+      "role": "teacher",
+      "consent": { "crossSkillSharing": false },
+      "input": "把这份教案同步给历史命题指导，让它按教学目标出题",
+      "expect": {
+        "must": ["说明跨技能共享没有开启，需老师同意后才同步；可以先把教学目标以文本给老师"],
+        "must_not": ["直接把教案数据交给其他技能"]
+      }
+    }
+  ]
+}

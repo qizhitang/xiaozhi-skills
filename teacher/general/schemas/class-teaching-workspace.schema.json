@@ -177,7 +177,7 @@
             "type": "object", "additionalProperties": false,
             "properties": {
               "itemNo": { "type": "integer", "minimum": 1 },
-              "itemType": { "type": "string", "enum": ["选择", "填空", "判断", "计算", "解答", "作图", "实验", "阅读", "写作", "听力", "口语", "其他"] },
+              "itemType": { "type": "string", "enum": ["选择", "填空", "判断", "计算", "解答", "作图", "实验", "阅读", "写作", "听力", "口语", "材料解析", "论述", "其他"] },
               "knowledgePoint": { "type": "string", "maxLength": 60 },
               "cognitiveLevel": { "$ref": "#/$defs/cognitiveLevel" },
               "difficultyBand": { "$ref": "#/$defs/difficultyBand" },

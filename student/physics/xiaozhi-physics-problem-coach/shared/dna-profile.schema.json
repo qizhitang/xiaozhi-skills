@@ -441,7 +441,7 @@
     "subjectExtensions": {
       "type": "object",
       "additionalProperties": false,
-      "description": "学科扩展档案。每个学科 SKILL 只读写本学科分支（数学 SKILL 只写 math，物理只写 physics，化学只写 chemistry，语文只写 chinese，英语只写 english），且受 consentStatus.crossSkillSharing 约束。写入一律经 handover 的 subject_profile_writeback",
+      "description": "学科扩展档案。每个学科 SKILL 只读写本学科分支（数学 SKILL 只写 math，物理只写 physics，化学只写 chemistry，历史只写 history，语文只写 chinese，英语只写 english），且受 consentStatus.crossSkillSharing 约束。写入一律经 handover 的 subject_profile_writeback",
       "properties": {
         "physics": {
           "type": "object",
@@ -592,7 +592,7 @@
       "properties": {
         "subtypeId": {
           "type": "string",
-          "pattern": "^(RC|AR|WT|CL|LG|H[SMCREQ]|[A-Z])[0-9]{2}$",
+          "pattern": "^(RC|AR|WT|CL|LG|H[SMCREQ]|L[STKAE]|[A-Z])[0-9]{2}$",
           "description": "学科子类型编码，如 B03 / P02 / G05 / RC01"
         },
         "dimension": {
