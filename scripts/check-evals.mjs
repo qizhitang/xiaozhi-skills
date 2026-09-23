@@ -6,7 +6,7 @@
 //  E2 至少 1 条 trigger（activate=true）+ 1 条 no-trigger（activate=false 且给出 route_to）
 //  E3 声明了能力代号的 SKILL 至少 1 条 degrade；missing 只能是该 SKILL 自己声明的代号
 //  E4 持有长期数据的 SKILL（P1 集）至少 1 条 consent，且 must_not 非空
-//  E5 会读到情绪文本的 SKILL（S1 集）至少 1 条 crisis，must 含“停止/转介”类行为，must_not 非空
+//  E5 学生端 SKILL 一律、以及会读到情绪文本的 SKILL（S1 集），至少 1 条 crisis，must 含“停止/转介”类行为，must_not 非空
 //  E6 route_to 必须是存在的 SKILL（或 null）；consent 字段名必须是 shared/vocab.md §8 的字段
 //  E7 每条用例 must / must_not 至少有一个非空——没有断言的用例不算用例
 //
@@ -30,6 +30,8 @@ const rel = (p) => relative(root, p).replace(/\\/g, "/");
 // ---- 与 check-skills.mjs 相同的判定集，保持一致 ----
 const MEMORY_WORDS = /跨会话|长期档案|长期记忆|持久记忆|档案|DNA|履历|定时提醒|主动推送|月报|周报/;
 const EMOTION_WORDS = /焦虑|情绪|放弃|挫败|不想学|我太差|熔断|家长看板|家长摘要|家长简报|家庭版/;
+// 危机片段原文含“熔断/家长摘要/档案”，判 mem/emo 前先剔除（与 check-skills 同口径）
+const stripCrisis = (s) => s.split(/\r?\n/).filter((l) => !l.includes("危机例外（最高优先级）")).join("\n");
 const CRISIS_ACT = /停止|中断|转介|信任的成年人|求助|不评判|不继续|crisis/;
 const CONSENT_FIELDS = new Set([
   "profileEnabled", "consentGivenBy", "ageBand", "guardianConsentRequired",
@@ -56,8 +58,9 @@ for (const side of ["student", "teacher", "tools"]) {
         skills.set(n, {
           file: sk,
           caps: cap ? cap[1].split(",").map((s) => s.trim()).filter(Boolean) : [],
-          mem: MEMORY_WORDS.test(body),
-          emo: EMOTION_WORDS.test(body),
+          mem: MEMORY_WORDS.test(stripCrisis(body)),
+          emo: EMOTION_WORDS.test(stripCrisis(body)),
+          student: side === "student",
         });
       } else walk(p);
     }
@@ -128,7 +131,7 @@ for (const [name, info] of [...skills].sort()) {
   if (!byKind["no-trigger"].length) err("E2", rf, "缺 no-trigger 用例");
   if (info.caps.length && !byKind.degrade.length) err("E3", rf, `声明了能力 [${info.caps.join(",")}] 但缺 degrade 用例`);
   if (info.mem && !byKind.consent.length) err("E4", rf, "持有长期数据（P1 集）但缺 consent 用例");
-  if (info.emo && !byKind.crisis.length) err("E5", rf, "会读到情绪文本（S1 集）但缺 crisis 用例");
+  if ((info.emo || info.student) && !byKind.crisis.length) err("E5", rf, info.student ? "学生端 SKILL 必须至少一条 crisis 用例" : "会读到情绪文本（S1 集）但缺 crisis 用例");
   if (data.cases.length < 4) warn("E2", rf, `只有 ${data.cases.length} 条，建议 ≥4`);
 }
 for (const f of readdirSync(join(root, "evals")).filter((n) => n.endsWith(".json") && n !== "eval-case.schema.json")) {

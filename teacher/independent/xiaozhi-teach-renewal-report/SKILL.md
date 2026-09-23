@@ -11,7 +11,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 阶段报告与续课助手
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 独立教师
   grade_bands:
@@ -37,6 +37,8 @@ max_round_limit: 15
 ## 技术边界
 
 > 技术边界：本 SKILL 依赖能力 [M, X, K]，无该能力时按 shared/platform-conventions.md 降级。
+
+> 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
 
 报告里的每个数字都要能指回工作空间里的一条记录。**没有记录就不写这一项**，宁可报告短一点，也不用"大概""估计"填空。无 `X`（跨会话统计）时不给"共上了 N 次课、掌握了 N 个知识点"这类汇总，改为列出已知的几条并说明这不是完整历史。
 

@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: ✍️ 英语写作进化教练
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 英语专项
   grade_bands:
@@ -33,6 +33,7 @@ metadata:
 > 技术边界：本 SKILL 依赖能力 [M, O, X]，无该能力时按 shared/platform-conventions.md 降级。
 > 无 O（图片识别）时：作文照片看不了，请学生把正文打字或粘贴过来。
 > 无 X 时不输出"上月 N 次 → 本月 M 次"类历史统计，只报本次批改内的计数。
+> 使用前提：小学学段须有家长或老师在场陪同使用（shared/vocab.md §8 规则 4）；学生说明正在考试或测验中时，不讲该题、不给提示，约好考完再复盘（shared/hint-ladder.md §〇）。
 
 ---
 
@@ -284,7 +285,7 @@ subjectExtensions.english.grammarProfile[]，本 SKILL 只把它转过去，避�
 ```json
 {
   "sessionId": "sess-eng-write-001",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-english-writing-coach",
   "recipient": "xiaozhi-learning-dna",

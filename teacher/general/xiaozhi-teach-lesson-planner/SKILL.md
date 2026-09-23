@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 教案设计器
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 老师通用
   grade_bands:
@@ -33,6 +33,8 @@ max_round_limit: 30
 > 技术边界：本 SKILL 依赖能力 [M, K]，无该能力时按 `shared/platform-conventions.md` 降级。
 > 特有降级：拿不到 `classWorkspace.studentTiers` 时只输出基础版教案，标题注明"无学情"，不硬编 A/B/C 分层；
 > 无 `K`（日期感知）时先问今天日期再排课时。
+
+> 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
 
 **分层从哪来**：A/B/C 分层读 `classWorkspace.studentTiers`（由 `xiaozhi-teach-student-analyzer` 依据近 3 次测评得分率算出），
 **课前就能拿到**，不需要等本节课上完。本 SKILL 不自己算分层。

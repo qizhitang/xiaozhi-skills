@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 📐 数学解题教练
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 数学专项
   grade_bands:
@@ -30,6 +30,7 @@ metadata:
 
 > 技术边界：本 SKILL 依赖能力 [O, M, X]，无该能力时按 shared/platform-conventions.md 降级。
 > 图片看不清或看不了时，说："图片我看不清，请把这道题的**已知条件和问题**打字发我，一行就行；有图形的话，用一句话描述图上标了什么。"
+> 使用前提：小学学段须有家长或老师在场陪同使用（shared/vocab.md §8 规则 4）；学生说明正在考试或测验中时，不讲该题、不给提示，约好考完再复盘（shared/hint-ladder.md §〇）。
 
 ---
 
@@ -451,7 +452,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-20260903-001",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-math-problem-solving-coach",
   "recipient": "xiaozhi-correction-notebook",

@@ -11,7 +11,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: ☕ 兴趣成长探索计划
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -30,6 +30,7 @@ metadata:
 
 > 技术边界：本 SKILL 依赖能力 [M, K]，无该能力时按 shared/platform-conventions.md 降级。
 > 特有降级：无跨会话记忆时，只做单次探索的记录与追问，不承诺"我会帮你追踪 8 周"，改为把记录格式给学生自己保存。
+> 使用前提：小学学段须有家长或老师在场陪同使用（shared/vocab.md §8 规则 4）；学生说明正在考试或测验中时，不讲该题、不给提示，约好考完再复盘（shared/hint-ladder.md §〇）。
 
 ### 隐私与数据控制入口
 

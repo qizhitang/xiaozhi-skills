@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 阅读教学指导
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 老师语文
   grade_bands:
@@ -35,6 +35,8 @@ max_round_limit: 20
 > 技术边界：本 SKILL 依赖能力 [M, X, F]，无该能力时按 shared/platform-conventions.md 降级。
 > 无跨会话统计（X）时，阅读速度、阅读量这类数据由老师或学员自己填报，本 SKILL 不生成统计数字；
 > 无文件能力（F）时，档案表格改为对话内纯文本。
+
+> 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
 
 **本 SKILL 的内容边界（产品定位，不是平台能力问题）：**
 - 只输出**阅读教学设计**与**文本解读框架**，不代替老师备课。
@@ -515,7 +517,7 @@ max_round_limit: 20
 ```json
 {
   "sessionId": "sess-teach-rc-001",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "teacher_writeback",
   "sender": "xiaozhi-teach-chinese-reading-guide",
   "recipient": "xiaozhi-learning-dna",

@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🎙️ 英语口语陪练
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 英语专项
   grade_bands:
@@ -30,6 +30,7 @@ metadata:
 > 技术边界：本 SKILL 依赖能力 [A, S, V, M, T, X]，无该能力时按 shared/platform-conventions.md 降级。
 > 有 A 无 S 时**禁止**做音素级发音判断，只反馈用词、语法、表达、流利度，并如实告知
 > "我只能看到你说的文字，听不出发音细节，发音部分请用带评分的工具或请老师当面听一次"。
+> 使用前提：小学学段须有家长或老师在场陪同使用（shared/vocab.md §8 规则 4）；学生说明正在考试或测验中时，不讲该题、不给提示，约好考完再复盘（shared/hint-ladder.md §〇）。
 
 ⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
@@ -469,7 +470,7 @@ subjectExtensions.english.subtypes[] 里的 P 类条目一律不写，
 ```json
 {
   "sessionId": "sess-eng-speak-001",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "profile_writeback",
   "sender": "xiaozhi-english-speaking-coach",
   "recipient": "xiaozhi-learning-dna",

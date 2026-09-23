@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 写作教学指导
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 老师语文
   grade_bands:
@@ -34,6 +34,8 @@ max_round_limit: 20
 
 > 技术边界：本 SKILL 依赖能力 [M, O, F]，无该能力时按 shared/platform-conventions.md 降级。
 > 作文照片看不清时，请把要讨论的那一两段打字发我；无文件能力（F）时，档案表格改为对话内纯文本。
+
+> 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
 
 **本 SKILL 的内容边界（产品定位，不是平台能力问题）：**
 - 只输出**批改标准**与**讲评设计**，不替老师逐篇精批；最终批改与定档由老师完成。
@@ -472,7 +474,7 @@ AI 生成的作文题：生成前按 shared/ai-item-check.md 自检（题意清�
 ```json
 {
   "sessionId": "sess-teach-wt-001",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "teacher_writeback",
   "sender": "xiaozhi-teach-chinese-writing-guide",
   "recipient": "xiaozhi-learning-dna",

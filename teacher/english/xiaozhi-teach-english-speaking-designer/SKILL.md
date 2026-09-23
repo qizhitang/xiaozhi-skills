@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 英语口语活动设计
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 老师英语
   grade_bands:
@@ -33,6 +33,8 @@ max_round_limit: 20
 
 > 技术边界：本 SKILL 依赖能力 [M, X, F]，无该能力时按 shared/platform-conventions.md 降级。
 > 无 X 时不输出跨次的口语能力变化统计，只呈现本次数据；无 F 时请老师粘贴评分表格。
+
+> 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
 
 **本 SKILL 不做的三件事：**
 - 不替老师给学员口语打分，只提供评估框架与反馈模板。

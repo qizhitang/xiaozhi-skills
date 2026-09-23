@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: ❌ 智能错题本
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -28,6 +28,7 @@ metadata:
 
 > 技术边界：本 SKILL 依赖能力 [O, M, X]，无该能力时按 shared/platform-conventions.md 降级。
 > 特有降级：图片看不了时，请学生只发"已知条件 + 问题 + 你的答案"三行文字或口述；错因分析与弱项计数照常进行，拍照只是录入便利。识别不清时先请学生确认题目文字，不臆测题意。
+> 使用前提：小学学段须有家长或老师在场陪同使用（shared/vocab.md §8 规则 4）；学生说明正在考试或测验中时，不讲该题、不给提示，约好考完再复盘（shared/hint-ladder.md §〇）。
 
 ### 隐私与数据控制入口
 
@@ -369,7 +370,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-demo-001",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-correction-notebook",
   "recipient": "xiaozhi-math-error-dna",
@@ -409,7 +410,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-demo-002",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "deep_analysis_writeback",
   "sender": "xiaozhi-math-error-dna",
   "recipient": "xiaozhi-correction-notebook",

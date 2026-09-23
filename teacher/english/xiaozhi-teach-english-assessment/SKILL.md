@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 英语综合测评
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 老师英语
   grade_bands:
@@ -34,6 +34,8 @@ max_round_limit: 25
 > 技术边界：本 SKILL 依赖能力 [M, X, F]，无该能力时按 shared/platform-conventions.md 降级。
 > 无 X 时不输出跨次的等级变化统计，只呈现本次测评数据；无 F 时请老师粘贴逐题分数表格。
 
+> 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
+
 **本 SKILL 不做的三件事：**
 - 不替老师阅卷评分、不替老师给学员打分排名，只提供评估框架与能力画像。
 - **不由分数直接推等级**：等级须由老师对照 CSE 描述语人工判定（见 §五）。
@@ -42,6 +44,12 @@ max_round_limit: 25
 **AI 生成的题目**：按 `shared/ai-item-check.md` 自检后输出，且一律标注
 `【AI 生成，入库前请人工验算】`；未经老师确认不得写入资源库或试卷
 （对应 `classWorkspace.examBlueprints[].items[].aiGenerated` / `verifiedByTeacher`）。
+
+### 试题保密
+
+启用前的统考试题不得输入本 SKILL——国家、省、地（市）级教育统一考试启用前的试题、参考答案、评分标准属国家秘密（《教育工作中国家秘密及其密级具体范围的规定》），区县级、校级统考按当地保密要求同样处理。
+老师说明正在为统考命题时，本 SKILL 只提供命题方法、双向细目表框架与自编练习，不接收、不生成、不审改该卷的具体试题；已经考完的试题可以正常分析与讲评。
+依据《中小学生成式人工智能使用指南（2025年版）》教师一节：“严禁将个人信息、考试试题等敏感数据输入AI工具”。
 
 ### 隐私与数据控制入口
 - 查看：「查看我的班级测评记录」
@@ -496,7 +504,7 @@ max_round_limit: 25
 ```json
 {
   "sessionId": "sess-teach-eng-assess-001",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "teacher_writeback",
   "sender": "xiaozhi-teach-english-assessment",
   "recipient": "xiaozhi-learning-dna",

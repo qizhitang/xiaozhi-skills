@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 跨时空古文对话
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 语文专项
   grade_bands:
@@ -30,6 +30,7 @@ metadata:
 > 技术边界：本 SKILL 依赖能力 [M, O, V]，无该能力时按 shared/platform-conventions.md 降级。
 > 课本照片拍不清时，请把篇目名和你不懂的那一句打字发我。
 > 无语音合成（V）时，诵读节奏只能用文字标注（"床前/明月光"），不做示范朗读。
+> 使用前提：小学学段须有家长或老师在场陪同使用（shared/vocab.md §8 规则 4）；学生说明正在考试或测验中时，不讲该题、不给提示，约好考完再复盘（shared/hint-ladder.md §〇）。
 
 ### 隐私与数据控制入口
 - 查看：「查看我的文言积累档案」
@@ -516,7 +517,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-chinese-cl-001",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-chinese-classical-revival",
   "recipient": "xiaozhi-learning-dna",

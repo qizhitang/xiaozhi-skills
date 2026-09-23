@@ -1,8 +1,8 @@
 # 🎓 小智伴学 · SKILL 库
 
 > **面向中国 K12 的 AI 学习与教学 SKILL 集合 — 学生端 · 老师端**
-> 作者：小智伴学 ｜ 适用平台：WorkBuddy / SkillHub · OpenClaw / ClawHub ｜ 当前版本：**v2.1.12**
-> 全库 **57 个 SKILL**（学生端 31 + 老师端 26）+ 1 个开发者工具，**176 份 references**、**6 份共享约定**、**4 份 JSON Schema**（含 8 份示例）、**3 个校验脚本**。
+> 作者：小智伴学 ｜ 适用平台：WorkBuddy / SkillHub · OpenClaw / ClawHub ｜ 当前版本：**v2.1.13**
+> 全库 **57 个 SKILL**（学生端 31 + 老师端 26）+ 1 个开发者工具，**177 份 references**、**6 份共享约定**、**4 份 JSON Schema**（含 8 份示例）、**3 个校验脚本**。
 
 传统 AI 容易被当成"给答案的计算器"。这套 SKILL 库的目标，是把 AI 变成**追问思路的教练**和**减轻教师重复劳动的助手**，并让学生、老师、家长三方在**明确授权**的前提下共享必要的学习证据。
 
@@ -116,8 +116,24 @@ xiaozhi-skills/
 - **家长可见内容有门控**：`parentSharingConsent` 控制学习摘要，`emotionSharingWithParent` 单独控制情绪内容。
 - **危机例外优先**：出现自伤、轻生、霸凌、家庭安全等信号时，所有 SKILL 立即停止本流程，按 `shared/crisis-exception.md` 处置，不做低敏美化。
 - **控制入口**：每个持有数据的 SKILL 都提供查看 / 更正 / 删除 / 暂停 / 共享控制 / 导出六项口令。
-- **最小化记录**：不记真实姓名、联系方式、住址、证件、医疗与家庭信息；学员一律化名或座号。
+- **最小化记录**：不记真实姓名、联系方式、住址、证件、医疗与家庭信息；学员一律化名或座号。用户主动发来这类信息时，不写入，并提醒下次不必发。
+- **小学须有成人在场**：小学各学段须有家长或老师陪同使用（`shared/vocab.md` §8 规则 4）。
+- **考试中不讲题**：学生说明正在考试或测验时不讲该题，约好考完再复盘；考完的题照常讲（`shared/hint-ladder.md` §〇）。
+- **试题保密**：启用前的统考试题属国家秘密，会出题、组卷或存卷的老师端 SKILL 不接收、不入库（[`SECURITY_BASELINE.md`](SECURITY_BASELINE.md) 4.2）。
 - **不承诺提分**：不输出"预期提分 X 分"或"治愈焦虑"类表述。
+
+---
+
+## 📜 政策对标
+
+| 文件 | 要求 | 本库落点 |
+|---|---|---|
+| 《中小学生成式人工智能使用指南（2025年版）》 | 学生避免在作业中简单复制 AI 生成的内容 | 提示阶梯 L0–L6：不代做，也不把学生困死（`shared/hint-ladder.md`） |
+| 同上 | 避免在未查阅教材或权威资料前贸然使用 AI 获取信息 | 提示阶梯从 L0 复述起步，概念问题先回到课本 |
+| 同上 | 小学阶段禁止学生独自使用开放式内容生成功能 | 小学各学段须有成人在场（`shared/vocab.md` §8 规则 4；CI 项 G2） |
+| 同上 | 不得利用生成式人工智能作弊 | 考试进行中不讲题（`shared/hint-ladder.md` §〇；CI 项 G2） |
+| 同上 | 严禁将个人信息、考试试题等敏感数据输入 AI 工具 | 输入即提醒、试题保密（`SECURITY_BASELINE.md` 4.1、4.2；CI 项 T1） |
+| 《义务教育课程方案（2022年版）》 | 各科用不少于 10% 的课时开展跨学科主题学习 | 🔭 跨学科侦探周 |
 
 ---
 
@@ -150,15 +166,17 @@ npm install
 npm run check
 ```
 
+推送与 PR 时由 GitHub Actions（`.github/workflows/check.yml`）自动跑同一套校验。
+
 | 脚本 | 检查什么 |
 |---|---|
 | `scripts/check-references.mjs` | 引用的 references / schemas 文件真实存在，无孤儿文件 |
-| `scripts/check-skills.mjs` | frontmatter 规范、依赖无环、词表一致、占位与重复文件、学段标注、控制入口与危机片段、接口路径存在于 schema、文档一致性 |
+| `scripts/check-skills.mjs` | frontmatter 规范、依赖无环、词表一致、占位与重复文件、学段标注、控制入口与危机片段（学生端一律）、学生端使用前提与老师端试题保密、老师端教学主体边界、接口路径存在于 schema、文档一致性 |
 | `scripts/validate-schemas.mjs` | 四份 schema 自身有效、8 份 examples 合规、枚举与 `shared/vocab.md` 一致、结构与协议版本号等于 `package.json` |
 | `scripts/sync-shared.mjs --check` | 每个 SKILL 目录内的 `shared/` 副本与源一致：Markdown 逐字节（加横幅），JSON 契约按目标技能裁剪并带 `x-skill-scope`，检查时按同一规则重新生成再比对 |
 | `scripts/verify-examples.mjs` | references 里的 ```verify``` 断言逐条求值（示例题的关键数值结论交给 CI 算）；`check-skills` 的 A2 另查“示例题验算”日期不得早于文件最后一次实质提交 |
 | `scripts/gen-docs.mjs --check` | 文档与源码同步：`docs/skills-index.md` 由 frontmatter 生成且不落后；README / architecture 技能表的显示名、目录、学段与 frontmatter 一致；数量声明正确；安装指南的顺序不违反 `metadata.depends_on` |
-| `scripts/check-evals.mjs` | 每个 SKILL 都有回归用例：至少 1 条触发 + 1 条不触发；声明了能力代号的有降级用例；持有长期数据的有授权用例；会读到情绪文本的有危机用例；`route_to` 指向存在的 SKILL |
+| `scripts/check-evals.mjs` | 每个 SKILL 都有回归用例：至少 1 条触发 + 1 条不触发；声明了能力代号的有降级用例；持有长期数据的有授权用例；学生端技能与会读到情绪文本的技能都有危机用例；`route_to` 指向存在的 SKILL |
 
 行为层回归不进 `npm run check`（要 API key、非确定）：`ANTHROPIC_API_KEY=... npm run evals:run [skill...]` 把 SKILL.md 喂给模型逐条对话并判卷，报告在 `evals/report/`。格式与写法见 [evals/README.md](evals/README.md)。
 
@@ -171,6 +189,7 @@ npm run check
 - 🗺️ [安装指南](docs/installation-guide.md) — WorkBuddy 安装方式、分阶段安装路径与打包建议
 - 🔄 [版本历史](docs/changelog.md) — 版本演进与本轮变更
 - 📋 [评估报告 2026-09](docs/review-2026-09.md) — 本轮问题清单与优化路线图
+- 🧭 [学科扩展路线图](docs/roadmap-new-subjects.md) — 按各地中考与高考学科要求重排：物理高中化、化学、历史、高中生物与地理（第零批已完成，其余规划中）
 
 ---
 

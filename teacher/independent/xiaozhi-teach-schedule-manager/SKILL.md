@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 排课与课时管理
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 独立教师
   grade_bands:
@@ -36,6 +36,10 @@ max_round_limit: 12
 ## 技术边界
 
 > 技术边界：本 SKILL 依赖能力 [M, K, F]，无该能力时按 shared/platform-conventions.md 降级。
+
+> 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
+
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 排课建议与冲突检测由本 SKILL 给出，**写入课表前一律要老师确认**。冲突检测只读 `studentCards[].availability[]`（学员授权登记的可上课时间段），不擅自扩大可上课范围。无 `K`（日期感知）时先问今天日期与本周起止日再排课。
 

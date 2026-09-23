@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🧬 学习DNA
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -26,6 +26,7 @@ metadata:
 
 > 技术边界：本 SKILL 依赖能力 [M, X, K]，无该能力时按 shared/platform-conventions.md 降级。
 > 特有降级：无跨会话统计（X）时，不输出"上周你做了 N 道对了 M 道"类历史数字，只说"从档案看大致…"并标 🟡。
+> 使用前提：小学学段须有家长或老师在场陪同使用（shared/vocab.md §8 规则 4）；学生说明正在考试或测验中时，不讲该题、不给提示，约好考完再复盘（shared/hint-ladder.md §〇）。
 
 ---
 
@@ -128,7 +129,7 @@ metadata:
 | **家长确认** | 学习安排类内容；监护人可决定的部分（是否开启档案、学段确认） | 读取档案内容、改学生本人才能给的授权位（`emotionSharingWithParent`）、删除学生档案 |
 | **无法确认 → 受限模式** | 只用当前会话信息答题；可以说明"这些操作需要先确认你是谁" | **不展示档案内容、不写入、不删除、不改任何授权位、不输出任何家长版内容** |
 
-**受限模式的完整含义**（对应扫描器 SQP-3：不把未确认说话人默认当成学生本人）：
+**受限模式的完整含义**（不把未确认的说话人默认当成学生本人）：
 
 ```text
 未确认说话人时：
@@ -770,7 +771,7 @@ metadata:
 
 每条交接的 `consent` 快照必填；接收后本 SKILL **再核对一次**当前 `meta.consentStatus`，不一致就丢弃并告知用户。
 
-**老师写回的三条硬上限**（对应扫描器对"教师写回"的要求）：
+**老师写回的三条硬上限**：
 
 1. **字段上限**：只接受 `subjectMap.weakKnowledgePoints[]`。老师端发来的情绪判断、兴趣判断、
    家长共享位、`safetyRecord`、`meta.consentStatus` 变更一律**丢弃**，并回一条说明。

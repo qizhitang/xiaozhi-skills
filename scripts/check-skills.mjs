@@ -10,8 +10,13 @@
 //  V1 废弃词表（shared/vocab.md 列出的旧枚举）
 //  V2 协调器旧名称
 //  P1 依赖持久记忆/提醒/档案的 SKILL 必须有技术边界引用 + 控制入口
-//  S1 含情绪/焦虑/放弃等词的 SKILL 必须引用 shared/crisis-exception.md 或 crisis-referral-protocol.md
+//  S1 学生端 SKILL 一律、以及含情绪/焦虑/放弃等词的 SKILL，必须引用 shared/crisis-exception.md 或 crisis-referral-protocol.md
+//     （危机片段本身含“出题/熔断/家长摘要/档案”等词，做 A1/P1/S1 词表判定时先剔除危机片段那一行）
 //  G1 高中术语出现在 student/ 与 teacher/ 的 references/SKILL 中且同行无 ⚠高中/初高衔接 标注
+//     豁免（shared/vocab.md §10）：标题含"初高衔接"的整节；grade_bands 含 高中 的技能，标题含 高中/高一/高二/高三 的整节
+//  G2 学生端 SKILL 必须有"使用前提"行（小学需成人在场 vocab §8 规则 4；考试进行中不帮 hint-ladder §〇）
+//  T1 会出题、组卷或存放试卷的老师端 SKILL 必须有"试题保密"段落（SECURITY_BASELINE.md 4.2）
+//  T2 老师端 SKILL 必须有“教学主体边界”行（SECURITY_BASELINE.md 4.3）
 //  I1 老师端接口路径根字段必须存在于 schema
 //  D1 docs 版本号与 package.json 一致；docs 中 SKILL 名称与目录一致
 //  A1 含"示例题"的 references 必须有"示例题验算：YYYY-MM-DD"声明（警告）
@@ -49,7 +54,7 @@ const rel = (p) => relative(root, p).replace(/\\/g, "/");
 
 function walk(dir, acc = []) {
   for (const name of readdirSync(dir)) {
-    if ([".git", "node_modules", ".claude", "tools"].includes(name)) continue;
+    if ([".git", "node_modules", ".claude"].includes(name)) continue;   // tools/ 也发布到市场，同样受内容级校验
     const p = join(dir, name);
     if (statSync(p).isDirectory()) walk(p, acc); else acc.push(p);
   }
@@ -120,11 +125,19 @@ const DEPRECATED_VOCAB = [
 const OLD_COORD = /三SKILL联动协调器|五SKILL联动协调器|五SKILL协调器|三SKILL协调器|SKILL联动协调器/;
 const MEMORY_WORDS = /跨会话|长期档案|长期记忆|持久记忆|档案|DNA|履历|定时提醒|主动推送|月报|周报/;
 const EMOTION_WORDS = /焦虑|情绪|放弃|挫败|不想学|我太差|熔断|家长看板|家长摘要|家长简报|家庭版/;
+// 危机片段必须原文照抄（shared/crisis-exception.md），而原文里有“出题/熔断/家长摘要/档案”，词表判定前先剔除这一行
+const stripCrisis = (s) => s.split(/\r?\n/).filter((l) => !l.includes("危机例外（最高优先级）")).join("\n");
 const HS_TERMS = [
   "动量守恒", "动能定理", "正交分解", "玻意耳", "内阻", "闭合电路欧姆", "洛伦兹", "电场强度", "万有引力", "简谐", "单摆",
   "平抛", "向心力", "等比数列", "等差数列", "条件概率", "射影定理", "切割线定理", "三角函数的图像", "函数零点",
   "AWL", "学术词表", "定语从句的非限制", "虚拟语气", "倒装句（部分倒装）", "《赤壁赋》", "《将进酒》", "《登高》", "《念奴娇》", "《归园田居》", "《阿房宫赋》", "《兰亭集序》",
+  "物质的量", "摩尔质量", "气体摩尔体积", "阿伏加德罗", "氧化还原反应", "离子方程式", "化学平衡", "原电池", "电解池", "盖斯定律",
 ];
+// T1：会出题、组卷或存放试卷的老师端技能（SECURITY_BASELINE.md 4.2；新增同类技能时加进来）
+const EXAM_SKILLS = new Set(["xiaozhi-teach-exam-designer", "xiaozhi-teach-math-exam-designer", "xiaozhi-teach-english-assessment", "xiaozhi-teach-english-listening-designer", "xiaozhi-teach-assignment-designer", "xiaozhi-teach-resource-library"]);
+// G1 章节豁免：标题命中即整节免标，直到出现同级或更高级标题
+const HS_SECTION_ANY = /初高衔接/;               // 任何技能
+const HS_SECTION_NATIVE = /高中|高一|高二|高三/;   // 仅 grade_bands 含 高中 的技能，且标题不能同时写“初中”（如“初中与高中”是混合章节）
 const HS_OK = /⚠高中|⚠️高中|初高衔接|高中拓展|高中内容|【高中】|高中必修|高中选修|（高中）|\(高中\)|非课标|已删|不在课标/;
 
 // ---------- F1/F2/F3 frontmatter & body ----------
@@ -213,19 +226,33 @@ for (const f of contentFiles) {
   }
   const ci = lines.findIndex((l) => OLD_COORD.test(l));
   if (ci >= 0) err("V2", rel(f) + ":" + (ci + 1), "协调器旧名称，应为“学习系统协调器”");
+  // G1 章节豁免：所属技能 grade_bands 含 高中 时，高中章节整体免标；否则只有“初高衔接”章节免标
+  const parts = rel(f).split("/"), ri = parts.lastIndexOf("references");
+  const owner = skills.get(isSkill ? basename(dirname(f)) : ri > 0 ? parts[ri - 1] : "");
+  const native = !!owner && (owner.fm.metadata?.grade_bands || []).includes("高中");
+  const exemptHeading = (t) => HS_SECTION_ANY.test(t) || (native && HS_SECTION_NATIVE.test(t) && !/初中/.test(t));
+  const secStack = []; let inFence = false;
   lines.forEach((l, i) => {
+    if (/^\s*(```|~~~)/.test(l)) inFence = !inFence;
+    const h = !inFence && l.match(/^(#{1,6})\s+(.*)$/);
+    if (h) { while (secStack.length && secStack[secStack.length - 1].level >= h[1].length) secStack.pop(); secStack.push({ level: h[1].length, exempt: exemptHeading(h[2]) }); }
+    if (secStack.some((s) => s.exempt)) return;
     for (const t of HS_TERMS) if (l.includes(t) && !HS_OK.test(l)) { err("G1", rel(f) + ":" + (i + 1), `高中/超纲术语“${t}”未标注 ⚠高中`); break; }
     if (/(?<![引指领教辅向传半倒诱疏])导数/.test(l) && !HS_OK.test(l)) err("G1", rel(f) + ":" + (i + 1), "高中/超纲术语“导数”未标注 ⚠高中");
   });
   if (isSkill) {
-    const needsMemory = MEMORY_WORDS.test(text);
+    const plain = stripCrisis(text);
+    const needsMemory = MEMORY_WORDS.test(plain);
     if (needsMemory) {
       if (!/shared\/platform-conventions\.md/.test(text)) err("P1", rel(f), "依赖持久记忆/提醒/档案，但未引用 shared/platform-conventions.md");
       if (!/查看我的/.test(text) || !/删除我的/.test(text)) err("P1", rel(f), "缺控制入口（查看我的… / 删除我的…）");
     }
-    if (EMOTION_WORDS.test(text) && !/shared\/crisis-exception\.md|crisis-referral-protocol\.md/.test(text)) err("S1", rel(f), "涉及情绪/焦虑/家长输出，但未引用 shared/crisis-exception.md");
-    if (/出题|生成.{0,4}题|同类题|变式题|纯净版/.test(text) && !/shared\/ai-item-check\.md/.test(text)) err("A1", rel(f), "会生成题目，但未引用 shared/ai-item-check.md");
+    if ((rel(f).startsWith("student/") || EMOTION_WORDS.test(plain)) && !/shared\/crisis-exception\.md|crisis-referral-protocol\.md/.test(text)) err("S1", rel(f), rel(f).startsWith("student/") ? "学生端 SKILL 必须带危机例外片段（shared/crisis-exception.md）——危机信号不挑场景" : "涉及情绪/焦虑/家长输出，但未引用 shared/crisis-exception.md");
+    if (/出题|生成.{0,4}题|同类题|变式题|纯净版/.test(plain) && !/shared\/ai-item-check\.md/.test(text)) err("A1", rel(f), "会生成题目，但未引用 shared/ai-item-check.md");
     if (/不给答案|不给完整|永远不.{0,8}(?:答案|讲解|解题|讲题)|绝不.{0,6}答案|不直接给/.test(text) && !/shared\/hint-ladder\.md/.test(text)) err("H1", rel(f), "含“不给答案”类铁律，但未引用 shared/hint-ladder.md（提示阶梯与出口）");
+    if (rel(f).startsWith("student/") && !(/shared\/vocab\.md §8 规则 4/.test(text) && /shared\/hint-ladder\.md §〇/.test(text))) err("G2", rel(f), "学生端 SKILL 缺“使用前提”行：须引用 shared/vocab.md §8 规则 4（小学需成人在场）与 shared/hint-ladder.md §〇（考试进行中不帮）");
+    if (EXAM_SKILLS.has(basename(dirname(f))) && !/试题保密/.test(text)) err("T1", rel(f), "会接触试题的老师端 SKILL 缺“试题保密”段落（启用前的统考试题不得输入，见 SECURITY_BASELINE.md 4.2）");
+    if (rel(f).startsWith("teacher/") && !/教学主体边界/.test(text)) err("T2", rel(f), "老师端 SKILL 缺“教学主体边界”行：AI 不作替代性教学主体、不直接回答学生、不直接评价学生（教育部 2025 生成式 AI 使用指南；SECURITY_BASELINE.md 4.3）");
   }
 }
 

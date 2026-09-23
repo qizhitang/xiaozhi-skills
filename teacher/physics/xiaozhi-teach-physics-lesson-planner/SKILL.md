@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 物理教案设计
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 老师物理
   grade_bands:
@@ -34,6 +34,8 @@ max_round_limit: 30
 > 特有降级话术：本 SKILL 输出教案框架与概念建构路径，不代替老师备课、不替老师讲题。
 > AI 生成的题与素材必须标注 `【AI 生成，入库前请人工验算】`，生成前按 shared/ai-item-check.md 自检。
 > 铁律"不替老师讲题"的准确表述：面向学生的提问链按 `shared/hint-ladder.md` 逐级升，本 SKILL 提供到 L4（半步）的提问设计，L5/L6 的完整示范由老师在课堂上决定。
+
+> 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
 
 ### 实验边界（进课堂前必读）
 

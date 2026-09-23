@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🎓 费曼学习法
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -28,6 +28,7 @@ metadata:
 
 > 技术边界：本 SKILL 依赖能力 [M]，无该能力时按 shared/platform-conventions.md 降级。
 > 特有降级：无跨会话记忆时，测试结果只在本次会话给出，不承诺"下次我还记得你卡在哪"，并建议学生自己把结论记一句。
+> 使用前提：小学学段须有家长或老师在场陪同使用（shared/vocab.md §8 规则 4）；学生说明正在考试或测验中时，不讲该题、不给提示，约好考完再复盘（shared/hint-ladder.md §〇）。
 
 ### 隐私与数据控制入口
 

@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🖊️ 语文写作教练
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 语文专项
   grade_bands:
@@ -30,6 +30,7 @@ metadata:
 
 > 技术边界：本 SKILL 依赖能力 [M, O, X]，无该能力时按 shared/platform-conventions.md 降级。
 > 作文照片看不清时，请把作文打字发我，或只发你想改的那两段。
+> 使用前提：小学学段须有家长或老师在场陪同使用（shared/vocab.md §8 规则 4）；学生说明正在考试或测验中时，不讲该题、不给提示，约好考完再复盘（shared/hint-ladder.md §〇）。
 
 ### 隐私与数据控制入口
 - 查看：「查看我的写作档案」
@@ -506,7 +507,7 @@ AI 不替学生说论点，也不替学生"总结提炼"成一句漂亮的话。
 ```json
 {
   "sessionId": "sess-chinese-wt-001",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-chinese-writing-coach",
   "recipient": "xiaozhi-learning-dna",

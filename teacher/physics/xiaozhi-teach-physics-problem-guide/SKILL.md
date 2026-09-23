@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 物理解题教学指导
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 老师物理
   grade_bands:
@@ -33,6 +33,8 @@ max_round_limit: 20
 > 特有降级话术：题目图片看不清时，请把题干文字和已知条件打出来；本 SKILL 输出解题思路框架与变式设计，不替老师讲完整题、不给"标准答案"、不替老师给学生打分排名。
 > 题目一律标注 `copyrightStatus`（`自有` / `改编` / `公开可引用` / `仅存索引`，见 shared/vocab.md §11）；教辅原题与历年真题一律 `仅存索引`。
 > AI 生成的题必须标注 `【AI 生成，入库前请人工验算】`，生成前按 shared/ai-item-check.md 自检。
+
+> 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
 
 ### 隐私与数据控制入口
 - 查看：「查看我的班级解题档案」

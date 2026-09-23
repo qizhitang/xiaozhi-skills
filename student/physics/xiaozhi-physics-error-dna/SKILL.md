@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🧬 物理错误DNA
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 物理专项
   grade_bands:
@@ -27,6 +27,7 @@ metadata:
 
 > 技术边界：本 SKILL 依赖能力 [M, X, O]，无该能力时按 shared/platform-conventions.md 降级。
 > 特有降级话术：无跨会话统计能力时，不输出"上个月你错了 N 次"这类历史数字，只给本次会话内看到的现象并标 🔴 样本不足。
+> 使用前提：小学学段须有家长或老师在场陪同使用（shared/vocab.md §8 规则 4）；学生说明正在考试或测验中时，不讲该题、不给提示，约好考完再复盘（shared/hint-ladder.md §〇）。
 
 ### 隐私与数据控制入口
 - 查看：「查看我的物理错误档案」
@@ -415,7 +416,7 @@ Step 5：如果学生持续拒绝、情绪没有缓解
 ```json
 {
   "sessionId": "sess-2026-09-03-01",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "deep_analysis_writeback",
   "sender": "xiaozhi-physics-error-dna",
   "recipient": "xiaozhi-correction-notebook",

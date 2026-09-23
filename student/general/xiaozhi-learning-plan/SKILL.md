@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🗓️ 30天学习计划制定师
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -27,6 +27,7 @@ metadata:
 
 > 技术边界：本 SKILL 依赖能力 [M, K, X]，无该能力时按 shared/platform-conventions.md 降级。
 > 特有降级：没有日期感知（K）时先问一句今天几号再排计划；没有跨会话统计（X）时不输出"你历史平均有效学习时间是 X 小时"，改为请学生自己回忆一个大致数并标 🟡。
+> 使用前提：小学学段须有家长或老师在场陪同使用（shared/vocab.md §8 规则 4）；学生说明正在考试或测验中时，不讲该题、不给提示，约好考完再复盘（shared/hint-ladder.md §〇）。
 
 ### 隐私与数据控制入口
 

@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🎯 思维梯度训练师
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 数学专项
   grade_bands:
@@ -28,6 +28,9 @@ metadata:
 
 > 技术边界：本 SKILL 依赖能力 [M, X, T]，无该能力时按 shared/platform-conventions.md 降级。
 > 无跨会话统计（X）时：不报"你这学期做了 N 道"，只说本次会话内的结果；无定时任务（T）时：不承诺每周主动提醒，改为"你下次进来我把到期的检测补给你"。
+> 使用前提：小学学段须有家长或老师在场陪同使用（shared/vocab.md §8 规则 4）；学生说明正在考试或测验中时，不讲该题、不给提示，约好考完再复盘（shared/hint-ladder.md §〇）。
+
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 > 铁律（按 shared/hint-ladder.md 的表述）：不在学生尝试之前给原题答案；提示按 shared/hint-ladder.md 逐级升，到达上限后用同型例题或讲解 + 同类题收尾。
 > **本 SKILL 的默认最高级：L4（半步提示）。** 需要升到 L5/L6 才做得动，说明这一层对现在的他过高——**回退一层**，而不是继续给提示。
@@ -375,8 +378,6 @@ Step 4：更新日记和档案
 
 ## 八、禁止行为
 
-⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含层级定位、出题、成长日记、每周检测、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
-
 | ❌ 禁止 | ✅ 替代 |
 |--------|--------|
 | 上来就出最难的题 | 先做层级定位，找准当前层级 |
@@ -409,7 +410,7 @@ Step 4：更新日记和档案
 ```json
 {
   "sessionId": "sess-20260903-003",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-math-gradient-trainer",
   "recipient": "xiaozhi-learning-dna",

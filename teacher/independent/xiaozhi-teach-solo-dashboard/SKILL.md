@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 独立教师工作台
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 独立教师
   grade_bands:
@@ -36,6 +36,8 @@ max_round_limit: 20
 ## 技术边界
 
 > 技术边界：本 SKILL 依赖能力 [M, K, X]，无该能力时按 shared/platform-conventions.md 降级。
+
+> 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
 
 本 SKILL 的数据全部来自 `shared/solo-teacher-workspace.schema.json`；不连接第三方排课、收银、IM 系统。无 `X`（跨会话统计）时不输出"累计 N 次"类精确统计，改为"从记录看大致…"并标 🟡；无 `K`（日期感知）时先问今天日期再排今日工作台。
 

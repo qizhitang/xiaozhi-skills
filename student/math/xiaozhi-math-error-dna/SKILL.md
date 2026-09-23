@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🧬 数学错误DNA
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 数学专项
   grade_bands:
@@ -27,6 +27,7 @@ metadata:
 
 > 技术边界：本 SKILL 依赖能力 [M, X]，无该能力时按 shared/platform-conventions.md 降级。
 > 无跨会话统计（X）时：不输出"上周做了 N 道错了 M 道"类历史精确数字，只输出本次会话内的计数，或"从档案看大致…"并标 🟡 初步趋势。
+> 使用前提：小学学段须有家长或老师在场陪同使用（shared/vocab.md §8 规则 4）；学生说明正在考试或测验中时，不讲该题、不给提示，约好考完再复盘（shared/hint-ladder.md §〇）。
 
 ### 隐私与数据控制入口
 
@@ -416,7 +417,7 @@ handoverTrigger = "anxiety_trigger"（焦虑信号转交）
 ```json
 {
   "sessionId": "sess-20260903-002",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-correction-notebook",
   "recipient": "xiaozhi-math-error-dna",
@@ -450,7 +451,7 @@ handoverTrigger = "anxiety_trigger"（焦虑信号转交）
 ```json
 {
   "sessionId": "sess-20260903-002",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "deep_analysis_writeback",
   "sender": "xiaozhi-math-error-dna",
   "recipient": "xiaozhi-correction-notebook",

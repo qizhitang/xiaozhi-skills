@@ -18,9 +18,9 @@
         },
         "schemaVersion": {
           "type": "string",
-          "description": "档案结构版本号，与仓库版本一致（当前 2.1.12）。旧档案（1.0.0–1.3.0）的字段在本结构中全部保留且均为可选，迁移时只需把本字段改写为 2.1.0。",
+          "description": "档案结构版本号，与仓库版本一致（当前 2.1.13）。旧档案（1.0.0–1.3.0）的字段在本结构中全部保留且均为可选，迁移时只需把本字段改写为 2.1.0。",
           "enum": [
-            "2.1.12"
+            "2.1.13"
           ]
         },
         "createdAt": {
@@ -136,6 +136,101 @@
             "初一",
             "初三",
             "高一"
+          ]
+        },
+        "subjectSelection": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "高中选科（shared/vocab.md §10）。只在高中学生自述时记录，不追问；供协调器的选科门使用——未选考的科目按学业水平合格性考试深度处理，不推选考难度",
+          "properties": {
+            "examMode": {
+              "type": "string",
+              "enum": [
+                "3+1+2",
+                "3+3",
+                "未定"
+              ],
+              "description": "所在省份的高考模式"
+            },
+            "firstChoice": {
+              "type": "string",
+              "enum": [
+                "物理",
+                "历史"
+              ],
+              "description": "首选科目，仅 3+1+2"
+            },
+            "electives": {
+              "type": "array",
+              "description": "再选 / 选考科目：3+1+2 从化学、生物学、地理、思想政治中选 2；3+3 选 3（技术仅浙江）",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "物理",
+                  "化学",
+                  "生物学",
+                  "历史",
+                  "地理",
+                  "思想政治",
+                  "技术"
+                ]
+              },
+              "uniqueItems": true,
+              "maxItems": 3
+            },
+            "decidedAt": {
+              "type": "string",
+              "format": "date",
+              "description": "选科确定日期"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "examMode": {
+                    "const": "3+1+2"
+                  }
+                },
+                "required": [
+                  "examMode"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "electives": {
+                    "maxItems": 2,
+                    "items": {
+                      "enum": [
+                        "化学",
+                        "生物学",
+                        "地理",
+                        "思想政治"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "examMode": {
+                    "const": "3+3"
+                  }
+                },
+                "required": [
+                  "examMode"
+                ]
+              },
+              "then": {
+                "not": {
+                  "required": [
+                    "firstChoice"
+                  ]
+                }
+              }
+            }
           ]
         },
         "shortTermGoal": {

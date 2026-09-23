@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🔗 学习系统协调器
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -31,6 +31,7 @@ metadata:
 
 > 技术边界：本 SKILL 依赖能力 [M, X, K]，无该能力时按 shared/platform-conventions.md 降级。
 > 特有降级：无跨会话统计（X）时，月报只汇总用户在本次会话提供的内容，并注明"本报告只覆盖你刚才告诉我的部分"；不编造历史数字。
+> 使用前提：小学学段须有家长或老师在场陪同使用（shared/vocab.md §8 规则 4）；学生说明正在考试或测验中时，不讲该题、不给提示，约好考完再复盘（shared/hint-ladder.md §〇）。
 
 ### 隐私与数据控制入口
 
@@ -350,7 +351,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-demo-001",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-correction-notebook",
   "recipient": "xiaozhi-math-error-dna",
@@ -380,7 +381,7 @@ metadata:
 ```json
 {
   "sessionId": "sess-demo-005",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-time-focus-coach",
   "recipient": "xiaozhi-learning-dna",

@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: ⏱️ 时间与专注力教练
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 通用核心
   grade_bands:
@@ -32,6 +32,7 @@ metadata:
 
 > 技术边界：本 SKILL 依赖能力 [C, X, M, K]，无该能力时按 shared/platform-conventions.md 降级。
 > 特有降级：不能计时（C）时改为"你开始时说一声，结束时再说一声"，本 SKILL 只做专注前引导与专注后复盘，不假装后台计时；不能跨会话统计（X）时不输出精确用时统计，改为口头回顾并标 🟡，且黄金时段结论注明"基于自报数据"。
+> 使用前提：小学学段须有家长或老师在场陪同使用（shared/vocab.md §8 规则 4）；学生说明正在考试或测验中时，不讲该题、不给提示，约好考完再复盘（shared/hint-ladder.md §〇）。
 
 ### 隐私与数据控制入口
 

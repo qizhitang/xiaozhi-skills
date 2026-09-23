@@ -1,13 +1,13 @@
 # 🏛️ 系统架构与方法论
 
-本文档描述小智伴学 SKILL 库的完整清单、协作架构、数据契约、方法论依据与目录结构。当前版本 v2.1.12。
-全库 **57 个 SKILL**（学生端 31 + 老师端 26）+ 1 个开发者工具，**176 份 references**（其中开发者工具 1 份），**6 份共享约定**，**4 份 JSON Schema**（含 8 份示例），**3 个 CI 校验脚本**。
+本文档描述小智伴学 SKILL 库的完整清单、协作架构、数据契约、方法论依据与目录结构。当前版本 v2.1.13。
+全库 **57 个 SKILL**（学生端 31 + 老师端 26）+ 1 个开发者工具，**177 份 references**（其中开发者工具 1 份），**6 份共享约定**，**4 份 JSON Schema**（含 8 份示例），**3 个 CI 校验脚本**。
 
 ---
 
 ## 一、设计底座：单一事实源
 
-v2.1.12 的核心变化是把散落在各 SKILL 里的术语、阈值、降级规则、安全条款收敛到 `shared/`。所有 SKILL 只**引用**，不再各自定义。
+v2.1.13 的核心变化是把散落在各 SKILL 里的术语、阈值、降级规则、安全条款收敛到 `shared/`。所有 SKILL 只**引用**，不再各自定义。
 
 | 文件 | 定义了什么 | 谁必须引用 |
 |---|---|---|
@@ -44,7 +44,7 @@ v2.1.12 的核心变化是把散落在各 SKILL 里的术语、阈值、降级�
 
 ### 2.1 学生端 · 通用（11）
 
-| SKILL | 目录 | 核心能力（v2.1.12 现状） | 适用学段 |
+| SKILL | 目录 | 核心能力（v2.1.13 现状） | 适用学段 |
 |---|---|---|---|
 | 🧬 学习DNA | `student/general/xiaozhi-learning-dna/` | 长期档案层；六位授权模型 + 说话人确认；概念图谱为唯一图谱结构；四科扩展档案与五类通用扩展；危机处置事实 | 小学中段–高中 |
 | ❌ 智能错题本 | `student/general/xiaozhi-correction-notebook/` | 全学科统一入口；**"3 次顽固"唯一计数权威**；快速记录模式（≤2 轮）与轮次预算（≤6 轮）；提示阶梯默认 L5 | 小学中段–高中 |
@@ -251,6 +251,9 @@ safetyRecord                ← 任何触发危机例外的 SKILL（只记处置
 | 难度 P / 区分度 D / 信度 α | 经典测验理论 | 学情分析师、测评设计师 |
 | 危机识别与转介优先于一切 | 未成年人保护常识与"宁可误报不可漏报" | `shared/crisis-exception.md` |
 | 成长型措辞、拒绝固定标签 | 避免能力固化归因 | 全库（已删"天赋""天花板"类表述） |
+| 先回到课本，再问 AI | 《中小学生成式人工智能使用指南（2025年版）》：学生避免在未查阅教材或权威资料前贸然使用 AI 获取信息 | `shared/hint-ladder.md` L0 |
+| 小学须有成人在场；考试中不讲题 | 同一《指南》的分学段使用规范与"不得利用生成式人工智能作弊" | `shared/vocab.md` §8 规则 4、`shared/hint-ladder.md` §〇 |
+| 启用前的统考试题不输入、不入库 | 同一《指南》教师一节；《教育工作中国家秘密及其密级具体范围的规定》 | `SECURITY_BASELINE.md` 4.2；会出题、组卷或存卷的老师端 SKILL 的"试题保密"段 |
 
 ---
 
@@ -272,7 +275,9 @@ consentStatus
 - 学生与家长共用会话时先确认说话人；**确认之前进入受限模式**（不读档案、不写记录、不执行删除、不变更授权位、不输出家长版内容）。
 - **危机例外优先于以上全部授权位**：出现自伤、轻生、霸凌、持续绝望、家庭安全信号时，立即停止本 SKILL 流程，不做低敏美化，如实提示可信成年人并给出求助渠道；档案只记"已转介"的处置事实。
 - 控制入口六项：查看 / 更正 / 删除 / 暂停 / 共享控制 / 导出。
-- 最小化记录：不记真实姓名、联系方式、住址、证件、医疗与家庭信息。
+- 最小化记录：不记真实姓名、联系方式、住址、证件、医疗与家庭信息；用户主动发来时提醒下次不必发（`SECURITY_BASELINE.md` 4.1）。
+- 小学各学段须有家长或老师在场（`shared/vocab.md` §8 规则 4）；学生说明正在考试或测验时不讲该题（`shared/hint-ladder.md` §〇）。每个学生端 SKILL 都有一行"使用前提"引用这两条（CI 项 G2）。
+- 启用前的统考试题不输入、不入库；会出题、组卷或存卷的老师端 SKILL 都有"试题保密"段（CI 项 T1）。
 
 ---
 
@@ -281,12 +286,14 @@ consentStatus
 | 脚本 | 检查项 |
 |---|---|
 | `scripts/check-references.mjs` | 引用文件存在；references 无孤儿 |
-| `scripts/check-skills.mjs` | F1 frontmatter（name/version/depends_on 列表/grade_bands）· F2 依赖无环 · F3 硬命令词与自动措辞 · R1 占位文件 · R2 跨文件重复 · V1 废弃词表 · V2 协调器命名 · P1 平台边界与控制入口 · S1 危机片段 · G1 高中术语标注 · A1 出题自检与示例题验算 · H1 提示阶梯 · I1 接口路径存在于 schema · D1 文档一致性 |
+| `scripts/check-skills.mjs` | F1 frontmatter（name/version/depends_on 列表/grade_bands）· F2 依赖无环 · F3 硬命令词与自动措辞 · R1 占位文件 · R2 跨文件重复 · V1 废弃词表 · V2 协调器命名 · P1 平台边界与控制入口 · S1 危机片段（学生端一律）· G1 高中术语标注（"初高衔接"章节豁免；声明了高中学段的技能，其高中章节豁免） · G2 学生端使用前提 · T1 老师端试题保密 · T2 老师端教学主体边界 · A1 出题自检与示例题验算 · H1 提示阶梯 · I1 接口路径存在于 schema · D1 文档一致性 |
 | `scripts/validate-schemas.mjs` | 四份 schema 有效；8 份示例合规；枚举与 `shared/vocab.md` 一致；收发方覆盖全库；关键字段存在；结构与协议版本号等于 `package.json` |
 | `scripts/sync-shared.mjs --check` | 58 个 SKILL 目录内的 `shared/` 副本与仓库根源文件一致（缺失、被改、残留均报错）|
 | `scripts/verify-examples.mjs` | X1 ```verify``` 块为合法 JSON（claim / expr / expect）· X2 expr 只含 Math 与字面量，求值结果等于 expect · X3 有验算声明却无断言的文件给警告。配合 `check-skills` 的 A2：验算日期早于最后一次实质提交即失败 |
 | `scripts/gen-docs.mjs --check` | D2 `docs/skills-index.md` 与 frontmatter 生成结果一致 · D3 README / architecture 技能表：显示名 == `metadata.display_name`、反引号目录存在、学段列 == `grade_bands` 区间、改名残留报错 · D4 数量声明（全库 / 学生端 / 老师端 / references）与实际一致 · D5 安装指南顺序不违反 `metadata.depends_on` |
-| `scripts/check-evals.mjs` | E1 用例文件过 schema、id 唯一 · E2 至少 1 触发 + 1 不触发 · E3 有能力代号即有降级用例且 `missing` 不越界 · E4 持有长期数据即有授权用例 · E5 会读情绪文本即有危机用例 · E6 `route_to` 与授权字段名存在 · E7 每条用例有断言 |
+| `scripts/check-evals.mjs` | E1 用例文件过 schema、id 唯一 · E2 至少 1 触发 + 1 不触发 · E3 有能力代号即有降级用例且 `missing` 不越界 · E4 持有长期数据即有授权用例 · E5 学生端一律、会读情绪文本的也要有危机用例 · E6 `route_to` 与授权字段名存在 · E7 每条用例有断言 |
+
+推送与 PR 时，GitHub Actions（`.github/workflows/check.yml`）在 Ubuntu 上跑同一条 `npm run check`，失败的提交会在 GitHub 上标红。
 
 静态校验盖不住“文件之间互相矛盾”（SKILL.md 说不归档、references 说归档）——每份文件单看都合法。`evals/` 下每个 SKILL 一份回归用例（触发 / 不触发 / 降级 / 授权 / 危机五种），`scripts/run-evals.mjs` 把 SKILL.md 与随包 shared/ 喂给模型逐条对话、再由判卷模型对照期望打分。它不进 `npm run check`：要 API key，结果非确定，用途是发现回归而不是当门禁。
 

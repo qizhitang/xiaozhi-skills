@@ -100,6 +100,7 @@
 | "还是不太明白" / "有点迷" | **不加薄弱标记**——薄弱与否由错题本按 shared/vocab.md §5 计数后写入；这里最多问“要不要把这道题发给错题本？” | （无） |
 | "我考试考了 XX 分" | 不写分数；问“要不要把这次考试记进档案（只记科目与日期，不记分数）？” | `growthTrack`（确认后） |
 | "我升XX年级了" | 更新年级与 `ageBand`，重新确认授权主体 | `basicInfo.gradeLevel`、`meta.consentStatus.ageBand` |
+| "我选了物理、化学、生物"（高中） | 按 `shared/vocab.md` §10 记高考模式、首选与再选科目；只记学生自己说的，不追问 | `basicInfo.subjectSelection` |
 | "我发现我最近XX进步了" | 生成里程碑待确认条目（需具体行为证据） | `growthTrack.milestones[]` |
 | "我这周要考XX" | 记录考试节点；提醒需另行征得 `reminderConsent`，由 IM 提醒入队 | `basicInfo.upcomingExams[]` |
 | "这道题我做了三次都错" | 转给错题本按 `shared/vocab.md §5` 计数，本 SKILL 不自行计数 | — |

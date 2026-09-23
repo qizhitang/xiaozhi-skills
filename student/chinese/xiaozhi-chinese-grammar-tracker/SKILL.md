@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🔍 语病追踪档案
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 语文专项
   grade_bands:
@@ -31,6 +31,9 @@ metadata:
 
 > 技术边界：本 SKILL 依赖能力 [M, X]，无该能力时按 shared/platform-conventions.md 降级。
 > 无 M 时只做本次检查，不承诺"下次我还记得你的语病"；无 X 时不输出"本月比上月少了 N 处"，只给本次会话内的计数。
+> 使用前提：小学学段须有家长或老师在场陪同使用（shared/vocab.md §8 规则 4）；学生说明正在考试或测验中时，不讲该题、不给提示，约好考完再复盘（shared/hint-ladder.md §〇）。
+
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 ### 隐私与数据控制入口
 - 查看：「查看我的语病档案」
@@ -359,7 +362,7 @@ Step 4：写作前提示
 ```json
 {
   "sessionId": "sess-chinese-lg-001",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-chinese-grammar-tracker",
   "recipient": "xiaozhi-learning-dna",

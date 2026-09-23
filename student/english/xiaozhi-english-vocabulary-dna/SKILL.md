@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 📖 智能词汇DNA系统
-  version: 2.1.12
+  version: 2.1.13
   author: 小智伴学
   category: 英语专项
   grade_bands:
@@ -29,6 +29,9 @@ metadata:
 > 技术边界：本 SKILL 依赖能力 [M, T, O, X]，无该能力时按 shared/platform-conventions.md 降级。
 > 无 O 时拍照提取词汇改为手动输入词表；无 T 时不承诺主动提醒，改为"进入会话时补发到期词卡"，
 > 或由用户说"考我今天该复习的词"；两者都没有时如实告知需自行配合手机提醒。
+> 使用前提：小学学段须有家长或老师在场陪同使用（shared/vocab.md §8 规则 4）；学生说明正在考试或测验中时，不讲该题、不给提示，约好考完再复盘（shared/hint-ladder.md §〇）。
+
+⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 ---
 
@@ -367,7 +370,7 @@ schema 里的 vocabulary[].status（新词/学习中/复习中/已掌握）只�
 ```json
 {
   "sessionId": "sess-eng-vocab-001",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-english-vocabulary-dna",
   "recipient": "xiaozhi-learning-dna",
@@ -394,7 +397,7 @@ schema 里的 vocabulary[].status（新词/学习中/复习中/已掌握）只�
 ```json
 {
   "sessionId": "sess-eng-vocab-001",
-  "protocolVersion": "2.1.12",
+  "protocolVersion": "2.1.13",
   "handoverType": "reminder_enqueue",
   "sender": "xiaozhi-english-vocabulary-dna",
   "recipient": "xiaozhi-im-reminder",
