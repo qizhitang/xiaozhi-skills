@@ -11,6 +11,7 @@
     python publish_skillhub.py             # 发全部（多轮，直到全成功或轮次用尽）
     python publish_skillhub.py --dry-run   # 只打包并列出顺序
     python publish_skillhub.py --once      # 只跑一轮（探配额用）
+    python publish_skillhub.py --first a,b,c   # 这几个排最前（窗口额度不够一次发完时，先发有实质改动的）
 """
 import json, os, shutil, subprocess, sys, time
 
@@ -76,7 +77,11 @@ def main():
     restage(ver)
     changelog = f"v{ver}：详见仓库 docs/changelog.md"
     allnames = sorted(os.listdir(STAGE))
-    order = [n for n in PRIORITY if n in allnames] + [n for n in allnames if n not in PRIORITY]
+    first = []
+    if "--first" in sys.argv:
+        first = [n for n in sys.argv[sys.argv.index("--first") + 1].split(",") if n in allnames]
+    order = first + [n for n in PRIORITY if n in allnames and n not in first] \
+        + [n for n in allnames if n not in PRIORITY and n not in first]
 
     if "--dry-run" in sys.argv:
         log(f"dry-run：{len(allnames)} 个待发，优先 {len([n for n in PRIORITY if n in allnames])} 个", LOG)
