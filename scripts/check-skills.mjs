@@ -13,7 +13,7 @@
 //  S1 学生端 SKILL 一律、以及含情绪/焦虑/放弃等词的 SKILL，必须引用 shared/crisis-exception.md 或 crisis-referral-protocol.md
 //     （危机片段本身含“出题/熔断/家长摘要/档案”等词，做 A1/P1/S1 词表判定时先剔除危机片段那一行）
 //  G1 高中术语出现在 student/ 与 teacher/ 的 references/SKILL 中且同行无 ⚠高中/初高衔接 标注
-//     豁免（shared/vocab.md §10）：标题含"初高衔接"的整节；grade_bands 含 高中 的技能，标题含 高中/高一/高二/高三 的整节
+//     豁免（shared/vocab.md §10）：标题含"初高衔接"的整节；grade_bands 含 高中 的技能，标题含 高中/高一/高二/高三、且不同时写"初中"的整节
 //  G2 学生端 SKILL 必须有"使用前提"行（小学需成人在场 vocab §8 规则 4；考试进行中不帮 hint-ladder §〇）
 //  T1 会出题、组卷或存放试卷的老师端 SKILL 必须有"试题保密"段落（SECURITY_BASELINE.md 4.2）
 //  T2 老师端 SKILL 必须有“教学主体边界”行（SECURITY_BASELINE.md 4.3）
