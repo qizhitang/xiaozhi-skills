@@ -14,7 +14,7 @@
 | `publish_clawhub.py` | 一轮发完 ClawHub，断点续跑。`xiaozhi-chinese-classical-revival` 的 slug 在 ClawHub 上重定向到一个审核隐藏的旧条目，只能就地发到 `chinese-classical-revival`，版本号映射为 `1000000.<patch>.0` |
 | `verify_publish.py` | 查 SkillHub 线上实际版本，与 `package.json` 比对，写 `verify-report.md`。看板列表按更新时间倒序、每页 20 条，发布刚结束时平台异步审核会让条目在翻页途中换位，出现重复或漏项就整遍重翻。报告区分“已提交”与“已审核通过”：审核中的版本用户暂时装不到，但不算发布失败 |
 | `withdraw_clawhub.py` | 撤回某个版本区间的旧版本（`2.1.4 2.1.11` 含两端），保留 latest 与区间外的版本。默认预演，加 `--yes` 才真撤；进度写 `withdrawn-clawhub.json`，可中断续跑。底层是 `clawhub delete <slug> --version`：制品保留、版本号占位，`clawhub undelete <slug> --version <v>` 可恢复 |
-| `fetch_scans.py` | 拉 ClawHub 对当前版本的安全扫描（ClawScan 判定 + SkillSpector 逐条证据），汇总成 `scan_summary_<版本>.json`；`--compare <上一版 summary>` 打印翻转表。ClawHub 发布后 3–5 分钟先落一份只有判定与摘要的快照，10–30 分钟后才补维度与逐条证据；快照记为 `complete: false`，重跑会重拉，直到退出码为 0 才算拉齐 |
+| `fetch_scans.py` | 拉 ClawHub 对当前版本的安全扫描（ClawScan 判定 + SkillSpector 逐条证据），汇总成 `scan_summary_<版本>.json`；`--compare <上一版 summary>` 打印翻转表。ClawHub 发布后 3–5 分钟先落一份只有判定与摘要的快照，10–30 分钟后才补维度与逐条证据；快照记为 `complete: false`，重跑会重拉，直到退出码为 0 才算拉齐。全量报告之后约 1–1.5 小时，平台还会复核一部分技能、改写判定（可能翻转），所以拉齐后隔一两个小时再跑一次 `--refresh`（已有全量报告的也重拉，并列出被改写的），以那一遍为准 |
 | `bump_version.py` | 版本号 OLD → NEW 一处改完：package.json / package-lock、各 SKILL.md 的 metadata.version 与示例 protocolVersion、schemas/examples 与 references 的 protocolVersion / schemaVersion、两个主 schema 的版本枚举、学习DNA validate.js 夹具、README / docs / changelog 的“当前版本”。跑完 `node scripts/sync-shared.mjs && npm run docs:gen && npm run check` |
 | `compare_scans.py` | 两个版本的翻转表（转好 / 变差 / 仍 suspicious），把仍 suspicious 的按证据归类：报告不完整（只拉到快照，重拉）/ 仅摘要 / 随包 schema（分发层的事）/ 技能自身；`--evidence` 逐条列 file:line 与判词。SQP-3 与 AE1 不追 |
 

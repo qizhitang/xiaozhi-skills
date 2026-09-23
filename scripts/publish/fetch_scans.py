@@ -9,10 +9,15 @@
 skillspector.json 为 null），10–30 分钟后全量分析才补上维度与逐条证据。快照会被记下来但标为
 complete=false，重跑时会重新拉；不要拿快照当最终报告去对比。
 
+全量报告也不一定是最后一版：之后约 1–1.5 小时，平台还会复核一部分技能并改写 clawscan.json，判定可能翻转
+（2026-09-23 实测 v2.1.13：58 份里 17 份在全量报告后 70–90 分钟被改写，其中 1 份 clean→suspicious）。
+所以退出码 0 之后，隔一两个小时用 --refresh 全部重拉一遍，以那一遍为准。
+
 用法：
     python fetch_scans.py                              # 拉当前版本
     python fetch_scans.py --compare <上一版 summary.json>  # 拉完顺便打印翻转表
     python fetch_scans.py --only <slug> [<slug>...]    # 只拉几个
+    python fetch_scans.py --refresh                    # 已有全量报告的也重拉，列出判定被改写的
 退出码：0 全部拿到且都是全量报告；1 仍有未生成或只有快照的报告（等几分钟再跑一次）
 """
 import json, os, subprocess, sys, time, zipfile
@@ -41,6 +46,7 @@ def summarize(zp):
         "guidance": cs.get("guidance"),
         "spector_status": sp.get("status"),
         "spector_issues": issues,
+        "checkedAt": cs.get("checkedAt"),
         # 快照阶段没有维度、skillspector 为 null；全量报告两者都有
         "complete": bool(cs.get("dimensions")) and sp_raw is not None,
     }
@@ -71,8 +77,10 @@ def main():
     env = clawhub_env()
     cli = clawhub_cli()
 
-    todo = [k for k in sorted(pub) if (not only or k in only) and not final(res.get(k))]
-    log(f"v{ver}：清单 {len(pub)} 个，待拉 {len(todo)}（已有全量报告 {len(pub) - len(todo)}）")
+    refresh = "--refresh" in sys.argv
+    todo = [k for k in sorted(pub) if (not only or k in only) and (refresh or not final(res.get(k)))]
+    log(f"v{ver}：清单 {len(pub)} 个，待拉 {len(todo)}（已有全量报告 {sum(final(res.get(k)) for k in pub)}）")
+    rewritten = []
     for i, name in enumerate(todo, 1):
         slug, rver = pub[name]["slug"], pub[name]["version"]
         zp = os.path.join(zdir, f"{slug}.zip")
@@ -82,9 +90,13 @@ def main():
                            capture_output=True, text=True, encoding="utf-8", env=env, timeout=180)
         s = summarize(zp) if os.path.exists(zp) else None
         if s:
+            before = (res.get(name) or {}).get("clawscan") if final(res.get(name)) else None
+            flip = f"  ← 全量报告后被改写：{before}→{s['clawscan']}" if before and before != s["clawscan"] else ""
+            if flip:
+                rewritten.append(f"{name}（{before}→{s['clawscan']}）")
             res[name] = s
             log(f"  [{i}/{len(todo)}] {name}: {s['clawscan']}  spector={len(s['spector_issues'])}"
-                + ("" if s["complete"] else "  ← 只有快照，全量还没跑完，下次重跑再拉"))
+                + ("" if s["complete"] else "  ← 只有快照，全量还没跑完，下次重跑再拉") + flip)
         else:
             res[name] = {"clawscan": None, "error": ((r.stdout or "") + (r.stderr or "")).strip()[:160] or "报告未生成"}
             log(f"  [{i}/{len(todo)}] {name}: 未生成（下次重跑再试）")
@@ -100,6 +112,8 @@ def main():
     snap = sorted(k for k, v in res.items() if v.get("clawscan") and not final(v))
     if snap:
         log(f"只有快照、还没全量 {len(snap)}：" + ", ".join(snap) + "  （等几分钟再跑一次）")
+    if refresh:
+        log(f"重拉 {len(todo)} 份，判定被改写 {len(rewritten)}" + ("：" + ", ".join(rewritten) if rewritten else ""))
 
     if "--compare" in sys.argv:
         prev_path = sys.argv[sys.argv.index("--compare") + 1]
