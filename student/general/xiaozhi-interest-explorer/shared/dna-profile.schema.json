@@ -10,7 +10,7 @@
       "meta"
     ]
   },
-  "description": "学习DNA 档案结构——随 xiaozhi-interest-explorer 分发的裁剪副本，只含 interestDNA、meta；完整定义见 xiaozhi-learning-dna/schemas/dna-profile.schema.json",
+  "description": "学习DNA 档案结构——随 xiaozhi-interest-explorer 分发的裁剪副本，只含 interestDNA、meta；完整定义见归属技能 xiaozhi-learning-dna 的 dna-profile.schema.json",
   "type": "object",
   "additionalProperties": false,
   "properties": {

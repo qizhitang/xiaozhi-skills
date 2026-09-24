@@ -11,7 +11,7 @@
       "subjectExtensions.chinese.subtypes"
     ]
   },
-  "description": "学习DNA 档案结构——随 xiaozhi-chinese-classical-revival 分发的裁剪副本，只含 meta、subjectExtensions.chinese.classicalProgress、subjectExtensions.chinese.subtypes；完整定义见 xiaozhi-learning-dna/schemas/dna-profile.schema.json",
+  "description": "学习DNA 档案结构——随 xiaozhi-chinese-classical-revival 分发的裁剪副本，只含 meta、subjectExtensions.chinese.classicalProgress、subjectExtensions.chinese.subtypes；完整定义见归属技能 xiaozhi-learning-dna 的 dna-profile.schema.json",
   "type": "object",
   "additionalProperties": false,
   "properties": {

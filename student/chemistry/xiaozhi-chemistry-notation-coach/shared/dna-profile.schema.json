@@ -12,7 +12,7 @@
       "subjectExtensions.chemistry.reactionTypes"
     ]
   },
-  "description": "学习DNA 档案结构——随 xiaozhi-chemistry-notation-coach 分发的裁剪副本，只含 basicInfo、meta、subjectExtensions.chemistry.notationProfile、subjectExtensions.chemistry.reactionTypes；完整定义见 xiaozhi-learning-dna/schemas/dna-profile.schema.json",
+  "description": "学习DNA 档案结构——随 xiaozhi-chemistry-notation-coach 分发的裁剪副本，只含 basicInfo、meta、subjectExtensions.chemistry.notationProfile、subjectExtensions.chemistry.reactionTypes；完整定义见归属技能 xiaozhi-learning-dna 的 dna-profile.schema.json",
   "type": "object",
   "additionalProperties": false,
   "properties": {

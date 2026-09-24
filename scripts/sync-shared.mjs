@@ -445,7 +445,7 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
     : scopeList.length
     ? `本副本随 ${skillName} 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的${kinds ? "交接类型" : "字段"}（共 ${scopeList.length} 项，删去 ${droppedN} 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。${roleNote}`
     : `本副本随 ${skillName} 分发。该技能正文没有在非否定语境下提到本 schema 的任何字段——它不直接读写这份数据，副本仅为交接契约的类型参照；已删去全部 ${droppedN} 个数据字段。`;
-  if (isDna && paths.length) obj.description = `学习DNA 档案结构——随 ${skillName} 分发的裁剪副本，只含 ${paths.join("、")}；完整定义见 xiaozhi-learning-dna/schemas/dna-profile.schema.json`;
+  if (isDna && paths.length) obj.description = `学习DNA 档案结构——随 ${skillName} 分发的裁剪副本，只含 ${paths.join("、")}；完整定义见归属技能 xiaozhi-learning-dna 的 dna-profile.schema.json`;
   const head = {};
   for (const k of ["$schema", "$id", "title"]) if (k in obj) head[k] = obj[k];
   head["x-distributed-to"] = skillName;

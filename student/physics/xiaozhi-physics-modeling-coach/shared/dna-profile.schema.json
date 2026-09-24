@@ -12,7 +12,7 @@
       "subjectExtensions.physics.subtypes"
     ]
   },
-  "description": "学习DNA 档案结构——随 xiaozhi-physics-modeling-coach 分发的裁剪副本，只含 basicInfo、meta、subjectExtensions.physics.modelingProfile、subjectExtensions.physics.subtypes；完整定义见 xiaozhi-learning-dna/schemas/dna-profile.schema.json",
+  "description": "学习DNA 档案结构——随 xiaozhi-physics-modeling-coach 分发的裁剪副本，只含 basicInfo、meta、subjectExtensions.physics.modelingProfile、subjectExtensions.physics.subtypes；完整定义见归属技能 xiaozhi-learning-dna 的 dna-profile.schema.json",
   "type": "object",
   "additionalProperties": false,
   "properties": {
