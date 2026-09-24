@@ -30,7 +30,7 @@
 
 > "移项不变号"归**概念模糊**（规则记错的本质是概念），不归计算失误。
 
-交接：完成上表定位后，把结果写入 `wrongAnswerData.basicDimension`（值为四维之一），推送给 `xiaozhi-math-error-dna`。学科端回写 `subtypeId`（如 B03）与深度 `rootCause`。子类型定义见 `../../../math/xiaozhi-math-error-dna/references/math-error-dimension-table.md`。
+交接：完成上表定位后，把结果写入 `wrongAnswerData.basicDimension`（值为四维之一），推送给 `xiaozhi-math-error-dna`。学科端回写 `subtypeId`（如 B03）与深度 `rootCause`。子类型定义见 `xiaozhi-math-error-dna` 的数学错因维度表。
 
 ---
 
@@ -47,7 +47,7 @@
 
 > 判断规则：**缺"画图景"的意识和习惯**归 P；**画了图但概念理解有偏差**归 C；**公式选错**归 F；**过程拆分不完整**归 R。
 
-交接给 `xiaozhi-physics-error-dna`；`new_error` 类型时 `judgmentClue` 必填。子类型定义见 `../../../physics/xiaozhi-physics-error-dna/references/physics-error-dimension-table.md`。
+交接给 `xiaozhi-physics-error-dna`；`new_error` 类型时 `judgmentClue` 必填。子类型定义见 `xiaozhi-physics-error-dna` 的物理错因维度表。
 
 ---
 
@@ -64,7 +64,7 @@
 
 > 判断规则：单独写这个化学式或方程式仍错 → HS；请学生用"粒子"讲一遍讲不出 → HM；纯净版概念判断题仍错 → HC；复述题目条件后立刻会做 → HR。
 
-七、八年级学生发来的"化学题"，先问一句学校教没教过化学（五四制八年级开课，浙江等地在《科学》课里学，见 shared/grade-bands.md §四）；没教过的多半是物理或生物题，按学科判别重新确认。交接给 `xiaozhi-chemistry-error-dna`；`new_error` 类型时 `judgmentClue` 必填。子类型定义见 `../../../chemistry/xiaozhi-chemistry-error-dna/references/chemistry-error-dimension-table.md`。
+七、八年级学生发来的"化学题"，先问一句学校教没教过化学（五四制八年级开课，浙江等地在《科学》课里学，见 shared/grade-bands.md §四）；没教过的多半是物理或生物题，按学科判别重新确认。交接给 `xiaozhi-chemistry-error-dna`；`new_error` 类型时 `judgmentClue` 必填。子类型定义见 `xiaozhi-chemistry-error-dna` 的化学错因维度表。
 
 ---
 
@@ -77,7 +77,7 @@
 | 计算失误 | 拼写错误、词形变化写错（复数、过去式） | `P`（拼写部分） |
 | 方法用错 | 中式英语（直接照译中文逻辑）；句子结构单一、缺连接词；答题不按题干要求作答 | `T` 表达 |
 
-交接给 `xiaozhi-english-grammar-coach`。子类型定义见 `../../../english/xiaozhi-english-grammar-coach/references/english-error-dimension-table.md`。
+交接给 `xiaozhi-english-grammar-coach`。子类型定义见 `xiaozhi-english-grammar-coach` 的英语错因维度表。
 
 ---
 
@@ -90,7 +90,7 @@
 | 计算失误 | 默写错字、引用原文抄错 | —（少见） |
 | 方法用错 | 答题格式不规范、缺术语；分析停留表面没答"为什么"；语病改了一处漏一处 | `AR` 答题规范 / `WT` 写作 / `LG` 语病 |
 
-交接给 `xiaozhi-chinese-reading-decoder`（阅读类）或 `xiaozhi-chinese-grammar-tracker`（语病类）。子类型定义见 `../../../chinese/xiaozhi-chinese-reading-decoder/references/chinese-error-dimension-table.md`。
+交接给 `xiaozhi-chinese-reading-decoder`（阅读类）或 `xiaozhi-chinese-grammar-tracker`（语病类）。子类型定义见 `xiaozhi-chinese-reading-decoder` 的语文错因维度表。
 
 ---
 
@@ -120,4 +120,4 @@
 | `occurrenceCountInWindow` | 整数 ≥ 1 | 错题本按 `shared/vocab.md §5` 统计的 28 天累计次数 |
 | `judgmentClue` | 自由文本 | 物理、化学 `new_error` 必填，说明为何归到该学科维度 |
 
-字段的完整约束见 `../../xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json`。
+字段的完整约束见 `shared/handover-protocol.schema.json`。

@@ -3,7 +3,7 @@
 > 适用学段：小学中段 / 小学高段 / 初中 / 高中
 > 配合 `xiaozhi-teach-solo-dashboard` 使用。
 > 完整 Prompt 逻辑请参阅 [`../SKILL.md`](../SKILL.md)。
-> 数据字段约束请参阅 [`../../schemas/solo-teacher-workspace.schema.json`](../../schemas/solo-teacher-workspace.schema.json)。
+> 数据字段约束请参阅 [`../shared/solo-teacher-workspace.schema.json`](../shared/solo-teacher-workspace.schema.json)。
 > 工作台**只读聚合，不写任何字段**，也不被其他 SKILL 依赖。"最近 N 条"一律按 `lessonLogs[].date` 倒序取；逾期一律看 `homeworkFollowups[].overdueDays`（`status` 枚举里没有 `overdue`）。
 
 ---

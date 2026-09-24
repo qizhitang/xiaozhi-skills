@@ -172,7 +172,7 @@
 
 > 候场追问不在本模板展开：本 SKILL 只出提问链草案，
 > 完整的五类候场追问、冷场 3 步走、基础学生参与路径见
-> `../../xiaozhi-teach-classroom-coach/references/questioning-strategies.md`。
+> 课堂互动教练 `xiaozhi-teach-classroom-coach` 的课堂提问策略与互动话术库。
 > 草案里给每问挂一个方向即可，例如：
 > 「y=kx+b 中 k 表示什么？」→ 候场方向：k 的正负决定什么。
 

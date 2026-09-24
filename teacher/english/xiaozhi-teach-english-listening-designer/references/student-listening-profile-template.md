@@ -5,7 +5,7 @@
 > 配合 `xiaozhi-teach-english-listening-designer` 使用。
 > 栏位与 SKILL.md §9.1 的微技能 M1-M8 一一对应；**只记得分与强弱项，不记等级**。
 > 等级须由老师对照 CSE 描述语判定，流程见
-> `../../xiaozhi-teach-english-assessment/references/cefr-can-do-statements.md` §8。
+> 英语综合测评 `xiaozhi-teach-english-assessment` 的"能做什么"语句与定级流程 §8。
 
 ```text
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━

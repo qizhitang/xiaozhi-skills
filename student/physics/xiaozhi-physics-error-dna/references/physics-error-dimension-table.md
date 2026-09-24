@@ -445,7 +445,7 @@ C06(电学概念混淆) + F06(多公式联立错误)
 
 ### 9.3 交接契约（以 handover-protocol.schema.json 为源）
 
-交接结构必须与 `student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json` 完全一致，字段名与枚举不得自造。
+交接结构必须与 `shared/handover-protocol.schema.json` 完全一致，字段名与枚举不得自造。
 
 **接收：`wrong_answer_handover`**
 

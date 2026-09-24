@@ -6,7 +6,7 @@
 >
 > ⚠️ **本文件只出分数与强弱项，不出等级。**
 > 等级须由老师对照 CSE 描述语人工判定，流程见
-> `../../xiaozhi-teach-english-assessment/references/cefr-can-do-statements.md` §8。
+> 英语综合测评 `xiaozhi-teach-english-assessment` 的"能做什么"语句与定级流程 §8。
 >
 > ⚠️ **"准确度"里的发音**：只评"是否影响对方听懂"这一层（如词尾辅音吞掉导致 test/tes 分不清），
 > 不做音素级判定——那需要语音评测能力，课堂现场听达不到那个精度。
@@ -91,7 +91,7 @@
 【等级】不由本次任务分数换算。
   · 一次 3 分钟的角色扮演不足以定级；
   · 要定级请累积两次以上表现，对照 CSE 描述语判定并写出依据，
-    流程见 ../../xiaozhi-teach-english-assessment/references/cefr-can-do-statements.md §8
+    流程见英语综合测评 xiaozhi-teach-english-assessment 的"能做什么"语句与定级流程 §8
 
 ■ 老师评语
   · 主要优点：得体度高（May I have / Could I 用得准），互动自然

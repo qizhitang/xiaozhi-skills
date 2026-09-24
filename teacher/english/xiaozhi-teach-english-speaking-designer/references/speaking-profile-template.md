@@ -5,7 +5,7 @@
 > 配合 `xiaozhi-teach-english-speaking-designer` §9 使用。
 > **只记得分与可观察的表现，不记等级、不记发音音素级判定。**
 > 等级须由老师对照 CSE 描述语判定，流程见
-> `../../xiaozhi-teach-english-assessment/references/cefr-can-do-statements.md` §8。
+> 英语综合测评 `xiaozhi-teach-english-assessment` 的"能做什么"语句与定级流程 §8。
 
 ```text
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━

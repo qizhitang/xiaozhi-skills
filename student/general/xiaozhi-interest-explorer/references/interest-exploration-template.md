@@ -2,7 +2,7 @@
 
 > 适用学段：小学中段 / 小学高段（只用 §四 的 8 周试探版表格）、初中、高中（用 §一至 §三 的完整版）。
 > 本文档为 `xiaozhi-interest-explorer` 的配套记录模板。
-> 长期存储落在学习DNA的 `interestDNA`（见 `../../xiaozhi-learning-dna/schemas/dna-profile.schema.json`），
+> 长期存储落在学习DNA的 `interestDNA`（见 `shared/dna-profile.schema.json`），
 > 需 `interestTrackingConsent = true`，通过 `profile_writeback` 写入。
 
 ---

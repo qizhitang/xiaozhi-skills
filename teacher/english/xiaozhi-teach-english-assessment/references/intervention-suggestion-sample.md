@@ -27,7 +27,7 @@
   · 短期（2 周）：每节课留 3 分钟做"连续说 5 句"——
       给 3 个提示词，要求不中断说完，不纠错
   · 中期（1 个月）：情景问答任务，老师用重述式纠正处理三单
-      （见 ../xiaozhi-teach-english-speaking-designer/references/error-correction-strategies.md）
+      （见 xiaozhi-teach-english-speaking-designer 的英语纠错策略参考）
   · 长期（本学期）：把口语任务并进单元教学，不单独占课时
 
 ■ 资源

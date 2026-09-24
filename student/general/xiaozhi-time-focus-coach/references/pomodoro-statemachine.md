@@ -188,7 +188,7 @@ stateDiagram-v2
 
 | 项 | 说明 |
 |---|---|
-| **AI动作** | ①生成待确认的档案条目（完成/未完成/中途放弃 + 时长 + 分心归类），复述给学生听 ②学生说"可以"、且 `profileEnabled` 与 `crossSkillSharing` 都为 true 时，才写入 `extensions.focus` ③`reminderConsent=true` 且学生这次说要，才另发一条 `reminder_enqueue`；**不把"连续 N 天完成专注"做成里程碑**（使用时长不是学习成果，见 learning-dna/references/growth-milestones.md）|
+| **AI动作** | ①生成待确认的档案条目（完成/未完成/中途放弃 + 时长 + 分心归类），复述给学生听 ②学生说"可以"、且 `profileEnabled` 与 `crossSkillSharing` 都为 true 时，才写入 `extensions.focus` ③`reminderConsent=true` 且学生这次说要，才另发一条 `reminder_enqueue`；**不把"连续 N 天完成专注"做成里程碑**（使用时长不是学习成果，见学习DNA `xiaozhi-learning-dna` 的成长里程碑参考标准）|
 | **不写的情形** | 学生没点头 / 没回应 / 说"不用记"，或两个授权位任一为 false → 只留在本次会话，如实说"这次的没存，想存跟我说一声" |
 | **内容上限** | 只写时长、时段、完成情况、中性的分心归类、黄金时段结论。不写分心原因里的家庭与人际细节、不写情绪判断、不贴"专注力差"类标签 |
 | **退出条件** | 归档完毕（或确认不归档），流程结束 |

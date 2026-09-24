@@ -2,7 +2,7 @@
 
 > 适用学段：小学高段 / 初中。
 > 本档案只记阅读力，不记写作风格——写作风格档案在 `xiaozhi-teach-chinese-writing-guide` 的
-> `references/style-dna-profile-template.md`，两者不要混在一张表里。
+> 学员写作风格档案模板里，两者不要混在一张表里。
 > 阅读速度与阅读量由学员自测或老师登记，本 SKILL 不代为统计。
 
 ```text

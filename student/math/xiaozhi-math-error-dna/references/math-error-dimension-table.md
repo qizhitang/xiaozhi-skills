@@ -346,7 +346,7 @@ R02(误读数量关系) + M01(题型识别错误)
 本 SKILL 据此进入对应维度的子类型定位，并把结果写进 `subtypeId`（如 `B02`）。
 **不得擅自改判 basicDimension**；确有异议时在 `rootCause` 里说明，由错题本决定是否改判。
 
-### 8.3 数据流转规则（字段以 `student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json` 为准）
+### 8.3 数据流转规则（字段以 `xiaozhi-skill-coordinator` 的 handover-protocol.schema.json 为准）
 
 ```text
 交接流程：

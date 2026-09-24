@@ -2,7 +2,7 @@
 
 > 适用学段：小学中段（简化版，只填 A、B 两栏）、小学高段、初中、高中。
 > 本文档为 `xiaozhi-time-focus-coach` 模块E 的填写模板。
-> 长期存储落在学习DNA的 `extensions.focus`（见 `../../xiaozhi-learning-dna/schemas/dna-profile.schema.json`），
+> 长期存储落在学习DNA的 `extensions.focus`（见 `shared/dna-profile.schema.json`），
 > 通过 `subject_profile_writeback`（`updateTarget: "extension"`）写入，写前确认 `crossSkillSharing`。
 > **默认不存在专注力档案**：所有计时状态只在会话内。只有学生开启档案（`profileEnabled`）、同意跨 SKILL 共享、并对每一条待确认条目点头之后，才有下面这份履历；本模板写的是“存了之后长什么样”，不是默认行为。
 

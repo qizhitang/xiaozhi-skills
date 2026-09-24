@@ -1,9 +1,9 @@
 # 初中物理模型案例库
 
 > 适用学段：初中（7-9 年级）。
-> 示例题验算：2026-09-04
+> 示例题验算：2026-09-23
 > 配合 `xiaozhi-teach-physics-lesson-planner` 使用。物理模型是连接实际与理论的桥梁；本文档分两部分：**理想化对象**（把实物简化成什么）与**五类解题模型**（把一类问题归到哪套关系式）。
-> 五类解题模型的命名与 `../xiaozhi-teach-physics-problem-guide/references/model-selection.md` 及学生端建模教练完全一致。
+> 五类解题模型的命名与物理解题教学指导 `xiaozhi-teach-physics-problem-guide` 的模型选择参考及学生端建模教练完全一致。
 > 超出初中课标的模型见文末"初高衔接（⚠高中）"，不在初中课堂建立。
 
 ---

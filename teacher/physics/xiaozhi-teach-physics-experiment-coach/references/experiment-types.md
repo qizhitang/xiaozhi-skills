@@ -4,7 +4,7 @@
 > 配合 `xiaozhi-teach-physics-experiment-coach` 使用。
 > **两套分类不要混淆**：
 > · 按**实验目的**分 7 类（本文第 1-8 节）：测量型 / 验证型 / 探究型 / 演示型 / 设计型 / 课外型 / 仿真型
-> · 按**课堂组织形式**分 3 类（`../xiaozhi-teach-physics-lesson-planner/references/lab-design-template.md` 用的就是这一套）：**演示 / 分组 / 课外**
+> · 按**课堂组织形式**分 3 类（物理教案设计 `xiaozhi-teach-physics-lesson-planner` 的实验位模板用的就是这一套）：**演示 / 分组 / 课外**
 > 同一个实验在两套分类里各有一个位置，例如"探究浮力的大小"是目的上的探究型、组织上的分组实验。
 > 本文第 11 节给出物理实验的 `safetyLevel` 档位参考与激光专项（三档定义以 `shared/lab-safety.md` 为准），第 12 节给出课标要求的学生必做实验清单。
 

@@ -3,7 +3,7 @@
 > 适用学段：小学高段（用 §五 的简化版）、初中、高中（用 §一至 §四 完整版）。
 > 本文档为 `xiaozhi-cross-subject-detective` 的配套记录模板。
 > 长期存储：项目本身落在 `extensions.projects[]`，联结落在 `growthMap.conceptGraph`
-> （见 `../../xiaozhi-learning-dna/schemas/dna-profile.schema.json`）。
+> （两者的字段定义见学习DNA `xiaozhi-learning-dna` 的档案 schema）。
 
 ---
 

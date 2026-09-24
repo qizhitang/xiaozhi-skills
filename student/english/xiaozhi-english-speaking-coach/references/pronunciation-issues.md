@@ -433,8 +433,7 @@
   → 步骤：小智示范 → 学生跟读 → 小智反馈 → 学生自主说
 
 ④ 复习间隔
-  → 顽固弱项的复习节奏由 xiaozhi-im-reminder 统一排（见
-    student/general/xiaozhi-im-reminder/references/ebbinghaus-schedule.md），
+  → 顽固弱项的复习节奏由 xiaozhi-im-reminder 按它的间隔复习序列统一排，
     本 SKILL 不自行定义间隔天数，也不承诺"我几天后提醒你"
   → 每次热身开场提醒今日重点发音（这属于会话内提醒，不占提醒预算）
 

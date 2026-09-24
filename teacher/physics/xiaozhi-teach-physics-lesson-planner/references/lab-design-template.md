@@ -21,9 +21,9 @@
 > 课堂安全组织流程、防护用具要求、实验失败的现场处置与应急预案。
 >
 > `safetyLevel` 的三档定义与判定规则见
-> `../xiaozhi-teach-physics-experiment-coach/references/experiment-types.md`；
+> `shared/lab-safety.md`（物理实验的逐项档位与激光专项见 `shared/experiment-types.md` 第 11 节）；
 > 本文的标注只是**教案层面的初筛**，用来决定"能不能进这节课、进演示还是进分组"，
-> 不构成安全评估结论。课标要求的学生必做实验清单同样见该文件，本文不重复维护。
+> 不构成安全评估结论。课标要求的学生必做实验清单见 `shared/experiment-types.md` 第 12 节，本文不重复维护。
 
 ## 0. 四类高风险要素（出现即须写全三项）
 
@@ -568,7 +568,7 @@
 
 ## 5. safetyLevel 在教案里的用法（初筛，不是安全评估）
 
-三档定义以 `../xiaozhi-teach-physics-experiment-coach/references/experiment-types.md` 为准。
+三档定义以 `shared/lab-safety.md` 为准。
 **本节只解决一个问题：这个实验能不能进这节课、进演示还是进分组。**
 真正的安全流程、防护要求与应急处置由 `xiaozhi-teach-physics-experiment-coach`
 和学校实验室管理规定给出，与本文不一致时以前者为准。

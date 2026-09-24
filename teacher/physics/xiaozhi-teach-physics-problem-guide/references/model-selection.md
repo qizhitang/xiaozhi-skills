@@ -2,7 +2,7 @@
 
 > 适用学段：初中（7-9 年级）。
 > 配合 `xiaozhi-teach-physics-problem-guide` 使用。从"问题类型 → 模型选择 → 关键式子"三步走，帮助学生建立模型选择的判断力。
-> 本文与学生端 `student/physics/xiaozhi-physics-modeling-coach/references/physics-modeling-patterns.md` 用同一套五类模型命名，老师端侧重"怎么教选模型"，学生端侧重"怎么自己选"。
+> 本文与学生端物理建模教练 `xiaozhi-physics-modeling-coach` 的建模模式详解用同一套五类模型命名，老师端侧重"怎么教选模型"，学生端侧重"怎么自己选"。
 > 超出初中课标的模型见文末"初高衔接（⚠高中）"，不作为课堂讲解与命题依据。
 
 ## 1. 初中五类模型总览

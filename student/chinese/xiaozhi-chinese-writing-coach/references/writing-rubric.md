@@ -3,7 +3,7 @@
 > 适用学段：小学高段（记叙文部分）/ 初中（全部）。
 > 配合 `xiaozhi-chinese-writing-coach` 模块 A Step 4 使用。
 > 本文件给的是**追问工具**，不是评分表——学生端不打分，只说"缺什么、往哪改"。
-> 老师端的评分标准另见 `../../../teacher/chinese/xiaozhi-teach-chinese-writing-guide/references/three-dim-rubric.md`。
+> 老师端的评分标准另见写作教学指导 `xiaozhi-teach-chinese-writing-guide` 的作文批改标准。
 
 ---
 

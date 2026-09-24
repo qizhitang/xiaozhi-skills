@@ -3,7 +3,7 @@
 > 适用学段：小学高段（记叙文部分）/ 初中（全部）。
 > 配合 `xiaozhi-chinese-reading-decoder` 使用。所有"答题模板"都是**把要点摆清楚的工具**，不是背下来往上套的套话——
 > 使用前提是学生已经读懂了文章（见 SKILL.md §一"两层能力"）。
-> 文言文阅读题与古诗鉴赏题不在本文件，见 `../../xiaozhi-chinese-classical-revival/SKILL.md` 模块E。
+> 文言文阅读题与古诗鉴赏题不在本文件，见跨时空古文对话 `xiaozhi-chinese-classical-revival` 的模块E。
 
 ---
 

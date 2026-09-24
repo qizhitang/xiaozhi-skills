@@ -6,7 +6,7 @@
 >
 > ⚠️ **本文件只出分数与微技能强弱项，不出等级。**
 > 等级须由老师对照 CSE 描述语人工判定，流程见
-> `../../xiaozhi-teach-english-assessment/references/cefr-can-do-statements.md` §8。
+> 英语综合测评 `xiaozhi-teach-english-assessment` 的"能做什么"语句与定级流程 §8。
 >
 > **微技能只有一套**：M1-M8，定义见 SKILL.md §9.1，本文件不另立名称。
 
@@ -143,7 +143,7 @@
 
 【等级】不由本卷分数换算。
   请对照 CSE 描述语人工判定并附证据，流程见
-  ../../xiaozhi-teach-english-assessment/references/cefr-can-do-statements.md §8
+  英语综合测评 xiaozhi-teach-english-assessment 的"能做什么"语句与定级流程 §8
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
