@@ -8,7 +8,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 生物教案设计
-  version: 2.3.0
+  version: 2.4.0
   author: 小智伴学
   category: 老师生物
   grade_bands:

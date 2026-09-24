@@ -170,7 +170,7 @@ LS ↔ LE：设问没读清（LS06），答出来就是答非所问（LE03）
 ```json
 {
   "sessionId": "sess-2026-09-23-07",
-  "protocolVersion": "2.3.0",
+  "protocolVersion": "2.4.0",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-correction-notebook",
   "recipient": "xiaozhi-history-source-analyzer",

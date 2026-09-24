@@ -206,7 +206,7 @@ DI ↔ DR：人地关系只说一面（DI03），区域联系也说不完整（D
 ```json
 {
   "sessionId": "sess-2026-09-23-12",
-  "protocolVersion": "2.3.0",
+  "protocolVersion": "2.4.0",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-correction-notebook",
   "recipient": "xiaozhi-geography-map-reader",
