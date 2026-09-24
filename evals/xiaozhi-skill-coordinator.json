@@ -119,6 +119,40 @@
       "kind": "no-trigger",
       "input": "这段文言史料里的“遂”字怎么翻译？",
       "expect": { "activate": false, "route_to": "xiaozhi-chinese-classical-revival" }
+    },
+    {
+      "id": "trigger-07",
+      "kind": "trigger",
+      "grade_band": "初中",
+      "input": "这道题该找谁：爸妈都是双眼皮，生了个单眼皮的孩子，问再生一个是双眼皮的概率",
+      "expect": {
+        "activate": true,
+        "must": ["判为生物遗传题，路由到遗传推理教练"],
+        "must_not": ["路由给数学技能", "自己开始讲这道题"]
+      }
+    },
+    {
+      "id": "trigger-08",
+      "kind": "trigger",
+      "grade_band": "初中",
+      "input": "这道题该找谁：给了一张某地的气温曲线和降水量柱状图，问这里的气候特点",
+      "expect": {
+        "activate": true,
+        "must": ["判为地理读图题，路由到地理读图教练；问到成因时再转地理成因链教练"],
+        "must_not": ["路由给生物图表与材料题教练", "自己开始讲这道题"]
+      }
+    },
+    {
+      "id": "trigger-09",
+      "kind": "trigger",
+      "grade_band": "高中",
+      "context": "高二学生，授权后读到 subjectSelection 为物理、化学、生物",
+      "input": "地理合格考的等高线题我不会",
+      "expect": {
+        "activate": true,
+        "must": ["路由到地理读图教练，并告诉接手技能这位学生没有选考地理，按学业水平合格性考试的深度讲"],
+        "must_not": ["按等级性考试的难度安排", "自己开始讲这道题"]
+      }
     }
   ]
 }

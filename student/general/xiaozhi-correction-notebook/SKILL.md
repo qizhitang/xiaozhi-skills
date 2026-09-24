@@ -4,7 +4,7 @@ description: >
   全科错题的归档、错因定位与弱项计数中枢。
   学生说“我这道题做错了”“帮我分析错误原因”“出一道同类题”“我的错题本里有什么”“帮我整理本章错题”，或发来错题图片并说明做错了时可激活——前提是**有一道具体做错的题**；泛泛说"我总出错""帮我总结一下"而没有题，先问题目，不登记、不分析。
   错因分四维（概念模糊/计算失误/读题失误/方法用错），并按 shared/vocab.md §5 唯一计数“28 天内同一知识点同一维度累计 3 次”。
-  数学、物理、化学、历史、语文、英语的深度子类型定位不在此处，交给对应学科的错误 DNA；理解是否到位交给费曼学习法，提醒由 IM 智能提醒发送。
+  数学、物理、化学、历史、生物、地理、语文、英语的深度子类型定位不在此处，交给对应学科的错误 DNA；理解是否到位交给费曼学习法，提醒由 IM 智能提醒发送。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
@@ -54,7 +54,7 @@ metadata:
 **找到错误的根因、识别固定模式、触发后续突破，而不只是保存题目。**
 
 ⚠️ **【学科边界声明】**：本SKILL作为通用核心，接收所有科目的错题，提供统一的**通用四维**错因分析（`shared/vocab.md §1`），并且是全库**"3 次顽固"的唯一计数权威**（`shared/vocab.md §5`）。
-学科层的**深度子类型定位**（数学 B/C/R/M、物理 P/C/F/R/T、英语 G/V/T/P/L、语文 RC/AR/WT/CL/LG、化学 HS/HM/HC/HR/HE/HQ、历史 LS/LT/LK/LA/LE）与专项突破流程，交由对应学科的错误 DNA 处理；本 SKILL 不重复分析、不重复计数、不重复提醒。
+学科层的**深度子类型定位**（数学 B/C/R/M、物理 P/C/F/R/T、英语 G/V/T/P/L、语文 RC/AR/WT/CL/LG、化学 HS/HM/HC/HR/HE/HQ、历史 LS/LT/LK/LA/LE、生物 SC/SF/SG/SV/SE/SQ、地理 DM/DR/DP/DI/DE/DQ）与专项突破流程，交由对应学科的错误 DNA 处理；本 SKILL 不重复分析、不重复计数、不重复提醒。
 
 ---
 
@@ -173,7 +173,7 @@ metadata:
 ```text
 错题ID（errorId）：由平台生成
 日期：
-科目：[数学 / 物理 / 化学 / 历史 / 语文 / 英语 / 其他]
+科目：[数学 / 物理 / 化学 / 历史 / 生物 / 地理 / 语文 / 英语 / 其他]
 知识点标签：
 题目描述 / 图片链接：
 题目来源：[作业 / 测验 / 自练]
@@ -286,14 +286,14 @@ metadata:
 📋 学期错题全景报告
 
 本学期错题总计：[N]道
-学科分布：语文[N] / 数学[N] / 英语[N] / 物理[N] / 化学[N] / 历史[N]
+学科分布：语文[N] / 数学[N] / 英语[N] / 物理[N] / 化学[N] / 历史[N] / 生物[N] / 地理[N]
 
 ■ 错误分布（通用四维，shared/vocab.md §1）
   概念模糊：[X]道
   计算失误：[X]道
   读题失误：[X]道
   方法用错：[X]道
-  注：各科的子类型 ID（数学 B/C/R/M、物理 P/C/F/R/T、英语 G/V/T/P/L、语文 RC/AR/WT/CL/LG、化学 HS/HM/HC/HR/HE/HQ、历史 LS/LT/LK/LA/LE）
+  注：各科的子类型 ID（数学 B/C/R/M、物理 P/C/F/R/T、英语 G/V/T/P/L、语文 RC/AR/WT/CL/LG、化学 HS/HM/HC/HR/HE/HQ、历史 LS/LT/LK/LA/LE、生物 SC/SF/SG/SV/SE/SQ、地理 DM/DR/DP/DI/DE/DQ）
       由对应学科错误 DNA 回写，本报告只做汇总呈现
 
 ■ 三大顽固弱项
@@ -350,7 +350,7 @@ metadata:
     ──→ 每周学习复盘 / 学习系统协调器（错题趋势摘要）
 ```
 
-对应学科错误 DNA：数学 `xiaozhi-math-error-dna`、物理 `xiaozhi-physics-error-dna`、化学 `xiaozhi-chemistry-error-dna`、历史 `xiaozhi-history-source-analyzer`（持有历史错因维度表）、语文 `xiaozhi-chinese-grammar-tracker`（语病）与 `xiaozhi-chinese-reading-decoder`（阅读）、英语 `xiaozhi-english-grammar-coach`。
+对应学科错误 DNA：数学 `xiaozhi-math-error-dna`、物理 `xiaozhi-physics-error-dna`、化学 `xiaozhi-chemistry-error-dna`、历史 `xiaozhi-history-source-analyzer`（持有历史错因维度表）、生物 `xiaozhi-biology-error-dna`、地理 `xiaozhi-geography-map-reader`（持有地理错因维度表）、语文 `xiaozhi-chinese-grammar-tracker`（语病）与 `xiaozhi-chinese-reading-decoder`（阅读）、英语 `xiaozhi-english-grammar-coach`。
 
 > **学科包是可选的。** 本 SKILL 不依赖任何学科包即可独立工作：未安装对应学科包时，只做通用四维分类与顽固计数，不发 `wrong_answer_handover`，也不等待回写；已安装时才把该学科的错题交接出去做子类型定位。因此安装顺序上，本 SKILL 可以先装，学科包按需后补。
 
@@ -360,7 +360,7 @@ metadata:
 
 | 条件 | `handoverTrigger` | 附带字段 |
 |---|---|---|
-| 新错题完成通用四维分类，且该科有学科错误 DNA | `new_error` | `basicDimension` + `surfaceInfo`；物理另填 `physicsBasicDimension` + `judgmentClue`，化学另填 `chemistryDimension` + `judgmentClue`，历史另填 `historyDimension` + `judgmentClue` |
+| 新错题完成通用四维分类，且该科有学科错误 DNA | `new_error` | `basicDimension` + `surfaceInfo`；物理另填 `physicsBasicDimension` + `judgmentClue`，化学另填 `chemistryDimension` + `judgmentClue`，历史另填 `historyDimension` + `judgmentClue`，生物另填 `biologyDimension` + `judgmentClue`，地理另填 `geographyDimension` + `judgmentClue` |
 | 同口径 28 天内累计第 3 次（§5.1） | `stubborn_weakness` | `occurrenceCountInWindow` + `historyRefs[]` |
 | 学生流露学科焦虑（已排除危机信号） | `anxiety_trigger` | `anxietySignals[]` |
 | 学生请求深度错因分析 | `new_error` | 当前错题 + `historyRefs[]` |

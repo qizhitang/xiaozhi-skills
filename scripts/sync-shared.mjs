@@ -70,6 +70,16 @@ const CONTRACTS = [
     owner: "xiaozhi-history-source-analyzer",
   },
   {
+    as: "biology-error-dimension-table.md",
+    src: "student/biology/xiaozhi-biology-error-dna/references/biology-error-dimension-table.md",
+    owner: "xiaozhi-biology-error-dna",
+  },
+  {
+    as: "geography-error-dimension-table.md",
+    src: "student/geography/xiaozhi-geography-map-reader/references/geography-error-dimension-table.md",
+    owner: "xiaozhi-geography-map-reader",
+  },
+  {
     // 理化生实验安全口径：不属于某个技能，也不发给全部技能，只发给正文引用了 shared/lab-safety.md 的技能
     as: "lab-safety.md",
     src: "shared/contracts/lab-safety.md",
@@ -93,7 +103,7 @@ const CONTRACTS = [
   {
     as: "class-teaching-workspace.schema.json",
     src: "teacher/general/schemas/class-teaching-workspace.schema.json",
-    toDirs: ["teacher/general", "teacher/math", "teacher/physics", "teacher/chemistry", "teacher/history", "teacher/chinese", "teacher/english"],
+    toDirs: ["teacher/general", "teacher/math", "teacher/physics", "teacher/chemistry", "teacher/history", "teacher/biology", "teacher/geography", "teacher/chinese", "teacher/english"],
     owner: null, // 包级 schema，不归属某个技能
   },
   {
@@ -402,12 +412,12 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
         return c;
       });
       // 学科技能：错题交接的 subject 枚举与学科维度字段只留本学科
-      const subj = (dirRel.match(/^(?:student|teacher)\/(math|physics|chemistry|history|chinese|english)\//) || [])[1];
+      const subj = (dirRel.match(/^(?:student|teacher)\/(math|physics|chemistry|history|biology|geography|chinese|english)\//) || [])[1];
       const pp2 = props.payload && props.payload.properties;
       if (subj && pp2 && pp2.wrongAnswerData && pp2.wrongAnswerData.properties) {
         const wp = { ...pp2.wrongAnswerData.properties };
         if (wp.subject && Array.isArray(wp.subject.enum)) wp.subject = { ...wp.subject, enum: [subj] };
-        const own = { physics: "physicsBasicDimension", chemistry: "chemistryDimension", history: "historyDimension", chinese: "chineseDimension", english: "englishDimension", math: null }[subj];
+        const own = { physics: "physicsBasicDimension", chemistry: "chemistryDimension", history: "historyDimension", biology: "biologyDimension", geography: "geographyDimension", chinese: "chineseDimension", english: "englishDimension", math: null }[subj];
         for (const k of Object.keys(wp)) if (/Dimension$/.test(k) && k !== "basicDimension" && k !== own) delete wp[k];
         pp2.wrongAnswerData = { ...pp2.wrongAnswerData, properties: wp, required: Array.isArray(pp2.wrongAnswerData.required) ? pp2.wrongAnswerData.required.filter((r) => r in wp) : pp2.wrongAnswerData.required };
       }
@@ -419,7 +429,7 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
         pp2.profileData.properties.subjectExtensionPatch = { type: "object", description: `subject_extension 时：只允许本学科分支 subjectExtensions.${subj}${subKeys.length ? "，且只写 " + subKeys.join("、") : ""}`, properties: { [subj]: branch }, additionalProperties: false };
       }
       // 收件方：按协议的固定路由——写回档案只能到学习DNA，错题交接只能到错题本，提醒只能到 IM 提醒
-      const DEST = { wrong_answer_handover: ["xiaozhi-correction-notebook", "xiaozhi-math-error-dna", "xiaozhi-physics-error-dna", "xiaozhi-chemistry-error-dna", "xiaozhi-history-source-analyzer"], deep_analysis_writeback: ["xiaozhi-correction-notebook"], profile_writeback: ["xiaozhi-learning-dna"], subject_profile_writeback: ["xiaozhi-learning-dna"], reminder_enqueue: ["xiaozhi-im-reminder"], reminder_sync: [], teacher_writeback: ["xiaozhi-learning-dna"] };
+      const DEST = { wrong_answer_handover: ["xiaozhi-correction-notebook", "xiaozhi-math-error-dna", "xiaozhi-physics-error-dna", "xiaozhi-chemistry-error-dna", "xiaozhi-history-source-analyzer", "xiaozhi-biology-error-dna", "xiaozhi-geography-map-reader"], deep_analysis_writeback: ["xiaozhi-correction-notebook"], profile_writeback: ["xiaozhi-learning-dna"], subject_profile_writeback: ["xiaozhi-learning-dna"], reminder_enqueue: ["xiaozhi-im-reminder"], reminder_sync: [], teacher_writeback: ["xiaozhi-learning-dna"] };
       if (props.recipient && Array.isArray(props.recipient.enum)) {
         const fixed = new Set(kinds.flatMap((k) => DEST[k] || []));
         const openKinds = kinds.filter((k) => !(DEST[k] || []).length);   // 路由表没定目的地的类型（reminder_sync）

@@ -2,7 +2,7 @@
 
 > 由 `scripts/gen-docs.mjs --write` 从各 SKILL.md 的 frontmatter 生成，**请勿手改**；CI 用 `--check` 核对。
 
-全库 72 个 SKILL（学生端 41 + 老师端 31）+ 1 个开发者工具，197 份 references。
+全库 83 个 SKILL（学生端 49 + 老师端 34）+ 1 个开发者工具，209 份 references。
 
 ## 学生端 · 通用（13）
 
@@ -80,6 +80,24 @@
 | 📜 历史材料解析题教练 | `xiaozhi-history-source-analyzer` | 历史专项 | 初中、高中 | `xiaozhi-learning-dna` | 2.3.0 |
 | 🧭 时空线索构建器 | `xiaozhi-history-timeline-builder` | 历史专项 | 初中、高中 | `xiaozhi-learning-dna` | 2.3.0 |
 
+## 学生端 · 生物（5）
+
+| SKILL | 目录名 | 分类 | 适用学段 | 依赖 | 版本 |
+|---|---|---|---|---|---|
+| 📊 生物图表与材料题教练 | `xiaozhi-biology-chart-reader` | 生物专项 | 初中、高中 | `xiaozhi-learning-dna` | 2.3.0 |
+| 🕸️ 生物概念网络构建器 | `xiaozhi-biology-concept-network` | 生物专项 | 初中、高中 | `xiaozhi-learning-dna` | 2.3.0 |
+| 🧬 生物错误DNA | `xiaozhi-biology-error-dna` | 生物专项 | 初中、高中 | `xiaozhi-learning-dna` | 2.3.0 |
+| 🧩 遗传推理教练 | `xiaozhi-biology-genetics-coach` | 生物专项 | 初中、高中 | `xiaozhi-learning-dna`、`xiaozhi-biology-error-dna` | 2.3.0 |
+| 🌿 生物实验探究教练 | `xiaozhi-biology-inquiry-coach` | 生物专项 | 初中、高中 | `xiaozhi-learning-dna` | 2.3.0 |
+
+## 学生端 · 地理（3）
+
+| SKILL | 目录名 | 分类 | 适用学段 | 依赖 | 版本 |
+|---|---|---|---|---|---|
+| 🌀 地理成因链教练 | `xiaozhi-geography-causal-chain` | 地理专项 | 初中、高中 | `xiaozhi-learning-dna` | 2.3.0 |
+| 🗺️ 地理读图教练 | `xiaozhi-geography-map-reader` | 地理专项 | 初中、高中 | `xiaozhi-learning-dna` | 2.3.0 |
+| 🌏 区域认知构建器 | `xiaozhi-geography-region-builder` | 地理专项 | 初中、高中 | `xiaozhi-learning-dna` | 2.3.0 |
+
 ## 老师端 · 通用教学（6）
 
 | SKILL | 目录名 | 分类 | 适用学段 | 依赖 | 版本 |
@@ -150,6 +168,19 @@
 |---|---|---|---|---|---|
 | 历史命题与答题规范指导 | `xiaozhi-teach-history-assessment-guide` | 老师历史 | 初中、高中 | `xiaozhi-teach-exam-designer`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-history-lesson-planner` | 2.3.0 |
 | 历史教案设计 | `xiaozhi-teach-history-lesson-planner` | 老师历史 | 初中、高中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.3.0 |
+
+## 老师端 · 生物（2）
+
+| SKILL | 目录名 | 分类 | 适用学段 | 依赖 | 版本 |
+|---|---|---|---|---|---|
+| 生地学业水平考试复习规划 | `xiaozhi-teach-bio-geo-review-planner` | 老师生地 | 初中、高中 | `xiaozhi-teach-review-planner`、`xiaozhi-teach-student-analyzer` | 2.3.0 |
+| 生物教案设计 | `xiaozhi-teach-biology-lesson-planner` | 老师生物 | 初中、高中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.3.0 |
+
+## 老师端 · 地理（1）
+
+| SKILL | 目录名 | 分类 | 适用学段 | 依赖 | 版本 |
+|---|---|---|---|---|---|
+| 地理教案设计 | `xiaozhi-teach-geography-lesson-planner` | 老师地理 | 初中、高中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.3.0 |
 
 ## 开发者工具（1）
 

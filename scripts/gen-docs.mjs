@@ -79,7 +79,7 @@ const grp = (s) => s.side === "tools" ? "tools" : `${s.side}/${s.group}`;
 const nStudent = count((s) => s.side === "student"), nTeacher = count((s) => s.side === "teacher"), nTools = count((s) => s.side === "tools");
 
 // ---------- D2 skills-index.md ----------
-const GROUP_TITLE = { "student/general": "学生端 · 通用", "student/chinese": "学生端 · 语文", "student/math": "学生端 · 数学", "student/english": "学生端 · 英语", "student/physics": "学生端 · 物理", "student/chemistry": "学生端 · 化学", "student/history": "学生端 · 历史", "teacher/general": "老师端 · 通用教学", "teacher/independent": "老师端 · 独立教师", "teacher/chinese": "老师端 · 语文", "teacher/math": "老师端 · 数学", "teacher/english": "老师端 · 英语", "teacher/physics": "老师端 · 物理", "teacher/chemistry": "老师端 · 化学", "teacher/history": "老师端 · 历史", "tools": "开发者工具" };
+const GROUP_TITLE = { "student/general": "学生端 · 通用", "student/chinese": "学生端 · 语文", "student/math": "学生端 · 数学", "student/english": "学生端 · 英语", "student/physics": "学生端 · 物理", "student/chemistry": "学生端 · 化学", "student/history": "学生端 · 历史", "student/biology": "学生端 · 生物", "student/geography": "学生端 · 地理", "teacher/general": "老师端 · 通用教学", "teacher/independent": "老师端 · 独立教师", "teacher/chinese": "老师端 · 语文", "teacher/math": "老师端 · 数学", "teacher/english": "老师端 · 英语", "teacher/physics": "老师端 · 物理", "teacher/chemistry": "老师端 · 化学", "teacher/history": "老师端 · 历史", "teacher/biology": "老师端 · 生物", "teacher/geography": "老师端 · 地理", "tools": "开发者工具" };
 function genIndex() {
   const out = ["# 技能索引", "", `> 由 \`scripts/gen-docs.mjs --write\` 从各 SKILL.md 的 frontmatter 生成，**请勿手改**；CI 用 \`--check\` 核对。`, "", `全库 ${nStudent + nTeacher} 个 SKILL（学生端 ${nStudent} + 老师端 ${nTeacher}）+ ${nTools} 个开发者工具，${refCount} 份 references。`, ""];
   const groups = [...new Set(skills.map((s) => s.side === "tools" ? "tools" : `${s.side}/${s.group}`))];
@@ -135,7 +135,7 @@ for (const doc of ["README.md", "docs/architecture.md"]) {
   const secCount = [
     [/学生端 · 通用（(\d+)）/, () => count((s) => grp(s) === "student/general")],
     [/学生端 · 学科专项（(\d+)）/, () => count((s) => s.side === "student" && s.group !== "general")],
-    [/学生端 · (语文|数学|英语|物理|化学|历史)（(\d+)）/, (m) => count((s) => s.side === "student" && s.group === { 语文: "chinese", 数学: "math", 英语: "english", 物理: "physics", 化学: "chemistry", 历史: "history" }[m[1]]), 2],
+    [/学生端 · (语文|数学|英语|物理|化学|历史|生物|地理)（(\d+)）/, (m) => count((s) => s.side === "student" && s.group === { 语文: "chinese", 数学: "math", 英语: "english", 物理: "physics", 化学: "chemistry", 历史: "history", 生物: "biology", 地理: "geography" }[m[1]]), 2],
     [/老师端（(\d+)）/, () => nTeacher],
     [/通用教学（`teacher\/general\/`，(\d+)）/, () => count((s) => grp(s) === "teacher/general")],
     [/独立教师日常（`teacher\/independent\/`，(\d+)）/, () => count((s) => grp(s) === "teacher/independent")],

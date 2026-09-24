@@ -293,6 +293,8 @@ metadata:
 │   ├── physics（物理错误DNA / 建模教练 / 实验教练）
 │   ├── chemistry（化学错误DNA / 用语与方程式教练 / 实验探究教练）
 │   ├── history（材料解析题教练 / 时空线索构建器 / 论述题教练）
+│   ├── biology（生物错误DNA / 概念网络构建器 / 遗传推理教练 / 实验探究教练）
+│   ├── geography（地理读图教练 / 成因链教练 / 区域认知构建器）
 │   ├── chinese（语病、写作风格、阅读五坑、素材、文言进度）
 │   └── english（词汇到期日、语法档案、写作、听力）
 │
@@ -801,7 +803,7 @@ metadata:
 | `xiaozhi-skill-coordinator` | 月报所需摘要 | 不写 |
 | `xiaozhi-bridge-planner` | 年级、高中选科、数理化英的弱项（需 `profileEnabled`） | 不写（存计划转 `xiaozhi-learning-plan`） |
 
-**学科端（28，各自只读写本学科分支）**
+**学科端（36，各自只读写本学科分支）**
 
 | 学科 | SKILL | 只读写 |
 |---|---|---|
@@ -809,6 +811,8 @@ metadata:
 | 物理 | `xiaozhi-physics-error-dna`、`xiaozhi-physics-modeling-coach`、`xiaozhi-physics-lab-coach`、`xiaozhi-physics-concept-intuition`、`xiaozhi-physics-problem-coach` | `subjectExtensions.physics`（`subtypes[]` / `modelingProfile[]` / `labSkills[]`） |
 | 化学 | `xiaozhi-chemistry-error-dna`、`xiaozhi-chemistry-notation-coach`、`xiaozhi-chemistry-lab-coach`、`xiaozhi-chemistry-micro-visualizer`、`xiaozhi-chemistry-problem-coach` | `subjectExtensions.chemistry`（`subtypes[]` / `notationProfile[]` / `reactionTypes[]` / `labSkills[]`） |
 | 历史 | `xiaozhi-history-source-analyzer`、`xiaozhi-history-timeline-builder`、`xiaozhi-history-essay-coach` | `subjectExtensions.history`（`subtypes[]` / `timeFrames[]` / `essaySkills[]`） |
+| 生物 | `xiaozhi-biology-error-dna`、`xiaozhi-biology-concept-network`、`xiaozhi-biology-chart-reader`、`xiaozhi-biology-genetics-coach`、`xiaozhi-biology-inquiry-coach` | `subjectExtensions.biology`（`subtypes[]` / `conceptNetwork[]` / `geneticsSkills[]` / `labSkills[]`） |
+| 地理 | `xiaozhi-geography-map-reader`、`xiaozhi-geography-causal-chain`、`xiaozhi-geography-region-builder` | `subjectExtensions.geography`（`subtypes[]` / `mapSkills[]` / `principles[]` / `regions[]`） |
 | 语文 | `xiaozhi-chinese-reading-decoder`、`xiaozhi-chinese-writing-coach`、`xiaozhi-chinese-grammar-tracker`、`xiaozhi-chinese-classical-revival`、`xiaozhi-chinese-material-library` | `subjectExtensions.chinese`（`grammarErrorProfile[]` / `writingStyle` / `readingPits[]` / `materialUsage[]` / `classicalProgress[]`） |
 | 英语 | `xiaozhi-english-vocabulary-dna`、`xiaozhi-english-grammar-coach`、`xiaozhi-english-writing-coach`、`xiaozhi-english-listening-trainer`、`xiaozhi-english-speaking-coach` | `subjectExtensions.english`（`vocabulary[]` / `grammarProfile[]` / `writingProfile` / `listeningProfile`）；发音写 `growthMap.oralGrowthTrack` |
 

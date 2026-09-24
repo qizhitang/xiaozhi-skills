@@ -51,7 +51,9 @@
         "xiaozhi-math-error-dna",
         "xiaozhi-physics-error-dna",
         "xiaozhi-chemistry-error-dna",
-        "xiaozhi-history-source-analyzer"
+        "xiaozhi-history-source-analyzer",
+        "xiaozhi-biology-error-dna",
+        "xiaozhi-geography-map-reader"
       ]
     },
     "payload": {
@@ -143,7 +145,7 @@
             },
             "subtypeId": {
               "type": "string",
-              "pattern": "^(RC|AR|WT|CL|LG|H[SMCREQ]|L[STKAE]|[A-Z])[0-9]{2}$",
+              "pattern": "^(RC|AR|WT|CL|LG|H[SMCREQ]|L[STKAE]|S[CFGVEQ]|D[MRPIEQ]|[A-Z])[0-9]{2}$",
               "description": "学科子类型编码（shared/vocab.md §2），可选"
             },
             "occurrenceCountInWindow": {

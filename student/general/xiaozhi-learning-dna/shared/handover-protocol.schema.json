@@ -78,6 +78,14 @@
         "xiaozhi-history-essay-coach",
         "xiaozhi-history-source-analyzer",
         "xiaozhi-history-timeline-builder",
+        "xiaozhi-biology-chart-reader",
+        "xiaozhi-biology-concept-network",
+        "xiaozhi-biology-error-dna",
+        "xiaozhi-biology-genetics-coach",
+        "xiaozhi-biology-inquiry-coach",
+        "xiaozhi-geography-causal-chain",
+        "xiaozhi-geography-map-reader",
+        "xiaozhi-geography-region-builder",
         "xiaozhi-teach-chinese-classical-guide",
         "xiaozhi-teach-chinese-reading-guide",
         "xiaozhi-teach-chinese-writing-guide",
@@ -108,7 +116,10 @@
         "xiaozhi-teach-chemistry-lesson-planner",
         "xiaozhi-teach-chemistry-notation-drill",
         "xiaozhi-teach-history-assessment-guide",
-        "xiaozhi-teach-history-lesson-planner"
+        "xiaozhi-teach-history-lesson-planner",
+        "xiaozhi-teach-bio-geo-review-planner",
+        "xiaozhi-teach-biology-lesson-planner",
+        "xiaozhi-teach-geography-lesson-planner"
       ]
     },
     "recipient": {
@@ -387,7 +398,10 @@
                 "xiaozhi-teach-chemistry-lesson-planner",
                 "xiaozhi-teach-chemistry-notation-drill",
                 "xiaozhi-teach-history-assessment-guide",
-                "xiaozhi-teach-history-lesson-planner"
+                "xiaozhi-teach-history-lesson-planner",
+                "xiaozhi-teach-bio-geo-review-planner",
+                "xiaozhi-teach-biology-lesson-planner",
+                "xiaozhi-teach-geography-lesson-planner"
               ]
             },
             "studentAlias": {

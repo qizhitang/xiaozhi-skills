@@ -79,6 +79,14 @@
         "xiaozhi-history-essay-coach",
         "xiaozhi-history-source-analyzer",
         "xiaozhi-history-timeline-builder",
+        "xiaozhi-biology-chart-reader",
+        "xiaozhi-biology-concept-network",
+        "xiaozhi-biology-error-dna",
+        "xiaozhi-biology-genetics-coach",
+        "xiaozhi-biology-inquiry-coach",
+        "xiaozhi-geography-causal-chain",
+        "xiaozhi-geography-map-reader",
+        "xiaozhi-geography-region-builder",
         "xiaozhi-teach-chinese-classical-guide",
         "xiaozhi-teach-chinese-reading-guide",
         "xiaozhi-teach-chinese-writing-guide",
@@ -109,7 +117,10 @@
         "xiaozhi-teach-chemistry-lesson-planner",
         "xiaozhi-teach-chemistry-notation-drill",
         "xiaozhi-teach-history-assessment-guide",
-        "xiaozhi-teach-history-lesson-planner"
+        "xiaozhi-teach-history-lesson-planner",
+        "xiaozhi-teach-bio-geo-review-planner",
+        "xiaozhi-teach-biology-lesson-planner",
+        "xiaozhi-teach-geography-lesson-planner"
       ]
     },
     "recipient": {
@@ -157,6 +168,14 @@
         "xiaozhi-history-essay-coach",
         "xiaozhi-history-source-analyzer",
         "xiaozhi-history-timeline-builder",
+        "xiaozhi-biology-chart-reader",
+        "xiaozhi-biology-concept-network",
+        "xiaozhi-biology-error-dna",
+        "xiaozhi-biology-genetics-coach",
+        "xiaozhi-biology-inquiry-coach",
+        "xiaozhi-geography-causal-chain",
+        "xiaozhi-geography-map-reader",
+        "xiaozhi-geography-region-builder",
         "xiaozhi-teach-chinese-classical-guide",
         "xiaozhi-teach-chinese-reading-guide",
         "xiaozhi-teach-chinese-writing-guide",
@@ -187,7 +206,10 @@
         "xiaozhi-teach-chemistry-lesson-planner",
         "xiaozhi-teach-chemistry-notation-drill",
         "xiaozhi-teach-history-assessment-guide",
-        "xiaozhi-teach-history-lesson-planner"
+        "xiaozhi-teach-history-lesson-planner",
+        "xiaozhi-teach-bio-geo-review-planner",
+        "xiaozhi-teach-biology-lesson-planner",
+        "xiaozhi-teach-geography-lesson-planner"
       ]
     },
     "payload": {
@@ -208,6 +230,8 @@
                 "physics",
                 "chemistry",
                 "history",
+                "biology",
+                "geography",
                 "chinese",
                 "english",
                 "other"
@@ -296,6 +320,30 @@
               ],
               "description": "历史五维（仅 subject=history 时可用；shared/vocab.md §2）"
             },
+            "biologyDimension": {
+              "type": "string",
+              "enum": [
+                "概念网络(SC)",
+                "结构与功能(SF)",
+                "图表识读(SG)",
+                "变量与实验设计(SV)",
+                "表述与术语(SE)",
+                "遗传与数据计算(SQ)"
+              ],
+              "description": "生物六维（仅 subject=biology 时可用；shared/vocab.md §2）"
+            },
+            "geographyDimension": {
+              "type": "string",
+              "enum": [
+                "读图(DM)",
+                "区域认知(DR)",
+                "地理过程与原理(DP)",
+                "要素关联(DI)",
+                "表述规范(DE)",
+                "地理计算(DQ)"
+              ],
+              "description": "地理六维（仅 subject=geography 时可用；shared/vocab.md §2）"
+            },
             "judgmentClue": {
               "type": "string"
             },
@@ -307,7 +355,7 @@
             },
             "subtypeId": {
               "type": "string",
-              "pattern": "^(RC|AR|WT|CL|LG|H[SMCREQ]|L[STKAE]|[A-Z])[0-9]{2}$",
+              "pattern": "^(RC|AR|WT|CL|LG|H[SMCREQ]|L[STKAE]|S[CFGVEQ]|D[MRPIEQ]|[A-Z])[0-9]{2}$",
               "description": "学科子类型编码（shared/vocab.md §2），可选"
             },
             "chineseDimension": {
@@ -632,6 +680,8 @@
                 "physics",
                 "chemistry",
                 "history",
+                "biology",
+                "geography",
                 "chinese",
                 "english",
                 "other"
@@ -639,7 +689,7 @@
             },
             "subtypeId": {
               "type": "string",
-              "pattern": "^(RC|AR|WT|CL|LG|H[SMCREQ]|L[STKAE]|[A-Z])[0-9]{2}$"
+              "pattern": "^(RC|AR|WT|CL|LG|H[SMCREQ]|L[STKAE]|S[CFGVEQ]|D[MRPIEQ]|[A-Z])[0-9]{2}$"
             },
             "basicDimension": {
               "type": "string",
@@ -720,7 +770,10 @@
                 "xiaozhi-teach-chemistry-lesson-planner",
                 "xiaozhi-teach-chemistry-notation-drill",
                 "xiaozhi-teach-history-assessment-guide",
-                "xiaozhi-teach-history-lesson-planner"
+                "xiaozhi-teach-history-lesson-planner",
+                "xiaozhi-teach-bio-geo-review-planner",
+                "xiaozhi-teach-biology-lesson-planner",
+                "xiaozhi-teach-geography-lesson-planner"
               ]
             },
             "studentAlias": {

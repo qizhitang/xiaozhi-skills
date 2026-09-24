@@ -1,0 +1,443 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xiaozhi-skills.openclaw.dev/schemas/dna-profile.schema.json",
+  "title": "LearningDNAProfile",
+  "x-distributed-to": "xiaozhi-geography-map-reader",
+  "x-skill-scope": {
+    "note": "本副本随 xiaozhi-geography-map-reader 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的字段（共 4 项，删去 10 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
+    "paths": [
+      "basicInfo",
+      "meta",
+      "subjectExtensions.geography.mapSkills",
+      "subjectExtensions.geography.subtypes"
+    ]
+  },
+  "description": "学习DNA 档案结构——随 xiaozhi-geography-map-reader 分发的裁剪副本，只含 basicInfo、meta、subjectExtensions.geography.mapSkills、subjectExtensions.geography.subtypes；完整定义见归属技能 xiaozhi-learning-dna 的 dna-profile.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "meta": {
+      "description": "档案元数据：版本、创建时间、授权状态",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "profileId": {
+          "type": "string",
+          "description": "档案唯一标识符，由平台自动生成",
+          "pattern": "^[a-zA-Z0-9_-]+$"
+        },
+        "schemaVersion": {
+          "type": "string",
+          "description": "档案结构版本号，与仓库版本一致（当前 2.3.0）。旧档案（1.0.0–1.3.0）的字段在本结构中全部保留且均为可选，迁移时只需把本字段改写为 2.1.0。",
+          "enum": [
+            "2.3.0"
+          ]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "首次建档时间（ISO 8601）"
+        },
+        "lastUpdatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "最近一次更新时间（ISO 8601）"
+        },
+        "consentStatus": {
+          "description": "授权状态：用户对长期档案的当前授权情况",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "profileEnabled": {
+              "type": "boolean",
+              "description": "用户是否已同意开启长期档案",
+              "default": false
+            },
+            "memoryPaused": {
+              "type": "boolean",
+              "description": "是否暂停记忆（本次不读取也不写入）",
+              "default": false
+            },
+            "crossSkillSharing": {
+              "type": "boolean",
+              "description": "是否允许跨SKILL共享最小字段摘要",
+              "default": false
+            },
+            "reminderConsent": {
+              "type": "boolean",
+              "description": "是否同意接收IM提醒",
+              "default": false
+            },
+            "interestTrackingConsent": {
+              "type": "boolean",
+              "description": "是否同意记录兴趣偏好",
+              "default": false
+            },
+            "emotionTrackingConsent": {
+              "type": "boolean",
+              "description": "是否同意记录学习情绪数据（默认关闭，需单独授权）",
+              "default": false
+            },
+            "consentGivenBy": {
+              "type": "string",
+              "enum": [
+                "学生本人",
+                "监护人",
+                "学生与监护人",
+                "未记录"
+              ],
+              "default": "未记录",
+              "description": "同意主体（shared/vocab.md §8）。profileEnabled=true 时应为 学生本人/监护人/学生与监护人；ageBand 为小学各段时必须包含监护人"
+            },
+            "ageBand": {
+              "$ref": "#/$defs/ageBand",
+              "description": "学段（shared/vocab.md §10），用于推导 guardianConsentRequired 与学段参数"
+            },
+            "guardianConsentRequired": {
+              "type": "boolean",
+              "default": false,
+              "description": "是否需要监护人同意（小学各段为 true；初中由 SKILL 询问年龄后判断，约 ≤14 周岁为 true）"
+            },
+            "parentSharingConsent": {
+              "type": "boolean",
+              "default": false,
+              "description": "允许把学习摘要输出给家长/监护人（家庭看板、月报家长页、家长简报）。默认 false"
+            },
+            "emotionSharingWithParent": {
+              "type": "boolean",
+              "default": false,
+              "description": "允许把情绪相关内容输出给家长。独立于 parentSharingConsent，必须学生本人同意。默认 false。危机例外（shared/crisis-exception.md）不受此位限制"
+            },
+            "teacherWritebackConsent": {
+              "type": "boolean",
+              "default": false,
+              "description": "允许老师端 SKILL 写回本档案。默认 false"
+            },
+            "grantedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "最近一次授权变更时间"
+            },
+            "lastReviewedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "最近一次向用户复述授权状态的时间（建议每学期一次）"
+            }
+          }
+        }
+      },
+      "required": [
+        "profileId",
+        "schemaVersion",
+        "createdAt",
+        "consentStatus"
+      ]
+    },
+    "basicInfo": {
+      "description": "一、基础信息：年级、目标、可用时间等与学生身份和学习安排相关的低敏信息",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "gradeLevel": {
+          "type": "string",
+          "description": "年级或学段（粗粒度，不记录学校班级全称）",
+          "examples": [
+            "小学四年级",
+            "初一",
+            "初三",
+            "高一"
+          ]
+        },
+        "subjectSelection": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "高中选科（shared/vocab.md §10）。只在高中学生自述时记录，不追问；供协调器的选科门使用——未选考的科目按学业水平合格性考试深度处理，不推选考难度",
+          "properties": {
+            "examMode": {
+              "type": "string",
+              "enum": [
+                "3+1+2",
+                "3+3",
+                "未定"
+              ],
+              "description": "所在省份的高考模式"
+            },
+            "firstChoice": {
+              "type": "string",
+              "enum": [
+                "物理",
+                "历史"
+              ],
+              "description": "首选科目，仅 3+1+2"
+            },
+            "electives": {
+              "type": "array",
+              "description": "再选 / 选考科目：3+1+2 从化学、生物学、地理、思想政治中选 2；3+3 选 3（技术仅浙江）",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "物理",
+                  "化学",
+                  "生物学",
+                  "历史",
+                  "地理",
+                  "思想政治",
+                  "技术"
+                ]
+              },
+              "uniqueItems": true,
+              "maxItems": 3
+            },
+            "decidedAt": {
+              "type": "string",
+              "format": "date",
+              "description": "选科确定日期"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "examMode": {
+                    "const": "3+1+2"
+                  }
+                },
+                "required": [
+                  "examMode"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "electives": {
+                    "maxItems": 2,
+                    "items": {
+                      "enum": [
+                        "化学",
+                        "生物学",
+                        "地理",
+                        "思想政治"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "examMode": {
+                    "const": "3+3"
+                  }
+                },
+                "required": [
+                  "examMode"
+                ]
+              },
+              "then": {
+                "not": {
+                  "required": [
+                    "firstChoice"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "shortTermGoal": {
+          "type": "string",
+          "description": "短期学习目标（具体可衡量，如'下次月考数学过80分'）",
+          "maxLength": 200
+        },
+        "longTermGoal": {
+          "type": "string",
+          "description": "长期学习目标或方向",
+          "maxLength": 200
+        },
+        "availableStudyTime": {
+          "type": "string",
+          "description": "可用学习时间的粗粒度描述（不记录精确作息）",
+          "examples": [
+            "晚饭后1小时",
+            "周末上午2小时",
+            "每天30分钟碎片时间"
+          ]
+        },
+        "upcomingExams": {
+          "type": "array",
+          "description": "近期重要考试节点",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "examName": {
+                "type": "string",
+                "description": "考试名称",
+                "maxLength": 100
+              },
+              "subject": {
+                "type": "string",
+                "description": "相关学科"
+              },
+              "estimatedDate": {
+                "type": "string",
+                "format": "date",
+                "description": "预计考试日期"
+              }
+            },
+            "required": [
+              "examName",
+              "subject"
+            ]
+          },
+          "maxItems": 5
+        }
+      }
+    },
+    "subjectExtensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "学科扩展档案。每个学科 SKILL 只读写本学科分支（数学 SKILL 只写 math，物理只写 physics，化学只写 chemistry，历史只写 history，生物只写 biology，地理只写 geography，语文只写 chinese，英语只写 english），且受 consentStatus.crossSkillSharing 约束。写入一律经 handover 的 subject_profile_writeback",
+      "properties": {
+        "geography": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "地理三个学生端 SKILL 的学科层档案（初中到高中）：错因子类型、读图与地理计算、地理过程与原理、区域认知",
+          "properties": {
+            "subtypes": {
+              "$ref": "#/$defs/subjectSubtypeMap"
+            },
+            "mapSkills": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "skill": {
+                    "type": "string",
+                    "maxLength": 60,
+                    "description": "读图与地理计算技能（如 等高线地形图 / 时区与地方时换算）"
+                  },
+                  "status": {
+                    "$ref": "#/$defs/masteryLevel"
+                  },
+                  "lastDate": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                },
+                "required": [
+                  "skill",
+                  "status"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "meta"
+  ],
+  "$defs": {
+    "confidenceLevel": {
+      "description": "结论置信度标签（shared/vocab.md §7）：防止数据不足时给出误导性结论。样本不足（insufficient_sample）只作输出标签，不可写入本档案，故不在枚举内。凡是基于'连续N次'得出的AI结论必须附带此标签。data_sufficient=🟢数据充分（≥3 次独立观察且方向一致）；preliminary_trend=🟡初步趋势（2 次观察或方向基本一致）；insufficient_sample=🔴样本不足（单次观察或互相矛盾，不写入长期档案）",
+      "type": "string",
+      "enum": [
+        "data_sufficient",
+        "preliminary_trend"
+      ]
+    },
+    "errorDimension": {
+      "type": "string",
+      "enum": [
+        "概念模糊",
+        "计算失误",
+        "读题失误",
+        "方法用错"
+      ],
+      "description": "错因基础四维（shared/vocab.md §1）。学科子类型见 subtypeId"
+    },
+    "weaknessStatus": {
+      "type": "string",
+      "enum": [
+        "待处理",
+        "初步弱项",
+        "突破中",
+        "顽固弱项",
+        "已攻克"
+      ],
+      "description": "弱项状态五档（shared/vocab.md §4）"
+    },
+    "masteryLevel": {
+      "type": "string",
+      "enum": [
+        "会复述",
+        "会解释",
+        "真正掌握"
+      ],
+      "description": "掌握度三档（shared/vocab.md §6）"
+    },
+    "ageBand": {
+      "type": "string",
+      "enum": [
+        "小学低段",
+        "小学中段",
+        "小学高段",
+        "初中",
+        "高中",
+        "未知"
+      ],
+      "description": "学段（shared/vocab.md §10）"
+    },
+    "subtypeRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "学科子类型记录（shared/vocab.md §2）。通用层只存 ID，不解释含义",
+      "properties": {
+        "subtypeId": {
+          "type": "string",
+          "pattern": "^(RC|AR|WT|CL|LG|H[SMCREQ]|L[STKAE]|S[CFGVEQ]|D[MRPIEQ]|[A-Z])[0-9]{2}$",
+          "description": "学科子类型编码，如 B03 / P02 / G05 / RC01"
+        },
+        "dimension": {
+          "$ref": "#/$defs/errorDimension"
+        },
+        "knowledgePoint": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "occurrenceCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "windowStart": {
+          "type": "string",
+          "format": "date",
+          "description": "28 天滚动窗口起点（shared/vocab.md §5）"
+        },
+        "status": {
+          "$ref": "#/$defs/weaknessStatus"
+        },
+        "lastOccurrenceDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "confidenceLevel": {
+          "$ref": "#/$defs/confidenceLevel"
+        }
+      },
+      "required": [
+        "subtypeId",
+        "knowledgePoint",
+        "status"
+      ]
+    },
+    "subjectSubtypeMap": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/subtypeRecord"
+      }
+    }
+  }
+}

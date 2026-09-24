@@ -17,7 +17,7 @@
 //  G2 学生端 SKILL 必须有"使用前提"行（小学需成人在场 vocab §8 规则 4；考试进行中不帮 hint-ladder §〇）
 //  T1 会出题、组卷或存放试卷的老师端 SKILL 必须有"试题保密"段落（SECURITY_BASELINE.md 4.2）
 //  T2 老师端 SKILL 必须有“教学主体边界”行（SECURITY_BASELINE.md 4.3）
-//  B1 历史技能与开卷答题教练必须有“内容边界”行（SECURITY_BASELINE.md 4.4）
+//  B1 历史、生物、地理技能与开卷答题教练必须有“内容边界”行（SECURITY_BASELINE.md 4.4）
 //  I1 老师端接口路径根字段必须存在于 schema
 //  D1 docs 版本号与 package.json 一致；docs 中 SKILL 名称与目录一致
 //  A1 含"示例题"的 references 必须有"示例题验算：YYYY-MM-DD"声明（警告）
@@ -133,9 +133,10 @@ const HS_TERMS = [
   "平抛", "向心力", "等比数列", "等差数列", "条件概率", "射影定理", "切割线定理", "三角函数的图像", "函数零点",
   "AWL", "学术词表", "定语从句的非限制", "虚拟语气", "倒装句（部分倒装）", "《赤壁赋》", "《将进酒》", "《登高》", "《念奴娇》", "《归园田居》", "《阿房宫赋》", "《兰亭集序》",
   "物质的量", "摩尔质量", "气体摩尔体积", "阿伏加德罗", "氧化还原反应", "离子方程式", "化学平衡", "原电池", "电解池", "盖斯定律",
+  "减数分裂", "有丝分裂", "自由组合定律", "伴性遗传", "基因频率", "内环境", "表观遗传", "热力环流", "三圈环流", "地转偏向力", "锋面", "等压线",
 ];
 // T1：会出题、组卷或存放试卷的老师端技能（SECURITY_BASELINE.md 4.2；新增同类技能时加进来）
-const EXAM_SKILLS = new Set(["xiaozhi-teach-exam-designer", "xiaozhi-teach-math-exam-designer", "xiaozhi-teach-english-assessment", "xiaozhi-teach-english-listening-designer", "xiaozhi-teach-assignment-designer", "xiaozhi-teach-resource-library", "xiaozhi-teach-chemistry-notation-drill", "xiaozhi-teach-history-assessment-guide"]);
+const EXAM_SKILLS = new Set(["xiaozhi-teach-exam-designer", "xiaozhi-teach-math-exam-designer", "xiaozhi-teach-english-assessment", "xiaozhi-teach-english-listening-designer", "xiaozhi-teach-assignment-designer", "xiaozhi-teach-resource-library", "xiaozhi-teach-chemistry-notation-drill", "xiaozhi-teach-history-assessment-guide", "xiaozhi-teach-bio-geo-review-planner"]);
 // G1 章节豁免：标题命中即整节免标，直到出现同级或更高级标题
 const HS_SECTION_ANY = /初高衔接/;               // 任何技能
 const HS_SECTION_NATIVE = /高中|高一|高二|高三/;   // 仅 grade_bands 含 高中 的技能，且标题不能同时写初中标记（如“初中与高中”“九年级与高中”是混合章节）
@@ -255,7 +256,7 @@ for (const f of contentFiles) {
     if (rel(f).startsWith("student/") && !(/shared\/vocab\.md §8 规则 4/.test(text) && /shared\/hint-ladder\.md §〇/.test(text))) err("G2", rel(f), "学生端 SKILL 缺“使用前提”行：须引用 shared/vocab.md §8 规则 4（小学需成人在场）与 shared/hint-ladder.md §〇（考试进行中不帮）");
     if (EXAM_SKILLS.has(basename(dirname(f))) && !/试题保密/.test(text)) err("T1", rel(f), "会接触试题的老师端 SKILL 缺“试题保密”段落（启用前的统考试题不得输入，见 SECURITY_BASELINE.md 4.2）");
     if (rel(f).startsWith("teacher/") && !/教学主体边界/.test(text)) err("T2", rel(f), "老师端 SKILL 缺“教学主体边界”行：AI 不作替代性教学主体、不直接回答学生、不直接评价学生（教育部 2025 生成式 AI 使用指南；SECURITY_BASELINE.md 4.3）");
-    if ((/^(student|teacher)\/history\//.test(rel(f)) || basename(dirname(f)) === "xiaozhi-openbook-coach") && !/内容边界/.test(text)) err("B1", rel(f), "历史技能与开卷答题教练缺“内容边界”行：历史评价以课标与教材为准、不替学生给观点；开卷只教方法、不产出道法观点（SECURITY_BASELINE.md 4.4）");
+    if ((/^(student|teacher)\/(history|biology|geography)\//.test(rel(f)) || basename(dirname(f)) === "xiaozhi-openbook-coach") && !/内容边界/.test(text)) err("B1", rel(f), "历史、生物、地理技能与开卷答题教练缺“内容边界”行：历史评价以课标与教材为准、不替学生给观点；开卷只教方法、不产出道法观点；生物不做诊断与用药建议；地图以教材与标准地图为准（SECURITY_BASELINE.md 4.4）");
   }
 }
 
