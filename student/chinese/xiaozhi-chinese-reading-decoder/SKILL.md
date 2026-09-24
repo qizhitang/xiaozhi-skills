@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 📖 阅读理解拆解师
-  version: 2.2.0
+  version: 2.3.0
   author: 小智伴学
   category: 语文专项
   grade_bands:
@@ -393,7 +393,7 @@ Step 4  错题三追问复盘
 ```json
 {
   "sessionId": "sess-chinese-rc-001",
-  "protocolVersion": "2.2.0",
+  "protocolVersion": "2.3.0",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-chinese-reading-decoder",
   "recipient": "xiaozhi-learning-dna",

@@ -164,7 +164,9 @@ function mentioned(skillText, key) {
     const m = re.exec(line);
     if (m) {
       const before = line.slice(0, m.index);
-      const owned = /(→|->|—>)\s*.*(由|归|交给|交).*(维护|负责|唯一写入|写入)|不在本 SKILL|本 SKILL 不|它写|它维护|由它/.test(line);
+      // “本 SKILL 不承诺/不自己发/不自行”否定的是承诺与自行发送，不是本行提到的键：
+      // “回看提醒 → reminder_enqueue，由 IM 提醒合并发送；本 SKILL 不承诺‘我会在 X 时提醒你’”里 reminder_enqueue 是本技能要生成的
+      const owned = /(→|->|—>)\s*.*(由|归|交给|交).*(维护|负责|唯一写入|写入)|不在本 SKILL|本 SKILL 不(?!承诺|自己发|自行)|它写|它维护|由它/.test(line);
       const negHere = owned || NEG.test(before) || (cont && !/(?<!不)(读|写|访问|使用)/.test(before));
       if (!negHere) return true;
     }

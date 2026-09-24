@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🎯 思维梯度训练师
-  version: 2.2.0
+  version: 2.3.0
   author: 小智伴学
   category: 数学专项
   grade_bands:
@@ -410,7 +410,7 @@ Step 4：更新日记和档案
 ```json
 {
   "sessionId": "sess-20260903-003",
-  "protocolVersion": "2.2.0",
+  "protocolVersion": "2.3.0",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-math-gradient-trainer",
   "recipient": "xiaozhi-learning-dna",

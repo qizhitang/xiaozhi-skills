@@ -11,7 +11,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 家长沟通助手
-  version: 2.2.0
+  version: 2.3.0
   author: 小智伴学
   category: 独立教师
   grade_bands:
@@ -314,7 +314,7 @@ max_round_limit: 15
 
 ### 8.2 沟通记录
 
-每次沟通后写一条 `workspace.parentCommunicationLogs[]`：
+每次沟通后写一条 `workspace.parentCommunicationLogs[]`。以下情况本次**不写**，草稿只留在当前会话：学员卡 `status` 为"暂停记录""已结课"或"待删除"；老师、学员或家长说了"这次不要记忆"。字段如下：
 
 ```text
   date           → 沟通时间
@@ -432,7 +432,8 @@ max_round_limit: 15
           emotionSharingWithParent（情绪内容的第二道检查）
   workspace.studentCards[].alias / .gradeBand / .status /
       .guardianCommunicationPreference
-        → 化名、学段、是否在读、家长偏好的沟通方式
+        → 化名、学段、是否在读、家长偏好的沟通方式；
+          status 为"暂停记录""已结课""待删除"时不写沟通日志
   workspace.lessonLogs[].parentSummary / .completedContent / .evidence
         → 沟通素材（家长版摘要、学了什么、佐证行为）
   workspace.lessonLogs[].masteryStatus / .perTopicMastery[]
@@ -552,7 +553,7 @@ max_round_limit: 15
 
 学员/家长提出时同样适用（由老师核实请求人身份后代为执行），按学员化名定位：「查看 小A 的沟通记录」「以后不要给家长看 小A 的情绪观察」。后者要把 `emotionSharingWithParent` 关掉——**授权位由 `xiaozhi-teach-student-intake` 的档案流程改**，本 SKILL 收到这类要求时如实转达给老师，并从这一刻起不再起草任何涉及课堂状态的内容（不等改完）。
 
-**校验要求**：起草家长内容前须确认 `parentCommunicationAllowed` 为 true，含情绪内容再确认 `emotionSharingWithParent`；跨 SKILL 共享另需 `crossSkillSharing` 为 true。真实姓名、联系方式、家庭信息一律不写入（详见 `SECURITY_BASELINE.md`）。
+**校验要求**：起草家长内容前须确认 `parentCommunicationAllowed` 为 true，含情绪内容再确认 `emotionSharingWithParent`；跨 SKILL 共享另需 `crossSkillSharing` 为 true。学员卡 `status` 为"暂停记录""已结课"或"待删除"，或有人说了"这次不要记忆"时，不写沟通日志。真实姓名、联系方式、家庭信息一律不写入（详见 `SECURITY_BASELINE.md`）。
 
 ---
 

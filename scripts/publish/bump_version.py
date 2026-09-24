@@ -53,9 +53,19 @@ def main():
     for p in ["student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json",
               "student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json"]:
         sub(p, [(f"（当前 {old}）", f"（当前 {new}）"), (f'"{old}"', f'"{new}"')])
-    for p in ["README.md", "docs/architecture.md", "docs/installation-guide.md"]:
-        sub(p, [(f"v{old}", f"v{new}")])
-    sub("docs/changelog.md", [(f"当前版本 **v{old}**", f"当前版本 **v{new}**")])
+    # README 与 docs 只改“当前版本”这几个固定写法；“第一批随 v2.2.0 发布”这类历史记录不能跟着升
+    cur = re.escape(f"v{old}")
+    for p in ["README.md", "docs/architecture.md", "docs/installation-guide.md", "docs/changelog.md"]:
+        try:
+            t = open(p, encoding="utf-8", newline="").read()
+        except FileNotFoundError:
+            continue
+        o = t
+        t = re.sub(rf"(当前版本[：:]?\s*\**){cur}(?![\d.])", rf"\g<1>v{new}", t)   # 当前版本：**vX** / 当前版本 vX。
+        t = t.replace(f"（v{old} 现状）", f"（v{new} 现状）").replace(f"| 版本 | v{old} |", f"| 版本 | v{new} |")
+        if t != o:
+            open(p, "w", encoding="utf-8", newline="").write(t)
+            changed.append(p)
 
     print(f"{old} → {new}：改动 {len(changed)} 个文件")
     left = []

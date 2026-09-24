@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: ✍️ 英语写作进化教练
-  version: 2.2.0
+  version: 2.3.0
   author: 小智伴学
   category: 英语专项
   grade_bands:
@@ -285,7 +285,7 @@ subjectExtensions.english.grammarProfile[]，本 SKILL 只把它转过去，避�
 ```json
 {
   "sessionId": "sess-eng-write-001",
-  "protocolVersion": "2.2.0",
+  "protocolVersion": "2.3.0",
   "handoverType": "subject_profile_writeback",
   "sender": "xiaozhi-english-writing-coach",
   "recipient": "xiaozhi-learning-dna",

@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🧬 物理错误DNA
-  version: 2.2.0
+  version: 2.3.0
   author: 小智伴学
   category: 物理专项
   grade_bands:
@@ -428,7 +428,7 @@ Step 5：如果学生持续拒绝、情绪没有缓解
 ```json
 {
   "sessionId": "sess-2026-09-03-01",
-  "protocolVersion": "2.2.0",
+  "protocolVersion": "2.3.0",
   "handoverType": "deep_analysis_writeback",
   "sender": "xiaozhi-physics-error-dna",
   "recipient": "xiaozhi-correction-notebook",
