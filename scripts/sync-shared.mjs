@@ -154,6 +154,8 @@ function findSkillDirs(dir, acc = []) {
 const skillDirs = findSkillDirs(root).sort();
 
 const rel = (p) => relative(root, p).replace(/\\/g, "/");
+// 技能名 → 所在学科目录（student/<学科>/、teacher/<学科>/；通用、独立教师与工具不算学科）
+const SUBJECT_OF = new Map(skillDirs.map((d) => [d.split(/[\\/]/).pop(), (rel(d).match(/^(?:student|teacher)\/(math|physics|chemistry|history|biology|geography|chinese|english)\//) || [])[1]]));
 // 比较时统一行尾：git 的 autocrlf 会在检出时把 LF 转成 CRLF，
 // 逐字节比较会在 Windows 上误报“与源不一致”。
 const norm = (s) => s.split(String.fromCharCode(13)).join("");
@@ -431,7 +433,10 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
       // 收件方：按协议的固定路由——写回档案只能到学习DNA，错题交接只能到错题本，提醒只能到 IM 提醒
       const DEST = { wrong_answer_handover: ["xiaozhi-correction-notebook", "xiaozhi-math-error-dna", "xiaozhi-physics-error-dna", "xiaozhi-chemistry-error-dna", "xiaozhi-history-source-analyzer", "xiaozhi-biology-error-dna", "xiaozhi-geography-map-reader"], deep_analysis_writeback: ["xiaozhi-correction-notebook"], profile_writeback: ["xiaozhi-learning-dna"], subject_profile_writeback: ["xiaozhi-learning-dna"], reminder_enqueue: ["xiaozhi-im-reminder"], reminder_sync: [], teacher_writeback: ["xiaozhi-learning-dna"] };
       if (props.recipient && Array.isArray(props.recipient.enum)) {
-        const fixed = new Set(kinds.flatMap((k) => DEST[k] || []));
+        // 学科技能的错题交接只发给错题本与本学科的错误DNA（payload 的 subject 上面已只留本学科）；
+        // 发给别科错误DNA 的，只有正文明确写到（非否定语境）时才留。通用技能（协调器、错题本等）照旧保留全部
+        const waKeep = (r) => !subj || r === "xiaozhi-correction-notebook" || SUBJECT_OF.get(r) === subj || mentioned(skillText, r);
+        const fixed = new Set(kinds.flatMap((k) => (DEST[k] || []).filter((r) => k !== "wrong_answer_handover" || waKeep(r))));
         const openKinds = kinds.filter((k) => !(DEST[k] || []).length);   // 路由表没定目的地的类型（reminder_sync）
         const men = openKinds.length ? props.recipient.enum.filter((r) => r !== skillName && mentioned(skillText, r)) : [];
         const rs = props.recipient.enum.filter((r) => (fixed.has(r) || men.includes(r)) && r !== skillName);   // 不会发给自己

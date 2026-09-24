@@ -49,12 +49,7 @@
       "enum": [
         "xiaozhi-correction-notebook",
         "xiaozhi-im-reminder",
-        "xiaozhi-learning-dna",
-        "xiaozhi-math-error-dna",
-        "xiaozhi-chemistry-error-dna",
-        "xiaozhi-history-source-analyzer",
-        "xiaozhi-biology-error-dna",
-        "xiaozhi-geography-map-reader"
+        "xiaozhi-learning-dna"
       ]
     },
     "payload": {
