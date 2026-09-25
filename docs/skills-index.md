@@ -2,7 +2,7 @@
 
 > 由 `scripts/gen-docs.mjs --write` 从各 SKILL.md 的 frontmatter 生成，**请勿手改**；CI 用 `--check` 核对。
 
-全库 83 个 SKILL（学生端 49 + 老师端 34）+ 1 个开发者工具，217 份 references。
+全库 83 个 SKILL（学生端 49 + 老师端 34）+ 1 个开发者工具，221 份 references。
 
 ## 学生端 · 通用（13）
 
@@ -46,11 +46,11 @@
 
 | SKILL | 目录名 | 分类 | 适用学段 | 依赖 | 版本 |
 |---|---|---|---|---|---|
-| 📝 英语语法突破教练 | `xiaozhi-english-grammar-coach` | 英语专项 | 小学高段、初中 | `xiaozhi-learning-dna` | 2.5.0 |
-| 🎧 个性化英语听力训练师 | `xiaozhi-english-listening-trainer` | 英语专项 | 小学高段、初中 | `xiaozhi-learning-dna`、`xiaozhi-english-vocabulary-dna` | 2.5.0 |
-| 🎙️ 英语口语陪练 | `xiaozhi-english-speaking-coach` | 英语专项 | 小学高段、初中 | `xiaozhi-learning-dna` | 2.5.0 |
-| 📖 智能词汇DNA系统 | `xiaozhi-english-vocabulary-dna` | 英语专项 | 小学高段、初中 | `xiaozhi-learning-dna` | 2.5.0 |
-| ✍️ 英语写作进化教练 | `xiaozhi-english-writing-coach` | 英语专项 | 小学高段、初中 | `xiaozhi-learning-dna`、`xiaozhi-english-grammar-coach` | 2.5.0 |
+| 📝 英语语法突破教练 | `xiaozhi-english-grammar-coach` | 英语专项 | 小学高段、初中、高中 | `xiaozhi-learning-dna` | 2.5.0 |
+| 🎧 个性化英语听力训练师 | `xiaozhi-english-listening-trainer` | 英语专项 | 小学高段、初中、高中 | `xiaozhi-learning-dna`、`xiaozhi-english-vocabulary-dna` | 2.5.0 |
+| 🎙️ 英语口语陪练 | `xiaozhi-english-speaking-coach` | 英语专项 | 小学高段、初中、高中 | `xiaozhi-learning-dna` | 2.5.0 |
+| 📖 智能词汇DNA系统 | `xiaozhi-english-vocabulary-dna` | 英语专项 | 小学高段、初中、高中 | `xiaozhi-learning-dna` | 2.5.0 |
+| ✍️ 英语写作进化教练 | `xiaozhi-english-writing-coach` | 英语专项 | 小学高段、初中、高中 | `xiaozhi-learning-dna`、`xiaozhi-english-grammar-coach` | 2.5.0 |
 
 ## 学生端 · 物理（5）
 
@@ -142,9 +142,9 @@
 
 | SKILL | 目录名 | 分类 | 适用学段 | 依赖 | 版本 |
 |---|---|---|---|---|---|
-| 英语综合测评 | `xiaozhi-teach-english-assessment` | 老师英语 | 小学高段、初中 | `xiaozhi-teach-student-analyzer`、`xiaozhi-teach-lesson-planner`、`xiaozhi-teach-exam-designer` | 2.5.0 |
-| 英语听力材料设计 | `xiaozhi-teach-english-listening-designer` | 老师英语 | 小学高段、初中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.5.0 |
-| 英语口语活动设计 | `xiaozhi-teach-english-speaking-designer` | 老师英语 | 小学高段、初中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.5.0 |
+| 英语综合测评 | `xiaozhi-teach-english-assessment` | 老师英语 | 小学高段、初中、高中 | `xiaozhi-teach-student-analyzer`、`xiaozhi-teach-lesson-planner`、`xiaozhi-teach-exam-designer` | 2.5.0 |
+| 英语听力材料设计 | `xiaozhi-teach-english-listening-designer` | 老师英语 | 小学高段、初中、高中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.5.0 |
+| 英语口语活动设计 | `xiaozhi-teach-english-speaking-designer` | 老师英语 | 小学高段、初中、高中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.5.0 |
 
 ## 老师端 · 物理（3）
 

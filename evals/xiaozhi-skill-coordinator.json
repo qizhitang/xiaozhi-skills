@@ -153,6 +153,16 @@
         "must": ["路由到地理读图教练，并告诉接手技能这位学生没有选考地理，按学业水平合格性考试的深度讲"],
         "must_not": ["按等级性考试的难度安排", "自己开始讲这道题"]
       }
+    },
+    {
+      "id": "no-trigger-05",
+      "kind": "no-trigger",
+      "grade_band": "高中",
+      "input": "高二英语读后续写总是接不上原文，怎么练？",
+      "expect": {
+        "activate": false,
+        "route_to": "xiaozhi-english-writing-coach"
+      }
     }
   ]
 }

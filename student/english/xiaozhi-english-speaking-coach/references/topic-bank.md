@@ -1,6 +1,6 @@
 # 分学段口语话题库
 
-> 适用学段：小学高段与初中（7-9 年级）。§四为初高衔接内容，整节标 ⚠高中，初中不作为常规话题。
+> 适用学段：小学高段、初中与高中。§四为初高衔接内容，整节标 ⚠高中，初中不作为常规话题；高中学生用 §八。
 
 > 本文档为 `xiaozhi-english-speaking-coach` 的配套参考资源，提供晨间热身、即兴演讲、四级跳追问的场景话题。
 
@@ -155,7 +155,7 @@
    → YES：延续上次话题（连贯性优先）
    → NO：进入③
 
-③ 使用本话题库 → 按学生学段选择难度区间（⚠高中一节默认不进轮换）
+③ 使用本话题库 → 按学生学段选择难度区间（初中：⚠高中一节默认不进轮换；高中：用 §八）
    → 随机选择一个话题类别
    → 如果学生在3分钟内聊不完一个话题 → 降级到更简单的类别
    → 如果学生聊得流畅 → 下次升级难度
@@ -181,4 +181,27 @@
   ① 学生在对话中自发提到的新话题 → 记入兴趣档案
   ② 当前热门新闻/事件（学生能接触到的）→ 随时补充
   ③ 课内正在学的话题（由学生自己说，不预设某一版教材的单元名）→ 与课内学习联动
+```
+---
+
+## 八、高中话题（按课标三大主题）
+
+> 依据：《普通高中英语课程标准日常修订版（2017 年版 2025 年修订）》表 2 的三大主题与主题群。课本单元有自己的主题时，以课本为准；本表只是示例。
+
+| 主题 · 主题群 | 话题 | 英文引导语 | 四级跳重点 |
+|---|---|---|---|
+| 人与自我 · 生活与学习 | 学习方法 | "What's one study habit that really works for you? How did you find it?" | 第 2 跳：Why does it work for you, but maybe not for others? |
+| 人与自我 · 做人与做事 | 未来规划 | "What kind of work would you like to try in the future, and why?" | 第 3 跳：What if that kind of work changes a lot in ten years? |
+| 人与社会 · 社会服务与人际沟通 | 志愿服务 | "Have you ever done any volunteer work? What did you learn from it?" | 第 4 跳：So what makes volunteering meaningful? |
+| 人与社会 · 文学、艺术与体育 | 一本书或一部电影 | "Tell me about a book or a film that changed the way you see something." | 第 1 跳先把故事说完整：发生了什么、转折在哪、你怎么看 |
+| 人与社会 · 历史、社会与文化 | 介绍传统节日 | "How would you introduce the Dragon Boat Festival to a foreign friend?" | 先说它是什么，再说怎么过、为什么重要 |
+| 人与社会 · 科学与技术 | 科技与学习 | "How has technology changed the way you learn?" | 第 4 跳换成评判他人观点："Some people say phones make students lazy. Do you agree?" |
+| 人与自然 · 环境保护 | 校园里的环保 | "What can students do to protect the environment at school?" | 第 3 跳：What if every student did just one small thing? |
+| 人与自然 · 宇宙探索 | 太空探索 | "Why do you think countries explore space?" | 第 2 跳：Why do people think it is worth the cost? |
+
+```
+高中话题的三条用法：
+  ① 概述练习：先听或读一段同话题的短材料，再用 3-5 句说出主要内容
+  ② 评判观点：先复述对方的观点，再说同意哪一部分、为什么
+  ③ 得体：同一件事，分别说给同学听和说给外国嘉宾听，比较用词的正式程度
 ```

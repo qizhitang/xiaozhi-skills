@@ -1,6 +1,6 @@
 # 低阶→精准词汇升级对照表
 
-> 适用学段：初中（7-9 年级）。标 ⚠高中 的词属高考 3000 词范围，中考写作不必用，出现时只作说明。
+> 适用学段：初中（7-9 年级）与高中。每张表下面都按《普通高中英语课程标准日常修订版（2017 年版 2025 年修订）》附录 2 给替换词分了档：义教词是中考范围；标 ⚠高中 的是高中必修词或选择性必修词，初中写作不必用；派生词附录 2 不单列，按词根的档；词表外的词不在课标词表里，初中、高中都只要认识。附录 2 也不列一般词组：意思能由单词直接推出的词组按其中的单词定档，整体另有意思的（如 worn out"筋疲力尽"）列为词表外。
 
 > 按词性分类，供英语写作进化教练在用词维度批改时参考。
 > 追问时先问学生"你觉得这两个词有什么区别"，再给出解释。
@@ -8,8 +8,8 @@
 > **三条使用规则（否则这张表会帮倒忙）：**
 > 1. **不追求"高级"，只追求"准确"。** 一个用对的 `good` 好过一个用错的 `outstanding`。
 >    中考英语写作的评分看的是表达是否准确、连贯、切题，不是有没有生僻词。
-> 2. **优先用课标 1600 词表内的替换词**（下表未标 ⚠高中 的都在或接近这个范围）。
->    标 ⚠高中 的词让学生认识即可，不鼓励往作文里塞。
+> 2. **先用学生所在学段词表里的替换词**：初中用义教词；高中可以用到必修词、选择性必修词。
+>    词表外的词让学生认识即可，不鼓励往作文里塞。
 > 3. **不给学生成句。** 本表只给"词 → 词"的对应和差别说明；
 >    句子由学生自己写，教练按 `shared/hint-ladder.md` 最高到 L4（给半句）。
 
@@ -37,9 +37,13 @@
 | very easy | effortless / straightforward / simple | 非常容易 |
 | very interesting | interesting enough to... / fascinating | 非常有趣 |
 
-> ⚠高中（高考 3000 词范围，认识即可，不要求写进作文）：
-> outstanding, remarkable, dreadful, enormous, substantial, negligible, trivial,
-> devastated, overjoyed, breathtaking, effortless, captivating, compelling, microscopic
+> 按课标词表分档（2026-09-25 逐词核对）：
+> - 义教词：excellent, wonderful, fantastic, amazing, terrible, awful, huge, tiny, simple, interesting
+> - 高中必修词 ⚠高中：significant, major
+> - 高中选择性必修词 ⚠高中：outstanding, remarkable, enormous, vast, massive, substantial, minor, crucial, essential, vital, critical, complex, straightforward, fascinating
+> - 派生（按词根的档）：challenging ← challenge、effortless ← effort、overjoyed ← joy（义教）；delighted ← delight（必修 ⚠高中）；exhausted ← exhaust、demanding ← demand、microscopic ← microscope（选择性必修 ⚠高中）
+> - 词表外（认识即可，不要求写进作文）：dreadful, negligible, trivial, thrilled, devastated, heartbroken, miserable, drained, worn out, stunning, breathtaking, gorgeous
+> - 表中"very small → minute"的 minute 作"极小的"讲，读 /maɪˈnjuːt/，也在词表外；词表里的 minute 是"分钟"。
 
 ---
 
@@ -73,7 +77,11 @@
 | show | reveal | 揭示（出人意料） |
 | show | indicate | 表明 |
 
-> ⚠高中（高考 3000 词范围）：obtain, acquire, proceed, navigate, demonstrate, reveal, indicate
+> 按课标词表分档（2026-09-25 逐词核对）：
+> - 义教词：explain, argue, believe, consider, suggest, create, produce, cause, achieve, travel
+> - 高中必修词 ⚠高中：admit, announce, acquire, reveal, indicate
+> - 高中选择性必修词 ⚠高中：claim, insist, generate, obtain, proceed, demonstrate
+> - 词表外：navigate
 
 ---
 
@@ -98,8 +106,12 @@
 | because | as a result of | 因为（后跟名词短语） |
 | because | since | 既然、由于（后跟句子） |
 
-> ⚠高中（高考 3000 词范围）：nevertheless, on the contrary, furthermore, moreover,
-> consequently, as a result of, given that
+> 按课标词表分档（2026-09-25 逐词核对）：
+> - 义教词：however, therefore, since, as well as, as a result (of)
+> - 高中必修词 ⚠高中：furthermore, moreover, in addition（addition）, due to（附录 2 单列的词组）
+> - 高中选择性必修词 ⚠高中：nevertheless, on the contrary（contrary）
+> - 派生（按词根的档）：additionally ← addition（必修 ⚠高中）
+> - 词表外：consequently
 >
 > 初中写作够用的连接词就这几个：but / however / and / also / so / therefore /
 > because / for example / first, then, finally。**用对比用多更重要。**

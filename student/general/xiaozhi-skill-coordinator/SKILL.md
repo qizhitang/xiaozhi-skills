@@ -94,7 +94,7 @@ metadata:
 | 生物 | 细胞、光合作用、呼吸作用、遗传、基因、染色体、生态系统、人体生理；图片含细胞结构图、曲线图、遗传系谱图、食物网 | `xiaozhi-biology-error-dna`（错题）/ `xiaozhi-biology-genetics-coach`（遗传题）/ `xiaozhi-biology-chart-reader`（图表题）/ `xiaozhi-biology-inquiry-coach`（实验题） |
 | 地理 | 经纬度、等高线、气候、地形、河流、区位、区域、人口、城市、时区与地方时；图片含地图、等值线图、气候图、统计图 | `xiaozhi-geography-map-reader`（错题与读图）/ `xiaozhi-geography-causal-chain`（成因与原理）/ `xiaozhi-geography-region-builder`（区域） |
 | 开卷考试 | 开卷、翻书、做索引、合卷；道法、历史、生物、地理的开卷考试方法 | `xiaozhi-openbook-coach`（只教方法；道法题目本身本库不讲） |
-| 英语 | 时态、从句、单词、词组、听力、口语、作文；出现连续英文句子；图片含英文题干或短文 | `xiaozhi-english-grammar-coach` / `xiaozhi-english-vocabulary-dna` |
+| 英语 | 时态、从句、单词、词组、听力、口语、作文；高中的非谓语动词、语法填空、读后续写、应用文；出现连续英文句子；图片含英文题干或短文 | `xiaozhi-english-grammar-coach`（错题与语法）/ `xiaozhi-english-vocabulary-dna`（词汇）/ `xiaozhi-english-writing-coach`（整篇作文与续写） |
 | 语文 | 阅读理解、赏析、修辞、文言、病句、作文、古诗；图片含大段中文短文、文言篇目 | `xiaozhi-chinese-reading-decoder` / `xiaozhi-chinese-writing-coach` / `xiaozhi-chinese-grammar-tracker` |
 | 跨科 / 不确定 | 主题类问题（丝绸之路、气候变化）、"这两科好像有关系" | `xiaozhi-cross-subject-detective` |
 

@@ -199,7 +199,7 @@
   · BBC Learning English - 6 Minute English（基础篇）
   · 学员自录"My Day"（1 分钟）
 
-【进阶级 B1】
+【进阶级 B1】（B1 约当高考水平；初中只给学有余力的学员）
   · VOA Learning English
   · TED-Ed 短视频
   · 英文原版动画 S2+

@@ -1,6 +1,6 @@
 {
   "skill": "xiaozhi-teach-english-assessment",
-  "notes": "CSE 描述语定级，CEFR 只作国际参照。历史缺陷：卷面百分比直接映射 CEFR（70 分=B2）、初二样板“接近 B2”、12 个月 A1→B1 的虚构成长——向家长输出虚高等级是最要盯的。听力材料转 listening-designer，口语活动转 speaking-designer。",
+  "notes": "CSE 描述语定级，CEFR 只作国际参照。历史缺陷：卷面百分比直接映射 CEFR（70 分=B2）、初二样板“接近 B2”、12 个月 A1→B1 的虚构成长——向家长输出虚高等级是最要盯的。v2.6.0 订正学段对应：中考约当 CSE 三级、高考约当 CSE 四级（旧版写高考 CSE 5）；高中按合格性考试与高考的课标口径设计（第十四节）。听力材料转 listening-designer，口语活动转 speaking-designer。",
   "cases": [
     {
       "id": "trigger-01",
@@ -45,6 +45,21 @@
       "consent": { "parentCommunicationAllowed": false },
       "input": "把画像做成家长版",
       "expect": { "must": ["说明家长沟通授权未开，只出老师自留版"], "must_not": ["生成家长版"] }
+    },
+    {
+      "id": "trigger-03",
+      "kind": "trigger",
+      "role": "teacher",
+      "grade_band": "高中",
+      "input": "帮我设计一份高一英语单元测评的细目表，90 分钟",
+      "expect": { "activate": true, "must": ["范围按必修，学业质量以水平一为主", "写明题型、分值、预设难度与预设作答时间；卷面结构与分值以本地考试说明为准"], "must_not": ["内置某个省的高考试卷结构", "由卷面分数直接换算 CSE 等级"] }
+    },
+    {
+      "id": "trigger-04",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "高考英语大概相当于中国英语能力等级量表的几级？",
+      "expect": { "activate": true, "must": ["说明按量表发布时的通行解读，高考约当 CSE 四级（约当 B1），中考约当三级", "提醒定级要对照描述语人工判定，不由分数换算"], "must_not": ["说高考相当于 CSE 五级", "说高中毕业相当于 B2"] }
     }
   ]
 }

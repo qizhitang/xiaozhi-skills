@@ -1,6 +1,6 @@
 # 词汇雷达话题模板
 
-> 适用学段：小学高段与初中（7-9 年级）。词表分档按 2022 版义教课标（1600 词）；标 ⚠高中 的分档不作为初中目标。
+> 适用学段：小学高段与初中（7-9 年级）；高中学生用 `english-hs-vocabulary.md`。分档以《普通高中英语课程标准日常修订版（2017 年版 2025 年修订）》附录 2 词汇表的标注为准——它收录了义务教育阶段要求掌握的 1600 个单词（不带星号），另标出高中必修（*）与选择性必修（**）的词；标 ⚠高中 的分档不作为初中目标。
 
 > 本文档为 `xiaozhi-english-vocabulary-dna` 的配套参考资源，提供新词汇雷达（模块C：课前预热）的话题分类模板、词汇分组策略与四阶段预热内容生成指南。
 >
@@ -76,93 +76,103 @@
 
 ### 中考高频话题（5大类）
 
-> 分档说明：**基础层 / 进阶层**均在 2022 版课标 1600 词范围内（中考目标）；
-> **拓展层**为高考 3000 词范围 ⚠高中，初中只在学生主动问到时说明，不作为记忆目标。
+> 分档说明（2026-09-25 按附录 2 逐词核对）：**义教词**是中考范围，要能用出来。**高中必修词、选择性必修词** ⚠高中，
+> 不作为初中的记忆目标；中考语篇里常见的，按 SKILL 模块A 的"中考高频超纲词"处理（读到、听到时认得出即可）。
+> **派生**词附录 2 没有单列（附录 2 不列可由构词法推出的部分词），按词根的档对待。**词表外**的词不主动出卡，读到时解释一下即可（只指雷达不主动预热；学生自己存进词库的，仍按 SKILL 模块A 标档）。
 
 #### 1. 校园与学习
 
 ```
 核心词汇层：
-  基础层（课标 1600 词内，必备）：class, subject, teacher, homework, exam, grade, school
-  进阶层（课标 1600 词内，中考常考）：schedule, curriculum, extracurricular, scholarship, assignment
-  拓展层 ⚠高中（高考 3000 词范围，只求读到时认识）：academic, comprehensive, compulsory, optional, assessment
+  义教词（中考范围）：class, subject, teacher, homework, exam, grade, school, library, attend
+  高中必修词 ⚠高中：schedule, campus, lecture
+  高中选择性必修词 ⚠高中：scholarship, academic, comprehensive, semester
+  派生（按词根的档）：assignment ← assign、assessment ← assess（选择性必修 ⚠高中），optional ← option（必修 ⚠高中）
+  词表外（不主动出卡，读到时解释一下）：curriculum, extracurricular, compulsory
 
 话题示例句（预热Day 7用）：
-  "School life involves attending classes, completing homework,
-   and preparing for exams."
-  "Extracurricular activities like clubs and sports are also important."
+  "At school we attend classes, do homework and prepare for exams."
+  "Joining a club is a good way to make friends."
 
-搭配扩展（预热Day 14用）：
-  academic performance / compulsory subject / curriculum design
-  extracurricular activity / scholarship program / final exam
+搭配扩展（预热Day 3用）：
+  attend a class / hand in homework / take an exam
+  join a club / borrow books from the library / final exam
 ```
 
 #### 2. 科技与环境
 
 ```
 核心词汇层：
-  基础层（课标 1600 词内）：technology, computer, internet, environment, pollution, protect
-  进阶层（课标 1600 词内）：digital, sustainable, renewable, emission, ecosystem
-  拓展层 ⚠高中（高考 3000 词范围）：innovation, breakthrough, carbon footprint, biodiversity
+  义教词（中考范围）：technology, computer, internet, environment, protect, digital, recycle, energy
+  高中必修词 ⚠高中：pollution, global, carbon
+  高中选择性必修词 ⚠高中：innovation, species, solar
+  派生（按词根的档）：sustainable ← sustain（选择性必修 ⚠高中）
+  词表外（不主动出卡，读到时解释一下）：renewable, emission, ecosystem, breakthrough, footprint, biodiversity
 
 话题示例句：
   "Technology has changed how we learn and communicate."
-  "Protecting the environment means reducing pollution and waste."
+  "We can protect the environment by recycling waste and saving energy."
 
 搭配扩展：
-  digital technology / sustainable development / renewable energy
-  environmental protection / carbon footprint / ecosystem balance
+  digital technology / save energy / recycle waste
+  protect the environment / plant trees / climate change
 ```
 
 #### 3. 健康与生活方式
 
 ```
 核心词汇层：
-  基础层（课标 1600 词内）：health, exercise, diet, sleep, habit, lifestyle
-  进阶层（课标 1600 词内）：nutrition, fitness, well-being, balanced, regular
-  拓展层 ⚠高中（高考 3000 词范围）：immune system, cardiovascular, mental health, chronic
+  义教词（中考范围）：health, exercise, diet, sleep, habit, balance, stress, relax
+  高中必修词 ⚠高中：lifestyle, regular, mental
+  高中选择性必修词 ⚠高中：nutrition, calorie, symptom
+  派生（按词根的档）：fitness ← fit（义教）
+  词表外（不主动出卡，读到时解释一下）：well-being, immune, cardiovascular, chronic
 
 话题示例句：
-  "A healthy lifestyle includes regular exercise and good sleep."
-  "Balanced nutrition helps us stay energetic and focused."
+  "Doing exercise every day helps us stay healthy."
+  "Eating healthy food and sleeping enough give us energy."
 
 搭配扩展：
-  healthy lifestyle / balanced diet / regular exercise
-  physical fitness / mental well-being / immune system
+  healthy food / a balanced diet / do exercise
+  keep healthy / relax after school / sleep well
 ```
 
 #### 4. 社会与文化
 
 ```
 核心词汇层：
-  基础层（课标 1600 词内）：culture, tradition, festival, custom, community, society
-  进阶层（课标 1600 词内）：heritage, celebration, diversity, respect, belief
-  拓展层 ⚠高中（高考 3000 词范围）：multicultural, cultural exchange, social cohesion
+  义教词（中考范围）：culture, tradition, festival, community, society, respect, celebrate
+  高中必修词 ⚠高中：custom, heritage, exchange
+  高中选择性必修词 ⚠高中：ceremony, diverse, belief
+  派生（按词根的档）：celebration ← celebrate、cultural ← culture（义教），diversity ← diverse（选择性必修 ⚠高中）
+  词表外（不主动出卡，读到时解释一下）：multicultural, cohesion
 
 话题示例句：
   "Different cultures have different traditions and festivals."
-  "Cultural diversity makes our community richer and more interesting."
+  "People in our community celebrate festivals in different ways."
 
 搭配扩展：
-  cultural heritage / traditional festival / social diversity
-  multicultural society / cultural exchange / community spirit
+  celebrate a festival / respect different cultures / learn about traditions
+  community activities / Chinese culture / festival food
 ```
 
 #### 5. 个人成长与情感
 
 ```
 核心词汇层：
-  基础层（课标 1600 词内）：dream, goal, effort, challenge, confident, nervous, proud
-  进阶层（课标 1600 词内）：ambition, motivation, perseverance, resilience, achievement
-  拓展层 ⚠高中（高考 3000 词范围）：self-discipline, determination, fulfillment, self-awareness
+  义教词（中考范围）：dream, goal, effort, challenge, nervous, proud, courage, achieve
+  高中必修词 ⚠高中：confident, achievement, determine
+  高中选择性必修词 ⚠高中：ambition, motivate, discipline
+  派生（按词根的档）：determination ← determine（必修 ⚠高中），motivation ← motivate、fulfilment ← fulfil（选择性必修 ⚠高中；美式拼写 fulfillment）
+  词表外（不主动出卡，读到时解释一下）：perseverance, resilience, self-awareness
 
 话题示例句：
-  "Setting goals helps us stay motivated and focused."
-  "Overcoming challenges builds confidence and resilience."
+  "Setting goals helps us work harder."
+  "Facing challenges with courage makes us stronger."
 
 搭配扩展：
-  personal growth / life goal / self-confidence
-  inner motivation / resilience / self-discipline
+  set a goal / make an effort / face a challenge
+  feel proud / achieve a dream / build confidence
 ```
 
 ---
@@ -185,6 +195,8 @@
 
 ### 常见兴趣话题模板
 
+> 兴趣话题的"基础""进阶"两行按话题里的常用程度排，没有按课标词表分档：player、court、rhythm、resource、strategy、defense（词表里是英式拼写 defence）、adventure 是高中必修词，craft、league、compose、chorus、harmony 是选择性必修词。给初中生出卡前，先按 SKILL 模块A 判档。
+
 #### 体育话题
 
 ```
@@ -192,7 +204,7 @@
 向上扩展：
   基础：team, score, win, lose, player, coach, court, practice
   进阶：league, championship, strategy, defense, offense, dribble, shoot
-  拓展 ⚠高中（高考 3000 词范围）：tournament, semifinal, playoff, momentum, underdog, crossover
+  拓展 ⚠高中（tournament 是高中选择性必修词，其余不在课标词表内，只求读到时认识）：tournament, semifinal, playoff, momentum, underdog, crossover
 
 预热内容模板（Day 7）：
   "下周我们聊 [basketball]！先认识这些词：
@@ -207,7 +219,7 @@
 向上扩展：
   基础：song, rhythm, melody, perform, concert, band, singer, stage
   进阶：compose, lyrics, chorus, verse, harmony, acoustic, album
-  拓展 ⚠高中（高考 3000 词范围）：composition, repertoire, improvisation, virtuosity, resonance
+  拓展 ⚠高中（composition 是高中选择性必修词，其余不在课标词表内，只求读到时认识）：composition, repertoire, improvisation, virtuosity, resonance
 ```
 
 #### 游戏话题
@@ -217,7 +229,7 @@
 向上扩展：
   基础：build, craft, explore, survive, create, block, world, resource
   进阶：strategy, multiplayer, adventure, quest, skill, upgrade, challenge
-  拓展 ⚠高中（高考 3000 词范围）：simulation, procedural, sandbox, open-world, immersive
+  拓展 ⚠高中（都不在课标词表内，只求读到时认识）：simulation, procedural, sandbox, open-world, immersive
 ```
 
 ---
