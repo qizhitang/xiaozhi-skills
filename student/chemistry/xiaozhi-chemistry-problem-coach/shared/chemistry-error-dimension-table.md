@@ -201,7 +201,7 @@ HE ↔ HC：除杂方案错（HE04），先确认物质性质（HC04）是否掌
 ```json
 {
   "sessionId": "sess-2026-09-23-01",
-  "protocolVersion": "2.4.0",
+  "protocolVersion": "2.5.0",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-correction-notebook",
   "recipient": "xiaozhi-chemistry-error-dna",

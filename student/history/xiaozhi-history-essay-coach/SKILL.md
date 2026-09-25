@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: ⚖️ 历史论述题教练
-  version: 2.4.0
+  version: 2.5.0
   author: 小智伴学
   category: 历史专项
   grade_bands:

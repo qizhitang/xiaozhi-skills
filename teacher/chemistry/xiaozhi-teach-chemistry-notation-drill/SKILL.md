@@ -8,7 +8,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 化学用语过关训练设计
-  version: 2.4.0
+  version: 2.5.0
   author: 小智伴学
   category: 老师化学
   grade_bands:

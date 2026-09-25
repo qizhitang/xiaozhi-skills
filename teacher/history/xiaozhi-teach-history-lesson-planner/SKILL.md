@@ -8,7 +8,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 历史教案设计
-  version: 2.4.0
+  version: 2.5.0
   author: 小智伴学
   category: 老师历史
   grade_bands:
