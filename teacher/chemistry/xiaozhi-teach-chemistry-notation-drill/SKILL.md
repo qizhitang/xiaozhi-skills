@@ -113,7 +113,7 @@ max_round_limit: 20
   classWorkspace.classProfile     → 年级、班额、每节课分钟数；决定过关卡的时长与分发方式
   classWorkspace.studentTiers     → A/B/C 分层，决定每张卡的题目组合
   classWorkspace.weaknessRank     → 本班已识别的化学用语弱项，决定先从哪一级补
-  classWorkspace.reviewPlans      → 已有的间隔回看安排，过关回看嵌进去，不另起一套
+  classWorkspace.reviewPlans      → 已有的间隔回看安排；过关回看按这些日子嵌进作业或课前 3 分钟，不另起一套
 
 写（均生成待确认条目，老师确认后落库）：
   classWorkspace.homeworkAssignments[] → 过关卡作为作业任务：
@@ -122,7 +122,7 @@ max_round_limit: 20
                                           批改后 completionSummary 只记班级层面的 submitted / total / commonErrors
 ```
 
-> 本 SKILL 不写 weaknessRank（弱项排序由学情分析师根据逐题得分生成），不写教案 lessonPlans，不写考试蓝图 examBlueprints。
+> 本 SKILL 不写 weaknessRank（弱项排序由学情分析师根据逐题得分生成），不写复习排期 reviewPlans（排期归复习规划师，本 SKILL 只按它的回看日放题），不写教案 lessonPlans，不写考试蓝图 examBlueprints。
 
 ---
 

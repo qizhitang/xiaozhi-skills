@@ -1,6 +1,6 @@
 # 化学用语五级过关体系
 
-> 示例题验算：2026-09-23
+> 示例题验算：2026-09-25
 > 适用学段：初中化学；第五级为高中必修起点。
 > 本文件是 `xiaozhi-teach-chemistry-notation-drill` 的参考资源。清单按《义务教育化学课程标准（2022 年版）》"物质的组成与结构""物质的化学变化"两个学习主题中"物质组成的表示""化学反应"相关要求整理；**具体物质与元素以本校教材及其附录为准**。
 > 过关卡中的每道题按 `shared/ai-item-check.md` 自检；本文件的错例与改正都写成了可核对的形式，化学式的化合价代数和由 CI 验算。
@@ -97,7 +97,7 @@
 |---|---|---|
 | 过关卡的题目与分层 | `classWorkspace.homeworkAssignments[].tasks[]` | 每题一个 knowledgePoint（如"化学用语第 3 级：化学式"），标 tier |
 | 本班的常见错误类型 | `homeworkAssignments[].completionSummary.commonErrors` | 只记班级层面的错误类型与频数 |
-| 已过关级别的回看 | 与老师通用复习规划师的 `classWorkspace.reviewPlans` 合并 | 不另起一套间隔 |
+| 已过关级别的回看 | 回看题嵌进作业，写进 `classWorkspace.homeworkAssignments[].tasks[]`；回看日按 `classWorkspace.reviewPlans` 已有的排期 | 本 SKILL 只读 reviewPlans、不写；间隔口径与老师通用复习规划师一致，不另起一套 |
 
 学生个人的过关情况由老师自己掌握，本 SKILL 不生成面向家长的个人过关报告（教学主体边界）。
 
