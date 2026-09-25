@@ -8,7 +8,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🕸️ 生物概念网络构建器
-  version: 2.5.0
+  version: 2.6.0
   author: 小智伴学
   category: 生物专项
   grade_bands:

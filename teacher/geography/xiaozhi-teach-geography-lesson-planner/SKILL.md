@@ -8,7 +8,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 地理教案设计
-  version: 2.5.0
+  version: 2.6.0
   author: 小智伴学
   category: 老师地理
   grade_bands:

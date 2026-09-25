@@ -8,7 +8,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🧭 时空线索构建器
-  version: 2.5.0
+  version: 2.6.0
   author: 小智伴学
   category: 历史专项
   grade_bands:
