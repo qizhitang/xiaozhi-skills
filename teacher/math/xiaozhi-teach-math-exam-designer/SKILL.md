@@ -669,7 +669,7 @@ Cronbach α（写入 classSummaries[].reliabilityAlpha）：
       弱项要不要变、怎么变，是错因分析的判断，
       由 xiaozhi-teach-math-error-analyzer 依据 itemScores/itemStats 决定
   classWorkspace.studentTiers[]  → 分层由 xiaozhi-teach-student-analyzer 维护
-  classWorkspace.reviewPlans[]   → 复习排期由 xiaozhi-teach-review-planner 维护
+  classWorkspace.reviewPlans[]   → 复习排期由 xiaozhi-teach-review-planner 主写（学科技能只补本学科条目）
 
 交出（只交字段，不代做下游判断）：
   → xiaozhi-teach-math-error-analyzer：examId + itemScores + itemStats

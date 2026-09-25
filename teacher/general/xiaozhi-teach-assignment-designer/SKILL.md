@@ -456,7 +456,7 @@ homeworkAssignments[].completionSummary
 | `weaknessRank` | `xiaozhi-teach-student-analyzer` | 读（作业针对哪些弱项、什么错因维度） |
 | `studentTiers` | `xiaozhi-teach-student-analyzer` | 读（A/B/C 各多少人 → 印几份任务卡） |
 | `examBlueprints` | `xiaozhi-teach-exam-designer` | 读（认知层级与难度档口径对齐，避免作业和测评两套标准） |
-| `reviewPlans` | `xiaozhi-teach-review-planner` | 读 spacingSchedule（哪天该回看哪个知识点）、interleavingSets（哪几个混着练） |
+| `reviewPlans` | `xiaozhi-teach-review-planner` 主写 + 学科技能（english-assessment、english-listening-designer、bio-geo-review-planner）只补本学科条目 | 读 spacingSchedule（哪天该回看哪个知识点）、interleavingSets（哪几个混着练） |
 | `homeworkAssignments` | **本 SKILL 唯一写入** | 写 assignmentId、planId、date、purpose（诊断/巩固/补救/拓展）、tasks[]（taskNo、knowledgePoint、cognitiveLevel、difficultyBand、tier、**estimatedMinutes**）、estimatedTotalMinutes、completionSummary |
 
 ```text

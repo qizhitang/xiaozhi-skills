@@ -551,6 +551,7 @@ max_round_limit: 20
                                           只有总分时不得生成微技能画像）
   classWorkspace.itemStats[]           → 听力题的难度 P / 区分度 D
   classWorkspace.weaknessRank[]        → 班级听力弱项排序
+  classWorkspace.reviewPlans[]         → 同一场考试是否已有复习计划（有就在原计划上补充）
 
 写（均为待老师确认的条目，确认后落库）：
   classWorkspace.lessonPlans[].segments[]   → 听前/听中/听后三段的活动与分钟数
@@ -558,7 +559,9 @@ max_round_limit: 20
                                               AI 生成题 aiGenerated=true，
                                               老师验算后才可 verifiedByTeacher=true
   classWorkspace.weaknessRank[]             → 由听力题得分归纳出的弱项条目
-  classWorkspace.reviewPlans[]              → 微技能训练的排布
+  classWorkspace.reviewPlans[]              → 微技能训练的排布，只写英语听力条目；
+                                              同一场考试已有复习计划时在原计划上补充，不另起一份；
+                                              写入守复习规划师的三道门：老师确认、只用化名、不写个体分数与名次
 
 写回学生档案（可选，需授权）：
   handoverType = "teacher_writeback"，recipient = xiaozhi-learning-dna

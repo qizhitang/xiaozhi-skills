@@ -489,7 +489,16 @@ max_round_limit: 30
 | `examBlueprints` | `xiaozhi-teach-exam-designer` | 读（考试范围、题号→知识点，用于对齐复习范围） |
 | `lessonPlans` | `xiaozhi-teach-lesson-planner` | 读（之前教到哪、哪些目标已覆盖） |
 | `homeworkAssignments` | `xiaozhi-teach-assignment-designer` | 读（已布置过的复习作业，避免重复） |
-| `reviewPlans` | **本 SKILL 唯一写入** | 写 reviewId / targetExamId / startDate / endDate / phases / spacingSchedule / interleavingSets / sourceWeaknessIds |
+| `reviewPlans` | **本 SKILL 主写** + 学科技能（只补本学科条目，见下） | 读（这场考试是否已有计划）；写 reviewId / targetExamId / startDate / endDate / phases / spacingSchedule / interleavingSets / sourceWeaknessIds |
+
+**`reviewPlans` 的其他写入方**（本 SKILL 主写；它们只补本学科、本场考试的条目）：
+
+- `xiaozhi-teach-english-assessment`：英语测评的干预建议转成的复习排布
+- `xiaozhi-teach-english-listening-designer`：听力微技能训练的排布
+- `xiaozhi-teach-bio-geo-review-planner`：生物、地理学业水平考试的复习排期（阶段、间隔、交叉规则沿用本 SKILL）
+
+各写入方守同一套规则：下面的三道门缺一不写；**一场考试（targetExamId）只留一份计划**——写入前先看这场考试有没有计划，
+有就在原计划上补充、不另起一份（补充也算修改已有排期，同样要老师重新确认）。
 
 **写入 `reviewPlans` 的三道门（缺一不写）**：
 

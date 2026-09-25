@@ -429,7 +429,7 @@ O  Organize → 顺序如何安排（按认知层次递进）
 | `studentTiers` | `xiaozhi-teach-student-analyzer` | 读（A/B/C 分层与各层人数 → 配 tierVariants） |
 | `classSummaries` | `xiaozhi-teach-student-analyzer` | 读（meanRate 定新课起点与节奏） |
 | `examBlueprints` | `xiaozhi-teach-exam-designer` | 读（讲评课：讲评错题清单与题号→知识点） |
-| `reviewPlans` | `xiaozhi-teach-review-planner` | 读（复习课：本课在哪个复习阶段、覆盖哪些知识点） |
+| `reviewPlans` | `xiaozhi-teach-review-planner` 主写 + 学科技能（english-assessment、english-listening-designer、bio-geo-review-planner）只补本学科条目 | 读（复习课：本课在哪个复习阶段、覆盖哪些知识点） |
 | `interactionLogs` | `xiaozhi-teach-classroom-coach` | 读（上节课实际用时与卡点 → 调整本节课时间矩阵） |
 | `lessonPlans` | **本 SKILL 唯一写入** | 写 planId、topic、planType、periodMinutes、objectives（statement + cognitiveLevel + coreCompetency）、segments（含 tierVariants）、questionChain、boardPlan、sourceWeaknessIds |
 

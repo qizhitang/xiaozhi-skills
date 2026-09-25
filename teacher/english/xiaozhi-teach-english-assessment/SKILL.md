@@ -479,13 +479,16 @@ max_round_limit: 25
   classWorkspace.itemStats[]         → 各题难度 P / 区分度 D
   classWorkspace.classSummaries[]    → 班级均分、得分率、分布
   classWorkspace.weaknessRank[]      → 班级顽固弱项排序
+  classWorkspace.reviewPlans[]       → 同一场考试是否已有复习计划（有就在原计划上补充）
 
 写（均为待老师确认的条目，确认后落库）：
   classWorkspace.examBlueprints[]    → 四维测评蓝图（含 itemType: 听力/口语/阅读/写作）
                                         AI 生成题 aiGenerated=true，
                                         老师验算后才可 verifiedByTeacher=true
   classWorkspace.weaknessRank[]      → 由四维得分归纳出的弱项条目
-  classWorkspace.reviewPlans[]       → 干预建议转成的复习排布
+  classWorkspace.reviewPlans[]       → 干预建议转成的复习排布，只写英语条目；
+                                        同一场考试已有复习计划时在原计划上补充，不另起一份；
+                                        写入守复习规划师的三道门：老师确认、只用化名、不写个体分数与名次
 
 写回学生档案（可选，需授权）：
   handoverType = "teacher_writeback"，recipient = xiaozhi-learning-dna

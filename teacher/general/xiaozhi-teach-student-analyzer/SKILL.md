@@ -446,7 +446,7 @@ C 层任务（拔尖学生）：
 | `weaknessRank` | 本 SKILL + 学科错因技能 | 写 knowledgePoint / errorRate / dimension / evidenceExamIds；**`stubbornCount` 由本 SKILL 唯一累加**，学科技能（math-error-analyzer、chinese-writing-guide）只补本学科条目，不碰该计数 |
 | `studentTiers` | **本 SKILL 唯一写入** | 写 studentAlias / tier / basis / updatedAt |
 | `lessonPlans` | `xiaozhi-teach-lesson-planner` | 只读（看上节课覆盖了哪些 sourceWeaknessIds） |
-| `reviewPlans` | `xiaozhi-teach-review-planner` | 只读 |
+| `reviewPlans` | `xiaozhi-teach-review-planner` 主写 + 学科技能（english-assessment、english-listening-designer、bio-geo-review-planner）只补本学科条目 | 只读 |
 
 ### 9.2 下游怎么用本 SKILL 的产出
 

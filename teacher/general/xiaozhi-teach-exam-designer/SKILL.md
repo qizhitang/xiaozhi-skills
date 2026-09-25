@@ -491,7 +491,7 @@ D 的算法只有一套（27% 分组），见 xiaozhi-teach-student-analyzer SKI
 | `classSummaries` | `xiaozhi-teach-student-analyzer` | 读（上次整卷 P、平均得分率 → 本次难度基线） |
 | `itemStats` | `xiaozhi-teach-student-analyzer` | 读（P/D/flag → §9.2 题目返修）；**本 SKILL 不写** |
 | `lessonPlans` | `xiaozhi-teach-lesson-planner` | 读（本单元实际教到哪、目标层级 → 命题范围） |
-| `reviewPlans` | `xiaozhi-teach-review-planner` | 读（复习覆盖的知识点 → 测评范围对齐） |
+| `reviewPlans` | `xiaozhi-teach-review-planner` 主写 + 学科技能（english-assessment、english-listening-designer、bio-geo-review-planner）只补本学科条目 | 读（复习覆盖的知识点 → 测评范围对齐） |
 | `examBlueprints` | **本 SKILL 唯一写入** | 写 assessmentType、durationMinutes、fullScore、difficultyRatio、cognitiveRatio、items[]（含 expectedP、aiGenerated、verifiedByTeacher） |
 
 ```text
