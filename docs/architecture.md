@@ -355,7 +355,7 @@ consentStatus
 
 | 脚本 | 检查项 |
 |---|---|
-| `scripts/check-references.mjs` | 引用文件存在；references 无孤儿；SKILL.md、references/、shared/（含 schema 与示例 JSON 副本）里写到的路径都落在本技能目录内（单独安装可解析：指向别的技能的，有随包副本写 `shared/<文件>`，没有的只写技能名） |
+| `scripts/check-references.mjs` | 引用文件存在；references 无孤儿；SKILL.md、references/、shared/（含 schema 与示例 JSON 副本）与技能自带的 schemas/ 里写到的路径都落在本技能目录内（单独安装可解析：指向别的技能的，有随包副本写 `shared/<文件>`，没有的只写技能名） |
 | `scripts/check-skills.mjs` | F1 frontmatter（name/version/depends_on 列表/grade_bands）· F2 依赖无环 · F3 硬命令词与自动措辞 · R1 占位文件 · R2 跨文件重复 · V1 废弃词表 · V2 协调器命名 · P1 平台边界与控制入口 · S1 危机片段（学生端一律）· G1 高中术语标注（"初高衔接"章节豁免；声明了高中学段的技能，其高中章节豁免，标题同时写初中或七至九年级的算混合章节、不豁免） · G2 学生端使用前提 · T1 老师端试题保密 · T2 老师端教学主体边界 · B1 历史、生物、地理与开卷的内容边界 · A1 出题自检与示例题验算 · H1 提示阶梯 · I1 接口路径存在于 schema · D1 文档一致性 |
 | `scripts/validate-schemas.mjs` | 四份 schema 有效；8 份示例合规；枚举与 `shared/vocab.md` 一致；收发方覆盖全库；关键字段存在；结构与协议版本号等于 `package.json` |
 | `scripts/sync-shared.mjs --check` | 84 个 SKILL 目录内的 `shared/` 副本与仓库根源文件一致（缺失、被改、残留均报错）|

@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // 引用完整性校验：确保每个 SKILL.md/SKILL.lite.md 引用的 references/schemas 文件真实存在，
 // 且每个 references/ 目录下的文件都被其 SKILL 引用（无孤儿）；
-// 并且 SKILL.md、references/*.md、shared/*.md 与 shared/*.json 里写到的文件路径都落在本技能目录内（单独安装一个技能也能解析）。
+// 并且 SKILL.md、references/*.md、shared/*.md、shared/*.json 与技能自带的 schemas/**/*.json 里写到的文件路径
+// 都落在本技能目录内（单独安装一个技能也能解析）。
 // 用法：node scripts/check-references.mjs   （CI 中作为门禁，发现问题以非 0 退出）
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, dirname, resolve, relative, sep } from "node:path";
@@ -62,8 +63,8 @@ for (const dir of skillDirs) {
   }
 }
 
-// 技能包自包含：SKILL.md、references/ 下的 .md、shared/ 下的 .md 与 .json（schema、示例的随包副本）里写到的文件路径，
-// 必须能在本技能目录内解析到。
+// 技能包自包含：SKILL.md、references/ 下的 .md、shared/ 下的 .md 与 .json（schema、示例的随包副本）、
+// 技能自带的 schemas/ 下的 .json（学习DNA、协调器的主 schema 与示例）里写到的文件路径，必须能在本技能目录内解析到。
 // 从技能市场单独安装一个技能时只有它自己的目录，指向别的技能目录或仓库路径的写法都会断；
 // 上面的悬空检测允许相对仓库根解析，查不出这一类。
 // 修法：该技能有随包副本的写 shared/<文件>；没有的只写技能名，不写路径。
@@ -98,7 +99,7 @@ const filesIn = (d, ext) => existsSync(d)
 const outside = []; // { dir, file, line, ref }
 let scanned = 0;
 for (const dir of skillDirs) {
-  const files = [join(dir, "SKILL.md"), join(dir, "SKILL.lite.md"), ...filesIn(join(dir, "references"), /\.md$/), ...filesIn(join(dir, "shared"), /\.(md|json)$/)];
+  const files = [join(dir, "SKILL.md"), join(dir, "SKILL.lite.md"), ...filesIn(join(dir, "references"), /\.md$/), ...filesIn(join(dir, "shared"), /\.(md|json)$/), ...filesIn(join(dir, "schemas"), /\.json$/)];
   for (const file of files.filter((f) => existsSync(f))) {
     scanned++;
     readFileSync(file, "utf-8").split(/\r?\n/).forEach((text, i) => {

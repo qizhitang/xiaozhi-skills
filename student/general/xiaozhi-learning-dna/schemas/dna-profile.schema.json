@@ -956,7 +956,7 @@
           "deprecated": true
         },
         "conceptGraph": {
-          "description": "5.4 跨学科概念图谱（Entity-Relation Concept Graph）。与 xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json 的 profileData.graphUpdates 对齐，是 SKILL 正文 §5.4 概念图谱的正式存储结构，取代扁平的 knowledgeAccumulationTree。",
+          "description": "5.4 跨学科概念图谱（Entity-Relation Concept Graph）。与交接协议（shared/handover-protocol.schema.json）的 profileData.graphUpdates 对齐，是 SKILL 正文 §5.4 概念图谱的正式存储结构，取代扁平的 knowledgeAccumulationTree。",
           "type": "object",
           "additionalProperties": false,
           "properties": {
