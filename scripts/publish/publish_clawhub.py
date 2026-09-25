@@ -51,6 +51,25 @@ def run_cli(args, env, timeout=300):
     return r.returncode, (r.stdout or ""), (r.stderr or "")
 
 
+def already_live(slug, rver, path, env):
+    """报 “Version X already exists” 时核实：线上 latest 就是 rver，且线上 SKILL.md 与打包内容一致 → 视为已发布。
+
+    2026-09-25 实测（2.4.0 的语文素材库）：首次上传约 93 秒超时，CLI 内部重试时报 already exists，
+    其实第一次已经成功。inspect --file 的输出前面有一段 “┌─ inspect” 信息头，以 “SKILL.md:” 一行结束。
+    """
+    try:
+        _, out, _ = run_cli(["inspect", slug, "--json"], env, timeout=120)
+        if ((json.loads(out[out.index("{"):]).get("latestVersion") or {}).get("version")) != rver:
+            return False
+        _, out, _ = run_cli(["inspect", slug, "--version", rver, "--file", "SKILL.md"], env, timeout=120)
+    except Exception:
+        return False
+    online = out.split("SKILL.md:", 1)[1] if "SKILL.md:" in out else out
+    staged = open(os.path.join(path, "SKILL.md"), encoding="utf-8").read()
+    norm = lambda s: s.replace("\r\n", "\n").strip()
+    return norm(online) == norm(staged)
+
+
 def main():
     ver = version()
     restage(ver)
@@ -83,9 +102,15 @@ def main():
                 except Exception:
                     pass
         ok = code == 0 and not body.get("error")
+        note = None
+        if not ok and "already exists" in (body.get("error") or err or out) and already_live(slug, rver, path, env):
+            ok, note = True, "线上已有同版本且 SKILL.md 与打包一致（多为首次上传成功、客户端重试时报 already exists）"
         done[name] = {"ok": ok, "repoVersion": ver, "version": rver, "slug": slug,
                       "name": disp, "error": None if ok else (body.get("error") or err or out)[:200]}
-        log(f"[{i}/{len(names)}] {'OK' if ok else 'x '} {name} @{rver}" + ("" if ok else f": {done[name]['error'][:80]}"), LOG)
+        if note:
+            done[name]["note"] = note
+        log(f"[{i}/{len(names)}] {'OK' if ok else 'x '} {name} @{rver}" + ("" if ok else f": {done[name]['error'][:80]}")
+            + (f"（{note[:24]}…）" if note else ""), LOG)
         json.dump(done, open(DONE_FILE, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
         time.sleep(1.5)
 
