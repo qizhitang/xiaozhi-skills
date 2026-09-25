@@ -93,8 +93,13 @@ function resolvesInside(skillDir, base, ref) {
   }
   return statSync(cur).isFile();
 }
+// node_modules（在 schemas/ 下跑校验时装的依赖，.gitignore 已忽略）与点目录不是技能内容，跳过
 const filesIn = (d, ext) => existsSync(d)
-  ? readdirSync(d).flatMap((n) => { const p = join(d, n); return statSync(p).isDirectory() ? filesIn(p, ext) : ext.test(n) ? [p] : []; })
+  ? readdirSync(d).flatMap((n) => {
+      if (n === "node_modules" || n.startsWith(".")) return [];
+      const p = join(d, n);
+      return statSync(p).isDirectory() ? filesIn(p, ext) : ext.test(n) ? [p] : [];
+    })
   : [];
 const outside = []; // { dir, file, line, ref }
 let scanned = 0;
