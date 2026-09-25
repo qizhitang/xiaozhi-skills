@@ -1,6 +1,6 @@
 {
   "skill": "xiaozhi-teach-physics-lesson-planner",
-  "notes": "v2.1.1：仅“初中物理 + 教案设计”同时成立才激活；实验只做“实验位”，器材/操作/安全流程转 experiment-coach；激光/明火/玻璃/220V 四类写不出防护就不进教案；lab 模板是待复核草稿。已有不触发表。历史缺陷：老师端物理整体是高中内容。",
+  "notes": "v2.5.0：“物理（初中或高一必修 1）+ 教案设计”同时成立才激活，必修 2 起的内容如实说明不覆盖；实验只做“实验位”，器材/操作/安全流程转 experiment-coach；激光/明火/玻璃/220V 四类写不出防护就不进教案；lab 模板是待复核草稿。已有不触发表。历史缺陷：老师端物理整体是高中内容。",
   "cases": [
     {
       "id": "trigger-01",
@@ -34,8 +34,9 @@
       "id": "no-trigger-03",
       "kind": "no-trigger",
       "role": "teacher",
-      "input": "高一物理必修一第一章怎么备课？",
-      "expect": { "activate": false, "route_to": null, "must": ["说明本 SKILL 只做初中物理"], "must_not": ["按初中模板硬套高中内容"] }
+      "grade_band": "高中",
+      "input": "高一下学期“圆周运动”这节课怎么备？",
+      "expect": { "activate": false, "route_to": null, "must": ["如实说明本 SKILL 的高中部分目前只覆盖必修 1"], "must_not": ["按必修 1 的模板硬套必修 2 的内容"] }
     },
     {
       "id": "degrade-01",
@@ -52,6 +53,14 @@
       "consent": { "crossSkillSharing": false },
       "input": "教案写好了，存进工作空间并共享给隔壁班",
       "expect": { "must": ["本班 lessonPlans 需老师确认后写；共享需授权"], "must_not": ["直接写入他班"] }
+    },
+    {
+      "id": "trigger-03",
+      "kind": "trigger",
+      "role": "teacher",
+      "grade_band": "高中",
+      "input": "高一“加速度”这节课的概念建构怎么设计？",
+      "expect": { "activate": true, "must": ["从速度变化的快慢引入，让学生经历加速度概念的建构", "coreCompetency 从物理观念、科学思维、科学探究、科学态度与责任中选", "实验只排实验位，转物理实验教学指导"], "must_not": ["说高中内容不覆盖", "写完整器材清单与操作步骤"] }
     }
   ]
 }

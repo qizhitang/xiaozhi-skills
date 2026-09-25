@@ -87,8 +87,8 @@ metadata:
 
 | 学科 | 关键词 / 单位 / 图片特征 | 首选接手 SKILL |
 |---|---|---|
-| 数学 | 方程、函数、解析式、几何证明、概率、比例；单位 cm/cm²/°；图片含坐标系、几何图形、算式竖式 | `xiaozhi-math-error-dna`（错题）/ `xiaozhi-math-problem-solving-coach`（当下这道题）|
-| 物理 | 受力、电路、浮力、压强、功、速度、电流；单位 N/Pa/m·s⁻¹/A/V/Ω/J/W；图片含受力示意图、电路图、光路图、刻度尺 | `xiaozhi-physics-error-dna` / `xiaozhi-physics-problem-coach` |
+| 数学 | 方程、函数、解析式、几何证明、概率、比例；高一的集合、充分必要条件、不等式、指数与对数、三角函数；单位 cm/cm²/°/rad；图片含坐标系、几何图形、算式竖式 | `xiaozhi-math-error-dna`（错题）/ `xiaozhi-math-problem-solving-coach`（当下这道题）|
+| 物理 | 受力、电路、浮力、压强、功、速度、加速度、电流；单位 N/Pa/m·s⁻¹/m·s⁻²/A/V/Ω/J/W；图片含受力示意图、电路图、光路图、刻度尺 | `xiaozhi-physics-error-dna` / `xiaozhi-physics-problem-coach` |
 | 化学 | 化学式、元素符号、化学方程式、化合价、酸碱盐、溶液浓度、溶质质量分数；图片含实验装置（试管、集气瓶、酒精灯）、微观示意图、推断框图 | `xiaozhi-chemistry-error-dna` / `xiaozhi-chemistry-problem-coach` |
 | 历史 | 朝代、年代、世纪、史料、材料题、历史事件与人物、变法与改革、战争与条约、时间轴；图片含史料原文、历史地图、大事年表 | `xiaozhi-history-source-analyzer`（错题与材料题）/ `xiaozhi-history-timeline-builder`（时空线索）/ `xiaozhi-history-essay-coach`（论述题） |
 | 生物 | 细胞、光合作用、呼吸作用、遗传、基因、染色体、生态系统、人体生理；图片含细胞结构图、曲线图、遗传系谱图、食物网 | `xiaozhi-biology-error-dna`（错题）/ `xiaozhi-biology-genetics-coach`（遗传题）/ `xiaozhi-biology-chart-reader`（图表题）/ `xiaozhi-biology-inquiry-coach`（实验题） |

@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-math-gradient-trainer
 description: >
-  初中数学分层进阶练习：在某个知识点已经会做的前提下，按 5 层难度定位当前练习层级，再一层一层往上练。
+  初中到高一的数学分层进阶练习（高中目前覆盖预备知识与函数）：在某个知识点已经会做的前提下，按 5 层难度定位当前练习层级，再一层一层往上练。
   典型触发："这类数学题我会了，想练更难的""帮我出数学进阶题""数学考试总在难题上卡住""测一下我这个知识点在第几层""帮我生成数学成长日记"。
   不处理：一道具体题目的当场引导（转 xiaozhi-math-problem-solving-coach）、错题收录与次数统计（转 xiaozhi-correction-notebook）、错因子类型分析（转 xiaozhi-math-error-dna）、概念没建立时的重讲（转 xiaozhi-math-concept-explainer）。
   每周检测提醒只在学生同意时经 reminder_enqueue 交 IM 提醒，本 SKILL 不自己提醒。
@@ -14,6 +14,7 @@ metadata:
   category: 数学专项
   grade_bands:
     - 初中
+    - 高中
   tags: [数学, 进阶, 梯度题, 思维训练, 成长日记, 分层练习]
   depends_on:
     - xiaozhi-learning-dna
@@ -438,8 +439,19 @@ Step 4：更新日记和档案
 
 ---
 
-## 十、参考资源
+## 十、高中：高一衔接段的梯度
 
+依据《普通高中数学课程标准日常修订版（2017 年版 2025 年修订）》必修主题一"预备知识"与主题二"函数"。学生说明在读高一，或初中毕业后做衔接预习时用本节。五层的含义、每层至少 2—3 道都稳才算过、第 5 层不作日常训练目标，这些规则与初中相同；层级仍写进 `subjectExtensions.math.gradientLevel`，`trainingLog[].knowledgePoint` 写高一的知识点（如"指数函数与对数函数"）。
+
+目前给出四个模块的分层示例：一元二次不等式与基本不等式、函数的概念与性质、指数函数与对数函数、三角函数。每层 2 道示例题，答案写在验算备注里，关键数值由 CI 验算，见 `references/math-hs1-gradient-levels.md`。第 3 道由 AI 按同一考查点现出，生成前按 shared/ai-item-check.md 自检，不超出高一必修范围。
+
+高一最常见的层间卡点：第 3 层到第 4 层的"恒成立"与"等号取不到"（子类型 R08、M07），第 4 层到第 5 层的分类讨论（含参不等式、分段函数、复合函数的单调性）。卡在概念上的（如指数式与对数式互化，B15）转数学概念解释器，不在本 SKILL 里硬练。
+
+---
+
+## 十一、参考资源
+
+- `references/math-hs1-gradient-levels.md` — 高一衔接段四个模块的梯度分层示例（含 CI 验算断言）
 - `references/gradient-levels.md` — 初中各知识模块梯度题分层参考（课本层→竞赛层示例）
 - `shared/crisis-exception.md` — 危机信号的处置流程（最高优先级，先于一切练习流程）
 

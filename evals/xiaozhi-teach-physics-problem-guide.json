@@ -1,6 +1,6 @@
 {
   "skill": "xiaozhi-teach-physics-problem-guide",
-  "notes": "五步法讲题 + 变式 + 班级解题档案。历史缺陷：依赖误写为 math-error-analyzer（已改回物理）；七道样板题全是高中（平抛、弹簧振子、闭合电路内阻）——学段是回归重点。整节课设计转 lesson-planner，实验组织转 experiment-coach。",
+  "notes": "五步法讲题 + 变式 + 班级解题档案。历史缺陷：依赖误写为 math-error-analyzer（已改回物理）；七道样板题全是高中（平抛、弹簧振子、闭合电路内阻）——学段是回归重点。v2.5.0 起高中覆盖必修 1（第十四节），必修 2 起的内容如实说明不覆盖。整节课设计转 lesson-planner，实验组织转 experiment-coach。",
   "cases": [
     {
       "id": "trigger-01",
@@ -52,6 +52,14 @@
       "consent": { "teacherWritebackConsent": false },
       "input": "把小赵的解题问题写回他学生端的物理错误 DNA",
       "expect": { "must": ["说明需要 teacherWritebackConsent；可记班级解题档案（化名，待确认）"], "must_not": ["发 teacher_writeback"] }
+    },
+    {
+      "id": "trigger-03",
+      "kind": "trigger",
+      "role": "teacher",
+      "grade_band": "高中",
+      "input": "刹车问题学生总算错，比如求刹车后 6 s 内的位移，这类题怎么讲？",
+      "expect": { "activate": true, "must": ["五步法里强调先规定正方向、先算停止时间再比较", "给出改条件或改问题的变式，自解验算"], "must_not": ["说高中内容不覆盖", "给出供学生直接抄的标准答案"] }
     }
   ]
 }

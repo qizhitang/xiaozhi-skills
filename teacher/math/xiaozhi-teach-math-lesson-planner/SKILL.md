@@ -1,9 +1,9 @@
 ---
 name: xiaozhi-teach-math-lesson-planner
 description: >
-  数学教师的备课工具：把一节数学课的概念建构路径、例题示范与变式训练排成可上的教案。
+  数学教师的备课工具（初中；高中目前覆盖高一预备知识与函数）：把一节数学课的概念建构路径、例题示范与变式训练排成可上的教案。
   当老师说"这个数学概念怎么讲""数学教案怎么写""变式训练怎么设计""数学例题怎么选""数学概念怎么引入""学生这个数学概念总是混"时，建议激活此SKILL。
-  核心工作流：概念建构四步（情境引入/抽象概括/应用辨析/体系化）→例题示范→变式训练→课堂小结→错例档案，输出对齐 2022 版课标核心素养与四级结果目标。
+  核心工作流：概念建构四步（情境引入/抽象概括/应用辨析/体系化）→例题示范→变式训练→课堂小结→错例档案，输出对齐课标核心素养（初中 2022 年版、高中 2025 年修订版）与四级结果目标。
   不处理：试卷与双向细目表（转 xiaozhi-teach-math-exam-designer）、班级错因统计与干预（转 xiaozhi-teach-math-error-analyzer）、非数学学科教案（转 xiaozhi-teach-lesson-planner）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
@@ -14,6 +14,7 @@ metadata:
   category: 老师数学
   grade_bands:
     - 初中
+    - 高中
   tags: [数学教案, 概念建构, 变式训练, 数学思维, 数学老师]
   depends_on:
     - xiaozhi-teach-lesson-planner
@@ -528,8 +529,22 @@ payload 为 `teacherWritebackData`（`teacherSkill` / `studentAlias` / `weakKnow
 
 ---
 
-## 十三、参考资源
+## 十三、高中：高一衔接段的教案
 
+依据《普通高中数学课程标准日常修订版（2017 年版 2025 年修订）》必修主题一"预备知识"（建议 18 课时）与主题二"函数"（建议 52 课时）。课时、班额、教材版本一律以 `classWorkspace.classProfile` 为准，本 SKILL 不写死教材章节与课时数；几何与代数、概率与统计和选择性必修的教案，如实说明暂不覆盖。
+
+- **概念建构四步照用**：函数概念、单调性、弧度制、诱导公式等高一概念课，情境引入与抽象概括可以用课标附录的案例 2、5、3、6 作素材；单调性的单元整体设计还可参考案例 32（函数单调性主题教学设计，只取必修部分）。案例与单元的对应见 `references/math-hs-curriculum-map.md` 第四节。
+- **衔接要点**（课标教学提示）：初中阶段数学知识相对具体，高中阶段相对抽象，要帮学生完成学习心理与学习方式的过渡；集合与常用逻辑用语以学过的初中内容为载体来梳理；单调性要引导学生用符号语言表达；定义域、值域与函数性质的教学避免偏题、怪题和烦琐的技巧训练；鼓励用信息技术画函数图像、探索规律。
+- **目标对齐**：`objectives[].coreCompetency` 填高中数学六个核心素养之一——数学抽象、逻辑推理、数学建模、直观想象、数学运算、数据分析。
+- **变式训练**照第六节做，变式题生成前按 shared/ai-item-check.md 自检，不超出高一必修范围。
+
+课程结构、两个主题的单元要点、课标案例对应、学业质量与考试见 `references/math-hs-curriculum-map.md`。
+
+---
+
+## 十四、参考资源
+
+- `references/math-hs-curriculum-map.md` — 高中数学课程地图：课程结构与课时、预备知识与函数的单元要点、课标案例对应、学业质量与考试（高一衔接段）
 - `references/concept-build-template.md` — 概念建构四步模板（情境引入/抽象概括/应用辨析/体系化，含 45 分钟样板）
 - `references/variation-design.md` — 变式训练设计模板（一题多解/多题一解/变条件，含验算说明）
 - `references/error-pattern-rubric.md` — 错因分类表（教师端七类 + 互斥判定 + 通用四维映射 + 教案预防）

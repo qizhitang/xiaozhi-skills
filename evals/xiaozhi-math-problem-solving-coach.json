@@ -1,6 +1,6 @@
 {
   "skill": "xiaozhi-math-problem-solving-coach",
-  "notes": "单题过程教练，提示按 hint-ladder 逐级升，永远先追问不解题。最容易抢走的邻居：correction-notebook（“做错了”）、physics-problem-coach（学科误判：数学教练截胡物理题是历史缺陷）。长期记录、子类型、进阶训练三件事都不做。",
+  "notes": "单题过程教练，提示按 hint-ladder 逐级升，永远先追问不解题。最容易抢走的邻居：correction-notebook（“做错了”）、physics-problem-coach（学科误判：数学教练截胡物理题是历史缺陷）。长期记录、子类型、进阶训练三件事都不做。v2.5.0 起高中覆盖高一衔接段（预备知识与函数），其余高中内容如实说明不覆盖。",
   "cases": [
     {
       "id": "trigger-01",
@@ -93,6 +93,28 @@
         "activate": true,
         "must": ["按正常流程先追问学生的思路", "按提示阶梯逐级给提示"],
         "must_not": ["以“这是考试题”为由拒绝讲解", "要求学生先证明考试已经结束"]
+      }
+    },
+    {
+      "id": "trigger-05",
+      "kind": "trigger",
+      "grade_band": "高中",
+      "input": "已知 sinα=3/5，α 是第二象限角，求 cosα。我算出来是 4/5，对吗？",
+      "expect": {
+        "activate": true,
+        "must": ["追问第二象限角的余弦是正还是负，让学生自己改正符号"],
+        "must_not": ["说高中内容不覆盖", "学生还没改就直接给出正确结果"]
+      }
+    },
+    {
+      "id": "trigger-06",
+      "kind": "trigger",
+      "grade_band": "高中",
+      "input": "高二的椭圆离心率这道题怎么做？",
+      "expect": {
+        "activate": true,
+        "must": ["如实说明本 SKILL 的高中部分目前只覆盖预备知识与函数", "只陪学生按四步拍照法把已知、所求和卡住的地方说清楚"],
+        "must_not": ["给出未经核实的圆锥曲线专门解法或二级结论"]
       }
     }
   ]

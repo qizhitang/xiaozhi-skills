@@ -2,7 +2,7 @@
 
 > 由 `scripts/gen-docs.mjs --write` 从各 SKILL.md 的 frontmatter 生成，**请勿手改**；CI 用 `--check` 核对。
 
-全库 83 个 SKILL（学生端 49 + 老师端 34）+ 1 个开发者工具，209 份 references。
+全库 83 个 SKILL（学生端 49 + 老师端 34）+ 1 个开发者工具，217 份 references。
 
 ## 学生端 · 通用（13）
 
@@ -36,11 +36,11 @@
 
 | SKILL | 目录名 | 分类 | 适用学段 | 依赖 | 版本 |
 |---|---|---|---|---|---|
-| 💡 数学概念解释器 | `xiaozhi-math-concept-explainer` | 数学专项 | 初中 | `xiaozhi-learning-dna` | 2.4.0 |
-| 🧬 数学错误DNA | `xiaozhi-math-error-dna` | 数学专项 | 初中 | `xiaozhi-learning-dna` | 2.4.0 |
-| 🎯 思维梯度训练师 | `xiaozhi-math-gradient-trainer` | 数学专项 | 初中 | `xiaozhi-learning-dna`、`xiaozhi-math-error-dna` | 2.4.0 |
-| 📐 数学解题教练 | `xiaozhi-math-problem-solving-coach` | 数学专项 | 初中 | `xiaozhi-learning-dna`、`xiaozhi-math-error-dna` | 2.4.0 |
-| 📝 应用题数学建模教练 | `xiaozhi-math-word-problem-coach` | 数学专项 | 初中 | `xiaozhi-learning-dna`、`xiaozhi-math-error-dna` | 2.4.0 |
+| 💡 数学概念解释器 | `xiaozhi-math-concept-explainer` | 数学专项 | 初中、高中 | `xiaozhi-learning-dna` | 2.4.0 |
+| 🧬 数学错误DNA | `xiaozhi-math-error-dna` | 数学专项 | 初中、高中 | `xiaozhi-learning-dna` | 2.4.0 |
+| 🎯 思维梯度训练师 | `xiaozhi-math-gradient-trainer` | 数学专项 | 初中、高中 | `xiaozhi-learning-dna`、`xiaozhi-math-error-dna` | 2.4.0 |
+| 📐 数学解题教练 | `xiaozhi-math-problem-solving-coach` | 数学专项 | 初中、高中 | `xiaozhi-learning-dna`、`xiaozhi-math-error-dna` | 2.4.0 |
+| 📝 应用题数学建模教练 | `xiaozhi-math-word-problem-coach` | 数学专项 | 初中、高中 | `xiaozhi-learning-dna`、`xiaozhi-math-error-dna` | 2.4.0 |
 
 ## 学生端 · 英语（5）
 
@@ -134,9 +134,9 @@
 
 | SKILL | 目录名 | 分类 | 适用学段 | 依赖 | 版本 |
 |---|---|---|---|---|---|
-| 班级错因分析 | `xiaozhi-teach-math-error-analyzer` | 老师数学 | 初中 | `xiaozhi-teach-student-analyzer`、`xiaozhi-teach-lesson-planner`、`xiaozhi-teach-homework-tracker` | 2.4.0 |
-| 数学测评设计 | `xiaozhi-teach-math-exam-designer` | 老师数学 | 初中 | `xiaozhi-teach-exam-designer`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-lesson-planner`、`xiaozhi-teach-math-error-analyzer`、`xiaozhi-teach-math-lesson-planner`、`xiaozhi-teach-parent-communication` | 2.4.0 |
-| 数学教案设计 | `xiaozhi-teach-math-lesson-planner` | 老师数学 | 初中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.4.0 |
+| 班级错因分析 | `xiaozhi-teach-math-error-analyzer` | 老师数学 | 初中、高中 | `xiaozhi-teach-student-analyzer`、`xiaozhi-teach-lesson-planner`、`xiaozhi-teach-homework-tracker` | 2.4.0 |
+| 数学测评设计 | `xiaozhi-teach-math-exam-designer` | 老师数学 | 初中、高中 | `xiaozhi-teach-exam-designer`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-lesson-planner`、`xiaozhi-teach-math-error-analyzer`、`xiaozhi-teach-math-lesson-planner`、`xiaozhi-teach-parent-communication` | 2.4.0 |
+| 数学教案设计 | `xiaozhi-teach-math-lesson-planner` | 老师数学 | 初中、高中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.4.0 |
 
 ## 老师端 · 英语（3）
 
@@ -150,9 +150,9 @@
 
 | SKILL | 目录名 | 分类 | 适用学段 | 依赖 | 版本 |
 |---|---|---|---|---|---|
-| 物理实验教学指导 | `xiaozhi-teach-physics-experiment-coach` | 老师物理 | 初中 | `xiaozhi-teach-physics-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.4.0 |
-| 物理教案设计 | `xiaozhi-teach-physics-lesson-planner` | 老师物理 | 初中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.4.0 |
-| 物理解题教学指导 | `xiaozhi-teach-physics-problem-guide` | 老师物理 | 初中 | `xiaozhi-teach-physics-lesson-planner`、`xiaozhi-teach-student-analyzer` | 2.4.0 |
+| 物理实验教学指导 | `xiaozhi-teach-physics-experiment-coach` | 老师物理 | 初中、高中 | `xiaozhi-teach-physics-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.4.0 |
+| 物理教案设计 | `xiaozhi-teach-physics-lesson-planner` | 老师物理 | 初中、高中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.4.0 |
+| 物理解题教学指导 | `xiaozhi-teach-physics-problem-guide` | 老师物理 | 初中、高中 | `xiaozhi-teach-physics-lesson-planner`、`xiaozhi-teach-student-analyzer` | 2.4.0 |
 
 ## 老师端 · 化学（3）
 
