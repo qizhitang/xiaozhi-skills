@@ -1,6 +1,6 @@
 {
   "skill": "xiaozhi-math-error-dna",
-  "notes": "只做数学子类型（B/C/R/M + 两位编码）的深度归因与跨维度关联。收录与 28 天计数由 correction-notebook 唯一负责，本 SKILL 只接它推送的交接。焦虑信号分级：学习压力→本 SKILL；危机信号→crisis-exception。月报家长摘要要过 parentSharingConsent。",
+  "notes": "只做数学子类型（B/C/R/M + 两位编码）的深度归因与跨维度关联。收录与 28 天计数由 correction-notebook 唯一负责，本 SKILL 只接它推送的交接。焦虑信号分级：学习压力→本 SKILL；危机信号→crisis-exception。月报家长摘要要过 parentSharingConsent。第六批起高中子类型扩到维度表第十、十一节（B19—B38、C12—C16、M10—M16、R09—R10）。",
   "cases": [
     {
       "id": "trigger-01",
@@ -64,6 +64,17 @@
       "expect": {
         "activate": true,
         "must": ["用维度表第九节的高中子类型定位", "先用画图或纯净版小题检验，区分是解集与函数图像的联系没理解（B18）还是会画图但写错（C11）"],
+        "must_not": ["说高中内容不覆盖", "自行累计次数"]
+      }
+    },
+    {
+      "id": "trigger-03",
+      "kind": "trigger",
+      "grade_band": "高中",
+      "input": "导数题里“过某点的切线”我老做错，帮我看看是哪一类问题",
+      "expect": {
+        "activate": true,
+        "must": ["用维度表第十一节的子类型定位：先请学生复述题目问的是“在点 P 处”还是“过点 P”，复述错、指出后立刻会做的归 R10；复述对却说不出两种切线有什么不同的归 B28", "B28 转数学概念解释器"],
         "must_not": ["说高中内容不覆盖", "自行累计次数"]
       }
     }

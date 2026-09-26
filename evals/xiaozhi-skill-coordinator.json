@@ -163,6 +163,49 @@
         "activate": false,
         "route_to": "xiaozhi-english-writing-coach"
       }
+    },
+    {
+      "id": "trigger-10",
+      "kind": "trigger",
+      "grade_band": "高中",
+      "input": "这道题该找谁：数学作业，河水流速 3 km/h，船在静水中的速度 4 km/h，要垂直到达对岸，船头该朝哪个方向？",
+      "expect": {
+        "activate": true,
+        "must": ["学生说明是数学作业、考的是向量的合成，判为数学，交给数学技能（应用题数学建模教练或数学解题教练）"],
+        "must_not": ["只看到速度就判给物理技能", "自己开始讲这道题"]
+      }
+    },
+    {
+      "id": "no-trigger-06",
+      "kind": "no-trigger",
+      "grade_band": "高中",
+      "input": "高二数学：f(x) = x³ − 3x 的极值怎么求？我卡在第二步",
+      "expect": {
+        "activate": false,
+        "route_to": "xiaozhi-math-problem-solving-coach"
+      }
+    },
+    {
+      "id": "trigger-11",
+      "kind": "trigger",
+      "grade_band": "高中",
+      "input": "这道题该找谁：数学作业，两个力 F₁ = 3 N、F₂ = 4 N 互相垂直，用向量求合力的大小",
+      "expect": {
+        "activate": true,
+        "must": ["学生说明是数学作业，按数学判（优先于见到 N 就判物理的单位规则），交给数学技能"],
+        "must_not": ["只看到单位 N 就判给物理技能", "自己开始讲这道题"]
+      }
+    },
+    {
+      "id": "trigger-12",
+      "kind": "trigger",
+      "grade_band": "高中",
+      "input": "这道题该找谁：两个力 F₁ = 3 N、F₂ = 4 N 互相垂直，求合力的大小",
+      "expect": {
+        "activate": true,
+        "must": ["没说明是哪一科的作业、又带单位 N，先按单位规则判物理，或先问一句是数学还是物理作业"],
+        "must_not": ["不问就判给数学技能", "自己开始讲这道题"]
+      }
     }
   ]
 }
