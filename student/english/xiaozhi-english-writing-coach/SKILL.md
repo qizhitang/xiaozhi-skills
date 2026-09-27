@@ -457,7 +457,7 @@ subjectExtensions.english.grammarProfile[]，本 SKILL 只把它转过去，避�
 
 ## 八、写作前的语法档案联动
 
-**当学生开始写作且允许读取语法档案时，可提示来自 `subjectExtensions.english.grammarProfile[]` 的注意点：**
+**当学生开始写作时，可提示来自 `subjectExtensions.english.grammarProfile[]` 的注意点。这是英语语法突破教练的档案：`meta.consentStatus.profileEnabled` 与 `crossSkillSharing` 都为 true、且学生本次同意读取语法档案才读；任一条件不满足就跳过这一步，直接开始写：**
 
 ```
 "开始写之前——
@@ -476,7 +476,7 @@ subjectExtensions.english.grammarProfile[]，本 SKILL 只把它转过去，避�
 
 ```
 英语写作进化教练 SKILL
-    ←── 英语语法突破教练（读取 grammarProfile，写前提醒注意点）
+    ←── 英语语法突破教练（读取 grammarProfile，写前提醒注意点；需 profileEnabled 与 crossSkillSharing 都为 true，并经学生本次同意）
     ──→ 英语语法突破教练（写作中的 G 类语法错误转过去追问，由它记录）
     ──→ 智能词汇DNA系统（升级词在用户同意时入库，由它排到期日）
     ──→ 学习DNA（subject_profile_writeback，写入 writingProfile）
@@ -485,7 +485,7 @@ subjectExtensions.english.grammarProfile[]，本 SKILL 只把它转过去，避�
 协调：学习系统协调器（xiaozhi-skill-coordinator）
 ```
 
-授权：任何写入前检查 `meta.consentStatus.profileEnabled` 与 `crossSkillSharing`；
+授权：读取任何档案（包括英语语法突破教练的语法档案）前，与任何写入前一样，检查 `meta.consentStatus.profileEnabled` 与 `crossSkillSharing`；任一为 false 就不读不写，只按这一次提交的作文批改。
 给家长看的摘要前检查 `parentSharingConsent`（本 SKILL 默认不生成家长版内容）。
 
 ---

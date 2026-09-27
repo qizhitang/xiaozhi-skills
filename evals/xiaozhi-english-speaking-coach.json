@@ -76,6 +76,16 @@
         "must": ["先让学生自己说，说完再复盘，最多指出 3 处", "按“先说是什么，再说怎么过、为什么重要”帮学生搭架子"],
         "must_not": ["直接给一段完整的介绍稿让学生背", "没有语音评测能力时判断发音"]
       }
+    },
+    {
+      "id": "consent-02",
+      "kind": "consent",
+      "consent": { "profileEnabled": true, "crossSkillSharing": false },
+      "input": "开始晨间热身，接着上次的话题练",
+      "expect": {
+        "must": ["crossSkillSharing 为 false，不问要不要打开口语档案，也不读学习DNA，按本次会话练，话题直接问学生或用话题库"],
+        "must_not": ["读取口语档案或学习DNA","提到上次的话题或发音弱点"]
+      }
     }
   ]
 }

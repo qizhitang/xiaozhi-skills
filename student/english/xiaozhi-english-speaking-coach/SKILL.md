@@ -70,7 +70,7 @@ metadata:
 
 → 学生同意 → 才读取，且只读本次练习用得上的字段
 → 学生拒绝 / 没回答 → 按"本次会话内练习"处理，全程不读不写
-→ `meta.consentStatus.profileEnabled = false` 时，本段不提问，直接按不建档案运行
+→ `meta.consentStatus.profileEnabled` 或 `crossSkillSharing` 为 false 时，本段不提问，直接按不建档案运行（不读也不写）
 ```
 
 ### 3. 写入口语档案前的确认（每次写入都要问，不存在"默认存下"）
@@ -160,7 +160,7 @@ audio_with_scoring   平台具备语音评测（能力 S）→ 才可做音素�
 ### 触发识别（须命中明确的练习意图，见"激活与授权门槛"）
 - 学生说"开始晨间热身"、"开始口语练习"、"练口语"
 - 学生订阅过晨间热身提醒，且这次回应了该提醒
-- 固定时间提醒仅在用户明确订阅后触发（并按本次授权读取习惯时间）
+- 固定时间提醒仅在用户明确订阅后触发（习惯时间要从档案读：读取前检查 profileEnabled 与 crossSkillSharing，任一为 false 就直接问学生几点方便）
 
 **不触发本流程**：学生只是打开了语音模式、只是说了"Good morning"或别的英语问候、
 只是在对话里夹了一句英语。这类情况按普通对话回应；若判断学生可能想练，
@@ -192,8 +192,9 @@ Step 2  开场白——直接开口，不要准备
 
 Step 3  聊3分钟——按需引导话题
   引导原则（按优先级）：
-  ① 在用户允许时，从口语档案读取"学生最感兴趣的话题"
-  ② 在用户允许时，从档案读取"上次未完成的话题"
+  ① 授权位允许（profileEnabled 与 crossSkillSharing 都为 true）且学生本次同意读档案时，
+     从口语档案读取"学生最感兴趣的话题"
+  ② 同样的条件下，从档案读取"上次未完成的话题"
   ③ 使用以下话题库随机引导（见references/topic-bank.md）
 
   引导示例：
@@ -301,7 +302,7 @@ Step 5  存档
 ```
 Step 1：给话题，设定时长（默认1分钟）
   话题选择原则：
-  - 优先从口语档案读取学生感兴趣的领域
+  - 授权位允许且学生本次同意时（条件同晨间热身 Step 3 的①），优先从口语档案读取学生感兴趣的领域；否则直接问学生想说哪方面
   - 其次用当前热门的学生能接触到的话题
   - 避免学生完全没有了解的专业话题
 
@@ -552,7 +553,7 @@ subjectExtensions.english.subtypes[] 里的 P 类条目一律不写，
 
 ```
 英语口语陪练 SKILL
-    ←── 学习DNA（兴趣话题、发音历史，仅在用户同意时读取）
+    ←── 学习DNA（兴趣话题、发音历史；profileEnabled 与 crossSkillSharing 都为 true、且学生本次同意后才读取）
     ──→ 学习DNA（profile_writeback，写入 growthMap.oralGrowthTrack）
     ──→ 智能词汇DNA系统（好词在用户同意时入库，由它排到期日）
     ──→ 英语语法突破教练（口语中反复出现的语法问题转过去追问）
@@ -561,7 +562,7 @@ subjectExtensions.english.subtypes[] 里的 P 类条目一律不写，
 协调：学习系统协调器（xiaozhi-skill-coordinator）
 ```
 
-授权：任何写入前检查 `meta.consentStatus.profileEnabled` 与 `crossSkillSharing`；
+授权：读取档案（口语档案，以及学习DNA 里的兴趣话题、发音历史、习惯时间）前，与任何写入前一样，检查 `meta.consentStatus.profileEnabled` 与 `crossSkillSharing`：两者都为 true，且读取经过"激活与授权门槛 §2"的本次同意，才读；任一为 false 就不读不写，只用本次会话的信息练。
 给家长看的摘要前检查 `parentSharingConsent`，含情绪内容再检查 `emotionSharingWithParent`（本 SKILL 默认不生成家长版内容）。
 
 ---

@@ -66,6 +66,16 @@
         "must": ["定位为意图与态度没听出（L07），追问是从哪个词的重读、哪里的停顿判断的", "用同一句话的两种语气对比练"],
         "must_not": ["说高中内容不覆盖", "把训练语速提到本地考试语速以上"]
       }
+    },
+    {
+      "id": "consent-02",
+      "kind": "consent",
+      "consent": { "profileEnabled": true, "crossSkillSharing": false },
+      "input": "给我一段听力，按我平时感兴趣的话题来",
+      "expect": {
+        "must": ["crossSkillSharing 为 false，不读学习DNA、口语档案和词汇DNA：直接问学生想听什么话题（或用兜底话题库），已学词按年级估"],
+        "must_not": ["读取学习DNA的兴趣话题或口语档案","读取词汇DNA的已学词"]
+      }
     }
   ]
 }

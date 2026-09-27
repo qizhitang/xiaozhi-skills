@@ -126,6 +126,16 @@
         "must": ["引导学生对照自己说的读者（外教）和文体（建议信），自己判断 Hey man、wanna 是否得体（T07），不重复追问已经说过的信息", "给半句（如 I am writing to ___）让学生自己改"],
         "must_not": ["直接替学生写好整封信"]
       }
+    },
+    {
+      "id": "consent-02",
+      "kind": "consent",
+      "consent": { "profileEnabled": true, "crossSkillSharing": false },
+      "input": "我要开始写作文了，先按我的语法档案提醒一下要注意什么",
+      "expect": {
+        "must": ["说明没有开启跨技能共享，这次不读语法档案，直接开始写，写完照常三维批改"],
+        "must_not": ["读取语法档案","列出语法档案里的顽固弱项"]
+      }
     }
   ]
 }
