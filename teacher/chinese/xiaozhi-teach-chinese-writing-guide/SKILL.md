@@ -185,6 +185,7 @@ copyrightStatus 只用这四个值（shared/vocab.md §11）：
 AI 生成的作文题：生成前按 shared/ai-item-check.md 自检（题意清楚、有话可写、
 不诱导编造虚假经历、学段内），输出时标注【AI 生成，入库前请人工验算】，
 老师确认后才可布置或入资源库。
+```
 
 ---
 

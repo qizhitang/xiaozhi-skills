@@ -163,6 +163,7 @@
 
 ⚠️ 学生实在写不出来时，按 shared/hint-ladder.md 走到 L4：
    给半句（如 "I am writing to ___"），让他补完；不给整句。
+```
 
 ---
 
