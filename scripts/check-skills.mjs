@@ -23,6 +23,7 @@
 //  A1 含"示例题"的 references 必须有"示例题验算：YYYY-MM-DD"声明（警告）
 //  Z1 正文与契约不得含零宽/方向控制/BOM 等不可见字符（组合 emoji 请换单码位）——扫描器把它们当作元数据投毒信号
 //  A2 验算日期不得早于文件最后一次实质提交（git；纯升版提交不算）
+//  M1 Markdown 代码围栏必须闭合；块内不得出现不短于外层、带语言标记的围栏行（新块插进了未闭合的块）
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, dirname, resolve, relative, basename } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -71,6 +72,35 @@ for (const f of allFiles.filter((f) => /\.(md|json|ya?ml|txt)$/.test(f))) {
   if (!hits.length) continue;
   const cps = [...new Set(hits.map((m) => "U+" + m[0].codePointAt(0).toString(16).toUpperCase().padStart(4, "0")))];
   err("Z1", rel(f), `含不可见字符 ${cps.join(" ")}（${hits.length} 处）——组合 emoji 换成单码位，正文不得有零宽字符`);
+}
+// ---------- M1 代码围栏闭合 ----------
+// 围栏没闭合，后面的标题会落进代码块、页面整段错位；verify-examples 按正则取 ```verify 块、不看外层，CI 一直查不出来
+// （2026-09-26 查出 8 份：其中 3 份（4 处）是 959c4df 把 ```verify 块插进了未闭合的代码块，另 5 份是 v2.1.0 改写时丢了闭合围栏）。
+// 按 CommonMark：与起始同字符、不短于起始、且不带语言标记的围栏行才算闭合；块内出现不短于外层、带语言标记的
+// ```lang 行，几乎总是新块插进了未闭合的块（想在块里展示围栏的，外层用更长的围栏，如 ````）。
+// 技能目录里的 shared/ 副本由 sync-shared 从源文件生成，只查源文件。
+function fenceIssues(text) {
+  const issues = [];
+  let open = null;
+  text.split(/\r?\n/).forEach((line, i) => {
+    const m = line.match(/^ {0,3}(`{3,}|~{3,})(.*)$/);
+    if (!m) return;
+    const ch = m[1][0], len = m[1].length, info = m[2].trim();
+    if (!open) {
+      if (ch === "`" && info.includes("`")) return;   // 行内代码，不是围栏
+      open = { ch, len, line: i + 1 };
+      return;
+    }
+    if (ch === open.ch && len >= open.len && info === "") { open = null; return; }
+    if (ch === open.ch && len >= open.len && info) issues.push(`第 ${i + 1} 行的 ${m[1]}${info} 开在第 ${open.line} 行未闭合的代码块里`);
+  });
+  if (open) issues.push(`第 ${open.line} 行开的代码块到文末都没有闭合`);
+  return issues;
+}
+// 点目录（.github 等）与任何深度的 node_modules 不查：主工作区有 git 忽略的 schemas/node_modules，干净克隆里没有
+for (const f of allFiles.filter((f) => f.endsWith(".md") && !/^(student|teacher|tools)\/.*\/shared\//.test(rel(f))
+  && !/(^|\/)(\.[^/]+|node_modules)\//.test(rel(f)))) {
+  for (const msg of fenceIssues(readFileSync(f, "utf-8"))) err("M1", rel(f), msg);
 }
 
 
