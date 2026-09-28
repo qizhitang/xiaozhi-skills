@@ -2,7 +2,7 @@
 
 > 由 `scripts/gen-docs.mjs --write` 从各 SKILL.md 的 frontmatter 生成，**请勿手改**；CI 用 `--check` 核对。
 
-全库 83 个 SKILL（学生端 49 + 老师端 34）+ 1 个开发者工具，230 份 references。
+全库 83 个 SKILL（学生端 49 + 老师端 34）+ 1 个开发者工具，244 份 references。
 
 ## 学生端 · 通用（13）
 

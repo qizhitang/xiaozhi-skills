@@ -1,6 +1,6 @@
 {
   "skill": "xiaozhi-teach-physics-lesson-planner",
-  "notes": "v2.5.0：“物理（初中或高一必修 1）+ 教案设计”同时成立才激活，必修 2 起的内容如实说明不覆盖；实验只做“实验位”，器材/操作/安全流程转 experiment-coach；激光/明火/玻璃/220V 四类写不出防护就不进教案；lab 模板是待复核草稿。已有不触发表。历史缺陷：老师端物理整体是高中内容。",
+  "notes": "v2.5.0 起：“物理（初中或高中）+ 教案设计”同时成立才激活；高中自第七批起覆盖必修与选择性必修，选修课程如实说明不覆盖；实验只做“实验位”，器材/操作/安全流程转 experiment-coach；激光/明火/玻璃/220V 四类写不出防护就不进教案；lab 模板是待复核草稿。已有不触发表。历史缺陷：老师端物理整体是高中内容。",
   "cases": [
     {
       "id": "trigger-01",
@@ -31,12 +31,12 @@
       "expect": { "activate": false, "route_to": "xiaozhi-teach-physics-problem-guide" }
     },
     {
-      "id": "no-trigger-03",
-      "kind": "no-trigger",
+      "id": "trigger-04",
+      "kind": "trigger",
       "role": "teacher",
       "grade_band": "高中",
       "input": "高一下学期“圆周运动”这节课怎么备？",
-      "expect": { "activate": false, "route_to": null, "must": ["如实说明本 SKILL 的高中部分目前只覆盖必修 1"], "must_not": ["按必修 1 的模板硬套必修 2 的内容"] }
+      "expect": { "activate": true, "must": ["按第十七节必修 2 的口径备课：先找圆心和半径，再找谁提供向心力，讲清向心力是效果力", "实验只排实验位（探究向心力大小的实验），转物理实验教学指导"], "must_not": ["说高中内容不覆盖", "写完整器材清单与操作步骤"] }
     },
     {
       "id": "degrade-01",
@@ -61,6 +61,14 @@
       "grade_band": "高中",
       "input": "高一“加速度”这节课的概念建构怎么设计？",
       "expect": { "activate": true, "must": ["从速度变化的快慢引入，让学生经历加速度概念的建构", "coreCompetency 从物理观念、科学思维、科学探究、科学态度与责任中选", "实验只排实验位，转物理实验教学指导"], "must_not": ["说高中内容不覆盖", "写完整器材清单与操作步骤"] }
+    },
+    {
+      "id": "trigger-05",
+      "kind": "trigger",
+      "role": "teacher",
+      "grade_band": "高中",
+      "input": "选考班要上\"楞次定律\"，这节课怎么设计？",
+      "expect": { "activate": true, "must": ["用\"探究影响感应电流方向的因素\"的实验归纳出楞次定律，不先给结论", "coreCompetency 从物理观念、科学思维、科学探究、科学态度与责任中选"], "must_not": ["说高中内容不覆盖", "先宣布\"增反减同\"再让学生验证"] }
     }
   ]
 }
