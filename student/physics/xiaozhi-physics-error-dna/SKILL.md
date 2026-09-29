@@ -488,7 +488,7 @@ subjectExtensions.physics.labSkills         —— 实验技能（由实验思�
 
 ## 九、参考资源
 
-- `references/physics-error-dimension-table.md` — 物理错因维度表（五维子类型分类体系，含跨维度关联规则与交接契约；第十至十二节为高中的子类型：必修第一册、必修第二三册、选择性必修）
+- `references/physics-error-dimension-table.md` — 物理错因维度表（本 SKILL 持有原件，物理概念直觉器、物理建模教练、物理解题教练、物理实验思维教练与老师端物理解题教学指导随包带的是同一份副本；五维子类型分类体系，含跨维度关联规则与交接契约；第十至十二节为高中的子类型：必修第一册、必修第二三册、选择性必修）
 - `references/physics-concept-confusion-map.md` — 物理高频概念混淆对照表
 - `references/physics-math-tools-checklist.md` — 物理数学工具自检清单
 - `shared/physics-diagram-guide.md` — 四类物理图景绘制追问手册（与物理解题教练共用一份）

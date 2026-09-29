@@ -613,6 +613,7 @@ max_round_limit: 20
 - `references/physics-hs1-problem-teaching.md` — 高一必修 1 的解题教学样板（三道五步样板、以连接体为母题的变式链、高一常见错因归类；第十四节用）
 - `references/physics-hs2-problem-teaching.md` — 高中必修 2、必修 3 的解题教学样板（三道五步样板、变式链、常见错因归类；第十四节用）
 - `references/physics-hs3-problem-teaching.md` — 选择性必修的解题教学样板（三道五步样板、变式链、常见错因归类；第十四节用）
+- `shared/physics-error-dimension-table.md` — 物理错因维度表（学生端子类型的定义，与物理错误DNA 共用一份；参考资料里写的"物理错误DNA 维度表第 X 节"就是这份随包副本）
 - `references/five-step-template.md` — 五步物理解题模板（审题/建模/过程/列方程/求解）
 - `references/model-selection.md` — 物理模型选择参考（初中五类模型 + 决策树，文末初高衔接）
 - `references/variation-physics.md` — 物理解题变式设计（情境/物理量/解法 三维度）

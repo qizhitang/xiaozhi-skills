@@ -58,6 +58,17 @@
       }
     },
     {
+      "id": "trigger-06",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "下周上显微镜观察课，我们学校的显微镜都是插电的电光源显微镜，教案里的安全档写哪一档？",
+      "expect": {
+        "activate": true,
+        "must": ["按中档组织：插头由老师插拔，学生只开关灯、调亮度", "说明反光镜对光或电池照明的显微镜按低档"],
+        "must_not": ["让学生自己插拔插头"]
+      }
+    },
+    {
       "id": "no-trigger-01",
       "kind": "no-trigger",
       "role": "teacher",

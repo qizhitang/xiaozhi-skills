@@ -479,6 +479,7 @@ metadata:
 - `references/physics-hs1-models.md` — 必修第一册的八个模型卡片与算例（含 CI 验算断言）
 - `references/physics-hs2-models.md` — 必修第二、三册的九个模型卡片与算例（含 CI 验算断言）
 - `references/physics-hs3-models.md` — 选择性必修的十个模型卡片与算例（含 CI 验算断言）
+- `shared/physics-error-dimension-table.md` — 物理错因维度表（与物理错误DNA 共用一份；模型卡片里的子类型码都在这里定义，参考资料里写的"物理错误DNA 维度表第 X 节"就是这份随包副本）
 
 ---
 

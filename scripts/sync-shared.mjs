@@ -60,6 +60,11 @@ const CONTRACTS = [
     owner: "xiaozhi-physics-problem-coach",
   },
   {
+    as: "physics-error-dimension-table.md",
+    src: "student/physics/xiaozhi-physics-error-dna/references/physics-error-dimension-table.md",
+    owner: "xiaozhi-physics-error-dna",
+  },
+  {
     as: "chemistry-error-dimension-table.md",
     src: "student/chemistry/xiaozhi-chemistry-error-dna/references/chemistry-error-dimension-table.md",
     owner: "xiaozhi-chemistry-error-dna",

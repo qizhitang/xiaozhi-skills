@@ -55,18 +55,18 @@ xiaozhi-correction-notebook/
 
 这样 `shared/vocab.md` 这类路径在两种场景下都能解析：整库使用时相对仓库根，单技能安装后相对技能目录。
 
-除这六份外，被跨技能引用的**契约与参考资料**也按需分发到引用方的 `shared/` 下（共 222 份副本，来自下表 19 份源文件）：
+除这六份外，被跨技能引用的**契约与参考资料**也按需分发到引用方的 `shared/` 下（共 227 份副本，来自下表 20 份源文件）：
 
 | 类别 | 文件 | 分发范围 |
 |---|---|---|
 | 数据契约 | `handover-protocol.schema.json`、`dna-profile.schema.json`、`class-teaching-workspace.schema.json`、`solo-teacher-workspace.schema.json` | 正文引用它的技能 |
 | 交接示例 | `wrong-answer-handover`、`reminder-enqueue`、`deep-analysis-writeback` 三份 `.example.json` | 错题本、IM 提醒 |
-| 学科错因维度表 | `english-error-dimension-table.md`、`chinese-error-dimension-table.md`、`chemistry-error-dimension-table.md`、`history-error-dimension-table.md`、`biology-error-dimension-table.md`、`geography-error-dimension-table.md` | 同学科的其余技能 |
+| 学科错因维度表 | `english-error-dimension-table.md`、`chinese-error-dimension-table.md`、`physics-error-dimension-table.md`、`chemistry-error-dimension-table.md`、`history-error-dimension-table.md`、`biology-error-dimension-table.md`、`geography-error-dimension-table.md` | 同学科中正文引用它的技能 |
 | 参考资料 | `physics-diagram-guide.md`、`ebbinghaus-schedule.md`、`cross-subject-connections.md`、`experiment-types.md` | 引用方 |
 | 跨学科约定 | `lab-safety.md`（实验安全：`safetyLevel` 三档、跨学科硬红线、化学与生物必守规范） | 正文引用它的理化生技能 |
 | 安全底线 | `crisis-referral-protocol.md` | **全部 84 个技能**（因为 `crisis-exception.md` 在每个包里都指向它）|
 
-源文件留在归属技能里（实验安全约定没有归属技能，源文件在仓库根 `shared/contracts/`），归属技能用自己的原件、不重复复制；除危机转介协议外，只有正文真正引用的技能才会拿到副本。单包体积平均 131 KB，最大 1.4 MB（学习DNA，因其 schema 本身较大）。
+源文件留在归属技能里（实验安全约定没有归属技能，源文件在仓库根 `shared/contracts/`），归属技能用自己的原件、不重复复制；除危机转介协议外，只有正文真正引用的技能才会拿到副本。单包体积平均约 115 KB，最大约 264 KB（物理解题教练；学习DNA 因 schema 较大，约 245 KB）。
 
 副本由 `npm run sync:shared` 从源生成，Markdown 副本头部有"请勿直接编辑"横幅（JSON 契约按目标技能**裁剪并标注范围**：副本顶部的 `x-skill-scope` 列出该技能正文在非否定语境下提到的字段或交接类型，其余子树不进副本；完整定义在归属技能处）；`npm run check` 会校验副本与源一致，并清理已不再引用的残留。**要改共享约定或契约，请改源文件再重新同步。**
 
