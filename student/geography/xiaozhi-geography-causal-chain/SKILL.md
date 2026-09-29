@@ -8,7 +8,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🌀 地理成因链教练
-  version: 2.7.1
+  version: 2.8.0
   author: 小智伴学
   category: 地理专项
   grade_bands:

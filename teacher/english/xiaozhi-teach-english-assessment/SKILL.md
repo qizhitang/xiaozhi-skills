@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 英语综合测评
-  version: 2.7.1
+  version: 2.8.0
   author: 小智伴学
   category: 老师英语
   grade_bands:
@@ -499,7 +499,7 @@ max_round_limit: 25
 ```json
 {
   "sessionId": "sess-teach-eng-assess-001",
-  "protocolVersion": "2.7.1",
+  "protocolVersion": "2.8.0",
   "handoverType": "teacher_writeback",
   "sender": "xiaozhi-teach-english-assessment",
   "recipient": "xiaozhi-learning-dna",
