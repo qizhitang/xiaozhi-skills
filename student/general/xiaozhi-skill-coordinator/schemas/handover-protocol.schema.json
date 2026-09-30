@@ -16,7 +16,7 @@
       ]
     },
     "handoverType": {
-      "description": "交接类型：wrong_answer_handover=错题本→学科错误DNA；deep_analysis_writeback=学科错误DNA→错题本回写；profile_writeback=写入学习DNA通用层；subject_profile_writeback=写入学习DNA subjectExtensions/extensions；reminder_enqueue=向IM提醒入队（唯一允许的提醒方式，需 consent.reminderConsent）；reminder_sync=IM提醒回报状态；teacher_writeback=老师端写回学生档案（需 consent.teacherWritebackConsent）",
+      "description": "交接类型：wrong_answer_handover=学科技能→通用错题本（错题的初次收录与计数只归错题本），通用错题本→学科错误DNA（深度归因）；deep_analysis_writeback=学科错误DNA→错题本回写；profile_writeback=写入学习DNA通用层；subject_profile_writeback=写入学习DNA subjectExtensions/extensions；reminder_enqueue=向IM提醒入队（唯一允许的提醒方式，需 consent.reminderConsent）；reminder_sync=IM提醒回报状态；teacher_writeback=老师端写回学生档案（需 consent.teacherWritebackConsent）",
       "type": "string",
       "enum": [
         "wrong_answer_handover",

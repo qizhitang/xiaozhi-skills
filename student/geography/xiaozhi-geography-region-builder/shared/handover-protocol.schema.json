@@ -4,7 +4,7 @@
   "title": "XiaozhiMultiAgentHandoverProtocol",
   "x-distributed-to": "xiaozhi-geography-region-builder",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-geography-region-builder 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的交接类型（共 3 项，删去 0 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
+    "note": "本副本随 xiaozhi-geography-region-builder 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的交接类型（共 3 项，删去 0 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。wrong_answer_handover 只发给通用错题本。",
     "paths": [
       "wrong_answer_handover",
       "subject_profile_writeback",
@@ -26,7 +26,7 @@
       ]
     },
     "handoverType": {
-      "description": "subject_profile_writeback=写入学习DNA subjectExtensions/extensions；reminder_enqueue=向IM提醒入队（唯一允许的提醒方式，需 consent.reminderConsent）",
+      "description": "wrong_answer_handover=本技能→通用错题本（错题的初次收录与计数只归错题本）；subject_profile_writeback=写入学习DNA subjectExtensions/extensions；reminder_enqueue=向IM提醒入队（唯一允许的提醒方式，需 consent.reminderConsent）",
       "type": "string",
       "enum": [
         "wrong_answer_handover",
@@ -47,8 +47,7 @@
       "enum": [
         "xiaozhi-correction-notebook",
         "xiaozhi-im-reminder",
-        "xiaozhi-learning-dna",
-        "xiaozhi-geography-map-reader"
+        "xiaozhi-learning-dna"
       ]
     },
     "payload": {
@@ -364,6 +363,28 @@
             "required": [
               "reminderConsent"
             ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "handoverType": {
+            "const": "wrong_answer_handover"
+          }
+        },
+        "required": [
+          "handoverType"
+        ]
+      },
+      "then": {
+        "properties": {
+          "sender": {
+            "const": "xiaozhi-geography-region-builder"
+          },
+          "recipient": {
+            "const": "xiaozhi-correction-notebook"
           }
         }
       }

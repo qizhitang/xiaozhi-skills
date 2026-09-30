@@ -159,8 +159,6 @@ function findSkillDirs(dir, acc = []) {
 const skillDirs = findSkillDirs(root).sort();
 
 const rel = (p) => relative(root, p).replace(/\\/g, "/");
-// 技能名 → 所在学科目录（student/<学科>/、teacher/<学科>/；通用、独立教师与工具不算学科）
-const SUBJECT_OF = new Map(skillDirs.map((d) => [d.split(/[\\/]/).pop(), (rel(d).match(/^(?:student|teacher)\/(math|physics|chemistry|history|biology|geography|chinese|english)\//) || [])[1]]));
 // 比较时统一行尾：git 的 autocrlf 会在检出时把 LF 转成 CRLF，
 // 逐字节比较会在 Windows 上误报“与源不一致”。
 const norm = (s) => s.split(String.fromCharCode(13)).join("");
@@ -279,6 +277,8 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
   // 声明里列了子字段的键，只留列出的子字段（加上 required）；只写了键名的整块保留
   let rwScope = null, roleNote = "";
   const RECEIVERS = { "xiaozhi-learning-dna": true, "xiaozhi-im-reminder": true };
+  // 学科错误DNA：错题交接只收不发（错题的初次收录与计数只归通用错题本）
+  const WA_RECEIVE_ONLY = new Set(["xiaozhi-math-error-dna", "xiaozhi-physics-error-dna", "xiaozhi-chemistry-error-dna", "xiaozhi-biology-error-dna"]);
   if (/-workspace\.schema\.json$/.test(name)) {
     const rw = parseReadWrite(skillText);
     const rk = [...rw.read.keys()].filter((k) => k in props), wk = [...rw.write.keys()].filter((k) => k in props);
@@ -403,9 +403,9 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
         if (keepC.length < Object.keys(props.consent.properties).length) props.consent = { ...props.consent, properties: Object.fromEntries(Object.entries(props.consent.properties).filter(([k]) => keepC.includes(k))), required: Array.isArray(props.consent.required) ? props.consent.required.filter((r) => keepC.includes(r)) : props.consent.required };
       }
       // ── 收尾：说明文字 / 条件分支 / 学科枚举 / 学科维度 / 收件方 都裁到与保留类型一致 ──
-      // handoverType.description 只留保留类型那几段（原文以“；”分段，每段以 kind= 开头）
+      // handoverType.description 只留保留类型那几段（原文以“；”分段，每段以 kind= 开头；第一段前面带“交接类型：”，先去掉再比）
       if (props.handoverType && typeof props.handoverType.description === "string") {
-        const segs = props.handoverType.description.split("；").filter((s) => kinds.some((k) => s.trim().startsWith(k + "=")));
+        const segs = props.handoverType.description.replace(/^交接类型：/, "").split("；").filter((s) => kinds.some((k) => s.trim().startsWith(k + "=")));
         if (segs.length) props.handoverType = { ...props.handoverType, description: segs.join("；") };
       }
       // payload 各分支的说明文字里的交接类型名也按保留类型改写（主文件里写的是 profile_writeback / reminder_sync 的旧口径）
@@ -438,9 +438,9 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
       // 收件方：按协议的固定路由——写回档案只能到学习DNA，错题交接只能到错题本，提醒只能到 IM 提醒
       const DEST = { wrong_answer_handover: ["xiaozhi-correction-notebook", "xiaozhi-math-error-dna", "xiaozhi-physics-error-dna", "xiaozhi-chemistry-error-dna", "xiaozhi-history-source-analyzer", "xiaozhi-biology-error-dna", "xiaozhi-geography-map-reader"], deep_analysis_writeback: ["xiaozhi-correction-notebook"], profile_writeback: ["xiaozhi-learning-dna"], subject_profile_writeback: ["xiaozhi-learning-dna"], reminder_enqueue: ["xiaozhi-im-reminder"], reminder_sync: [], teacher_writeback: ["xiaozhi-learning-dna"] };
       if (props.recipient && Array.isArray(props.recipient.enum)) {
-        // 学科技能的错题交接只发给错题本与本学科的错误DNA（payload 的 subject 上面已只留本学科）；
-        // 发给别科错误DNA 的，只有正文明确写到（非否定语境）时才留。通用技能（协调器、错题本等）照旧保留全部
-        const waKeep = (r) => !subj || r === "xiaozhi-correction-notebook" || SUBJECT_OF.get(r) === subj || mentioned(skillText, r);
+        // 学科技能的错题交接只发给通用错题本：各学科技能正文都写“交给通用错题本”，错题的初次收录与计数只归错题本，
+        // 再由错题本转给学科错误DNA（2.8.0 扫描复核）。通用技能（协调器、错题本等）照旧保留全部
+        const waKeep = (r) => !subj || r === "xiaozhi-correction-notebook";
         const fixed = new Set(kinds.flatMap((k) => (DEST[k] || []).filter((r) => k !== "wrong_answer_handover" || waKeep(r))));
         const openKinds = kinds.filter((k) => !(DEST[k] || []).length);   // 路由表没定目的地的类型（reminder_sync）
         const men = openKinds.length ? props.recipient.enum.filter((r) => r !== skillName && mentioned(skillText, r)) : [];
@@ -454,6 +454,30 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
         if (props.recipient && Array.isArray(props.recipient.enum)) props.recipient = { ...props.recipient, enum: skillName === "xiaozhi-learning-dna" ? [skillName] : [...new Set([skillName, ...props.recipient.enum])] };
         roleNote = `本技能是接收方：sender 为各写入方，recipient 为自己；保留全部写回目标与字段以校验来件。`;
       } else if (props.sender && Array.isArray(props.sender.enum) && props.sender.enum.includes(skillName)) props.sender = { ...props.sender, enum: [skillName] };
+      // 学科技能的错题交接按方向写死（2.8.0 扫描复核）：学生端技能只发给通用错题本；学科错误DNA 只收错题本转来的；
+      // 历史史料分析、地理读图兼做本学科的错误DNA，两个方向都有。其余交接类型 sender 仍是本技能
+      if (subj && kinds.includes("wrong_answer_handover") && props.sender && props.recipient && Array.isArray(props.recipient.enum)) {
+        const NB = "xiaozhi-correction-notebook";
+        const waIn = DEST.wrong_answer_handover.includes(skillName), waOut = !WA_RECEIVE_ONLY.has(skillName);
+        const outRule = { properties: { sender: { const: skillName }, recipient: { const: NB } } };
+        const inRule = { properties: { sender: { const: NB }, recipient: { const: skillName } } };
+        if (waIn) {
+          props.sender = { ...props.sender, enum: [skillName, NB] };
+          props.recipient = { ...props.recipient, enum: [...new Set([...props.recipient.enum, skillName])] };
+        }
+        const others = kinds.filter((k) => k !== "wrong_answer_handover");
+        obj.allOf = [...(obj.allOf || []),
+          { if: { properties: { handoverType: { const: "wrong_answer_handover" } }, required: ["handoverType"] }, then: !waIn ? outRule : waOut ? { oneOf: [outRule, inRule] } : inRule },
+          ...(waIn && others.length ? [{ if: { properties: { handoverType: { enum: others } }, required: ["handoverType"] }, then: { properties: { sender: { const: skillName }, recipient: { not: { const: skillName } } } } }] : [])];
+        const waText = !waIn ? "本技能→通用错题本（错题的初次收录与计数只归错题本）"
+          : waOut ? "本技能→通用错题本（本次错题的初次收录），通用错题本→本技能（深度归因）"
+          : "通用错题本→本技能（本技能只收不发：错题的初次收录与计数只归错题本）";
+        const d = props.handoverType && props.handoverType.description;
+        if (typeof d === "string") props.handoverType = { ...props.handoverType, description: d.split("；").map((s) => s.trim().startsWith("wrong_answer_handover=") ? "wrong_answer_handover=" + waText : s).join("；") };
+        roleNote += !waIn ? "wrong_answer_handover 只发给通用错题本。"
+          : waOut ? "wrong_answer_handover 两个方向：本技能把本次错题交给通用错题本，也接收错题本转来的错题做深度归因；其余交接类型 sender 为本技能。"
+          : "wrong_answer_handover 本技能只收不发：来件 sender 为通用错题本、recipient 为本技能；其余交接类型 sender 为本技能。";
+      }
 
     }
   }

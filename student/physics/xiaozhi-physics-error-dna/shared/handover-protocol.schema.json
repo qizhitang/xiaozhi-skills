@@ -4,7 +4,7 @@
   "title": "XiaozhiMultiAgentHandoverProtocol",
   "x-distributed-to": "xiaozhi-physics-error-dna",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-physics-error-dna 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的交接类型（共 4 项，删去 0 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
+    "note": "本副本随 xiaozhi-physics-error-dna 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的交接类型（共 4 项，删去 0 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。wrong_answer_handover 本技能只收不发：来件 sender 为通用错题本、recipient 为本技能；其余交接类型 sender 为本技能。",
     "paths": [
       "wrong_answer_handover",
       "deep_analysis_writeback",
@@ -27,7 +27,7 @@
       ]
     },
     "handoverType": {
-      "description": "deep_analysis_writeback=学科错误DNA→错题本回写；subject_profile_writeback=写入学习DNA subjectExtensions/extensions；reminder_enqueue=向IM提醒入队（唯一允许的提醒方式，需 consent.reminderConsent）",
+      "description": "wrong_answer_handover=通用错题本→本技能（本技能只收不发：错题的初次收录与计数只归错题本）；deep_analysis_writeback=学科错误DNA→错题本回写；subject_profile_writeback=写入学习DNA subjectExtensions/extensions；reminder_enqueue=向IM提醒入队（唯一允许的提醒方式，需 consent.reminderConsent）",
       "type": "string",
       "enum": [
         "wrong_answer_handover",
@@ -40,7 +40,8 @@
       "description": "发送数据的源SKILL名称",
       "type": "string",
       "enum": [
-        "xiaozhi-physics-error-dna"
+        "xiaozhi-physics-error-dna",
+        "xiaozhi-correction-notebook"
       ]
     },
     "recipient": {
@@ -49,7 +50,8 @@
       "enum": [
         "xiaozhi-correction-notebook",
         "xiaozhi-im-reminder",
-        "xiaozhi-learning-dna"
+        "xiaozhi-learning-dna",
+        "xiaozhi-physics-error-dna"
       ]
     },
     "payload": {
@@ -461,6 +463,56 @@
             "required": [
               "reminderConsent"
             ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "handoverType": {
+            "const": "wrong_answer_handover"
+          }
+        },
+        "required": [
+          "handoverType"
+        ]
+      },
+      "then": {
+        "properties": {
+          "sender": {
+            "const": "xiaozhi-correction-notebook"
+          },
+          "recipient": {
+            "const": "xiaozhi-physics-error-dna"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "handoverType": {
+            "enum": [
+              "deep_analysis_writeback",
+              "subject_profile_writeback",
+              "reminder_enqueue"
+            ]
+          }
+        },
+        "required": [
+          "handoverType"
+        ]
+      },
+      "then": {
+        "properties": {
+          "sender": {
+            "const": "xiaozhi-physics-error-dna"
+          },
+          "recipient": {
+            "not": {
+              "const": "xiaozhi-physics-error-dna"
+            }
           }
         }
       }
