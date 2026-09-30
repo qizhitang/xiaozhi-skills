@@ -2,7 +2,7 @@
 
 > 由 `scripts/gen-docs.mjs --write` 从各 SKILL.md 的 frontmatter 生成，**请勿手改**；CI 用 `--check` 核对。
 
-全库 83 个 SKILL（学生端 49 + 老师端 34）+ 1 个开发者工具，257 份 references。
+全库 83 个 SKILL（学生端 49 + 老师端 34）+ 1 个开发者工具，265 份 references。
 
 ## 学生端 · 通用（13）
 
@@ -26,11 +26,11 @@
 
 | SKILL | 目录名 | 分类 | 适用学段 | 依赖 | 版本 |
 |---|---|---|---|---|---|
-| 跨时空古文对话 | `xiaozhi-chinese-classical-revival` | 语文专项 | 初中 | `xiaozhi-learning-dna` | 2.9.0 |
-| 🔍 语病追踪档案 | `xiaozhi-chinese-grammar-tracker` | 语文专项 | 小学高段、初中 | `xiaozhi-learning-dna` | 2.9.0 |
-| 📚 语文素材库 | `xiaozhi-chinese-material-library` | 语文专项 | 小学高段、初中 | `xiaozhi-learning-dna` | 2.9.0 |
-| 📖 阅读理解拆解师 | `xiaozhi-chinese-reading-decoder` | 语文专项 | 小学高段、初中 | `xiaozhi-learning-dna` | 2.9.0 |
-| 🖊️ 语文写作教练 | `xiaozhi-chinese-writing-coach` | 语文专项 | 小学高段、初中 | `xiaozhi-learning-dna` | 2.9.0 |
+| 跨时空古文对话 | `xiaozhi-chinese-classical-revival` | 语文专项 | 初中、高中 | `xiaozhi-learning-dna` | 2.9.0 |
+| 🔍 语病追踪档案 | `xiaozhi-chinese-grammar-tracker` | 语文专项 | 小学高段、初中、高中 | `xiaozhi-learning-dna` | 2.9.0 |
+| 📚 语文素材库 | `xiaozhi-chinese-material-library` | 语文专项 | 小学高段、初中、高中 | `xiaozhi-learning-dna` | 2.9.0 |
+| 📖 阅读理解拆解师 | `xiaozhi-chinese-reading-decoder` | 语文专项 | 小学高段、初中、高中 | `xiaozhi-learning-dna` | 2.9.0 |
+| 🖊️ 语文写作教练 | `xiaozhi-chinese-writing-coach` | 语文专项 | 小学高段、初中、高中 | `xiaozhi-learning-dna` | 2.9.0 |
 
 ## 学生端 · 数学（5）
 
@@ -126,9 +126,9 @@
 
 | SKILL | 目录名 | 分类 | 适用学段 | 依赖 | 版本 |
 |---|---|---|---|---|---|
-| 文言文教学指导 | `xiaozhi-teach-chinese-classical-guide` | 老师语文 | 小学高段、初中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-chinese-reading-guide` | 2.9.0 |
-| 阅读教学指导 | `xiaozhi-teach-chinese-reading-guide` | 老师语文 | 小学高段、初中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.9.0 |
-| 写作教学指导 | `xiaozhi-teach-chinese-writing-guide` | 老师语文 | 小学高段、初中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.9.0 |
+| 文言文教学指导 | `xiaozhi-teach-chinese-classical-guide` | 老师语文 | 小学高段、初中、高中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-chinese-reading-guide` | 2.9.0 |
+| 阅读教学指导 | `xiaozhi-teach-chinese-reading-guide` | 老师语文 | 小学高段、初中、高中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.9.0 |
+| 写作教学指导 | `xiaozhi-teach-chinese-writing-guide` | 老师语文 | 小学高段、初中、高中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.9.0 |
 
 ## 老师端 · 数学（3）
 

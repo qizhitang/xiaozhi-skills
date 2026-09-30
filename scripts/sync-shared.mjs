@@ -55,6 +55,11 @@ const CONTRACTS = [
     owner: "xiaozhi-chinese-reading-decoder",
   },
   {
+    as: "chinese-hs-recitation-list.md",
+    src: "student/chinese/xiaozhi-chinese-classical-revival/references/chinese-hs-recitation-list.md",
+    owner: "xiaozhi-chinese-classical-revival",
+  },
+  {
     as: "physics-diagram-guide.md",
     src: "student/physics/xiaozhi-physics-problem-coach/references/physics-diagram-guide.md",
     owner: "xiaozhi-physics-problem-coach",

@@ -5,6 +5,7 @@ description: >
   当老师说"这篇文言文怎么讲"、"古诗怎么上"、"学员读不懂文言文"、"实词虚词怎么教"、"文言翻译怎么带"、"古文背诵怎么落实"、"文言文主题怎么把握"、"诗词鉴赏怎么教"时，建议激活此SKILL。
   工作流：诵读正音 → 训诂（字词/句式/活用）→ 串讲 → 主题 → 文化背景与现代联结 → 班级古文积累记录。
   只输出教学框架与讨论问题，不逐字逐句串讲整篇、不提供完整现代文翻译、不代老师批改。
+  高中覆盖课标推荐背诵的 72 篇（首）与"中华传统文化经典研习"的教学。
   现代文阅读教学转 xiaozhi-teach-chinese-reading-guide；作文教学转 xiaozhi-teach-chinese-writing-guide。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
@@ -16,6 +17,7 @@ metadata:
   grade_bands:
     - 小学高段
     - 初中
+    - 高中
   tags: [文言文, 古诗文, 诵读, 训诂, 串讲, 主题, 语文老师]
   depends_on:
     - xiaozhi-teach-lesson-planner
@@ -544,7 +546,7 @@ max_round_limit: 20
       · sourceWeaknessIds[]             → 本课针对的 weaknessRank 条目
   classWorkspace.interactionLogs[]      → 课后回填：段落实际用时、
                                           misconceptionsObserved[]（如"把'何陋之有'当介宾后置"）
-  classWorkspace.homeworkAssignments[]  → 背诵与翻译任务（purpose = 巩固/补救）
+  classWorkspace.homeworkAssignments[]  → 背诵与翻译任务（purpose = 巩固/补救/拓展）
   classWorkspace.weaknessRank[]         → 依据课堂与作业表现更新文言类弱项
 ```
 
@@ -645,7 +647,19 @@ max_round_limit: 20
 
 ---
 
-## 十五、参考资源
+## 十五、高中：推荐篇目与古诗文教学
+
+**层次**（高中必修与选择性必修通用）：① **范围**：合格考考必修的 7 个学习任务群，难度主要依据学业质量水平一；高考考必修和选择性必修，难度主要依据学业质量水平二；语文没有等级性考试，选修的专题研讨不进考试范围。② **课标原文与卷面说法分开**：课标写的是学习任务群、三类语篇（实用类、论述类、文学作品）和学业质量水平；"信息类文本阅读""名篇名句默写""语言文字运用""文言断句与翻译"等题型名和"不少于 800 字"按本地当年考试说明，不写成课标要求。③ **语言知识**：不求全面系统，在情境中积累、梳理（任务群 4 教学提示）。④ **整本书阅读**：课标只规定必修读一部长篇小说和一部学术著作（「在指定范围内」），书目以所用教材和学校安排为准。⑤ **不以刷题代替任务群**：课标要求防止「把大量时间用于做题操练」。
+
+- 推荐篇目：课标附录 1 共 72 篇（首），文言文 32 篇（必修 10、选择性必修 10、选修 12），诗词曲 40 首（不分组）；考试「古诗文背诵不超过课程标准推荐篇目的范围」；所用教材的册次可能与课标分组不同，按教材册次排背诵计划。逐篇清单与考试口径见 `shared/chinese-hs-recitation-list.md`（原件在跨时空古文对话，本包带的是同一份副本）。
+- 选择性必修的"中华传统文化经典研习"（2 学分、36 课时）教学提示：「重视诵读在培养学生语感、增进文本理解中的作用」；「引导学生借助注释、工具书独立研读文本，并联系学习过的古代作品，梳理常用文言实词、虚词和特殊句式」；「学习运用评点方法」。诵读、训诂、串讲、主题的流程照用。
+- 文言知识「不追求知识点的全面与系统」：实词、虚词、句式在篇目中梳理，不单独刷清单；翻译、断句、默写是考试惯用题型，按本地当年考试说明备考，不写成课标要求。
+
+高中古诗文教学的组织要点、合格考与高考的分寸见 `references/hs-classical-teaching.md`。所有输出都是需老师复核的草稿。
+
+---
+
+## 十六、参考资源
 
 - `references/classical-vocab-quick-ref.md` — 文言常用实词虚词速查（30 实词 + 20 虚词；课堂高频 7 个见本文 §5.3）
 - `references/recitation-rhythm-guide.md` — 诵读三阶与节奏训练指南
@@ -654,6 +668,8 @@ max_round_limit: 20
 - `references/serial-explain-sample-template.md` — 串讲样板完整填写模板
 - `references/theme-discussion-question-bank.md` — 主题讨论问题设计题库（思乡/爱国/山水/哲理四类）
 - `references/classical-accumulation-profile-template.md` — 学员古文积累档案完整填写模板
+- `references/hs-classical-teaching.md` — 高中古诗文教学：推荐篇目的使用、经典研习的教学、考试惯例与课标的分寸（第十五节用）
+- `shared/chinese-hs-recitation-list.md` — 高中古诗文背诵推荐篇目 72 篇（首）与考试口径（原件在跨时空古文对话）
 
 ---
 
