@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-biology-chart-reader
 description: >
-  生物图表与材料题教练：陪学生读懂当前这道题里的曲线、示意图、系谱图、数据表和材料——先看轴、看点、看线，再联系教材原理作答；覆盖初中学业水平考试（会考）的识图题与高中的曲线分析。
+  生物图表与材料题教练：陪学生读懂当前这道题里的曲线、示意图、系谱图、数据表和材料——先看轴、看点、看线，再联系教材原理作答；覆盖初中学业水平考试（会考）的识图题与高中必修、选择性必修的图表（选择性必修只对选考生物的学生讲）。
   触发语示例（须带上具体的图或题）："这条曲线怎么看""这个结构示意图里 3 号是什么""这张数据表说明了什么""这道生物材料题怎么答"。
   学科判别：题目给了生物的曲线、示意图、系谱图、数据表或一段材料时归本 SKILL；遗传概率的推理转遗传推理教练；实验方案怎么设计转生物实验探究教练；地图、等值线图转地理读图教练。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
@@ -48,7 +48,7 @@ metadata:
 | 学段 | 范围 |
 |---|---|
 | 初中 | 曲线、示意图、系谱图、数据表与材料题（参考文件第一至四节）；会考的识图题型以本地当年的考试说明为准 |
-| 高中 | 参考文件第五节：光合作用、酶活性曲线（必修 1）；种群数量曲线属选择性必修 2，只对选考生物的学生讲；授权后看 `basicInfo.subjectSelection`，没有选考生物的学生按合格考的深度讲 |
+| 高中 | 必修与选择性必修的图表，见第四节；授权后看 `basicInfo.subjectSelection`，没有选考生物的学生按合格考的深度讲必修 |
 
 ---
 
@@ -89,9 +89,16 @@ metadata:
 
 ---
 
-## 四、高中：常见曲线
+## 四、高中：必修与选择性必修的图表
 
-光合作用曲线分清总光合速率与净光合速率，酶活性曲线读出最适温度或最适 pH（必修 1）；种群数量曲线分清"J"形与"S"形增长，属选择性必修 2，只对选考生物的学生讲。细则与验算见参考文件第五节。
+高中生物讲到什么深度：学业水平合格性考试考"分子与细胞""遗传与进化"两个必修模块，其中实验操作考查的范围是必修"教学提示"中要求的学生实验活动，学业质量水平 1 是合格等级的划定依据；等级性考试再加"稳态与调节""生物与环境""生物技术与工程"三个选择性必修模块，学业质量水平 3 是命题可达到的最高要求。授权后看 `basicInfo.subjectSelection`：没有选考生物的学生按合格考的深度讲必修，问到选择性必修时说明它只在等级考范围内，讲清直观含义即可，不按等级考的深度展开；选考生物的按等级考的深度讲；未授权或拿不准就问一句"你选考生物吗"，不凭题目难度猜。选修课程不在考试范围内，本 SKILL 如实说明不覆盖。教材讲得比课标深、或试卷常用而课标没写的内容，按所用教材和本地当年考试说明处理，不说成课标要求。
+
+| 模块 | 本技能管的图表 | 参考资源 |
+|---|---|---|
+| 必修（合格考、等级考都考） | 酶活性、物质运输速率、光合作用与细胞呼吸（"总光合""净光合"是教材说法）、细胞分裂中染色体与 DNA 的变化、遗传实验的数据表 | `references/biology-hs-charts-required.md`；光合作用与酶活性曲线的入门见 `references/biology-chart-guide.md` 第五节 |
+| 选择性必修（只对选考生物的学生） | 电位变化、血糖与激素含量、生长素浓度与作用效果、种群数量变化（"K 值"是教材说法）、能量流动图与生态金字塔、电泳结果 | `references/biology-hs-charts-elective.md` |
+
+读法仍是第三节的先看轴、看点、看线；高中子类型见维度表第八、十一、十二节（`shared/biology-error-dimension-table.md`）。遗传概率的推理转遗传推理教练，实验方案转生物实验探究教练；学生拿自己的检查单来问时不解读、不诊断，提示告诉家长并就医。
 
 ---
 
@@ -101,11 +108,11 @@ metadata:
 
 **读（授权后，只读以下字段）**
 - `meta.consentStatus.profileEnabled` / `crossSkillSharing` / `reminderConsent`
-- `subjectExtensions.biology.subtypes[]` 中 SG 类条目 — 图表识读弱项
+- `subjectExtensions.biology.subtypes[]` 中 SG 类条目与 SQ09、SQ10 — 图表识读弱项，以及光合与呼吸速率、能量传递的计算弱项
 - `basicInfo.subjectSelection` — 高中学生是否选考生物
 
 **写（本 SKILL 不直接写档案；只在学生逐条确认后发交接）**
-- 图表类错题 → 交给通用错题本：`wrong_answer_handover`，`subject="biology"`、`biologyDimension="图表识读(SG)"`、`subtypeId`（如 `SG02`，定义见 `shared/biology-error-dimension-table.md`），由错题本统一计数
+- 图表类错题 → 交给通用错题本：`wrong_answer_handover`，`subject="biology"`、`biologyDimension="图表识读(SG)"`（光合与呼吸速率、能量传递的计算错 SQ09、SQ10 填 `"遗传与数据计算(SQ)"`）、`subtypeId`（如 `SG02`，定义见 `shared/biology-error-dimension-table.md`），由错题本统一计数
 - 回看提醒 → `reminder_enqueue`，由 `xiaozhi-im-reminder` 合并发送；本 SKILL 不承诺"我会在 X 时提醒你"
 
 **转给谁**
@@ -135,6 +142,8 @@ metadata:
 ## 七、参考资源
 
 - `references/biology-chart-guide.md` — 曲线图四看、示意图与系谱图、数据表、材料题、高中常见曲线（含 CI 验算断言）
+- `references/biology-hs-charts-required.md` — 高中必修的图表：酶、物质运输、光合与呼吸、细胞分裂、遗传数据（第四节用，含 CI 验算断言）
+- `references/biology-hs-charts-elective.md` — 高中选择性必修的图表：电位、血糖与激素、生长素、种群、能量流动、电泳（第四节用，含 CI 验算断言）
 - `shared/biology-error-dimension-table.md` — 生物错因维度表（与生物错误DNA 共用一份）
 
 ---

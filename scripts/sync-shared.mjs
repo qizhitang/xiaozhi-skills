@@ -60,6 +60,11 @@ const CONTRACTS = [
     owner: "xiaozhi-chinese-classical-revival",
   },
   {
+    as: "biology-hs-student-activities.md",
+    src: "student/biology/xiaozhi-biology-inquiry-coach/references/biology-hs-student-activities.md",
+    owner: "xiaozhi-biology-inquiry-coach",
+  },
+  {
     as: "physics-diagram-guide.md",
     src: "student/physics/xiaozhi-physics-problem-coach/references/physics-diagram-guide.md",
     owner: "xiaozhi-physics-problem-coach",

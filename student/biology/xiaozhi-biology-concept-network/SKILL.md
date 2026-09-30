@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-biology-concept-network
 description: >
-  生物概念网络构建器：帮学生把零散的生物概念连成网——按"大概念 → 重要概念 → 次位概念"分层，用结构与功能、物质与能量等生命观念串起来，理清基因与染色体、光合作用与呼吸作用这类最易混的概念关系。
+  生物概念网络构建器：帮学生把零散的生物概念连成网——按"大概念 → 重要概念 → 次位概念"分层，用结构与功能、物质与能量等生命观念串起来，理清基因与染色体、光合作用与呼吸作用这类最易混的概念关系；高中覆盖必修与选择性必修的概念层级（选择性必修只对选考生物的学生）。
   触发语示例："基因、DNA、染色体到底什么关系""光合作用和呼吸作用怎么区分""帮我把这一章的概念串起来""生物全是要背的，怎么记得住"。
   学科判别：问生物概念之间的关系、要画概念图或整理一章的知识结构时归本 SKILL；带具体数据要算的遗传题转遗传推理教练；曲线和示意图怎么读转生物图表与材料题教练；实验怎么设计转生物实验探究教练。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
@@ -48,7 +48,7 @@ metadata:
 | 学段 | 范围 |
 |---|---|
 | 初中 | 课标 7 个学习主题的概念关系；最常混的几组见参考文件第三节 |
-| 高中 | 必修与选择性必修的大概念（参考文件第四节）；授权后看 `basicInfo.subjectSelection`，没有选考生物的学生重点放在必修的四个大概念上，按合格考的深度讲 |
+| 高中 | 必修与选择性必修的概念层级与常混概念，见第七节；授权后看 `basicInfo.subjectSelection`，没有选考生物的学生按合格考的深度讲必修 |
 
 ---
 
@@ -96,12 +96,12 @@ metadata:
 **读（授权后，只读以下字段）**
 - `meta.consentStatus.profileEnabled` / `crossSkillSharing` / `reminderConsent`
 - `subjectExtensions.biology.conceptNetwork[]` — 哪些概念关系已经理清
-- `subjectExtensions.biology.subtypes[]` 中 SC、SF 类条目 — 概念与结构功能类弱项
+- `subjectExtensions.biology.subtypes[]` 中 SC、SF 类条目与 SE05 — 概念、结构功能类弱项，以及生物技术安全与伦理的表述弱项
 - `basicInfo.subjectSelection` — 高中学生是否选考生物
 
 **写（学生逐条确认后）**
 - `subjectExtensions.biology.conceptNetwork[]` — `concept`（如"基因、DNA 与染色体的关系"）+ `status`（shared/vocab.md §6 学生端三档）+ `lastDate`；经 `subject_profile_writeback`，需 `crossSkillSharing=true`；只有学生能合上图、用自己的话讲出整张网时才写"真正掌握"
-- 概念类错题 → 学生说"记下来"后交给通用错题本：`wrong_answer_handover`，`subject="biology"`、`biologyDimension="概念网络(SC)"` 或 `"结构与功能(SF)"`、`subtypeId`（定义见 `shared/biology-error-dimension-table.md`），由错题本统一计数
+- 概念类错题 → 学生说"记下来"后交给通用错题本：`wrong_answer_handover`，`subject="biology"`、`biologyDimension="概念网络(SC)"` 或 `"结构与功能(SF)"`（生物技术安全与伦理的表述失准 SE05 填 `"表述与术语(SE)"`）、`subtypeId`（定义见 `shared/biology-error-dimension-table.md`），由错题本统一计数
 - 回看提醒 → `reminder_enqueue`，由 `xiaozhi-im-reminder` 合并发送；本 SKILL 不承诺"我会在 X 时提醒你"
 
 **转给谁**
@@ -127,9 +127,26 @@ metadata:
 
 ---
 
-## 七、参考资源
+## 七、高中：必修与选择性必修
+
+高中生物讲到什么深度：学业水平合格性考试考"分子与细胞""遗传与进化"两个必修模块，其中实验操作考查的范围是必修"教学提示"中要求的学生实验活动，学业质量水平 1 是合格等级的划定依据；等级性考试再加"稳态与调节""生物与环境""生物技术与工程"三个选择性必修模块，学业质量水平 3 是命题可达到的最高要求。授权后看 `basicInfo.subjectSelection`：没有选考生物的学生按合格考的深度讲必修，问到选择性必修时说明它只在等级考范围内，讲清直观含义即可，不按等级考的深度展开；选考生物的按等级考的深度讲；未授权或拿不准就问一句"你选考生物吗"，不凭题目难度猜。选修课程不在考试范围内，本 SKILL 如实说明不覆盖。教材讲得比课标深、或试卷常用而课标没写的内容，按所用教材和本地当年考试说明处理，不说成课标要求。
+
+| 模块 | 本技能管的内容 | 参考资源 |
+|---|---|---|
+| 必修（合格考、等级考都考） | "分子与细胞""遗传与进化"的大概念、重要概念与第三级条目（保留课标的动词）；高中常混的概念组：物质进出细胞、光合作用与细胞呼吸、酶与 ATP、细胞的分化衰老与死亡、进化、细胞各部分的分工合作、生物大分子 | `references/biology-hs-concepts-required.md`；必修与选择性必修的大概念总览见 `references/biology-concept-map.md` 第四节 |
+| 选择性必修（只对选考生物的学生） | "稳态与调节""生物与环境""生物技术与工程"的概念层级与常混概念；生物技术的安全与伦理（照课标原文） | `references/biology-hs-concepts-elective.md` |
+
+- 课标的内容要求多用描述句："分离定律""伴性遗传""光反应""有氧呼吸""自由扩散""K 值"等是教材说法，讲的时候可以用，但不说成"课标要求掌握××"；引课标照原词（如表型、年龄结构、质膜）。
+- 高中子类型见维度表第八、十一、十二节（`shared/biology-error-dimension-table.md`）。可遗传变异、带数据的遗传推理转遗传推理教练；曲线与示意图转生物图表与材料题教练；实验与技术操作转生物实验探究教练。
+- 讲免疫、激素与疾病时只讲教材里的生物学；学生问到自己或家人的身体状况时，不做诊断、不给用药或治疗建议，提示告诉家长并及时就医。
+
+---
+
+## 八、参考资源
 
 - `references/biology-concept-map.md` — 概念的三层结构、生命观念、初中常混的概念关系（结构层次、基因与染色体、光合与呼吸、生态系统、分类单位）、高中必修与选择性必修的大概念
+- `references/biology-hs-concepts-required.md` — 高中必修的概念层级与常混概念组（第七节用）
+- `references/biology-hs-concepts-elective.md` — 高中选择性必修的概念层级、常混概念与生物技术安全伦理的课标表述（第七节用）
 - `shared/biology-error-dimension-table.md` — 生物错因维度表（与生物错误DNA 共用一份）
 
 ---

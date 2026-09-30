@@ -91,7 +91,7 @@ metadata:
 | 物理 | 受力、电路、浮力、压强、功、速度、加速度、电流；高中另有动量、电场、电势、磁场、电磁感应、交变电流、振动与波、折射率、光电效应、半衰期；单位 N/Pa/m·s⁻¹/m·s⁻²/A/V/Ω/J/W，高中另有 T（特斯拉）/Wb/eV；图片含受力示意图、电路图、光路图、刻度尺 | `xiaozhi-physics-error-dna` / `xiaozhi-physics-problem-coach` |
 | 化学 | 化学式、元素符号、化学方程式、化合价、酸碱盐、溶液浓度、溶质质量分数；高中必修与选择性必修另有物质的量、氧化还原、离子反应、元素周期律、化学键、原电池与电解池、焓变与盖斯定律、化学平衡与平衡常数、电离与水解、沉淀溶解平衡、原子轨道与晶体、官能团与有机反应、同分异构；单位 mol、g/mol、mol/L、L/mol、kJ/mol；图片含实验装置（试管、集气瓶、酒精灯）、微观示意图、推断框图，高中另有有机物的结构简式、晶胞图、电化学装置 | `xiaozhi-chemistry-error-dna` / `xiaozhi-chemistry-problem-coach` |
 | 历史 | 朝代、年代、世纪、史料、材料题、历史事件与人物、变法与改革、战争与条约、时间轴；图片含史料原文、历史地图、大事年表 | `xiaozhi-history-source-analyzer`（错题与材料题）/ `xiaozhi-history-timeline-builder`（时空线索）/ `xiaozhi-history-essay-coach`（论述题） |
-| 生物 | 细胞、光合作用、呼吸作用、遗传、基因、染色体、生态系统、人体生理；图片含细胞结构图、曲线图、遗传系谱图、食物网 | `xiaozhi-biology-error-dna`（错题）/ `xiaozhi-biology-genetics-coach`（遗传题）/ `xiaozhi-biology-chart-reader`（图表题）/ `xiaozhi-biology-inquiry-coach`（实验题） |
+| 生物 | 细胞、光合作用、呼吸作用、遗传、基因、染色体、生态系统、人体生理；高中必修与选择性必修另有物质进出细胞、酶、细胞分裂、基因表达、变异与进化、内环境与稳态、神经调节、激素调节、免疫、植物激素、种群与群落、能量流动、发酵、微生物培养、组织培养、基因工程与 PCR；图片含细胞结构图、曲线图、遗传系谱图、食物网、电位变化曲线、能量流动图、电泳图 | `xiaozhi-biology-error-dna`（错题）/ `xiaozhi-biology-genetics-coach`（遗传题）/ `xiaozhi-biology-chart-reader`（图表题）/ `xiaozhi-biology-inquiry-coach`（实验题与学生活动）/ `xiaozhi-biology-concept-network`（概念关系与知识结构） |
 | 地理 | 经纬度、等高线、气候、地形、河流、区位、区域、人口、城市、时区与地方时；图片含地图、等值线图、气候图、统计图 | `xiaozhi-geography-map-reader`（错题与读图）/ `xiaozhi-geography-causal-chain`（成因与原理）/ `xiaozhi-geography-region-builder`（区域） |
 | 开卷考试 | 开卷、翻书、做索引、合卷；道法、历史、生物、地理的开卷考试方法 | `xiaozhi-openbook-coach`（只教方法；道法题目本身本库不讲） |
 | 英语 | 时态、从句、单词、词组、听力、口语、作文；高中的非谓语动词、语法填空、读后续写、应用文；出现连续英文句子；图片含英文题干或短文 | `xiaozhi-english-grammar-coach`（错题与语法）/ `xiaozhi-english-vocabulary-dna`（词汇）/ `xiaozhi-english-writing-coach`（整篇作文与续写） |

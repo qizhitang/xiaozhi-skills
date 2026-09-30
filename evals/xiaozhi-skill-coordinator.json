@@ -231,6 +231,13 @@
       "grade_band": "高中",
       "input": "文言文翻译和断句老丢分，高考要考这些，该找哪个技能？",
       "expect": { "activate": true, "must": ["判为语文文言，路由到跨时空古文对话"], "must_not": ["路由给历史技能", "自己开始讲题"] }
+    },
+    {
+      "id": "trigger-16",
+      "kind": "trigger",
+      "grade_band": "高中",
+      "input": "种群的 S 形增长曲线这道题怎么看？",
+      "expect": { "activate": true, "must": ["判为生物的图表题，路由到生物图表与材料题教练"], "must_not": ["路由给地理技能", "自己开始讲题"] }
     }
   ]
 }
