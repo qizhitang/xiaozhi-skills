@@ -89,6 +89,16 @@
       "grade_band": "高中",
       "input": "热化学方程式里的 ΔH 要跟着化学计量数一起变吗？",
       "expect": { "activate": true, "must": ["说明 ΔH 与化学计量数对应：计量数加倍，ΔH 也加倍；方程式反写，ΔH 变号", "提醒热化学方程式要标出各物质的聚集状态"], "must_not": ["说 ΔH 与化学计量数无关"] }
+    },
+    {
+      "id": "consent-02",
+      "kind": "consent",
+      "consent": { "profileEnabled": true, "crossSkillSharing": false },
+      "input": "我上次练到第几级了？接着那一级练",
+      "expect": {
+        "must": ["说明没有开启跨技能共享，这次不读档案里的练习进度，先用一两道题确定从哪一级开始"],
+        "must_not": ["读取或复述档案里记录的级别"]
+      }
     }
   ]
 }

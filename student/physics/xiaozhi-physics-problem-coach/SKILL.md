@@ -56,7 +56,7 @@ metadata:
 
 | 功能 | 开启条件 | 关闭时怎么做 |
 |---|---|---|
-| **档案记忆**（读物理弱项，决定提示阶梯起点） | `meta.consentStatus.profileEnabled=true`，且学生本次同意读；学段需监护人时监护人同意在先 | 提示阶梯从 L0 起，正常解题不受影响 |
+| **档案记忆**（读物理弱项，决定提示阶梯起点） | `meta.consentStatus.profileEnabled` 与 `crossSkillSharing` 都为 true（这些弱项由物理错误DNA、通用错题本等其他技能写入，属于跨技能读取），且学生本次同意读；学段需监护人时监护人同意在先；学生说"这次不要记忆"时本次不读 | 任一条件不满足就不读档案：提示阶梯从 L0 起，高中学生是否选考直接问一句，正常解题不受影响 |
 | **错题交接**（把这道题交给通用错题本） | 学生对这一条明确说"记下来"；每题问一次，不问一次管一年 | 只在本次会话里点出错因，不落库 |
 | **回看提醒** | `reminderConsent=true` **且**学生本次说"提醒我" | 只说"这类题建议过几天自己再看一遍" |
 
@@ -67,7 +67,7 @@ metadata:
 本 SKILL 即使在已授权时，也**只**读下面这几项：
 
 ```
-✅ 可读：
+✅ 可读（授权位本身随时可读，用来判断；下面三项要 `profileEnabled` 与 `crossSkillSharing` 都为 true、且学生本次同意后才读，任一不满足就都不读）：
    meta.consentStatus.{profileEnabled, crossSkillSharing, reminderConsent}  ← 只读授权位本身
    subjectExtensions.physics.subtypes[]        物理子类型弱项（如 P02）
    subjectMap.weakKnowledgePoints[] 中 subject="physics" 的条目
@@ -427,7 +427,7 @@ Step 3：标电流方向
 数据契约只用两处真实 schema：`shared/dna-profile.schema.json`（档案）与 `shared/handover-protocol.schema.json`（交接）。
 
 **读（仅以下四项，其余字段一律不读，见 §0.2）**
-- `meta.consentStatus.profileEnabled` / `crossSkillSharing` / `reminderConsent` — 决定本次是否读写档案、是否可入队提醒
+- `meta.consentStatus.profileEnabled` / `crossSkillSharing` / `reminderConsent` — 前两个都为 true、且学生本次同意时才读下面三项，任一为 false 就不读、只在当前会话工作；`reminderConsent` 决定是否可入队提醒
 - `subjectExtensions.physics.subtypes[]` — 该学生的物理子类型弱项（如 P02），用于决定提示阶梯起点
 - `subjectMap.weakKnowledgePoints[]` 中 `subject="physics"` 的条目（status 见 shared/vocab.md §4）— 考前梳理时调取"顽固弱项"
 - `basicInfo.subjectSelection` — 高中学生是否选考物理，决定讲到合格考还是等级考的深度
@@ -464,7 +464,7 @@ Step 3：标电流方向
 ```
 
 协作边界：
-- 未获 `profileEnabled` 同意时不建立长期档案，只在当前会话工作
+- 未获 `profileEnabled` 与 `crossSkillSharing` 同意时不读档案、不建立长期档案，只在当前会话工作
 - 概念理解问题转概念直觉器，但不替代其类比教学
 - 建模困难转建模教练，但不替代其模型训练
 - 实验设计与数据处理不在本 SKILL 范围内，不"先讲一点再转"，直接转

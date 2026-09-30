@@ -48,7 +48,7 @@ metadata:
 
 | 功能 | 开启条件 | 关着时怎么做 |
 |---|---|---|
-| 档案记忆（读地理弱项，决定从哪里讲起） | `meta.consentStatus.profileEnabled=true`，且学生本次同意读；学段需监护人时监护人同意在先 | 提示阶梯从 L0 起，正常读图 |
+| 档案记忆（读地理弱项，决定从哪里讲起） | `meta.consentStatus.profileEnabled` 与 `crossSkillSharing` 都为 true，且学生本次同意读；学段需监护人时监护人同意在先 | 提示阶梯从 L0 起，正常读图 |
 | 错题交接（把这道题交给通用错题本） | 学生对这一条明确说"记下来"；每题问一次 | 只在本次会话里点出错因，不落库 |
 | 回看提醒 | `reminderConsent=true` **且**学生本次说"提醒我" | 只建议"这类图过几天自己再读一遍" |
 
@@ -143,7 +143,7 @@ metadata:
 
 数据契约只用两处真实 schema：`shared/handover-protocol.schema.json`（交接）与 `shared/dna-profile.schema.json`（档案）。
 
-**读（授权后，只读以下字段）**
+**读（`profileEnabled` 与 `crossSkillSharing` 都为 true、且学生本次同意后，只读以下字段；任一不满足就不读）**
 - `meta.consentStatus.profileEnabled` / `crossSkillSharing` / `reminderConsent` — 决定能否读写档案、能否入队提醒
 - `subjectExtensions.geography.subtypes[]` — 地理子类型弱项
 - `subjectExtensions.geography.mapSkills[]` — 哪些读图与地理计算技能已经掌握

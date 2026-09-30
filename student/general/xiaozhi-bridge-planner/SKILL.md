@@ -53,7 +53,7 @@ metadata:
 
 | 门 | 开启条件 | 关着时怎么做 |
 |---|---|---|
-| 读学习档案 | `meta.consentStatus.profileEnabled=true` 且学生本次同意；学段需监护人时监护人同意在先 | 只用学生这次说的情况诊断 |
+| 读学习档案 | `meta.consentStatus.profileEnabled` 与 `crossSkillSharing` 都为 true，且学生本次同意；学段需监护人时监护人同意在先 | 只用学生这次说的情况诊断 |
 | 放进提醒队列 | `reminderConsent=true` 且学生本次说"提醒我" | 计划以文本给学生，请他自己安排 |
 
 "没说话"不算同意。本 SKILL 不生成家长看板；学生想要家庭版计划，转 30天学习计划制定师（它有自己的授权门）。
@@ -145,7 +145,7 @@ metadata:
 
 数据契约只用两处真实 schema：`shared/dna-profile.schema.json`（档案）与 `shared/handover-protocol.schema.json`（交接）。
 
-**读（授权后，只读以下字段）**
+**读（`profileEnabled` 与 `crossSkillSharing` 都为 true、且学生本次同意后，只读以下字段；任一不满足就不读）**
 - `meta.consentStatus.profileEnabled` / `crossSkillSharing` / `reminderConsent`
 - `basicInfo.gradeLevel`、`basicInfo.subjectSelection`
 - `subjectMap.weakKnowledgePoints[]` 中 subject 为语文、数学、物理、化学、英语、生物的条目

@@ -52,7 +52,7 @@ metadata:
 
 | 功能 | 开启条件 | 关闭时怎么做 |
 |---|---|---|
-| **档案记忆**（读化学弱项，决定提示阶梯起点） | `meta.consentStatus.profileEnabled=true`，且学生本次同意读；学段需监护人时监护人同意在先 | 提示阶梯从 L0 起，正常解题不受影响 |
+| **档案记忆**（读化学弱项，决定提示阶梯起点） | `meta.consentStatus.profileEnabled` 与 `crossSkillSharing` 都为 true（这些弱项由化学错误DNA、通用错题本等其他技能写入，属于跨技能读取），且学生本次同意读；学段需监护人时监护人同意在先；学生说"这次不要记忆"时本次不读 | 任一条件不满足就不读档案：提示阶梯从 L0 起，高中学生是否选考直接问一句，正常解题不受影响 |
 | **错题交接**（把这道题交给通用错题本） | 学生对这一条明确说"记下来"；每题问一次 | 只在本次会话里点出错因，不落库 |
 | **回看提醒** | `reminderConsent=true` **且**学生本次说"提醒我" | 只说"这类题建议过几天自己再做一遍" |
 
@@ -61,7 +61,7 @@ metadata:
 ### 0.2 只读化学相关字段（字段级最小必要）
 
 ```
-✅ 可读（授权后）：
+✅ 可读（授权位本身随时可读，用来判断；下面三项要 `profileEnabled` 与 `crossSkillSharing` 都为 true、且学生本次同意后才读，任一不满足就都不读）：
    meta.consentStatus.{profileEnabled, crossSkillSharing, reminderConsent}   ← 只读授权位本身
    subjectExtensions.chemistry.subtypes[]       化学子类型弱项（如 HS04）
    subjectMap.weakKnowledgePoints[] 中 subject="chemistry" 的条目
@@ -219,7 +219,7 @@ metadata:
 
 数据契约只用两处真实 schema：`shared/dna-profile.schema.json`（档案）与 `shared/handover-protocol.schema.json`（交接）。
 
-**读**：仅 §0.2 列出的四项。
+**读**：仅 §0.2 列出的四项，而且只在 `meta.consentStatus.profileEnabled` 与 `crossSkillSharing` 都为 true、学生本次同意时读；任一条件不满足就不读，只按本次会话解题。
 
 **写（本 SKILL 自己不写档案；只在学生逐条确认后发交接）**
 - 本次错题 → 交接给通用错题本：`handoverType = wrong_answer_handover`，`payload.wrongAnswerData` 填 `subject="chemistry"`、`basicDimension`（四维，shared/vocab.md §1）、`chemistryDimension`（六维）、`subtypeId`（如 `HR02`）、`surfaceInfo`；子类型定义见 `shared/chemistry-error-dimension-table.md`

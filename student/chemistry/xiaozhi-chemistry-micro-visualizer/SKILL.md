@@ -43,7 +43,7 @@ metadata:
 
 ## 〇、默认边界与学段
 
-**默认只在本次会话讲解**，不读写档案。学生开启档案记忆（`meta.consentStatus.profileEnabled=true` 且本次同意）后，只读 `subjectExtensions.chemistry.subtypes[]` 中微观表征（HM）类的弱项，用来决定从哪个迷思讲起；本 SKILL 不写档案。
+**默认只在本次会话讲解**，不读写档案。学生开启档案记忆（`meta.consentStatus.profileEnabled` 与 `crossSkillSharing` 都为 true，且本次同意）后，只读 `subjectExtensions.chemistry.subtypes[]` 中微观表征（HM）类的弱项，用来决定从哪个迷思讲起；本 SKILL 不写档案。
 
 | 学段 | 范围 |
 |---|---|
@@ -140,7 +140,7 @@ Step 3  回到符号："这张图写成化学式或方程式是什么？"
 
 ## 五、接口与协作
 
-**读（授权后）**：`meta.consentStatus.profileEnabled`；`subjectExtensions.chemistry.subtypes[]` 中 HM 类条目。数据契约为 `shared/dna-profile.schema.json`。
+**读（`profileEnabled` 与 `crossSkillSharing` 都为 true、且学生本次同意后才读）**：`meta.consentStatus.profileEnabled` / `crossSkillSharing`；`subjectExtensions.chemistry.subtypes[]` 中 HM 类条目。数据契约为 `shared/dna-profile.schema.json`。
 
 **写**：本 SKILL 不写档案。学生某个微观迷思反复出现、想让它被记录和追踪时，请学生把相关错题交给通用错题本（唯一计数权威），由化学错误DNA 做子类型定位。
 

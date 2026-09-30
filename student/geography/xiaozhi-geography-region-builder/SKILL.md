@@ -44,7 +44,7 @@ metadata:
 
 ## 〇、默认边界与学段
 
-**默认只在本次会话里整理**，不读写档案、不排提醒。学生开启档案记忆（`meta.consentStatus.profileEnabled=true` 且本次同意）后，可读区域认知档案与区域类弱项，决定从哪里讲起；写入需学生逐条确认。三项互相独立，"没说话"不算同意。
+**默认只在本次会话里整理**，不读写档案、不排提醒。学生开启档案记忆（`meta.consentStatus.profileEnabled` 与 `crossSkillSharing` 都为 true，且本次同意）后，可读区域认知档案与区域类弱项，决定从哪里讲起；写入需学生逐条确认。三项互相独立，"没说话"不算同意。
 
 | 学段 | 范围 |
 |---|---|
@@ -100,7 +100,7 @@ metadata:
 
 数据契约只用两处真实 schema：`shared/dna-profile.schema.json`（档案）与 `shared/handover-protocol.schema.json`（交接）。
 
-**读（授权后，只读以下字段）**
+**读（`profileEnabled` 与 `crossSkillSharing` 都为 true、且学生本次同意后，只读以下字段；任一不满足就不读）**
 - `meta.consentStatus.profileEnabled` / `crossSkillSharing` / `reminderConsent`
 - `subjectExtensions.geography.regions[]` — 哪些区域的认知已经建立
 - `subjectExtensions.geography.subtypes[]` 中 DR 类条目 — 区域认知类弱项

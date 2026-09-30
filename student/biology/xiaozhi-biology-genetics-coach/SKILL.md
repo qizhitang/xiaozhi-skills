@@ -45,7 +45,7 @@ metadata:
 
 ## 〇、默认边界与学段
 
-**默认只做当前这道题**：不读写档案、不归档错题、不排提醒。学生开启档案记忆（`meta.consentStatus.profileEnabled=true` 且本次同意）后，可读遗传推理技能的档案决定从哪里讲起；错题交接要学生对这一条说"记下来"；回看提醒需 `reminderConsent=true` 且学生本次说"提醒我"。三项互相独立，"没说话"不算同意。
+**默认只做当前这道题**：不读写档案、不归档错题、不排提醒。学生开启档案记忆（`meta.consentStatus.profileEnabled` 与 `crossSkillSharing` 都为 true，且本次同意）后，可读遗传推理技能的档案决定从哪里讲起；错题交接要学生对这一条说"记下来"；回看提醒需 `reminderConsent=true` 且学生本次说"提醒我"。三项互相独立，"没说话"不算同意。
 
 | 学段 | 范围 |
 |---|---|
@@ -115,7 +115,7 @@ metadata:
 
 数据契约只用两处真实 schema：`shared/dna-profile.schema.json`（档案）与 `shared/handover-protocol.schema.json`（交接）。
 
-**读（授权后，只读以下字段）**
+**读（`profileEnabled` 与 `crossSkillSharing` 都为 true、且学生本次同意后，只读以下字段；任一不满足就不读）**
 - `meta.consentStatus.profileEnabled` / `crossSkillSharing` / `reminderConsent`
 - `subjectExtensions.biology.geneticsSkills[]` — 哪些遗传推理技能已经掌握
 - `subjectExtensions.biology.subtypes[]` 中 SQ01、SQ02、SQ04—SQ08 与 SG05、SC01、SC05、SC08、SC13 等遗传相关条目
