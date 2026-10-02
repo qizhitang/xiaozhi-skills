@@ -46,8 +46,13 @@ def display_name(path):
 
 
 def run_cli(args, env, timeout=300):
+    """CLI 卡死超过 timeout 秒时记为这一个调用失败，不抛异常（2026-09-29 v2.8.0：上传卡死 300 秒，整轮在 56/84 中断）。
+    卡死的那次上传可能其实成功了：续跑时会报 already exists，由 already_live 核实。"""
     cmd = clawhub_cli() + args
-    r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", env=env, timeout=timeout)
+    try:
+        r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", env=env, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        return 124, "", f"Error: CLI 超过 {timeout} 秒没有返回，已终止"
     return r.returncode, (r.stdout or ""), (r.stderr or "")
 
 
