@@ -1,6 +1,7 @@
 # 复习策略：间隔回看与交叉练习排期
 
-> 适用学段：小学中段 / 小学高段 / 初中（高中同样适用）。
+> 适用学段：小学中段 / 小学高段 / 初中 / 高中（高中以月计的长周期复习，见 SKILL.md 第六节 6.4）。
+> 下文的题目来源写的是老师通用的作业设计（xiaozhi-teach-assignment-designer），它目前标到初中；高中班级的题目去处按 SKILL.md 第六节 6.4。
 > 配合 `xiaozhi-teach-review-planner` 使用。本文件只放**排期工具**；
 > 知识图谱四层与可视化见 `knowledge-map-example.md`，重难点清单见 `key-points-checklist-template.md`，
 > 复习活动样例见 `review-activity-library.md`，阶段策略与话术见 [`../SKILL.md`](../SKILL.md) §6、§8。

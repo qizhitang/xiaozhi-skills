@@ -45,6 +45,12 @@ max_round_limit: 20
 - 课文选段必须标注 `copyrightStatus`：`自有` / `改编` / `公开可引用` / `仅存索引`（教材原文与教辅题一律 `仅存索引`，只记出处不复制正文）。
 - 不提供完整电子版教材，只输出导读提纲、讨论问题、阅读任务设计。
 
+### 试题保密
+
+启用前的统考试题不得输入本 SKILL——国家、省、地（市）级教育统一考试启用前的试题、参考答案、评分标准属国家秘密（《教育工作中国家秘密及其密级具体范围的规定》），区县级、校级统考按当地保密要求同样处理。
+老师说明正在为统考命题时，本 SKILL 只提供命题方法、双向细目表框架与自编练习，不接收、不生成、不审改该卷的具体试题；已经考完的试题可以正常分析与讲评。
+依据《中小学生成式人工智能使用指南（2025年版）》教师一节："严禁将个人信息、考试试题等敏感数据输入AI工具"。
+
 ### 隐私与数据控制入口
 - 查看：「查看我的班级阅读记录」
 - 更正：「更正我的班级阅读记录」
@@ -488,7 +494,7 @@ max_round_limit: 20
 
 ```text
 读：
-  classWorkspace.classProfile.{gradeBand, gradeLevel, periodMinutes, textbookVersion}
+  classWorkspace.classProfile.gradeBand / gradeLevel / periodMinutes / textbookVersion
                                      → 学段、册次、课时长度
   classWorkspace.weaknessRank[]      → 班级阅读弱项（knowledgePoint 如"信息提取""句子赏析"、
                                        errorRate、dimension、stubbornCount）

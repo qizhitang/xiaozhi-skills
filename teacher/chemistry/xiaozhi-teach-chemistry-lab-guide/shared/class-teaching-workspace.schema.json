@@ -25,7 +25,9 @@
     "fields": {
       "classProfile": {
         "reads": [
-          "classSize"
+          "gradeLevel",
+          "classSize",
+          "periodMinutes"
         ]
       },
       "lessonPlans": {
@@ -110,6 +112,11 @@
             "初中",
             "高中"
           ]
+        },
+        "gradeLevel": {
+          "type": "string",
+          "maxLength": 10,
+          "description": "如 八年级"
         },
         "classSize": {
           "type": "integer",

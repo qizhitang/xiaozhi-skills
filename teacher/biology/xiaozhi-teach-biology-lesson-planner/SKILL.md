@@ -3,7 +3,7 @@ name: xiaozhi-teach-biology-lesson-planner
 description: >
   帮生物老师做以核心素养为目标、以观察和实验为主线的教案：初中七个学习主题与高中必修、选择性必修模块的单元统筹，探究活动与学生实验的设计，实验安全定档，概念教学的提问链。
   仅在"生物 + 教案设计"两个条件同时成立时建议激活，例如"光合作用这节课怎么设计""这个探究实验怎么组织分组""高一分子与细胞这个单元怎么串""初中和高中讲遗传怎么衔接"。
-  不处理：生物学业水平考试的复习排期（初中学业水平考试与高中合格性考试转 xiaozhi-teach-bio-geo-review-planner；高中等级性考试的复习排期本库暂无专门技能，可借用 xiaozhi-teach-review-planner 的排期规则）、命题与组卷（转 xiaozhi-teach-exam-designer）、其他学科教案（转对应学科 SKILL）。
+  不处理：生物学业水平考试的复习排期（初中学业水平考试与高中合格性考试转 xiaozhi-teach-bio-geo-review-planner；高中等级性考试转 xiaozhi-teach-review-planner）、命题与组卷（初中转 xiaozhi-teach-exam-designer，高中本库暂无专门技能）、其他学科教案（转对应学科 SKILL）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
@@ -116,7 +116,7 @@ max_round_limit: 30
 | 选择性必修三个模块 | 选考生物班级的单元设计；伦理议题（转基因辩论、设计试管婴儿讨论、生物武器资料分析）的课堂组织 | `references/biology-hs-units-elective.md` |
 | 课标列出的学生活动 | 53 条逐条照录，附安全档位与老师操作的部分 | `shared/biology-hs-student-activities.md`（原件在生物实验探究教练） |
 
-是否选考由老师说明，班级工作区没有这一项，不从其他字段推断。复习排期不在本技能：合格考转生地学业水平考试复习规划；等级考的复习排期本库暂无专门技能，复习规划师（xiaozhi-teach-review-planner，学段目前标到初中）的阶段、间隔回看与交叉练习规则可以借用，考点按两个必修模块加三个选择性必修模块对照本地等级考说明；命题与组卷转 xiaozhi-teach-exam-designer。
+是否选考由老师说明，班级工作区没有这一项，不从其他字段推断。复习排期不在本技能：合格考转生地学业水平考试复习规划；等级考的复习排期转复习规划师（xiaozhi-teach-review-planner），考点按两个必修模块加三个选择性必修模块对照本地等级考说明；命题与组卷：高中本库暂无专门技能（老师通用的测评设计目前标到初中）。
 
 **初高衔接**要讲清三处升级：核心素养的名称从"探究实践、态度责任"变成"科学探究、社会责任"；生命观念增加了稳态与平衡观；实验设计从"单一变量"升级到自变量、因变量与无关变量（教材说法）。对照表见参考文件第四节。高一第一节课可以把一个初中学过的探究实验改写成高中的写法，让学生看到同一个探究思路怎样升级。
 
@@ -128,7 +128,7 @@ max_round_limit: 30
 
 ```text
 读：
-  classWorkspace.classProfile     → 年级、班额 classSize、每节课分钟数 periodMinutes、教材版本；
+  classWorkspace.classProfile     → 年级 gradeLevel、班额 classSize、每节课分钟数 periodMinutes、教材版本 textbookVersion，
                                      分组实验的组数与时长由这里决定
   classWorkspace.weaknessRank     → 本班的薄弱点（如对照设计、曲线识读），决定这一课的重点与提问密度
   classWorkspace.studentTiers     → A/B/C 分层，决定各环节的 tierVariants
@@ -142,7 +142,7 @@ max_round_limit: 30
                                      questionChain / boardPlan / sourceWeaknessIds
 ```
 
-> 本 SKILL 不写考试蓝图 examBlueprints、不写逐题得分 itemScores、不写复习排期 reviewPlans（初中学业水平考试与高中合格性考试的复习排期在生地学业水平考试复习规划；高中等级性考试的复习排期本库暂无专门技能）。
+> 本 SKILL 不写考试蓝图 examBlueprints、不写逐题得分 itemScores、不写复习排期 reviewPlans（初中学业水平考试与高中合格性考试的复习排期在生地学业水平考试复习规划；高中等级性考试的复习排期在复习规划师）。
 
 `objectives[].coreCompetency` 填核心素养之一：初中为生命观念、科学思维、探究实践、态度责任；高中为生命观念、科学思维、科学探究、社会责任。
 

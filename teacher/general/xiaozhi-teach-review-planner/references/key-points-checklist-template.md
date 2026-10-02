@@ -1,6 +1,6 @@
 # 重难点清单模板
 
-> 适用学段：小学中段 / 小学高段 / 初中（高中同样适用）。
+> 适用学段：小学中段 / 小学高段 / 初中 / 高中。
 > 对应 `xiaozhi-teach-review-planner` SKILL.md §5.2。得分率来自 `classWorkspace.weaknessRank` 与 `itemStats`。
 >
 > ⚠️ 本表的"学情得分率"一律是**知识点级的班级聚合值**，不是某个学生的成绩。

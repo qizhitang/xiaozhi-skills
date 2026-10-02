@@ -28,8 +28,10 @@
     "fields": {
       "classProfile": {
         "reads": [
+          "gradeLevel",
           "classSize",
-          "periodMinutes"
+          "periodMinutes",
+          "textbookVersion"
         ]
       },
       "lessonPlans": {
@@ -121,6 +123,11 @@
             "高中"
           ]
         },
+        "gradeLevel": {
+          "type": "string",
+          "maxLength": 10,
+          "description": "如 八年级"
+        },
         "classSize": {
           "type": "integer",
           "minimum": 1,
@@ -137,6 +144,10 @@
             90
           ],
           "description": "一节课分钟数（小学默认 40，初中默认 45）"
+        },
+        "textbookVersion": {
+          "type": "string",
+          "maxLength": 40
         }
       },
       "required": [

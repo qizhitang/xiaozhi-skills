@@ -27,6 +27,7 @@
     "fields": {
       "classProfile": {
         "reads": [
+          "gradeBand",
           "gradeLevel",
           "periodMinutes",
           "fullScore"

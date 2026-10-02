@@ -44,6 +44,12 @@ max_round_limit: 20
 - 只输出**串讲框架**与主题解析，不逐字逐句串讲整篇古文（由老师主导）。
 - 不提供完整现代汉语翻译，只输出关键句段的翻译框架。
 
+### 试题保密
+
+启用前的统考试题不得输入本 SKILL——国家、省、地（市）级教育统一考试启用前的试题、参考答案、评分标准属国家秘密（《教育工作中国家秘密及其密级具体范围的规定》），区县级、校级统考按当地保密要求同样处理。
+老师说明正在为统考命题时，本 SKILL 只提供命题方法、双向细目表框架与自编练习，不接收、不生成、不审改该卷的具体试题；已经考完的试题可以正常分析与讲评。
+依据《中小学生成式人工智能使用指南（2025年版）》教师一节："严禁将个人信息、考试试题等敏感数据输入AI工具"。
+
 ### 隐私与数据控制入口
 - 查看：「查看我的班级古文记录」
 - 更正：「更正我的班级古文记录」
@@ -531,7 +537,7 @@ max_round_limit: 20
 
 ```text
 读：
-  classWorkspace.classProfile.{gradeBand, gradeLevel, periodMinutes, textbookVersion}
+  classWorkspace.classProfile.gradeBand / gradeLevel / periodMinutes / textbookVersion
                                         → 学段、册次、课时长度（决定选篇与节奏）
   classWorkspace.weaknessRank[]         → 班级弱项（knowledgePoint 如"文言实词""特殊句式"、
                                           errorRate、dimension、stubbornCount）

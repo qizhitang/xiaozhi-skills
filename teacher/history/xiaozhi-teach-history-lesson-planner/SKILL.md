@@ -113,7 +113,7 @@ max_round_limit: 30
 
 ```text
 读：
-  classWorkspace.classProfile     → 年级、班额 classSize、每节课分钟数 periodMinutes、教材版本；
+  classWorkspace.classProfile     → 年级 gradeLevel、班额 classSize、每节课分钟数 periodMinutes、教材版本 textbookVersion，
                                      课时伸缩与活动分组都由这里决定
   classWorkspace.weaknessRank     → 本班的薄弱点（如史料信息提取、时空定位），决定这一课的重点与提问密度
   classWorkspace.studentTiers     → A/B/C 分层，决定各环节的 tierVariants

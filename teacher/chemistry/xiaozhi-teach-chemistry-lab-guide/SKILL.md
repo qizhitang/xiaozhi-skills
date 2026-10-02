@@ -167,7 +167,7 @@ AI 只出批改要点草稿，不代老师给学生打分或写评语（教学�
 
 ```text
 读：
-  classWorkspace.classProfile     → 年级、班额 classSize、每节课分钟数 periodMinutes；分组人数与器材安排由这里推出
+  classWorkspace.classProfile     → 年级 gradeLevel、班额 classSize、每节课分钟数 periodMinutes，分组人数与器材安排由这里推出
   classWorkspace.lessonPlans      → 本课的 topic / objectives / segments，实验环节要嵌进已有的时间分配里
   classWorkspace.studentTiers     → A/B/C 分层，决定给多少操作支架
   classWorkspace.interactionLogs  → 上一次实验课的实际用时 segmentTimings、观察到的迷思 misconceptionsObserved、

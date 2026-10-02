@@ -16,8 +16,9 @@
     {
       "id": "no-trigger-01",
       "kind": "no-trigger",
+      "grade_band": "初中",
       "input": "研究到地理那部分，这道等高线的题我不会",
-      "expect": { "activate": false, "route_to": null, "must": ["说明单科解题不在本 SKILL 范围，本库暂无地理教练，如实说明"], "must_not": ["顺手解题"] }
+      "expect": { "activate": false, "route_to": "xiaozhi-geography-map-reader", "must": ["说明单科解题不在本 SKILL 范围，等高线读图转地理读图教练"], "must_not": ["顺手解题"] }
     },
     {
       "id": "no-trigger-02",

@@ -44,6 +44,12 @@ max_round_limit: 20
 - 写作题目必须标注 `copyrightStatus`：`自有` / `改编` / `公开可引用` / `仅存索引`（教辅题库与历年真题一律 `仅存索引`，只记出处）。
 - 不为学员代写作文；老师可示范写作过程，本 SKILL 不提供范文代写。
 
+### 试题保密
+
+启用前的统考试题不得输入本 SKILL——国家、省、地（市）级教育统一考试启用前的试题、参考答案、评分标准属国家秘密（《教育工作中国家秘密及其密级具体范围的规定》），区县级、校级统考按当地保密要求同样处理。
+老师说明正在为统考命题时，本 SKILL 只提供作文命题的方法与自编练习，不接收、不生成、不审改该卷的具体试题（含作文题）；已经考完的试题可以正常分析与讲评。
+依据《中小学生成式人工智能使用指南（2025年版）》教师一节："严禁将个人信息、考试试题等敏感数据输入AI工具"。
+
 ### 隐私与数据控制入口
 - 查看：「查看我的班级写作记录」
 - 更正：「更正我的班级写作记录」
@@ -448,7 +454,7 @@ AI 生成的作文题：生成前按 shared/ai-item-check.md 自检（题意清�
 
 ```text
 读：
-  classWorkspace.classProfile.{gradeBand, gradeLevel, periodMinutes, fullScore}
+  classWorkspace.classProfile.gradeBand / gradeLevel / periodMinutes / fullScore
                                       → 学段、课时长度、卷面满分（用于作文换算带）
   classWorkspace.weaknessRank[]       → 班级写作弱项（knowledgePoint 如"详略失当""立意浅"、
                                         errorRate、dimension、stubbornCount）

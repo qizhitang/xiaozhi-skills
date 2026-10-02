@@ -3,7 +3,7 @@ name: xiaozhi-teach-bio-geo-review-planner
 description: >
   帮生物、地理老师做学业水平考试的复习规划：初中生物学、地理学业水平考试（会考）与高中合格性考试。不内置任何省份的考试政策——老师先提供本地当年的考试说明，本 SKILL 据此把考试范围对到课标、标出本班的掌握情况、安排实验操作与地理实践的准备，再按距考天数倒推排期。
   仅在"生物或地理 + 学业水平考试复习"两个条件同时成立时建议激活，例如"生地会考还有两个月怎么复习""高二生物合格考怎么排""地理合格考考前一个月怎么安排""生物实验操作考试怎么练"。
-  不处理：复习卷与组卷（转 xiaozhi-teach-exam-designer）、复习作业的具体题目（转 xiaozhi-teach-assignment-designer）、高中等级性考试（选考）的备考、其他学科的复习。
+  不处理：复习卷、组卷与复习作业的具体题目（初中分别转 xiaozhi-teach-exam-designer、xiaozhi-teach-assignment-designer，高中本库暂无专门技能）、高中等级性考试（选考）的备考与其他学科的复习（转 xiaozhi-teach-review-planner）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
@@ -96,7 +96,7 @@ max_round_limit: 30
 
 ## 五、第四步：倒推排期
 
-阶段划分、1 / 3 / 7 / 14 天的间隔回看、交叉练习的规则沿用复习规划师，不另立一套；生地常见的易混组合与两科同期备考的安排，见参考文件第五节；高中生物合格性考试各阶段放什么、写进 `reviewPlans[]` 时怎么填，见 `references/biology-hs-exam-review.md` 第五节。高中等级性考试（选考）的复习排期不在本技能：本库暂无专门技能，老师需要时可借用复习规划师（xiaozhi-teach-review-planner，学段目前标到初中）的阶段、间隔回看与交叉练习规则。
+阶段划分、1 / 3 / 7 / 14 天的间隔回看、交叉练习的规则沿用复习规划师，不另立一套；生地常见的易混组合与两科同期备考的安排，见参考文件第五节；高中生物合格性考试各阶段放什么、写进 `reviewPlans[]` 时怎么填，见 `references/biology-hs-exam-review.md` 第五节。高中等级性考试（选考）的复习排期不在本技能，转复习规划师（xiaozhi-teach-review-planner）。复习期以月计时（如提前几个月准备合格考），14 天之后的再接触照复习规划师第六节 6.4 的长间隔规则。
 
 - 还没上完的新课在距考 14 天前上完；距考 14 天内不再上新课，7 天内不引入新知识点
 - 考试当天只说流程与状态，不点弱项、不发新的错题清单
@@ -110,7 +110,7 @@ max_round_limit: 30
 
 ```text
 读（先告诉老师读什么、为什么读）：
-  classWorkspace.classProfile     → 学科、学段 gradeBand、年级、每节课分钟数
+  classWorkspace.classProfile     → 学科 subject、学段 gradeBand、年级 gradeLevel、每节课分钟数 periodMinutes
   classWorkspace.weaknessRank     → 本班弱项与错误率，定考点对照表的 🔴🟡🟢
   classWorkspace.lessonPlans      → 教到哪里，哪些内容还没上完
   classWorkspace.reviewPlans      → 同一场考试是否已有复习排期；有就在原计划上补充，不另起一份

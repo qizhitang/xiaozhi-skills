@@ -106,7 +106,7 @@
 | 课堂互动教练 | `xiaozhi-teach-classroom-coach` | 老师通用 | 小学中段、小学高段、初中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer` | 2.10.0 |
 | 测评设计师 | `xiaozhi-teach-exam-designer` | 老师通用 | 小学中段、小学高段、初中 | — | 2.10.0 |
 | 教案设计器 | `xiaozhi-teach-lesson-planner` | 老师通用 | 小学中段、小学高段、初中 | `xiaozhi-teach-student-analyzer` | 2.10.0 |
-| 复习规划师 | `xiaozhi-teach-review-planner` | 老师通用 | 小学中段、小学高段、初中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-exam-designer` | 2.10.0 |
+| 复习规划师 | `xiaozhi-teach-review-planner` | 老师通用 | 小学中段、小学高段、初中、高中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-exam-designer` | 2.10.0 |
 | 学情分析师 | `xiaozhi-teach-student-analyzer` | 老师通用 | 小学中段、小学高段、初中 | `xiaozhi-teach-exam-designer` | 2.10.0 |
 
 ## 老师端 · 独立教师（8）

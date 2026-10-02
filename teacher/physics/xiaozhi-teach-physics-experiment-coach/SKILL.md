@@ -528,8 +528,8 @@ max_round_limit: 20
 
 ```text
 读：
-  classWorkspace.classProfile     → 年级、班额 classSize、每节课分钟数 periodMinutes、
-                                     教材版本；分组人数与器材套数都由这里推出来
+  classWorkspace.classProfile     → 年级 gradeLevel、班额 classSize、每节课分钟数 periodMinutes、
+                                     教材版本 textbookVersion，分组人数与器材套数都由这里推出来
   classWorkspace.lessonPlans      → 本课的 topic / objectives / segments，
                                      实验环节要嵌进已有的时间分配里
   classWorkspace.weaknessRank     → 本班弱项，决定这次实验重点练哪一环
