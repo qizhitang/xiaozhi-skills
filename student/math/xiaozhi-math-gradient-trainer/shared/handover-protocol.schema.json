@@ -69,13 +69,13 @@
                   "type": "object",
                   "properties": {
                     "subtypes": {
-                      "type": "object"
+                      "type": "array"
                     },
                     "gradientLevel": {
                       "type": "object"
                     },
                     "trainingLog": {
-                      "type": "object"
+                      "type": "array"
                     }
                   },
                   "additionalProperties": false

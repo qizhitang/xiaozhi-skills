@@ -69,10 +69,10 @@
                   "type": "object",
                   "properties": {
                     "notationProfile": {
-                      "type": "object"
+                      "type": "array"
                     },
                     "reactionTypes": {
-                      "type": "object"
+                      "type": "array"
                     }
                   },
                   "additionalProperties": false

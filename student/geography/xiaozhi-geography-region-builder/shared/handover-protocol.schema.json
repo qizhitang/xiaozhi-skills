@@ -175,10 +175,10 @@
                   "type": "object",
                   "properties": {
                     "subtypes": {
-                      "type": "object"
+                      "type": "array"
                     },
                     "regions": {
-                      "type": "object"
+                      "type": "array"
                     }
                   },
                   "additionalProperties": false

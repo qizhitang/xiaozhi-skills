@@ -16,9 +16,17 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const sharedDir = join(root, "shared");
 const checkOnly = process.argv.includes("--check");
 
-const BANNER =
-  "<!-- 本文件由 scripts/sync-shared.mjs 从仓库根 shared/ 自动生成，用于让单个技能包自包含。\n" +
-  "     请勿直接编辑；需要修改请改仓库根目录下的同名文件，然后运行 npm run sync:shared -->\n\n";
+// Markdown 副本的"请勿编辑"横幅要指向真正的原件：六份共享约定在仓库根 shared/；跨技能契约在归属技能里，
+// 或在仓库根 shared/contracts/。横幅里不写完整路径——check-references 会把指向本技能目录外的路径判为越界
+const BANNER = (src) => {
+  if (!src) return "<!-- 本文件由 scripts/sync-shared.mjs 从仓库根 shared/ 自动生成，用于让单个技能包自包含。\n" +
+    "     请勿直接编辑；需要修改请改仓库根目录下的同名文件，然后运行 npm run sync:shared -->\n\n";
+  const m = src.match(/^(?:student|teacher|tools)\/(?:[\w-]+\/)*?(xiaozhi-[\w-]+)\/((?:[\w-]+\/)*)[^/]+$/);
+  const file = src.split("/").pop();
+  const where = m ? `技能 ${m[1]} 的 ${m[2].replace(/\/$/, "") || "根"} 目录下的 ${file}` : `仓库根 ${dirname(src).replace(/\\/g, "/")} 目录下的 ${file}`;
+  return `<!-- 本文件由 scripts/sync-shared.mjs 从${where} 自动生成，用于让单个技能包自包含。\n` +
+    "     请勿直接编辑；需要修改请改那份原件，然后运行 npm run sync:shared -->\n\n";
+};
 
 // 一、全库共享约定：仓库根 shared/*.md，分发到每个 SKILL
 const sources = readdirSync(sharedDir)
@@ -442,7 +450,9 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
         const dnaS = DNA_MASTER();
         const subDefs = dnaS && dnaS.properties && dnaS.properties.subjectExtensions && dnaS.properties.subjectExtensions.properties && dnaS.properties.subjectExtensions.properties[subj] && dnaS.properties.subjectExtensions.properties[subj].properties;
         const subKeys = subDefs ? Object.keys(subDefs).filter((k) => mentioned(skillText, k) || mentioned(skillText, subj + "." + k)) : [];
-        const branch = subKeys.length ? { type: "object", properties: Object.fromEntries(subKeys.map((k) => [k, { type: "object" }])), additionalProperties: false } : { type: "object" };
+        // 子键类型照主 schema（多数是数组，subtypes 经 $defs.subjectSubtypeMap 也是数组）；原来一律写成 object，按副本校验数组写回会被拒
+        const typeOf = (def) => { let d = def; for (let i = 0; i < 5 && d && d.$ref; i++) { const r = d.$ref.match(/^#\/\$defs\/([\w-]+)$/); d = r && dnaS.$defs ? dnaS.$defs[r[1]] : null; } return (d && d.type) || "object"; };
+        const branch = subKeys.length ? { type: "object", properties: Object.fromEntries(subKeys.map((k) => [k, { type: typeOf(subDefs[k]) }])), additionalProperties: false } : { type: "object" };
         pp2.profileData.properties.subjectExtensionPatch = { type: "object", description: `subject_extension 时：只允许本学科分支 subjectExtensions.${subj}${subKeys.length ? "，且只写 " + subKeys.join("、") : ""}`, properties: { [subj]: branch }, additionalProperties: false };
       }
       // 收件方：按协议的固定路由——写回档案只能到学习DNA，错题交接只能到错题本，提醒只能到 IM 提醒
@@ -539,16 +549,16 @@ for (const dir of skillDirs) {
       const inDirs = c.toDirs && c.toDirs.some((d) => rel(dir).startsWith(d + "/"));
       if (!inDirs && !skillText.includes(`shared/${c.as}`)) continue; // 没引用就不塞进包里
     }
-    wanted.push({ name: c.as, body: c.body });
+    wanted.push({ name: c.as, body: c.body, src: c.src });
     contractCopies++;
   }
 
   if (!checkOnly && !existsSync(target)) mkdirSync(target, { recursive: true });
 
-  for (const { name, body } of wanted) {
+  for (const { name, body, src } of wanted) {
     const dest = join(target, name);
-    // JSON 不能带 HTML 注释横幅，逐字节复制；Markdown 加"请勿编辑"横幅
-    const want = name.endsWith(".schema.json") ? scopeJson(name, body, skillName, skillText, rel(dir)) : name.endsWith(".json") ? body : BANNER + body;
+    // JSON 不能带 HTML 注释横幅，逐字节复制；Markdown 加"请勿编辑"横幅（写明原件在哪）
+    const want = name.endsWith(".schema.json") ? scopeJson(name, body, skillName, skillText, rel(dir)) : name.endsWith(".json") ? body : BANNER(src) + body;
     const cur = existsSync(dest) ? readFileSync(dest, "utf-8") : null;
     if (cur !== null && norm(cur) === norm(want)) continue;
     if (checkOnly) stale.push(`${rel(dest)}${cur === null ? "（缺失）" : "（与源不一致）"}`);

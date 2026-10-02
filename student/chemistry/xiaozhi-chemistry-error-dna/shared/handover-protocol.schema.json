@@ -179,16 +179,16 @@
                   "type": "object",
                   "properties": {
                     "subtypes": {
-                      "type": "object"
+                      "type": "array"
                     },
                     "notationProfile": {
-                      "type": "object"
+                      "type": "array"
                     },
                     "reactionTypes": {
-                      "type": "object"
+                      "type": "array"
                     },
                     "labSkills": {
-                      "type": "object"
+                      "type": "array"
                     }
                   },
                   "additionalProperties": false

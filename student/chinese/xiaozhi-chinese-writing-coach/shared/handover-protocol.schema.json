@@ -69,16 +69,16 @@
                   "type": "object",
                   "properties": {
                     "subtypes": {
-                      "type": "object"
+                      "type": "array"
                     },
                     "grammarErrorProfile": {
-                      "type": "object"
+                      "type": "array"
                     },
                     "writingStyle": {
                       "type": "object"
                     },
                     "materialUsage": {
-                      "type": "object"
+                      "type": "array"
                     }
                   },
                   "additionalProperties": false

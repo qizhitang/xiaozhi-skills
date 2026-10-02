@@ -1,5 +1,5 @@
-<!-- 本文件由 scripts/sync-shared.mjs 从仓库根 shared/ 自动生成，用于让单个技能包自包含。
-     请勿直接编辑；需要修改请改仓库根目录下的同名文件，然后运行 npm run sync:shared -->
+<!-- 本文件由 scripts/sync-shared.mjs 从技能 xiaozhi-chinese-classical-revival 的 references 目录下的 chinese-hs-recitation-list.md 自动生成，用于让单个技能包自包含。
+     请勿直接编辑；需要修改请改那份原件，然后运行 npm run sync:shared -->
 
 # 高中古诗文背诵推荐篇目：课标附录 1 的 72 篇（首）
 
