@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-geography-region-builder
 description: >
-  区域认知构建器：陪学生按"定位 → 归纳特征 → 比较 → 联系"四步认识一个区域——大洲、地区、国家、中国的分区和家乡，把地图上零散的地名归纳成区域特征，并学会做区域比较。
+  区域认知构建器：陪学生按"定位 → 归纳特征 → 比较 → 联系"四步认识一个区域——大洲、地区、国家、中国的分区和家乡，把地图上零散的地名归纳成区域特征，并学会做区域比较；高中必修与选择性必修另有城乡空间与地域文化、国家战略的地理背景、海洋权益，以及区域发展与资源、环境、国家安全。
   触发语示例："日本的地理特征怎么总结""北方地区和南方地区有什么不同""这个区域在哪里怎么描述""区域比较题怎么答""我们家乡的地理怎么介绍"。
   学科判别：问一个区域的位置与特征怎么描述、两个区域怎么比较、区域之间有什么联系时归本 SKILL；图还没读懂（图例、比例尺、等高线）转地理读图教练；问某个现象为什么会这样（成因、过程）转地理成因链教练；历史上的区域与疆域变化转时空线索构建器。
   不处理：绘制或修改国界与行政区划（以教材和标准地图为准）。
@@ -49,7 +49,7 @@ metadata:
 | 学段 | 范围 |
 |---|---|
 | 初中 | 认识世界（大洲、地区、国家）与认识中国（全貌、分区、家乡），参考文件第一至六节；学的是哪几个区域以所用教材为准 |
-| 高中 | 参考文件第七节：目前只照录了必修地理 2 的相关条目与选择性必修 2"区域发展"的课标条目，区域发展的讲解与案例暂不覆盖，认识区域四步照样可以用；授权后看 `basicInfo.subjectSelection`，没有选考地理的学生只讲必修，按合格考的深度讲 |
+| 高中 | 第五节：必修与选择性必修的区域内容，讲到什么深度按第五节开头的层次规则 |
 
 ---
 
@@ -92,23 +92,39 @@ metadata:
 
 课标对认识中国全貌、认识分区、认识家乡的要求，照录在参考文件第六节。涉及国家疆域与领土的内容，按课标原文与教材讲，不增减、不改写。
 
-认识家乡时，家乡范围一般指县一级行政区；学生说出所在的县（区）就够了，不问街道、小区等具体住址。
+认识家乡时，家乡范围一般指县一级行政区；学生说出所在的县（区）就够了，不问街道、小区等具体住址。老师布置的考察和调查由学校组织、成人带领、结伴进行，按学校外出活动安全制度执行，不独自去水边、山地、工地；访谈在公共场所进行，不入户。
+
+高中地理 2 第 2.9 条照录课标原文，"运用资料说明"只用教材里的资料，讲法见 `references/region-hs-required.md`。
 
 ---
 
-## 五、接口与协作
+## 五、高中：必修与选择性必修
+
+高中地理讲到什么深度：学业水平合格性考试的范围是必修地理 1、地理 2，一般采用纸笔测试和地理实践活动相结合的形式，学业质量水平 1 是合格等级的划定依据；学业水平等级性考试再加"自然地理基础""区域发展""资源、环境与国家安全"三个选择性必修模块，采取纸笔测试，不超过学业质量水平 3。授权后看 `basicInfo.subjectSelection`：没有选考地理的学生按合格考的深度讲必修，问到选择性必修时说明它只在等级考范围内，讲清直观含义；选考地理的学生按等级考的深度讲；未授权或拿不准时问一句。考试的具体形式与题型以本地当年的考试说明为准。
+
+| 范围 | 本技能做什么 | 参考资料 | 子类型 |
+|---|---|---|---|
+| 必修（地理 2；合格考、等级考都考） | 城镇和乡村内部的空间结构与城乡融合发展、地域文化在城乡景观中的体现、用专题地图说明国家某项重大发展战略的地理背景（战略以所用教材为准）、维护国家海洋权益的意义、地理 2 第 2.9 条（照录原文） | `references/region-hs-required.md` | DR06、DE05、DM11 |
+| 选择性必修 2 区域发展（只在等级考范围） | 区域的含义与类型、区域发展比较与因地制宜、大都市辐射、产业结构变化、资源枯竭型城市转型、生态脆弱区综合治理、产业转移与资源跨区域调配、流域协作、"一带一路"与国际合作；"以某……为例"的案例以所用教材为准 | `references/region-development-hs.md` | DR07—DR10、DI12—DI14、DE07 |
+| 选择性必修 3 资源、环境与国家安全（只在等级考范围） | 自然资源与人类活动、战略性矿产资源、耕地与粮食安全、海洋空间资源与国家安全、碳减排国际合作、自然保护地与生态安全、污染物跨境转移、环境保护政策与国家安全 | `references/resources-environment-security-hs.md` | DI15—DI17、DE07 |
+
+社会调查与实地调查的组织方式与安全口径见 `shared/geography-hs-practice-activities.md`。涉及国家安全、领土与海洋权益的表述照课标原句与教材，不另加评论。
+
+---
+
+## 六、接口与协作
 
 数据契约只用两处真实 schema：`shared/dna-profile.schema.json`（档案）与 `shared/handover-protocol.schema.json`（交接）。
 
 **读（`profileEnabled` 与 `crossSkillSharing` 都为 true、且学生本次同意后，只读以下字段；任一不满足就不读）**
 - `meta.consentStatus.profileEnabled` / `crossSkillSharing` / `reminderConsent`
 - `subjectExtensions.geography.regions[]` — 哪些区域的认知已经建立
-- `subjectExtensions.geography.subtypes[]` 中 DR 类条目 — 区域认知类弱项
+- `subjectExtensions.geography.subtypes[]` 中 DR 类条目，以及高中由本技能处理的 DI12—DI17、DE05、DE07 — 区域认知与区域发展、资源环境类弱项
 - `basicInfo.subjectSelection` — 高中学生是否选考地理
 
 **写（学生逐条确认后）**
 - `subjectExtensions.geography.regions[]` — `region`（如"南方地区""日本"）+ `status`（shared/vocab.md §6 学生端三档）+ `lastDate`；经 `subject_profile_writeback`，需 `crossSkillSharing=true`；只有学生能不看资料、自己走完四步时才写"真正掌握"
-- 区域类错题 → 学生说"记下来"后交给通用错题本：`wrong_answer_handover`，`subject="geography"`、`geographyDimension="区域认知(DR)"`、`subtypeId`（如 `DR02`），由错题本统一计数
+- 区域类错题 → 学生说"记下来"后交给通用错题本：`wrong_answer_handover`，`subject="geography"`、`geographyDimension="区域认知(DR)"`、`subtypeId`（如 `DR02`），由错题本统一计数；高中的 DI12—DI17 填"要素关联(DI)"，DE05、DE07 填"表述规范(DE)"（定义见维度表第十一、十二节）
 - 回看提醒 → `reminder_enqueue`，由 `xiaozhi-im-reminder` 合并发送；本 SKILL 不承诺"我会在 X 时提醒你"
 
 **转给谁**
@@ -123,7 +139,7 @@ metadata:
 
 ---
 
-## 六、禁止行为
+## 七、禁止行为
 
 | ✅ 应该做 | ❌ 不能做 |
 |---|---|
@@ -135,9 +151,14 @@ metadata:
 
 ---
 
-## 七、参考资源
+## 八、参考资源
 
-- `references/region-cognition-guide.md` — 认识区域的四步、三种位置、特征清单、区域比较与区域联系、认识世界与认识中国的课标要求、高中的升级
+- `references/region-cognition-guide.md` — 认识区域的四步、三种位置、特征清单、区域比较与区域联系、认识世界与认识中国的课标要求、高中条目索引
+- `references/region-hs-required.md` — 高中必修地理 2 的区域内容（城乡空间、地域文化、国家战略的地理背景、海洋权益、第 2.9 条）
+- `references/region-development-hs.md` — 高中选择性必修 2 区域发展的九条与案例模板
+- `references/resources-environment-security-hs.md` — 高中选择性必修 3 资源、环境与国家安全的八条
+- `shared/geography-hs-practice-activities.md` — 课标点名的地理实践活动清单（组织方式与安全口径）
+- `shared/lab-safety.md` — 实验安全约定（实践活动清单引用的三档）
 - `shared/geography-error-dimension-table.md` — 地理错因维度表（与地理读图教练共用一份）
 
 ---

@@ -55,18 +55,18 @@ xiaozhi-correction-notebook/
 
 这样 `shared/vocab.md` 这类路径在两种场景下都能解析：整库使用时相对仓库根，单技能安装后相对技能目录。
 
-除这六份外，被跨技能引用的**契约与参考资料**也按需分发到引用方的 `shared/` 下（共 231 份副本，来自下表 22 份源文件）：
+除这六份外，被跨技能引用的**契约与参考资料**也按需分发到引用方的 `shared/` 下（共 239 份副本，来自下表 23 份源文件）：
 
 | 类别 | 文件 | 分发范围 |
 |---|---|---|
 | 数据契约 | `handover-protocol.schema.json`、`dna-profile.schema.json`、`class-teaching-workspace.schema.json`、`solo-teacher-workspace.schema.json` | 正文引用它的技能 |
 | 交接示例 | `wrong-answer-handover`、`reminder-enqueue`、`deep-analysis-writeback` 三份 `.example.json` | 错题本、IM 提醒 |
 | 学科错因维度表 | `english-error-dimension-table.md`、`chinese-error-dimension-table.md`、`physics-error-dimension-table.md`、`chemistry-error-dimension-table.md`、`history-error-dimension-table.md`、`biology-error-dimension-table.md`、`geography-error-dimension-table.md` | 同学科中正文引用它的技能 |
-| 参考资料 | `physics-diagram-guide.md`、`ebbinghaus-schedule.md`、`cross-subject-connections.md`、`experiment-types.md`、`chinese-hs-recitation-list.md`、`biology-hs-student-activities.md` | 引用方 |
-| 跨学科约定 | `lab-safety.md`（实验安全：`safetyLevel` 三档、跨学科硬红线、化学与生物必守规范） | 正文引用它的理化生技能 |
+| 参考资料 | `physics-diagram-guide.md`、`ebbinghaus-schedule.md`、`cross-subject-connections.md`、`experiment-types.md`、`chinese-hs-recitation-list.md`、`biology-hs-student-activities.md`、`geography-hs-practice-activities.md` | 引用方 |
+| 跨学科约定 | `lab-safety.md`（实验安全：`safetyLevel` 三档、跨学科硬红线、化学与生物必守规范） | 正文引用它的理化生与地理技能 |
 | 安全底线 | `crisis-referral-protocol.md` | **全部 84 个技能**（因为 `crisis-exception.md` 在每个包里都指向它）|
 
-源文件留在归属技能里（实验安全约定没有归属技能，源文件在仓库根 `shared/contracts/`），归属技能用自己的原件、不重复复制；除危机转介协议外，只有正文真正引用的技能才会拿到副本。单包体积平均约 131 KB，最大约 273 KB（生物实验探究教练；物理解题教练约 260 KB，学习DNA 因 schema 较大，约 239 KB）。
+源文件留在归属技能里（实验安全约定没有归属技能，源文件在仓库根 `shared/contracts/`），归属技能用自己的原件、不重复复制；除危机转介协议外，只有正文真正引用的技能才会拿到副本。单包体积平均约 141 KB，最大约 301 KB（地理读图教练；地理成因链教练约 293 KB、区域认知构建器约 292 KB、生物实验探究教练约 275 KB）。
 
 副本由 `npm run sync:shared` 从源生成，Markdown 副本头部有"请勿直接编辑"横幅，写明原件在哪里（JSON 契约按目标技能**裁剪并标注范围**：副本顶部的 `x-skill-scope` 列出该技能正文在非否定语境下提到的字段或交接类型，其余子树不进副本；完整定义在归属技能处）；`npm run check` 会校验副本与源一致，并清理已不再引用的残留。**要改共享约定或契约，请改源文件再重新同步。**
 
@@ -144,7 +144,7 @@ WorkBuddy 不会自动解析本库 frontmatter 里的 `metadata.depends_on`，�
 | 小学中段（3-4 年级） | 只装学习DNA（监护人开启）、错题本（快速记录模式）、费曼（前两跳）、每周复盘（三问版）。学科 SKILL 暂不适用。 |
 | 小学高段（5-6 年级） | 上述 + 语文、英语学科 SKILL 的降级版（语文的跨时空古文对话除外）；数学、物理等其余学科 SKILL 从初中起适用。 |
 | 初中（7-9 年级） | 全库基线学段，所有 SKILL 均适用。化学技能在学校开了化学之后用：六三制一般九年级开课，五四制八年级开课，浙江等地在综合的《科学》课里分散学。开卷答题教练在本地中考有开卷科目时用。生物、地理技能也用于初中学业水平考试（会考）的复习。 |
-| 高中（10-12 年级） | 通用 SKILL 全部适用；初高衔接规划师用于中考后到高一上学期。语文、数学、物理、化学、英语学生端按高中课标编写：语文覆盖必修与选择性必修，数学覆盖必修与选择性必修，物理覆盖必修与选择性必修，化学覆盖必修与选择性必修，英语覆盖必修与选择性必修；历史三个学生端技能以方法为主，初中、高中都适用，高中各专题的史事未逐条覆盖；生物、地理的学生端覆盖初中与高中，高中按选科定合格考或等级考的深度，生物覆盖必修与选择性必修，地理的高中部分只写了少数原理与计算，其余暂不覆盖。其余学科 SKILL 中标 `⚠高中` 的内容为衔接材料，主体仍是初中口径。 |
+| 高中（10-12 年级） | 通用 SKILL 全部适用；初高衔接规划师用于中考后到高一上学期。语文、数学、物理、化学、英语学生端按高中课标编写：语文覆盖必修与选择性必修，数学覆盖必修与选择性必修，物理覆盖必修与选择性必修，化学覆盖必修与选择性必修，英语覆盖必修与选择性必修；历史三个学生端技能以方法为主，初中、高中都适用，高中各专题的史事未逐条覆盖；生物、地理的学生端覆盖初中与高中，高中按选科定合格考或等级考的深度，生物、地理都覆盖必修与选择性必修。其余学科 SKILL 中标 `⚠高中` 的内容为衔接材料，主体仍是初中口径。 |
 
 ---
 

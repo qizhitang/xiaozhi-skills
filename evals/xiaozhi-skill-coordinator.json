@@ -238,6 +238,20 @@
       "grade_band": "高中",
       "input": "种群的 S 形增长曲线这道题怎么看？",
       "expect": { "activate": true, "must": ["判为生物的图表题，路由到生物图表与材料题教练"], "must_not": ["路由给地理技能", "自己开始讲题"] }
+    },
+    {
+      "id": "trigger-17",
+      "kind": "trigger",
+      "grade_band": "高中",
+      "input": "这道题给了一张光照图，问北京这一天的昼长",
+      "expect": { "activate": true, "must": ["判为地理读图，路由到地理读图教练"], "must_not": ["路由给物理技能", "自己开始讲题"] }
+    },
+    {
+      "id": "trigger-18",
+      "kind": "trigger",
+      "grade_band": "高中",
+      "input": "碳排放对环境有什么影响？碳减排为什么要国际合作？",
+      "expect": { "activate": true, "must": ["判为地理（选择性必修 3），路由到地理成因链教练或区域认知构建器", "说明问生态系统的物质循环才判生物"], "must_not": ["路由给生物技能", "自己开始讲题"] }
     }
   ]
 }

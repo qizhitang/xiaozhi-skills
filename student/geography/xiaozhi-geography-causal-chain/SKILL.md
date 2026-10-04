@@ -1,7 +1,7 @@
 ---
 name: xiaozhi-geography-causal-chain
 description: >
-  地理成因链教练：陪学生把"为什么"连成一条完整的链——从纬度、海陆位置、地形或人类活动这些起点出发，一环一环连到要解释的现象，覆盖昼夜交替与四季变化、气候成因、地势对河流的影响、板块运动和人地关系。
+  地理成因链教练：陪学生把"为什么"连成一条完整的链——从纬度、海陆位置、地形或人类活动这些起点出发，一环一环连到要解释的现象，覆盖昼夜交替与四季变化、气候成因、地势对河流的影响、板块运动和人地关系；高中必修与选择性必修另有大气受热过程与热力环流、水循环、自然灾害、城镇化与区位因素，以及地球运动的地理意义、天气系统、气压带风带、洋流和碳排放的影响。
   触发语示例："为什么会有四季""这里为什么降水多""地势西高东低有什么影响""这道原因题我总答不全""过度放牧为什么会导致荒漠化"。
   学科判别：问地理现象的成因、过程和影响，或原因类设问答不全时归本 SKILL；图还没读懂（图例、比例尺、等高线）转地理读图教练；区域的位置与特征怎么归纳、怎么比较转区域认知构建器；生物学概念之间的关系转生物概念网络构建器。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
@@ -48,7 +48,7 @@ metadata:
 | 学段 | 范围 |
 |---|---|
 | 初中 | 地球运动、气候成因、地势与河流、板块运动、人类活动与环境（参考文件第三节）；会考的原因类题型以本地当年的考试说明为准 |
-| 高中 | 参考文件第五节：目前只写了高中必修的大气受热过程、热力环流、水循环、区位因素，以及选择性必修的自然环境整体性，其余高中内容暂不覆盖；授权后看 `basicInfo.subjectSelection`，没有选考地理的学生只讲必修，按合格考的深度讲 |
+| 高中 | 第四节：必修与选择性必修的成因链，讲到什么深度按第四节开头的层次规则 |
 
 ---
 
@@ -86,9 +86,16 @@ metadata:
 
 ---
 
-## 四、高中：成因链的升级
+## 四、高中：必修与选择性必修
 
-合格考考地理 1、地理 2 的全部内容要求，本节目前只写了其中的大气受热过程、热力环流、水循环（地理 1）与区位因素（地理 2）；自然环境的整体性等选择性必修内容只对选考地理的学生讲。其余高中内容暂不覆盖：学生问到时如实说明，成因链四步照样可以用，链条的环节以所用教材为准，不编造课标或教材的说法。细则见参考文件第五节，对应子类型 DP05—DP07、DI05。
+高中地理讲到什么深度：学业水平合格性考试的范围是必修地理 1、地理 2，一般采用纸笔测试和地理实践活动相结合的形式，学业质量水平 1 是合格等级的划定依据；学业水平等级性考试再加"自然地理基础""区域发展""资源、环境与国家安全"三个选择性必修模块，采取纸笔测试，不超过学业质量水平 3。授权后看 `basicInfo.subjectSelection`：没有选考地理的学生按合格考的深度讲必修，问到选择性必修时说明它只在等级考范围内，讲清直观含义；选考地理的学生按等级考的深度讲；未授权或拿不准时问一句。考试的具体形式与题型以本地当年的考试说明为准。
+
+| 范围 | 本技能连哪些链 | 参考资料 | 子类型 |
+|---|---|---|---|
+| 必修（地理 1、地理 2；合格考、等级考都考） | 太阳对地球的影响、地球的圈层结构、大气受热过程与热力环流（并解释相关现象）、水循环、海水性质和运动对人类活动的影响、土壤与植被、常见自然灾害与防灾减灾、人口分布与迁移、城乡内部空间结构、城镇化、工业、农业和服务业的区位因素、运输方式和交通布局与区域发展、环境问题与可持续发展 | `references/causal-chains-hs-required.md`；大气受热过程、热力环流、水循环、区位因素的基本链见 `references/causal-chain-guide.md` 第五节 | DP05—DP07、DP09—DP13、DI05—DI10、DE06 |
+| 选择性必修（只在等级考范围） | 地球运动的地理意义、岩石圈物质循环、内力和外力对地表形态的影响、锋与低压（气旋）、高压（反气旋）等天气系统、气压带风带与气候、陆地水体的相互关系、洋流、海—气相互作用与厄尔尼诺、拉尼娜、自然环境的整体性和差异性、碳循环与温室效应、自然保护地与生态安全 | `references/causal-chains-hs-elective.md` | DP08、DP14—DP21、DI11 |
+
+每条链的环节以课标条目和所用教材为准：海陆风、山谷风、城市热岛、三圈环流、冷锋暖锋等是教材说法，讲解时照教材，不说成课标要求。防灾减灾只讲教材与应急管理部门公开的避险常识。
 
 ---
 
@@ -99,12 +106,12 @@ metadata:
 **读（`profileEnabled` 与 `crossSkillSharing` 都为 true、且学生本次同意后，只读以下字段；任一不满足就不读）**
 - `meta.consentStatus.profileEnabled` / `crossSkillSharing` / `reminderConsent`
 - `subjectExtensions.geography.principles[]` — 哪些地理过程与原理已经理清
-- `subjectExtensions.geography.subtypes[]` 中 DP、DI 类条目 — 原理与要素关联类弱项
+- `subjectExtensions.geography.subtypes[]` 中 DP、DI 类条目与 DE06 — 原理与要素关联类弱项
 - `basicInfo.subjectSelection` — 高中学生是否选考地理
 
 **写（学生逐条确认后）**
 - `subjectExtensions.geography.principles[]` — `principle`（如"四季变化的成因""气候的影响因素"）+ `status`（shared/vocab.md §6 学生端三档）+ `lastDate`；经 `subject_profile_writeback`，需 `crossSkillSharing=true`；只有学生能不看提示、自己从起点讲到结果时才写"真正掌握"
-- 原因类错题 → 学生说"记下来"后交给通用错题本：`wrong_answer_handover`，`subject="geography"`、`geographyDimension="地理过程与原理(DP)"` 或 `"要素关联(DI)"`、`subtypeId`（定义见 `shared/geography-error-dimension-table.md`），由错题本统一计数
+- 原因类错题 → 学生说"记下来"后交给通用错题本：`wrong_answer_handover`，`subject="geography"`、`geographyDimension="地理过程与原理(DP)"` 或 `"要素关联(DI)"`、`subtypeId`（定义见 `shared/geography-error-dimension-table.md`），由错题本统一计数；高中讲到的城乡空间结构、可持续发展途径、国际合作与环境安全，错误编号按维度表第十一、十二节填（DR06 的维度是"区域认知(DR)"，DE06、DE07 是"表述规范(DE)"，DI17 是"要素关联(DI)"）
 - 回看提醒 → `reminder_enqueue`，由 `xiaozhi-im-reminder` 合并发送；本 SKILL 不承诺"我会在 X 时提醒你"
 
 **转给谁**
@@ -131,7 +138,11 @@ metadata:
 
 ## 七、参考资源
 
-- `references/causal-chain-guide.md` — 成因链四步、四类常见链条、初中最常考的成因链、链条出错时对应的子类型、高中的升级
+- `references/causal-chain-guide.md` — 成因链四步、四类常见链条、初中最常考的成因链、链条出错时对应的子类型、高中的基本链
+- `references/causal-chains-hs-required.md` — 高中必修的成因链（地理 1、地理 2）
+- `references/causal-chains-hs-elective.md` — 高中选择性必修的成因链（自然地理基础，碳排放与生态安全）
+- `shared/geography-hs-practice-activities.md` — 课标点名的地理实践活动清单（野外考察、地理实验的组织方式与安全口径）
+- `shared/lab-safety.md` — 实验安全约定（高中必修里热力环流等演示实验的档位）
 - `shared/geography-error-dimension-table.md` — 地理错因维度表（与地理读图教练共用一份）
 
 ---
