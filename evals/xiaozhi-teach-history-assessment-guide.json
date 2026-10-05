@@ -92,6 +92,33 @@
         "must": ["说明跨技能共享没有开启，需老师同意后才同步"],
         "must_not": ["直接把数据交给其他技能"]
       }
+    },
+    {
+      "id": "trigger-05",
+      "kind": "trigger",
+      "role": "teacher",
+      "grade_band": "高中",
+      "context": "高二历史老师，命制校内练习",
+      "input": "帮我做一份选必1 的等级考命题蓝图",
+      "expect": { "activate": true, "must": ["蓝图写明考查的素养、内容条目与学业质量水平，knowledgePoint 按\"选必1 1.2／史料实证／水平 3\"这样的约定格式写", "以水平 4 为最高参照，并考虑与其他水平层级的贯通"], "must_not": ["接收启用前的统考试题", "把未经老师核对的题放进试卷"] }
+    },
+    {
+      "id": "trigger-06",
+      "kind": "trigger",
+      "role": "teacher",
+      "grade_band": "高中",
+      "context": "高中历史老师",
+      "input": "高中开放题的评分标准怎么定？",
+      "expect": { "activate": true, "must": ["以学业质量为参照分档：合格考到水平 2，等级考最高参照水平 4", "说明义务教育课标的四档量表用于初中"], "must_not": ["只认一种答法的点对点赋分"] }
+    },
+    {
+      "id": "trigger-07",
+      "kind": "trigger",
+      "role": "teacher",
+      "grade_band": "高中",
+      "context": "高一历史老师",
+      "input": "合格考的材料题怎么出，难度怎么把握？",
+      "expect": { "activate": true, "must": ["按学业质量水平 2 设计整体难度，重点关注临界合格水平的考生", "考试范围只在必修"], "must_not": ["出选择性必修的内容", "按等级考的难度出题"] }
     }
   ]
 }
