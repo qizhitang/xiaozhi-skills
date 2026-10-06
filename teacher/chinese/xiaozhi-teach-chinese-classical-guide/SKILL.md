@@ -527,7 +527,7 @@ max_round_limit: 20
         ┌─────────────────┼─────────────────┐
         ↓                 ↓                 ↓
   student-analyzer  resource-library  parent-communication
-  （古文积累档案）  （古文素材入库）  （古文进步反馈）
+  （古文积累档案）  （古文素材入库）  （独立教师的家长反馈）
 ```
 
 ### 11.2 接口
@@ -590,14 +590,14 @@ max_round_limit: 20
 
 ⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
-> 老师转述学员的话时也适用：出现上述信号，不做"低敏转化"再发家长，如实提示监护人。
+> 老师转述学员的话时也适用：出现上述信号，不做"低敏转化"再发家长，如实提示监护人。伤害可能来自家里的（家庭安全类信号）除外：不发家长、不提示监护人，按 shared/crisis-exception.md 对应一节走学生保护流程。
 
 ```text
 ⚠️ 在把学员的文言进步做成家长可见的内容之前，先核对：
   · dna-profile 的 meta.consentStatus.parentSharingConsent = true？
   · 内容里含情绪描述（如"孩子最近对文言文很抵触"）？→ 还需 emotionSharingWithParent = true
   任一为 false → 只把内容给老师和学员本人，并告知"该学员未开启家长共享，这份反馈先不发家长"。
-  本 SKILL 不生成家长简报，只把素材交给 xiaozhi-teach-parent-communication，由它按授权处理。
+  本 SKILL 不生成家长简报，只交素材：学校班级交 xiaozhi-teach-student-analyzer 出家长版，独立教师交 xiaozhi-teach-parent-communication，由它们按授权处理。
 ```
 
 ---
@@ -635,9 +635,9 @@ max_round_limit: 20
     <── xiaozhi-teach-lesson-planner（文言文嵌入教案）
     <── xiaozhi-teach-chinese-reading-guide（现代文阅读基础）
     <── xiaozhi-teach-student-analyzer（学情/弱项）
-    ──→ xiaozhi-teach-student-analyzer（古文积累档案）
+    ──→ xiaozhi-teach-student-analyzer（古文积累档案；学校班级的家长版，由它核对 parentSharingConsent）
     ──→ xiaozhi-teach-resource-library（古文素材入库）
-    ──→ xiaozhi-teach-parent-communication（古文进步素材；发给家长前由它核对 parentSharingConsent）
+    ──→ xiaozhi-teach-parent-communication（独立教师：古文进步素材；发给家长前由它核对 parentSharingConsent）
     ──→ 学生端 xiaozhi-chinese-classical-revival（学员视角）
 ```
 

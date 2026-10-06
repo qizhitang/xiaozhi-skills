@@ -471,7 +471,7 @@ max_round_limit: 20
         ┌─────────────────┼─────────────────┐
         ↓                 ↓                 ↓
   student-analyzer  resource-library  parent-communication
-  （解题能力维度）  （错题案例库）    （解题进步反馈）
+  （解题能力维度）  （错题案例库）    （独立教师的家长反馈）
 ```
 
 ### 10.2 接口
@@ -539,9 +539,9 @@ max_round_limit: 20
 物理解题教学指导
     <── xiaozhi-teach-physics-lesson-planner（解题嵌入）
     <── xiaozhi-teach-student-analyzer（学情/弱项）
-    ──→ xiaozhi-teach-student-analyzer（解题能力维度）
+    ──→ xiaozhi-teach-student-analyzer（解题能力维度；学校班级的家长版，由它核对 parentSharingConsent）
     ──→ xiaozhi-teach-resource-library（错题案例库）
-    ──→ xiaozhi-teach-parent-communication（解题进步反馈）
+    ──→ xiaozhi-teach-parent-communication（独立教师：解题进步反馈）
     ──→ 学生端 xiaozhi-physics-problem-coach（学员视角）
 ```
 
@@ -551,6 +551,7 @@ max_round_limit: 20
 - 禁止 AI 替老师讲完整题
 - 禁止未授权复制教辅题库
 - 禁止公开学员错题
+- 禁止在本 SKILL 内生成家长版：学校班级交学情分析师，独立教师交家长沟通助手，都先核对授权
 
 ---
 

@@ -2,7 +2,7 @@
 name: xiaozhi-teach-student-analyzer
 description: >
   把班级成绩表变成可执行的教学调整。
-  当老师说"帮我分析这次单元测评"、"这道题全班错了六成"、"班级数学两极分化怎么办"、"哪些知识点得分率最低"、"我要客观数据跟家长聊"、"高二联考的逐题分析"、"合格考模拟后哪些知识点要补"时，建议激活此 SKILL。
+  当老师说"帮我分析这次单元测评"、"这道题全班错了六成"、"班级数学两极分化怎么办"、"哪些知识点得分率最低"、"我要客观数据跟家长聊"、"把学科技能交来的进步素材出一份给家长的版本"、"高二联考的逐题分析"、"合格考模拟后哪些知识点要补"时，建议激活此 SKILL。
   工作流：导入逐题分数 → 班级画像 → 知识点热力图 → 分层 → 教学调整建议。
   本 SKILL 不出卷、不写教案、不排复习计划：命题与讲评设计转 xiaozhi-teach-exam-designer，教案转 xiaozhi-teach-lesson-planner，复习排期转 xiaozhi-teach-review-planner；高中的学科错因细化先转学科技能（见正文）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
@@ -96,7 +96,7 @@ max_round_limit: 25
 | 教学调整 | "接下来一个月我应该重点讲什么" |
 | 分层建议 | "哪些学生该进提升班，哪些留在基础班" |
 | 考后统计 | "算一下每道题的难度和区分度" |
-| 家长沟通素材 | "我需要客观数据跟家长聊" |
+| 家长沟通素材 | "我需要客观数据跟家长聊" / "根据写作教学指导交来的素材，出一份给家长的版本"（学校班级；独立教师的学员转家长沟通助手，见 §9.3） |
 
 **本 SKILL 不接的相邻请求**：
 
@@ -538,6 +538,7 @@ xiaozhi-teach-math-lesson-planner、xiaozhi-teach-biology-lesson-planner、xiaoz
 - 学科命题与学科错因细化由 `xiaozhi-teach-math-exam-designer`、`xiaozhi-teach-math-error-analyzer`、
   `xiaozhi-teach-english-assessment`、`xiaozhi-teach-history-assessment-guide` 等学科端 SKILL 承担；本 SKILL 只做学科无关的统计与分层。
 - 高中班级的学科转交见 §8.4 的转交表；物理、化学、生物学、地理的班级错因细化，老师端本库暂无专门技能。
+- **学科技能交来的家长素材**（数学、语文、英语、物理、生物学、地理等学科老师端技能交来的进步反馈、考后成绩与错因摘要）：素材由老师在对话里转来（班级工作区没有这一项）。学校班级的家长版由本 SKILL 按 §10.2 与 `references/analysis-framework.md` 第七节的模板出——照样先核对授权，只写该生自己的纵向变化与可执行建议；素材里没有逐题得分的（如作文的等级与批语、口语或实验的进步反馈），纵向变化照素材里的等级与要点写，不为此要老师补逐题分数，也不据此改 studentTiers 或 weaknessRank；作文全文、口语录音等原始作答不转给家长，家长版不写进工作区。作业的家长反馈仍由作业设计师（xiaozhi-teach-assignment-designer）出。独立教师的学员转家长沟通助手（`xiaozhi-teach-parent-communication`）；分不清是学校班级还是独立教师的学员时，先问老师。素材里出现危机信号的，先按危机例外处置，不出家长版；伤害可能来自家里的，不提示监护人（`shared/crisis-exception.md`"家庭安全类信号"）。
 - **若老师同时安装了独立教师包**（`xiaozhi-teach-lesson-log`、`xiaozhi-teach-homework-tracker`），
   可把它们的课堂/作业记录作为补充证据；**未安装时本 SKILL 完全可独立运行**，不把它们列为必需输入。
 
@@ -612,6 +613,7 @@ xiaozhi-teach-math-lesson-planner、xiaozhi-teach-biology-lesson-planner、xiaoz
     <── xiaozhi-teach-exam-designer（examBlueprints：题号→知识点）
     <── xiaozhi-teach-assignment-designer（homeworkAssignments：作业完成情况）
     <── xiaozhi-teach-classroom-coach（interactionLogs：课堂观察）
+    <── 学科教师 SKILL（学校班级的家长素材：进步反馈、考后成绩，经老师转来，按 §9.3 出家长版）
     ──→ xiaozhi-teach-lesson-planner（weaknessRank / studentTiers）
     ──→ xiaozhi-teach-classroom-coach（weaknessRank / studentTiers）
     ──→ xiaozhi-teach-review-planner（weaknessRank / classSummaries）

@@ -548,7 +548,7 @@ max_round_limit: 20
         ┌─────────────────┼─────────────────┐
         ↓                 ↓                 ↓
   student-analyzer  resource-library  parent-communication
-  （口语能力维度）  （口语素材入库）  （口语进步反馈）
+  （口语能力维度）  （口语素材入库）  （独立教师的家长反馈）
 ```
 
 ### 10.2 接口（唯一真实字段来源：`shared/class-teaching-workspace.schema.json`）
@@ -613,9 +613,9 @@ max_round_limit: 20
 英语口语活动设计
     <── xiaozhi-teach-lesson-planner（口语任务嵌入教案）
     <── xiaozhi-teach-student-analyzer（学情/弱项）
-    ──→ xiaozhi-teach-student-analyzer（口语能力维度）
+    ──→ xiaozhi-teach-student-analyzer（口语能力维度；学校班级的家长版，由它核对 parentSharingConsent）
     ──→ xiaozhi-teach-resource-library（口语素材入库）
-    ──→ xiaozhi-teach-parent-communication（口语进步反馈）
+    ──→ xiaozhi-teach-parent-communication（独立教师：口语进步反馈）
     ──→ 学生端 xiaozhi-english-speaking-coach（学员视角；发音判定的能力前提两端一致）
 ```
 
@@ -627,6 +627,7 @@ max_round_limit: 20
 - 禁止公开"某学员口语差"
 - 禁止未经 `teacherWritebackConsent` 写回学生档案
 - 禁止对录音做音素级发音判定（需语音评测能力，本 SKILL 不具备）
+- 禁止在本 SKILL 内生成家长版：学校班级交学情分析师，独立教师交家长沟通助手，都先核对授权
 
 ---
 

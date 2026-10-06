@@ -4,7 +4,7 @@ description: >
   数学教师的测评设计（初中；高中含必修与选择性必修）：用双向细目表把"凭感觉出数学卷"变成可诊断的命题。
   仅在老师提出明确的数学命题任务时建议激活，例如"给八年级数学出一份单元测评""算这次数学测评的逐题 P/D"；泛泛聊数学、问某题怎么解、问学生近况都不激活。
   只做四件事：命题蓝图与双向细目表、题目选编与版权标注、题目统计（逐题 P/D 与信度）、老师逐条确认后的写回。
-  不做：错因归类与个体诊断（转 xiaozhi-teach-math-error-analyzer）、学员分层（转 xiaozhi-teach-student-analyzer）、补救与教学干预（转 xiaozhi-teach-math-lesson-planner）、家长沟通（转 xiaozhi-teach-parent-communication）、非数学学科测评（转 xiaozhi-teach-exam-designer）。
+  不做：错因归类与个体诊断（转 xiaozhi-teach-math-error-analyzer）、学员分层（转 xiaozhi-teach-student-analyzer）、补救与教学干预（转 xiaozhi-teach-math-lesson-planner）、家长版（学校班级转学情分析师，独立教师转家长沟通助手）、非数学学科测评（转 xiaozhi-teach-exam-designer）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
@@ -63,7 +63,8 @@ max_round_limit: 25
   · 补救计划、教学干预、课时增减、个别辅导安排、讲评课（环节、例题与变式）
       → xiaozhi-teach-math-lesson-planner；复习排期转 xiaozhi-teach-review-planner
   · 家长沟通措辞、成绩告知、约谈安排
-      → xiaozhi-teach-parent-communication（家长沟通助手）
+      → 学校班级：家长版转 xiaozhi-teach-student-analyzer（学情分析师），约谈由老师按学校安排；
+        独立教师：转 xiaozhi-teach-parent-communication（家长沟通助手）
   · 非数学学科测评 → xiaozhi-teach-exam-designer
 
 ⚠️ 老师在本 SKILL 里直接要上述能力时：说明这属于哪个 SKILL，
@@ -126,7 +127,7 @@ max_round_limit: 25
 - **让结果"可读"**：逐题 P/D + 信度 + 知识点得分率（题目层面的量数）
 
 > 注意第四条止于"这份卷子考出了什么"。"学生为什么错、接下来怎么补、
-> 怎么跟家长说"是错因分析、学情分析师、教案与家长沟通四个 SKILL 的职责，
+> 怎么跟家长说"分别归班级错因分析、数学教案设计（分层看学情分析师）与家长版（学校班级由学情分析师出，独立教师用家长沟通助手），
 > 本 SKILL 只把统计结果整理成可交接的形式。
 
 ---
@@ -154,7 +155,7 @@ max_round_limit: 25
 | "考完这块该怎么补" | xiaozhi-teach-math-lesson-planner |
 | "讲评课怎么上" | xiaozhi-teach-math-lesson-planner（整节，含环节、例题与变式） |
 | "期末前复习怎么排" | xiaozhi-teach-review-planner |
-| "成绩怎么跟家长说" | xiaozhi-teach-parent-communication |
+| "成绩怎么跟家长说" | 学校班级：xiaozhi-teach-student-analyzer（家长版）；独立教师：xiaozhi-teach-parent-communication |
 | "这道数学题怎么讲给学生" | xiaozhi-teach-math-lesson-planner |
 
 在读写 `classWorkspace` 之前，先向老师确认一次本次任务与目标测评
@@ -206,11 +207,11 @@ max_round_limit: 25
                 │  错因→error-analyzer      │
                 │  分层→student-analyzer    │
                 │  补救→math-lesson-planner │
-                │  家长→parent-communication│
+                │  家长→student-analyzer    │
                 └──────────────────────────┘
 ```
 
-> ⑧ 是**出口**不是步骤：本 SKILL 到 ⑦ 为止，⑧ 只交出字段与一句说明。
+> ⑧ 是**出口**不是步骤：本 SKILL 到 ⑦ 为止，⑧ 只交出字段与一句说明。⑧ 里的家长一格指学校班级的家长版；独立教师的学员转 parent-communication。
 
 ---
 
@@ -529,7 +530,7 @@ aiGenerated=true，标注【AI 生成，入库前请人工验算】，
 > 不属于本 SKILL**：错因归类与个体诊断转 `xiaozhi-teach-math-error-analyzer`，
 > 学员分层与重点关注名单转 `xiaozhi-teach-student-analyzer`，
 > 补救与讲评课（环节、例题与变式）转 `xiaozhi-teach-math-lesson-planner`，
-> 成绩告知转 `xiaozhi-teach-parent-communication`。
+> 成绩告知的家长版：学校班级转 `xiaozhi-teach-student-analyzer`，独立教师转 `xiaozhi-teach-parent-communication`。
 
 ### 9.1 逐题 P / D（考后第一件事）
 
@@ -683,8 +684,8 @@ Cronbach α（写入 classSummaries[].reliabilityAlpha）：
 **写回学生端档案**：只走 `handoverType: "teacher_writeback"`，payload 为 `teacherWritebackData`；
 发送前必须核对 `meta.consentStatus.teacherWritebackConsent = true`，为 false 则丢弃并告知老师。
 
-**给家长的成绩内容**：本 SKILL 不直接生成；交 `xiaozhi-teach-parent-communication`，
-由它核对 `parentSharingConsent` 后输出。不默认推送成绩给家长，不发送班级排名。
+**给家长的成绩内容**：本 SKILL 不直接生成；学校班级交 `xiaozhi-teach-student-analyzer` 出家长版，独立教师交 `xiaozhi-teach-parent-communication`，
+由它们核对 `parentSharingConsent` 后输出。不默认推送成绩给家长，不发送班级排名。
 
 ---
 
@@ -727,10 +728,10 @@ Cronbach α（写入 classSummaries[].reliabilityAlpha）：
     <── xiaozhi-teach-student-analyzer（学员水平，只读档位分布）
     <── xiaozhi-teach-lesson-planner（教学内容）
     ──→ xiaozhi-teach-math-error-analyzer（错因归类与个体诊断）
-    ──→ xiaozhi-teach-student-analyzer（学员分层与重点关注名单）
+    ──→ xiaozhi-teach-student-analyzer（学员分层与重点关注名单；学校班级的家长版成绩反馈）
     ──→ xiaozhi-teach-math-lesson-planner（补救、讲评课、教学调整）
     ──→ xiaozhi-teach-review-planner（复习排期）
-    ──→ xiaozhi-teach-parent-communication（成绩告知与家长沟通）
+    ──→ xiaozhi-teach-parent-communication（独立教师：成绩告知与家长沟通）
     ──→ xiaozhi-teach-resource-library（错题入库）
     ──→ 学生端 xiaozhi-math-problem-solving-coach（学员视角）
 

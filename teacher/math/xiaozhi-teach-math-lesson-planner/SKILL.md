@@ -449,7 +449,7 @@ max_round_limit: 30
         ┌─────────────────┼─────────────────┐
         ↓                 ↓                 ↓
   student-analyzer  resource-library  parent-communication
-  （数学思维维度）  （错例入库）      （数学进步反馈）
+  （数学思维维度）  （错例入库）      （独立教师的家长反馈）
 ```
 
 ### 9.2 接口（唯一契约：`shared/class-teaching-workspace.schema.json`）
@@ -492,8 +492,8 @@ payload 为 `teacherWritebackData`（`teacherSkill` / `studentAlias` / `weakKnow
 发送前必须核对 `meta.consentStatus.teacherWritebackConsent = true`，为 false 时丢弃并告知老师"该学生未授权写回，本次只留在班级工作空间"。
 `note` 只写低敏事实描述，禁止心理标签、家庭信息、真实姓名。
 
-**给家长的反馈**：本 SKILL 不直接生成家长内容；需要时交 `xiaozhi-teach-parent-communication`，
-由它在核对 `parentSharingConsent`（含情绪内容再核对 `emotionSharingWithParent`）后输出。不默认推送家长简报。
+**给家长的反馈**：本 SKILL 不直接生成家长内容；需要时学校班级交 `xiaozhi-teach-student-analyzer` 出家长版，独立教师交 `xiaozhi-teach-parent-communication`，
+由它们在核对 `parentSharingConsent`（含情绪内容再核对 `emotionSharingWithParent`）后输出。不默认推送家长简报。
 
 ⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
@@ -536,9 +536,9 @@ payload 为 `teacherWritebackData`（`teacherSkill` / `studentAlias` / `weakKnow
     <── xiaozhi-teach-exam-designer（讲评错题清单 → 讲评课）
     <── xiaozhi-teach-math-error-analyzer（错因与讲评建议 → 讲评课）
     <── xiaozhi-teach-review-planner（reviewPlans → 复习课）
-    ──→ xiaozhi-teach-student-analyzer（数学思维维度）
+    ──→ xiaozhi-teach-student-analyzer（数学思维维度；学校班级的家长版，由它核对 parentSharingConsent）
     ──→ xiaozhi-teach-resource-library（错例入库）
-    ──→ xiaozhi-teach-parent-communication（数学进步反馈）
+    ──→ xiaozhi-teach-parent-communication（独立教师：数学进步反馈）
     ──→ xiaozhi-teach-assignment-designer（复习课、讲评课后的作业）
     ──→ 学生端 xiaozhi-math-concept-explainer（学员视角）
 ```
@@ -595,7 +595,7 @@ payload 为 `teacherWritebackData`（`teacherSkill` / `studentAlias` / `weakKnow
 | "这次月考的错因帮我归一下类" | 班级错因分析（xiaozhi-teach-math-error-analyzer） |
 | "讲评后的订正和巩固作业怎么布置" | 作业设计师（xiaozhi-teach-assignment-designer） |
 | "学生答不上来怎么追问、怎么分组" | 课堂互动教练（xiaozhi-teach-classroom-coach） |
-| "这次成绩怎么跟家长说" | 家长沟通助手（xiaozhi-teach-parent-communication），由它先核对授权（§9.2） |
+| "这次成绩怎么跟家长说" | 学校班级：学情分析师（xiaozhi-teach-student-analyzer）出家长版；独立教师：家长沟通助手（xiaozhi-teach-parent-communication）。都由它们先核对授权（§9.2） |
 
 **数据从哪来**（字段见 §9.2 的读块）：
 

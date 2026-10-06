@@ -539,7 +539,7 @@ max_round_limit: 20
         ┌─────────────────┼─────────────────┐
         ↓                 ↓                 ↓
   student-analyzer  resource-library  parent-communication
-  （听力能力维度）  （听力素材入库）  （听力进步反馈）
+  （听力能力维度）  （听力素材入库）  （独立教师的家长反馈）
 ```
 
 ### 11.2 接口（唯一真实字段来源：`shared/class-teaching-workspace.schema.json`）
@@ -606,9 +606,9 @@ max_round_limit: 20
 英语听力材料设计
     <── xiaozhi-teach-lesson-planner（听力任务嵌入教案）
     <── xiaozhi-teach-student-analyzer（学情/弱项）
-    ──→ xiaozhi-teach-student-analyzer（听力能力维度）
+    ──→ xiaozhi-teach-student-analyzer（听力能力维度；学校班级的家长版，由它核对 parentSharingConsent）
     ──→ xiaozhi-teach-resource-library（听力素材入库）
-    ──→ xiaozhi-teach-parent-communication（听力进步反馈）
+    ──→ xiaozhi-teach-parent-communication（独立教师：听力进步反馈）
     ──→ 学生端 xiaozhi-english-listening-trainer（学员视角；语速档与生词密度两端一致）
 ```
 
@@ -620,6 +620,7 @@ max_round_limit: 20
 - 禁止公开"某学员听力差"
 - 禁止未经 `teacherWritebackConsent` 写回学生档案
 - 禁止把 AI 生成的听力题在老师验算前放进正式试卷
+- 禁止在本 SKILL 内生成家长版：学校班级交学情分析师，独立教师交家长沟通助手，都先核对授权
 
 ---
 

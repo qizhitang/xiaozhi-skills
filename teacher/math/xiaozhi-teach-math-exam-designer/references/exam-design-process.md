@@ -301,7 +301,7 @@ examBlueprints[].difficultyRatio。
   · → 〔班级错因分析〕：examId + itemStats + itemScores
   · → 〔数学教案〕：flag 异常题号 + 低得分率知识点，用于设计讲评课
   · → 〔学情分析师〕：examId + classSummaries
-  · 家长侧输出：本 SKILL 不生成，转〔家长沟通助手〕
+  · 家长侧输出：本 SKILL 不生成，学校班级转〔学情分析师〕，独立教师转〔家长沟通助手〕
 
 【本 SKILL 不填的栏】
   · 错因 TOP 3、变式训练、巩固练习、个别关注名单

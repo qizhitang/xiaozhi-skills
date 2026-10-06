@@ -146,6 +146,7 @@ max_round_limit: 20
 | 没过关的学生安排针对性回看 | 用加倍罚抄代替跟进 |
 | 过关标准写成可调的经验值 | 承诺过关就能提分 |
 | 过关结果只用于教学调整 | 把过关结果当成对学生的评价结论发给家长 |
+| 家长版：学校班级交学情分析师（xiaozhi-teach-student-analyzer），独立教师交家长沟通助手（xiaozhi-teach-parent-communication） | 在本 SKILL 内生成家长内容 |
 
 ---
 

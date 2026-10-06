@@ -69,6 +69,20 @@
       "grade_band": "高中",
       "input": "选考班要上\"楞次定律\"，这节课怎么设计？",
       "expect": { "activate": true, "must": ["用\"探究影响感应电流方向的因素\"的实验归纳出楞次定律，不先给结论", "coreCompetency 从物理观念、科学思维、科学探究、科学态度与责任中选"], "must_not": ["说高中内容不覆盖", "先宣布\"增反减同\"再让学生验证"] }
+    },
+    {
+      "id": "no-trigger-03",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "context": "高一（2）班，学校班级工作空间",
+      "input": "这次物理月考后，想给几位进步明显的学生家长发个反馈",
+      "expect": {
+        "activate": false,
+        "route_to": "xiaozhi-teach-student-analyzer",
+        "must_not": [
+          "自己生成家长版"
+        ]
+      }
     }
   ]
 }

@@ -241,6 +241,17 @@
           "未确认地区就输出 110/120"
         ]
       }
+    },
+    {
+      "id": "no-trigger-05",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "context": "初一（4）班，学校班级工作空间",
+      "input": "期中地理考完了，成绩怎么跟家长说？",
+      "expect": {
+        "activate": false,
+        "route_to": "xiaozhi-teach-student-analyzer"
+      }
     }
   ]
 }

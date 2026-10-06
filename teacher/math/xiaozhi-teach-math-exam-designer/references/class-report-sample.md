@@ -6,8 +6,8 @@
 > ⚠️ **边界**：本模板只填**题目层面的统计量**。错因归类转
 > `xiaozhi-teach-math-error-analyzer`，分层与重点关注名单转
 > `xiaozhi-teach-student-analyzer`，教学调整与讲评编排转
-> `xiaozhi-teach-math-lesson-planner`，家长侧输出转
-> `xiaozhi-teach-parent-communication`。本模板对这四项只留交接口，不代填。
+> `xiaozhi-teach-math-lesson-planner`，家长侧输出学校班级转 `xiaozhi-teach-student-analyzer`、
+> 独立教师转 `xiaozhi-teach-parent-communication`。本模板对这四项只留交接口，不代填。
 > 本模板是**待确认草稿**：任何一段写入 `classWorkspace` 前都要老师逐条确认。
 
 ```text
@@ -58,8 +58,8 @@
   · 本报告不列"需要个别跟进"的学员名单，也不公示、不排名
 
 ■ 家长沟通 —— 本模板不填
-  · 家长侧输出一律转 xiaozhi-teach-parent-communication，
-    由它核对 parentSharingConsent 后决定给什么；本 SKILL 不发班级排名
+  · 家长侧输出学校班级转 xiaozhi-teach-student-analyzer、独立教师转 xiaozhi-teach-parent-communication，
+    由它们核对 parentSharingConsent 后决定给什么；本 SKILL 不发班级排名
 
 ■ 交接与授权提示
   · 本报告是待确认草稿，老师逐条确认后才写入 classWorkspace

@@ -27,8 +27,9 @@
       "id": "no-trigger-03",
       "kind": "no-trigger",
       "role": "teacher",
+      "context": "初二（3）班的期中数学卷，在学校班级工作空间里",
       "input": "成绩怎么跟家长说？",
-      "expect": { "activate": false, "route_to": "xiaozhi-teach-parent-communication" }
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-student-analyzer" }
     },
     {
       "id": "no-trigger-04",
@@ -69,6 +70,17 @@
       "grade_band": "高中",
       "input": "帮我出一份高二“导数及其应用”单元测评的双向细目表，90 分钟",
       "expect": { "activate": true, "must": ["范围限于选择性必修的一元函数导数及其应用，按学业质量水平二命题，不出水平三的题", "多选题在工作空间里按“选择”记，并在细目表上注明多选", "题型与分值以本地考试说明为准"], "must_not": ["以洛必达法则等必修与选择性必修以外的方法为必要解法", "内置某个省份的试卷结构"] }
+    },
+    {
+      "id": "no-trigger-05",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "context": "一对一家教老师，学员只在独立教师工作空间里，不在学校班级",
+      "input": "这次单元测的成绩怎么跟学员家长说？",
+      "expect": {
+        "activate": false,
+        "route_to": "xiaozhi-teach-parent-communication"
+      }
     }
   ]
 }

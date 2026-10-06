@@ -133,6 +133,7 @@ max_round_limit: 30
 | "试卷怎么分析" | xiaozhi-teach-student-analyzer |
 | "哪几个学生物理弱 / 怎么分层" | xiaozhi-teach-student-analyzer |
 | "课堂上学生不配合怎么办" | xiaozhi-teach-classroom-coach |
+| "考后想给家长发个反馈 / 成绩怎么跟家长说" | 学校班级：xiaozhi-teach-student-analyzer（出家长版）；独立教师：xiaozhi-teach-parent-communication。都由它们先核对授权，本 SKILL 不生成家长内容 |
 
 在读写 `classWorkspace` 之前，先向老师确认一次本次要备的课
 （"是给〔班级化名〕备〔课题〕这一节，对吗？"），确认后再取数。
@@ -593,7 +594,7 @@ max_round_limit: 30
         ┌─────────────────┼─────────────────┐
         ↓                 ↓                 ↓
   student-analyzer  resource-library  parent-communication
-  （物理观念维度）  （实验素材入库）  （物理进步反馈）
+  （物理观念维度）  （实验素材入库）  （独立教师的家长反馈）
 ```
 
 ### 11.2 接口
@@ -676,9 +677,9 @@ max_round_limit: 30
     <── xiaozhi-teach-student-analyzer（学情/弱项）
     ──→ xiaozhi-teach-physics-experiment-coach（实验方案、器材、安全流程）
     ──→ xiaozhi-teach-physics-problem-guide（单题讲法与变式）
-    ──→ xiaozhi-teach-student-analyzer（物理观念维度）
+    ──→ xiaozhi-teach-student-analyzer（物理观念维度；学校班级的家长版，由它核对 parentSharingConsent）
     ──→ xiaozhi-teach-resource-library（实验素材入库）
-    ──→ xiaozhi-teach-parent-communication（物理进步反馈）
+    ──→ xiaozhi-teach-parent-communication（独立教师：物理进步反馈）
     ──→ 学生端 xiaozhi-physics-concept-intuition（学员视角）
 
 箭头向右 = **交出课题与时间预算并停手**，不是"本 SKILL 顺便替它做"。

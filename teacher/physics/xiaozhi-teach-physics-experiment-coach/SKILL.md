@@ -521,7 +521,7 @@ max_round_limit: 20
         ┌─────────────────┼─────────────────┐
         ↓                 ↓                 ↓
   student-analyzer  resource-library  parent-communication
-  （实验能力维度）  （实验素材入库）  （实验进步反馈）
+  （实验能力维度）  （实验素材入库）  （独立教师的家长反馈）
 ```
 
 ### 11.2 接口
@@ -599,9 +599,9 @@ interactionLogs 为空时跳过本步，并在方案里注明"无上次反馈"�
 物理实验教学指导
     <── xiaozhi-teach-physics-lesson-planner（实验嵌入）
     <── xiaozhi-teach-student-analyzer（学情/弱项）
-    ──→ xiaozhi-teach-student-analyzer（实验能力维度）
+    ──→ xiaozhi-teach-student-analyzer（实验能力维度；学校班级的家长版，由它核对 parentSharingConsent）
     ──→ xiaozhi-teach-resource-library（实验素材入库）
-    ──→ xiaozhi-teach-parent-communication（实验进步反馈）
+    ──→ xiaozhi-teach-parent-communication（独立教师：实验进步反馈）
     ──→ 学生端 xiaozhi-physics-lab-coach（学员视角）
 ```
 
@@ -611,6 +611,7 @@ interactionLogs 为空时跳过本步，并在方案里注明"无上次反馈"�
 - 禁止 AI 涉及危险实验
 - 禁止推荐学员在家做危险实验
 - 禁止 AI 给出"标准实验报告"
+- 禁止在本 SKILL 内生成家长版：学校班级交学情分析师，独立教师交家长沟通助手，都先核对授权
 
 ---
 

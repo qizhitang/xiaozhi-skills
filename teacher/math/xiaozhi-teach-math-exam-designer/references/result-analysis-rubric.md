@@ -13,7 +13,7 @@
 > | 错因归类、七类错因分布、个体错因诊断 | `xiaozhi-teach-math-error-analyzer` |
 > | 学员分层（A/B/C tier）、重点关注名单 | `xiaozhi-teach-student-analyzer` |
 > | 补救计划、教学干预、课时增减、讲评课编排 | `xiaozhi-teach-math-lesson-planner` |
-> | 成绩告知、家长沟通措辞、约谈安排 | `xiaozhi-teach-parent-communication` |
+> | 成绩告知、家长沟通措辞、约谈安排 | 学校班级：家长版转 `xiaozhi-teach-student-analyzer`，约谈由老师按学校安排；独立教师：`xiaozhi-teach-parent-communication` |
 >
 > 老师在本流程里直接提出上述需求时：说明这属于哪个 SKILL，交出可用的最小字段
 > （examId + itemStats[] + itemScores[]），不要在本模板里就地代做。
@@ -73,11 +73,11 @@ flag 判读规则：
 │ ─ 错因    │ 错因分布与诊断  │ —                │ ❌ 转 math-error-analyzer │
 │ ─ 学员    │ 个体诊断与分层  │ —                │ ❌ 转 student-analyzer    │
 │ ─ 干预    │ 补救与讲评编排  │ —                │ ❌ 转 math-lesson-planner │
-│ ─ 家长    │ 成绩告知        │ —                │ ❌ 转 parent-communication│
+│ ─ 家长    │ 成绩告知        │ —                │ ❌ 转 student-analyzer    │
 └──────────┴────────────────┴──────────────────┴──────────────────────────┘
 
 三条实线以上是"这份卷子考出了什么"，以下是"接下来怎么办"。
-本 SKILL 只负责上半张表，下半张表交出字段即止。
+本 SKILL 只负责上半张表，下半张表交出字段即止；家长一行指学校班级的家长版，独立教师的学员转 parent-communication。
 ```
 
 ## 2. 第 1 维：分数分析
@@ -219,12 +219,12 @@ T12                        ●
    复习排期另转 xiaozhi-teach-review-planner。
 ```
 
-### 4.4 成绩告知与家长沟通 → `xiaozhi-teach-parent-communication`
+### 4.4 成绩告知与家长沟通 → 学校班级 `xiaozhi-teach-student-analyzer`，独立教师 `xiaozhi-teach-parent-communication`
 
 ```text
 ❌ 本 SKILL 不生成任何家长可见内容，不安排约谈，不统计"要沟通几名家长"。
-   家长侧输出一律交 xiaozhi-teach-parent-communication，
-   由它核对 parentSharingConsent 后决定给什么、怎么给。
+   家长侧输出学校班级交 xiaozhi-teach-student-analyzer、独立教师交 xiaozhi-teach-parent-communication，
+   由它们核对 parentSharingConsent 后决定给什么、怎么给。
    本 SKILL 任何情况下都不发班级排名、不发个人名次。
 ```
 
@@ -255,7 +255,7 @@ T12                        ●
   · 错因归类 → 〔班级错因分析〕：examId + itemStats + itemScores
   · 分层与关注名单 → 〔学情分析师〕：examId + classSummaries
   · 补救与讲评 → 〔数学教案〕：flag 异常题号 + 低得分率知识点
-  · 家长侧输出 → 〔家长沟通助手〕（本 SKILL 不代写）
+  · 家长侧输出 → 学校班级〔学情分析师〕、独立教师〔家长沟通助手〕（本 SKILL 不代写）
   以上均需老师确认后再交出。
 
 【五、写回确认】

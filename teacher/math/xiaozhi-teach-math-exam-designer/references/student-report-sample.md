@@ -7,7 +7,7 @@
 > "为什么错"（错因诊断）转 `xiaozhi-teach-math-error-analyzer`；
 > "接下来练什么"（改进计划、个别辅导）转 `xiaozhi-teach-math-lesson-planner`；
 > "在班里处于什么水平 / 属于哪一层"转 `xiaozhi-teach-student-analyzer`；
-> 给家长看的版本转 `xiaozhi-teach-parent-communication`。
+> 给家长看的版本学校班级转 `xiaozhi-teach-student-analyzer`，独立教师转 `xiaozhi-teach-parent-communication`。
 > 本模板对这四项只留交接口，不代填。
 
 ```text
@@ -41,7 +41,7 @@
 ■ 交接与授权提示
   · 本卡是待确认草稿，老师确认后才写入 classWorkspace
   · 写回学生端档案前核对 teacherWritebackConsent，为 false 则丢弃并告知老师
-  · 本 SKILL 不生成家长版本；家长侧输出转 xiaozhi-teach-parent-communication，
-    由它核对 parentSharingConsent 后决定给什么
+  · 本 SKILL 不生成家长版本；家长侧输出学校班级转 xiaozhi-teach-student-analyzer、
+    独立教师转 xiaozhi-teach-parent-communication，由它们核对 parentSharingConsent 后决定给什么
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```

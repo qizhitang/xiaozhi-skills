@@ -516,8 +516,8 @@ max_round_limit: 25
 `weakKnowledgePointUpdates[].status` 用五档，`masteryLevel` 用学生端三档（`shared/vocab.md §6`）。
 `note` 只写低敏事实描述，禁止心理标签、家庭信息、真实姓名。
 
-**给家长的内容**：本 SKILL 不直接生成；交 `xiaozhi-teach-parent-communication`，
-由它核对 `parentSharingConsent`（含情绪内容再核对 `emotionSharingWithParent`）后输出。不默认推送家长简报。
+**给家长的内容**：本 SKILL 不直接生成；学校班级交 `xiaozhi-teach-student-analyzer` 出家长版，独立教师交 `xiaozhi-teach-parent-communication`，
+由它们核对 `parentSharingConsent`（含情绪内容再核对 `emotionSharingWithParent`）后输出。不默认推送家长简报。
 
 ---
 

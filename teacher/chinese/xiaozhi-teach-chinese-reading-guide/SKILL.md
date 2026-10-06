@@ -484,7 +484,7 @@ max_round_limit: 20
         ┌─────────────────┼─────────────────┐
         ↓                 ↓                 ↓
   student-analyzer  resource-library  parent-communication
-  （阅读力维度）    （阅读素材入库）  （阅读进步反馈）
+  （阅读力维度）    （阅读素材入库）  （独立教师的家长反馈）
 ```
 
 ### 10.2 接口
@@ -517,7 +517,7 @@ max_round_limit: 20
 ⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 > 学员的读后感、随笔常写到真实处境。老师转述这类内容时，先按上面的危机例外处置，
-> 不做"低敏转化"再发家长。
+> 不做"低敏转化"再发家长。伤害可能来自家里的（家庭安全类信号）不发家长、不提示监护人，按 shared/crisis-exception.md 对应一节走学生保护流程。
 
 写回学生端学习 DNA 必须走 `handover-protocol.schema.json`，且 `meta.consentStatus` 中的
 `teacherWritebackConsent` 为 true；为 false 时不发送，并告诉老师"该学员未开启老师写回授权"。
@@ -550,7 +550,7 @@ max_round_limit: 20
 · 先核对 dna-profile 的 meta.consentStatus 中 parentSharingConsent = true？
 · 内容含情绪描述（如"孩子最近抗拒读长文"）？→ 还需 emotionSharingWithParent = true
   任一为 false → 只给老师和学员本人，并告知"该学员未开启家长共享"。
-· 本 SKILL 不生成家长简报，只把素材交给 xiaozhi-teach-parent-communication，由它按授权处理。
+· 本 SKILL 不生成家长简报，只交素材：学校班级交 xiaozhi-teach-student-analyzer 出家长版，独立教师交 xiaozhi-teach-parent-communication，由它们按授权处理。
 ```
 
 ---
@@ -588,9 +588,9 @@ max_round_limit: 20
 阅读教学指导
     <── xiaozhi-teach-lesson-planner（阅读任务嵌入教案）
     <── xiaozhi-teach-student-analyzer（学情/弱项）
-    ──→ xiaozhi-teach-student-analyzer（阅读力维度）
+    ──→ xiaozhi-teach-student-analyzer（阅读力维度；学校班级的家长版，由它核对 parentSharingConsent）
     ──→ xiaozhi-teach-resource-library（阅读素材入库）
-    ──→ xiaozhi-teach-parent-communication（阅读进步素材；发家长前由它核对 parentSharingConsent）
+    ──→ xiaozhi-teach-parent-communication（独立教师：阅读进步素材；发家长前由它核对 parentSharingConsent）
     ──→ 学生端 xiaozhi-chinese-reading-decoder（学员视角）
 ```
 

@@ -406,7 +406,7 @@ workspace.lessonLogs[].masteryStatus = "仍需巩固"   ← 整体判断
 ❌ 禁止：把 studentReaction 的枚举值原样当成对孩子的评价说出去
 ```
 
-危机信号例外于以上两条：出现危机信号时不做低敏转化，按 `shared/crisis-exception.md` 如实提示监护人。
+危机信号例外于以上两条：出现危机信号时不做低敏转化，按 `shared/crisis-exception.md` 如实提示监护人。伤害可能来自家里的（家庭安全类信号）不提示监护人、不写进 parentSummary，按同一文件"家庭安全类信号"一节报告。
 
 ### 9.3 摘要模板
 

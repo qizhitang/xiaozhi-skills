@@ -444,7 +444,7 @@ AI 生成的作文题：生成前按 shared/ai-item-check.md 自检（题意清�
         ┌─────────────────┼─────────────────┐
         ↓                 ↓                 ↓
   student-analyzer  resource-library  parent-communication
-  （写作能力维度）  （优秀作文入库）  （写作进步反馈）
+  （写作能力维度）  （优秀作文入库）  （独立教师的家长反馈）
 ```
 
 ### 9.2 接口
@@ -509,7 +509,7 @@ AI 生成的作文题：生成前按 shared/ai-item-check.md 自检（题意清�
 · 内容含情绪描述（如"孩子写作文时很抵触"）？→ 还需 emotionSharingWithParent = true
   任一为 false → 只给老师和学员本人，并告知"该学员未开启家长共享"。
 · 学员作文原文属于个人表达，即使有家长共享授权，也只发**批语与等级**，不转发作文全文。
-· 本 SKILL 不生成家长简报，只把素材交给 xiaozhi-teach-parent-communication，由它按授权处理。
+· 本 SKILL 不生成家长简报，只交素材：学校班级交 xiaozhi-teach-student-analyzer 出家长版，独立教师交 xiaozhi-teach-parent-communication，由它们按授权处理。
 ```
 
 ---
@@ -547,9 +547,9 @@ AI 生成的作文题：生成前按 shared/ai-item-check.md 自检（题意清�
 写作教学指导
     <── xiaozhi-teach-lesson-planner（写作任务嵌入教案）
     <── xiaozhi-teach-student-analyzer（学情/弱项）
-    ──→ xiaozhi-teach-student-analyzer（写作能力维度）
+    ──→ xiaozhi-teach-student-analyzer（写作能力维度；学校班级的家长版，由它核对 parentSharingConsent）
     ──→ xiaozhi-teach-resource-library（优秀作文入库）
-    ──→ xiaozhi-teach-parent-communication（写作进步素材；发家长前由它核对 parentSharingConsent）
+    ──→ xiaozhi-teach-parent-communication（独立教师：写作进步素材；发家长前由它核对 parentSharingConsent）
     ──→ 学生端 xiaozhi-chinese-writing-coach（学员视角）
 ```
 
