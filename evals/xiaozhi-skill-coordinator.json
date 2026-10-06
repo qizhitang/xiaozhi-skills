@@ -94,6 +94,13 @@
       "expect": { "activate": false, "route_to": "xiaozhi-bridge-planner" }
     },
     {
+      "id": "no-trigger-07",
+      "kind": "no-trigger",
+      "grade_band": "初中",
+      "input": "中考完了，高中的地理和历史暑假要怎么衔接？",
+      "expect": { "activate": false, "route_to": "xiaozhi-bridge-planner" }
+    },
+    {
       "id": "trigger-05",
       "kind": "trigger",
       "input": "这道题该找谁：给了一段清朝大臣的奏折，问反映了当时什么社会问题",

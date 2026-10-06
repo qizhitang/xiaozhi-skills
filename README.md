@@ -78,7 +78,7 @@ xiaozhi-skills/
 | ⏱️ 时间与专注力教练 | `student/general/xiaozhi-time-focus-coach/` | 时间记录、黄金时段、按学段参数化的番茄钟 | 小学中段–高中 |
 | 🔭 跨学科侦探周 | `student/general/xiaozhi-cross-subject-detective/` | 跨学科主题探究与概念图谱联结 | 小学高段–高中 |
 | ☕ 兴趣成长探索计划 | `student/general/xiaozhi-interest-explorer/` | 区分浅层喜好与真正兴趣，含 8 周试探版 | 小学中段–高中 |
-| 🌉 初高衔接规划师 | `student/general/xiaozhi-bridge-planner/` | 中考后到高一上学期：诊断数理化英的衔接缺口，先补地基、再看高一第一章入口，具体内容交给学科技能 | 初中–高中 |
+| 🌉 初高衔接规划师 | `student/general/xiaozhi-bridge-planner/` | 中考后到高一上学期：诊断语文、数学、物理、化学、英语、生物、地理、历史的衔接缺口，先补地基、再看高一第一章入口，具体内容交给学科技能 | 初中–高中 |
 | 🔖 开卷答题教练 | `student/general/xiaozhi-openbook-coach/` | 初中开卷考试的方法：三级索引、考场定位、把材料和教材原文组织成得分点；只教方法，不产出道法观点 | 初中 |
 
 ### 学生端 · 学科专项（36）

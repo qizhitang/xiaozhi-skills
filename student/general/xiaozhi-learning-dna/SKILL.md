@@ -801,7 +801,7 @@ metadata:
 | `xiaozhi-weekly-review` | 本周摘要、里程碑 | `growthTrack.*`（需用户同意） |
 | `xiaozhi-im-reminder` | 活跃时段摘要（需 `reminderConsent`） | 复习状态摘要 |
 | `xiaozhi-skill-coordinator` | 月报所需摘要 | 不写 |
-| `xiaozhi-bridge-planner` | 年级、高中选科、数理化英的弱项（需 `profileEnabled`） | 不写（存计划转 `xiaozhi-learning-plan`） |
+| `xiaozhi-bridge-planner` | 年级、高中选科，以及语文、数学、物理、化学、英语、生物、地理、历史八科的弱项（需 `profileEnabled` 与 `crossSkillSharing`，且学生本次同意） | 不写（存计划转 `xiaozhi-learning-plan`） |
 
 **学科端（36，各自只读写本学科分支）**
 
