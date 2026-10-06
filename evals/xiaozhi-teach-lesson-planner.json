@@ -1,6 +1,6 @@
 {
   "skill": "xiaozhi-teach-lesson-planner",
-  "notes": "UbD 逆向设计。不出卷、不算学情、不负责课堂实施。分层读 studentTiers（student-analyzer 写），自己不写。历史缺陷：estimatedScoreDelta（预期提分）已删；“拍照发家长群”属合规项本轮不动。讲评课要先从 exam-designer 拿讲评错题清单。第十五批扩到高中：先分学科，有学科教案技能的学科内容先转，复习课、讲评课的环节仍由本技能排（第十六批起，点名数学、生物学、地理的这两类课初中、高中都整节转学科教案技能，见 no-trigger-04、05；trigger-05 改用物理卷，trigger-07 守其余学科）；先问哪场考试、本地考试说明、本班考哪一种与进度；核心素养与学业质量水平按该科课标原名，不跨科换算，水平不写进工作区；课时读 periodMinutes，高中不设默认；没有学科技能的五科只出框架，思想政治不写观点性内容；补试题保密与危机例外。",
+  "notes": "UbD 逆向设计。不出卷、不算学情、不负责课堂实施。分层读 studentTiers（student-analyzer 写），自己不写。历史缺陷：estimatedScoreDelta（预期提分）已删；“拍照发家长群”属合规项本轮不动。讲评课要先从 exam-designer 拿讲评错题清单。第十五批扩到高中：先分学科，有学科教案技能的学科内容先转，复习课、讲评课的环节仍由本技能排（第十六批起，点名数学、生物学、地理的这两类课初中、高中都整节转学科教案技能，见 no-trigger-04、05；第十八批起物理、化学、历史也整节转，见 no-trigger-06、07、08；trigger-05 改用英语卷，trigger-07 改用语文卷，守语文、英语）；先问哪场考试、本地考试说明、本班考哪一种与进度；核心素养与学业质量水平按该科课标原名，不跨科换算，水平不写进工作区；课时读 periodMinutes，高中不设默认；没有学科技能的五科只出框架，思想政治不写观点性内容；补试题保密与危机例外。",
   "cases": [
     {
       "id": "trigger-01",
@@ -122,7 +122,7 @@
       "kind": "trigger",
       "role": "teacher",
       "grade_band": "高中",
-      "input": "下周的跨校联考物理卷我先拿到了，还没考，帮我照着它设计一节讲评课",
+      "input": "下周的跨校联考英语卷我先拿到了，还没考，帮我照着它设计一节讲评课",
       "expect": {
         "activate": true,
         "must": [
@@ -181,17 +181,50 @@
       "kind": "trigger",
       "role": "teacher",
       "grade_band": "高中",
-      "input": "高二物理月考考完了，帮我排一节讲评课",
+      "input": "高二语文月考考完了，帮我排一节讲评课",
       "expect": {
         "activate": true,
         "must": [
           "本 SKILL 排这一节的环节；讲哪几道按测评设计师的讲评错题清单与学情分析师的统计，没有就说明先去拿",
-          "物理题怎么讲、变式怎么出转物理解题教学指导"
+          "作文部分怎么讲评转写作教学指导"
         ],
         "must_not": [
-          "把整节讲评课转给物理教案设计",
+          "把整节试卷讲评课转给写作教学指导",
           "自己算得分率来定讲评顺序"
         ]
+      }
+    },
+    {
+      "id": "no-trigger-06",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "grade_band": "高中",
+      "input": "高二物理月考考完了，这节讲评课怎么上？",
+      "expect": {
+        "activate": false,
+        "route_to": "xiaozhi-teach-physics-lesson-planner"
+      }
+    },
+    {
+      "id": "no-trigger-07",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "grade_band": "初中",
+      "input": "九年级化学这节期末复习课怎么上？",
+      "expect": {
+        "activate": false,
+        "route_to": "xiaozhi-teach-chemistry-lesson-planner"
+      }
+    },
+    {
+      "id": "no-trigger-08",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "grade_band": "初中",
+      "input": "八年级历史期中考完了，这节讲评课怎么上？",
+      "expect": {
+        "activate": false,
+        "route_to": "xiaozhi-teach-history-lesson-planner"
       }
     }
   ]

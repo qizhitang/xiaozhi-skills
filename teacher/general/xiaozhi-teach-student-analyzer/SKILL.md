@@ -103,7 +103,7 @@ max_round_limit: 25
 | 老师说 | 转给 |
 |---|---|
 | "帮我出一份卷子 / 这道题怎么改 / 出评分细则" | `xiaozhi-teach-exam-designer` |
-| "这份卷子怎么讲评"（讲评课设计） | `xiaozhi-teach-exam-designer` 出错题清单 → `xiaozhi-teach-lesson-planner` 出讲评教案（初中、高中的数学、生物学、地理讲评课转该学科的教案技能） |
+| "这份卷子怎么讲评"（讲评课设计） | `xiaozhi-teach-exam-designer` 出错题清单 → `xiaozhi-teach-lesson-planner` 出讲评教案（初中、高中的数学、物理、化学、生物学、地理、历史讲评课转该学科的教案技能） |
 | "帮我排复习计划" | `xiaozhi-teach-review-planner` |
 | "帮我出这周的分层作业" | `xiaozhi-teach-assignment-designer` |
 
@@ -492,9 +492,9 @@ C 层任务（拔尖学生）：
 | 数学的班级错因归类与个体错因诊断 | 班级错因分析（xiaozhi-teach-math-error-analyzer） |
 | 英语听说读写的四维能力画像 | 英语综合测评（xiaozhi-teach-english-assessment） |
 | 语文作文的等级分布与讲评 | 写作教学指导（xiaozhi-teach-chinese-writing-guide） |
-| 历史答题规范的讲评 | 历史命题与答题规范指导（xiaozhi-teach-history-assessment-guide） |
-| 物理解题的讲评与变式 | 物理解题教学指导（xiaozhi-teach-physics-problem-guide） |
-| 数学、生物学、地理的讲评课与复习课（整节） | 数学教案设计（xiaozhi-teach-math-lesson-planner）；生物教案设计（xiaozhi-teach-biology-lesson-planner）；地理教案设计（xiaozhi-teach-geography-lesson-planner） |
+| 历史答题规范的专项讲评 | 历史命题与答题规范指导（xiaozhi-teach-history-assessment-guide） |
+| 物理单题的讲法与变式 | 物理解题教学指导（xiaozhi-teach-physics-problem-guide） |
+| 数学、物理、化学、生物学、地理、历史的讲评课与复习课（整节） | 数学教案设计（xiaozhi-teach-math-lesson-planner）；物理教案设计（xiaozhi-teach-physics-lesson-planner）；化学教案设计（xiaozhi-teach-chemistry-lesson-planner）；生物教案设计（xiaozhi-teach-biology-lesson-planner）；地理教案设计（xiaozhi-teach-geography-lesson-planner）；历史教案设计（xiaozhi-teach-history-lesson-planner） |
 | 生物学、地理合格考的复习排期；等级考的复习排期 | 生地学业水平考试复习规划（xiaozhi-teach-bio-geo-review-planner）；复习规划师（xiaozhi-teach-review-planner） |
 | 独立教师的家长沟通 | 家长沟通助手（xiaozhi-teach-parent-communication） |
 | 物理、化学、生物学、地理的班级错因细化 | 老师端本库暂无专门技能，本 SKILL 按通用四维（`shared/vocab.md` §1）做 |
@@ -530,7 +530,7 @@ xiaozhi-teach-lesson-planner ← 读 weaknessRank（教案侧重点）、student
 xiaozhi-teach-classroom-coach← 读 weaknessRank（提问侧重点）、studentTiers（分组与提问分配）
 xiaozhi-teach-assignment-designer ← 读 weaknessRank + studentTiers（分层作业）
 xiaozhi-teach-review-planner ← 读 weaknessRank（复习重点）、classSummaries（起点水平）
-xiaozhi-teach-math-lesson-planner、xiaozhi-teach-biology-lesson-planner、xiaozhi-teach-geography-lesson-planner ← 读 itemStats（讲评课的得分率与异常标记）
+xiaozhi-teach-math-lesson-planner、xiaozhi-teach-physics-lesson-planner、xiaozhi-teach-chemistry-lesson-planner、xiaozhi-teach-biology-lesson-planner、xiaozhi-teach-geography-lesson-planner、xiaozhi-teach-history-lesson-planner ← 读 itemStats（讲评课的得分率与异常标记）
 ```
 
 ### 9.3 与学科教师 SKILL / 独立教师包的关系
@@ -538,7 +538,7 @@ xiaozhi-teach-math-lesson-planner、xiaozhi-teach-biology-lesson-planner、xiaoz
 - 学科命题与学科错因细化由 `xiaozhi-teach-math-exam-designer`、`xiaozhi-teach-math-error-analyzer`、
   `xiaozhi-teach-english-assessment`、`xiaozhi-teach-history-assessment-guide` 等学科端 SKILL 承担；本 SKILL 只做学科无关的统计与分层。
 - 高中班级的学科转交见 §8.4 的转交表；物理、化学、生物学、地理的班级错因细化，老师端本库暂无专门技能。
-- **学科技能交来的家长素材**（数学、语文、英语、物理、生物学、地理等学科老师端技能交来的进步反馈、考后成绩与错因摘要）：素材由老师在对话里转来（班级工作区没有这一项）。学校班级的家长版由本 SKILL 按 §10.2 与 `references/analysis-framework.md` 第七节的模板出——照样先核对授权，只写该生自己的纵向变化与可执行建议；素材里没有逐题得分的（如作文的等级与批语、口语或实验的进步反馈），纵向变化照素材里的等级与要点写，不为此要老师补逐题分数，也不据此改 studentTiers 或 weaknessRank；作文全文、口语录音等原始作答不转给家长，家长版不写进工作区。作业的家长反馈仍由作业设计师（xiaozhi-teach-assignment-designer）出。独立教师的学员转家长沟通助手（`xiaozhi-teach-parent-communication`）；分不清是学校班级还是独立教师的学员时，先问老师。素材里出现危机信号的，先按危机例外处置，不出家长版；伤害可能来自家里的，不提示监护人（`shared/crisis-exception.md`"家庭安全类信号"）。
+- **学科技能交来的家长素材**（数学、语文、英语、物理、化学、生物学、历史、地理等学科老师端技能交来的进步反馈、考后成绩与错因摘要）：素材由老师在对话里转来（班级工作区没有这一项）。学校班级的家长版由本 SKILL 按 §10.2 与 `references/analysis-framework.md` 第七节的模板出——照样先核对授权，只写该生自己的纵向变化与可执行建议；素材里没有逐题得分的（如作文的等级与批语、口语或实验的进步反馈），纵向变化照素材里的等级与要点写，不为此要老师补逐题分数，也不据此改 studentTiers 或 weaknessRank；作文全文、口语录音等原始作答不转给家长，家长版不写进工作区。作业的家长反馈仍由作业设计师（xiaozhi-teach-assignment-designer）出。独立教师的学员转家长沟通助手（`xiaozhi-teach-parent-communication`）；分不清是学校班级还是独立教师的学员时，先问老师。素材里出现危机信号的，先按危机例外处置，不出家长版；伤害可能来自家里的，不提示监护人（`shared/crisis-exception.md`"家庭安全类信号"）。
 - **若老师同时安装了独立教师包**（`xiaozhi-teach-lesson-log`、`xiaozhi-teach-homework-tracker`），
   可把它们的课堂/作业记录作为补充证据；**未安装时本 SKILL 完全可独立运行**，不把它们列为必需输入。
 

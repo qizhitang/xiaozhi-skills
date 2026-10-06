@@ -4,17 +4,23 @@
   "title": "ClassTeachingWorkspace",
   "x-distributed-to": "xiaozhi-teach-history-lesson-planner",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-teach-history-lesson-planner 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：读 classProfile、interactionLogs、studentTiers、weaknessRank；写 lessonPlans（同一键既读又写时，读/写各自的子字段列在 x-skill-scope.fields；各字段只留声明列出的子字段；删去 6 个顶层字段）。完整定义在归属技能处。",
+    "note": "本副本随 xiaozhi-teach-history-lesson-planner 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：读 classProfile、examBlueprints、interactionLogs、itemStats、reviewPlans、studentTiers、weaknessRank；写 lessonPlans（同一键既读又写时，读/写各自的子字段列在 x-skill-scope.fields；各字段只留声明列出的子字段；删去 3 个顶层字段）。完整定义在归属技能处。",
     "paths": [
       "classProfile",
+      "examBlueprints",
       "interactionLogs",
+      "itemStats",
       "lessonPlans",
+      "reviewPlans",
       "studentTiers",
       "weaknessRank"
     ],
     "reads": [
       "classProfile",
+      "examBlueprints",
       "interactionLogs",
+      "itemStats",
+      "reviewPlans",
       "studentTiers",
       "weaknessRank"
     ],
@@ -24,6 +30,7 @@
     "fields": {
       "classProfile": {
         "reads": [
+          "gradeBand",
           "gradeLevel",
           "classSize",
           "periodMinutes",
@@ -37,11 +44,33 @@
           "adjustmentForNext"
         ]
       },
+      "reviewPlans": {
+        "reads": [
+          "phases",
+          "spacingSchedule"
+        ]
+      },
+      "examBlueprints": {
+        "reads": [
+          "examId",
+          "title",
+          "items"
+        ]
+      },
+      "itemStats": {
+        "reads": [
+          "examId",
+          "itemNo",
+          "pValue",
+          "flag"
+        ]
+      },
       "lessonPlans": {
         "writes": [
           "planId",
           "topic",
           "date",
+          "planType",
           "periodMinutes",
           "objectives",
           "segments",
@@ -71,6 +100,18 @@
         "$ref": "#/$defs/interactionLog"
       }
     },
+    "examBlueprints": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/examBlueprint"
+      }
+    },
+    "itemStats": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/itemStat"
+      }
+    },
     "weaknessRank": {
       "type": "array",
       "items": {
@@ -81,6 +122,12 @@
       "type": "array",
       "items": {
         "$ref": "#/$defs/studentTier"
+      }
+    },
+    "reviewPlans": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/reviewPlan"
       }
     }
   },
@@ -154,6 +201,15 @@
       ],
       "description": "2022 版课标结果目标四级。与 Bloom 对照：了解≈记忆，理解≈理解，掌握≈应用，运用≈分析/评价/创造"
     },
+    "difficultyBand": {
+      "type": "string",
+      "enum": [
+        "基础",
+        "中等",
+        "较难"
+      ],
+      "description": "难度档。校内形成性默认 6:3:1，期末/模拟按 7:2:1"
+    },
     "tier": {
       "type": "string",
       "enum": [
@@ -178,6 +234,17 @@
         "date": {
           "type": "string",
           "format": "date"
+        },
+        "planType": {
+          "type": "string",
+          "enum": [
+            "新授",
+            "复习",
+            "讲评",
+            "单元起始",
+            "单元总结"
+          ],
+          "description": "讲评课的错题清单与讲评顺序来自 exam-designer；本字段用于区分教案类型"
         },
         "periodMinutes": {
           "type": "integer",
@@ -342,6 +409,149 @@
         "date"
       ]
     },
+    "examBlueprint": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "examId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "assessmentType": {
+          "type": "string",
+          "enum": [
+            "诊断性",
+            "形成性",
+            "终结性"
+          ]
+        },
+        "fullScore": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 150
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "itemNo": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "itemType": {
+                "type": "string",
+                "enum": [
+                  "选择",
+                  "填空",
+                  "判断",
+                  "计算",
+                  "解答",
+                  "作图",
+                  "实验",
+                  "阅读",
+                  "写作",
+                  "听力",
+                  "口语",
+                  "材料解析",
+                  "论述",
+                  "其他"
+                ]
+              },
+              "knowledgePoint": {
+                "type": "string",
+                "maxLength": 60
+              },
+              "cognitiveLevel": {
+                "$ref": "#/$defs/cognitiveLevel"
+              },
+              "difficultyBand": {
+                "$ref": "#/$defs/difficultyBand"
+              },
+              "score": {
+                "type": "number",
+                "minimum": 0
+              },
+              "expectedP": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1,
+                "description": "预期难度 P（得分率）"
+              },
+              "resourceId": {
+                "type": "string",
+                "maxLength": 40
+              },
+              "aiGenerated": {
+                "type": "boolean",
+                "default": false
+              },
+              "verifiedByTeacher": {
+                "type": "boolean",
+                "default": false,
+                "description": "AI 生成题必须人工验算后才能为 true；未验算的题不得进入试卷"
+              }
+            },
+            "required": [
+              "itemNo",
+              "itemType",
+              "knowledgePoint",
+              "cognitiveLevel",
+              "difficultyBand",
+              "score"
+            ]
+          }
+        }
+      },
+      "required": [
+        "examId",
+        "title",
+        "assessmentType",
+        "fullScore",
+        "items"
+      ]
+    },
+    "itemStat": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "examId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "itemNo": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "pValue": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "难度 = 平均得分 / 满分"
+        },
+        "flag": {
+          "type": "string",
+          "enum": [
+            "正常",
+            "偏难",
+            "偏易",
+            "区分度低",
+            "疑似错题"
+          ],
+          "description": "基础题允许 D<0.2；只对中等/较难题要求 D≥0.2"
+        }
+      },
+      "required": [
+        "examId",
+        "itemNo",
+        "pValue"
+      ]
+    },
     "weaknessEntry": {
       "type": "object",
       "additionalProperties": false,
@@ -415,6 +625,85 @@
       "required": [
         "studentAlias",
         "tier"
+      ]
+    },
+    "reviewPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "reviewId": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "phases": {
+          "type": "array",
+          "description": "按距考天数倒推的阶段。距考 3 天内不得引入新内容；考试当天只做状态保持，不点弱项",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "maxLength": 40
+              },
+              "daysToExam": {
+                "type": "string",
+                "maxLength": 20,
+                "description": "如 >14 / 7-14 / 3-7 / 1-3 / 0"
+              },
+              "emphasis": {
+                "type": "string",
+                "maxLength": 200
+              },
+              "newContentAllowed": {
+                "type": "boolean",
+                "default": true
+              }
+            },
+            "required": [
+              "name",
+              "daysToExam"
+            ]
+          }
+        },
+        "spacingSchedule": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "knowledgePoint": {
+                "type": "string",
+                "maxLength": 60
+              },
+              "reviewDates": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "date"
+                }
+              }
+            },
+            "required": [
+              "knowledgePoint",
+              "reviewDates"
+            ]
+          },
+          "description": "按 1/3/7/14 天回看排布"
+        }
+      },
+      "required": [
+        "reviewId",
+        "startDate",
+        "endDate"
       ]
     }
   }
