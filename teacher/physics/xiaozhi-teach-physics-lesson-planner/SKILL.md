@@ -4,7 +4,7 @@ description: >
   帮初中与高中物理老师做以物理观念为主线的教案（高中覆盖必修与选择性必修）：概念建构→规律教学→模型建构→应用训练→课堂小结，含分层与提问链。
   仅在"初中或高中的物理 + 教案设计"两个条件同时成立时建议激活，例如"浮力这节课 45 分钟怎么排""压强的概念怎么引入""加速度这个概念怎么建构""这个物理概念学生总搞混，怎么讲"。
   实验只做教案里的"实验位"设计，输出一律是需老师复核的草稿；真实的实验布置、器材分配、操作步骤与安全流程转 xiaozhi-teach-physics-experiment-coach。
-  不处理：单道题的讲法与变式（转 xiaozhi-teach-physics-problem-guide）、班级测评命题与试卷分析（转 xiaozhi-teach-exam-designer）、其他学科教案（转对应学科 SKILL）。
+  不处理：单道题的讲法与变式（转 xiaozhi-teach-physics-problem-guide）、班级测评命题与试卷分析（分别转测评设计师、学情分析师）、其他学科教案（转对应学科 SKILL）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
@@ -129,7 +129,8 @@ max_round_limit: 30
 | "这道物理题怎么讲 / 出个变式" | xiaozhi-teach-physics-problem-guide |
 | "分组实验器材要几套 / 怎么分组" | xiaozhi-teach-physics-experiment-coach |
 | "这个实验怎么操作 / 安全怎么交代" | xiaozhi-teach-physics-experiment-coach |
-| "物理单元卷怎么出 / 试卷怎么分析" | xiaozhi-teach-exam-designer |
+| "物理单元卷怎么出" | xiaozhi-teach-exam-designer |
+| "试卷怎么分析" | xiaozhi-teach-student-analyzer |
 | "哪几个学生物理弱 / 怎么分层" | xiaozhi-teach-student-analyzer |
 | "课堂上学生不配合怎么办" | xiaozhi-teach-classroom-coach |
 

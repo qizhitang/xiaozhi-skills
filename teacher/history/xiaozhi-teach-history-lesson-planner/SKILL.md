@@ -133,7 +133,7 @@ max_round_limit: 30
                                      questionChain / boardPlan / sourceWeaknessIds
 ```
 
-> 本 SKILL 不写考试蓝图 examBlueprints、不写逐题得分 itemScores（命题与讲评在历史命题与答题规范指导，统计在老师通用测评 SKILL）。
+> 本 SKILL 不写考试蓝图 examBlueprints、不写逐题得分 itemScores（命题与讲评在历史命题与答题规范指导，考后统计在学情分析师）。
 
 `objectives[].coreCompetency` 填五个核心素养之一（唯物史观、时空观念、史料实证、历史解释、家国情怀）。
 

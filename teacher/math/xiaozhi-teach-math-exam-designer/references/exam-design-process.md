@@ -1,7 +1,7 @@
 # 数学测评设计流程
 
 > 适用学段：初中（7-9 年级）。
-> 示例题验算：2026-09-04（本文无需计算的示例题，只有分值区间；09-04 的改动为边界与流程措辞）
+> 示例题验算：2026-10-06（本文无需计算的示例题，只有分值区间；10-06 的改动为选拔性的口径与讲评课的去向）
 > 配合 `xiaozhi-teach-math-exam-designer` 使用。从测评目标出发，6 步走完"目的→蓝图→题目→审查→拼卷→考后统计"全流程。
 > 边界：本流程只做命题与题目统计；错因归类、学员分层、补救与讲评编排、家长沟通均转对应 SKILL（见第 7 节）。
 > 词表以 `shared/vocab.md` 为准：测评类型三类（诊断性/形成性/终结性）、
@@ -22,13 +22,14 @@
 └──────────┴────────────────┴────────────────────┘
 
 第 6 步止于**题目统计**。讲评课怎么上、错因怎么归类、谁要额外补，
-分别转 xiaozhi-teach-math-lesson-planner、xiaozhi-teach-math-error-analyzer、
+分别转 xiaozhi-teach-lesson-planner（讲评课的环节；讲评用的例题与变式转
+xiaozhi-teach-math-lesson-planner）、xiaozhi-teach-math-error-analyzer、
 xiaozhi-teach-student-analyzer，本流程只交出字段。
 ```
 
 ## 2. 第 1 步：明确测评目的
 
-### 2.1 4 类测评目的
+### 2.1 三类测评目的
 
 ```text
 ┌──────────┬──────────────────┬────────────────────┬────────────┐
@@ -40,7 +41,7 @@ xiaozhi-teach-student-analyzer，本流程只交出字段。
 └──────────┴──────────────────┴────────────────────┴────────────┘
 
 三类是 `shared/vocab.md §11` 的统一口径，也是 schema `examBlueprint.assessmentType` 的 enum。
-选拔性场景（升学/竞赛选拔）不在本 SKILL 范围，用通用版 `xiaozhi-teach-exam-designer`。
+竞赛选拔不在本 SKILL 范围，用通用版 `xiaozhi-teach-exam-designer` 的框架；中考、高考、学业水平考试的模拟卷属终结性，本 SKILL 照出（高中见 SKILL.md 第十五节）。
 ```
 
 ### 2.2 测评目的设定
@@ -270,8 +271,9 @@ examBlueprints[].difficultyRatio。
 
 ❌ 错因归类（七类分析、抽答卷看步骤）
      → xiaozhi-teach-math-error-analyzer
-❌ 讲评课编排（讲哪几题、多少分钟、变式训练、当堂巩固）
-     → xiaozhi-teach-math-lesson-planner
+❌ 讲评课编排（讲哪几题、多少分钟、当堂巩固）
+     → xiaozhi-teach-lesson-planner；讲评用的例题与变式训练
+       转 xiaozhi-teach-math-lesson-planner
 ❌ 个别辅导与重点关注名单
      → xiaozhi-teach-student-analyzer
 
@@ -299,7 +301,8 @@ examBlueprints[].difficultyRatio。
 
 【交接建议】（须老师确认后才交出）
   · → 〔班级错因分析〕：examId + itemStats + itemScores
-  · → 〔数学教案〕：flag 异常题号 + 低得分率知识点，用于设计讲评课
+  · → 〔教案设计器〕：flag 异常题号 + 低得分率知识点，用于排讲评课的环节
+  · → 〔数学教案〕：同上，用于设计讲评用的例题与变式
   · → 〔学情分析师〕：examId + classSummaries
   · 家长侧输出：本 SKILL 不生成，转〔家长沟通助手〕
 

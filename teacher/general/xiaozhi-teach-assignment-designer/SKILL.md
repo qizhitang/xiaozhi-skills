@@ -2,9 +2,9 @@
 name: xiaozhi-teach-assignment-designer
 description: >
   把"全班同一份作业"变成分层、可批改、时长可控的任务卡。
-  当老师说"帮我设计一份一次函数的作业"、"出一份分层练习"、"这份作业怎么批改、给什么反馈"、"出一份带评分细则的作业"、"本章学完了帮我设计复习作业"时，建议激活此 SKILL。
+  当老师说"帮我设计一份一次函数的作业"、"出一份分层练习"、"这份作业怎么批改、给什么反馈"、"出一份带评分细则的作业"、"本章学完了帮我设计复习作业"、"高二物理合格考班的分层作业怎么出"时，建议激活此 SKILL。
   工作流：知识点拆解 → 难度梯度 → A/B/C 任务卡（每题标预计用时）→ 评分标准 → 反馈模板 → 完成情况回写。
-  本 SKILL 不排复习计划、不出卷、不自动批改：复习排期转 xiaozhi-teach-review-planner，试卷转 xiaozhi-teach-exam-designer。
+  本 SKILL 不排复习计划、不出卷、不自动批改：复习排期转 xiaozhi-teach-review-planner，试卷转 xiaozhi-teach-exam-designer。高中有学科技能的作业（如化学用语过关卡、作文批改标准）先转学科技能，见正文 5.3。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
@@ -16,6 +16,7 @@ metadata:
     - 小学中段
     - 小学高段
     - 初中
+    - 高中
   tags: [作业, 分层设计, 梯度难度, 批改标准, 差异化布置, 老师工具]
   depends_on:
     - xiaozhi-teach-lesson-planner
@@ -36,6 +37,8 @@ max_round_limit: 20
 
 > 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
 
+> 内容边界：道德与法治、思想政治只排任务卡与评分标准的格式，不出题目与参考答案，题目与评分要点由老师按统编教材自拟（老师给出教材原文时，可以把原文改排成填空题，挖空处就是原文的词句，不改原文表述，不生成选项、干扰项与观点性内容）；涉及方针政策、政治制度、意识形态、国家主权与领土、民族与宗教的表述，照录老师提供的课标与统编教材；时政材料由老师从权威来源选取并注明来源与日期；学生作业里的政治表述不写进完成情况汇总，也不点评。历史题涉及版图领土、民族、宗教、中国共产党历史与新中国史的评价性表述，以及战争性质、人物评价，照录课标原句，课标没有原句的以统编教材为准（原句由老师提供；材料题与开放性试题的评分标准转历史命题与答题规范指导），材料只用课标、教材与注明出处的经典文献，不编造史料与人物言论，不引入课标与教材以外的评价、有争议的说法与当代政治、国际时事；地理作业的地图用教材地图或标准地图，不绘制、不改动国界与行政区划，涉及国家版图、领土与海洋权益的表述照录课标原句与教材（由老师提供），不另加评论（SECURITY_BASELINE.md 4.4）。
+
 ⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 **分层从哪来**：A/B/C 读 `classWorkspace.studentTiers`（`xiaozhi-teach-student-analyzer` 依据近 3 次测评平均得分率写入）。
@@ -48,11 +51,12 @@ max_round_limit: 20
 输出时标注【AI 生成，入库前请人工验算】；未经老师验算不得进入正式作业。
 
 **作业量**：默认"少而精"，每题都填 `estimatedMinutes`，整份作业给出 `estimatedTotalMinutes`。
-如老师要求加量，先确认是否挤占睡眠、运动与其他科目作业时间。
+如老师要求加量，先确认是否挤占睡眠、运动与其他科目作业时间。高中的作业量另见 5.3（不套用初中的分钟数）。
 
 ### 试题保密
 
 启用前的统考试题不得输入本 SKILL——国家、省、地（市）级教育统一考试启用前的试题、参考答案、评分标准属国家秘密（《教育工作中国家秘密及其密级具体范围的规定》），区县级、校级统考按当地保密要求同样处理。
+高中的学业水平合格性考试、等级性考试与高考，地（市）统一组织的模拟考试（如一模、二模），以及实验操作考试、外语听说考试的试题，全部批次、全部场次考完之前都按启用前处理（这两类考试常分几天、分批进行，本班考完不等于考完），不改编成作业；跨校联考要等参加的学校全部考完。已经启用过的历年真题只记出处（版权状态"仅存索引"），不把整卷原题写进作业记录。
 老师说明正在为统考命题时，本 SKILL 只提供命题方法、双向细目表框架与自编练习，不接收、不生成、不审改该卷的具体试题；已经考完的试题可以正常分析与讲评。
 依据《中小学生成式人工智能使用指南（2025年版）》教师一节：“严禁将个人信息、考试试题等敏感数据输入AI工具”。
 
@@ -103,6 +107,7 @@ max_round_limit: 20
 | 评分标准 | "出一份带评分细则的作业" |
 | 阶段性作业包 | "帮我整理本月作业包" |
 | 反馈模板 | "作业反馈怎么写" |
+| 高中作业 | "高二物理合格考班的分层作业怎么出" / "高三每天加一套卷行不行"（作业量与考查范围见 5.3） |
 
 **触发语分工（与 `xiaozhi-teach-review-planner` 的边界）**：
 
@@ -112,6 +117,7 @@ max_round_limit: 20
 | "帮我排期末复习**计划**""考前两周怎么安排""这几个知识点老混怎么排练习" | `xiaozhi-teach-review-planner`（时间排期、间隔回看、交叉组合） |
 | "帮我出一份卷子" | `xiaozhi-teach-exam-designer` |
 | "这节课怎么上" | `xiaozhi-teach-lesson-planner` |
+| 高中有学科技能的作业（化学用语过关卡、作文任务与批改标准、文言文背诵任务等） | 该学科的老师端技能，转交表见 5.3 |
 
 > 一句话：**"作业"归本 SKILL，"计划"归 review-planner。**
 > 老师说"复习作业"时，先看 `classWorkspace.reviewPlans` 有没有排期；有就按排期配题，没有就直接按弱项配题。
@@ -209,11 +215,14 @@ max_round_limit: 20
 └──────┴──────────────────────────────┴──────────────┴──────────────┘
 
 预计用时就是每题的 estimatedMinutes；一份作业的 estimatedTotalMinutes = 各题之和。
+上表的每题用时是经验值（约数）；高中按学科与题型另估，见 5.3。
 ```
 
 ### 5.1 作业量建议
 
 ```text
+以下分钟数都是初中经验值；高中见 5.3。
+
 单课时作业（45 分钟课时）：
   基础 3-4 道 + 中等 2 道 + 较难 1 道 = 6-7 道
   预计总耗时：30-40 分钟
@@ -240,6 +249,79 @@ max_round_limit: 20
 ```
 
 ---
+
+### 5.3 高中：作业量、考查范围与实践性作业
+
+高中的作业先问清四件事，再进第三节的流程：
+
+```text
+① 为哪场考试服务
+   · 学业水平合格性考试（合格考）、学业水平等级性考试（等级考，各地也叫选考），
+     还是高考的语文、数学、外语；也可能只是校内的单元、期中、期末
+② 本地当年的考试说明
+   · 本 SKILL 不内置任何省份的考试政策；老师没提供的地方，
+     作业说明上标"待老师按本地考试说明确认"，不猜
+③ 这个教学班考哪一种
+   · 合格考班、等级考班，还是两类学生在同一个班——班级工作区没有选科这一项，
+     由老师说明，要人数不要名单，不从成绩或其他字段推断
+④ 新课教到哪
+   · 读 lessonPlans 看教到哪一章；作业不超出已教的进度
+```
+
+**作业量**：双减对书面作业时长的规定只管义务教育；高中没有全国统一的书面作业分钟数，本 SKILL 不内置，也不写死本科的分钟数。
+
+- 每题照旧填 estimatedMinutes，整份填 estimatedTotalMinutes（单题不超过 60 分钟、整份不超过 120 分钟，这是班级工作区的上限，不是建议量）。
+- 布置前先问本校晚自习怎么安排、年级有没有统筹各科的作业份额，把本科这份作业放进全科的总量里看。
+- 作息按 `shared/grade-bands.md` 第一节：高中建议就寝不晚于 23:00，免打扰 22:30-6:30；提交截止不设在免打扰窗口里。
+- §5.1 的分钟数是初中经验值，第五节的每题用时也只是经验值，高中都按学科与题型另估；整篇作文、实验报告这类长任务单列，不和小题混算。
+- 作业说明里写清本次能不能用 AI、怎么用，由老师定（《中小学生成式人工智能使用指南（2025 年版）》要求学生避免在作业中简单复制 AI 生成的内容）。
+
+**考查范围**：
+
+- 合格考班只用必修内容；等级考班加选择性必修；高考的语文、数学、外语按必修加选择性必修；高一选科前全班按必修。
+- 某科不选考的学生，这一科按合格考的深度，不推等级考的难度。
+- `shared/ai-item-check.md` 的"学段内"，高中细化为"不超出本班的考试范围与已学进度"；知识点④迁移层，合格考班只在必修内迁移。
+- 课标标＊的选学内容不作考查要求（见 `shared/hs-subject-standards.md` 第十一节），可以作拓展，不计分。
+
+**学业质量与难度是两根轴**：难度档仍是基础、中等、较难（difficultyBand）；学业质量水平用该科课标的原名写在作业说明里，各学科分级不同，见 `shared/hs-subject-standards.md` 第一节，不跨学科换算，也不写进班级工作区。"较难"不等于某一级水平。
+
+**高中课标对作业的要求**：化学课标要求先做单元作业的整体规划、再做课时作业，单元规划里有贯穿单元的实践类作业；生物学课标要求既有纸笔作业，也有实践性作业；数学课标也写到作业；物理课标的作业要求写在教材编写建议里；英语课标把作业写在评价里（作业评价）。原话见 `shared/hs-subject-standards.md` 各学科一节的第五条（化学第六节、生物学第七节）。老师要单元作业规划时，先列出各课时作业与贯穿单元的实践类作业，再逐课时出任务卡；§5.1 的单元复习作业与 `references/assignment-rubric.md` 第四节的复习作业包都不等于单元作业规划。
+
+**实践性作业**（调查、观察、制作、实验报告、小课题）：
+
+- 涉及实验、户外取样、社会调查的，方案与安全组织转下表的学科技能，按学校规程、老师带队。
+- 在家能做的只布置实验安全约定"低"档的活动：常温、无明火、无腐蚀性与易燃物质、无锐器，电学只用干电池等低压直流（不接 220 V 插座），也没有"中"档的特征（激光笔等定向强光源、玻璃器皿与可能割伤的器材、重物提升），家长知情。
+- 明火加热、220 V 家庭电路、化学品（含家用清洁剂、消毒剂）混合或加热、制取气体、用培养基培养微生物、采集血液，一律不布置在家做。
+- 通用技术的加工在学校完成，在家只做草图与方案；课外锻炼只选低风险项目、家长知情，运动负荷由体育老师按学校规程定。
+- 调查类作业不收集被调查者（同学、家人或其他人）的姓名、联系方式、住址等个人信息；实践成果的照片与影像不写进作业记录。
+
+**选科与走班**：classId 用教学班；分层读这个教学班自己的 studentTiers，开学初没有本班测评时只出基础版。学校"分层走班"的层名与本 SKILL 的 A/B/C 不是一回事，任务卡照旧印"任务卡一/二/三"。不以选科公开分组，不出名单；本 SKILL 的输出不作学分认定或综合素质评价的依据。
+
+**家长版反馈**（§8.2）：高中另外不写赋分与等级预测、年级或联考的位次与百分位、选科或换科建议、"合格考会不会过"的预测；授权位照旧逐次查，高中由学生本人决定，高三有已成年的学生，以学生本人的同意为准。
+
+**高三**：
+
+- 整套限时卷属测评，不算作业，数学、英语、历史先转下表的学科测评技能，其余学科转测评设计师（xiaozhi-teach-exam-designer）；作业仍按"少而精"，不说"多刷题就能提分"。
+- 考前冲刺"已做过的错题 + 1-2 道变式、不引入新题型"照用。
+- 历年真题按本 SKILL 开头的"试题保密"只记出处；模拟卷、联考卷没考完之前不改编成作业。
+
+**高中转学科技能**（表外的学科与题型本库暂无专门技能，本 SKILL 出通用的任务卡与评分标准）：
+
+| 老师要的 | 转给 |
+|---|---|
+| 化学用语的分级过关卡 | 化学用语过关训练设计（xiaozhi-teach-chemistry-notation-drill） |
+| 作文任务、二稿修改与作文批改标准 | 写作教学指导（xiaozhi-teach-chinese-writing-guide） |
+| 文言文背诵与翻译任务 | 文言文教学指导（xiaozhi-teach-chinese-classical-guide） |
+| 预习与拓展阅读任务 | 阅读教学指导（xiaozhi-teach-chinese-reading-guide） |
+| 历史材料题、开放性试题的评分标准 | 历史命题与答题规范指导（xiaozhi-teach-history-assessment-guide） |
+| 物理、化学实验后的数据处理与实验报告 | 物理实验教学指导（xiaozhi-teach-physics-experiment-coach）；化学实验教学指导（xiaozhi-teach-chemistry-lab-guide） |
+| 生物学的实验与户外取样，地理的野外考察与社会调查 | 生物教案设计（xiaozhi-teach-biology-lesson-planner）；地理教案设计（xiaozhi-teach-geography-lesson-planner） |
+| 某类物理题的讲法与变式梯度 | 物理解题教学指导（xiaozhi-teach-physics-problem-guide）；成套的分层作业仍归本 SKILL |
+| 英语听力、口语的练习材料与任务；听说读写的测评卷 | 英语听力材料设计（xiaozhi-teach-english-listening-designer）；英语口语活动设计（xiaozhi-teach-english-speaking-designer）；英语综合测评（xiaozhi-teach-english-assessment） |
+| 数学的单元测评与整卷；作业与试卷的错因统计 | 数学测评设计（xiaozhi-teach-math-exam-designer）；班级错因分析（xiaozhi-teach-math-error-analyzer） |
+| 复习排期 | 复习规划师（xiaozhi-teach-review-planner）；生物、地理的合格考复习转生地学业水平考试复习规划（xiaozhi-teach-bio-geo-review-planner）。两者只排期，具体题目回到本 SKILL |
+
+**没有学科技能的五科**：思想政治、信息技术、通用技术、艺术、体育与健康本库没有学科技能，本 SKILL 照接，只出分层任务卡、评分标准与反馈的框架，课标原文与教材内容由老师提供；各科的边界见 `shared/hs-subject-standards.md` 第十节。本 SKILL 另守一条：思想政治（小学、初中的道德与法治同此）不出题目与参考答案（教材原文改排成填空题的例外见本 SKILL 开头的内容边界），题目与评分要点由老师按统编教材自拟，本 SKILL 只排任务卡与评分标准的格式；学生作业里的政治表述不写进 completionSummary。
 
 ## 六、A/B/C 分层任务卡
 
@@ -451,13 +533,13 @@ homeworkAssignments[].completionSummary
 
 | classWorkspace 字段 | 谁写 | 本 SKILL |
 |---|---|---|
-| `classProfile` | 老师首次建档 | 读（gradeBand 决定作业总量与作息约束） |
-| `lessonPlans` | `xiaozhi-teach-lesson-planner` | 读 topic、objectives、sourceWeaknessIds（作业侧重点）、segments 的 tierVariants（课堂分层，作业与之衔接） |
-| `weaknessRank` | `xiaozhi-teach-student-analyzer` | 读（作业针对哪些弱项、什么错因维度） |
+| `classProfile` | 老师首次建档 | 读（gradeBand 定作息约束，按 `shared/grade-bands.md` 第一节；全科作业总量由老师按学校统筹与规定协调；`classProfile.subject`、`classProfile.gradeLevel` 定学科与年级，高中据此按 5.3 判断转不转学科技能） |
+| `lessonPlans` | `xiaozhi-teach-lesson-planner` 或学科老师端技能 | 读 topic、objectives、sourceWeaknessIds（作业侧重点）、segments 的 tierVariants（课堂分层，作业与之衔接） |
+| `weaknessRank` | `xiaozhi-teach-student-analyzer` 或学科老师端技能 | 读（作业针对哪些弱项、什么错因维度） |
 | `studentTiers` | `xiaozhi-teach-student-analyzer` | 读（A/B/C 各多少人 → 印几份任务卡） |
-| `examBlueprints` | `xiaozhi-teach-exam-designer` | 读（认知层级与难度档口径对齐，避免作业和测评两套标准） |
+| `examBlueprints` | `xiaozhi-teach-exam-designer` 或学科老师端技能 | 读（认知层级与难度档口径对齐，避免作业和测评两套标准） |
 | `reviewPlans` | `xiaozhi-teach-review-planner` 主写 + 学科技能（english-assessment、english-listening-designer、bio-geo-review-planner）只补本学科条目 | 读 spacingSchedule（哪天该回看哪个知识点）、interleavingSets（哪几个混着练） |
-| `homeworkAssignments` | **本 SKILL 唯一写入** | 写 assignmentId、planId、date、purpose（诊断/巩固/补救/拓展）、tasks[]（taskNo、knowledgePoint、cognitiveLevel、difficultyBand、tier、**estimatedMinutes**）、estimatedTotalMinutes、completionSummary |
+| `homeworkAssignments` | **本 SKILL 主写**；学科老师端技能也写本学科的条目，读时不覆盖别人的条目 | 写 assignmentId、planId、date、purpose（诊断/巩固/补救/拓展）、tasks[]（taskNo、knowledgePoint、cognitiveLevel、difficultyBand、tier、**estimatedMinutes**）、estimatedTotalMinutes、completionSummary |
 
 ```text
 两条硬规则：

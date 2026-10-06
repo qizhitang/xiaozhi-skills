@@ -108,6 +108,11 @@ const CONTRACTS = [
     owner: "xiaozhi-teach-geography-lesson-planner",
   },
   {
+    as: "hs-subject-standards.md",
+    src: "teacher/general/xiaozhi-teach-exam-designer/references/hs-subject-standards.md",
+    owner: "xiaozhi-teach-exam-designer",
+  },
+  {
     // 理化生实验安全口径：不属于某个技能，也不发给全部技能，只发给正文引用了 shared/lab-safety.md 的技能
     as: "lab-safety.md",
     src: "shared/contracts/lab-safety.md",

@@ -60,8 +60,8 @@ max_round_limit: 25
       → xiaozhi-teach-math-error-analyzer（班级错因分析）
   · 学员分层（A/B/C tier）、个体学情画像、重点关注名单
       → xiaozhi-teach-student-analyzer（学情分析师）
-  · 补救计划、教学干预、课时增减、个别辅导安排、讲评课设计
-      → xiaozhi-teach-math-lesson-planner；复习排期转 xiaozhi-teach-review-planner
+  · 补救计划、教学干预、课时增减、个别辅导安排、讲评用的例题与变式
+      → xiaozhi-teach-math-lesson-planner；讲评课的环节转 xiaozhi-teach-lesson-planner；复习排期转 xiaozhi-teach-review-planner
   · 家长沟通措辞、成绩告知、约谈安排
       → xiaozhi-teach-parent-communication（家长沟通助手）
   · 非数学学科测评 → xiaozhi-teach-exam-designer
@@ -151,7 +151,8 @@ max_round_limit: 25
 |---------|---------|
 | "这次数学错得最多的是什么原因" | xiaozhi-teach-math-error-analyzer |
 | "哪几个学生要重点关注 / 怎么分层" | xiaozhi-teach-student-analyzer |
-| "考完这块该怎么补 / 讲评课怎么上" | xiaozhi-teach-math-lesson-planner |
+| "考完这块该怎么补" | xiaozhi-teach-math-lesson-planner |
+| "讲评课怎么上" | xiaozhi-teach-lesson-planner（环节）；讲评用的例题与变式转 xiaozhi-teach-math-lesson-planner |
 | "期末前复习怎么排" | xiaozhi-teach-review-planner |
 | "成绩怎么跟家长说" | xiaozhi-teach-parent-communication |
 | "这道数学题怎么讲给学生" | xiaozhi-teach-math-lesson-planner |
@@ -219,7 +220,7 @@ max_round_limit: 25
 
 > ⚠️ **本 SKILL 是通用 `xiaozhi-teach-exam-designer` 的数学学科细化，不是替代。** 通用版的测量学工具——**难度系数 P、区分度 D、考后实际 P/实际 D 分析**——一律沿用通用版定义，本 SKILL 只补充数学学科的知识点体系、题型与双向细目表，不重定义、不删减。
 >
-> 测评类型统一用 `shared/vocab.md §11` 的三类：**诊断性 / 形成性 / 终结性**（对应 schema `examBlueprint.assessmentType` 的 enum）。"总结性""展示性"是废弃说法。选拔性场景请用通用版。
+> 测评类型统一用 `shared/vocab.md §11` 的三类：**诊断性 / 形成性 / 终结性**（对应 schema `examBlueprint.assessmentType` 的 enum）。"总结性""展示性"是废弃说法。竞赛选拔请用通用版的框架；高考、学业水平考试的模拟卷不算选拔性，属终结性，按第十五节出。
 
 ```text
 ┌──────────┬────────────────────────┬────────────────┬──────────────┐
@@ -493,7 +494,7 @@ aiGenerated=true，标注【AI 生成，入库前请人工验算】，
 
 ■ 讲评
   · 及时安排（本 SKILL 只提示"该讲评了"，不设计讲评课）
-  · 讲评课的内容编排转 xiaozhi-teach-math-lesson-planner
+  · 讲评课的环节转 xiaozhi-teach-lesson-planner，讲评用的例题与变式转 xiaozhi-teach-math-lesson-planner
 ```
 
 ### 8.2 讲评的交接口（本 SKILL 不设计讲评课）
@@ -509,14 +510,15 @@ aiGenerated=true，标注【AI 生成，入库前请人工验算】，
 ❌ 不在本 SKILL 内做
   · 共性错因归类、七类错因分布  → xiaozhi-teach-math-error-analyzer
   · 个体错因与改进方向          → xiaozhi-teach-math-error-analyzer
-  · 讲评课时间编排与变式训练设计 → xiaozhi-teach-math-lesson-planner
+  · 讲评课的环节与时间编排      → xiaozhi-teach-lesson-planner
+  · 讲评用的例题与变式训练设计  → xiaozhi-teach-math-lesson-planner
   · 错题入库与后续练习          → xiaozhi-teach-resource-library
   · 学员档案更新                → 见"接口"节的写回边界，须老师逐条确认
 
 交接话术：
   "这次 T5、T9、T12 三道题 P 偏低，逐题数据我整理好了。
    要做错因归类的话，我把 examId 和 itemStats 交给〔班级错因分析〕，
-   讲评课的编排交给〔数学教案〕——需要我现在交过去吗？"
+   讲评课的环节交给〔教案设计器〕、讲评用的变式交给〔数学教案〕——需要我现在交过去吗？"
 ```
 
 ---
@@ -527,12 +529,12 @@ aiGenerated=true，标注【AI 生成，入库前请人工验算】，
 > 哪些知识点得分率低。**再往下一步——为什么错、谁要补、怎么补、怎么跟家长说——
 > 不属于本 SKILL**：错因归类与个体诊断转 `xiaozhi-teach-math-error-analyzer`，
 > 学员分层与重点关注名单转 `xiaozhi-teach-student-analyzer`，
-> 补救与讲评编排转 `xiaozhi-teach-math-lesson-planner`，
+> 补救与讲评用的变式转 `xiaozhi-teach-math-lesson-planner`，讲评课的环节转 `xiaozhi-teach-lesson-planner`，
 > 成绩告知转 `xiaozhi-teach-parent-communication`。
 
 ### 9.1 逐题 P / D（考后第一件事）
 
-结果分析的起点不是平均分，是**每道题的难度 P 与区分度 D**（写入 `classWorkspace.itemStats[]`）。
+结果分析的起点不是平均分，是**每道题的难度 P 与区分度 D**（写入 `classWorkspace.itemStats[]`，α 与整卷指标写入 `classWorkspace.classSummaries[]`；同一 examId 在工作区里已有这两类条目时（学情分析师写的、本 SKILL 上次写的都算，工作区不记写入方），先读、比对，不另写一套；数字或口径不一致时把两套数字给老师看，由老师定用哪一份，选本 SKILL 的经老师确认后替换该 examId 的条目）。
 只有总分、没有逐题分数时，不能做知识点分析，只能报总体分布。
 
 ```text
@@ -677,6 +679,7 @@ Cronbach α（写入 classSummaries[].reliabilityAlpha）：
   → xiaozhi-teach-math-error-analyzer：examId + itemScores + itemStats
   → xiaozhi-teach-student-analyzer：examId + classSummaries
   → xiaozhi-teach-math-lesson-planner：examId + itemStats 中 flag 异常的题号
+  → xiaozhi-teach-lesson-planner：examId + itemStats 中 flag 异常的题号（讲评课的环节）
 ```
 
 **写回学生端档案**：只走 `handoverType: "teacher_writeback"`，payload 为 `teacherWritebackData`；
@@ -727,7 +730,8 @@ Cronbach α（写入 classSummaries[].reliabilityAlpha）：
     <── xiaozhi-teach-lesson-planner（教学内容）
     ──→ xiaozhi-teach-math-error-analyzer（错因归类与个体诊断）
     ──→ xiaozhi-teach-student-analyzer（学员分层与重点关注名单）
-    ──→ xiaozhi-teach-math-lesson-planner（补救、讲评课、教学调整）
+    ──→ xiaozhi-teach-math-lesson-planner（补救、讲评用的变式、教学调整）
+    ──→ xiaozhi-teach-lesson-planner（讲评课的环节）
     ──→ xiaozhi-teach-review-planner（复习排期）
     ──→ xiaozhi-teach-parent-communication（成绩告知与家长沟通）
     ──→ xiaozhi-teach-resource-library（错题入库）
@@ -749,7 +753,7 @@ Cronbach α（写入 classSummaries[].reliabilityAlpha）：
 
 ## 十五、高中的测评设计
 
-依据《普通高中数学课程标准日常修订版（2017 年版 2025 年修订）》实施建议中的"学业水平考试与高考建议"，以及必修与选择性必修各主题的内容要求。高中的单元测评、期中与期末测评按下面的口径设计。
+依据《普通高中数学课程标准日常修订版（2017 年版 2025 年修订）》实施建议中的"学业水平考试与高考建议"，以及必修与选择性必修各主题的内容要求。高中的单元测评、期中与期末测评，以及学业水平考试与高考的模拟卷，按下面的口径设计。
 
 - **范围**：学业水平考试的内容范围是必修课程，高考的内容范围是必修和选择性必修课程。单元测评只考本单元：高一衔接段的测评只考预备知识与函数，必修后半与选择性必修的单元同理；只备学业水平考试的班级，不出选择性必修的内容。课标标＊的选学内容（如复数的三角表示、数学归纳法、贝叶斯公式）不作为考试要求，不出题。选修课程（A～E 类）的测评本 SKILL 不覆盖。
 - **难度依据**：学业质量水平一是学业水平考试命题的依据，高考命题不超过水平二。课标表 3 中，水平一的描述以必修内容为主；借助导数研究函数、用随机变量及其分布研究随机现象、成对数据的统计模型等选择性必修的内容，写在水平二。据此，本 SKILL 建议：高一必修的单元测评（形成性或终结性）以水平一为主、少量试题到水平二；选择性必修的单元测评按水平二命题，都不出水平三的题（这是本 SKILL 的建议，不是课标的规定，老师可按班情调整）。

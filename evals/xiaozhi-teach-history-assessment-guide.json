@@ -1,6 +1,6 @@
 {
   "skill": "xiaozhi-teach-history-assessment-guide",
-  "notes": "按课标流程命题（考查目标 → 素材 → 情境与问题 → 难度 → 评分标准），开放题用分层次评分标准（观点 × 材料运用与论述），参考答案给几类合理答案；材料写明出处、不虚构不改写；AI 生成的题标注并由老师核对。试题保密：启用前的统考试题不接收、不审改。讲评按五维归类共性问题，用化名。最易混的邻居：老师通用测评设计（逐题统计与信度）、历史教案设计。",
+  "notes": "按课标流程命题（考查目标 → 素材 → 情境与问题 → 难度 → 评分标准），开放题用分层次评分标准（观点 × 材料运用与论述），参考答案给几类合理答案；材料写明出处、不虚构不改写；AI 生成的题标注并由老师核对。试题保密：启用前的统考试题不接收、不审改。讲评按五维归类共性问题，用化名。最易混的邻居：学情分析师（逐题统计与信度）、历史教案设计。",
   "cases": [
     {
       "id": "trigger-01",
@@ -51,7 +51,7 @@
       "kind": "no-trigger",
       "role": "teacher",
       "input": "这次考试的逐题难度和区分度帮我算一下",
-      "expect": { "activate": false, "route_to": "xiaozhi-teach-exam-designer" }
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-student-analyzer" }
     },
     {
       "id": "no-trigger-02",

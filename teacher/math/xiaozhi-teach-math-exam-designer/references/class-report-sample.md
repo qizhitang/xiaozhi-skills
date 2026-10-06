@@ -5,8 +5,8 @@
 >
 > ⚠️ **边界**：本模板只填**题目层面的统计量**。错因归类转
 > `xiaozhi-teach-math-error-analyzer`，分层与重点关注名单转
-> `xiaozhi-teach-student-analyzer`，教学调整与讲评编排转
-> `xiaozhi-teach-math-lesson-planner`，家长侧输出转
+> `xiaozhi-teach-student-analyzer`，教学调整与讲评用的变式转
+> `xiaozhi-teach-math-lesson-planner`（讲评课的环节转 `xiaozhi-teach-lesson-planner`），家长侧输出转
 > `xiaozhi-teach-parent-communication`。本模板对这四项只留交接口，不代填。
 > 本模板是**待确认草稿**：任何一段写入 `classWorkspace` 前都要老师逐条确认。
 
@@ -52,8 +52,9 @@
     转 xiaozhi-teach-math-error-analyzer；本报告不写错因百分比
 
 ■ 教学建议 —— 本模板不填
-  · 重新讲什么、加什么练习、讲评课怎么排
+  · 重新讲什么、加什么练习、讲评用的例题与变式
     → xiaozhi-teach-math-lesson-planner
+  · 讲评课怎么排 → xiaozhi-teach-lesson-planner
   · 谁需要个别跟进 → xiaozhi-teach-student-analyzer
   · 本报告不列"需要个别跟进"的学员名单，也不公示、不排名
 

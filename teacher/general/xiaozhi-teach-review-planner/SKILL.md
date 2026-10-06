@@ -39,12 +39,14 @@ max_round_limit: 30
 
 > 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
 
+> 内容边界：本 SKILL 只排复习计划，不出成套的复习题；道德与法治、思想政治的复习活动不生成例题与变式题（老师给出教材原文时，可以把原文改排成填空题，挖空处就是原文的词句，不改原文表述，不生成选项、干扰项与观点性内容），复习内容与表述以老师提供的课标与统编教材为准，本 SKILL 不生成观点性内容，也不评价学生的政治观点（见 `shared/hs-subject-standards.md` 第十节）。
+
 ⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 **不承诺**：不对考试分数、排名、升学结果做任何承诺；只基于现有数据回答"该复习什么、什么时候回看"。
 
 **生成题目时**：复习活动里如需 AI 生成例题或变式题，生成前按 `shared/ai-item-check.md` 自检，
-输出时标注【AI 生成，入库前请人工验算】；成套的复习题请转 `xiaozhi-teach-assignment-designer` / `xiaozhi-teach-exam-designer`（高中班级按 §6.4 转学科技能）。
+输出时标注【AI 生成，入库前请人工验算】；成套的复习题请转 `xiaozhi-teach-assignment-designer` / `xiaozhi-teach-exam-designer`（高中班级先看 §6.4 的学科技能，没有的转这两个通用技能）。
 
 ### 试题保密
 
@@ -116,7 +118,7 @@ max_round_limit: 30
 > 一句话：**"计划"归 review-planner，"作业"归 assignment-designer。**
 > 本 SKILL 输出的是 `classWorkspace.reviewPlans`（哪天回看哪个知识点、哪几个知识点混着练），
 > 具体题目由 assignment-designer 按这张排期表去配。
-> 上表的教案、作业、测评三个去处目前都标到初中；高中班级转给谁，见 §6.4。
+> 高中班级：复习课的环节由教案设计器排；作业与测评有学科老师端技能的先转学科技能，其余转上表的通用技能，见 §6.4。
 
 **说不清是哪一类时，先问再做**：老师的话同时像计划、教案、作业、测评时
 （例如"这章复习一下"），不要默认进本 SKILL 的流程，先问一句：
@@ -284,7 +286,7 @@ max_round_limit: 30
              + 错题回看 30% + 主动回忆 10%
   · ⚠️ 上一版这里写"新知识 60%"是错的：这是**复习**阶段，
     如果 60% 的时间还在上新课，那说明教学进度没走完，
-    此时应该先调教学进度（回 lesson-planner，高中回该学科的教案技能），而不是叫它"复习计划"。
+    此时应该先调教学进度（回 lesson-planner；高中有学科教案技能的，回该学科的教案技能），而不是叫它"复习计划"。
     只有确实还有 1-2 节新课没上完时，才给新内容留到 30%，且必须在距考 14 天前上完。
 
 距考试 7-14 天：强化整合模式
@@ -418,22 +420,22 @@ max_round_limit: 30
 
 合格考班的交叉组合只从必修内容里选。
 
-**高中班级转给谁**（老师通用的教案设计、测评设计、作业设计、学情分析目前都标到初中，高中先看学科技能）：
+**高中班级转给谁**（有学科老师端技能的先转学科技能，其余转老师通用的教案设计器、测评设计师、作业设计师、学情分析师；各学科的学业质量水平与考试口径见 `shared/hs-subject-standards.md`）：
 
 ```text
 生物、地理的合格考    → xiaozhi-teach-bio-geo-review-planner；生物、地理的等级考复习归本 SKILL
-复习课的教案          → 该学科的高中教案技能：数学、物理、化学、生物、地理、历史的教案设计，
-                        语文的阅读、写作、文言文教学指导，英语的听力材料设计与口语活动设计；
-                        没有对应技能的学科与课型，本库暂无专门技能
+复习课的教案          → 环节由教案设计器（xiaozhi-teach-lesson-planner）排；复习用的例题、变式与练习
+                        先看该学科的老师端技能：数学、物理、化学、生物、地理、历史的教案设计，
+                        语文的阅读、写作、文言文教学指导，英语的听力材料设计与口语活动设计
 复习卷                → 数学转 xiaozhi-teach-math-exam-designer，英语转 xiaozhi-teach-english-assessment，
                         历史转 xiaozhi-teach-history-assessment-guide；语文的文言文、现代文阅读、作文可用三个语文教学指导出练习；
-                        整卷与其余学科的高中复习卷本库暂无专门技能
+                        整卷与其余学科的复习卷转测评设计师（xiaozhi-teach-exam-designer）
 复习作业的具体题目    → 先看该学科的老师端技能有没有对应的练习设计（如化学用语的过关卡转
-                        xiaozhi-teach-chemistry-notation-drill）；没有的，高中本库暂无专门技能
+                        xiaozhi-teach-chemistry-notation-drill）；没有的转作业设计师（xiaozhi-teach-assignment-designer）
 实验操作考查的练习    → 化学转 xiaozhi-teach-chemistry-lab-guide（合格考实验操作考试的组织），物理的学生必做实验转
                         xiaozhi-teach-physics-experiment-coach，生物见第一行；练习都在学校实验室由老师组织，
                         本 SKILL 只排练习的时间，不写实验步骤
-本班弱项与考试范围    → 高中班级的 weaknessRank、examBlueprints 多由学科老师端技能写入；
+本班弱项与考试范围    → 高中班级的 weaknessRank、examBlueprints 由学情分析师、测评设计师或学科老师端技能写入；
                         工作区里没有时，请老师口头说明本班的薄弱点与考试范围，不凭空推断
 ```
 
@@ -577,12 +579,12 @@ max_round_limit: 30
 | classWorkspace 字段 | 谁写 | 本 SKILL |
 |---|---|---|
 | `classProfile` | 老师首次建档 | 读（gradeBand 定就寝与专注参数，periodMinutes 定复习课时长） |
-| `weaknessRank` | `xiaozhi-teach-student-analyzer` | 读（复习重点排序 → 填 sourceWeaknessIds；dimension 决定交叉组合） |
-| `classSummaries` | `xiaozhi-teach-student-analyzer` | 读（meanRate 定复习起点） |
-| `itemStats` | `xiaozhi-teach-student-analyzer` | 读（历史逐题得分率；**不是** exam-designer 写的） |
-| `examBlueprints` | `xiaozhi-teach-exam-designer` | 读（考试范围、题号→知识点，用于对齐复习范围） |
-| `lessonPlans` | `xiaozhi-teach-lesson-planner` | 读（之前教到哪、哪些目标已覆盖） |
-| `homeworkAssignments` | `xiaozhi-teach-assignment-designer` | 读（已布置过的复习作业，避免重复） |
+| `weaknessRank` | `xiaozhi-teach-student-analyzer` 或学科老师端技能 | 读（复习重点排序 → 填 sourceWeaknessIds；dimension 决定交叉组合） |
+| `classSummaries` | `xiaozhi-teach-student-analyzer` 或数学测评设计（数学卷） | 读（meanRate 定复习起点） |
+| `itemStats` | `xiaozhi-teach-student-analyzer` 或数学测评设计（数学卷） | 读（历史逐题得分率；**不是** exam-designer 写的） |
+| `examBlueprints` | `xiaozhi-teach-exam-designer` 或学科老师端技能 | 读（考试范围、题号→知识点，用于对齐复习范围） |
+| `lessonPlans` | `xiaozhi-teach-lesson-planner` 或学科老师端技能 | 读（之前教到哪、哪些目标已覆盖） |
+| `homeworkAssignments` | `xiaozhi-teach-assignment-designer` 或学科老师端技能 | 读（已布置过的复习作业，避免重复） |
 | `reviewPlans` | **本 SKILL 主写** + 学科技能（只补本学科条目，见下） | 读（这场考试是否已有计划）；写 reviewId / targetExamId / startDate / endDate / phases / spacingSchedule / interleavingSets / sourceWeaknessIds |
 
 **`reviewPlans` 的其他写入方**（本 SKILL 主写；它们只补本学科、本场考试的条目）：
@@ -686,7 +688,7 @@ max_round_limit: 30
     ──→ xiaozhi-teach-exam-designer（reviewPlans → 复习测评范围对齐）
 ```
 
-> 上面三个通用下游目前标到初中；高中班级的去处见 §6.4。
+> 高中班级：复习课的环节由教案设计器排，复习用的例题与变式、复习作业与复习卷有学科老师端技能的先转学科技能，见 §6.4。
 
 **禁止行为**：
 - 禁止承诺提分/排名/升学
@@ -695,7 +697,7 @@ max_round_limit: 30
 - 禁止在考试当天点弱项、发新错题清单、公布上次成绩
 - 禁止用焦虑话术催学生
 - 禁止在公开复习资料中暴露学生姓名/分数
-- 禁止把"复习作业"的具体题目写进本 SKILL 的输出（那是 assignment-designer 的活；高中班级按 §6.4 转学科技能）
+- 禁止把"复习作业"的具体题目写进本 SKILL 的输出（那是 assignment-designer 的活；高中班级有学科技能的，按 §6.4 先转学科技能）
 
 ---
 

@@ -55,14 +55,14 @@ xiaozhi-correction-notebook/
 
 这样 `shared/vocab.md` 这类路径在两种场景下都能解析：整库使用时相对仓库根，单技能安装后相对技能目录。
 
-除这六份外，被跨技能引用的**契约与参考资料**也按需分发到引用方的 `shared/` 下（共 239 份副本，来自下表 23 份源文件）：
+除这六份外，被跨技能引用的**契约与参考资料**也按需分发到引用方的 `shared/` 下（共 243 份副本，来自下表 24 份源文件）：
 
 | 类别 | 文件 | 分发范围 |
 |---|---|---|
 | 数据契约 | `handover-protocol.schema.json`、`dna-profile.schema.json`、`class-teaching-workspace.schema.json`、`solo-teacher-workspace.schema.json` | 正文引用它的技能 |
 | 交接示例 | `wrong-answer-handover`、`reminder-enqueue`、`deep-analysis-writeback` 三份 `.example.json` | 错题本、IM 提醒 |
 | 学科错因维度表 | `english-error-dimension-table.md`、`chinese-error-dimension-table.md`、`physics-error-dimension-table.md`、`chemistry-error-dimension-table.md`、`history-error-dimension-table.md`、`biology-error-dimension-table.md`、`geography-error-dimension-table.md` | 同学科中正文引用它的技能 |
-| 参考资料 | `physics-diagram-guide.md`、`ebbinghaus-schedule.md`、`cross-subject-connections.md`、`experiment-types.md`、`chinese-hs-recitation-list.md`、`biology-hs-student-activities.md`、`geography-hs-practice-activities.md` | 引用方 |
+| 参考资料 | `physics-diagram-guide.md`、`ebbinghaus-schedule.md`、`cross-subject-connections.md`、`experiment-types.md`、`chinese-hs-recitation-list.md`、`biology-hs-student-activities.md`、`geography-hs-practice-activities.md`、`hs-subject-standards.md` | 引用方 |
 | 跨学科约定 | `lab-safety.md`（实验安全：`safetyLevel` 三档、跨学科硬红线、化学与生物必守规范） | 正文引用它的理化生与地理技能 |
 | 安全底线 | `crisis-referral-protocol.md` | **全部 84 个技能**（因为 `crisis-exception.md` 在每个包里都指向它）|
 
@@ -254,7 +254,7 @@ WorkBuddy 不会自动解析本库 frontmatter 里的 `metadata.depends_on`，�
 | 开卷答题包 | 开卷答题教练 | 无 | 初中（本地中考有开卷科目时） |
 | 生物专项包 | 学生端生物 5 个 | 核心通用包 | 初中 / 高中（必修与选择性必修） |
 | 地理专项包 | 学生端地理 3 个 | 核心通用包 | 初中 / 高中（必修与选择性必修） |
-| 老师通用教学包 | 老师通用 6 个 | 无 | 小学中段–初中（复习规划师到高中） |
+| 老师通用教学包 | 老师通用 6 个 | 无 | 小学中段–高中 |
 | 独立教师日常包 | 独立教师 8 个 | 无（可独立安装，课后记录与试听建档零依赖）| 小学中段–高中 |
 | 老师学科专项包 | 老师学科 20 个 | 老师通用教学包 | 按学科 |
 

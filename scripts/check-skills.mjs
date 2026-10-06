@@ -17,12 +17,12 @@
 //  G2 学生端 SKILL 必须有"使用前提"行（小学需成人在场 vocab §8 规则 4；考试进行中不帮 hint-ladder §〇）
 //  T1 会出题、组卷或存放试卷的老师端 SKILL 必须有"试题保密"段落（SECURITY_BASELINE.md 4.2）
 //  T2 老师端 SKILL 必须有“教学主体边界”行（SECURITY_BASELINE.md 4.3）
-//  B1 历史、生物、地理技能与开卷答题教练必须有“内容边界”行（SECURITY_BASELINE.md 4.4）
+//  B1 历史、生物、地理技能、开卷答题教练与老师通用技能必须有“内容边界”行（SECURITY_BASELINE.md 4.4）
 //  I1 老师端接口路径根字段必须存在于 schema
 //  D1 docs 版本号与 package.json 一致；docs 中 SKILL 名称与目录一致
 //  A1 含"示例题"的 references 必须有"示例题验算：YYYY-MM-DD"声明（警告）
 //  Z1 正文与契约不得含零宽/方向控制/BOM 等不可见字符（组合 emoji 请换单码位）——扫描器把它们当作元数据投毒信号
-//  A2 验算日期不得早于文件最后一次实质提交（git；纯升版提交不算）
+//  A2 验算日期不得早于文件最后一次实质提交（git；纯升版提交与未提交的纯版本号改动不算）
 //  M1 Markdown 代码围栏必须闭合；块内不得出现不短于外层、带语言标记的围栏行（新块插进了未闭合的块）
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, dirname, resolve, relative, basename } from "node:path";
@@ -37,6 +37,21 @@ function gitDirty(file) {
   try {
     const out = execFileSync("git", ["-c", "safe.directory=" + root.replaceAll(String.fromCharCode(92), "/"), "status", "--porcelain", "--", file], { cwd: root, encoding: "utf-8", stdio: ["ignore", "pipe", "ignore"] });
     return out.trim().length > 0;
+  } catch { return false; }
+}
+// 未提交的改动是否只改了 bump_version 改的版本号（"protocolVersion"/"schemaVersion" 与 metadata 的 version）：
+// 是就和已提交的升版提交一样，不算实质改动（发版时先跑 check 再提交升版，带验算声明的示例 JSON 也不会报 A2）
+function gitVersionOnly(file) {
+  try {
+    const out = execFileSync("git", ["-c", "safe.directory=" + root.replaceAll(String.fromCharCode(92), "/"), "diff", "-U0", "HEAD", "--", file], { cwd: root, encoding: "utf-8", stdio: ["ignore", "pipe", "ignore"] });
+    const lines = out.split(String.fromCharCode(10));
+    const h = lines.findIndex((l) => l.startsWith("@@"));   // 第一个 @@ 之前是文件头（--- a/…、+++ b/…）
+    if (h < 0) return false;                                 // 没有 diff（如未跟踪的新文件）：照常要求当天的验算日期
+    const ver = /("(?:protocolVersion|schemaVersion)":\s*"|^\s*version:\s*|schemaVersion:\s*")\d+\.\d+\.\d+/g;
+    const norm = (l) => l.slice(1).replace(/\r$/, "").replace(ver, (m, p) => p + "X");
+    const body = lines.slice(h);
+    const minus = body.filter((l) => l[0] === "-").map(norm), plus = body.filter((l) => l[0] === "+").map(norm);
+    return minus.length > 0 && minus.length === plus.length && minus.every((l, i) => l === plus[i]);
   } catch { return false; }
 }
 function gitLog(file) {
@@ -166,7 +181,7 @@ const HS_TERMS = [
   "减数分裂", "有丝分裂", "自由组合定律", "伴性遗传", "基因频率", "内环境", "表观遗传", "热力环流", "三圈环流", "地转偏向力", "锋面", "等压线",
 ];
 // T1：会出题、组卷或存放试卷的老师端技能（SECURITY_BASELINE.md 4.2；新增同类技能时加进来）
-const EXAM_SKILLS = new Set(["xiaozhi-teach-exam-designer", "xiaozhi-teach-math-exam-designer", "xiaozhi-teach-english-assessment", "xiaozhi-teach-english-listening-designer", "xiaozhi-teach-assignment-designer", "xiaozhi-teach-resource-library", "xiaozhi-teach-chemistry-notation-drill", "xiaozhi-teach-history-assessment-guide", "xiaozhi-teach-bio-geo-review-planner", "xiaozhi-teach-chinese-classical-guide", "xiaozhi-teach-chinese-reading-guide", "xiaozhi-teach-chinese-writing-guide", "xiaozhi-teach-review-planner"]);
+const EXAM_SKILLS = new Set(["xiaozhi-teach-exam-designer", "xiaozhi-teach-math-exam-designer", "xiaozhi-teach-english-assessment", "xiaozhi-teach-english-listening-designer", "xiaozhi-teach-assignment-designer", "xiaozhi-teach-resource-library", "xiaozhi-teach-chemistry-notation-drill", "xiaozhi-teach-history-assessment-guide", "xiaozhi-teach-bio-geo-review-planner", "xiaozhi-teach-chinese-classical-guide", "xiaozhi-teach-chinese-reading-guide", "xiaozhi-teach-chinese-writing-guide", "xiaozhi-teach-review-planner", "xiaozhi-teach-lesson-planner", "xiaozhi-teach-student-analyzer"]);
 // G1 章节豁免：标题命中即整节免标，直到出现同级或更高级标题
 const HS_SECTION_ANY = /初高衔接/;               // 任何技能
 const HS_SECTION_NATIVE = /高中|高一|高二|高三/;   // 仅 grade_bands 含 高中 的技能，且标题不能同时写初中标记（如“初中与高中”“九年级与高中”是混合章节）
@@ -235,13 +250,13 @@ for (const f of refFiles) {
   }
   // A1
   if (/示例题|例题|样板题/.test(text) && /^\s*(\d+[.、)]|例\s*\d|题目[:：])/m.test(text) && !/示例题验算[:：]\s*\d{4}-\d{2}-\d{2}/.test(text)) warn("A1", rel(f), "含示例题但无“示例题验算：YYYY-MM-DD”声明（shared/ai-item-check.md §3）");
-  // A2：验算日期不得早于文件最后一次实质提交（纯升版提交不算）——否则"验算日期"只是装饰
+  // A2：验算日期不得早于文件最后一次实质提交（纯升版提交、未提交的纯版本号改动不算）——否则"验算日期"只是装饰
   const decl = text.match(/示例题验算[:：]\s*(\d{4}-\d{2}-\d{2})/);
   if (decl && gitOk) {
     const logs = gitLog(f);
     const later = logs.filter((l) => l.date > decl[1] && !/升版|版本号|全库升版|bump/i.test(l.subject));
     if (later.length) err("A2", rel(f), `示例题验算声明为 ${decl[1]}，但此后有 ${later.length} 次实质改动（最近 ${later[0].date}），请逐题重新验算并更新日期`);
-    else if (gitDirty(f) && decl[1] < today()) err("A2", rel(f), `示例题验算声明为 ${decl[1]}，但文件有未提交改动，请验算后把日期更新为今天`);
+    else if (gitDirty(f) && decl[1] < today() && !gitVersionOnly(f)) err("A2", rel(f), `示例题验算声明为 ${decl[1]}，但文件有未提交改动，请验算后把日期更新为今天`);
   }
 }
 
@@ -286,7 +301,7 @@ for (const f of contentFiles) {
     if (rel(f).startsWith("student/") && !(/shared\/vocab\.md §8 规则 4/.test(text) && /shared\/hint-ladder\.md §〇/.test(text))) err("G2", rel(f), "学生端 SKILL 缺“使用前提”行：须引用 shared/vocab.md §8 规则 4（小学需成人在场）与 shared/hint-ladder.md §〇（考试进行中不帮）");
     if (EXAM_SKILLS.has(basename(dirname(f))) && !/试题保密/.test(text)) err("T1", rel(f), "会接触试题的老师端 SKILL 缺“试题保密”段落（启用前的统考试题不得输入，见 SECURITY_BASELINE.md 4.2）");
     if (rel(f).startsWith("teacher/") && !/教学主体边界/.test(text)) err("T2", rel(f), "老师端 SKILL 缺“教学主体边界”行：AI 不作替代性教学主体、不直接回答学生、不直接评价学生（教育部 2025 生成式 AI 使用指南；SECURITY_BASELINE.md 4.3）");
-    if ((/^(student|teacher)\/(history|biology|geography)\//.test(rel(f)) || basename(dirname(f)) === "xiaozhi-openbook-coach") && !/内容边界/.test(text)) err("B1", rel(f), "历史、生物、地理技能与开卷答题教练缺“内容边界”行：历史评价以课标与教材为准、不替学生给观点；开卷只教方法、不产出道法观点；生物不做诊断与用药建议；地图以教材与标准地图为准（SECURITY_BASELINE.md 4.4）");
+    if ((/^(student|teacher)\/(history|biology|geography)\//.test(rel(f)) || basename(dirname(f)) === "xiaozhi-openbook-coach" || rel(f).startsWith("teacher/general/")) && !/^> 内容边界：/m.test(text)) err("B1", rel(f), "历史、生物、地理技能、开卷答题教练与老师通用技能缺“内容边界”行：历史评价以课标与教材为准、不替学生给观点；开卷只教方法、不产出道法观点；生物不做诊断与用药建议；地图以教材与标准地图为准；老师通用技能对道德与法治、思想政治只给工具层（SECURITY_BASELINE.md 4.4）");
   }
 }
 

@@ -3,7 +3,7 @@ name: xiaozhi-teach-history-assessment-guide
 description: >
   帮历史老师命题与讲评：按课程标准的命题流程设计材料解析题与开放性试题，制定分层次的评分标准，并把学生答卷里的共性问题整理成答题规范讲评；高中必修与选择性必修另有合格考、等级考的命题蓝图与以学业质量为参照的分层评分。
   仅在"历史 + 命题或讲评"两个条件同时成立时建议激活，例如"这个单元的材料题怎么出""开放性试题的评分标准怎么定""这次学生答题不规范，讲评课怎么上""帮我做一张历史双向细目表"。
-  不处理：整节课的教学设计（转 xiaozhi-teach-history-lesson-planner）、全卷的逐题统计与信度分析（转 xiaozhi-teach-exam-designer）。
+  不处理：整节课的教学设计（转 xiaozhi-teach-history-lesson-planner）、全卷的逐题统计与信度分析（转 xiaozhi-teach-student-analyzer）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
@@ -134,7 +134,7 @@ max_round_limit: 25
 ```
 
 > AI 生成的题 `aiGenerated=true`，老师核对前 `verifiedByTeacher=false`，未核对的题不得进入试卷。
-> 本 SKILL 不写逐题得分 itemScores、逐题统计 itemStats 与班级汇总 classSummaries（考后统计转 xiaozhi-teach-exam-designer），不写弱项排序 weaknessRank（由学情分析师维护）。
+> 本 SKILL 不写逐题得分 itemScores、逐题统计 itemStats 与班级汇总 classSummaries（考后统计转 xiaozhi-teach-student-analyzer），不写弱项排序 weaknessRank（由学情分析师维护）。
 
 ---
 

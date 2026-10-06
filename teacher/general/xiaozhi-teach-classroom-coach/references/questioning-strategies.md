@@ -1,6 +1,6 @@
 # 课堂提问策略与互动话术库
 
-> 适用学段：小学中段 / 小学高段 / 初中（高中同样适用）。
+> 适用学段：小学中段 / 小学高段 / 初中 / 高中（高中的课时、走班与互动形式见 SKILL.md §4.2）。
 > 配合 `xiaozhi-teach-classroom-coach` 使用。
 > **分工**：提问链草案（问什么）由 `xiaozhi-teach-lesson-planner` 生成并写在
 > `classWorkspace.lessonPlans[].questionChain`；本文件做的是**怎么问、答不上来怎么办**。
@@ -10,7 +10,7 @@
 
 ## 一、提问链实施表（在草案上挂候场追问）
 
-时间栏按 `classProfile.periodMinutes` 填；下表以 45 分钟为例，小学 40 分钟档整体前移。
+时间栏按 `classProfile.periodMinutes` 填；下表以 45 分钟为例，小学与高中的 40 分钟档整体前移（高中压小组合作与汇报，不压独立思考，见 SKILL.md §4.2）。
 层级标签用课标四级（了解 / 理解 / 掌握 / 运用）。
 
 ```text

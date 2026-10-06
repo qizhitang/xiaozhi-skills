@@ -2,9 +2,9 @@
 name: xiaozhi-teach-classroom-coach
 description: >
   把"单向讲授"变成有追问、有参与路径的课堂。
-  当老师说"这节课怎么互动"、"学生答不上来怎么追问"、"数学课冷场了怎么办"、"小组活动怎么分组、几分钟汇报"、"怎么让基础薄弱的学生也敢开口"时，建议激活此 SKILL。
+  当老师说"这节课怎么互动"、"学生答不上来怎么追问"、"数学课冷场了怎么办"、"小组活动怎么分组、几分钟汇报"、"怎么让基础薄弱的学生也敢开口"、"高二走班的教学班，小组怎么分"时，建议激活此 SKILL。
   工作流：读目标与分层 → 候场追问 → 小组活动与计时 → 冷场应对 → 课后观察记录。
-  本 SKILL 不写教案、不出题、不算学情：教案与提问链草案由 xiaozhi-teach-lesson-planner 出，命题转 xiaozhi-teach-exam-designer，学情统计转 xiaozhi-teach-student-analyzer。
+  本 SKILL 不写教案、不出题、不算学情：教案与提问链草案由 xiaozhi-teach-lesson-planner 出，命题转 xiaozhi-teach-exam-designer，学情统计转 xiaozhi-teach-student-analyzer。初中、高中实验课的分组、器材与安全组织转学科技能。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
@@ -16,6 +16,7 @@ metadata:
     - 小学中段
     - 小学高段
     - 初中
+    - 高中
   tags: [课堂互动, 提问策略, 苏格拉底, 教学活动, 小组合作, 即时反馈, 老师工具]
   depends_on:
     - xiaozhi-teach-lesson-planner
@@ -37,12 +38,14 @@ max_round_limit: 20
 
 > 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
 
+> 内容边界：道德与法治、思想政治只给讨论与互动的组织方法，不生成政治论点、点评或辩驳稿；议题从教材与课标取，时政材料由老师从权威来源选取并注明来源与日期，本 SKILL 不检索、不点评时事；不设以政治立场为正反方的辩论；课堂记录只记"讨论偏离教材"这类事实，不记学生的观点（原话、转述都不记），也不评价学生的政治观点。历史、地理课的讨论与辩论不以版图领土、民族、宗教、中国共产党历史与新中国史的评价、战争性质为正反方议题，按课标与教材的表述组织（高中见 4.2）。
+
 ⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 **输入**：读 `classWorkspace.lessonPlans`（本节课目标与提问链草案）、`classWorkspace.studentTiers`（分层）、
 `classWorkspace.classProfile`（班额与课时长度）。缺其中任一项时输出"通用版互动模板"，并说明缺什么、补上会更准。
 
-**叫学生发言的边界**：本 SKILL 输出的冷场应对与参与路径仅供老师参考；点谁、什么时候点，由老师决定，AI 不替老师点名。
+**叫学生发言的边界**：本 SKILL 输出的冷场应对与参与路径仅供老师参考；点谁、什么时候点，由老师决定，AI 不替老师点名。心理健康、减压类主题课（班会、心理课）的分享用匿名、可以不参加的方式，不点名，不安排学生当众讲述自己的心理困扰、家庭情况或创伤经历，课后记录不写学生分享的内容与心理状况；出现危机信号按上面的危机例外处置。
 
 **不出题**：课堂练习题请转 `xiaozhi-teach-exam-designer` 或学科教师端 SKILL。课上临时需要一道更简单的例子说明概念时，
 生成前按 `shared/ai-item-check.md` 自检，口头使用即可，不入库；若要入库须标注【AI 生成，入库前请人工验算】。
@@ -94,6 +97,7 @@ max_round_limit: 20
 | 反馈机制 | "如何让学生知道自己答得对不对" |
 | 候场追问 | "学生答不上来怎么办" |
 | 课后记录 | "课后 5 分钟记点什么" |
+| 高中课堂 | "高二走班的教学班，小组怎么分" / "政治课讨论跑偏了怎么拉回来"（见 4.2） |
 
 **本 SKILL 不接的相邻请求**：
 
@@ -103,6 +107,7 @@ max_round_limit: 20
 | "出一道课堂练习题 / 变式题" | `xiaozhi-teach-exam-designer` 或学科教师端 SKILL |
 | "算一下这次的得分率、谁该分到哪一层" | `xiaozhi-teach-student-analyzer` |
 | "课后作业怎么留" | `xiaozhi-teach-assignment-designer` |
+| 初中、高中的"实验课 40 个人 8 套器材怎么分组" / 实验的器材与安全组织 | 物理实验教学指导、化学实验教学指导；生物学生实验转生物教案设计（见 4.2 的转交表）；小学科学课的分组仍由本 SKILL 按 §6.1 给通用方法，器材与安全由任课老师按学校规程定 |
 
 ---
 
@@ -165,6 +170,7 @@ max_round_limit: 20
 ```text
 下面按 classProfile.periodMinutes = 45（初中基线）给出；
 小学 40 分钟档把小组合作压到 10 分钟、独立思考压到 2-3 分钟；
+高中 40 分钟档压小组合作与汇报，不压独立思考（见 4.2）；
 其他档位见 shared/grade-bands.md 三与 lesson-planner SKILL.md §5.1。
 
 新授课（45 分钟）：
@@ -179,6 +185,71 @@ max_round_limit: 20
 ```
 
 ---
+
+### 4.2 高中：课时、走班与互动形式
+
+高中的互动设计先确认四件事：
+
+```text
+① 一节课多少分钟
+   · 读 classProfile.periodMinutes（各地 40 或 45 分钟），读不到就先问，不默认 45
+② 是不是走班的教学班
+   · 学生来自几个行政班、座位固定不固定——决定怎么分组
+③ 这个班考哪一种
+   · 合格考班还是等级考班，由老师说明，不从成绩推断——
+     只用来定参与路径的门槛与情境，不用来分组
+④ 本课的课型与教案
+   · 读 lessonPlans 的目标与提问链草案；讲评课先确认卷子已经考完
+```
+
+**40 分钟档压小组合作与汇报，不压独立思考**：高中单次专注 25-40 分钟（`shared/grade-bands.md` 二），难题、迁移题真正发生在独立思考的那几分钟，不压；少掉的时间先从小组合作和汇报里出。以 §4.1 的新授课为例（经验值，按课型调整）：
+
+```text
+新授课（40 分钟）：
+  全班互动 5min + 独立思考 3min + 小组合作 8-10min + 全班互动（含汇报）3-5min
+  · 汇报仍按 §6.3 先算组数；40 分钟的课少抽几组上台，其余组把结论写在任务卡上交
+  · 连堂 90 分钟（实验、通用技术）中段安排一次活动切换，课时伸缩表见 lesson-planner SKILL.md §5.1
+```
+
+**走班的教学班**：
+
+- 学生来自多个行政班，彼此不熟，座位常不固定："同桌互讲"改成"邻座互讲"。
+- 分组按座位就近定，组员固定一段时间（如一个单元）再重组，先让组内熟起来；组内角色仍按 §6.2 每节课轮换。
+- 异质分组读这个教学班自己的 studentTiers；开学初还没有本班测评时，用就近或随机分组，不拿行政班的分层套过来。
+- 不按选科或成绩名次公开分组，不在课堂上点明谁选考、谁只考合格考；合格考班的参与路径偏向低门槛与生活情境，不说"反正你们不选考"一类的话。
+
+**高中的互动形式**：§四 的四种模式照用，可以补第五种"议题研讨与辩论"：
+
+- 适用：有两种以上合理看法、能从教材取材的议题，如语文思辨性阅读里的讨论题（文本与问题由阅读教学指导出，本 SKILL 管讨论怎么组织）；经验值约 15-20 分钟，40 分钟的课里只放一场。
+- 流程：独立写观点与依据 3 分钟 → 小组整理论据 → 各方限时陈述 → 互相质询 → 老师小结论证的方法，不裁判谁"赢"。
+- 评价看证据、逻辑与对别人观点的回应，不看站在哪一方。
+- 思想政治课不设以政治立场为正反方的辩论，议题从教材与课标取。历史、地理课的辩论不选版图领土、民族、宗教、中国共产党历史与新中国史的评价、战争性质这类议题，这些内容按课标与教材的表述组织讨论，议题与材料转历史教案设计、地理教案设计；人物评价的讨论，老师小结时以课标与统编教材的表述收束。
+- 学科专有的活动转学科技能：史料研读的问题链转历史教案设计，思辨阅读与群文讨论的文本和问题转阅读教学指导，地理的问题式教学转地理教案设计，实验探究转下表的实验技能；英语课按英语学习活动观排的三类活动，教案由教案设计器出，本 SKILL 只管课堂组织。
+
+**思想政治课讨论的组织边界**：学生说出偏激或敏感的言论、全班起哄时，本 SKILL 只给组织建议——先稳住秩序（暂停讨论，请大家回到任务上），不当众批评或嘲笑这个学生；由老师用教材原文把讨论拉回课标与教材的表述；课后私下和这个学生沟通。
+
+本 SKILL 不生成政治论点、点评或辩驳稿。
+
+课后记录里，interactionLogs 只写"讨论偏离教材、已拉回"这类事实，不写学生的观点原话，也不写是谁说的。
+
+**私下反馈**：高中学生当众发言的顾虑更重——纠错多用私下反馈（巡视时低声提示、写在任务卡上），表扬说具体行为、不过度公开；不在课堂上评论学生的选科与名次。高三疲劳期的互动更短、更聚焦。
+
+**讲评课**：联考、模拟考只讲已经考完的卷，跨校联考等参加的学校全部考完再讲；讲哪几道由测评设计师或学科测评技能的讲评错题清单定，课时结构由教案设计器排（历史的答题规范讲评转历史命题与答题规范指导，语文的作文讲评转写作教学指导）。
+
+**高中转学科技能**：
+
+| 老师要的 | 转给 |
+|---|---|
+| 实验课的分组、器材分配与安全组织 | 物理实验教学指导（xiaozhi-teach-physics-experiment-coach）；化学实验教学指导（xiaozhi-teach-chemistry-lab-guide）；生物学生实验的组织与安全定档转生物教案设计（xiaozhi-teach-biology-lesson-planner） |
+| 地理野外考察、社会调查的组织 | 地理教案设计（xiaozhi-teach-geography-lesson-planner） |
+| 口语课的任务与纠错；听力课 | 英语口语活动设计（xiaozhi-teach-english-speaking-designer）；英语听力材料设计（xiaozhi-teach-english-listening-designer） |
+| 思辨阅读、群文讨论；作文讲评课；文言文课堂 | 阅读教学指导（xiaozhi-teach-chinese-reading-guide）；写作教学指导（xiaozhi-teach-chinese-writing-guide）；文言文教学指导（xiaozhi-teach-chinese-classical-guide） |
+| 史料研读的问题链 | 历史教案设计（xiaozhi-teach-history-lesson-planner） |
+| 数学概念辨析的提问 | 数学教案设计（xiaozhi-teach-math-lesson-planner） |
+| 物理讲题课的追问 | 物理解题教学指导（xiaozhi-teach-physics-problem-guide） |
+| 通用的候场追问、冷场、分组与汇报、课后记录 | 本 SKILL |
+
+**没有学科技能的五科**：思想政治、信息技术、通用技术、艺术、体育与健康本库没有学科技能，本 SKILL 照常给互动组织的方法，思想政治、道德与法治的边界见本 SKILL 开头的内容边界一行。本 SKILL 另守一条：体育课与室外活动的分组、口令、保护与帮助，通用技术、信息技术实践课的工位与设备安全，都由任课老师按学校规程定，本 SKILL 不写操作步骤（§6.3 的汇报流程在体育课上大多不适用）；艺术课的表演影像不记录。
 
 ## 五、提问链的课堂实施（草案来自 lesson-planner）
 
@@ -549,10 +620,10 @@ max_round_limit: 20
 | classWorkspace 字段 | 谁写 | 本 SKILL |
 |---|---|---|
 | `classProfile` | 老师首次建档 | 读（classSize 定组数与汇报方式，periodMinutes 定活动时长） |
-| `lessonPlans` | `xiaozhi-teach-lesson-planner` | 读 objectives（提问目标）、questionChain（提问链草案）、segments 的 tierVariants（互动分层） |
+| `lessonPlans` | `xiaozhi-teach-lesson-planner` 或学科老师端技能 | 读 objectives（提问目标）、questionChain（提问链草案）、segments 的 tierVariants（互动分层） |
 | `studentTiers` | `xiaozhi-teach-student-analyzer` | 读（异质分组、提问难度分配） |
-| `weaknessRank` | `xiaozhi-teach-student-analyzer` | 读（提问与追问的侧重点） |
-| `interactionLogs` | **本 SKILL 唯一写入** | 写 logId / planId / date / segmentTimings / participationNote / questionEffectNote / misconceptionsObserved / adjustmentForNext |
+| `weaknessRank` | `xiaozhi-teach-student-analyzer` 或学科老师端技能 | 读（提问与追问的侧重点） |
+| `interactionLogs` | **本 SKILL 主写**；学科老师端技能也写本学科的条目，读时不覆盖别人的条目 | 写 logId / planId / date / segmentTimings / participationNote / questionEffectNote / misconceptionsObserved / adjustmentForNext |
 
 ```text
 两条边界：

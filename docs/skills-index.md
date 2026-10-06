@@ -2,7 +2,7 @@
 
 > 由 `scripts/gen-docs.mjs --write` 从各 SKILL.md 的 frontmatter 生成，**请勿手改**；CI 用 `--check` 核对。
 
-全库 83 个 SKILL（学生端 49 + 老师端 34）+ 1 个开发者工具，298 份 references。
+全库 83 个 SKILL（学生端 49 + 老师端 34）+ 1 个开发者工具，299 份 references。
 
 ## 学生端 · 通用（13）
 
@@ -102,12 +102,12 @@
 
 | SKILL | 目录名 | 分类 | 适用学段 | 依赖 | 版本 |
 |---|---|---|---|---|---|
-| 作业设计师 | `xiaozhi-teach-assignment-designer` | 老师通用 | 小学中段、小学高段、初中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer` | 2.10.0 |
-| 课堂互动教练 | `xiaozhi-teach-classroom-coach` | 老师通用 | 小学中段、小学高段、初中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer` | 2.10.0 |
-| 测评设计师 | `xiaozhi-teach-exam-designer` | 老师通用 | 小学中段、小学高段、初中 | — | 2.10.0 |
-| 教案设计器 | `xiaozhi-teach-lesson-planner` | 老师通用 | 小学中段、小学高段、初中 | `xiaozhi-teach-student-analyzer` | 2.10.0 |
+| 作业设计师 | `xiaozhi-teach-assignment-designer` | 老师通用 | 小学中段、小学高段、初中、高中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer` | 2.10.0 |
+| 课堂互动教练 | `xiaozhi-teach-classroom-coach` | 老师通用 | 小学中段、小学高段、初中、高中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer` | 2.10.0 |
+| 测评设计师 | `xiaozhi-teach-exam-designer` | 老师通用 | 小学中段、小学高段、初中、高中 | — | 2.10.0 |
+| 教案设计器 | `xiaozhi-teach-lesson-planner` | 老师通用 | 小学中段、小学高段、初中、高中 | `xiaozhi-teach-student-analyzer` | 2.10.0 |
 | 复习规划师 | `xiaozhi-teach-review-planner` | 老师通用 | 小学中段、小学高段、初中、高中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-exam-designer` | 2.10.0 |
-| 学情分析师 | `xiaozhi-teach-student-analyzer` | 老师通用 | 小学中段、小学高段、初中 | `xiaozhi-teach-exam-designer` | 2.10.0 |
+| 学情分析师 | `xiaozhi-teach-student-analyzer` | 老师通用 | 小学中段、小学高段、初中、高中 | `xiaozhi-teach-exam-designer` | 2.10.0 |
 
 ## 老师端 · 独立教师（8）
 

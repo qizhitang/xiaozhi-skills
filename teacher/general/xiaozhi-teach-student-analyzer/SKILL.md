@@ -2,9 +2,9 @@
 name: xiaozhi-teach-student-analyzer
 description: >
   把班级成绩表变成可执行的教学调整。
-  当老师说"帮我分析这次单元测评"、"这道题全班错了六成"、"班级数学两极分化怎么办"、"哪些知识点得分率最低"、"我要客观数据跟家长聊"时，建议激活此 SKILL。
+  当老师说"帮我分析这次单元测评"、"这道题全班错了六成"、"班级数学两极分化怎么办"、"哪些知识点得分率最低"、"我要客观数据跟家长聊"、"高二联考的逐题分析"、"合格考模拟后哪些知识点要补"时，建议激活此 SKILL。
   工作流：导入逐题分数 → 班级画像 → 知识点热力图 → 分层 → 教学调整建议。
-  本 SKILL 不出卷、不写教案、不排复习计划：命题与讲评设计转 xiaozhi-teach-exam-designer，教案转 xiaozhi-teach-lesson-planner，复习排期转 xiaozhi-teach-review-planner。
+  本 SKILL 不出卷、不写教案、不排复习计划：命题与讲评设计转 xiaozhi-teach-exam-designer，教案转 xiaozhi-teach-lesson-planner，复习排期转 xiaozhi-teach-review-planner；高中的学科错因细化先转学科技能（见正文）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
@@ -16,6 +16,7 @@ metadata:
     - 小学中段
     - 小学高段
     - 初中
+    - 高中
   tags: [学情分析, 数据诊断, 班级报告, 弱项识别, 差异化教学, 老师工具]
   depends_on:
     - xiaozhi-teach-exam-designer
@@ -35,11 +36,19 @@ max_round_limit: 25
 
 > 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
 
+> 内容边界：道德与法治、思想政治的统计照常做，不评价学生的政治观点或立场；开放题失分只按通用四维归因，不下"立场问题""价值观偏差"一类结论。
+
 ⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 **不做的三件事**：不预测未来分数与排名；不在样本不足时下趋势结论（证据不足就写"证据不足"）；不替老师判断学生品行。
 
 **不出题**：命题请转 `xiaozhi-teach-exam-designer`。分析中确需举一道同类题说明错因时，生成前按 `shared/ai-item-check.md` 自检，并标注【AI 生成，入库前请人工验算】。
+
+### 试题保密
+
+启用前的统考试题不得输入本 SKILL——国家、省、地（市）级教育统一考试启用前的试题、参考答案、评分标准属国家秘密（《教育工作中国家秘密及其密级具体范围的规定》），区县级、校级统考按当地保密要求同样处理。
+考后分析只需要逐题得分与题号→知识点映射，不需要题干，统考、联考的卷子不用把题目发过来；启用前的统考、联考试题不输入，所有考点考完之前都不算已经考完。老师说明正在为统考命题（包括拿命题稿在本班试测）时，本 SKILL 只讲统计方法，不接收该卷的试题与试测成绩，也不为该卷做逐题分析或改题建议。已经考完的考试照常做考后分析。
+依据《中小学生成式人工智能使用指南（2025年版）》教师一节：“严禁将个人信息、考试试题等敏感数据输入AI工具”。
 
 ### 隐私与数据控制入口
 
@@ -175,7 +184,7 @@ max_round_limit: 25
 ### 4.1 必备指标（阈值一律按得分率，不按百分制分数）
 
 先取 `classWorkspace.classProfile.fullScore`（或本卷 `examBlueprints[].fullScore`）把分数换算成**得分率 = 得分 ÷ 满分**，
-所有警戒值都对得分率生效，这样 100/120/150 分卷可以横向比较。
+所有警戒值都对得分率生效，这样 100/120/150 分卷可以横向比较。等级赋分、标准分与位次都不是得分率，不能拿来算 P、D、热力图，也不套警戒值，一律用原始的逐题得分（高中见 §8.4）。
 
 | 指标 | 含义 | 警戒值（得分率口径） |
 |------|------|--------|
@@ -184,7 +193,7 @@ max_round_limit: 25
 | 标准差（换算为得分率） | 班级内差距 | > 0.15 说明分化明显 |
 | 极差（最高−最低得分率） | 两端跨度 | > 0.40 说明两极分化 |
 | 优秀率（得分率 ≥ 0.85） | 拔尖学生占比 | < 10% 偏低 |
-| 及格率（得分率 ≥ 0.60） | 基础达标率 | < 60% 说明大面积未达标 |
+| 及格率（得分率 ≥ 0.60） | 基础达标率（不是合格线：高中合格考模拟的合格线由老师按本地考试说明给，见 §8.4） | < 60% 说明大面积未达标 |
 | 低分率（得分率 < 0.40） | 严重落后学生占比 | > 15% 需重点关注 |
 
 > 这些警戒值是**经验值**，随卷子难度浮动；难度偏离预期时（见 §4.3）先怀疑卷子，再怀疑学生。
@@ -255,8 +264,9 @@ max_round_limit: 25
   · 缺考、中途离场、雷同卷先剔除再统计，并写明剔除了几份。
 
 ■ 写入
-  以上 P / D / groupingMethod / flag 由**本 SKILL 唯一写入** `classWorkspace.itemStats`；
+  以上 P / D / groupingMethod / flag 由**本 SKILL 主写** `classWorkspace.itemStats`；
   α 与整卷指标写入 `classWorkspace.classSummaries`。
+  同一 examId 已有条目的（如数学测评设计写入的），先读、比对，不另写一套；口径不一致时由老师定用哪一份（做法见 §8.4，各学段都照这样做——数学测评设计也写初中数学卷）。
   `xiaozhi-teach-exam-designer` 只写考前的**预期难度** `examBlueprints[].items[].expectedP`，不写实际值。
 ```
 
@@ -331,7 +341,8 @@ max_round_limit: 25
 ### 6.1 趋势判定规则
 
 ```text
-数据要求：近 4 次测评，全部换算成得分率后再比较（不同满分的卷子不能直接比分数）
+数据要求：近 4 次测评，全部换算成得分率后再比较（不同满分的卷子不能直接比分数；
+          高中只考必修的卷与含选择性必修的卷分开比较，见 §8.4）
 
 稳步上升：4 次得分率中至少 3 次逐次上升，且最近 1 次高于这 4 次的均值   🟢
 稳定：    4 次得分率极差 < 0.05                                          🟢
@@ -427,6 +438,68 @@ C 层任务（拔尖学生）：
 
 ---
 
+### 8.4 高中：考试口径、赋分、选科与走班
+
+高中的成绩分析先问清四件事，再进第三节的流程：
+
+```text
+① 哪场考试
+   · 校内的单元测、期中、期末，统考或联考，还是合格考、等级考（各地也叫选考）、
+     高考的语文、数学、外语的模拟卷
+   · 统考、联考在所有考点都考完之后才分析，见开头"试题保密"段
+② 本地当年的考试说明
+   · 合格考模拟的合格线由老师按本地考试说明给出（原始分或得分率，换算成得分率后用）；
+     没给的标"待老师按本地考试说明确认"，不拿 §4.1 的及格率 0.60 代替
+③ 这个教学班考哪一种
+   · 合格考班还是等级考班——班级工作区没有选科这一项，由老师说明，
+     不从成绩或其他字段推断
+④ 这张卷考到哪
+   · 只考必修，还是含选择性必修；细目表上有"范围"列或老师说明了每题属于哪一块时，
+     两部分分开统计
+```
+
+建档里有的字段先读：`classProfile.subject`、`classProfile.gradeLevel`，分清学科与年级；没有的问老师。`classProfile.classId` 对应教学班。
+
+**只用原始的逐题得分**：等级考的赋分由考试机构按考生在全体考生中的位置换算，不是本卷的得分率——不能拿来算 P、D、热力图，也不套 §4.1 的警戒值。等级考的模拟卷（校内或联考）一律用原始逐题得分；老师只拿到赋分或等级的，说明这些数据不能用于本 SKILL 的分析，请老师提供原始逐题得分，只有原始总分时按 §4.0 做总分级分析。本 SKILL 不推算学生的赋分、等级或位次：班级与联考的数据算不出赋分，赋分本身也是排名。
+
+**学业质量水平**：分析单位仍是知识点。细目表上标了"核心素养""学业质量水平"列的（这两列工作区没有，只在细目表上；历史命题与答题规范指导按约定格式把它们写进了 knowledgePoint，也可以照着拆开），本次报告可以按列汇总得分率，只写"本卷标为水平 X 的题，班级得分率是多少"，不写"该生达到了学业质量水平 X"——合格与等级由省级考试认定。各学科的水平分级不同，见 `shared/hs-subject-standards.md` 第一节，不跨学科换算。
+
+**合格考的模拟**：报告写低于老师所给合格线的人数；老师要名单时只列学号或座号，只给老师本人，不进家长版，也不当作学生的身份标签。只说本次模拟有几人低于合格线，不说谁"会过""不会过"。
+
+**必修与选择性必修分开**：只考必修的卷与含选择性必修的卷，不放进同一条趋势线比较（§6.1 的"整卷 P 相差 > 0.15 不直接比"照用）。同一张卷里两部分都有时，分开给得分率；合格考与等级考的学生做同一张卷时，按老师说明的分组分别统计，只考合格考的那一组，不按选择性必修题给他们下弱项结论。
+
+**走班与样本**：不跨教学班合并个人成绩；跨班只在两卷相同时比较班级层面的指标。走班的教学班人数可能不到 20 人，§4.3 的样本量提示照用（< 20 人不输出 D 与 α，标 🔴 样本不足）；分组统计时按每组的人数判，人少的组只给得分率与人数。
+
+**选科不记录**：
+
+- studentAlias 只写学号或座号，studentTiers.basis 只写得分率依据，都不拼接选科、走班层级或姓名。
+- 老师贴来的成绩表里有选科列的，只在本次会话里分组统计，不写进任何字段。
+- 不读学生端学习档案里的选科信息（basicInfo.subjectSelection）。
+- 不从成绩推断谁该选什么科，不做选科、换科建议。
+
+**分层走班不是 studentTiers**：学校的"分层走班"也常分 A、B、C 层，由学校按自己的办法定；本 SKILL 的 A/B/C 只用来安排任务难度（§8.2 规则③），两者不是一回事——不拿 studentTiers 去定走班的层，也不出走班或分班名单。
+
+**学分**：模块考试、学分认定、合格与毕业由学校按课程方案与本地规定办，本 SKILL 不判定；本 SKILL 的分层、名单与报告也不作学分认定或综合素质评价的依据。
+
+**家长版**：§10.2 照用；高中另外不写赋分与等级预测，年级或联考的位次、百分位，选科或换科建议，"合格考会不会过"的预测，也不写临界生名单。授权位照旧逐次查，高中由学生本人决定（`shared/vocab.md` §8），高三有已满 18 周岁的学生，同样以学生本人的同意为准；老师拿不准时先问学生本人。
+
+**itemStats 与 classSummaries**：写入前先查同一 examId 在工作区里有没有条目（工作区不记写入方；数学卷常由数学测评设计先写，本 SKILL 上次写的也算）。有就先读，按本 SKILL 的口径重算比对，不另写一套：数字与口径都一致的不再写；数字有出入（如老师更正过逐题得分后重跑），或 groupingMethod 不同、sampleSize 对不上（剔除的答卷份数不同）时，把两套数字给老师看，由老师定用哪一份——选本 SKILL 的，经老师确认后替换该 examId 的条目；选已有的，本 SKILL 只读。
+
+**高中转给谁**：
+
+| 老师要的 | 转给 |
+|---|---|
+| 数学的班级错因归类与个体错因诊断 | 班级错因分析（xiaozhi-teach-math-error-analyzer） |
+| 英语听说读写的四维能力画像 | 英语综合测评（xiaozhi-teach-english-assessment） |
+| 语文作文的等级分布与讲评 | 写作教学指导（xiaozhi-teach-chinese-writing-guide） |
+| 历史答题规范的讲评 | 历史命题与答题规范指导（xiaozhi-teach-history-assessment-guide） |
+| 物理解题的讲评与变式 | 物理解题教学指导（xiaozhi-teach-physics-problem-guide） |
+| 生物学、地理合格考的复习排期；等级考的复习排期 | 生地学业水平考试复习规划（xiaozhi-teach-bio-geo-review-planner）；复习规划师（xiaozhi-teach-review-planner） |
+| 独立教师的家长沟通 | 家长沟通助手（xiaozhi-teach-parent-communication） |
+| 物理、化学、生物学、地理的班级错因细化 | 老师端本库暂无专门技能，本 SKILL 按通用四维（`shared/vocab.md` §1）做 |
+
+**本库没有学科技能的五科**（思想政治、信息技术、通用技术、艺术、体育与健康）：统计照常做，各科的边界见 `shared/hs-subject-standards.md` 第十节。思想政治的开放题失分只按通用四维归因（答题不规范归"方法用错"），不评价学生的观点或立场，不下"立场问题""价值观偏差"一类结论。
+
 ## 九、与其他 SKILL 的数据接口
 
 老师通用 6 个 SKILL 共用同一份数据契约 `shared/class-teaching-workspace.schema.json`，
@@ -436,16 +509,16 @@ C 层任务（拔尖学生）：
 
 | classWorkspace 字段 | 谁写 | 本 SKILL 的角色 |
 |---|---|---|
-| `classProfile` | 老师首次建档 | 读（取 fullScore、classSize、gradeBand 做换算） |
-| `examBlueprints` | `xiaozhi-teach-exam-designer` | 读（题号→知识点、认知层级、难度档、expectedP） |
+| `classProfile` | 老师首次建档 | 读（取 fullScore、classSize、gradeBand 做换算；高中另读 `classProfile.subject`、`classProfile.gradeLevel` 分清学科与年级，见 §8.4） |
+| `examBlueprints` | `xiaozhi-teach-exam-designer` 或学科老师端技能 | 读（题号→知识点、认知层级、难度档、expectedP） |
 | `itemScores` | 老师导入（本 SKILL 引导） | 读（唯一的逐题分数来源） |
-| `homeworkAssignments` | `xiaozhi-teach-assignment-designer` | 读 `completionSummary` 作为辅助证据 |
-| `interactionLogs` | `xiaozhi-teach-classroom-coach` | 读 `misconceptionsObserved` 作为辅助证据 |
-| `itemStats` | **本 SKILL 唯一写入** | 写 pValue / dValue / groupingMethod / flag |
-| `classSummaries` | **本 SKILL 唯一写入** | 写 mean / sd / meanRate / distribution / reliabilityAlpha / dataCompleteness |
-| `weaknessRank` | 本 SKILL + 学科错因技能 | 写 knowledgePoint / errorRate / dimension / evidenceExamIds；**`stubbornCount` 由本 SKILL 唯一累加**，学科技能（math-error-analyzer、chinese-writing-guide）只补本学科条目，不碰该计数 |
+| `homeworkAssignments` | `xiaozhi-teach-assignment-designer` 或学科老师端技能 | 读 `completionSummary` 作为辅助证据 |
+| `interactionLogs` | `xiaozhi-teach-classroom-coach` 或学科老师端技能 | 读 `misconceptionsObserved` 作为辅助证据 |
+| `itemStats` | **本 SKILL 主写**；学科老师端技能（目前是数学测评设计 xiaozhi-teach-math-exam-designer）也写本学科卷子的条目 | 写 pValue / dValue / groupingMethod / flag；同一 examId 已有条目的（不论哪个技能写的）先读、比对，不另写一套，口径不一致时由老师定用哪一份（§8.4） |
+| `classSummaries` | **本 SKILL 主写**；数学测评设计也写数学卷的条目 | 写 mean / sd / meanRate / distribution / reliabilityAlpha / dataCompleteness；同一 examId 的规则同上 |
+| `weaknessRank` | 本 SKILL + 学科错因技能 | 写 knowledgePoint / errorRate / dimension / evidenceExamIds；**`stubbornCount` 由本 SKILL 唯一累加**，学科技能（math-error-analyzer、chinese-writing-guide、english-assessment、english-listening-designer、english-speaking-designer）只补本学科条目，不碰该计数 |
 | `studentTiers` | **本 SKILL 唯一写入** | 写 studentAlias / tier / basis / updatedAt |
-| `lessonPlans` | `xiaozhi-teach-lesson-planner` | 只读（看上节课覆盖了哪些 sourceWeaknessIds） |
+| `lessonPlans` | `xiaozhi-teach-lesson-planner` 或学科老师端技能 | 只读（看上节课覆盖了哪些 sourceWeaknessIds） |
 | `reviewPlans` | `xiaozhi-teach-review-planner` 主写 + 学科技能（english-assessment、english-listening-designer、bio-geo-review-planner）只补本学科条目 | 只读 |
 
 ### 9.2 下游怎么用本 SKILL 的产出
@@ -461,7 +534,8 @@ xiaozhi-teach-review-planner ← 读 weaknessRank（复习重点）、classSumma
 ### 9.3 与学科教师 SKILL / 独立教师包的关系
 
 - 学科命题与学科错因细化由 `xiaozhi-teach-math-exam-designer`、`xiaozhi-teach-math-error-analyzer`、
-  `xiaozhi-teach-physics-lesson-planner` 等学科端 SKILL 承担；本 SKILL 只做学科无关的统计与分层。
+  `xiaozhi-teach-english-assessment`、`xiaozhi-teach-history-assessment-guide` 等学科端 SKILL 承担；本 SKILL 只做学科无关的统计与分层。
+- 高中班级的学科转交见 §8.4 的转交表；物理、化学、生物学、地理的班级错因细化，老师端本库暂无专门技能。
 - **若老师同时安装了独立教师包**（`xiaozhi-teach-lesson-log`、`xiaozhi-teach-homework-tracker`），
   可把它们的课堂/作业记录作为补充证据；**未安装时本 SKILL 完全可独立运行**，不把它们列为必需输入。
 
@@ -501,6 +575,8 @@ xiaozhi-teach-review-planner ← 读 weaknessRank（复习重点）、classSumma
        ——横向位次会把沟通推向比较，且随卷子难度剧烈波动，不是可行动的信息
 ❌ 禁止：单独分数 + 排名的组合
 ❌ 禁止：人格判断、焦虑话术
+❌ 高中另外不写：赋分与等级预测、年级或联考的位次、选科或换科建议、"合格考会不会过"的预测；
+       授权由学生本人决定，已满 18 周岁的学生也一样（见 §8.4）
 ```
 
 ### 10.3 跨 SKILL 共享脱敏
@@ -538,7 +614,7 @@ xiaozhi-teach-review-planner ← 读 weaknessRank（复习重点）、classSumma
     ──→ xiaozhi-teach-classroom-coach（weaknessRank / studentTiers）
     ──→ xiaozhi-teach-review-planner（weaknessRank / classSummaries）
     ──→ xiaozhi-teach-exam-designer（itemStats：题目质量）
-    ──→ 学科教师 SKILL（xiaozhi-teach-math-error-analyzer 等，做学科错因细化）
+    ──→ 学科教师 SKILL（xiaozhi-teach-math-error-analyzer 等，做学科错因细化；高中的转交表见 §8.4）
     ··→ 若已安装独立教师包：xiaozhi-teach-lesson-log / homework-tracker 可作补充证据（可选）
 ```
 

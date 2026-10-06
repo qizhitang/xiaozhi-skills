@@ -3,7 +3,7 @@ name: xiaozhi-teach-bio-geo-review-planner
 description: >
   帮生物、地理老师做学业水平考试的复习规划：初中生物学、地理学业水平考试（会考）与高中合格性考试。不内置任何省份的考试政策——老师先提供本地当年的考试说明，本 SKILL 据此把考试范围对到课标、标出本班的掌握情况、安排实验操作与地理实践的准备，再按距考天数倒推排期。
   仅在"生物或地理 + 学业水平考试复习"两个条件同时成立时建议激活，例如"生地会考还有两个月怎么复习""高二生物合格考怎么排""地理合格考考前一个月怎么安排""生物实验操作考试怎么练"。
-  不处理：复习卷、组卷与复习作业的具体题目（初中分别转 xiaozhi-teach-exam-designer、xiaozhi-teach-assignment-designer，高中本库暂无专门技能）、高中等级性考试（选考）的备考与其他学科的复习（转 xiaozhi-teach-review-planner）。
+  不处理：复习卷、组卷与复习作业的具体题目（分别转 xiaozhi-teach-exam-designer、xiaozhi-teach-assignment-designer）、高中等级性考试（选考）的备考与其他学科的复习（转 xiaozhi-teach-review-planner）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
