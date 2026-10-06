@@ -60,8 +60,8 @@ max_round_limit: 25
       → xiaozhi-teach-math-error-analyzer（班级错因分析）
   · 学员分层（A/B/C tier）、个体学情画像、重点关注名单
       → xiaozhi-teach-student-analyzer（学情分析师）
-  · 补救计划、教学干预、课时增减、个别辅导安排、讲评用的例题与变式
-      → xiaozhi-teach-math-lesson-planner；讲评课的环节转 xiaozhi-teach-lesson-planner；复习排期转 xiaozhi-teach-review-planner
+  · 补救计划、教学干预、课时增减、个别辅导安排、讲评课（环节、例题与变式）
+      → xiaozhi-teach-math-lesson-planner；复习排期转 xiaozhi-teach-review-planner
   · 家长沟通措辞、成绩告知、约谈安排
       → xiaozhi-teach-parent-communication（家长沟通助手）
   · 非数学学科测评 → xiaozhi-teach-exam-designer
@@ -152,7 +152,7 @@ max_round_limit: 25
 | "这次数学错得最多的是什么原因" | xiaozhi-teach-math-error-analyzer |
 | "哪几个学生要重点关注 / 怎么分层" | xiaozhi-teach-student-analyzer |
 | "考完这块该怎么补" | xiaozhi-teach-math-lesson-planner |
-| "讲评课怎么上" | xiaozhi-teach-lesson-planner（环节）；讲评用的例题与变式转 xiaozhi-teach-math-lesson-planner |
+| "讲评课怎么上" | xiaozhi-teach-math-lesson-planner（整节，含环节、例题与变式） |
 | "期末前复习怎么排" | xiaozhi-teach-review-planner |
 | "成绩怎么跟家长说" | xiaozhi-teach-parent-communication |
 | "这道数学题怎么讲给学生" | xiaozhi-teach-math-lesson-planner |
@@ -494,7 +494,7 @@ aiGenerated=true，标注【AI 生成，入库前请人工验算】，
 
 ■ 讲评
   · 及时安排（本 SKILL 只提示"该讲评了"，不设计讲评课）
-  · 讲评课的环节转 xiaozhi-teach-lesson-planner，讲评用的例题与变式转 xiaozhi-teach-math-lesson-planner
+  · 讲评课（环节、例题与变式）转 xiaozhi-teach-math-lesson-planner
 ```
 
 ### 8.2 讲评的交接口（本 SKILL 不设计讲评课）
@@ -510,15 +510,14 @@ aiGenerated=true，标注【AI 生成，入库前请人工验算】，
 ❌ 不在本 SKILL 内做
   · 共性错因归类、七类错因分布  → xiaozhi-teach-math-error-analyzer
   · 个体错因与改进方向          → xiaozhi-teach-math-error-analyzer
-  · 讲评课的环节与时间编排      → xiaozhi-teach-lesson-planner
-  · 讲评用的例题与变式训练设计  → xiaozhi-teach-math-lesson-planner
+  · 讲评课的环节、例题与变式    → xiaozhi-teach-math-lesson-planner
   · 错题入库与后续练习          → xiaozhi-teach-resource-library
   · 学员档案更新                → 见"接口"节的写回边界，须老师逐条确认
 
 交接话术：
   "这次 T5、T9、T12 三道题 P 偏低，逐题数据我整理好了。
    要做错因归类的话，我把 examId 和 itemStats 交给〔班级错因分析〕，
-   讲评课的环节交给〔教案设计器〕、讲评用的变式交给〔数学教案〕——需要我现在交过去吗？"
+   讲评课（环节、例题与变式）交给〔数学教案〕——需要我现在交过去吗？"
 ```
 
 ---
@@ -529,7 +528,7 @@ aiGenerated=true，标注【AI 生成，入库前请人工验算】，
 > 哪些知识点得分率低。**再往下一步——为什么错、谁要补、怎么补、怎么跟家长说——
 > 不属于本 SKILL**：错因归类与个体诊断转 `xiaozhi-teach-math-error-analyzer`，
 > 学员分层与重点关注名单转 `xiaozhi-teach-student-analyzer`，
-> 补救与讲评用的变式转 `xiaozhi-teach-math-lesson-planner`，讲评课的环节转 `xiaozhi-teach-lesson-planner`，
+> 补救与讲评课（环节、例题与变式）转 `xiaozhi-teach-math-lesson-planner`，
 > 成绩告知转 `xiaozhi-teach-parent-communication`。
 
 ### 9.1 逐题 P / D（考后第一件事）
@@ -678,8 +677,7 @@ Cronbach α（写入 classSummaries[].reliabilityAlpha）：
 交出（只交字段，不代做下游判断）：
   → xiaozhi-teach-math-error-analyzer：examId + itemScores + itemStats
   → xiaozhi-teach-student-analyzer：examId + classSummaries
-  → xiaozhi-teach-math-lesson-planner：examId + itemStats 中 flag 异常的题号
-  → xiaozhi-teach-lesson-planner：examId + itemStats 中 flag 异常的题号（讲评课的环节）
+  → xiaozhi-teach-math-lesson-planner：examId + itemStats 中 flag 异常的题号（补救与讲评课）
 ```
 
 **写回学生端档案**：只走 `handoverType: "teacher_writeback"`，payload 为 `teacherWritebackData`；
@@ -730,8 +728,7 @@ Cronbach α（写入 classSummaries[].reliabilityAlpha）：
     <── xiaozhi-teach-lesson-planner（教学内容）
     ──→ xiaozhi-teach-math-error-analyzer（错因归类与个体诊断）
     ──→ xiaozhi-teach-student-analyzer（学员分层与重点关注名单）
-    ──→ xiaozhi-teach-math-lesson-planner（补救、讲评用的变式、教学调整）
-    ──→ xiaozhi-teach-lesson-planner（讲评课的环节）
+    ──→ xiaozhi-teach-math-lesson-planner（补救、讲评课、教学调整）
     ──→ xiaozhi-teach-review-planner（复习排期）
     ──→ xiaozhi-teach-parent-communication（成绩告知与家长沟通）
     ──→ xiaozhi-teach-resource-library（错题入库）

@@ -189,10 +189,10 @@
 
 ---
 
-## 六、讲评错题清单（本 SKILL 出清单，讲评课教案由 lesson-planner 出）
+## 六、讲评错题清单（本 SKILL 出清单，讲评课教案由 lesson-planner 或学科教案技能出）
 
 > 分工：**讲哪几道、按什么顺序讲、每道的目标错因** = 本 SKILL；
-> **讲评课的环节与时间分配** = `xiaozhi-teach-lesson-planner`（planType = 讲评）；
+> **讲评课的环节与时间分配** = `xiaozhi-teach-lesson-planner`（planType = 讲评；初中、高中的数学、生物学、地理卷，讲评课整节由该学科的教案技能排）；
 > **课堂提问与追问、谁来讲** = `xiaozhi-teach-classroom-coach`。
 
 ```text
@@ -217,6 +217,7 @@
 
 ■ 清单交付
   → xiaozhi-teach-lesson-planner：排讲评课教案（时间、环节、变式题安排）
+  → 初中、高中的数学、生物学、地理卷：数学教案设计、生物教案设计、地理教案设计排整节讲评课
   → 共性错题已在 classWorkspace.weaknessRank 中，不需要在这里重复登记
   → 学生个人错题归档：学生端错题本 SKILL
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -292,7 +293,7 @@
 - [ ] 题目版权（copyrightStatus）是否清晰
 - [ ] 是否只写了 expectedP，没有在考前编造 D
 - [ ] 试卷与数据字段中是否只用化名/座号，没有真实姓名
-- [ ] 讲评错题清单是否已生成并交给 lesson-planner
+- [ ] 讲评错题清单是否已生成并交给 lesson-planner 或学科教案技能
 
 ---
 

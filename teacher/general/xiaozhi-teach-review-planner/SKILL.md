@@ -2,7 +2,7 @@
 name: xiaozhi-teach-review-planner
 description: >
   把"从头再讲一遍"变成有间隔、有交叉、有取舍的复习排期。
-  当老师说"帮我安排期末复习计划"、"考前两周怎么排"、"高三一轮复习怎么排"、"物理合格考还有两个月怎么复习"、"数学单元复习怎么上"、"帮我梳理本章知识图谱"、"这几个知识点老混，怎么练"、"考前学生太紧张怎么办"时，建议激活此 SKILL。
+  当老师说"帮我安排期末复习计划"、"考前两周怎么排"、"高三一轮复习怎么排"、"物理合格考还有两个月怎么复习"、"数学单元复习怎么排"、"帮我梳理本章知识图谱"、"这几个知识点老混，怎么练"、"考前学生太紧张怎么办"时，建议激活此 SKILL。
   工作流：知识图谱 → 重难点 → 阶段策略 → 间隔回看与交叉练习排期 → 复习活动 → 考前状态。
   本 SKILL 只出复习"计划"，不出复习"作业"：具体题目与分层任务卡转 xiaozhi-teach-assignment-designer，复习卷转 xiaozhi-teach-exam-designer（高中按学科转，见正文）。生物、地理的会考与合格考复习转 xiaozhi-teach-bio-geo-review-planner，等级考仍归本 SKILL。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
@@ -100,7 +100,7 @@ max_round_limit: 30
 | 知识图谱 | "帮我梳理本章知识图谱" |
 | 重难点识别 | "本章重点是什么" |
 | 间隔与交叉 | "这几个知识点老混，怎么排练习" |
-| 复习活动 | "复习课怎么上不枯燥" |
+| 复习活动 | "复习活动怎么设计才不枯燥" |
 | 考前状态 | "考前学生太紧张怎么办" |
 | 高中合格考、等级考复习 | "物理合格考还有两个月怎么复习""化学等级考复习怎么排" |
 | 高三阶段复习 | "高三一轮复习怎么排""二轮专题期间怎么安排回看" |
@@ -113,12 +113,13 @@ max_round_limit: 30
 | "本章学完了，帮我设计复习作业""出一份复习练习" | `xiaozhi-teach-assignment-designer` | 这是**作业**：具体题目、分层任务卡、评分标准、预计时长 |
 | "帮我出一份复习卷" | `xiaozhi-teach-exam-designer` | 这是**测评**：细目表、难度配比、评分细则 |
 | "复习课这节怎么上" | `xiaozhi-teach-lesson-planner` | 这是**教案**：环节与时间矩阵 |
+| "八年级数学这节复习课怎么上"（点名数学、生物、地理） | `xiaozhi-teach-math-lesson-planner`、`xiaozhi-teach-biology-lesson-planner`、`xiaozhi-teach-geography-lesson-planner` | 点名这三科的复习课**教案**整节归学科教案技能，初中、高中都是 |
 | "生地会考怎么复习""高二生物合格考怎么排" | `xiaozhi-teach-bio-geo-review-planner` | 生物、地理的**学业水平考试**有专门技能（考点对照表、实验操作与地理实践的准备）；生物、地理的等级考复习仍归本 SKILL |
 
 > 一句话：**"计划"归 review-planner，"作业"归 assignment-designer。**
 > 本 SKILL 输出的是 `classWorkspace.reviewPlans`（哪天回看哪个知识点、哪几个知识点混着练），
 > 具体题目由 assignment-designer 按这张排期表去配。
-> 高中班级：复习课的环节由教案设计器排；作业与测评有学科老师端技能的先转学科技能，其余转上表的通用技能，见 §6.4。
+> 老师点名数学、生物、地理的复习课，初中、高中都整节转该学科的教案设计；高中班级其余学科复习课的环节由教案设计器排；作业与测评有学科老师端技能的先转学科技能，其余转上表的通用技能，见 §6.4。
 
 **说不清是哪一类时，先问再做**：老师的话同时像计划、教案、作业、测评时
 （例如"这章复习一下"），不要默认进本 SKILL 的流程，先问一句：
@@ -424,9 +425,11 @@ max_round_limit: 30
 
 ```text
 生物、地理的合格考    → xiaozhi-teach-bio-geo-review-planner；生物、地理的等级考复习归本 SKILL
-复习课的教案          → 环节由教案设计器（xiaozhi-teach-lesson-planner）排；复习用的例题、变式与练习
-                        先看该学科的老师端技能：数学、物理、化学、生物、地理、历史的教案设计，
-                        语文的阅读、写作、文言文教学指导，英语的听力材料设计与口语活动设计
+复习课的教案          → 数学、生物、地理整节转该学科的教案设计（xiaozhi-teach-math-lesson-planner、
+                        xiaozhi-teach-biology-lesson-planner、xiaozhi-teach-geography-lesson-planner）；
+                        其余学科的环节由教案设计器（xiaozhi-teach-lesson-planner）排，复习用的例题、变式
+                        与练习先看该学科的老师端技能：物理、化学、历史的教案设计（物理题的讲法转物理解题
+                        教学指导），语文的阅读、写作、文言文教学指导，英语的听力材料设计与口语活动设计
 复习卷                → 数学转 xiaozhi-teach-math-exam-designer，英语转 xiaozhi-teach-english-assessment，
                         历史转 xiaozhi-teach-history-assessment-guide；语文的文言文、现代文阅读、作文可用三个语文教学指导出练习；
                         整卷与其余学科的复习卷转测评设计师（xiaozhi-teach-exam-designer）
@@ -684,11 +687,12 @@ max_round_limit: 30
     <── xiaozhi-teach-lesson-planner（lessonPlans：教到哪、目标覆盖情况）
     <── xiaozhi-teach-assignment-designer（homeworkAssignments：已布置过什么）
     ──→ xiaozhi-teach-lesson-planner（reviewPlans → 每节复习课的教案）
+    ──→ xiaozhi-teach-math-lesson-planner、xiaozhi-teach-biology-lesson-planner、xiaozhi-teach-geography-lesson-planner（reviewPlans → 点名这三科的复习课教案）
     ──→ xiaozhi-teach-assignment-designer（reviewPlans → 按回看日排具体题目）
     ──→ xiaozhi-teach-exam-designer（reviewPlans → 复习测评范围对齐）
 ```
 
-> 高中班级：复习课的环节由教案设计器排，复习用的例题与变式、复习作业与复习卷有学科老师端技能的先转学科技能，见 §6.4。
+> 老师点名数学、生物、地理的复习课，初中、高中都整节转该学科的教案设计；高中班级其余学科复习课的环节由教案设计器排，复习用的例题与变式、复习作业与复习卷有学科老师端技能的先转学科技能，见 §6.4。
 
 **禁止行为**：
 - 禁止承诺提分/排名/升学

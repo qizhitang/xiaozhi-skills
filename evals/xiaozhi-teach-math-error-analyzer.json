@@ -1,6 +1,6 @@
 {
   "skill": "xiaozhi-teach-math-error-analyzer",
-  "notes": "v2.1.1：写 weaknessRank 本学科条目但不写 stubbornCount（student-analyzer 唯一累加），不写 studentTiers。“教学原因”作为错因第四层（“到底是学员不会，还是我教不会”）是好设计。历史缺陷：逐题标注 45×25 无抽样；“粗心→心理干预”越界。第六批起高中加必修后半与选择性必修的共性错误表（第十四节）。",
+  "notes": "v2.1.1：写 weaknessRank 本学科条目但不写 stubbornCount（student-analyzer 唯一累加），不写 studentTiers。“教学原因”作为错因第四层（“到底是学员不会，还是我教不会”）是好设计。历史缺陷：逐题标注 45×25 无抽样；“粗心→心理干预”越界。第六批起高中加必修后半与选择性必修的共性错误表（第十四节）。第十六批：整节讲评课转数学教案设计（no-trigger-03），本技能只给每类错因的讲评与干预建议。",
   "cases": [
     {
       "id": "trigger-01",
@@ -61,6 +61,16 @@
       "grade_band": "高中",
       "input": "高二月考“用空间向量求线面角”这道题全班错了四成，很多人把方向向量与法向量夹角的余弦直接当成了线面角的余弦，帮我分析",
       "expect": { "activate": true, "must": ["归入老师端七类中的规则错误", "讲评建议画出方向向量、法向量与平面的关系图，说明线面角的正弦等于 |cos⟨u, n⟩|"], "must_not": ["说高中内容不覆盖", "用学生真名做讲评材料"] }
+    },
+    {
+      "id": "no-trigger-03",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "input": "这次数学月考的讲评课怎么上，先讲哪几道？",
+      "expect": {
+        "activate": false,
+        "route_to": "xiaozhi-teach-math-lesson-planner"
+      }
     }
   ]
 }

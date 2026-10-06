@@ -12,7 +12,7 @@
 > |---|---|
 > | 错因归类、七类错因分布、个体错因诊断 | `xiaozhi-teach-math-error-analyzer` |
 > | 学员分层（A/B/C tier）、重点关注名单 | `xiaozhi-teach-student-analyzer` |
-> | 补救计划、教学干预、课时增减、讲评用的变式训练 | `xiaozhi-teach-math-lesson-planner`；讲评课的环节转 `xiaozhi-teach-lesson-planner` |
+> | 补救计划、教学干预、课时增减、讲评课编排 | `xiaozhi-teach-math-lesson-planner` |
 > | 成绩告知、家长沟通措辞、约谈安排 | `xiaozhi-teach-parent-communication` |
 >
 > 老师在本流程里直接提出上述需求时：说明这属于哪个 SKILL，交出可用的最小字段
@@ -72,8 +72,7 @@ flag 判读规则：
 ├──────────┼────────────────┼──────────────────┼──────────────────────────┤
 │ ─ 错因    │ 错因分布与诊断  │ —                │ ❌ 转 math-error-analyzer │
 │ ─ 学员    │ 个体诊断与分层  │ —                │ ❌ 转 student-analyzer    │
-│ ─ 干预    │ 补救与变式训练  │ —                │ ❌ 转 math-lesson-planner │
-│ ─ 讲评    │ 讲评课的环节    │ —                │ ❌ 转 lesson-planner      │
+│ ─ 干预    │ 补救与讲评编排  │ —                │ ❌ 转 math-lesson-planner │
 │ ─ 家长    │ 成绩告知        │ —                │ ❌ 转 parent-communication│
 └──────────┴────────────────┴──────────────────┴──────────────────────────┘
 
@@ -206,16 +205,15 @@ T12                        ●
 ❌ 本 SKILL 不写 classWorkspace.studentTiers[]。
 ```
 
-### 4.3 补救、讲评与教学调整 → `xiaozhi-teach-math-lesson-planner`、`xiaozhi-teach-lesson-planner`
+### 4.3 补救、讲评与教学调整 → `xiaozhi-teach-math-lesson-planner`（含讲评课的整节）
 
 ```text
 本 SKILL 能交出的：
   · examId + flag 异常的题号 + 得分率最低的知识点
 
 话术：
-  "哪些内容要重讲、讲评课怎么排、要不要加课时，是教案设计的事：
-   讲评课的环节由〔教案设计器〕排，重讲内容与讲评用的变式训练由〔数学教案〕出。
-   我把这次得分率最低的三个知识点交过去？"
+  "哪些内容要重讲、讲评课怎么排、要不要加课时，是教案设计的事。
+   我把这次得分率最低的三个知识点交给〔数学教案〕？"
 
 ❌ 本模板不提供：课时增减建议、讲评重点排序、个别辅导安排、变式训练设计。
    复习排期另转 xiaozhi-teach-review-planner。
@@ -256,8 +254,7 @@ T12                        ●
 【四、可交接给谁】
   · 错因归类 → 〔班级错因分析〕：examId + itemStats + itemScores
   · 分层与关注名单 → 〔学情分析师〕：examId + classSummaries
-  · 补救与讲评用的变式 → 〔数学教案〕：flag 异常题号 + 低得分率知识点
-  · 讲评课的环节 → 〔教案设计器〕：flag 异常题号 + 低得分率知识点
+  · 补救与讲评 → 〔数学教案〕：flag 异常题号 + 低得分率知识点
   · 家长侧输出 → 〔家长沟通助手〕（本 SKILL 不代写）
   以上均需老师确认后再交出。
 

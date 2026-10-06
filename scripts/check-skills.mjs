@@ -181,7 +181,7 @@ const HS_TERMS = [
   "减数分裂", "有丝分裂", "自由组合定律", "伴性遗传", "基因频率", "内环境", "表观遗传", "热力环流", "三圈环流", "地转偏向力", "锋面", "等压线",
 ];
 // T1：会出题、组卷或存放试卷的老师端技能（SECURITY_BASELINE.md 4.2；新增同类技能时加进来）
-const EXAM_SKILLS = new Set(["xiaozhi-teach-exam-designer", "xiaozhi-teach-math-exam-designer", "xiaozhi-teach-english-assessment", "xiaozhi-teach-english-listening-designer", "xiaozhi-teach-assignment-designer", "xiaozhi-teach-resource-library", "xiaozhi-teach-chemistry-notation-drill", "xiaozhi-teach-history-assessment-guide", "xiaozhi-teach-bio-geo-review-planner", "xiaozhi-teach-chinese-classical-guide", "xiaozhi-teach-chinese-reading-guide", "xiaozhi-teach-chinese-writing-guide", "xiaozhi-teach-review-planner", "xiaozhi-teach-lesson-planner", "xiaozhi-teach-student-analyzer"]);
+const EXAM_SKILLS = new Set(["xiaozhi-teach-exam-designer", "xiaozhi-teach-math-exam-designer", "xiaozhi-teach-english-assessment", "xiaozhi-teach-english-listening-designer", "xiaozhi-teach-assignment-designer", "xiaozhi-teach-resource-library", "xiaozhi-teach-chemistry-notation-drill", "xiaozhi-teach-history-assessment-guide", "xiaozhi-teach-bio-geo-review-planner", "xiaozhi-teach-chinese-classical-guide", "xiaozhi-teach-chinese-reading-guide", "xiaozhi-teach-chinese-writing-guide", "xiaozhi-teach-review-planner", "xiaozhi-teach-lesson-planner", "xiaozhi-teach-student-analyzer", "xiaozhi-teach-math-lesson-planner", "xiaozhi-teach-biology-lesson-planner", "xiaozhi-teach-geography-lesson-planner"]);
 // G1 章节豁免：标题命中即整节免标，直到出现同级或更高级标题
 const HS_SECTION_ANY = /初高衔接/;               // 任何技能
 const HS_SECTION_NATIVE = /高中|高一|高二|高三/;   // 仅 grade_bands 含 高中 的技能，且标题不能同时写初中标记（如“初中与高中”“九年级与高中”是混合章节）

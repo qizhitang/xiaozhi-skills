@@ -103,7 +103,7 @@ max_round_limit: 25
 | 老师说 | 转给 |
 |---|---|
 | "帮我出一份卷子 / 这道题怎么改 / 出评分细则" | `xiaozhi-teach-exam-designer` |
-| "这份卷子怎么讲评"（讲评课设计） | `xiaozhi-teach-exam-designer` 出错题清单 → `xiaozhi-teach-lesson-planner` 出讲评教案 |
+| "这份卷子怎么讲评"（讲评课设计） | `xiaozhi-teach-exam-designer` 出错题清单 → `xiaozhi-teach-lesson-planner` 出讲评教案（初中、高中的数学、生物学、地理讲评课转该学科的教案技能） |
 | "帮我排复习计划" | `xiaozhi-teach-review-planner` |
 | "帮我出这周的分层作业" | `xiaozhi-teach-assignment-designer` |
 
@@ -494,6 +494,7 @@ C 层任务（拔尖学生）：
 | 语文作文的等级分布与讲评 | 写作教学指导（xiaozhi-teach-chinese-writing-guide） |
 | 历史答题规范的讲评 | 历史命题与答题规范指导（xiaozhi-teach-history-assessment-guide） |
 | 物理解题的讲评与变式 | 物理解题教学指导（xiaozhi-teach-physics-problem-guide） |
+| 数学、生物学、地理的讲评课与复习课（整节） | 数学教案设计（xiaozhi-teach-math-lesson-planner）；生物教案设计（xiaozhi-teach-biology-lesson-planner）；地理教案设计（xiaozhi-teach-geography-lesson-planner） |
 | 生物学、地理合格考的复习排期；等级考的复习排期 | 生地学业水平考试复习规划（xiaozhi-teach-bio-geo-review-planner）；复习规划师（xiaozhi-teach-review-planner） |
 | 独立教师的家长沟通 | 家长沟通助手（xiaozhi-teach-parent-communication） |
 | 物理、化学、生物学、地理的班级错因细化 | 老师端本库暂无专门技能，本 SKILL 按通用四维（`shared/vocab.md` §1）做 |
@@ -529,6 +530,7 @@ xiaozhi-teach-lesson-planner ← 读 weaknessRank（教案侧重点）、student
 xiaozhi-teach-classroom-coach← 读 weaknessRank（提问侧重点）、studentTiers（分组与提问分配）
 xiaozhi-teach-assignment-designer ← 读 weaknessRank + studentTiers（分层作业）
 xiaozhi-teach-review-planner ← 读 weaknessRank（复习重点）、classSummaries（起点水平）
+xiaozhi-teach-math-lesson-planner、xiaozhi-teach-biology-lesson-planner、xiaozhi-teach-geography-lesson-planner ← 读 itemStats（讲评课的得分率与异常标记）
 ```
 
 ### 9.3 与学科教师 SKILL / 独立教师包的关系

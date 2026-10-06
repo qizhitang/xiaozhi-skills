@@ -1,6 +1,6 @@
 {
   "skill": "xiaozhi-teach-math-exam-designer",
-  "notes": "v2.1.1：只做四件事（蓝图与细目表、选题与版权、题目统计、经老师逐条确认的写回），不写 weaknessRank / studentTiers / reviewPlans。触发需“命题任务动词 + 数学语境”两条件。已有不触发表，用例直接对照。第六批起高中测评覆盖必修与选择性必修（第十五节），附高二导数单元的蓝图示例。第十五批：讲评课的环节改转教案设计器（no-trigger-04），讲评用的例题与变式仍转数学教案设计（no-trigger-02 只留补救一问）。",
+  "notes": "v2.1.1：只做四件事（蓝图与细目表、选题与版权、题目统计、经老师逐条确认的写回），不写 weaknessRank / studentTiers / reviewPlans。触发需“命题任务动词 + 数学语境”两条件。已有不触发表，用例直接对照。第六批起高中测评覆盖必修与选择性必修（第十五节），附高二导数单元的蓝图示例。第十五批曾把讲评课的环节改转教案设计器；第十六批改回：讲评课整节（含环节、例题与变式）转数学教案设计，各学段都这样（no-trigger-04；no-trigger-02 只留补救一问）。",
   "cases": [
     {
       "id": "trigger-01",
@@ -35,7 +35,7 @@
       "kind": "no-trigger",
       "role": "teacher",
       "input": "数学月考考完了，讲评课怎么上？",
-      "expect": { "activate": false, "route_to": "xiaozhi-teach-lesson-planner" }
+      "expect": { "activate": false, "route_to": "xiaozhi-teach-math-lesson-planner" }
     },
     {
       "id": "degrade-01",

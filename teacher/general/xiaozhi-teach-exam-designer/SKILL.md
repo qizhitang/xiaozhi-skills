@@ -3,7 +3,7 @@ name: xiaozhi-teach-exam-designer
 description: >
   帮老师把"拼凑试卷"变成"按双向细目表命题"。
   当老师**明确要求生成或修改命题产物**时建议激活：出一份单元测验/试卷、写双向细目表、调整试卷难度配比、改编某道题、写评分细则、按题目统计决定哪些题返修、出高中合格考或等级考的模拟卷。
-  **不激活**：只讨论考试结果与学情分析（转 `xiaozhi-teach-student-analyzer`）、只备讲评课的环节与提问（转 `xiaozhi-teach-lesson-planner` / `xiaozhi-teach-classroom-coach`）、布置作业（转 `xiaozhi-teach-assignment-designer`）、非命题的日常教学讨论；高中数学、英语、历史先转学科技能。
+  **不激活**：只讨论考试结果与学情分析（转 `xiaozhi-teach-student-analyzer`）、只备讲评课的环节与提问（转 `xiaozhi-teach-lesson-planner` 或学科教案技能 / `xiaozhi-teach-classroom-coach`）、布置作业（转 `xiaozhi-teach-assignment-designer`）、非命题的日常教学讨论；高中数学、英语、历史先转学科技能。
   工作流：测评类型 → 双向细目表 → 选题改编 → 难度与认知层级配比 → 评分标准 → 讲评错题清单；考后 P/D/信度只读不算。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
@@ -121,7 +121,7 @@ max_round_limit: 25
 | 老师说 | 转给 |
 |---|---|
 | "这份卷子难度/区分度如何"（考后统计） | `xiaozhi-teach-student-analyzer` 算 P/D/α，本 SKILL 只读结果改题 |
-| "帮我设计一节讲评课"（教案） | 本 SKILL 出高频错题清单与讲评顺序 → `xiaozhi-teach-lesson-planner` 出讲评教案 |
+| "帮我设计一节讲评课"（教案） | 本 SKILL 出高频错题清单与讲评顺序 → `xiaozhi-teach-lesson-planner` 出讲评教案（初中、高中的数学、生物学、地理讲评课转该学科的教案技能） |
 | "讲评课上怎么提问、怎么分组" | `xiaozhi-teach-classroom-coach` |
 | "帮我排考前复习计划" | `xiaozhi-teach-review-planner` |
 | "高三数学模拟卷怎么出""高一英语单元测评怎么设计"（高中数学、英语、历史的命题） | `xiaozhi-teach-math-exam-designer`、`xiaozhi-teach-english-assessment`、`xiaozhi-teach-history-assessment-guide`（高中先转学科技能，转交表见 §6.4） |
@@ -398,7 +398,7 @@ D 的算法只有一套（27% 分组），见 xiaozhi-teach-student-analyzer SKI
 | 化学用语的过关卡；合格考实验操作考试的组织 | 化学用语过关训练设计（xiaozhi-teach-chemistry-notation-drill）；化学实验教学指导（xiaozhi-teach-chemistry-lab-guide） | 化学整卷 |
 | 物理单题的讲法与变式；学生必做实验 | 物理解题教学指导（xiaozhi-teach-physics-problem-guide）；物理实验教学指导（xiaozhi-teach-physics-experiment-coach） | 物理整卷 |
 | 生物学、地理合格考的复习排期，实验操作考查与地理实践的准备 | 生地学业水平考试复习规划（xiaozhi-teach-bio-geo-review-planner，它不出卷） | 生物学、地理整卷 |
-| 讲评课教案 | 教案设计器（xiaozhi-teach-lesson-planner）排环节，讲评用的例题与变式先看该学科的老师端技能（如物理单题的讲法与变式转物理解题教学指导）；历史的答题规范讲评转历史命题与答题规范指导，语文的作文讲评转写作教学指导（xiaozhi-teach-chinese-writing-guide） | 讲评错题清单（§9.3） |
+| 讲评课教案 | 数学、生物学、地理的整节转数学教案设计（xiaozhi-teach-math-lesson-planner）、生物教案设计（xiaozhi-teach-biology-lesson-planner）、地理教案设计（xiaozhi-teach-geography-lesson-planner）；其余学科由教案设计器（xiaozhi-teach-lesson-planner）排环节，讲评用的例题与变式先看该学科的老师端技能（如物理单题的讲法与变式转物理解题教学指导）；历史的答题规范讲评转历史命题与答题规范指导，语文的作文讲评转写作教学指导（xiaozhi-teach-chinese-writing-guide） | 讲评错题清单（§9.3） |
 | 复习排期；课堂提问与分组；作业 | 复习规划师（xiaozhi-teach-review-planner）；课堂互动教练（xiaozhi-teach-classroom-coach）；作业设计师（xiaozhi-teach-assignment-designer） | — |
 
 老师只要细目表格式、难度配比这类通用骨架，或者没装对应的学科技能时，本 SKILL 照出，并说明不核对该学科的课标范围与实验安全。
@@ -501,7 +501,7 @@ D 的算法只有一套（27% 分组），见 xiaozhi-teach-student-analyzer SKI
   统计（P / D / α / 分布 / 热力图）→ xiaozhi-teach-student-analyzer 做，写入
       classWorkspace.itemStats 与 classWorkspace.classSummaries
   题目返修（哪道题改、怎么改、下次预期 P 调多少）→ 本 SKILL 做
-  讲评课怎么上（环节、时间、提问）→ lesson-planner / classroom-coach 做
+  讲评课怎么上（环节、时间、提问）→ lesson-planner 或学科教案技能 / classroom-coach 做
 
 本 SKILL 不重复计算任何统计量，避免两套数字打架。
 ```
@@ -524,9 +524,9 @@ D 的算法只有一套（27% 分组），见 xiaozhi-teach-student-analyzer SKI
   · 有效答卷 < 20 人时，不据 D 改题；只据 P 与老师阅卷时看到的实际错法改。
 ```
 
-### 9.3 讲评错题清单（交给 lesson-planner）
+### 9.3 讲评错题清单（交给 lesson-planner 或学科教案技能）
 
-本 SKILL 输出**讲哪几道、按什么顺序讲**；讲评课的环节与时间由 `xiaozhi-teach-lesson-planner` 排。
+本 SKILL 输出**讲哪几道、按什么顺序讲**；讲评课的环节与时间由 `xiaozhi-teach-lesson-planner` 排；初中、高中的数学、生物学、地理卷，讲评课整节由该学科的教案技能排（高中的数学卷由数学测评设计出，见 §6.4）。
 
 ```text
 排序规则：
@@ -633,6 +633,7 @@ D 的算法只有一套（27% 分组），见 xiaozhi-teach-student-analyzer SKI
     <── xiaozhi-teach-review-planner（reviewPlans：复习覆盖范围）
     ──→ xiaozhi-teach-student-analyzer（examBlueprints：题号→知识点映射）
     ──→ xiaozhi-teach-lesson-planner（讲评错题清单 → 讲评课教案）
+    ──→ xiaozhi-teach-math-lesson-planner、xiaozhi-teach-biology-lesson-planner、xiaozhi-teach-geography-lesson-planner（初中、高中的数学、生物学、地理卷的讲评错题清单 → 整节讲评课）
     ──→ xiaozhi-teach-assignment-designer（examBlueprints：作业与测评对齐）
     ──→ 学科教师 SKILL（xiaozhi-teach-math-exam-designer 等，学科命题；高中数学、英语、历史先转，转交表见 §6.4）
 ```

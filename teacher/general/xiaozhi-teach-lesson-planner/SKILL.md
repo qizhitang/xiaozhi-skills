@@ -3,7 +3,7 @@ name: xiaozhi-teach-lesson-planner
 description: >
   用 UbD 逆向设计把"经验型备课"变成可观测的教学设计。
   当老师说"帮我设计一节《一次函数》新课"、"写一份教案"、"做一份分层教案"、"帮我设计一节讲评课"、"这节课的提问链草案"、"高一信息技术这节课 40 分钟怎么排"时，建议激活此 SKILL。
-  高中有学科教案技能的学科，学科内容先建议转学科技能；复习课、讲评课的环节仍由本 SKILL 排（见正文 4.3）。
+  高中有学科教案技能的学科，学科内容先建议转学科技能；点名数学、生物学、地理的复习课、讲评课，初中、高中都整节转过去，其余的由本 SKILL 排（见正文 4.3）。
   工作流：预期结果 → 评估证据 → 核心素养目标 → 环节时间矩阵 → 提问链草案 → A/B/C 分层。
   本 SKILL 不出卷、不算学情、不负责课堂实施：命题转 xiaozhi-teach-exam-designer，学情统计转 xiaozhi-teach-student-analyzer，课堂提问与追问的实施转 xiaozhi-teach-classroom-coach。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
@@ -116,6 +116,7 @@ max_round_limit: 30
 | "帮我把作业细化成分层任务卡" | `xiaozhi-teach-assignment-designer` |
 | "帮我排整个期末的复习计划" | `xiaozhi-teach-review-planner` |
 | 高中有学科教案技能的学科内容（如"高一这节物理课的概念怎么建构"） | 该学科的老师端技能，转交表见 4.3 |
+| 老师点名数学、生物学、地理的复习课、讲评课（如"高二生物期中考完了，这节讲评课怎么上""八年级数学这节期末复习课怎么上"） | 数学教案设计、生物教案设计、地理教案设计，初中、高中都整节转过去；没点学科、只要 UbD 骨架或环节时间矩阵的，本 SKILL 照出 |
 
 ---
 
@@ -281,8 +282,9 @@ O  Organize → 顺序如何安排（按认知层次递进）
 
 **高中常见课型**：
 
-- 高三一轮、二轮复习课：本 SKILL 排这一节的环节，复习用的例题、变式与练习先看下表的学科技能；轮次与回看排期归复习规划师，不改学校的轮次与总进度。
-- 联考、模拟考的讲评课：本 SKILL 排这一节的环节，讲评用的例题与变式先看下表的学科技能（历史的答题规范讲评转历史命题与答题规范指导，语文的作文讲评转写作教学指导）；只用已经考完的卷，跨校联考等参加的学校全部考完再讲；讲评错题清单来自测评设计师或学科测评技能，统计来自学情分析师。
+- 复习课（含高三一轮、二轮）：数学、生物学、地理整节转该学科的教案技能（见下表）；其余学科由本 SKILL 排这一节的环节，复习用的例题、变式与练习先看下表的学科技能；轮次与回看排期归复习规划师，不改学校的轮次与总进度。
+- 讲评课（含联考、模拟考）：数学、生物学、地理整节转该学科的教案技能（见下表）；其余学科由本 SKILL 排这一节的环节，讲评用的例题与变式先看下表的学科技能（物理题的讲法与变式转物理解题教学指导，历史的答题规范讲评转历史命题与答题规范指导，语文的作文讲评转写作教学指导）；只用已经考完的卷，跨校联考等参加的学校全部考完再讲；讲评错题清单来自测评设计师或学科测评技能，统计来自学情分析师。
+- 整节转学科的只有数学、生物学、地理三科（这三科的教案技能写了复习课与讲评课）；物理、化学、历史、语文、英语的复习课、讲评课仍由本 SKILL 排环节，题、讲法与专项讲评看下表的学科技能。没装对应学科技能时，三科的这两类课也由本 SKILL 照出（见本节开头）。
 - 实验课：教案只写"实验位"（做什么实验、放在哪一段、几分钟），分组、器材、操作步骤与安全组织转下表的学科技能。野外考察、社会调查、研学须学校审批、有安全预案、家长知情、老师带队，方案转地理教案设计或生物教案设计。任何情况下不写可在家操作的危险实验步骤。
 - 课题研究：数学建模活动与数学探究活动转数学教案设计；其他学科的研究性学习，本 SKILL 只排开题、中期、结题的时间节点与评价方式，研究报告由学生自己完成。
 - 英语的阅读、写作、语法课：本库没有英语教案技能，由本 SKILL 出框架，活动按课标的英语学习活动观排学习理解、应用实践、迁移创新三类（英语课标的教学建议见 `shared/hs-subject-standards.md` 第四节）。
@@ -293,11 +295,11 @@ O  Organize → 顺序如何安排（按认知层次递进）
 
 | 老师要的 | 转给 |
 |---|---|
-| 数学的概念课、例题与变式（含复习课、讲评课里用的例题与变式）；数学建模活动与数学探究活动的课题 | 数学教案设计（xiaozhi-teach-math-lesson-planner） |
+| 数学的概念课、复习课与讲评课（整节，含例题与变式）；数学建模活动与数学探究活动的课题 | 数学教案设计（xiaozhi-teach-math-lesson-planner） |
 | 物理的新授、规律与模型课；学生必做实验的组织；讲题课（含复习课、讲评课里的物理题怎么讲） | 物理教案设计（xiaozhi-teach-physics-lesson-planner）；物理实验教学指导（xiaozhi-teach-physics-experiment-coach）；物理解题教学指导（xiaozhi-teach-physics-problem-guide） |
-| 化学的各类课（含从初中接过来的必修第一课）；实验的组织；化学用语过关 | 化学教案设计（xiaozhi-teach-chemistry-lesson-planner）；化学实验教学指导（xiaozhi-teach-chemistry-lab-guide）；化学用语过关训练设计（xiaozhi-teach-chemistry-notation-drill） |
-| 生物学的课（含学生实验的组织与安全定档） | 生物教案设计（xiaozhi-teach-biology-lesson-planner） |
-| 地理的课（含地理实践、野外考察与社会调查方案） | 地理教案设计（xiaozhi-teach-geography-lesson-planner） |
+| 化学的各类课（含从初中接过来的必修第一课；复习课、讲评课的环节仍由本 SKILL 排，见上）；实验的组织；化学用语过关 | 化学教案设计（xiaozhi-teach-chemistry-lesson-planner）；化学实验教学指导（xiaozhi-teach-chemistry-lab-guide）；化学用语过关训练设计（xiaozhi-teach-chemistry-notation-drill） |
+| 生物学的课（含复习课与讲评课的整节，学生实验的组织与安全定档） | 生物教案设计（xiaozhi-teach-biology-lesson-planner） |
+| 地理的课（含复习课与讲评课的整节，地理实践、野外考察与社会调查方案） | 地理教案设计（xiaozhi-teach-geography-lesson-planner） |
 | 历史的课；历史的命题与讲评 | 历史教案设计（xiaozhi-teach-history-lesson-planner）；历史命题与答题规范指导（xiaozhi-teach-history-assessment-guide） |
 | 语文的文言文与古诗词；现代文、整本书阅读与必修、选择性必修的学习任务群；写作与作文讲评 | 文言文教学指导（xiaozhi-teach-chinese-classical-guide）；阅读教学指导（xiaozhi-teach-chinese-reading-guide）；写作教学指导（xiaozhi-teach-chinese-writing-guide） |
 | 英语的听力课、口语课；英语单元测评 | 英语听力材料设计（xiaozhi-teach-english-listening-designer）；英语口语活动设计（xiaozhi-teach-english-speaking-designer）；英语综合测评（xiaozhi-teach-english-assessment） |
@@ -535,7 +537,7 @@ O  Organize → 顺序如何安排（按认知层次递进）
 
 - **学科教案细化**：各学科专有的环节设计（概念课、实验课、讲题课、作文讲评等）转该学科的老师端技能，
   如 `xiaozhi-teach-math-lesson-planner`、`xiaozhi-teach-physics-lesson-planner`、`xiaozhi-teach-chinese-reading-guide`；
-  高中先看 4.3 的转交表，有学科技能的学科先转。
+  高中先看 4.3 的转交表，有学科技能的学科先转；老师点名数学、生物学、地理的复习课、讲评课，初中也整节转该学科的教案技能，没点学科、只要 UbD 骨架或环节时间矩阵的由本 SKILL 照出。
 - **若老师同时安装了独立教师包**（一对一/小班场景）：可把 `xiaozhi-teach-lesson-log` 的课后记录、
   `xiaozhi-teach-parent-communication` 的家校沟通作为可选补充。**未安装时本 SKILL 完全可独立运行**，
   班级授课场景不依赖这些 SKILL。
@@ -609,7 +611,7 @@ O  Organize → 顺序如何安排（按认知层次递进）
     <── xiaozhi-teach-classroom-coach（interactionLogs → 上节课实际用时与卡点）
     ──→ xiaozhi-teach-assignment-designer（lessonPlans → 作业细化）
     ──→ xiaozhi-teach-classroom-coach（lessonPlans.questionChain → 课堂实施）
-    ──→ 学科教师 SKILL（xiaozhi-teach-math-lesson-planner 等）
+    ──→ 学科教师 SKILL（xiaozhi-teach-math-lesson-planner 等；点名数学、生物学、地理的复习课与讲评课，初中、高中都整节转过去）
     ··→ 若已安装独立教师包：lesson-log / parent-communication 可作可选补充
 ```
 

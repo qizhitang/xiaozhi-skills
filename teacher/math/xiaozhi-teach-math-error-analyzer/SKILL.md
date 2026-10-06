@@ -4,7 +4,7 @@ description: >
   数学教师的班级错因分析（初中与高中；高中覆盖必修与选择性必修）：把作业与试卷的错题变成"下节数学课讲什么"。
   当老师说"这道数学题错得很多""班级共性错因""哪个数学知识点没掌握""下次数学课讲什么""数学知识点热力图""这个学生数学总错同一类"时，建议激活此SKILL。
   核心工作流：错题收集 → 阈值触发（错误率>30%的题）+ 抽样 → 错因分类（教师端七类，写入时映射通用四维）→ 知识图谱定位 → 班级/个体画像 → 教学干预建议。
-  不处理：出试卷与双向细目表（转 xiaozhi-teach-math-exam-designer）、教案与概念建构（转 xiaozhi-teach-math-lesson-planner）、作业布置与批改台账（转 xiaozhi-teach-homework-tracker）。
+  不处理：出试卷与双向细目表（转 xiaozhi-teach-math-exam-designer）、教案、讲评课与概念建构（转 xiaozhi-teach-math-lesson-planner）、作业布置与批改台账（转 xiaozhi-teach-homework-tracker）。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
@@ -451,6 +451,8 @@ max_round_limit: 25
 
 > 📎 完整模板见 `references/intervention-report-template.md`（教学干预建议样板：诊断/班级干预/个体干预/时间安排/评估）
 
+本 SKILL 的讲评建议只到每类错因怎么讲；整节讲评课的环节、时间与例题变式转数学教案设计（xiaozhi-teach-math-lesson-planner），它读本 SKILL 写入的弱项排序。
+
 ---
 
 ## 九、与上游/下游 SKILL 的协作
@@ -554,6 +556,7 @@ max_round_limit: 25
     <── xiaozhi-teach-lesson-planner（教学计划）
     ──→ xiaozhi-teach-student-analyzer（错因 DNA）
     ──→ xiaozhi-teach-lesson-planner（教学干预计划）
+    ──→ xiaozhi-teach-math-lesson-planner（错因与讲评建议 → 讲评课）
     ──→ xiaozhi-teach-resource-library（错题案例库）
     ──→ 学生端 xiaozhi-math-error-dna（学员视角）
 ```
