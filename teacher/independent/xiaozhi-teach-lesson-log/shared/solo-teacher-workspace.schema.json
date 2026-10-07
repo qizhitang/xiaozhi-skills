@@ -53,7 +53,8 @@
           "studentReaction",
           "evidence",
           "nextLessonFocus",
-          "parentSummary"
+          "parentSummary",
+          "consumeLessonUnits"
         ]
       },
       "coursePackageLedger": {
@@ -292,6 +293,11 @@
           "type": "string",
           "maxLength": 500,
           "description": "面向家长的事实摘要，受 500 字符硬约束。禁止写入真实姓名、家庭住址、身份证件、联系电话、账户信息、医疗诊断、心理标签、家庭纠纷、财务细节等高敏信息。"
+        },
+        "consumeLessonUnits": {
+          "type": "number",
+          "minimum": 0,
+          "description": "本节课消耗课时数。由 xiaozhi-teach-lesson-log 生成为待确认条目，老师确认后才写入课时台账；排课与课时管理、续费报告等其他 SKILL 只读"
         },
         "date": {
           "type": "string",

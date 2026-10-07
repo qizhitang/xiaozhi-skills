@@ -23,6 +23,7 @@
 //  A1 含"示例题"的 references 必须有"示例题验算：YYYY-MM-DD"声明（警告）
 //  Z1 正文与契约不得含零宽/方向控制/BOM 等不可见字符（组合 emoji 请换单码位）——扫描器把它们当作元数据投毒信号
 //  A2 验算日期不得早于文件最后一次实质提交（git；纯升版提交与未提交的纯版本号改动不算）
+//  C1 合规用语：SKILL.md、references 与 schemas/ 目录下的 JSON（教师包与学生端的数据契约及示例）里不出现分班（重点班/基础班/提升班/快慢班/尖子班/火箭班/拆班）、拍照发群、周末集中排课、寒暑假专属课时包、学期包、推荐新学员、月考（SECURITY_BASELINE.md 4.2；shared/contracts/off-campus-training.md）；只拦第二十批删掉的原词复发，不是完整的合规检查；"拍照发群"的常见否定写法与写了"义务教育法""分设重点班"的行不算
 //  M1 Markdown 代码围栏必须闭合；块内不得出现不短于外层、带语言标记的围栏行（新块插进了未闭合的块）
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, dirname, resolve, relative, basename } from "node:path";
@@ -182,6 +183,10 @@ const HS_TERMS = [
 ];
 // T1：会出题、组卷或存放试卷的老师端技能（SECURITY_BASELINE.md 4.2；新增同类技能时加进来）
 const EXAM_SKILLS = new Set(["xiaozhi-teach-exam-designer", "xiaozhi-teach-math-exam-designer", "xiaozhi-teach-english-assessment", "xiaozhi-teach-english-listening-designer", "xiaozhi-teach-assignment-designer", "xiaozhi-teach-resource-library", "xiaozhi-teach-chemistry-notation-drill", "xiaozhi-teach-history-assessment-guide", "xiaozhi-teach-bio-geo-review-planner", "xiaozhi-teach-chinese-classical-guide", "xiaozhi-teach-chinese-reading-guide", "xiaozhi-teach-chinese-writing-guide", "xiaozhi-teach-review-planner", "xiaozhi-teach-lesson-planner", "xiaozhi-teach-student-analyzer", "xiaozhi-teach-math-lesson-planner", "xiaozhi-teach-biology-lesson-planner", "xiaozhi-teach-geography-lesson-planner", "xiaozhi-teach-physics-lesson-planner", "xiaozhi-teach-chemistry-lesson-planner", "xiaozhi-teach-history-lesson-planner", "xiaozhi-teach-physics-problem-guide", "xiaozhi-teach-physics-experiment-coach", "xiaozhi-teach-chemistry-lab-guide", "xiaozhi-teach-english-speaking-designer", "xiaozhi-teach-math-error-analyzer"]);
+// C1 合规用语（第二十批）：技能正文、references 与 schemas/ 目录下的 JSON 里不出现（只拦本批删掉的原词复发，不是完整的合规检查）。
+// 前后文排除："提升班级""加快班上""很快班里"不算分班；"也不拍照发到群里""不要求家长拍照发群""别把作业拍照发群"这类常见否定写法不算（"不会的题拍照发群"照报）；"下个月考试""下月考试""岁月考验""本月考勤"不算月考（"这次月考"照报；"9 月考入"这类数字后带空格的月份不算）。
+const C1_TERMS = [/(?<![加放很赶变太较偏越])(?:快|慢)班(?![级会主长委])|(?:重点|基础|提升|尖子|火箭|快慢)班(?![级会主长委上风])|拆班/, /(?<!(?:不|别|勿|禁止|严禁|无需)(?:要求[^，。；、]{0,3}|把[^，。；、]{0,3}|需要|要|得|再|用|必|会)?)拍(?:照片?|下来|好照)(?:后|并)?(?:发|上传|传)到?(?:家长|班级|微信|QQ)?群/, /周末集中排课/, /寒暑假专属课时包/, /学期包/, /推荐新学员/, /(?<![个岁上下本当几数多\d０-９一二三四五六七八九十]|\d )月考(?![勤核察验])/];
+const C1_EXEMPT = /义务教育法|分设重点班/;   // 引用或转述法条的行（"学校不得分设重点班和非重点班""不分设重点班和非重点班"）
 // G1 章节豁免：标题命中即整节免标，直到出现同级或更高级标题
 const HS_SECTION_ANY = /初高衔接/;               // 任何技能
 const HS_SECTION_NATIVE = /高中|高一|高二|高三/;   // 仅 grade_bands 含 高中 的技能，且标题不能同时写初中标记（如“初中与高中”“九年级与高中”是混合章节）
@@ -272,6 +277,7 @@ for (const f of contentFiles) {
     const idx = lines.findIndex((l) => l.includes(w) && !/废弃|已废弃|旧词|映射|→|禁止|不使用|原“|原"/.test(l));
     if (idx >= 0) err("V1", rel(f) + ":" + (idx + 1), `使用废弃词表“${w}”（见 shared/vocab.md）`);
   }
+  for (const re of C1_TERMS) { const ix = lines.findIndex((l) => re.test(l) && !C1_EXEMPT.test(l)); if (ix >= 0) err("C1", rel(f) + ":" + (ix + 1), `合规用语“${lines[ix].match(re)[0]}”：分班、拍照发群、周末与寒暑假排课、学期包与推荐返利、月考都不写进技能（SECURITY_BASELINE.md 4.2，shared/contracts/off-campus-training.md）`); }
   const ci = lines.findIndex((l) => OLD_COORD.test(l));
   if (ci >= 0) err("V2", rel(f) + ":" + (ci + 1), "协调器旧名称，应为“学习系统协调器”");
   // G1 章节豁免：所属技能 grade_bands 含 高中 时，高中章节整体免标；否则只有“初高衔接”章节免标
@@ -303,6 +309,12 @@ for (const f of contentFiles) {
     if (rel(f).startsWith("teacher/") && !/教学主体边界/.test(text)) err("T2", rel(f), "老师端 SKILL 缺“教学主体边界”行：AI 不作替代性教学主体、不直接回答学生、不直接评价学生（教育部 2025 生成式 AI 使用指南；SECURITY_BASELINE.md 4.3）");
     if ((/^(student|teacher)\/(history|biology|geography)\//.test(rel(f)) || basename(dirname(f)) === "xiaozhi-openbook-coach" || rel(f).startsWith("teacher/general/")) && !/^> 内容边界：/m.test(text)) err("B1", rel(f), "历史、生物、地理技能、开卷答题教练与老师通用技能缺“内容边界”行：历史评价以课标与教材为准、不替学生给观点；开卷只教方法、不产出道法观点；生物不做诊断与用药建议；地图以教材与标准地图为准；老师通用技能对道德与法治、思想政治只给工具层（SECURITY_BASELINE.md 4.4）");
   }
+}
+
+// ---------- C1 数据契约 schema 与示例（schemas/ 目录下的 JSON，含教师包一级的 teacher/general/schemas/、teacher/independent/schemas/；随包副本在 shared/ 下，不查） ----------
+for (const sp of allFiles.filter((f) => /[\\/]schemas[\\/].*\.json$/.test(f)).map(rel).filter((p) => !/(^|\/)shared\//.test(p))) {
+  const sl = readFileSync(join(root, sp), "utf-8").split(/\r?\n/);
+  for (const re of C1_TERMS) { const ix = sl.findIndex((l) => re.test(l) && !C1_EXEMPT.test(l)); if (ix >= 0) err("C1", sp + ":" + (ix + 1), `合规用语“${sl[ix].match(re)[0]}”（SECURITY_BASELINE.md 4.2）`); }
 }
 
 // ---------- I1 teacher interface paths ----------

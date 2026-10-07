@@ -22,7 +22,7 @@
   },
   "basicInfo": {
     "gradeLevel": "初二",
-    "shortTermGoal": "下学期期中考试数学过85分",
+    "shortTermGoal": "下学期期中前把一次函数应用题弄扎实",
     "longTermGoal": "中考进入重点高中",
     "availableStudyTime": "晚饭后1.5小时+周末上午2小时",
     "upcomingExams": [
@@ -32,9 +32,9 @@
         "estimatedDate": "2026-05-20"
       },
       {
-        "examName": "月考",
+        "examName": "期末考试",
         "subject": "英语",
-        "estimatedDate": "2026-06-01"
+        "estimatedDate": "2026-06-28"
       }
     ]
   },
@@ -143,9 +143,9 @@
     ],
     "recentLearningNodes": [
       {
-        "nodeType": "测验",
+        "nodeType": "课堂学习",
         "subject": "数学",
-        "description": "一次函数单元测验 78/100",
+        "description": "一次函数课堂练习 正确率 78%",
         "date": "2026-05-08"
       }
     ]

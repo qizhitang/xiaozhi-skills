@@ -39,6 +39,8 @@ max_round_limit: 12
 
 > 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
 
+> 适用范围：用于校外培训（一对一、小班）时，只在合法范围内用，口径见 `shared/off-campus-training.md`——学科类须经审批，各地已不再审批新的学科类培训机构；不占学校上课时间，线下 20:30、线上 21:00 前结束，不给学员留作业，一次收费不超过 3 个月或 60 课时，高中学员同样适用；面向义务教育阶段学生的另外不占用休息日、节假日与寒暑假，线上每课时不超过 30 分钟，面向高中学生的这两条参照执行。本技能不预设违规的排课、作业与收费。
+
 ⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
 排课建议与冲突检测由本 SKILL 给出，**写入课表前一律要老师确认**。冲突检测只读 `studentCards[].availability[]`（学员授权登记的可上课时间段），不擅自扩大可上课范围。无 `K`（日期感知）时先问今天日期与本周起止日再排课。
@@ -93,6 +95,7 @@ max_round_limit: 12
 | 补课 | "补课" / "[化名] 缺课要补" |
 | 请假 | "[化名] 请假" / "学员请假怎么扣课时" |
 | 课时包 | "[化名] 还剩几课时" / "课时包快到期了" |
+| 登记课时包 | "[化名] 续了 [N] 课时，帮我登记" |
 | 排课冲突 | "这个时间排了谁" / "有没有冲突" |
 | 下一节课 | "我下一节课是谁" |
 | 续费节点 | "[化名] 课时快用完了" |
@@ -144,7 +147,7 @@ max_round_limit: 12
 ```text
 小A 的 availability：
   { "dayOfWeek": "周三", "startTime": "18:30", "endTime": "20:00" }
-  { "dayOfWeek": "周六", "startTime": "09:00", "endTime": "12:00" }
+  { "dayOfWeek": "周五", "startTime": "18:30", "endTime": "20:00" }
 ```
 
 **只记时间，不记原因**。"周三要上钢琴课""周日爷爷家"这类信息属于家庭安排，不写进档案——排课只需要知道哪段时间可用。
@@ -165,7 +168,7 @@ max_round_limit: 12
 
 ### 5.1 课表模板
 
-> 📎 完整模板见 `references/weekly-schedule-template.md`（第三节"周课表模板"：周一至周日 × 上午/下午/晚上 的课表示例 + 课时统计栏）
+> 📎 完整模板见 `references/weekly-schedule-template.md`（第三节"周课表模板"：周一至周五放学后时段的课表示例，周六、周日两列默认不排 + 课时统计栏）
 
 ### 5.2 课表生成三步走
 
@@ -201,6 +204,17 @@ max_round_limit: 12
       拟排结束 ≤ endTime）
   · 学员没登记 availability[] → 不猜，先问一次并登记
 
+■ 时段规定
+  · 所有学段（面向中小学生的校外培训都适用：国办发〔2018〕80 号；教基厅函〔2021〕11 号）：
+    线下课结束晚于 20:30、线上课结束晚于 21:00 → 提前；
+    落在工作日白天的学校上课时间 → 不排
+  · 小学中段 20:00、小学高段 20:20 前结束（shared/grade-bands.md 三）
+  · 面向义务教育阶段学生的学科类培训（"双减"意见；高中学员参照执行，按当地规定）：
+    落在周六、周日、法定节假日、寒暑假 → 不排；
+    线上每课时超过 30 分钟，或两课时之间不足 10 分钟 →
+    拆成每课时不超过 30 分钟、中间休息不少于 10 分钟
+  · 处理：说一句依据，给出合规的候选时段或拆法，由老师选；其余照常排
+
 ■ 课时包提示
   · remainingUnits ≤ 3
   · expiryDate 距今 ≤ 7 天
@@ -211,7 +225,7 @@ max_round_limit: 12
 
 ### 6.2 冲突检测输出
 
-> 📎 完整报告模板见 `references/weekly-schedule-template.md`（第 4.2 节"冲突检测输出"：排课请求 + 三类检测结果 + 建议）
+> 📎 完整报告模板见 `references/weekly-schedule-template.md`（第 4.2 节"冲突检测输出"：排课请求 + 四类检测结果 + 建议）
 
 ---
 
@@ -235,10 +249,10 @@ max_round_limit: 12
 ```text
 ■ 补课
   操作：
-    · 在老师可用时间 ∩ 该学员 availability[] 中找候选时段
+    · 在老师可用时间 ∩ 该学员 availability[] 中、合乎 §6.1 时段规定的范围里找候选时段
     · 生成"待确认的补课建议"，列出 1-3 个候选：
-        「小A 缺的这节课，这三个时间都排得开：
-          周四 18:30-20:00 / 周六 09:00-10:30 / 周六 10:30-12:00。
+        「小A 缺的这节课，这两个时间都排得开：
+          本周五 18:30-20:00 / 下周五 18:30-20:00。
           选哪个？也可以都不选。」
     · 老师选定并与学员/家长确认后，才写入 lessonSchedule[]（status=makeup）
     · 课时消耗仍由 lesson-log 在课后生成待确认条目
@@ -262,6 +276,7 @@ max_round_limit: 12
 
 ⚠️ 调课原则：
   · 一周内完成调课，不留"待定"
+  · 新时间同样过 §6.1 时段规定（不占学校上课时间、按时结束；面向义务教育阶段学生的学科类培训不调到周六、周日、法定节假日或寒暑假）
   · 调课记录要可追溯
   · 频繁调课的学员需沟通原因
 ```
@@ -286,7 +301,7 @@ max_round_limit: 12
   · expiryDate 距今 ≤ 7 天
 
 ■ 提示动作
-  · 向老师陈述事实：「小A 还剩 3 课时，课时包 12-31 到期，
+  · 向老师陈述事实：「小A 还剩 3 课时，课时包 11-30 到期，
     另有 1 条待确认（确认后剩 2 课时）。」
   · 不催单、不制造紧迫感、不替老师决定要不要续
 
@@ -298,6 +313,21 @@ max_round_limit: 12
   · 话术起草交 xiaozhi-teach-parent-communication
   · 起草前先查 workspace.studentCards[].consent 的
     parentCommunicationAllowed；发送由老师本人完成
+
+■ 登记课时包时（新开或续课）
+  · 按这一次收的课时与起止判断，不按累计的 totalUnits：
+    这次的课时折成标准课时超过 60（线下 45 分钟、线上 30 分钟为 1 课时，
+    如 90 分钟一节算 2 课时，短于标准时长的按 1 课时；每节多长看该学员的
+    lessonSchedule[].durationMinutes，没排过课的问老师一句，课时数本身已超过 60 的不用问），
+    或这次的起始日到到期日超过 3 个月
+    （没填 startDate 时按登记当天算；续课加在原课时包上的，起始日按这次
+    续课登记当天算，不用首次的 startDate）→ 提示老师一次：
+    「一次收费的时间跨度不超过 3 个月，也不超过 60 课时（教监管函〔2021〕2 号，
+    全国性规定；标准课时见发改价格〔2021〕1279 号）。这次 [N] 课时、每节 [N] 分钟，
+    折合约 [N] 个标准课时（跨度 [N] 个月），超出了；如果是一次收的费，请核对收费方式。」
+  · 折算只用于这一步：totalUnits 照老师给的数写，台账照老师的记法
+  · 只提示、不拦截：老师核对后说照登就照登，课时数与日期照老师给的写
+  · startDate 可以不填
 ```
 
 ### 8.3 课时异常处理
@@ -324,18 +354,27 @@ max_round_limit: 12
 
 ## 九、特殊场景
 
-### 9.1 寒暑假排课
+### 9.1 寒暑假、休息日与法定节假日
 
 ```text
-■ 寒暑假特殊安排
-  · 增加排课密度（每周 N+2 课时）
-  · 提前 2 周确认学员时间
-  · 寒暑假专属课时包
+■ 所有学段
+  · 工作日不排在学校上课时间（国办发〔2018〕80 号）；结束时间照 §6.1
 
-■ 节奏建议
-  · 假期前 1 周：学期收尾 + 假期规划
-  · 假期中：高频复习 + 预习
-  · 假期后 1 周：节奏调整
+■ 面向义务教育阶段学生的学科类培训
+  · 周六、周日、法定节假日与寒暑假不排课（双减意见）
+  · 老师提出要排时：说一句依据，改在开学后（或下周）的
+    工作日放学后排；其余照常排，不长篇解释
+
+■ 面向高中学生
+  · 休息日、法定节假日与寒暑假参照执行，按当地规定
+
+■ 本 SKILL 不预设
+  · 周末、假期的加课密度
+  · 假期课时包
+
+■ 培训进度
+  · 不超过学员所在学校的同期进度，不提前教下学期、下学年的内容
+  · 放假前最后一节：学期收尾，记下开学后从哪儿接着上
 ```
 
 ### 9.2 考试期排课
@@ -399,13 +438,14 @@ max_round_limit: 12
       → 学员可上课时间段（dayOfWeek / startTime / endTime）
         这是时间冲突检测的唯一依据
   workspace.studentCards[].alias / .status / .gradeBand
-      → 化名、是否在读、学段（学段影响建议上课时间的晚点边界，
-        见 shared/grade-bands.md 一的就寝时间）
+      → 化名、是否在读、学段（学段决定 §6.1 时段规定怎么用：义务教育阶段
+        与高中分开，小学中段、高段按 shared/grade-bands.md 一的就寝时间再提前）
   workspace.teacherProfile.deliveryChannels / .serviceModes
       → 线上/线下、一对一/小班，决定单节时长建议
   workspace.coursePackageLedger[].totalUnits / .usedUnits /
-      .remainingUnits / .expiryDate / .pendingConfirmations[]
-      → 课时包台账；pendingConfirmations 非空时剩余课时按"未含 N 条待确认"展示
+      .remainingUnits / .startDate / .expiryDate / .pendingConfirmations[]
+      → 课时包台账；pendingConfirmations 非空时剩余课时按"未含 N 条待确认"展示；
+        startDate 到 expiryDate 的跨度用于 §8.2 的登记提示（续课加在原课时包上的，起始日按这次续课登记当天算）
   workspace.lessonLogs[].consumeLessonUnits
       → 单节实际消耗（由 lesson-log 写，本 SKILL 只读）
 
@@ -415,8 +455,9 @@ max_round_limit: 12
       → 排课结果，老师确认后写入
       status 取值：scheduled / completed / rescheduled / makeup /
                   cancelled / absence / trial
-  workspace.coursePackageLedger[].totalUnits / .expiryDate
-      → 新开课时包时登记
+  workspace.coursePackageLedger[].totalUnits / .startDate / .expiryDate
+      → 新开或续课时登记（startDate 可不填）；超过 60 课时或起止超过
+        3 个月时按 §8.2 提示老师核对，不拦截
   workspace.coursePackageLedger[].renewalAttention
       → remainingUnits ≤ 3 或 expiryDate 距今 ≤ 7 天时置为 true
 
@@ -464,6 +505,9 @@ max_round_limit: 12
 | 剩余课时注明"未含 N 条待确认" | 拿虚高的剩余课时判断续费 |
 | 课时不足时先问老师 | 自行决定"允许透支 1 课时" |
 | 到期提示只陈述事实 | 用剩余课时制造紧迫感 |
+| 所有学段不占学校上课时间；义务教育阶段学员只排工作日放学后 | 把课排进学校上课时间，或把义务教育阶段学员排进周六、周日、法定节假日、寒暑假 |
+| 线上课每课时不超过 30 分钟、间隔不少于 10 分钟 | 排一节 60 分钟不间断的线上课 |
+| 课时包超过 60 课时或 3 个月时提示老师核对 | 替老师拦下登记或改课时数 |
 | 一律用化名 | 课表里出现真实姓名 |
 
 ---
@@ -475,7 +519,7 @@ max_round_limit: 12
     读 workspace.studentCards[].availability[] ← student-intake 登记
     读 workspace.coursePackageLedger[]         ← 本 SKILL 与 lesson-log 共同维护
     写 workspace.lessonSchedule[]              ← 本 SKILL 唯一写入方
-    写 workspace.coursePackageLedger[].totalUnits / .expiryDate /
+    写 workspace.coursePackageLedger[].totalUnits / .startDate / .expiryDate /
        .renewalAttention
 
   课时的实际扣减在 xiaozhi-teach-lesson-log（老师确认待确认条目）。

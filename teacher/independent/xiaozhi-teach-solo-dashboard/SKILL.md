@@ -5,7 +5,7 @@ description: >
   适用于独立教师问"今天有哪些课和学员待办""帮我整理今天课表""哪些学员需要重点跟进""哪些学员快没课时了""今天课后还有哪些反馈没发""帮我排今日三件事"。
   只说"今天我要做什么"这类不带课、学员、作业、家长、课时等教学语境的日程问题时，先问一句要不要打开工作台，老师确认后再读取。
   流程：只读工作空间 → 按 7 区块归类 → 依字段数值标记风险学员 → 给出今日最重要的三件事。
-  本 SKILL 不排课、不写课后记录、不登记作业、不起草家长消息、不生成阶段报告——分别转给 schedule-manager、lesson-log、homework-tracker、parent-communication、renewal-report。
+  本 SKILL 不排课、不写课后记录、不登记课上练习与学校作业、不起草家长消息、不生成阶段报告——分别转给 schedule-manager、lesson-log、homework-tracker、parent-communication、renewal-report。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
@@ -40,6 +40,8 @@ max_round_limit: 20
 
 > 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
 
+> 适用范围：用于校外培训（一对一、小班）时，只在合法范围内用，口径见 `shared/off-campus-training.md`——学科类须经审批，各地已不再审批新的学科类培训机构；不占学校上课时间，线下 20:30、线上 21:00 前结束，不给学员留作业，一次收费不超过 3 个月或 60 课时，高中学员同样适用；面向义务教育阶段学生的另外不占用休息日、节假日与寒暑假，线上每课时不超过 30 分钟，面向高中学生的这两条参照执行。本技能不预设违规的排课、作业与收费。
+
 本 SKILL 的数据全部来自 `shared/solo-teacher-workspace.schema.json`；不连接第三方排课、收银、IM 系统。无 `X`（跨会话统计）时不输出"累计 N 次"类精确统计，改为"从记录看大致…"并标 🟡；无 `K`（日期感知）时先问今天日期再排今日工作台。
 
 本 SKILL **不生成题目**；老师在工作台里顺手要一道题时，先按 `shared/ai-item-check.md` 自检，并标注【AI 生成，入库前请人工验算】，入库交给 `xiaozhi-teach-resource-library`。
@@ -53,7 +55,7 @@ max_round_limit: 20
 独立教师的日常痛点：
 
 ```text
-痛点① 信息分散：课表在日历、学员卡在 Excel、作业在群消息、
+痛点① 信息分散：课表在日历、学员卡在 Excel、练习与错题记在本子上、
         家长沟通在微信、课时包在另一个表格——
         每天开始工作前，要打开 5 个工具才能拼出"今天要做什么"。
 
@@ -72,7 +74,7 @@ max_round_limit: 20
 - **让风险看得见**：按字段数值判定并附依据，不靠老师记
 - **让续课沟通有据可依**：基于课堂证据和课时包数据，不靠销售话术
 
-本 SKILL **不替代**具体教学设计；发现需要备课、作业、学情分析时，建议调用教师通用或学科专项 SKILL。
+本 SKILL **不替代**具体教学设计；发现需要备课、设计课上练习、学情分析时，建议调用教师通用或学科专项 SKILL。
 
 ---
 
@@ -158,15 +160,16 @@ max_round_limit: 20
     3 次及以上 = 🔴 高度
   建议动作：调课 / 补课 / 主动沟通原因
 
-风险② 作业拖延风险
+风险② 课上练习跟不上风险
   触发条件：homeworkFollowups 中 overdueDays ≥ 1 的条目累计 ≥ 3 条
   说明：overdueDays 由 dueDate 与当前日期派生（status 枚举中没有 overdue 这个值，
-        逾期与否一律看 overdueDays，不看 status）
+        逾期与否一律看 overdueDays，不看 status）；课上练习的 dueDate 是约定做完的
+        那节课，学员带来的学校作业、考试错题不填 dueDate，不计入
   严重度：
     3 条 = 🟡 中度
     5 条及以上 = 🔴 高度
     单条 overdueDays ≥ 7 = 🔴 高度
-  建议动作：拆分作业 / 减量 / 共同制定节奏
+  建议动作：课上把练习拆小 / 减量 / 先查卡在哪个知识点（不改成回家做）
 
 风险③ 讲解重复风险
   触发条件：lessonLogs 按 date 倒序取最近 5 条，其中 masteryStatus 为
@@ -218,10 +221,10 @@ max_round_limit: 20
 
 ```text
 ✅ 合规示例：
-  小D 风险② 作业拖延（🟡 中度）
+  小D 风险② 课上练习跟不上（🟡 中度）
   依据：homeworkFollowups 中 overdueDays ≥ 1 的条目 3 条
-       dueDate：[6-1] [6-2] [6-3]，当前逾期 4 / 3 / 1 天
-  建议：拆分作业 / 减量
+       dueDate：[6-1] [6-2] [6-4]，当前逾期 4 / 3 / 1 天
+  建议：课上把练习拆小 / 减量
 
 ❌ 不合规示例：
   小D 作业不行，需要关注
@@ -278,7 +281,7 @@ workspace.progressEvidence[]：
 工作台给出的建议            → 老师确认后到这里落库
 今天该补的课后记录          → xiaozhi-teach-lesson-log（写 lessonLogs）
 今天该发的家长反馈          → xiaozhi-teach-parent-communication（写 parentCommunicationLogs）
-需要跟进的作业              → xiaozhi-teach-homework-tracker（写 homeworkFollowups）
+需要跟进的课上练习与错题    → xiaozhi-teach-homework-tracker（写 homeworkFollowups）
 需要调整的课表              → xiaozhi-teach-schedule-manager（写 lessonSchedule）
 到了续课节点的学员          → xiaozhi-teach-renewal-report（写 progressEvidence）
 ```

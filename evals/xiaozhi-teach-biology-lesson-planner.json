@@ -212,7 +212,7 @@
       "id": "no-trigger-03",
       "kind": "no-trigger",
       "role": "teacher",
-      "input": "这次生物月考的平均分、每题得分率和区分度帮我算一下",
+      "input": "这次生物期末的平均分、每题得分率和区分度帮我算一下",
       "expect": {
         "activate": false,
         "route_to": "xiaozhi-teach-student-analyzer"

@@ -55,7 +55,7 @@ xiaozhi-correction-notebook/
 
 这样 `shared/vocab.md` 这类路径在两种场景下都能解析：整库使用时相对仓库根，单技能安装后相对技能目录。
 
-除这六份外，被跨技能引用的**契约与参考资料**也按需分发到引用方的 `shared/` 下（共 243 份副本，来自下表 24 份源文件）：
+除这六份外，被跨技能引用的**契约与参考资料**也按需分发到引用方的 `shared/` 下（共 251 份副本，来自下表 25 份源文件）：
 
 | 类别 | 文件 | 分发范围 |
 |---|---|---|
@@ -64,9 +64,10 @@ xiaozhi-correction-notebook/
 | 学科错因维度表 | `english-error-dimension-table.md`、`chinese-error-dimension-table.md`、`physics-error-dimension-table.md`、`chemistry-error-dimension-table.md`、`history-error-dimension-table.md`、`biology-error-dimension-table.md`、`geography-error-dimension-table.md` | 同学科中正文引用它的技能 |
 | 参考资料 | `physics-diagram-guide.md`、`ebbinghaus-schedule.md`、`cross-subject-connections.md`、`experiment-types.md`、`chinese-hs-recitation-list.md`、`biology-hs-student-activities.md`、`geography-hs-practice-activities.md`、`hs-subject-standards.md` | 引用方 |
 | 跨学科约定 | `lab-safety.md`（实验安全：`safetyLevel` 三档、跨学科硬红线、化学与生物必守规范） | 正文引用它的理化生与地理技能 |
+| 校外培训口径 | `off-campus-training.md`（学科类校外培训的适用范围、时间、作业、收费口径） | 独立教师 8 个技能 |
 | 安全底线 | `crisis-referral-protocol.md` | **全部 84 个技能**（因为 `crisis-exception.md` 在每个包里都指向它）|
 
-源文件留在归属技能里（实验安全约定没有归属技能，源文件在仓库根 `shared/contracts/`），归属技能用自己的原件、不重复复制；除危机转介协议外，只有正文真正引用的技能才会拿到副本。单包体积平均约 150 KB，最大约 325 KB（历史材料解析题教练；地理读图教练约 301 KB、地理成因链教练约 293 KB、区域认知构建器约 292 KB）。
+源文件留在归属技能里（实验安全约定、校外培训口径没有归属技能，源文件在仓库根 `shared/contracts/`），归属技能用自己的原件、不重复复制；除危机转介协议外，只有正文真正引用的技能才会拿到副本。单包体积平均约 150 KB，最大约 325 KB（历史材料解析题教练；地理读图教练约 301 KB、地理成因链教练约 293 KB、区域认知构建器约 292 KB）。
 
 副本由 `npm run sync:shared` 从源生成，Markdown 副本头部有"请勿直接编辑"横幅，写明原件在哪里（JSON 契约按目标技能**裁剪并标注范围**：副本顶部的 `x-skill-scope` 列出该技能正文在非否定语境下提到的字段或交接类型，其余子树不进副本；完整定义在归属技能处）；`npm run check` 会校验副本与源一致，并清理已不再引用的残留。**要改共享约定或契约，请改源文件再重新同步。**
 
@@ -216,6 +217,8 @@ WorkBuddy 不会自动解析本库 frontmatter 里的 `metadata.depends_on`，�
 学情分析师需要**逐题得分**才能给出知识点热力图；只有总分时它只做分数分布。逐题数据与题号→知识点映射的格式见该 SKILL 的说明。
 
 ### 独立教师（一对一 / 小班）
+
+> 用于有偿的学科类校外培训时，先读 README 的"适用范围（校外培训）"：独立教师包只在合法范围内使用，口径见 [`shared/contracts/off-campus-training.md`](../shared/contracts/off-campus-training.md)。
 
 ```
 1. 试听与学员建档    2. 课后记录助手      3. 家长沟通助手

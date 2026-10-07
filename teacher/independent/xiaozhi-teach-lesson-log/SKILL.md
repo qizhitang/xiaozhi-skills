@@ -5,7 +5,7 @@ description: >
   适用于老师说"课后总结一下""记一下这节课""[化名] 今天学得怎么样""这节课复盘""看下 [化名] 的学习轨迹""这节课消耗几课时""下节课接着讲什么"。
   流程：即时记 5 维度（学了什么/掌握度/课堂反应/进步/调整）→ 分知识点记掌握度 → 生成课时待确认条目 → 给下节课衔接点。
   触发需带学员化名与日期；记录与课时条目都先给老师预览，确认后才写入。
-  本 SKILL 不排课、不登记作业、不代发家长消息、不做阶段报告——分别转 schedule-manager、homework-tracker、parent-communication、renewal-report；
+  本 SKILL 不排课、不登记课上练习与学校作业、不代发家长消息、不做阶段报告——分别转 schedule-manager、homework-tracker、parent-communication、renewal-report；
   家长事实摘要只起草成留在工作空间里的内部草稿，发不发由老师决定。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
@@ -36,6 +36,8 @@ max_round_limit: 15
 > 技术边界：本 SKILL 依赖能力 [M, K, X]，无该能力时按 shared/platform-conventions.md 降级。
 
 > 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
+
+> 适用范围：用于校外培训（一对一、小班）时，只在合法范围内用，口径见 `shared/off-campus-training.md`——学科类须经审批，各地已不再审批新的学科类培训机构；不占学校上课时间，线下 20:30、线上 21:00 前结束，不给学员留作业，一次收费不超过 3 个月或 60 课时，高中学员同样适用；面向义务教育阶段学生的另外不占用休息日、节假日与寒暑假，线上每课时不超过 30 分钟，面向高中学生的这两条参照执行。本技能不预设违规的排课、作业与收费。
 
 课后记录一律使用化名（`studentCards[].alias`），不出现真实姓名、家庭信息、家长身份。补录超过 30 分钟的记录标注"事后回忆，准确度有限"。无 `K`（日期感知）时先问今天日期再写 `lessonLogs[].date`——没有 `date` 的记录不参与"最近 N 条"统计。
 
@@ -90,7 +92,7 @@ max_round_limit: 15
 | 老师说的话 | 处理 |
 |---|---|
 | "课后总结一下"（没说是谁的课） | 先问"哪位学员、哪次课？"，答不上来就不记录 |
-| "小A 的作业交了吗" | 转作业跟进管家 |
+| "小A 课上那份练习补完了吗" / "小A 带来的学校作业帮我归一下错因" | 转作业跟进管家 |
 | "把小A 的课调到周四" | 转排课与课时管理 |
 | "给小A 家长发个反馈" | 转家长沟通助手 |
 | 学习轨迹 | "看一下 [化名] 的学习轨迹" |
@@ -256,7 +258,7 @@ workspace.lessonLogs[].masteryStatus = "仍需巩固"   ← 整体判断
 
 ### 6.2 学员学习轨迹视图
 
-> 📎 完整轨迹视图模板见 `references/lesson-log-template.md` 第四节（课时概览/知识图谱演进/课后复习记录/关键转折点——全部是可核对的事实，不含对特质的推断）
+> 📎 完整轨迹视图模板见 `references/lesson-log-template.md` 第四节（课时概览/知识图谱演进/当堂验证记录/关键转折点——全部是可核对的事实，不含对特质的推断）
 
 ### 6.3 轨迹数据存在哪
 
@@ -281,7 +283,7 @@ workspace.lessonLogs[].masteryStatus = "仍需巩固"   ← 整体判断
 ① 本 SKILL 写 lessonLogs[].consumeLessonUnits = 1（本节课的建议消耗数）
        ↓
 ② 同时在 coursePackageLedger[].pendingConfirmations 追加一条：
-     { "lessonId": "L-20260903-A", "units": 1, "generatedAt": "2026-09-03T20:10:00+08:00" }
+     { "lessonId": "L-20260904-A", "units": 1, "generatedAt": "2026-09-04T20:10:00+08:00" }
        ↓
 ③ 向老师问一次：
      「小A 今天这节课记 1 课时，确认吗？（确认 / 改成 X 课时 / 这次不扣）」
@@ -292,7 +294,7 @@ workspace.lessonLogs[].masteryStatus = "仍需巩固"   ← 整体判断
 
 **没确认就一直待确认**。工作台会在"课时包与续课节点"区块提示还有几条待确认，剩余课时的展示一律注明"未含 N 条待确认"。这样老师隔几天回来补确认时，账目仍然是对的。
 
-`coursePackageLedger[].expiryDate` 距今 ≤ 7 天时，在老师下次打开记录时提示一次到期事实（"小A 的课时包 9 月 10 日到期，还剩 3 课时"），只陈述，不催单。续费节点口径见 §9.1，与 `xiaozhi-teach-renewal-report` 一致。
+`coursePackageLedger[].expiryDate` 距今 ≤ 7 天时，在老师下次打开记录时提示一次到期事实（"小A 的课时包 11 月 30 日到期，还剩 3 课时"），只陈述，不催单。续费节点口径见 §9.1，与 `xiaozhi-teach-renewal-report` 一致。
 
 ### 7.2 特殊场景
 
@@ -469,7 +471,7 @@ workspace.lessonLogs[].masteryStatus = "仍需巩固"   ← 整体判断
   workspace.lessonLogs[].nextLessonFocus   → 下节课衔接点
   workspace.lessonLogs[].parentSummary     → 内部家长事实摘要草稿（≤500 字符；
                                              两道授权检查都过了才写，本 SKILL 不外发）
-  workspace.lessonLogs[].consumeLessonUnits→ 本节课建议消耗课时数
+  workspace.lessonLogs[].consumeLessonUnits → 本节课建议消耗课时数
   workspace.coursePackageLedger[].pendingConfirmations[]
                                            → 待老师确认的课时条目
   workspace.progressEvidence[]             → 课堂表现类进步证据

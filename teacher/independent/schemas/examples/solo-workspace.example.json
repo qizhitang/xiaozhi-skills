@@ -18,7 +18,7 @@
       "learningPreferences": ["先看一道例题再自己做", "步骤要写全"],
       "availability": [
         { "dayOfWeek": "周三", "startTime": "18:30", "endTime": "20:00" },
-        { "dayOfWeek": "周六", "startTime": "09:00", "endTime": "12:00" }
+        { "dayOfWeek": "周五", "startTime": "18:30", "endTime": "20:00" }
       ],
       "guardianCommunicationPreference": "微信文字",
       "consent": {
@@ -40,7 +40,7 @@
       "subjects": ["数学"],
       "goals": ["计算少出错"],
       "availability": [
-        { "dayOfWeek": "周日", "startTime": "10:00", "endTime": "11:30" }
+        { "dayOfWeek": "周二", "startTime": "17:30", "endTime": "18:30" }
       ],
       "guardianCommunicationPreference": "电话",
       "consent": {
@@ -66,14 +66,34 @@
       "lessonGoal": "一元一次方程去分母"
     },
     {
-      "lessonId": "L-20260906-B",
+      "lessonId": "L-20260904-A",
+      "studentId": "S-001",
+      "subject": "数学",
+      "startTime": "2026-09-04T18:30:00+08:00",
+      "durationMinutes": 90,
+      "day_of_week": "周五",
+      "status": "completed",
+      "lessonGoal": "移项变号复查与一元一次方程应用题"
+    },
+    {
+      "lessonId": "L-20260908-B",
       "studentId": "S-002",
       "subject": "数学",
-      "startTime": "2026-09-06T10:00:00+08:00",
+      "startTime": "2026-09-08T17:30:00+08:00",
       "durationMinutes": 60,
-      "day_of_week": "周日",
+      "day_of_week": "周二",
       "status": "trial",
       "lessonGoal": "试听：看计算习惯"
+    },
+    {
+      "lessonId": "L-20260909-A",
+      "studentId": "S-001",
+      "subject": "数学",
+      "startTime": "2026-09-09T18:30:00+08:00",
+      "durationMinutes": 90,
+      "day_of_week": "周三",
+      "status": "completed",
+      "lessonGoal": "一元一次方程应用题"
     }
   ],
   "lessonLogs": [
@@ -93,14 +113,26 @@
       "nextLessonFocus": "先用纯净版最简题复查移项变号，再进应用题",
       "parentSummary": "今天讲了去分母，4 道练习自己做对 3 道。移项变号还需要再练一次，下节课我会先复查这一点。",
       "consumeLessonUnits": 1
+    },
+    {
+      "logId": "LG-002",
+      "lessonId": "L-20260909-A",
+      "studentId": "S-001",
+      "date": "2026-09-09",
+      "completedContent": ["一元一次方程应用题"],
+      "evidence": ["练习册 P32 第 1-8 题课上做完，第 3、5 题错，其中 1 题移项没变号"],
+      "masteryStatus": "仍需巩固",
+      "studentReaction": "平稳",
+      "nextLessonFocus": "开头 10 分钟重做第 3、5 题，做对再进新内容",
+      "consumeLessonUnits": 1
     }
   ],
   "homeworkFollowups": [
     {
       "homeworkId": "H-001",
       "studentId": "S-001",
-      "task": "练习册 P32 第 1-8 题",
-      "dueDate": "2026-09-04",
+      "task": "课上练习（9-09）：练习册 P32 第 1-8 题",
+      "dueDate": "2026-09-09",
       "status": "已批改",
       "overdueDays": 0,
       "mainErrors": [
@@ -115,7 +147,36 @@
           "teacherCategory": "计算错误"
         }
       ],
-      "nextAction": "下节课前 10 分钟重做第 3、5 题，做对再进新内容"
+      "nextAction": "下节课开头 10 分钟重做第 3、5 题，做对再进新内容"
+    },
+    {
+      "homeworkId": "H-002",
+      "studentId": "S-001",
+      "task": "学校作业（9-04 带来）：一元一次方程 第 2、6 题",
+      "status": "已订正",
+      "mainErrors": [
+        {
+          "knowledgePoint": "一元一次方程移项",
+          "dimension": "概念模糊"
+        }
+      ],
+      "nextAction": "学员自己带来的，已订正；下节课用纯净版题复查移项"
+    },
+    {
+      "homeworkId": "H-003",
+      "studentId": "S-001",
+      "task": "课上练习（9-02）：去分母练习 4 题",
+      "dueDate": "2026-09-02",
+      "status": "已批改",
+      "overdueDays": 0,
+      "mainErrors": [
+        {
+          "knowledgePoint": "一元一次方程移项",
+          "dimension": "概念模糊",
+          "teacherCategory": "规则错误"
+        }
+      ],
+      "nextAction": "下节课先用纯净版最简题复查移项变号"
     }
   ],
   "parentCommunicationLogs": [
@@ -135,15 +196,16 @@
       "packageId": "P-001",
       "studentId": "S-001",
       "totalUnits": 20,
-      "usedUnits": 11,
-      "remainingUnits": 9,
+      "usedUnits": 2,
+      "remainingUnits": 18,
       "renewalAttention": false,
-      "expiryDate": "2026-12-31",
+      "startDate": "2026-09-01",
+      "expiryDate": "2026-11-30",
       "pendingConfirmations": [
         {
-          "lessonId": "L-20260902-A",
+          "lessonId": "L-20260909-A",
           "units": 1,
-          "generatedAt": "2026-09-02T20:10:00+08:00"
+          "generatedAt": "2026-09-09T20:10:00+08:00"
         }
       ]
     }
@@ -152,9 +214,9 @@
     {
       "evidenceId": "PE-001",
       "studentId": "S-001",
-      "date": "2026-09-04",
+      "date": "2026-09-09",
       "evidenceType": "作业",
-      "description": "『一元一次方程移项』28 天内第 3 次记到概念模糊（8-21 / 8-28 / 9-04），等老师确认后再进重点弱项。",
+      "description": "『一元一次方程移项』28 天内第 3 次记到概念模糊（9-02 / 9-04 / 9-09），等老师确认后再进重点弱项。",
       "confidenceLevel": "data_sufficient"
     }
   ],

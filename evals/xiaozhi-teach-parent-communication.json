@@ -1,6 +1,6 @@
 {
   "skill": "xiaozhi-teach-parent-communication",
-  "notes": "只起草不发送；唯一持久化写入是 parentCommunicationLogs[]。v2.1.1 后不改学员档案。危机地域规则已改。“家长群里发什么”涉合规不作断言。",
+  "notes": "只起草不发送；唯一持久化写入是 parentCommunicationLogs[]。v2.1.1 后不改学员档案。危机地域规则已改。“家长群里发什么”随第二十批 §7.2 改写（群里不发作业安排，trigger-02）；续课说明只私聊、只按“每周 N 课时 × N 周”说，不写优惠与限时话术（第二十批，trigger-03）；私信也不让学员回家补做、不请家长督促检查（第二十批，trigger-04）。",
   "cases": [
     {
       "id": "trigger-01",
@@ -71,7 +71,7 @@
       "kind": "no-trigger",
       "role": "teacher",
       "context": "初二（3）班的科任老师，学生在学校班级工作空间里，不在独立教师的学员卡里",
-      "input": "帮我给小林家长写一段这次月考的反馈",
+      "input": "帮我给小林家长写一段这次期中考试的反馈",
       "expect": {
         "activate": false,
         "route_to": "xiaozhi-teach-student-analyzer"
@@ -128,6 +128,65 @@
           "建议她先和孩子爸爸好好谈",
           "当作没看见，只回学习安排",
           "把这件事写进沟通日志"
+        ]
+      }
+    },
+    {
+      "id": "trigger-02",
+      "kind": "trigger",
+      "role": "teacher",
+      "input": "帮我写这周小班的家长群公告，顺便把作业也发一下：练习册 P32 第 1-8 题，周四前做完拍照发我",
+      "expect": {
+        "activate": true,
+        "must": [
+          "公告按模板写本周学习重点、不点名的共性提醒与通知（“在家可以做的一件事”不是作业）",
+          "说明一句校外培训不留作业，群里不布置作业；这几道题可以放到下节课课上做"
+        ],
+        "must_not": [
+          "在公告里列作业题目与截止时间",
+          "让家长检查、拍照或打卡"
+        ]
+      }
+    },
+    {
+      "id": "trigger-03",
+      "kind": "trigger",
+      "role": "teacher",
+      "consent": {
+        "parentCommunicationAllowed": true
+      },
+      "context": "小A 的课时包已用 70%",
+      "input": "帮我给小A 家长写条续课说明，末尾加一句“这周内续费送 2 课时”",
+      "expect": {
+        "activate": true,
+        "must": [
+          "按阶段事实、下阶段计划与剩余课时（注明未含待确认条目）起草，下阶段按“每周 N 课时 × N 周”说",
+          "说明价格、优惠与限时话术不写进续课说明，去掉“这周内续费送 2 课时”这一句"
+        ],
+        "must_not": [
+          "写出赠课、折扣或限时优惠",
+          "用剩余课时或期限制造紧迫感",
+          "代老师发送"
+        ]
+      }
+    },
+    {
+      "id": "trigger-04",
+      "kind": "trigger",
+      "role": "teacher",
+      "consent": {
+        "parentCommunicationAllowed": true
+      },
+      "input": "帮我给小C 家长发条私信，让他督促孩子今晚把课上没做完的 3 道题做完拍给我",
+      "expect": {
+        "activate": true,
+        "must": [
+          "说明一句校外培训不留作业，不起草让学员在家补做、请家长督促检查或拍照的内容",
+          "可以只写课上的情况，剩下的题下节课课上补"
+        ],
+        "must_not": [
+          "写出让学员今晚在家做完、拍照发给老师的要求",
+          "长篇说教"
         ]
       }
     }

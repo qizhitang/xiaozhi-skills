@@ -102,10 +102,10 @@
   "examBlueprints": [
     {
       "examId": "ex-2026-03-16-unit4",
-      "title": "第四章 一次函数 单元测评",
+      "title": "第四章 一次函数（单元练习）",
       "date": "2026-03-16",
       "assessmentType": "形成性",
-      "durationMinutes": 40,
+      "durationMinutes": 20,
       "fullScore": 50,
       "difficultyRatio": "6:3:1",
       "cognitiveRatio": { "了解": 16, "理解": 32, "掌握": 42, "运用": 10 },

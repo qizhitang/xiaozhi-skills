@@ -46,6 +46,7 @@
       },
       "homeworkFollowups": {
         "reads": [
+          "task",
           "status",
           "overdueDays",
           "mainErrors",
@@ -73,6 +74,7 @@
           "scenario",
           "channel",
           "factSummary",
+          "actionSuggestion",
           "sentStatus"
         ]
       }
@@ -423,6 +425,10 @@
           "type": "string",
           "maxLength": 500,
           "description": "沟通事实摘要，受 500 字符硬约束。禁止写入真实姓名、家庭住址、身份证件、联系电话、账户信息、医疗诊断、心理标签、家庭纠纷、财务细节等高敏信息。"
+        },
+        "actionSuggestion": {
+          "type": "string",
+          "maxLength": 500
         },
         "sentStatus": {
           "type": "string",

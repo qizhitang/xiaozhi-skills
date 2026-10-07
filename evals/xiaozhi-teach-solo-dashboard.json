@@ -43,7 +43,7 @@
       "kind": "degrade",
       "missing": ["X"],
       "role": "teacher",
-      "input": "哪些学员作业逾期最多？",
+      "input": "哪些学员课上练习逾期没补上的最多？",
       "expect": { "must": ["说明无法做跨记录统计，只能列当前状态为逾期的条目"], "must_not": ["编造次数排名"] }
     },
     {

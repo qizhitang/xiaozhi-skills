@@ -235,7 +235,7 @@
         },
         "shortTermGoal": {
           "type": "string",
-          "description": "短期学习目标（具体可衡量，如'下次月考数学过80分'）",
+          "description": "短期学习目标（具体可衡量，如'这周能独立做对一次函数应用题'）",
           "maxLength": 200
         },
         "longTermGoal": {

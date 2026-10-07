@@ -40,6 +40,7 @@
           "totalUnits",
           "usedUnits",
           "remainingUnits",
+          "startDate",
           "expiryDate"
         ]
       },
@@ -265,6 +266,11 @@
         "remainingUnits": {
           "type": "number",
           "minimum": 0
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date",
+          "description": "课时包起始日（可不填），与 expiryDate 一起用于‘起止超过 3 个月’提示"
         },
         "expiryDate": {
           "type": "string",

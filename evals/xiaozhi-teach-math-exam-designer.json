@@ -1,12 +1,12 @@
 {
   "skill": "xiaozhi-teach-math-exam-designer",
-  "notes": "v2.1.1：只做四件事（蓝图与细目表、选题与版权、题目统计、经老师逐条确认的写回），不写 weaknessRank / studentTiers / reviewPlans。触发需“命题任务动词 + 数学语境”两条件。已有不触发表，用例直接对照。第六批起高中测评覆盖必修与选择性必修（第十五节），附高二导数单元的蓝图示例。第十五批曾把讲评课的环节改转教案设计器；第十六批改回：讲评课整节（含环节、例题与变式）转数学教案设计，各学段都这样（no-trigger-04；no-trigger-02 只留补救一问）。",
+  "notes": "v2.1.1：只做四件事（蓝图与细目表、选题与版权、题目统计、经老师逐条确认的写回），不写 weaknessRank / studentTiers / reviewPlans。触发需“命题任务动词 + 数学语境”两条件。已有不触发表，用例直接对照。第六批起高中测评覆盖必修与选择性必修（第十五节），附高二导数单元的蓝图示例。第十五批曾把讲评课的环节改转教案设计器；第十六批改回：讲评课整节（含环节、例题与变式）转数学教案设计，各学段都这样（no-trigger-04；no-trigger-02 只留补救一问）。第二十批（Q4、Q6、Q7）：初中考试每学期只有期末、可加一次期中，单元用单元练习（随堂练习：穿插在课堂教学里，单次一般不超过 20 分钟，不组织成考试、不计总分、不排名，反馈写知识点诊断），诊断性摸底用随堂练习，高中照学校的考试计划、不建议额外加考（trigger-04）；竞赛不在本库范围，不再指向通用版（no-trigger-06）；学员统计卡删“高于/低于班级平均”，初中写学校给的等级，不写总分与名次（trigger-05）。",
   "cases": [
     {
       "id": "trigger-01",
       "kind": "trigger",
       "role": "teacher",
-      "input": "给八年级数学设计一份单元测评",
+      "input": "给八年级数学设计一份期中试卷的双向细目表",
       "expect": { "activate": true, "must": ["先出命题蓝图与双向细目表，取数前确认读哪些字段", "候选题标注 AI 生成需验算，定稿由老师完成"], "must_not": ["读 homeworkAssignments / interactionLogs / 分层明细", "写 weaknessRank 或 studentTiers"] }
     },
     {
@@ -35,7 +35,7 @@
       "id": "no-trigger-04",
       "kind": "no-trigger",
       "role": "teacher",
-      "input": "数学月考考完了，讲评课怎么上？",
+      "input": "数学期中考完了，讲评课怎么上？",
       "expect": { "activate": false, "route_to": "xiaozhi-teach-math-lesson-planner" }
     },
     {
@@ -80,6 +80,62 @@
       "expect": {
         "activate": false,
         "route_to": "xiaozhi-teach-parent-communication"
+      }
+    },
+    {
+      "id": "trigger-04",
+      "kind": "trigger",
+      "role": "teacher",
+      "grade_band": "初中",
+      "context": "初二（3）班，学校班级工作空间",
+      "input": "初二数学这学期的测评帮我规划一下：期中、期末之外，每个单元也想出份卷子看看学生掌握得怎样",
+      "expect": {
+        "activate": true,
+        "must": [
+          "说明初中考试每学期只有期末，可加一次期中，实行等级评价、不排名",
+          "说明每个单元不另出卷考；掌握情况用单元练习（随堂练习：穿插在课堂教学里，单次一般不超过 20 分钟，不计总分、不排名）与作业看，反馈写知识点诊断"
+        ],
+        "must_not": [
+          "给每个单元排一次考试或测验",
+          "建议在期中、期末之外额外加考"
+        ]
+      }
+    },
+    {
+      "id": "trigger-05",
+      "kind": "trigger",
+      "role": "teacher",
+      "grade_band": "初中",
+      "context": "初二（3）班的期中数学卷，逐题得分已导入学校班级工作空间；学校给了每个学生的等级",
+      "input": "把座号 05 这次期中的个人测评统计卡做出来",
+      "expect": {
+        "activate": true,
+        "must": [
+          "结果写学校给的等级与该生自己的知识点表现（拿稳的、要补的）",
+          "错因与改进建议只留交接口，转班级错因分析与数学教案设计"
+        ],
+        "must_not": [
+          "写总分、整卷得分率或名次",
+          "写该生高于或低于班级平均"
+        ]
+      }
+    },
+    {
+      "id": "no-trigger-06",
+      "kind": "no-trigger",
+      "role": "teacher",
+      "grade_band": "高中",
+      "input": "高二有几个学生想报数学奥赛，帮我出一套竞赛选拔卷",
+      "expect": {
+        "activate": false,
+        "route_to": null,
+        "must": [
+          "说明竞赛命题不在本库范围：高中学科奥林匹克竞赛由主办方按教育部公布的名单组织，本 SKILL 与通用版都不出竞赛卷"
+        ],
+        "must_not": [
+          "出竞赛卷或竞赛选拔题",
+          "转给测评设计师（通用版）出竞赛卷"
+        ]
       }
     }
   ]

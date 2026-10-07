@@ -119,6 +119,12 @@ const CONTRACTS = [
     owner: null,
   },
   {
+    // 校外培训口径：不属于某个技能，只发给正文引用了 shared/off-campus-training.md 的技能（独立教师包）
+    as: "off-campus-training.md",
+    src: "shared/contracts/off-campus-training.md",
+    owner: null,
+  },
+  {
     as: "ebbinghaus-schedule.md",
     src: "student/general/xiaozhi-im-reminder/references/ebbinghaus-schedule.md",
     owner: "xiaozhi-im-reminder",

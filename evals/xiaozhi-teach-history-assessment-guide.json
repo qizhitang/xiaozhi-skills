@@ -28,7 +28,7 @@
       "id": "trigger-03",
       "kind": "trigger",
       "role": "teacher",
-      "input": "这是下周区统考的历史卷，还没考，帮我看看材料题有没有问题",
+      "input": "这是下周区里高三一模的历史卷，还没考，帮我看看材料题有没有问题",
       "expect": {
         "activate": true,
         "must": ["说明启用前的统考试题不能输入 AI", "改为提供命题方法与双向细目表框架，让老师自己对照"],
@@ -124,7 +124,7 @@
       "id": "no-trigger-03",
       "kind": "no-trigger",
       "role": "teacher",
-      "input": "历史月考考完了，这节讲评课怎么上？",
+      "input": "历史期中考完了，这节讲评课怎么上？",
       "expect": {
         "activate": false,
         "route_to": "xiaozhi-teach-history-lesson-planner"

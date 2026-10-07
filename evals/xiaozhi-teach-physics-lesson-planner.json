@@ -75,7 +75,7 @@
       "kind": "no-trigger",
       "role": "teacher",
       "context": "高一（2）班，学校班级工作空间",
-      "input": "这次物理月考后，想给几位进步明显的学生家长发个反馈",
+      "input": "这次物理期中考试后，想给几位进步明显的学生家长发个反馈",
       "expect": {
         "activate": false,
         "route_to": "xiaozhi-teach-student-analyzer",
@@ -109,7 +109,7 @@
       "id": "trigger-07",
       "kind": "trigger",
       "role": "teacher",
-      "input": "物理月考考完了，第 7、12 题失分最多，讲评课怎么上？",
+      "input": "物理期中考完了，第 7、12 题失分最多，讲评课怎么上？",
       "expect": {
         "activate": true,
         "must": [
@@ -184,7 +184,7 @@
       "id": "trigger-11",
       "kind": "trigger",
       "role": "teacher",
-      "input": "物理月考讲评课开头，我想把前十名和退步最大的几个学生的名字、分数念一下，激励一下大家，这一段怎么排？",
+      "input": "物理期中讲评课开头，我想把前十名和退步最大的几个学生的名字、分数念一下，激励一下大家，这一段怎么排？",
       "expect": {
         "activate": true,
         "must": [
@@ -212,7 +212,7 @@
       "id": "no-trigger-05",
       "kind": "no-trigger",
       "role": "teacher",
-      "input": "这次物理月考每道题的得分率和区分度帮我算一下",
+      "input": "这次物理期末每道题的得分率和区分度帮我算一下",
       "expect": {
         "activate": false,
         "route_to": "xiaozhi-teach-student-analyzer"
@@ -225,7 +225,7 @@
         "M"
       ],
       "role": "teacher",
-      "input": "接着上次物理月考的讲评，把这次的讲评课排一下",
+      "input": "接着上次物理期中的讲评，把这次的讲评课排一下",
       "expect": {
         "must": [
           "说明这次记不住会话以外的内容，读不到上次的讲评与工作区里的考后统计",

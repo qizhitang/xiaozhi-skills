@@ -144,7 +144,7 @@
       "id": "trigger-09",
       "kind": "trigger",
       "role": "teacher",
-      "input": "历史月考考完了，讲评课怎么上？",
+      "input": "历史期中考完了，讲评课怎么上？",
       "expect": {
         "activate": true,
         "must": [
@@ -203,7 +203,7 @@
       "kind": "trigger",
       "role": "teacher",
       "grade_band": "高中",
-      "input": "跨校联考历史我们学校考完了，别的学校明天才考，今天能先讲评吗？",
+      "input": "高三跨校联考历史我们学校考完了，别的学校明天才考，今天能先讲评吗？",
       "expect": {
         "activate": true,
         "must": [
@@ -266,7 +266,7 @@
         "M"
       ],
       "role": "teacher",
-      "input": "接着上次历史月考的讲评，把这次的讲评课排一下",
+      "input": "接着上次历史期中的讲评，把这次的讲评课排一下",
       "expect": {
         "must": [
           "说明记不住会话以外的内容，读不到上次的讲评与工作区里的统计；请老师给出这次的题号、得分率与主要问题再排"
@@ -297,7 +297,7 @@
       "id": "no-trigger-05",
       "kind": "no-trigger",
       "role": "teacher",
-      "input": "这次历史月考每道题的得分率和区分度帮我算一下",
+      "input": "这次历史期末每道题的得分率和区分度帮我算一下",
       "expect": {
         "activate": false,
         "route_to": "xiaozhi-teach-student-analyzer"
@@ -308,7 +308,7 @@
       "kind": "trigger",
       "role": "teacher",
       "grade_band": "高中",
-      "input": "我在给区里的高二历史期末统考出题，顺便帮我把这几道材料题审一下，再照着它们设计一节讲评课",
+      "input": "我在给区里的高三历史一模出题，顺便帮我把这几道材料题审一下，再照着它们设计一节讲评课",
       "expect": {
         "activate": true,
         "must": [

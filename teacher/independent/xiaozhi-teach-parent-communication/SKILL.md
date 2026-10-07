@@ -5,7 +5,7 @@ description: >
   适用于老师说"帮我想个消息发给家长""家长问成绩怎么回""孩子这次退步了怎么说""家长很担心怎么回""续课怎么跟家长说""家长群里发什么""家长不太配合怎么办"。
   流程：认场景 → 查授权位 → 按具体/低焦虑/可操作三原则起草 → 检查频率是否过密 → 记录渠道与发送状态。
   本 SKILL 只起草不发送，唯一的持久化写入是 parentCommunicationLogs[]。
-  不写课后记录、不登记作业、不排课、不做阶段报告，也不改学员档案（status、沟通偏好、授权位、保留期一概不动）——
+  不写课后记录、不登记课上练习与学校作业、不排课、不做阶段报告，也不改学员档案（status、沟通偏好、授权位、保留期一概不动）——
   素材来自 lesson-log 与 homework-tracker，阶段报告转 renewal-report，档案改动转 student-intake。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
@@ -38,6 +38,8 @@ max_round_limit: 15
 > 技术边界：本 SKILL 依赖能力 [M, K]，无该能力时按 shared/platform-conventions.md 降级。
 
 > 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
+
+> 适用范围：用于校外培训（一对一、小班）时，只在合法范围内用，口径见 `shared/off-campus-training.md`——学科类须经审批，各地已不再审批新的学科类培训机构；不占学校上课时间，线下 20:30、线上 21:00 前结束，不给学员留作业，一次收费不超过 3 个月或 60 课时，高中学员同样适用；面向义务教育阶段学生的另外不占用休息日、节假日与寒暑假，线上每课时不超过 30 分钟，面向高中学生的这两条参照执行。本技能不预设违规的排课、作业与收费。
 
 **只起草，不发送。** 本 SKILL 不接入微信、短信或任何 IM，也不代管家长联系方式——联系方式在老师自己的手机里。生成的每一条话术都由老师复制出去自己发。
 
@@ -221,6 +223,7 @@ max_round_limit: 15
 
 ⚠️ 不用剩余课时制造紧迫感，不说"再不续就衔接不上了"。
    续不续是家长的决定，本 SKILL 只负责把事实说清楚。
+   下阶段只按"每周 [N] 课时 × [N] 周"说，不写价格、折扣、优惠与限时话术。
 ```
 
 ---
@@ -261,19 +264,20 @@ max_round_limit: 15
 ❌ 禁止在群里发：
   · 任何具体学员的分数、作业情况、课堂表现
   · 未交作业的名单
+  · 给学员布置的练习、作业（校外培训不留作业，练习放到课上做）
   · 学员之间的对比、排名
   · 让家长焦虑的"别人家孩子"
   · 单个学员的诊断结论或弱项
   · 续费接龙、优惠倒计时
 
 ✅ 群里可以发：
-  · 教学计划、作业安排、材料准备
+  · 教学计划、材料准备
   · 不点名的共性提醒（"这周这个知识点出错的同学比较多"）
   · 学习方法分享
-  · 通知性内容（调课、假期安排）
+  · 通知性内容（调课、放假停课通知）
 ```
 
-**为什么个体信息一条都不能发群**：群里每个人都看得见。一条"某某这周作业没交"，对家长是提醒，对孩子是当众点名——而孩子本人往往不在群里，没法解释也没法回应。学员个体的事一律私聊，没有例外。
+**为什么个体信息一条都不能发群**：群里每个人都看得见。一条"某某这周课上练习又没做完"，对家长是提醒，对孩子是当众点名——而孩子本人往往不在群里，没法解释也没法回应。学员个体的事一律私聊，没有例外。
 
 ### 7.3 1 对 1 私聊
 
@@ -343,7 +347,7 @@ max_round_limit: 15
 ```text
 ✅ 沟通内容：
   教学进度、学员表现、学习建议
-  课时消耗、续费信息
+  课时消耗、下阶段课时安排
 
 ❌ 不沟通：
   家庭经济、家庭关系、家长职业
@@ -456,9 +460,10 @@ max_round_limit: 15
         → 说进展或说需要再练时的依据
   workspace.lessonLogs[].studentReaction / .date
         → 课堂状态（转述前须查 emotionSharingWithParent）与时间线
-  workspace.homeworkFollowups[].status / .overdueDays
+  workspace.homeworkFollowups[].task / .status / .overdueDays
       / .mainErrors[].knowledgePoint / .nextAction
-        → 作业情况与错因（用知识点说话，不用"不认真"说话）
+        → 课上练习情况与学校作业、考试错题的错因，两类按 task 开头的类别分开说
+        → 用知识点说话，不用"不认真"说话；不据此催交
   workspace.coursePackageLedger[].usedUnits / .remainingUnits
       / .expiryDate / .pendingConfirmations[] / .renewalAttention
         → 续课说明的事实来源；剩余课时须注明"未含 N 条待确认"
@@ -470,14 +475,14 @@ max_round_limit: 15
   workspace.parentCommunicationLogs[].scenario        → 六枚举之一（见第四节）
   workspace.parentCommunicationLogs[].channel         → 渠道枚举，不记联系方式
   workspace.parentCommunicationLogs[].factSummary     → 沟通要点（客观事实，≤500 字符）
-  workspace.parentCommunicationLogs[].actionSuggestion→ 建议家长配合的一件事
+  workspace.parentCommunicationLogs[].actionSuggestion → 建议家长配合的一件事
   workspace.parentCommunicationLogs[].sentStatus      → draft / sent / not_sent
         老师说"发了"才记 sent；起草完默认 draft
 
 派生视图（不落库）：
   沟通频率检查   ← 由 workspace.parentCommunicationLogs[].date 统计
   需要沟通的提示 ← 由 homeworkFollowups[].overdueDays 与
-                   lessonLogs[].masteryStatus 实时计算
+                   lessonLogs[].masteryStatus 实时计算（说课上的情况，不用于催交）
 
 不写（越界项，交给别的流程）：
   · workspace.studentCards[] 的任何字段——学员状态、沟通方式偏好、
@@ -519,8 +524,8 @@ max_round_limit: 15
 | 具体 + 低焦虑 + 可操作 | 模糊 + 焦虑 + 空话 |
 | 学员个体反馈一律私聊 | 群里发具体学员的表现 |
 | 情绪内容只写行为 | 写推测、贴标签、猜原因 |
-| 给家长一件具体能做的事 | 让家长"多关注""要重视" |
-| 续课只说事实与计划 | 用剩余课时催单 |
+| 给家长一件具体能做的事（不是作业：听孩子讲两分钟、提醒带材料） | 让家长"多关注""要重视"；让学员回家补做练习，或请家长督促、检查、批改、打卡 |
+| 续课只说事实与计划，下阶段按周数说 | 用剩余课时催单，写优惠与限时话术 |
 | 超出学习范畴的转介 | 老师当心理咨询师 |
 | 只记渠道枚举 | 把手机号微信号记进档案 |
 | 只写 parentCommunicationLogs 这一处 | 顺手改学员状态、沟通偏好或保留期 |
@@ -556,6 +561,7 @@ max_round_limit: 15
 - 禁止使用焦虑话术（"再这样下去""别人家孩子"）
 - 禁止对情绪做诊断或贴标签，危机信号按 `shared/crisis-exception.md` 处置
 - 禁止记录任何联系方式或家长回复原文
+- 禁止在私聊或群里给学员布置练习、作业，或请家长督促做完、检查批改、拍照打卡（校外培训不留作业，见 `shared/off-campus-training.md` 第三节）；老师要催时说一句依据，改成下节课课上补
 
 ---
 

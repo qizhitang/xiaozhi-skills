@@ -118,7 +118,7 @@ max_round_limit: 30
 | 例题选择 | "例题怎么选" |
 | 错例分析 | "学员错在哪里" |
 | 复习课（第十五节） | "这一单元学完了，数学复习课怎么上" |
-| 讲评课（第十五节） | "数学月考考完了，讲评课怎么上" |
+| 讲评课（第十五节） | "数学期中考完了，讲评课怎么上" |
 
 ---
 
@@ -591,8 +591,8 @@ payload 为 `teacherWritebackData`（`teacherSkill` / `studentAlias` / `weakKnow
 | 老师说 | 转给 |
 |---|---|
 | "期末前两周数学复习怎么排""这几周哪天回看哪些知识点" | 复习规划师（xiaozhi-teach-review-planner） |
-| "出一份复习卷""这次数学月考每道题的难度、区分度算一下" | 数学测评设计（xiaozhi-teach-math-exam-designer） |
-| "这次月考的错因帮我归一下类" | 班级错因分析（xiaozhi-teach-math-error-analyzer） |
+| "出一份复习卷""这次数学期中每道题的难度、区分度算一下" | 数学测评设计（xiaozhi-teach-math-exam-designer） |
+| "这次期中的错因帮我归一下类" | 班级错因分析（xiaozhi-teach-math-error-analyzer） |
 | "讲评后的订正和巩固作业怎么布置" | 作业设计师（xiaozhi-teach-assignment-designer） |
 | "学生答不上来怎么追问、怎么分组" | 课堂互动教练（xiaozhi-teach-classroom-coach） |
 | "这次成绩怎么跟家长说" | 学校班级：学情分析师（xiaozhi-teach-student-analyzer）出家长版；独立教师：家长沟通助手（xiaozhi-teach-parent-communication）。都由它们先核对授权（§9.2） |
@@ -642,11 +642,11 @@ payload 为 `teacherWritebackData`（`teacherSkill` / `studentAlias` / `weakKnow
 
 - 先讲思路，再讲步骤与易错（§5.1—5.2）；同一类错因的几道题讲透一道，其余点出共同的错法。参考答案与评分标准以试卷与老师为准，本 SKILL 排讲法、易错与变式；各类错因的讲法可参考 `references/error-pattern-rubric.md` 第 4 节的检查表。
 - 每类错因讲完配一道当堂变式（§6.4 的改条件、改问题，出题后照 §6.4 自检）；课末的反思照 §7.3 改问：错在哪、为什么错、下次怎么避免。
-- 展示作答只用化名或老师誊写、改写的典型错解（§十），投影原卷先遮住姓名、学号与分数，字迹同学认得出的改用老师誊写的；点评对题不对人，不当众点名批评，表扬进步也不报分数与名次；不公布个人分数与排名。
+- 展示作答只用化名或老师誊写、改写的典型错解（§十），投影原卷先遮住姓名、学号与分数，字迹同学认得出的改用老师誊写的，原卷和作答也不拍照发到群里；点评对题不对人，不当众点名批评，表扬进步也不报分数与名次；不公布个人分数与排名。
 
 **记录与后续**：
 
-- 写进 lessonPlans 时 planType 填"讲评"；topic 写明哪场考试（如"第二次月考讲评"），lessonPlans 没有考试编号字段；题号清单与题干留在给老师的教案正文里。
+- 写进 lessonPlans 时 planType 填"讲评"；topic 写明哪场考试（如"期中讲评"），lessonPlans 没有考试编号字段；题号清单与题干留在给老师的教案正文里。
 - 课上观察到的典型错误记进 interactionLogs 的 misconceptionsObserved：只写错误本身，错因用通用四维（§8.1），不写是谁错的，也不写个别学生的分数。
 - 写回学生端、给家长的内容照 §9.2 先核对授权，个人分数与排名不在班级群、家长群公开；订正与巩固作业转作业设计师。
 - 考后有学生情绪低落，课上照常对题不对人；出现危机信号，停止讲评设计，按 §9.2 末的危机例外处置。

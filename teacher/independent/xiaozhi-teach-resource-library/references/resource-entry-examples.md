@@ -1,7 +1,7 @@
 # 资源五大类：用途、入库要求与示例
 
 > 适用学段：小学中段 / 小学高段 / 初中 / 高中
-> 示例题验算：2026-09-06
+> 示例题验算：2026-10-07
 > 配合 `xiaozhi-teach-resource-library` §四使用。标签与检索规则见 `resource-categorization.md`，版权格式见 `copyright-annotation-template.md`。
 > 字段名以 `solo-teacher-workspace.schema.json` 的 `resourceIndexItem` 为准；`resourceType` 只能取七档枚举之一：题目 / 讲义 / 课件 / 板书 / 讲评话术 / 错因案例 / 家长话术。
 
@@ -11,7 +11,7 @@
 
 ```text
 ■ 用途
-  · 课前预习材料、课中讲义、课后复习材料
+  · 课中讲义、复习课讲义、课上练习的配套材料
 
 ■ 入库要求
   · resourceType = 讲义

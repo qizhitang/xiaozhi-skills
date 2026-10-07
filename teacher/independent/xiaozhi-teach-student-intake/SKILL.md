@@ -4,7 +4,7 @@ description: >
   把试听从"体验课"变成一次双向诊断，并按最小化原则给新学员建档。
   适用于老师说"新学员要试听""安排一节试听""试听课怎么上""学员档案怎么建""家长/孩子想学什么""试听完怎么记录""试听后怎么跟进"。
   流程：确认监护人同意 → 收最小必要信息 → 5W 需求访谈 → 5-10 分钟前测评 → 设计诊断式试讲 → 记录 5 维度观察 → 判断是否适配 → 建正式学员卡。
-  范围到建档为止：不排课、不写课后记录、不登记作业、不做阶段报告、不谈续费与流失挽回，也不收集或存储任何联系方式。
+  范围到建档为止：不排课、不写课后记录、不登记课上练习与学校作业、不做阶段报告、不谈续费与流失挽回，也不收集或存储任何联系方式。
   排课与课节状态转 schedule-manager，课后记录转 lesson-log，续费/阶段报告/流失跟进转 renewal-report。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
@@ -35,6 +35,8 @@ max_round_limit: 15
 > 技术边界：本 SKILL 依赖能力 [M, K]，无该能力时按 shared/platform-conventions.md 降级。
 
 > 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
+
+> 适用范围：用于校外培训（一对一、小班）时，只在合法范围内用，口径见 `shared/off-campus-training.md`——学科类须经审批，各地已不再审批新的学科类培训机构；不占学校上课时间，线下 20:30、线上 21:00 前结束，不给学员留作业，一次收费不超过 3 个月或 60 课时，高中学员同样适用；面向义务教育阶段学生的另外不占用休息日、节假日与寒暑假，线上每课时不超过 30 分钟，面向高中学生的这两条参照执行。本技能不预设违规的排课、作业与收费。
 
 ⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
@@ -303,7 +305,7 @@ max_round_limit: 15
 
 ### 7.2 试讲课 5 段结构
 
-> 📎 完整模板见 `references/trial-lesson-5-segment-structure.md`（暖场→诊断→核心教学→互动评估→收尾跟进 五段 60-90 分钟结构模板）
+> 📎 完整模板见 `references/trial-lesson-5-segment-structure.md`（暖场→诊断→核心教学→互动评估→收尾跟进 五段结构模板：线下 60 / 90 分钟，线上 30 分钟）
 
 ### 7.3 试讲课选材原则
 
@@ -388,7 +390,10 @@ max_round_limit: 15
 ```text
 写 workspace.studentCards[]：化名、年级、学段、学科、目标、
                              可上课时间段、沟通方式偏好、授权位
-写 workspace.coursePackageLedger[]：课时包总数与到期日
+写 workspace.coursePackageLedger[]：课时包总数、起始日与到期日（总数照老师给的数写；这一次收的
+                                    折成标准课时超过 60（每节多长问老师，短于标准时长的按 1 课时）或起止
+                                    超过 3 个月时，说出折合约多少个标准课时、提示老师核对收费方式，只提示；
+                                    没填起始日按登记当天算）
 写 workspace.progressEvidence[]：试听诊断得到的学情基线证据
 
 不写：联系方式、真实姓名、出生年月、住址、学校班级（本 SKILL 不收集这些）
@@ -438,7 +443,7 @@ max_round_limit: 15
              emotionSharingWithParent, grantedBy, grantedAt, retentionUntil }
   workspace.coursePackageLedger[]
     packageId / studentId / totalUnits / usedUnits /
-    remainingUnits / expiryDate
+    remainingUnits / startDate / expiryDate
   workspace.progressEvidence[]
     evidenceType / description / date / confidenceLevel
     （源自试听诊断；单次观察一律标 insufficient_sample，

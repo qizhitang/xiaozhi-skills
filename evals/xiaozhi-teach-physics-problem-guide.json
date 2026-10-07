@@ -82,7 +82,7 @@
       "kind": "no-trigger",
       "role": "teacher",
       "grade_band": "初中",
-      "input": "这次物理月考考完了，这节讲评课怎么上？",
+      "input": "这次物理期中考完了，这节讲评课怎么上？",
       "expect": {
         "activate": false,
         "route_to": "xiaozhi-teach-physics-lesson-planner"
@@ -110,7 +110,7 @@
       "kind": "trigger",
       "role": "teacher",
       "grade_band": "初中",
-      "input": "下周区里统考的物理卷我先拿到了，还没考，第 12 题帮我先设计讲法和变式",
+      "input": "下周区里九年级一模的物理卷我先拿到了，还没考，第 12 题帮我先设计讲法和变式",
       "expect": {
         "activate": true,
         "must": [

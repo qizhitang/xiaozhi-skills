@@ -5,7 +5,7 @@ description: >
   适用于老师说"做一份阶段报告""给 [化名] 出个报告""[化名] 课时过半了""[化名] 课时剩三成""家长问孩子学得怎么样""这学期总结一下""家长犹豫要不要续"。
   流程：汇总课后记录与作业错因 → 写事实/进步/计划三段 → 无逐知识点分数时只出定性判断 → 给续课建议与话术。
   出报告前须先指定学员化名；它会读这名学员跨月的学习记录，家长可见的内容一律先过授权检查。
-  本 SKILL 不记课后内容、不登记作业、不排课、不发消息，也不改学员状态、不删学员档案（只删本 SKILL 自己写的阶段证据）——
+  本 SKILL 不记课后内容、不登记课上练习与学校作业、不排课、不发消息，也不改学员状态、不删学员档案（只删本 SKILL 自己写的阶段证据）——
   素材来自 lesson-log 与 homework-tracker，消息由老师自己发（措辞可交 parent-communication），档案变更转 student-intake。
 compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
@@ -39,6 +39,8 @@ max_round_limit: 15
 > 技术边界：本 SKILL 依赖能力 [M, X, K]，无该能力时按 shared/platform-conventions.md 降级。
 
 > 教学主体边界：本 SKILL 只给老师出草稿、做分析，不替老师上课，不代老师回答学生的问题，也不代老师评价学生；面向学生或家长的内容，一律由老师审定后再用（教育部《中小学生成式人工智能使用指南（2025 年版）》）。
+
+> 适用范围：用于校外培训（一对一、小班）时，只在合法范围内用，口径见 `shared/off-campus-training.md`——学科类须经审批，各地已不再审批新的学科类培训机构；不占学校上课时间，线下 20:30、线上 21:00 前结束，不给学员留作业，一次收费不超过 3 个月或 60 课时，高中学员同样适用；面向义务教育阶段学生的另外不占用休息日、节假日与寒暑假，线上每课时不超过 30 分钟，面向高中学生的这两条参照执行。本技能不预设违规的排课、作业与收费。
 
 报告里的每个数字都要能指回工作空间里的一条记录。**没有记录就不写这一项**，宁可报告短一点，也不用"大概""估计"填空。无 `X`（跨会话统计）时不给"共上了 N 次课、掌握了 N 个知识点"这类汇总，改为列出已知的几条并说明这不是完整历史。
 
@@ -229,10 +231,10 @@ max_round_limit: 15
   已攻克（连续 2 次独立验证做对、间隔 ≥ 3 天）：[知识点]
   仍在跟进：[知识点]（弱项状态见 shared/vocab.md §4）
 
-■ 作业情况
-  数据来源：workspace.homeworkFollowups[].status / .overdueDays
-  前半程：按时交 [N] / [N] 条
-  当前：按时交 [N] / [N] 条
+■ 课上练习情况（学员带来的学校作业、考试错题不算）
+  数据来源：workspace.homeworkFollowups[].task / .status / .overdueDays（task 开头为"课上练习"的才算）
+  前半程：课上练习按约定做完 [N] / [N] 条
+  当前：课上练习按约定做完 [N] / [N] 条
 ```
 
 ### 7.2 知识点热力图（有逐知识点数据时才画）
@@ -257,9 +259,9 @@ max_round_limit: 15
   │ 知识点掌握热力图 · [化名]            │
   ├────────────────────────────────────┤
   │ 一元一次方程移项  🟢 已掌握         │
-  │   依据：8-21 后未再出错，9-04 换题型做对 │
+  │   依据：9-04 后未再出错，9-18 换题型做对 │
   │ 去分母            🟡 仍需巩固       │
-  │   依据：近三次作业错 1 次（计算失误） │
+  │   依据：近三次练习错 1 次（计算失误） │
   │ 含参方程          🔴 需要重讲       │
   │   依据：28 天内错 3 次（概念模糊）    │
   └────────────────────────────────────┘
@@ -289,17 +291,16 @@ lessonLogs[].evidence 里，就不要凭印象补进时间线。
 
 ## 八、续课建议生成
 
-### 8.1 课时包推荐逻辑
+### 8.1 课时建议的依据
 
 ```text
 ■ 基于学习节奏
   当前每周 [N] 课时
-  → 推荐课时包 = 每周 [N] 课时 × 目标周数 [N]
+  → 下阶段课时 = 每周 [N] 课时 × 周数 [N]（见 8.2）
 
 ■ 基于学习目标
   短期目标（1 个月）：[N] 课时
   中期目标（3 个月）：[N] 课时
-  长期目标（学期）：[N] 课时
 
 ■ 基于续课节点
   已用 50%：给一次进展反馈
@@ -307,38 +308,30 @@ lessonLogs[].evidence 里，就不要凭印象补进时间线。
   （只有这两个节点，见第四节）
 ```
 
-### 8.2 课时包选项
+### 8.2 下阶段课时
 
 ```text
-■ 小包（10 课时）
-  适合：短期试学 / 假期短期课
-  时长：约 [X] 周
-  特点：灵活、可调整
+■ 怎么说
+  下阶段：每周 [N] 课时 × [N] 周，共 [N] 课时（课时照台账的记法，不折成标准课时）
+  只报数字与周数，不给档位起名，不比较哪档更划算
 
-■ 中包（30 课时）
-  适合：稳定期学员
-  时长：约 [X] 周
-  特点：性价比高、覆盖完整单元
-
-■ 学期包（60+ 课时）
-  适合：长期学员
-  时长：约 [X] 周 / 整个学期
-  特点：最优惠、稳定性最强
+■ 一次续多少
+  一次收费的时间跨度不超过 3 个月，也不超过 60 课时，超过的分段续
+  （《关于加强校外培训机构预收费监管工作的通知》，
+    教监管函〔2021〕2 号）
+  续课登记 startDate 与 expiryDate，
+  登记交排课与课时管理（xiaozhi-teach-schedule-manager）
+  下阶段（这一次续的，不按累计）折成标准课时超过 60（90 分钟一节算 2 课时、短于标准时长的按 1 课时；
+  每节多长不清楚时问老师一句，课时数本身已超过 60 的不用问），或跨度超过 3 个月（老师给了下阶段起止日期的
+  按日期算，没给的按周数算，约 13 周）
+    → 提示老师核对收费方式、分段续；只提示，不拦截
 ```
 
-### 8.3 续费优惠
+### 8.3 价格与优惠
 
-```text
-■ 优惠类型
-  · 早鸟优惠：到期前 14 天续费 [X] 折
-  · 升级优惠：从小包升中包 [X] 折
-  · 老学员优惠：连续 [N] 期续费 [X] 折
-  · 推荐优惠：推荐新学员 [X] 优惠
+价格与优惠不在本 SKILL 范围：不起草优惠、折扣、推荐返利与限时话术；义务教育阶段学科类收费照当地政府指导价。续课沟通不催单、不用销售话术、不制造时间压力，续不续由家长看完事实后自己定。
 
-⚠️ 优惠不是核心驱动
-  续费核心是：学员真实进步 + 家长真实认可
-  优惠只是"顺手"，不是"诱饵"
-```
+老师要写早鸟、打折一类文案时，说一句"价格与优惠不在本 SKILL 范围"，接着按 8.2 把下阶段安排写好；不拒绝整件事，不长篇说教。
 
 ---
 
@@ -359,7 +352,7 @@ lessonLogs[].evidence 里，就不要凭印象补进时间线。
   · workspace.lessonLogs[]（课后记录、perTopicMastery、date）
   · workspace.homeworkFollowups[]（status、overdueDays、mainErrors）
   · workspace.progressEvidence[]（进步证据、confidenceLevel）
-  · workspace.coursePackageLedger[]（课时数量、到期日、待确认条目）
+  · workspace.coursePackageLedger[]（课时数量、起止日期、待确认条目）
   · workspace.studentCards[]（目标、已确认弱项、授权位）
 
 ❌ 不允许：
@@ -445,16 +438,17 @@ lessonLogs[].evidence 里，就不要凭印象补进时间线。
                                               emotionSharingWithParent）
   workspace.homeworkFollowups[].mainErrors[].knowledgePoint / .dimension
                                             → 错因分布（热力图来源之一）
-  workspace.homeworkFollowups[].status / .overdueDays
-                                            → 作业情况对比
+  workspace.homeworkFollowups[].task / .status / .overdueDays
+                                            → 课上练习情况对比（按 task 开头的类别，只算课上练习）
   workspace.progressEvidence[].description / .date / .confidenceLevel
                                             → 进步证据；🔴 样本不足的不进"进步"段
   workspace.studentCards[].goals / .primaryWeaknesses / .alias / .gradeBand
                                             → 目标、已确认弱项、化名、学段
   workspace.studentCards[].consent          → 授权位（家长版报告的前置）
   workspace.coursePackageLedger[].usedUnits / .totalUnits /
-      .remainingUnits / .expiryDate / .pendingConfirmations[]
-                                            → 节点判断；待确认条目要注明
+      .remainingUnits / .startDate / .expiryDate / .pendingConfirmations[]
+                                            → 节点判断；待确认条目要注明；
+                                              起止日期用来展示现有课时包的跨度；下阶段的跨度按 §8.2 另算
   workspace.parentCommunicationLogs[].factSummary / .date
                                             → 已经跟家长说过什么，避免重复
 
@@ -512,6 +506,7 @@ lessonLogs[].evidence 里，就不要凭印象补进时间线。
 | 先点名学员再读记录 | 没指定学员就翻工作空间 |
 | 老师自己发送 | 代老师把报告发出去 |
 | 状态变更与删除转档案流程 | 顺手改学员状态或删档案 |
+| 下阶段只报每周课时数与周数 | 给课时档位起名，起草优惠、折扣与限时话术 |
 | 体面处理不续的情形 | 强行挽留、诋毁其他老师 |
 
 ---
@@ -544,6 +539,7 @@ lessonLogs[].evidence 里，就不要凭印象补进时间线。
 - 禁止在 `parentCommunicationAllowed` 为 false 时生成家长版报告
 - 禁止在报告中出现真实姓名或联系方式
 - 禁止强行挽留不再继续的学员
+- 禁止起草价格、优惠、折扣、推荐返利与限时话术（§8.3）
 
 ---
 

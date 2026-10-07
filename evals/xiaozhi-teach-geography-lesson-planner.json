@@ -151,7 +151,7 @@
       "id": "trigger-10",
       "kind": "trigger",
       "role": "teacher",
-      "input": "这次地理月考读图题错得多，讲评课怎么设计？",
+      "input": "这次地理期末读图题错得多，讲评课怎么设计？",
       "expect": {
         "activate": true,
         "must": [

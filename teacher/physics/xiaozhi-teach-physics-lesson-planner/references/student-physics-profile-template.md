@@ -86,7 +86,7 @@
 ## 三、使用规则
 
 - 本档案供老师备课与教研使用，**不用于给学生打分、排名或公开点评**。
-- 不把认得出是谁的错题在班内公开展示；讲评时只呈现"这一类错误"，不点名；投影原卷先遮住姓名、学号与分数，字迹同学认得出的改用老师誊写的。
+- 不把认得出是谁的错题在班内公开展示；讲评时只呈现"这一类错误"，不点名；投影原卷先遮住姓名、学号与分数，字迹同学认得出的改用老师誊写的，原卷和作答也不拍照发到群里。
 - 向学生端学习档案写回时：`handoverType` 取 `teacher_writeback`，负载用 `teacherWritebackData`，只带 `studentAlias`、`weakKnowledgePointUpdates`（subject / knowledgePoint / status / masteryLevel）与 ≤200 字的低敏 note；**发送前核对授权位 teacherWritebackConsent 为 true**，否则不发送并告知老师。
 - 需要与家长沟通时只输出事实描述，不带心理标签。
 - 学生或监护人要求查看、更正、删除时，按 `shared/platform-conventions.md` 第四节的控制入口处理。
