@@ -208,7 +208,7 @@ metadata:
 | **跨 SKILL 共享** | 白名单 SKILL 在 §11.2 声明的字段，且只取本次任务需要的那几个 | 由对方按 §11.1 交接写回 | `crossSkillSharing=true`；未列入白名单的 SKILL 一律拒绝，并告诉用户拒绝了谁 |
 | 导出档案 | 全档（按学生自己的请求） | 不写 | 学生本人（未确认身份不导出） |
 | 删除档案 | 不读 | 删除全档或指定类别 | 学生本人 + 二次确认（"删了就找不回来了，确定吗？"） |
-| 危机转介 | 不读档案 | `safetyRecord.crisisReferrals[]` 只记处置事实 | 无需授权位（危机例外优先），但仍不记细节、不记原话 |
+| 危机转介 | 不读档案 | `safetyRecord.crisisReferrals[]` 只记处置事实（§7.0 列出的不记情形除外） | 无需授权位（危机例外优先），但仍不记细节、不记原话 |
 
 **读之前必须说清楚读了什么、为什么读**（即时告知，每个新会话第一次读时说一次）：
 
@@ -452,7 +452,7 @@ metadata:
 
 ⚠️ 危机例外（最高优先级）：若对话中出现自伤/自残、轻生念头、遭受霸凌或伤害、持续严重绝望、家庭安全问题等超出学习范畴的信号，立即停止本 SKILL 的一切流程（含熔断、温情转化、数据展示、出题、家长摘要），按 shared/crisis-exception.md 处置：稳住不评判 → 说明 AI 边界 → 如实提示联系信任的成年人 → 按所在地区给出求助渠道（不确定地区时先问；中国大陆即时危险为 110/120，其他地区用当地紧急电话）。宁可误报，不可漏报；档案只记"已转介"的处置事实。
 
-完整处置流程见 `references/crisis-referral-protocol.md`。**处置事实写入 `safetyRecord.crisisReferrals`**（字段：`date` / `actionsTaken[]` / `followUpStatus`），不写事件细节、不写原话、不写家庭信息；也不写进 `learningEmotion`，不进入任何"本周阳光总结/攻坚蓄能期"类输出。
+完整处置流程见 `references/crisis-referral-protocol.md`。**处置事实写入 `safetyRecord.crisisReferrals`**（字段：`date` / `actionsTaken[]` / `followUpStatus`），不写事件细节、不写原话、不写家庭信息；也不写进 `learningEmotion`，不进入任何"本周阳光总结/攻坚蓄能期"类输出。家庭安全类信号里，小学有家长在旁边、学生与监护人共用会话或设备，或家长自己说打了孩子的，处置事实也不记（`shared/crisis-exception.md`"家庭安全类信号"一节、`references/crisis-referral-protocol.md` 第三节末）。
 
 ### 为什么需要学习情绪维度
 
@@ -685,7 +685,7 @@ metadata:
 | 某学科连续三周改善 | 学科成长里程碑 | `growthTrack.milestones[]` |
 | 兴趣探索结果更新 | 仅在 `interestTrackingConsent=true` 时同步 | `interestDNA` |
 | 跨学科侦探周生成项目DNA | 仅同步学习相关的跨科节点 | `growthMap.conceptGraph` + `extensions.projects[]` |
-| 危机信号已按 §7.0 处置完毕 | 只写处置事实，不写细节 | `safetyRecord.crisisReferrals[]` |
+| 危机信号已按 §7.0 处置完毕 | 只写处置事实，不写细节；§7.0 列出的不记情形不写 | `safetyRecord.crisisReferrals[]` |
 
 所有条目均为**待确认条目**：先用一句话复述给学生（"我打算这样记：…，可以吗？"），学生确认后才落库；学生说"不要记"就只留在本次会话。
 **不记录"连续使用 N 天"类里程碑**——使用时长不是学习成果（见 `references/growth-milestones.md`）。

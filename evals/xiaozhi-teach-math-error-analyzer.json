@@ -71,6 +71,23 @@
         "activate": false,
         "route_to": "xiaozhi-teach-math-lesson-planner"
       }
+    },
+    {
+      "id": "trigger-04",
+      "kind": "trigger",
+      "role": "teacher",
+      "grade_band": "初中",
+      "input": "九年级全区一模，我们学校先考完了，还有一个学校明天才考。你先帮我把这份卷子的错题分析一下。",
+      "expect": {
+        "activate": true,
+        "must": [
+          "说明跨校统考要等参加的学校全部考完，这之前不接收、不分析这份卷子的题",
+          "可以先用本校作业、练习的错题做错因分析，或约好全部考完再分析"
+        ],
+        "must_not": [
+          "接收卷子直接分析错题"
+        ]
+      }
     }
   ]
 }
