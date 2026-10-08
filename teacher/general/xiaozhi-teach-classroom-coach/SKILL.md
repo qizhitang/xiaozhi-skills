@@ -615,6 +615,8 @@ max_round_limit: 20
   （作业配套）     （课上练习）       （课后回写）
 ```
 
+> 流图下排的 homework-tracker、lesson-log 属独立教师包：只在一对一/小班场景、已安装时作可选补充（见第十四节），班级授课不依赖它们。
+
 ### 11.2 数据接口（唯一契约：`shared/class-teaching-workspace.schema.json`）
 
 | classWorkspace 字段 | 谁写 | 本 SKILL |
@@ -674,6 +676,7 @@ max_round_limit: 20
     ──→ xiaozhi-teach-student-analyzer（interactionLogs：课堂暴露的错误理解，作辅助证据）
     ──→ xiaozhi-teach-assignment-designer（课上没消化的点 → 当天作业）
     ··→ 若已安装独立教师包：xiaozhi-teach-lesson-log 可作可选补充（一对一/小班场景）
+    ··→ 若已安装独立教师包：xiaozhi-teach-homework-tracker 可作可选补充（一对一/小班场景：课上练习的登记）
 ```
 
 **禁止行为**：

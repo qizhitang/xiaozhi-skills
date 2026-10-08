@@ -368,7 +368,7 @@ max_round_limit: 25
 排除：若该题在 §5.1 中被判为 ⚪ 待复核（题目本身有问题），本次不计数
 
 满足 → weaknessRank[].stubbornCount 累加，并在个体诊断卡标注"顽固（近 4 次 3 次）"
-近 4 次都满足 → 诊断卡改标"高危（近 4 次 4 次）"，按 shared/vocab.md §5 的高危处理：先与学生本人沟通策略，告不告诉家长看授权位（§8）
+近 4 次每次都低于班级同题得分率且 < 0.60 → 诊断卡改标"高危（近 4 次 4 次）"，按 shared/vocab.md §5 的高危处理：先与学生本人沟通策略，告不告诉家长看授权位（shared/vocab.md §8：先查 parentSharingConsent，涉及情绪再查 emotionSharingWithParent）
 不满足但已出现 2 次 → 标 🟡 初步趋势，只提示"下次同类题留意"
 ```
 
@@ -545,8 +545,8 @@ xiaozhi-teach-math-lesson-planner、xiaozhi-teach-physics-lesson-planner、xiaoz
   `xiaozhi-teach-english-assessment`、`xiaozhi-teach-history-assessment-guide` 等学科端 SKILL 承担；本 SKILL 只做学科无关的统计与分层。
 - 高中班级的学科转交见 §8.4 的转交表；物理、化学、生物学、地理的班级错因细化，老师端本库暂无专门技能。
 - **学科技能交来的家长素材**（数学、语文、英语、物理、化学、生物学、历史、地理等学科老师端技能交来的进步反馈、考后成绩与错因摘要）：素材由老师在对话里转来（班级工作区没有这一项）。学校班级的家长版由本 SKILL 按 §10.2 与 `references/analysis-framework.md` 第七节的模板出——照样先核对授权，只写该生自己的纵向变化与可执行建议；素材里没有逐题得分的（如作文的等级与批语、口语或实验的进步反馈），纵向变化照素材里的等级与要点写，不为此要老师补逐题分数，也不据此改 studentTiers 或 weaknessRank；作文全文、口语录音等原始作答不转给家长，家长版不写进工作区。作业的家长反馈仍由作业设计师（xiaozhi-teach-assignment-designer）出。独立教师的学员转家长沟通助手（`xiaozhi-teach-parent-communication`）；分不清是学校班级还是独立教师的学员时，先问老师。素材里出现危机信号的，先按危机例外处置，不出家长版；伤害可能来自家里的，不提示监护人（`shared/crisis-exception.md`"家庭安全类信号"）。
-- **若老师同时安装了独立教师包**（`xiaozhi-teach-lesson-log`、`xiaozhi-teach-homework-tracker`），
-  可把它们的课后记录与课上练习记录作为补充证据；**未安装时本 SKILL 完全可独立运行**，不把它们列为必需输入。
+- **若老师同时安装了独立教师包**（一对一/小班场景，`xiaozhi-teach-lesson-log`、`xiaozhi-teach-homework-tracker`），
+  分析这位老师自己一对一、小班的学员时，可把它们的课后记录与课上练习记录作为补充证据，只作参考，不计入 §6.2 的顽固与高危判定；**未安装时本 SKILL 完全可独立运行**，不把它们列为必需输入。
 
 ### 9.4 调用边界
 
@@ -628,7 +628,7 @@ xiaozhi-teach-math-lesson-planner、xiaozhi-teach-physics-lesson-planner、xiaoz
     ──→ xiaozhi-teach-review-planner（weaknessRank / classSummaries）
     ──→ xiaozhi-teach-exam-designer（itemStats：题目质量）
     ──→ 学科教师 SKILL（xiaozhi-teach-math-error-analyzer 等，做学科错因细化；高中的转交表见 §8.4）
-    ··→ 若已安装独立教师包：xiaozhi-teach-lesson-log / homework-tracker 可作补充证据（可选）
+    ··→ 若已安装独立教师包：xiaozhi-teach-lesson-log / homework-tracker 可作补充证据（可选，一对一/小班场景，不计入顽固与高危判定）
 ```
 
 **禁止行为**：
