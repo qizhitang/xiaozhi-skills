@@ -11,7 +11,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 写作教学指导
-  version: 2.11.0
+  version: 2.11.1
   author: 小智伴学
   category: 老师语文
   grade_bands:
@@ -470,6 +470,8 @@ AI 生成的作文题：生成前按 shared/ai-item-check.md 自检（题意清�
   classWorkspace.interactionLogs[]    → 讲评课后回填：participationNote、
                                         misconceptionsObserved[]（如"把升华当结尾套话"）
   classWorkspace.weaknessRank[]       → 依据本次作文等级分布更新写作类弱项
+      · weaknessId / knowledgePoint / errorRate / dimension / evidenceExamIds[] / lastUpdated
+      （不写 .stubbornCount——顽固计数由 xiaozhi-teach-student-analyzer 唯一累加）
   （不写 classWorkspace.studentTiers[]——分层由 xiaozhi-teach-student-analyzer
     唯一维护；本 SKILL 只读分层用于任务分档，需要调整分层时把作文等级分布
     交接给它，不自行改写学生所处档位）
@@ -483,7 +485,7 @@ AI 生成的作文题：生成前按 shared/ai-item-check.md 自检（题意清�
 ```json
 {
   "sessionId": "sess-teach-wt-001",
-  "protocolVersion": "2.11.0",
+  "protocolVersion": "2.11.1",
   "handoverType": "teacher_writeback",
   "sender": "xiaozhi-teach-chinese-writing-guide",
   "recipient": "xiaozhi-learning-dna",

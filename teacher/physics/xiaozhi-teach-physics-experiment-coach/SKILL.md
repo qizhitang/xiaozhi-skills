@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 物理实验教学指导
-  version: 2.11.0
+  version: 2.11.1
   author: 小智伴学
   category: 老师物理
   grade_bands:
@@ -560,6 +560,8 @@ max_round_limit: 20
   classWorkspace.lessonPlans[].questionChain   → 实验前后的提问链
   classWorkspace.homeworkAssignments[].tasks[] → 实验后的数据处理任务
   classWorkspace.weaknessRank[]                → 实验中新发现的操作类弱项
+      · weaknessId / knowledgePoint / errorRate / dimension / evidenceExamIds[] / lastUpdated
+      （不写 .stubbornCount——顽固计数由 xiaozhi-teach-student-analyzer 唯一累加）
 ```
 
 **上一次实验课的反馈怎么用**（读 `classWorkspace.interactionLogs` 的三步）：

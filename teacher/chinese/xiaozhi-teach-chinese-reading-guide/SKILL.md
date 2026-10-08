@@ -11,7 +11,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 阅读教学指导
-  version: 2.11.0
+  version: 2.11.1
   author: 小智伴学
   category: 老师语文
   grade_bands:
@@ -510,6 +510,8 @@ max_round_limit: 20
   classWorkspace.homeworkAssignments[] → 预习与课后拓展阅读（purpose = 诊断/巩固/拓展）
   classWorkspace.interactionLogs[]   → 课后回填：段落实际用时、misconceptionsObserved[]
   classWorkspace.weaknessRank[]      → 依据课堂与作业表现更新阅读类弱项
+      · weaknessId / knowledgePoint / errorRate / dimension / evidenceExamIds[] / lastUpdated
+      （不写 .stubbornCount——顽固计数由 xiaozhi-teach-student-analyzer 唯一累加）
 ```
 
 **写回学生个人档案（可选，需授权）：**
@@ -525,7 +527,7 @@ max_round_limit: 20
 ```json
 {
   "sessionId": "sess-teach-rc-001",
-  "protocolVersion": "2.11.0",
+  "protocolVersion": "2.11.1",
   "handoverType": "teacher_writeback",
   "sender": "xiaozhi-teach-chinese-reading-guide",
   "recipient": "xiaozhi-learning-dna",

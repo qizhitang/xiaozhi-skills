@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 英语口语活动设计
-  version: 2.11.0
+  version: 2.11.1
   author: 小智伴学
   category: 老师英语
   grade_bands:
@@ -576,6 +576,8 @@ max_round_limit: 20
   classWorkspace.interactionLogs[]                     → 活动实际用时与观察到的共性问题
                                                          （participationNote 只写整体，不点名）
   classWorkspace.weaknessRank[]                        → 由口语表现归纳出的班级弱项
+      · weaknessId / knowledgePoint / errorRate / dimension / evidenceExamIds[] / lastUpdated
+      （不写 .stubbornCount——顽固计数由 xiaozhi-teach-student-analyzer 唯一累加）
 
 写回学生档案（可选，需授权）：
   handoverType = "teacher_writeback"，recipient = xiaozhi-learning-dna

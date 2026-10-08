@@ -11,7 +11,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 文言文教学指导
-  version: 2.11.0
+  version: 2.11.1
   author: 小智伴学
   category: 老师语文
   grade_bands:
@@ -554,6 +554,8 @@ max_round_limit: 20
                                           misconceptionsObserved[]（如"把'何陋之有'当介宾后置"）
   classWorkspace.homeworkAssignments[]  → 背诵与翻译任务（purpose = 巩固/补救/拓展）
   classWorkspace.weaknessRank[]         → 依据课堂与作业表现更新文言类弱项
+      · weaknessId / knowledgePoint / errorRate / dimension / evidenceExamIds[] / lastUpdated
+      （不写 .stubbornCount——顽固计数由 xiaozhi-teach-student-analyzer 唯一累加）
 ```
 
 **写回学生个人档案（可选，需授权）：**
@@ -565,7 +567,7 @@ max_round_limit: 20
 ```json
 {
   "sessionId": "sess-teach-cl-001",
-  "protocolVersion": "2.11.0",
+  "protocolVersion": "2.11.1",
   "handoverType": "teacher_writeback",
   "sender": "xiaozhi-teach-chinese-classical-guide",
   "recipient": "xiaozhi-learning-dna",

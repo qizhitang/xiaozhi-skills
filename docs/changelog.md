@@ -1,6 +1,18 @@
 # 🔄 版本历史
 
-当前版本 **v2.11.0**。全库 83 个 SKILL（学生端 49 + 老师端 34）+ 1 个开发者工具，版本号统一。
+当前版本 **v2.11.1**。全库 83 个 SKILL（学生端 49 + 老师端 34）+ 1 个开发者工具，版本号统一。
+
+---
+
+## v2.11.1 — v2.11.0 扫描复核：八个老师端学科技能写弱项时不碰 stubbornCount
+
+### 扫描复核与修复
+
+v2.11.0 在 ClawHub 的全量扫描为 83 clean / 1 suspicious：语文文言文教学指导由 clean 转为 suspicious（`persistence_privilege` 一项为 concern）。对照源文件，主要一条是真问题：
+
+- **写弱项没有列子字段**：它的写块把 `classWorkspace.weaknessRank[]` 整条声明为可写，随包的班级工作区 schema 副本因此不限制写哪些子字段；而第二十一批在 schema 里写明 `stubbornCount` 由学情分析师唯一累加，两者相抵。改为照数学班级错因分析的写法，只写 weaknessId / knowledgePoint / errorRate / dimension / evidenceExamIds / lastUpdated，注明不写 `stubbornCount`。
+- **同类写法一并改**：全库再查，另有 7 个老师端学科技能同样整条可写——语文现代文阅读指导、语文写作指导、英语综合测评、英语听力材料设计、英语口语活动设计、物理实验教学指导、物理解题教学指导（这次扫描都是 clean），一并改。sync 后 8 份随包副本的写范围都列出了子字段。
+- 同一份报告里另两条（触发短语偏宽、串讲模板逐段"译为"占位）是 2.10.0 就有的写法，当时扫描为 clean，这次不改。
 
 ---
 

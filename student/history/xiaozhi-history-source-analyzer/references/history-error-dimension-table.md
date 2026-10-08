@@ -189,7 +189,7 @@ LA08 ↔ LK04：唯物史观用错（LA08），常和因果倒置（LK04）连�
 ```json
 {
   "sessionId": "sess-2026-09-23-07",
-  "protocolVersion": "2.11.0",
+  "protocolVersion": "2.11.1",
   "handoverType": "wrong_answer_handover",
   "sender": "xiaozhi-correction-notebook",
   "recipient": "xiaozhi-history-source-analyzer",

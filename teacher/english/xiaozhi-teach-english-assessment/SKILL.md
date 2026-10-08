@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 英语综合测评
-  version: 2.11.0
+  version: 2.11.1
   author: 小智伴学
   category: 老师英语
   grade_bands:
@@ -481,6 +481,8 @@ max_round_limit: 25
                                         AI 生成题 aiGenerated=true，
                                         老师验算后才可 verifiedByTeacher=true
   classWorkspace.weaknessRank[]      → 由四维得分归纳出的弱项条目
+      · weaknessId / knowledgePoint / errorRate / dimension / evidenceExamIds[] / lastUpdated
+      （不写 .stubbornCount——顽固计数由 xiaozhi-teach-student-analyzer 唯一累加）
   classWorkspace.reviewPlans[]       → 干预建议转成的复习排布，只写英语条目；
                                         同一场考试已有复习计划时在原计划上补充，不另起一份；
                                         写入守复习规划师的三道门：老师确认、只用化名、不写个体分数与名次
@@ -502,7 +504,7 @@ max_round_limit: 25
 ```json
 {
   "sessionId": "sess-teach-eng-assess-001",
-  "protocolVersion": "2.11.0",
+  "protocolVersion": "2.11.1",
   "handoverType": "teacher_writeback",
   "sender": "xiaozhi-teach-english-assessment",
   "recipient": "xiaozhi-learning-dna",

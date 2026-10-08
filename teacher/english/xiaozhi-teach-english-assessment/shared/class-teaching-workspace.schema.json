@@ -27,7 +27,18 @@
       "reviewPlans",
       "weaknessRank"
     ],
-    "fields": {}
+    "fields": {
+      "weaknessRank": {
+        "writes": [
+          "weaknessId",
+          "knowledgePoint",
+          "errorRate",
+          "dimension",
+          "evidenceExamIds",
+          "lastUpdated"
+        ]
+      }
+    }
   },
   "description": "班级教学工作空间：老师通用 6 个 SKILL（教案、课堂、作业、测评、复习、学情）与学科教师 SKILL 之间的唯一数据契约。所有接口路径必须是本文件中的真实字段。学生只用化名/座号，不记真实姓名与联系方式。词表以 shared/vocab.md 为准。",
   "type": "object",
@@ -498,11 +509,6 @@
             "读题失误",
             "方法用错"
           ]
-        },
-        "stubbornCount": {
-          "type": "integer",
-          "minimum": 0,
-          "description": "近 4 次测评中错误率 >30% 的次数（shared/vocab.md §5 学校班级工作区口径，由 xiaozhi-teach-student-analyzer 唯一累加）"
         },
         "evidenceExamIds": {
           "type": "array",

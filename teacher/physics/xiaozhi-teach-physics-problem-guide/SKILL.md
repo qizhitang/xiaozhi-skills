@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 物理解题教学指导
-  version: 2.11.0
+  version: 2.11.1
   author: 小智伴学
   category: 老师物理
   grade_bands:
@@ -503,6 +503,8 @@ max_round_limit: 20
                                                      cognitiveLevel / difficultyBand /
                                                      tier / estimatedMinutes）
   classWorkspace.weaknessRank[]                   → 讲题中新发现的弱项条目
+      · weaknessId / knowledgePoint / errorRate / dimension / evidenceExamIds[] / lastUpdated
+      （不写 .stubbornCount——顽固计数由 xiaozhi-teach-student-analyzer 唯一累加）
 
 写回学生端（可选，走 handover-protocol.schema.json）：
   handoverType 取 teacher_writeback，负载用 teacherWritebackData，
