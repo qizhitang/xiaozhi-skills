@@ -11,7 +11,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 文言文教学指导
-  version: 2.10.0
+  version: 2.11.0
   author: 小智伴学
   category: 老师语文
   grade_bands:
@@ -565,7 +565,7 @@ max_round_limit: 20
 ```json
 {
   "sessionId": "sess-teach-cl-001",
-  "protocolVersion": "2.10.0",
+  "protocolVersion": "2.11.0",
   "handoverType": "teacher_writeback",
   "sender": "xiaozhi-teach-chinese-classical-guide",
   "recipient": "xiaozhi-learning-dna",
