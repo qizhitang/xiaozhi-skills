@@ -558,6 +558,7 @@ max_round_limit: 15
 - 禁止在 `parentCommunicationAllowed` 为 false 时生成家长内容
 - 禁止在 `emotionSharingWithParent` 为 false 时转述情绪或课堂状态
 - 禁止群发具体学员的表现
+- 禁止写学员在学校考试的名次，或拿来和别的学员比较；义务教育阶段学员的学校考试结果写学校给的等级与知识点诊断，不写总分与整卷得分率（`shared/off-campus-training.md` 第六节）
 - 禁止使用焦虑话术（"再这样下去""别人家孩子"）
 - 禁止对情绪做诊断或贴标签，危机信号按 `shared/crisis-exception.md` 处置
 - 禁止记录任何联系方式或家长回复原文

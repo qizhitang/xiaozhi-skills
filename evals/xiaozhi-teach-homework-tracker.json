@@ -15,7 +15,7 @@
       "role": "teacher",
       "context": "小A 同一知识点已错 2 次",
       "input": "这道题他又错了，第三次了",
-      "expect": { "activate": true, "must": ["按 §1/§3 归错因，阈值命中先存证据、给老师确认，不自动写长期弱项"], "must_not": ["直接写回 primaryWeaknesses", "自己做顽固计数并定性"] }
+      "expect": { "activate": true, "must": ["按 §1/§3 归错因，阈值命中先存证据、给老师确认，不自动写长期弱项"], "must_not": ["直接写回 primaryWeaknesses", "不等老师确认就定性为顽固弱项"] }
     },
     {
       "id": "no-trigger-01",

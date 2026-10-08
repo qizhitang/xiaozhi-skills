@@ -502,7 +502,7 @@
         "stubbornCount": {
           "type": "integer",
           "minimum": 0,
-          "description": "近 4 次测评中错误率 >30% 的次数（shared/vocab.md §5 老师端口径）"
+          "description": "近 4 次测评中错误率 >30% 的次数（shared/vocab.md §5 学校班级工作区口径，由 xiaozhi-teach-student-analyzer 唯一累加）"
         },
         "evidenceExamIds": {
           "type": "array",

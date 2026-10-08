@@ -166,10 +166,11 @@
 ┌──────┬────────────────────────────────────┬──────────┬──────────┐
 │ 编号 │ 判据（全部读字段值，不凭印象）        │ 中度      │ 高度      │
 ├──────┼────────────────────────────────────┼──────────┼──────────┤
-│ ①   │ lessonSchedule status=absence/       │ ≥ 2 次   │ ≥ 3 次   │
-│      │ cancelled 累计                       │          │          │
-│ ②   │ homeworkFollowups overdueDays ≥ 1     │ 3 条     │ ≥ 5 条   │
-│      │ 的条目数（不是 status=overdue）       │          │ 或单条≥7天│
+│ ①   │ lessonSchedule 近 4 周（按 startTime）│ ≥ 2 次   │ ≥ 3 次   │
+│      │ status=absence/cancelled 累计         │          │          │
+│ ②   │ homeworkFollowups 近 4 周（按 dueDate）│ 2 条     │ ≥ 3 条   │
+│      │ overdueDays ≥ 1 的条目数              │          │ 或单条≥7天│
+│      │ （不是 status=overdue）               │          │          │
 │ ③   │ lessonLogs 按 date 倒序最近 5 条中，   │ 3 条     │ 5 条     │
 │      │ masteryStatus 为需要重讲/仍需巩固     │          │          │
 │ ④   │ parentCommunicationLogs 无            │ 14-21 天 │ > 21 天  │
@@ -205,8 +206,8 @@
 | 6 课时 | remainingUnits, usedUnits, totalUnits, expiryDate | coursePackageLedger |
 | 6 课时 | pendingConfirmations（只读展示 + 提示老师去确认）| coursePackageLedger |
 | 6 课时 | renewalAttention | coursePackageLedger |
-| 风险 ① | status 计数 | lessonSchedule |
-| 风险 ② | overdueDays ≥ 1 的条目数 | homeworkFollowups |
+| 风险 ① | 近 4 周（按 startTime）的 status 计数 | lessonSchedule |
+| 风险 ② | 近 4 周（按 dueDate）overdueDays ≥ 1 的条目数 | homeworkFollowups |
 | 风险 ③ | 按 date 倒序最近 5 条的 masteryStatus | lessonLogs |
 | 风险 ④ | sentStatus + date | parentCommunicationLogs |
 | 风险 ⑤ | remainingUnits, expiryDate | coursePackageLedger |

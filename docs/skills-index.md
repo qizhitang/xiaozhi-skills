@@ -134,7 +134,7 @@
 
 | SKILL | 目录名 | 分类 | 适用学段 | 依赖 | 版本 |
 |---|---|---|---|---|---|
-| 班级错因分析 | `xiaozhi-teach-math-error-analyzer` | 老师数学 | 初中、高中 | `xiaozhi-teach-student-analyzer`、`xiaozhi-teach-lesson-planner`、`xiaozhi-teach-homework-tracker` | 2.10.0 |
+| 班级错因分析 | `xiaozhi-teach-math-error-analyzer` | 老师数学 | 初中、高中 | `xiaozhi-teach-student-analyzer`、`xiaozhi-teach-lesson-planner`、`xiaozhi-teach-assignment-designer` | 2.10.0 |
 | 数学测评设计 | `xiaozhi-teach-math-exam-designer` | 老师数学 | 初中、高中 | `xiaozhi-teach-exam-designer`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-lesson-planner`、`xiaozhi-teach-math-error-analyzer`、`xiaozhi-teach-math-lesson-planner`、`xiaozhi-teach-parent-communication` | 2.10.0 |
 | 数学教案设计 | `xiaozhi-teach-math-lesson-planner` | 老师数学 | 初中、高中 | `xiaozhi-teach-lesson-planner`、`xiaozhi-teach-student-analyzer`、`xiaozhi-teach-classroom-coach` | 2.10.0 |
 

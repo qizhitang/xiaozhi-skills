@@ -227,15 +227,15 @@
 ## 5. 错因追踪规则
 
 ```text
-口径按 `shared/vocab.md §5` 的**老师端**规则：由 `xiaozhi-teach-homework-tracker` 计数，
-本 SKILL 不自行累加。粒度是"同一知识点 + 同一通用四维"（不是同一子类别）。
+口径按 `shared/vocab.md §5` 的**学校班级**规则：`weaknessRank[].stubbornCount` 由 `xiaozhi-teach-student-analyzer`
+唯一累加，本 SKILL 不自行累加。粒度是"同一知识点 + 同一通用四维"（不是同一子类别）。
 
-■ 累计 3 次 → 顽固弱项
+■ 学情分析师已判为顽固（近 4 次测评中 3 次）→ 顽固弱项
   · 启动专项干预
   · 设计针对性训练
-  · 写入 classWorkspace.weaknessRank[]，stubbornCount +1
+  · 写入 classWorkspace.weaknessRank[] 的错误率与维度（stubbornCount 由学情分析师累加）
 
-■ 累计 5 次 → 高危
+■ 学情分析师已判为高危（近 4 次测评 4 次都达到顽固条件，shared/vocab.md §5）→ 高危
   · 先与学生本人沟通策略
   · 是否告知家长依授权位（shared/vocab.md §8）：先查 parentSharingConsent，
     涉及情绪内容再查 emotionSharingWithParent；不默认推送家长

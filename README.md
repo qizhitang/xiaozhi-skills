@@ -70,7 +70,7 @@ xiaozhi-skills/
 | SKILL | 目录 | 做什么 | 适用学段 |
 |---|---|---|---|
 | 🧬 学习DNA | `student/general/xiaozhi-learning-dna/` | 长期档案层：授权、学科强弱、概念图谱、情绪维度、学科扩展档案 | 小学中段–高中 |
-| ❌ 智能错题本 | `student/general/xiaozhi-correction-notebook/` | 全学科错题统一入口，四维错因分类，顽固弱项的唯一计数权威 | 小学中段–高中 |
+| ❌ 智能错题本 | `student/general/xiaozhi-correction-notebook/` | 全学科错题统一入口，四维错因分类，学生端顽固弱项的唯一计数权威 | 小学中段–高中 |
 | ⏰ IM智能提醒 | `student/general/xiaozhi-im-reminder/` | 全库唯一的提醒发送方：队列 + 每日合并摘要 + 学段免打扰 | 小学中段–高中 |
 | 🎓 费曼学习法 | `student/general/xiaozhi-feynman-learning/` | 用"讲给小智听"验证真实理解，支架渐退 + 反依赖设计 | 小学中段–高中 |
 | 📊 每周学习复盘 | `student/general/xiaozhi-weekly-review/` | 基于证据的周复盘与成长曲线，家庭版需单独授权 | 小学中段–高中 |

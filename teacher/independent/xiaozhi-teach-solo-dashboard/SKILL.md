@@ -154,21 +154,23 @@ max_round_limit: 20
 
 ```text
 风险① 缺课风险
-  触发条件：lessonSchedule 中 status 为 absence/cancelled 累计 ≥ 2 次
+  触发条件：lessonSchedule 中近 4 周（按 startTime）status 为 absence/cancelled 累计 ≥ 2 次
   严重度：
     2 次 = 🟡 中度
     3 次及以上 = 🔴 高度
   建议动作：调课 / 补课 / 主动沟通原因
 
 风险② 课上练习跟不上风险
-  触发条件：homeworkFollowups 中 overdueDays ≥ 1 的条目累计 ≥ 3 条
-  说明：overdueDays 由 dueDate 与当前日期派生（status 枚举中没有 overdue 这个值，
-        逾期与否一律看 overdueDays，不看 status）；课上练习的 dueDate 是约定做完的
-        那节课，学员带来的学校作业、考试错题不填 dueDate，不计入
+  触发条件：homeworkFollowups 中 dueDate 落在近 4 周的条目里，overdueDays ≥ 1 的 ≥ 2 条，
+            或其中单条 overdueDays ≥ 7（阈值与 homework-tracker 第十节相同；更早的条目不计）
+  说明：overdueDays 从 dueDate 算到做完那天，做完（已提交、已批改、已订正）后不再增加；
+        还没做完的按今天算（工作台只读派生）；已减免的记 0
+        （status 枚举中没有 overdue 这个值，逾期与否一律看 overdueDays，不看 status）；
+        课上练习的 dueDate 是约定做完的那节课，学员带来的学校作业、考试错题不填 dueDate，不计入
   严重度：
-    3 条 = 🟡 中度
-    5 条及以上 = 🔴 高度
-    单条 overdueDays ≥ 7 = 🔴 高度
+    2 条 = 🟡 中度
+    3 条及以上 = 🔴 高度
+    近 4 周内单条 overdueDays ≥ 7 = 🔴 高度
   建议动作：课上把练习拆小 / 减量 / 先查卡在哪个知识点（不改成回家做）
 
 风险③ 讲解重复风险
@@ -222,8 +224,8 @@ max_round_limit: 20
 ```text
 ✅ 合规示例：
   小D 风险② 课上练习跟不上（🟡 中度）
-  依据：homeworkFollowups 中 overdueDays ≥ 1 的条目 3 条
-       dueDate：[6-1] [6-2] [6-4]，当前逾期 4 / 3 / 1 天
+  依据：homeworkFollowups 中近 4 周 overdueDays ≥ 1 的条目 2 条
+       dueDate：[6-1] [6-4]，当前逾期 4 / 1 天
   建议：课上把练习拆小 / 减量
 
 ❌ 不合规示例：

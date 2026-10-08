@@ -612,7 +612,7 @@ max_round_limit: 20
         ↓                 ↓                 ↓
   assignment-      homework-         lesson-log
   designer         tracker           （观察记录）
-  （作业配套）     （作业配合）       （课后回写）
+  （作业配套）     （课上练习）       （课后回写）
 ```
 
 ### 11.2 数据接口（唯一契约：`shared/class-teaching-workspace.schema.json`）

@@ -386,7 +386,7 @@
         "overdueDays": {
           "type": "integer",
           "minimum": 0,
-          "description": "逾期天数（由 dueDate 与当前日期派生，仪表盘‘逾期’规则据此判断，status 中无 overdue 值）"
+          "description": "逾期天数：从 dueDate 算到做完那天，做完（status 为已提交、已批改、已订正）后不再增加；还没做完的（已布置、部分提交、未交）算到当前日期，读取方按当天算；已减免的记 0（仪表盘‘逾期’规则据此判断，status 中无 overdue 值）"
         }
       },
       "required": [

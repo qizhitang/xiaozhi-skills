@@ -610,6 +610,7 @@ homeworkAssignments[].completionSummary
     <── xiaozhi-teach-review-planner（reviewPlans：回看日与交叉组合 → 按排期配题）
     <── xiaozhi-teach-exam-designer（examBlueprints：认知层级与难度档口径对齐）
     ──→ xiaozhi-teach-student-analyzer（homeworkAssignments 的 completionSummary 作辅助证据）
+    ──→ xiaozhi-teach-math-error-analyzer（数学：homeworkAssignments 的 completionSummary 里的共性错因 → 七类错因分析）
     ──→ xiaozhi-teach-classroom-coach（高频错题 → 讲评素材）
     ──→ 学生端错题本 SKILL（学生个人错题归档）
     ··  独立教师场景不布置家庭作业（校外培训不留作业）：作业跟进管家（xiaozhi-teach-homework-tracker）

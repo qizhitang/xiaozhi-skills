@@ -169,7 +169,7 @@ max_round_limit: 12
 > - 七档用于两类记录：课上练习按课上的实际情况记（还在做、或约定下节课课上做还没开始的记 `已布置`，做完记 `已提交`，没做完记 `部分提交`）；学员带来的学校作业、考试错题从 `已批改` 或 `已订正` 起记，不填 `dueDate`，不算完成度、不算逾期。
 > - `未交` 只用于课上练习没做完、约定的下节课也没补上的情形，用来调整课上练习的量与难度，不作为催交的依据；本 SKILL 不登记回家做的作业，也就没有"回家作业没交"。
 > - "错题归档到错题本"是 `已订正` 后的下游动作，不是独立状态。
-> - 枚举里**没有** `overdue`、`补交`、`逾期` 这些值。逾期与否看 `overdueDays`（由 `dueDate` 与当前日期派生）；课上练习过了约定的那节课才做完的，状态就是 `已提交`，逾期事实由 `overdueDays` 保留。
+> - 枚举里**没有** `overdue`、`补交`、`逾期` 这些值。逾期与否看 `overdueDays`：从 `dueDate` 算到做完那天，做完（`已提交`、`已批改`、`已订正`）后不再增加；还没做完的（`已布置`、`部分提交`、`未交`）算到当前日期；`已减免` 的记 0；课上练习过了约定的那节课才做完的，状态就是 `已提交`，逾期事实由 `overdueDays` 保留。
 > - 七档以外的说法（"课上只做了一半""下节课补完了两题"）写进 `nextAction`，不新造状态。
 
 ---
@@ -274,7 +274,7 @@ max_round_limit: 12
 - 粒度：同一知识点标签 + 同一通用维度（`dimension`）。
 - 时间窗：滚动 28 天。
 - 累计（不要求连续），同一天同一知识点多次错只计 1 次。
-- 老师端由本 SKILL 计数（学生端由错题本计数，两边不互相覆盖）。
+- 独立教师工作区由本 SKILL 计数（学生端由错题本计数；学校班级工作区的顽固计数由学情分析师累加，见 `shared/vocab.md §5`；各算各的，不互相覆盖）。
 - 高危：同口径 28 天内累计 5 次 → 建议与学员本人谈策略；是否告知家长依 `shared/vocab.md §8` 授权。
 - 攻克标准：连续 2 次独立验证做对、间隔 ≥ 3 天、至少 1 次为换题型/纯净版验证。
 
@@ -369,8 +369,8 @@ max_round_limit: 12
 
 ```text
 ■ 课上练习没补上（看 overdueDays，不看 status）
-  · 中度：近 4 周有 2 条 overdueDays ≥ 1
-  · 高度：近 4 周有 3 条 overdueDays ≥ 1，或单条 overdueDays ≥ 7
+  · 中度：近 4 周（按 dueDate）有 2 条 overdueDays ≥ 1
+  · 高度：近 4 周（按 dueDate）有 3 条 overdueDays ≥ 1，或近 4 周内单条 overdueDays ≥ 7
 
 ■ 反复出错跟进
   · 按 shared/vocab.md §5 命中顽固阈值的知识点数 ≥ 3 个
@@ -428,7 +428,7 @@ max_round_limit: 12
   workspace.homeworkFollowups[].status
       → 七档枚举之一（已布置/已提交/部分提交/未交/已批改/已订正/已减免）
   workspace.homeworkFollowups[].overdueDays
-      → 由 dueDate 与当前日期派生的逾期天数（无 dueDate 时不写）
+      → 逾期天数：从 dueDate 算到做完那天（已提交、已批改、已订正），做完后不再增加；还没做完的算到当前日期；已减免的记 0（无 dueDate 时不写）
   workspace.homeworkFollowups[].mainErrors[]
       → 每条 {knowledgePoint, dimension, teacherCategory?}，dimension 必填
   workspace.homeworkFollowups[].nextAction

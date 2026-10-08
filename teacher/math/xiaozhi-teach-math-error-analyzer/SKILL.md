@@ -19,7 +19,7 @@ metadata:
   depends_on:
     - xiaozhi-teach-student-analyzer
     - xiaozhi-teach-lesson-planner
-    - xiaozhi-teach-homework-tracker
+    - xiaozhi-teach-assignment-designer
 id: openclaw:xiaozhi-teach-math-error-analyzer
 min_platform_version: "2.0"
 max_round_limit: 25
@@ -392,17 +392,17 @@ max_round_limit: 25
 ### 7.2 学员错因追踪
 
 ```text
-口径按 `shared/vocab.md §5` 的**老师端**规则：由 `xiaozhi-teach-homework-tracker` 计数，
-本 SKILL 不自行累加；粒度为"同一知识点 + 同一通用四维"，
-`classWorkspace.weaknessRank[].stubbornCount` 记的是**近 4 次测评中错误率 >30% 的次数**。
+口径按 `shared/vocab.md §5` 的**学校班级**规则：`classWorkspace.weaknessRank[].stubbornCount`
+由 `xiaozhi-teach-student-analyzer` 唯一累加，本 SKILL 不自行累加；粒度为"同一知识点 + 同一通用四维"，
+记的是**近 4 次测评中错误率 >30% 的次数**。
 ```
 
 ```text
-■ 同一知识点+同一维度累计 3 次 → 顽固弱项
+■ 学情分析师已判为顽固（同一知识点 + 同一维度，近 4 次测评中 3 次）→ 顽固弱项
   · 启动专项干预
   · 设计针对性训练
 
-■ 累计 5 次 → 高危
+■ 学情分析师已判为高危（近 4 次测评 4 次都达到顽固条件，shared/vocab.md §5）→ 高危
   · 与学生本人先沟通策略
   · 是否告知家长依授权位（shared/vocab.md §8）：
     先查 parentSharingConsent；涉及情绪内容再查 emotionSharingWithParent
@@ -467,15 +467,15 @@ max_round_limit: 25
 ```text
               ┌────────────────────────┐
               │ xiaozhi-teach-         │
-              │  homework-tracker      │
-              │ （作业错题入库）        │
+              │  assignment-designer   │
+              │ （作业批改的共性错因） │
               └───────────┬────────────┘
                           │
                           ↓
               ┌────────────────────────┐
               │ xiaozhi-teach-         │
               │  math-error-analyzer   │
-              │  （本 SKILL）           │
+              │  （本 SKILL）          │
               └───────────┬────────────┘
                           │
         ┌─────────────────┼─────────────────┐
@@ -506,6 +506,7 @@ max_round_limit: 25
       两处都累加会把“近 4 次错 3 次”判错）
   classWorkspace.homeworkAssignments[] 的 completionSummary › commonErrors[]
     knowledgePoint / dimension（四维）/ teacherCategory（七类）/ count
+    （只写数学作业条目；作业设计师已写的条目只补七类，不覆盖它写的计数）
   （不写 classWorkspace.studentTiers[]——A/B/C 分层由
     xiaozhi-teach-student-analyzer 唯一维护，本 SKILL 只读不写；
     需要更新分层时把错因分布交接给它，不自行判定“谁在哪一层”）
@@ -557,7 +558,7 @@ max_round_limit: 25
 
 ```text
 班级错因分析
-    <── xiaozhi-teach-homework-tracker（作业错题）
+    <── xiaozhi-teach-assignment-designer（作业批改的共性错因）
     <── xiaozhi-teach-student-analyzer（学员错因）
     <── xiaozhi-teach-lesson-planner（教学计划）
     ──→ xiaozhi-teach-student-analyzer（错因 DNA）

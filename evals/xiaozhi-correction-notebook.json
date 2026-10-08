@@ -1,6 +1,6 @@
 {
   "skill": "xiaozhi-correction-notebook",
-  "notes": "最容易误触发的邻居：math-problem-solving-coach / physics-problem-coach（“这道题我做错了”三边都想接——错题本接“记录与归因”，教练接“当场再做一遍”）。本 SKILL 是 §5 的唯一计数权威，学科 error-dna 只接收它的交接。",
+  "notes": "最容易误触发的邻居：math-problem-solving-coach / physics-problem-coach（“这道题我做错了”三边都想接——错题本接“记录与归因”，教练接“当场再做一遍”）。本 SKILL 是 §5 学生端的唯一计数权威，学科 error-dna 只接收它的交接。",
   "cases": [
     {
       "id": "trigger-01",

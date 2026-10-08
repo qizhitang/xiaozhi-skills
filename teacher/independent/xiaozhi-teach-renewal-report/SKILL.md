@@ -535,6 +535,7 @@ lessonLogs[].evidence 里，就不要凭印象补进时间线。
 - 禁止改动学员卡状态、授权位、保留期，禁止执行删除（转 `xiaozhi-teach-student-intake` 的档案流程）
 - 禁止编造、估算或夸大进展
 - 禁止承诺提分、排名、升学
+- 禁止写学员在学校考试的名次，或拿来和别的学员比较；义务教育阶段学员的学校考试结果写学校给的等级与知识点诊断，不写总分与整卷得分率（`shared/off-campus-training.md` 第六节）
 - 禁止把定性判断换算成百分比
 - 禁止在 `parentCommunicationAllowed` 为 false 时生成家长版报告
 - 禁止在报告中出现真实姓名或联系方式
