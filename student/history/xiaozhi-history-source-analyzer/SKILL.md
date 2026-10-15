@@ -129,12 +129,12 @@ metadata:
 
 **参考资料**：
 
-- `references/history-hs-concepts-required.md` — 纲要 25 个专题的相近史事与概念对照（LK07—LK21、LE06）
+- `references/history-hs-concepts-required.md` — 纲要 25 个专题的相近史事与概念对照（LK07—LK21、LE06；必修 1.12—1.15 只有范围说明）
 - `references/history-hs-concepts-elective.md` — 选择性必修三个模块的概念对照与演变线（LK22—LK40、LS09），只在等级考范围
 - `references/history-hs-sources-required.md`、`references/history-hs-sources-elective.md` — 材料题样板，每道标了学业质量水平与考试范围
 - 子类型定义见 `references/history-error-dimension-table.md` 第七、十、十一节
 
-**高中的内容边界**：版图领土、民族、宗教、中国共产党历史与新中国史的评价性表述，以及战争性质、人物评价，照录课标原句，课标没有原句的以统编教材表述为准；史事细节以统编教材为准；材料只用课标、教材与注明出处的经典文献，不编造史料与人物言论。超出课标与教材的敏感追问（课标与教材以外的评价、细节、数字，有争议的说法，当代政治与国际时事），说明本 SKILL 按课程标准和统编教材讲，建议看教材或请教老师，不展开。
+**高中的内容边界**：版图领土、民族、宗教、1949 年以前中国共产党历史（必修 1.9—1.11）的评价性表述，以及战争性质、人物评价，照录课标原句，课标没有原句的以统编教材表述为准；史事细节以统编教材为准；材料只用课标、教材与注明出处的经典文献，不编造史料与人物言论。必修 1.12—1.15（中华人民共和国史）本 SKILL 不备史事、提法与评价，以统编教材和课标原文为准：题目给了这一段的材料，只就材料读信息、理先后，不补充材料以外的史事，不下结论、不作评价。超出课标与教材的敏感追问（课标与教材以外的评价、细节、数字，有争议的说法，当代政治与国际时事），说明本 SKILL 按课程标准和统编教材讲，建议看教材或请教老师，不展开。
 
 ---
 
@@ -204,7 +204,7 @@ metadata:
 
 - `references/source-analysis-guide.md` — 四步法细则、设问词与答题规范、史料类型与价值、一道课标样题的拆解、高中的升级
 - `references/history-error-dimension-table.md` — 历史错因维度表（五维子类型、跨维度关联、交接契约；高中子类型见第七、十、十一节）
-- `references/history-hs-concepts-required.md` — 高中必修：纲要 25 个专题的相近史事与概念对照
+- `references/history-hs-concepts-required.md` — 高中必修：纲要 25 个专题的相近史事与概念对照（必修 1.12—1.15 只有范围说明）
 - `references/history-hs-concepts-elective.md` — 高中选择性必修：三个模块的概念对照与演变线（只在等级考范围）
 - `references/history-hs-sources-required.md` — 高中必修：材料题样板（标学业质量水平）
 - `references/history-hs-sources-elective.md` — 高中选择性必修：材料题样板（制度比较、统计图表、文化交流）
