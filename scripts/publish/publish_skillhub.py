@@ -12,6 +12,7 @@
     python publish_skillhub.py --dry-run   # 只打包并列出顺序
     python publish_skillhub.py --once      # 只跑一轮（探配额用）
     python publish_skillhub.py --first a,b,c   # 这几个排最前（窗口额度不够一次发完时，先发有实质改动的）
+    python publish_skillhub.py --only a,b,c    # 只发这几个（先拿审核结论探路；之后不带参数重跑，已发的不重发）
 """
 import json, os, shutil, subprocess, sys, time
 
@@ -82,6 +83,14 @@ def main():
         first = [n for n in sys.argv[sys.argv.index("--first") + 1].split(",") if n in allnames]
     order = first + [n for n in PRIORITY if n in allnames and n not in first] \
         + [n for n in allnames if n not in PRIORITY and n not in first]
+    if "--only" in sys.argv:
+        # 2026-10-15：四个历史技能被内容合规审查判不通过，改完先单发这几个拿结论，不先占掉整个窗口的额度
+        only = set(sys.argv[sys.argv.index("--only") + 1].split(","))
+        order = [n for n in order if n in only]
+        if len(order) != len(only):
+            log(f"--only 里有不认识的技能名：{sorted(only - set(order))}", LOG)
+            return 1
+        allnames = order
 
     if "--dry-run" in sys.argv:
         log(f"dry-run：{len(allnames)} 个待发，优先 {len([n for n in PRIORITY if n in allnames])} 个", LOG)
