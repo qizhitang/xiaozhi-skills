@@ -136,7 +136,7 @@ def main():
 
     ok = [k for k, v in done.items() if v.get("ok")]
     log(f"收工：成功 {len(ok)}/{len(allnames)} @ {ver}", LOG)
-    bad = [n for n in PRIORITY if not done.get(n, {}).get("ok")]
+    bad = [n for n in PRIORITY if n in allnames and not done.get(n, {}).get("ok")]
     if bad:
         log(f"优先项仍未发出（{len(bad)}）：{bad}", LOG)
     # 发完立刻核对线上实际版本，结论写进同一份日志
