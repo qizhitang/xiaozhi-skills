@@ -7,7 +7,7 @@
 用法：
     python verify_publish.py          # 打印报告并写 <work>/verify-report.md
     python verify_publish.py --quiet  # 只写文件，打印一行结论
-退出码：0 全一致；1 有落后/缺失；2 查询失败
+退出码：0 全一致；1 有落后、缺失或审核未通过；2 查询失败
 """
 import json, os, sys, time, urllib.request
 
@@ -46,7 +46,7 @@ def _page(host, tok, page):
 
 
 def live_versions(passes=5):
-    """返回 {slug: {"version": 已提交版本, "approved": 已审核通过版本, "review": 审核状态}}。
+    """返回 {slug: {"version": 已提交版本, "approved": 已审核通过版本, "review": 审核状态, "note": 平台审核说明}}。
 
     看板列表按 updatedAt 倒序、每页实际只给 20 条。发布刚结束时平台还在异步审核，条目的 updatedAt
     在翻页途中变化，同一条会在两页里重复出现、另一条被挤掉（2026-09-23 实测：连翻三遍，前两遍各重复 3 条、
@@ -68,6 +68,7 @@ def live_versions(passes=5):
                     "version": str(s.get("version") or s.get("latestVersion") or s.get("currentVersion")),
                     "approved": str(s.get("latestApprovedVersion") or ""),
                     "review": str(s.get("reviewStatus") or ""),
+                    "note": str(s.get("reviewNote") or s.get("reviewRejectReason") or ""),
                 }
             if len(items) < 20:
                 break
@@ -91,7 +92,11 @@ def main():
 
     ok = sorted(k for k, v in live.items() if v["version"] == ver)
     stale = sorted((k, v["version"]) for k, v in live.items() if k in want and v["version"] != ver)
-    pending = sorted((k, v["approved"]) for k, v in live.items() if k in want and v["version"] == ver and v["approved"] != ver)
+    # 已提交、还没通过的分两种：平台判了"rejected"的（2026-10-14 才发现：四个历史技能 2.11.x 被内容合规审查拒绝，
+    # 旧报告一直写成"审核中"）与仍在排队的
+    unapproved = [(k, v) for k, v in live.items() if k in want and v["version"] == ver and v["approved"] != ver]
+    rejected = sorted((k, v["approved"], v["note"]) for k, v in unapproved if v["review"].lower() == "rejected")
+    pending = sorted((k, v["approved"]) for k, v in unapproved if v["review"].lower() != "rejected")
     missing = sorted(want - set(live))
     pri_bad = sorted(({k for k, _ in stale} | set(missing)) & PRIORITY)
 
@@ -99,7 +104,8 @@ def main():
          f"仓库版本 **{ver}**，应上架 {len(want)} 个技能。",
          f"线上 {len(live)} 个，其中 **{len(ok)} 个已是 {ver}**，落后 {len(stale)} 个，缺失 {len(missing)} 个。", ""]
     if not stale and not missing:
-        L += [f"✅ **全部一致**：{len(want)} 个技能都已提交到 {ver}。", ""]
+        head = "✅ **全部一致**" if not rejected else f"⚠️ **都已提交，但 {len(rejected)} 个审核未通过**"
+        L += [f"{head}：{len(want)} 个技能都已提交到 {ver}。", ""]
     else:
         if stale:
             L += [f"## 落后的 {len(stale)} 个", "", "| 技能 | 线上版本 | 优先 |", "|---|---|---|"]
@@ -108,6 +114,9 @@ def main():
             L += [f"## 线上没有的 {len(missing)} 个", ""] + [f"- `{k}`{'　★' if k in PRIORITY else ''}" for k in missing] + [""]
         if pri_bad:
             L += ["> ★ 是安全整改改动最大的老师端技能。这些没上线，意味着线上仍是整改前的行为。", ""]
+    if rejected:
+        L += [f"## 审核未通过的 {len(rejected)} 个", "", f"平台已判定不通过：用户安装到的仍是下表的已通过版本。这不会自己好转——要么改内容后发新版本，要么在 SkillHub 平台申诉；重跑发布也不会让 {ver} 重新送审。", "",
+              "| 技能 | 已通过版本 | 平台说明 |", "|---|---|---|"] + [f"| `{k}` | {a or '—'} | {n or '—'} |" for k, a, n in rejected] + [""]
     if pending:
         L += [f"## 已提交、平台审核中的 {len(pending)} 个", "", "SkillHub 对新版本做异步审核；审核通过前，用户安装到的仍是下表的已通过版本。这不是发布失败，稍后重跑核对即可。", "",
               "| 技能 | 已通过版本 |", "|---|---|"] + [f"| `{k}` | {a or '—'} |" for k, a in pending] + [""]
@@ -115,10 +124,10 @@ def main():
     open(REPORT, "w", encoding="utf-8").write("\n".join(L) + "\n")
 
     if quiet:
-        print(f"SkillHub 核对：{len(ok)}/{len(want)} 已提交 {ver}（审核中 {len(pending)}），落后 {len(stale)}，缺失 {len(missing)} → {REPORT}")
+        print(f"SkillHub 核对：{len(ok)}/{len(want)} 已提交 {ver}（审核中 {len(pending)}，未通过 {len(rejected)}），落后 {len(stale)}，缺失 {len(missing)} → {REPORT}")
     else:
         print("\n".join(L))
-    return 0 if (not stale and not missing) else 1
+    return 0 if (not stale and not missing and not rejected) else 1
 
 
 if __name__ == "__main__":
