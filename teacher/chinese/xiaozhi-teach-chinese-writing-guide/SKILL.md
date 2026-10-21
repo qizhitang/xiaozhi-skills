@@ -11,7 +11,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 写作教学指导
-  version: 2.11.2
+  version: 2.12.0
   author: 小智伴学
   category: 老师语文
   grade_bands:
@@ -485,7 +485,7 @@ AI 生成的作文题：生成前按 shared/ai-item-check.md 自检（题意清�
 ```json
 {
   "sessionId": "sess-teach-wt-001",
-  "protocolVersion": "2.11.2",
+  "protocolVersion": "2.12.0",
   "handoverType": "teacher_writeback",
   "sender": "xiaozhi-teach-chinese-writing-guide",
   "recipient": "xiaozhi-learning-dna",

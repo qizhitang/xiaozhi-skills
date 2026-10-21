@@ -15,10 +15,10 @@
       "type": "string"
     },
     "protocolVersion": {
-      "description": "协议版本，与仓库版本一致（当前 2.11.2）",
+      "description": "协议版本，与仓库版本一致（当前 2.12.0）",
       "type": "string",
       "enum": [
-        "2.11.2"
+        "2.12.0"
       ]
     },
     "handoverType": {
