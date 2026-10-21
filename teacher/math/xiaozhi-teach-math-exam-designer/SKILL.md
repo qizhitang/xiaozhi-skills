@@ -22,7 +22,6 @@ metadata:
     - xiaozhi-teach-lesson-planner
     - xiaozhi-teach-math-error-analyzer
     - xiaozhi-teach-math-lesson-planner
-    - xiaozhi-teach-parent-communication
 id: openclaw:xiaozhi-teach-math-exam-designer
 min_platform_version: "2.0"
 max_round_limit: 25
@@ -517,7 +516,7 @@ aiGenerated=true，标注【AI 生成，入库前请人工验算】，
   · 共性错因归类、七类错因分布  → xiaozhi-teach-math-error-analyzer
   · 个体错因与改进方向          → xiaozhi-teach-math-error-analyzer
   · 讲评课的环节、例题与变式    → xiaozhi-teach-math-lesson-planner
-  · 错题入库与后续练习          → xiaozhi-teach-resource-library
+  · 讲评后的巩固作业            → xiaozhi-teach-assignment-designer
   · 学员档案更新                → 见"接口"节的写回边界，须老师逐条确认
 
 交接话术：
@@ -627,20 +626,20 @@ Cronbach α（写入 classSummaries[].reliabilityAlpha）：
               ┌────────────────────────┐
               │ xiaozhi-teach-         │
               │  student-analyzer      │
-              │ （学员水平数据）        │
+              │ （学员水平数据）       │
               └───────────┬────────────┘
                           │
                           ↓
               ┌────────────────────────┐
               │ xiaozhi-teach-         │
               │  math-exam-designer    │
-              │  （本 SKILL）           │
+              │  （本 SKILL）          │
               └───────────┬────────────┘
                           │
         ┌─────────────────┼─────────────────┐
         ↓                 ↓                 ↓
-  exam results       math-error-analyzer  resource-library
-  （测评结果）       （错因分析）          （错题入库）
+  exam results       math-error-analyzer  math-lesson-planner
+  （测评结果）       （错因分析）         （补救与讲评课）
 ```
 
 ### 11.2 接口（唯一契约：`shared/class-teaching-workspace.schema.json`）
@@ -741,7 +740,7 @@ Cronbach α（写入 classSummaries[].reliabilityAlpha）：
     ──→ xiaozhi-teach-math-lesson-planner（补救、讲评课、教学调整）
     ──→ xiaozhi-teach-review-planner（复习排期）
     ──→ xiaozhi-teach-parent-communication（独立教师：成绩告知与家长沟通）
-    ──→ xiaozhi-teach-resource-library（错题入库）
+    ──→ xiaozhi-teach-assignment-designer（讲评后的巩固作业）
     ──→ 学生端 xiaozhi-math-problem-solving-coach（学员视角）
 
 箭头向右 = **交出字段并停手**，不是"本 SKILL 顺便替它做"。

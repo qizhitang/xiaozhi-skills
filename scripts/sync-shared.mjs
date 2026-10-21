@@ -196,6 +196,10 @@ const rel = (p) => relative(root, p).replace(/\\/g, "/");
 // 比较时统一行尾：git 的 autocrlf 会在检出时把 LF 转成 CRLF，
 // 逐字节比较会在 Windows 上误报“与源不一致”。
 const norm = (s) => s.split(String.fromCharCode(13)).join("");
+// 写入时保留目标文件原有的换行（CRLF 或 LF），新文件沿用源文件的换行：一律写 LF 的话，
+// Windows 上 autocrlf 检出的 CRLF 副本每次重写都会出 "LF will be replaced by CRLF" 警告（每次升版 80 多个）
+const CRLF = String.fromCharCode(13, 10), LF = String.fromCharCode(10);
+const withEolOf = (text, like) => (like.includes(CRLF) ? norm(text).split(LF).join(CRLF) : norm(text));
 // schema 副本按目标技能裁剪 + 标注范围。扫描器把随包 schema 当成该技能自己的数据契约，
 // 所以副本只保留该技能正文里“非否定语境”提到的字段子树，其余删掉；并在头部写明范围与出处。
 // 判定“否定语境”：同一行里字段名之前出现 不读/不写/❌/不碰/… ；
@@ -578,7 +582,7 @@ for (const dir of skillDirs) {
     const cur = existsSync(dest) ? readFileSync(dest, "utf-8") : null;
     if (cur !== null && norm(cur) === norm(want)) continue;
     if (checkOnly) stale.push(`${rel(dest)}${cur === null ? "（缺失）" : "（与源不一致）"}`);
-    else { writeFileSync(dest, want, "utf-8"); written++; }
+    else { writeFileSync(dest, withEolOf(want, cur !== null ? cur : body), "utf-8"); written++; }
   }
 
   // 清理不该在这里的文件（源已删除，或正文已不再引用）

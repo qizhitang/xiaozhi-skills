@@ -225,7 +225,7 @@ max_round_limit: 20
 ✅ 合规示例：
   小D 风险② 课上练习跟不上（🟡 中度）
   依据：homeworkFollowups 中近 4 周 overdueDays ≥ 1 的条目 2 条
-       dueDate：[6-1] [6-4]，当前逾期 4 / 1 天
+       dueDate：06-01、06-03，当前逾期 3 / 1 天（今天 06-04）
   建议：课上把练习拆小 / 减量
 
 ❌ 不合规示例：
@@ -318,8 +318,8 @@ parentSummary / factSummary 字段硬约束：
    ┌───────────────┬───────────────┬───────────────┬───────────────┐
    │ student-      │ schedule-     │ lesson-log    │ homework-     │
    │ intake        │ manager       │               │ tracker       │
-   │ →studentCards │ →lessonSchedule│ →lessonLogs  │ →homework     │
-   │               │               │  coursePackage│  Followups    │
+   │ →studentCards │ →lesson       │ →lessonLogs   │ →homework     │
+   │               │  Schedule     │  coursePackage│  Followups    │
    └───────────────┴───────────────┴───────────────┴───────────────┘
    ┌───────────────┬───────────────┬───────────────┐
    │ parent-       │ renewal-      │ resource-     │
@@ -331,9 +331,10 @@ parentSummary / factSummary 字段硬约束：
                      （只读，单向）
                             ↓
                 ┌────────────────────────┐
-                │ solo-dashboard（本 SKILL）│
-                │  今日 7 区块 + 三件事    │
-                │  不写任何字段            │
+                │ solo-dashboard         │
+                │ （本 SKILL）           │
+                │  今日 7 区块 + 三件事  │
+                │  不写任何字段          │
                 └────────────────────────┘
 ```
 

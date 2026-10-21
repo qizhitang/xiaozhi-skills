@@ -49,13 +49,15 @@
 ### 2.2 按学员当前情况
 
 ```text
-读：workspace.studentCards[].gradeBand / .primaryWeaknesses
+读：workspace.studentCards[].gradeLevel / .gradeBand / .primaryWeaknesses
     workspace.homeworkFollowups[].mainErrors[].knowledgePoint / .dimension
 匹配：knowledgePoint 相同 + difficulty 与当前掌握度相称
-      + gradeLevel 在该学员学段内
+      + gradeLevel 不高于该学员所在年级，内容不超过学员所在学校的同期进度
+        （学员卡里没有学校进度这一项，拿不准的先问老师）
 输出：每条给出推荐理由（"针对小A 移项的概念模糊"），
       不给理由的推荐等于没推荐
-超纲的：要用就在同一行标 ⚠高中 并说明是拓展，不默认推荐
+超纲、超前的：不推荐，也不用于学员（校外培训不超标超前，本库不超过学员所在学校的
+      同期进度，见 shared/off-campus-training.md 第四节；不拿"拓展"当例外）
 ```
 
 ### 2.3 按错因
@@ -144,5 +146,5 @@
 - [ ] 改编件是否重新验算过、是否写了原出处与改动点
 - [ ] 学员案例是否过了脱敏清单
 - [ ] 检索结果是否给了推荐理由
-- [ ] 超纲内容是否标了 ⚠高中
+- [ ] 推荐的资源是否都在该学员的学段与学校同期进度以内（超纲、超前的不推荐）
 - [ ] 是否**没有**向学员推送资源（只给老师看）

@@ -431,25 +431,25 @@ max_round_limit: 30
               ┌────────────────────────┐
               │ xiaozhi-teach-         │
               │  lesson-planner        │
-              │ （数学课嵌入教案）      │
+              │ （数学课嵌入教案）     │
               └───────────┬────────────┘
                           │
                           ↓
               ┌────────────────────────┐
-              │ 课堂（数学教学）        │
+              │ 课堂（数学教学）       │
               └───────────┬────────────┘
                           │
                           ↓
               ┌────────────────────────┐
               │ xiaozhi-teach-         │
               │  math-lesson-planner   │
-              │  （本 SKILL）           │
+              │  （本 SKILL）          │
               └───────────┬────────────┘
                           │
         ┌─────────────────┼─────────────────┐
         ↓                 ↓                 ↓
-  student-analyzer  resource-library  parent-communication
-  （数学思维维度）  （错例入库）      （独立教师的家长反馈）
+  student-analyzer  assignment-designer  parent-communication
+  （数学思维维度）  （课后作业）         （独立教师的家长反馈）
 ```
 
 ### 9.2 接口（唯一契约：`shared/class-teaching-workspace.schema.json`）
@@ -537,7 +537,6 @@ payload 为 `teacherWritebackData`（`teacherSkill` / `studentAlias` / `weakKnow
     <── xiaozhi-teach-math-error-analyzer（错因与讲评建议 → 讲评课）
     <── xiaozhi-teach-review-planner（reviewPlans → 复习课）
     ──→ xiaozhi-teach-student-analyzer（数学思维维度；学校班级的家长版，由它核对 parentSharingConsent）
-    ──→ xiaozhi-teach-resource-library（错例入库）
     ──→ xiaozhi-teach-parent-communication（独立教师：数学进步反馈）
     ──→ xiaozhi-teach-assignment-designer（复习课、讲评课后的作业）
     ──→ 学生端 xiaozhi-math-concept-explainer（学员视角）

@@ -40,7 +40,8 @@
 📚 作业与复习跟进                ← homeworkFollowups[]
   近 7 日课上练习：按约定做完 11 / 13 条
   待跟进（逾期看 overdueDays）：
-    · 小D（数学）：status=未交，overdueDays=3
+    · 小D（数学）：2 条过了约定那节课还没补上——
+      06-01 那条 status=未交，overdueDays=3；06-03 那条 status=未交，overdueDays=1
     · 小E（物理）：status=已批改，订正 2 道未完成
     · 小A：「判别式」28 天内第 3 次记到概念模糊
       → homework-tracker 已生成待确认的弱项条目，等你确认
@@ -75,11 +76,12 @@
      动作：18:30 下课后到 lesson-log 确认课时；
            顺手在 homework-tracker 里决定这条弱项要不要进学员卡
   2. 看小D 的课上练习
-     依据：overdueDays=3（约定的那节课也没补上）
+     依据：风险② 🟡 中度——近 4 周 overdueDays ≥ 1 的 2 条
+           （dueDate 06-01、06-03，当前逾期 3 / 1 天，约定的两节课都没补上）
      动作：课上先问一句卡在哪个知识点；
            下节课的课上练习先减到 5 题
   3. 跟小D 家长说一声
-     依据：parentCommunicationLogs 最近一条 05-14，已 21 天
+     依据：风险④ 🟡 中度——parentCommunicationLogs 最近一条 05-14，已 21 天
      依据：consent.parentCommunicationAllowed=true
      动作：只说课上练习的调整，不催交，不提"拖延"两个字
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -87,7 +89,7 @@
 
 ## 这份示例演示的几条规则
 
-- **每条风险都带依据和日期**：不写"小D 作业不行"，写"overdueDays=3"。
+- **每条风险都带依据和日期**：不写"小D 作业不行"，写"风险② 🟡 中度：近 4 周 overdueDays ≥ 1 的 2 条（dueDate 06-01、06-03）"。只有一条、逾期又不到 7 天的，还到不了风险②（SKILL.md 6.1）。
 - **逾期看 `overdueDays`，不看 `status`**：`status` 枚举里没有 `overdue`。
 - **"上次"按 `lessonLogs[].date` 倒序取**，不按写入顺序。
 - **剩余课时注明"未含 N 条待确认"**：否则老师会按虚高的数字判断续课。

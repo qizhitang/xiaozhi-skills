@@ -95,7 +95,12 @@ function genIndex() {
 }
 const indexPath = join(root, "docs", "skills-index.md");
 const generated = genIndex();
-if (mode === "write") { writeFileSync(indexPath, generated + "\n"); console.log(`已生成 docs/skills-index.md（${skills.length} 个技能）`); }
+if (mode === "write") {
+  // 保留 skills-index.md 原有的换行（CRLF 或 LF）：一律写 LF 的话，Windows 上 autocrlf 检出的 CRLF 文件每次重生成都会出 "LF will be replaced by CRLF" 警告
+  const old = existsSync(indexPath) ? readFileSync(indexPath, "utf-8") : "";
+  writeFileSync(indexPath, (generated + "\n").split("\n").join(old.includes("\r\n") ? "\r\n" : "\n"));
+  console.log(`已生成 docs/skills-index.md（${skills.length} 个技能）`);
+}
 else if (!existsSync(indexPath)) err("D2", "docs/skills-index.md", "不存在，请运行 npm run docs:gen");
 else if (readFileSync(indexPath, "utf-8").replace(/\r\n/g, "\n").trim() !== generated.trim()) err("D2", "docs/skills-index.md", "与 frontmatter 不一致，请运行 npm run docs:gen");
 

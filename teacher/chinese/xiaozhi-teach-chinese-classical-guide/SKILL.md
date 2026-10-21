@@ -509,12 +509,12 @@ max_round_limit: 20
               ┌────────────────────────┐
               │ xiaozhi-teach-         │
               │  lesson-planner        │
-              │ （文言文嵌入教案）      │
+              │ （文言文嵌入教案）     │
               └───────────┬────────────┘
                           │
                           ↓
               ┌────────────────────────┐
-              │ 课堂（文言文教学）      │
+              │ 课堂（文言文教学）     │
               └───────────┬────────────┘
                           │
                           ↓
@@ -524,10 +524,10 @@ max_round_limit: 20
               │  guide（本 SKILL）     │
               └───────────┬────────────┘
                           │
-        ┌─────────────────┼─────────────────┐
-        ↓                 ↓                 ↓
-  student-analyzer  resource-library  parent-communication
-  （古文积累档案）  （古文素材入库）  （独立教师的家长反馈）
+        ┌─────────────────┴─────────────────┐
+        ↓                                   ↓
+  student-analyzer                    parent-communication
+  （古文积累档案）                    （独立教师的家长反馈）
 ```
 
 ### 11.2 接口
@@ -555,7 +555,7 @@ max_round_limit: 20
   classWorkspace.homeworkAssignments[]  → 背诵与翻译任务（purpose = 巩固/补救/拓展）
   classWorkspace.weaknessRank[]         → 依据课堂与作业表现更新文言类弱项
       · weaknessId / knowledgePoint / errorRate / dimension / evidenceExamIds[] / lastUpdated
-      （不写 .stubbornCount——顽固计数由 xiaozhi-teach-student-analyzer 唯一累加）
+      （不写 .stubbornCount——班级顽固计数由 xiaozhi-teach-student-analyzer 唯一计数，每次新测评后按最近 4 次重算）
 ```
 
 **写回学生个人档案（可选，需授权）：**
@@ -638,7 +638,6 @@ max_round_limit: 20
     <── xiaozhi-teach-chinese-reading-guide（现代文阅读基础）
     <── xiaozhi-teach-student-analyzer（学情/弱项）
     ──→ xiaozhi-teach-student-analyzer（古文积累档案；学校班级的家长版，由它核对 parentSharingConsent）
-    ──→ xiaozhi-teach-resource-library（古文素材入库）
     ──→ xiaozhi-teach-parent-communication（独立教师：古文进步素材；发给家长前由它核对 parentSharingConsent）
     ──→ 学生端 xiaozhi-chinese-classical-revival（学员视角）
 ```

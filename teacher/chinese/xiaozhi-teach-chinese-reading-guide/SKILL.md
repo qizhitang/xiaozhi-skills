@@ -471,20 +471,20 @@ max_round_limit: 20
                           │
                           ↓
               ┌────────────────────────┐
-              │ 课堂（阅读教学）        │
+              │ 课堂（阅读教学）       │
               └───────────┬────────────┘
                           │
                           ↓
               ┌────────────────────────┐
               │ xiaozhi-teach-         │
-              │  chinese-reading-guide│
-              │  （本 SKILL）           │
+              │  chinese-reading-guide │
+              │  （本 SKILL）          │
               └───────────┬────────────┘
                           │
-        ┌─────────────────┼─────────────────┐
-        ↓                 ↓                 ↓
-  student-analyzer  resource-library  parent-communication
-  （阅读力维度）    （阅读素材入库）  （独立教师的家长反馈）
+        ┌─────────────────┴─────────────────┐
+        ↓                                   ↓
+  student-analyzer                    parent-communication
+  （阅读力维度）                      （独立教师的家长反馈）
 ```
 
 ### 10.2 接口
@@ -511,7 +511,7 @@ max_round_limit: 20
   classWorkspace.interactionLogs[]   → 课后回填：段落实际用时、misconceptionsObserved[]
   classWorkspace.weaknessRank[]      → 依据课堂与作业表现更新阅读类弱项
       · weaknessId / knowledgePoint / errorRate / dimension / evidenceExamIds[] / lastUpdated
-      （不写 .stubbornCount——顽固计数由 xiaozhi-teach-student-analyzer 唯一累加）
+      （不写 .stubbornCount——班级顽固计数由 xiaozhi-teach-student-analyzer 唯一计数，每次新测评后按最近 4 次重算）
 ```
 
 **写回学生个人档案（可选，需授权）：**
@@ -539,7 +539,7 @@ max_round_limit: 20
       "weakKnowledgePointUpdates": [
         { "subject": "语文", "knowledgePoint": "概括段意", "status": "初步弱项", "masteryLevel": "会复述" }
       ],
-      "note": "课堂能复述内容，概括时仍照抄原句"
+      "note": "近 4 次测评中 2 次概括题低于班级同题得分率、且不到 0.6（学情分析师诊断卡标初步弱项）；课堂能复述内容，概括时仍照抄原句"
     }
   },
   "timestamp": "2026-09-03T16:40:00+08:00"
@@ -591,7 +591,6 @@ max_round_limit: 20
     <── xiaozhi-teach-lesson-planner（阅读任务嵌入教案）
     <── xiaozhi-teach-student-analyzer（学情/弱项）
     ──→ xiaozhi-teach-student-analyzer（阅读力维度；学校班级的家长版，由它核对 parentSharingConsent）
-    ──→ xiaozhi-teach-resource-library（阅读素材入库）
     ──→ xiaozhi-teach-parent-communication（独立教师：阅读进步素材；发家长前由它核对 parentSharingConsent）
     ──→ 学生端 xiaozhi-chinese-reading-decoder（学员视角）
 ```

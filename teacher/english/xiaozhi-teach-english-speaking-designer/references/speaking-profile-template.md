@@ -31,7 +31,9 @@
 ■ 反复出现的语言点（两次以上才写）
   · [如：第三人称单数漏 -s，本次 4 处]
   · [如：一般过去时用成现在时，本次 2 处]
-  · 状态按 shared/vocab.md §4（待处理/初步弱项/顽固弱项/突破中/已攻克）
+  · 状态：学校班级的学员照学情分析师的判定（初步弱项 / 顽固弱项 / 高危，shared/vocab.md §4 末），
+    本 SKILL 不自行判定；写回学生端档案时用 shared/vocab.md §4 五档
+    （看学情分析师的诊断卡，由老师转来；本 SKILL 不读个人计数，没有诊断卡时只写“近 N 次测评中出现 N 次”，不自定档名）
 
 ■ 发音
   · 老师现场听到的、影响听懂的问题：[如 词尾辅音吞掉，导致 test/tes 分不清]
@@ -60,6 +62,6 @@
 ```
 
 > 读取：`classWorkspace.itemScores[]`（口语题得分，画像的唯一来源；只读，本 SKILL 不写得分）。
-> 写入位置（待老师确认后落库）：`classWorkspace.weaknessRank[]`（弱项条目）、
-> `classWorkspace.interactionLogs[].participationNote`（整体参与度，不点名）。
+> 写入位置（待老师确认后落库）：班级层面的语言点弱项（看班级得分率，与学情分析师 §5.3 同口径）才写成 `classWorkspace.weaknessRank[]` 的班级条目（不记学员）；
+> `classWorkspace.interactionLogs[].participationNote`（整体参与度，不点名）。学员个人的弱项状态只留在本档案或写回学生端。
 > 写回学生个人档案需 `teacherWritebackConsent = true`，只写语言点弱项与掌握度。

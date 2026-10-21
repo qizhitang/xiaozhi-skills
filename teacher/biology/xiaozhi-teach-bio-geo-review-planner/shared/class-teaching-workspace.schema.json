@@ -4,7 +4,7 @@
   "title": "ClassTeachingWorkspace",
   "x-distributed-to": "xiaozhi-teach-bio-geo-review-planner",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-teach-bio-geo-review-planner 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：读 classProfile、lessonPlans、reviewPlans、weaknessRank；写 reviewPlans（同一键既读又写时，读/写各自的子字段列在 x-skill-scope.fields；各字段只留声明列出的子字段；删去 7 个顶层字段）。完整定义在归属技能处。",
+    "note": "本副本随 xiaozhi-teach-bio-geo-review-planner 分发，已按其 SKILL.md 的“读：/写：”声明裁剪：读 classProfile、lessonPlans、reviewPlans、weaknessRank；写 reviewPlans（同一键既读又写时，读/写各自的子字段列在 x-skill-scope.fields；各字段只留声明列出的子字段；删去 8 个顶层字段）。完整定义在归属技能处。",
     "paths": [
       "classProfile",
       "lessonPlans",
@@ -270,6 +270,7 @@
     "weaknessEntry": {
       "type": "object",
       "additionalProperties": false,
+      "description": "班级共性弱项：一条是一个知识点 + 一个通用错因维度，不记学生。个人的顽固与高危不记在这里（由 xiaozhi-teach-student-analyzer 另记）",
       "properties": {
         "weaknessId": {
           "type": "string",
@@ -282,7 +283,8 @@
         "errorRate": {
           "type": "number",
           "minimum": 0,
-          "maximum": 1
+          "maximum": 1,
+          "description": "本次测评该知识点的班级错误率 = 1 − 班级得分率（得分率 = 该知识点的班级平均得分 ÷ 满分）"
         },
         "dimension": {
           "type": "string",
@@ -296,14 +298,16 @@
         "stubbornCount": {
           "type": "integer",
           "minimum": 0,
-          "description": "近 4 次测评中错误率 >30% 的次数（shared/vocab.md §5 学校班级工作区口径，由 xiaozhi-teach-student-analyzer 唯一累加）"
+          "maximum": 4,
+          "description": "班级层面的顽固计数：该知识点最近 4 次测评中班级错误率 >30% 的次数（被判为待复核的那次不计），3 次及以上为班级顽固弱项（shared/vocab.md §5 学校班级工作区口径）。由 xiaozhi-teach-student-analyzer 唯一计数，每次新测评后按最近 4 次重算；个人的顽固与高危不记在这里"
         },
         "evidenceExamIds": {
           "type": "array",
           "items": {
             "type": "string",
             "maxLength": 40
-          }
+          },
+          "description": "得出本条的测评（班级顽固计数计入的各次都列上）"
         },
         "lastUpdated": {
           "type": "string",

@@ -4,7 +4,7 @@
   "title": "ClassTeachingWorkspace",
   "x-distributed-to": "xiaozhi-teach-student-analyzer",
   "x-skill-scope": {
-    "note": "本副本随 xiaozhi-teach-student-analyzer 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的字段（共 11 项，删去 0 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
+    "note": "本副本随 xiaozhi-teach-student-analyzer 分发，已按其 SKILL.md 裁剪：只保留正文在非否定语境下提到的字段（共 12 项，删去 0 个顶层字段）。完整定义在归属技能处。读/写权限与授权位以 SKILL.md 为准。",
     "paths": [
       "classProfile",
       "classSummaries",
@@ -16,6 +16,7 @@
       "lessonPlans",
       "reviewPlans",
       "studentTiers",
+      "studentWeaknesses",
       "weaknessRank"
     ]
   },
@@ -72,6 +73,12 @@
       "type": "array",
       "items": {
         "$ref": "#/$defs/weaknessEntry"
+      }
+    },
+    "studentWeaknesses": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/studentWeaknessEntry"
       }
     },
     "studentTiers": {
@@ -839,6 +846,7 @@
     "weaknessEntry": {
       "type": "object",
       "additionalProperties": false,
+      "description": "班级共性弱项：一条是一个知识点 + 一个通用错因维度，不记学生。个人的顽固与高危不记在这里（由 xiaozhi-teach-student-analyzer 另记）",
       "properties": {
         "weaknessId": {
           "type": "string",
@@ -851,7 +859,8 @@
         "errorRate": {
           "type": "number",
           "minimum": 0,
-          "maximum": 1
+          "maximum": 1,
+          "description": "本次测评该知识点的班级错误率 = 1 − 班级得分率（得分率 = 该知识点的班级平均得分 ÷ 满分）"
         },
         "dimension": {
           "type": "string",
@@ -865,14 +874,16 @@
         "stubbornCount": {
           "type": "integer",
           "minimum": 0,
-          "description": "近 4 次测评中错误率 >30% 的次数（shared/vocab.md §5 学校班级工作区口径，由 xiaozhi-teach-student-analyzer 唯一累加）"
+          "maximum": 4,
+          "description": "班级层面的顽固计数：该知识点最近 4 次测评中班级错误率 >30% 的次数（被判为待复核的那次不计），3 次及以上为班级顽固弱项（shared/vocab.md §5 学校班级工作区口径）。由 xiaozhi-teach-student-analyzer 唯一计数，每次新测评后按最近 4 次重算；个人的顽固与高危不记在这里"
         },
         "evidenceExamIds": {
           "type": "array",
           "items": {
             "type": "string",
             "maxLength": 40
-          }
+          },
+          "description": "得出本条的测评（班级顽固计数计入的各次都列上）"
         },
         "lastUpdated": {
           "type": "string",
@@ -883,6 +894,55 @@
         "weaknessId",
         "knowledgePoint",
         "errorRate"
+      ]
+    },
+    "studentWeaknessEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "个人的顽固与高危（shared/vocab.md §4、§5 学校班级工作区口径）：一条是一名学生的一个知识点（次数按知识点计，不按维度拆开；dimension 只记最近一次归过的主维度）。只由 xiaozhi-teach-student-analyzer 判定，经老师确认后写入；只写化名/座号，不作为学生的身份标签，家长版不写这几个档名。与班级层面的 weaknessRank[].stubbornCount 分开记，互不累加",
+      "properties": {
+        "studentAlias": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "knowledgePoint": {
+          "type": "string",
+          "maxLength": 60
+        },
+        "dimension": {
+          "type": "string",
+          "enum": [
+            "概念模糊",
+            "计算失误",
+            "读题失误",
+            "方法用错"
+          ],
+          "description": "通用四维：该生这个知识点最近一次归过的主维度；老师或学科错因技能没归过的不填"
+        },
+        "hitCount": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 4,
+          "description": "该知识点最近 4 次测评中，该生得分率低于班级同题得分率、且低于 0.60 的次数（被判为待复核的那次不计）：2 = 初步弱项（输出带初步趋势标签），3 = 顽固弱项，4 = 高危；不足 2 次的不写，每次新测评后按最近 4 次重算"
+        },
+        "evidenceExamIds": {
+          "type": "array",
+          "maxItems": 4,
+          "items": {
+            "type": "string",
+            "maxLength": 40
+          },
+          "description": "计入 hitCount 的各次测评"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": [
+        "studentAlias",
+        "knowledgePoint",
+        "hitCount"
       ]
     },
     "studentTier": {

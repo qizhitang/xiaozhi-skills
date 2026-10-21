@@ -565,7 +565,7 @@ D 的算法只有一套（27% 分组），见 xiaozhi-teach-student-analyzer SKI
               ┌────────────────────────┐
               │ xiaozhi-teach-         │
               │  exam-designer         │
-              │  （本 SKILL）           │
+              │  （本 SKILL）          │
               └───────────┬────────────┘
                           │
                           ↓ 得分率反哺

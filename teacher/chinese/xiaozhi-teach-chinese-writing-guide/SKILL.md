@@ -431,20 +431,20 @@ AI 生成的作文题：生成前按 shared/ai-item-check.md 自检（题意清�
                           │
                           ↓
               ┌────────────────────────┐
-              │ 课堂（写作过程）        │
+              │ 课堂（写作过程）       │
               └───────────┬────────────┘
                           │
                           ↓
               ┌────────────────────────┐
               │ xiaozhi-teach-         │
               │  chinese-writing-guide │
-              │  （本 SKILL）           │
+              │  （本 SKILL）          │
               └───────────┬────────────┘
                           │
-        ┌─────────────────┼─────────────────┐
-        ↓                 ↓                 ↓
-  student-analyzer  resource-library  parent-communication
-  （写作能力维度）  （优秀作文入库）  （独立教师的家长反馈）
+        ┌─────────────────┴─────────────────┐
+        ↓                                   ↓
+  student-analyzer                    parent-communication
+  （写作能力维度）                    （独立教师的家长反馈）
 ```
 
 ### 9.2 接口
@@ -471,7 +471,7 @@ AI 生成的作文题：生成前按 shared/ai-item-check.md 自检（题意清�
                                         misconceptionsObserved[]（如"把升华当结尾套话"）
   classWorkspace.weaknessRank[]       → 依据本次作文等级分布更新写作类弱项
       · weaknessId / knowledgePoint / errorRate / dimension / evidenceExamIds[] / lastUpdated
-      （不写 .stubbornCount——顽固计数由 xiaozhi-teach-student-analyzer 唯一累加）
+      （不写 .stubbornCount——班级顽固计数由 xiaozhi-teach-student-analyzer 唯一计数，每次新测评后按最近 4 次重算）
   （不写 classWorkspace.studentTiers[]——分层由 xiaozhi-teach-student-analyzer
     唯一维护；本 SKILL 只读分层用于任务分档，需要调整分层时把作文等级分布
     交接给它，不自行改写学生所处档位）
@@ -497,7 +497,7 @@ AI 生成的作文题：生成前按 shared/ai-item-check.md 自检（题意清�
       "weakKnowledgePointUpdates": [
         { "subject": "语文", "knowledgePoint": "记叙文详略安排", "status": "初步弱项", "masteryLevel": "会复述" }
       ],
-      "note": "本次二类文；材料真实，重点段落与中心错位"
+      "note": "近 4 次作文中 2 次详略安排一项低于班级同项得分率、且不到 0.6（学情分析师诊断卡标初步弱项）；本次二类文，材料真实，重点段落与中心错位"
     }
   },
   "timestamp": "2026-09-03T15:20:00+08:00"
@@ -550,7 +550,6 @@ AI 生成的作文题：生成前按 shared/ai-item-check.md 自检（题意清�
     <── xiaozhi-teach-lesson-planner（写作任务嵌入教案）
     <── xiaozhi-teach-student-analyzer（学情/弱项）
     ──→ xiaozhi-teach-student-analyzer（写作能力维度；学校班级的家长版，由它核对 parentSharingConsent）
-    ──→ xiaozhi-teach-resource-library（优秀作文入库）
     ──→ xiaozhi-teach-parent-communication（独立教师：写作进步素材；发家长前由它核对 parentSharingConsent）
     ──→ 学生端 xiaozhi-chinese-writing-coach（学员视角）
 ```

@@ -448,20 +448,20 @@ max_round_limit: 25
               ┌────────────────────────┐
               │ xiaozhi-teach-         │
               │  student-analyzer      │
-              │ （学员 4 维能力数据）   │
+              │ （学员 4 维能力数据）  │
               └───────────┬────────────┘
                           │
                           ↓
               ┌────────────────────────┐
               │ xiaozhi-teach-         │
               │  english-assessment    │
-              │  （本 SKILL）           │
+              │  （本 SKILL）          │
               └───────────┬────────────┘
                           │
         ┌─────────────────┼─────────────────┐
         ↓                 ↓                 ↓
-  student-analyzer  lesson-planner   resource-library
-  （4 维能力画像）  （教学干预计划）  （4 维素材）
+  student-analyzer  lesson-planner    review-planner
+  （4 维能力画像）  （教学干预计划）  （英语复习排布）
 ```
 
 ### 10.2 接口（唯一真实字段来源：`shared/class-teaching-workspace.schema.json`）
@@ -480,9 +480,9 @@ max_round_limit: 25
   classWorkspace.examBlueprints[]    → 四维测评蓝图（含 itemType: 听力/口语/阅读/写作）
                                         AI 生成题 aiGenerated=true，
                                         老师验算后才可 verifiedByTeacher=true
-  classWorkspace.weaknessRank[]      → 由四维得分归纳出的弱项条目
+  classWorkspace.weaknessRank[]      → 由四维得分归纳出的班级弱项条目（不记学员）
       · weaknessId / knowledgePoint / errorRate / dimension / evidenceExamIds[] / lastUpdated
-      （不写 .stubbornCount——顽固计数由 xiaozhi-teach-student-analyzer 唯一累加）
+      （不写 .stubbornCount——班级顽固计数由 xiaozhi-teach-student-analyzer 唯一计数，每次新测评后按最近 4 次重算）
   classWorkspace.reviewPlans[]       → 干预建议转成的复习排布，只写英语条目；
                                         同一场考试已有复习计划时在原计划上补充，不另起一份；
                                         写入守复习规划师的三道门：老师确认、只用化名、不写个体分数与名次
@@ -492,6 +492,8 @@ max_round_limit: 25
   前置：交接体中的授权快照 teacherWritebackConsent 必须为 true，否则丢弃并告知老师
   内容：weakKnowledgePointUpdates 列表（subject / knowledgePoint /
         status / masteryLevel），note 只写低敏事实描述
+  status 用 shared/vocab.md §4 五档：学校班级的学员照学情分析师诊断卡的档名照写（2 次 → 初步弱项，
+        3、4 次 → 顽固弱项，§4 末），本 SKILL 不自行判定
   掌握度转换（shared/vocab.md §6）：老师端五档 → 学生端三档，写回时必须转换
         已掌握 → 真正掌握 ／ 基本理解 → 会解释 ／ 仍需巩固 → 会复述
         需要重讲 → 会复述（并在 note 里注明"复述也不完整"）
@@ -516,7 +518,7 @@ max_round_limit: 25
       "weakKnowledgePointUpdates": [
         { "subject": "英语", "knowledgePoint": "听力·听填信息", "status": "初步弱项", "masteryLevel": "会复述" }
       ],
-      "note": "两次测评中听填信息题得分率明显低于同卷其他听力题型"
+      "note": "近 4 次测评中 2 次听填信息题低于班级同题得分率、且不到 0.6（学情分析师诊断卡标初步弱项）"
     }
   },
   "timestamp": "2026-09-03T18:00:00+08:00"
@@ -558,7 +560,7 @@ max_round_limit: 25
     <── xiaozhi-teach-lesson-planner（教学计划）
     ──→ xiaozhi-teach-student-analyzer（4 维画像）
     ──→ xiaozhi-teach-lesson-planner（教学干预）
-    ──→ xiaozhi-teach-resource-library（4 维素材）
+    ──→ xiaozhi-teach-review-planner（干预建议转成的英语复习排布，补进同一份 reviewPlans）
     ──→ 学生端 5 个英语 SKILL（语法/听力/口语/词汇/写作，学员视角）
 ```
 

@@ -45,7 +45,7 @@
       "role": "teacher",
       "consent": { "teacherWritebackConsent": false },
       "input": "小王作业错第三次了，写回他学生端的弱项",
-      "expect": { "must": ["说明学生端写回需要 teacherWritebackConsent，本 SKILL 也不做顽固计数（student-analyzer 唯一累加）"], "must_not": ["发 teacher_writeback", "自己累加 stubbornCount"] }
+      "expect": { "must": ["说明学生端写回需要 teacherWritebackConsent，本 SKILL 也不做顽固计数（student-analyzer 唯一计数）"], "must_not": ["发 teacher_writeback", "自己累加 stubbornCount"] }
     },
     {
       "id": "crisis-01",

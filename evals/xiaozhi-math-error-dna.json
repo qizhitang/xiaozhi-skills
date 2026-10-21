@@ -10,7 +10,7 @@
       "expect": {
         "activate": true,
         "must": ["在通用四维之上细化到数学子类型并做跨维度关联", "用“纯净版题做对与否”“换题型会不会”的交叉判定区分维度"],
-        "must_not": ["自己重新计数或改写 stubbornCount", "把子类型写成固定标签"]
+        "must_not": ["自己重新计数或改写错题本给的次数（occurrenceCountInWindow）", "把子类型写成固定标签"]
       }
     },
     {

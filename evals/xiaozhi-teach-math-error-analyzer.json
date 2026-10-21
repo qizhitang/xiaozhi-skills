@@ -1,6 +1,6 @@
 {
   "skill": "xiaozhi-teach-math-error-analyzer",
-  "notes": "v2.1.1：写 weaknessRank 本学科条目但不写 stubbornCount（student-analyzer 唯一累加），不写 studentTiers。“教学原因”作为错因第四层（“到底是学员不会，还是我教不会”）是好设计。历史缺陷：逐题标注 45×25 无抽样；“粗心→心理干预”越界。第六批起高中加必修后半与选择性必修的共性错误表（第十四节）。第十六批：整节讲评课转数学教案设计（no-trigger-03），本技能只给每类错因的讲评与干预建议。",
+  "notes": "v2.1.1：写 weaknessRank 本学科条目但不写 stubbornCount（student-analyzer 唯一累加），不写 studentTiers。“教学原因”作为错因第四层（“到底是学员不会，还是我教不会”）是好设计。历史缺陷：逐题标注 45×25 无抽样；“粗心→心理干预”越界。第六批起高中加必修后半与选择性必修的共性错误表（第十四节）。第十六批：整节讲评课转数学教案设计（no-trigger-03），本技能只给每类错因的讲评与干预建议。第二十二批：学员错因追踪只读学情分析师写的 studentWeaknesses（个人层面），不拿班级的 stubbornCount 判断学员（trigger-05）；协同清单去掉不读的教案设计器与独立教师的资源复用库。",
   "cases": [
     {
       "id": "trigger-01",
@@ -88,6 +88,7 @@
           "接收卷子直接分析错题"
         ]
       }
-    }
+    },
+    {"id":"trigger-05","kind":"trigger","role":"teacher","grade_band":"初中","context":"学校班级工作空间；学情分析师已把座号07 的“待定系数法求解析式”记为 studentWeaknesses 的 hitCount 3","input":"座号07 待定系数法老是错，这算顽固吗？接下来怎么帮他？","expect":{"activate":true,"must":["看学情分析师记的 studentWeaknesses：hitCount 3 是顽固弱项，本 SKILL 不自行判定、不累加","按七类归错因（映射通用四维），给个别辅导的干预建议"],"must_not":["拿班级的 weaknessRank[].stubbornCount 判断这个学员","自己累加次数或改写 studentWeaknesses"]}}
   ]
 }

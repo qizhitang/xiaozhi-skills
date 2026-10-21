@@ -541,7 +541,7 @@ max_round_limit: 20
                           │
                           ↓
               ┌────────────────────────┐
-              │ 课堂（口语活动）        │
+              │ 课堂（口语活动）       │
               └───────────┬────────────┘
                           │
                           ↓
@@ -551,10 +551,10 @@ max_round_limit: 20
               │  designer（本 SKILL）  │
               └───────────┬────────────┘
                           │
-        ┌─────────────────┼─────────────────┐
-        ↓                 ↓                 ↓
-  student-analyzer  resource-library  parent-communication
-  （口语能力维度）  （口语素材入库）  （独立教师的家长反馈）
+        ┌─────────────────┴─────────────────┐
+        ↓                                   ↓
+  student-analyzer                    parent-communication
+  （口语能力维度）                    （独立教师的家长反馈）
 ```
 
 ### 10.2 接口（唯一真实字段来源：`shared/class-teaching-workspace.schema.json`）
@@ -575,9 +575,9 @@ max_round_limit: 20
                                                          老师验算后才可 verifiedByTeacher=true
   classWorkspace.interactionLogs[]                     → 活动实际用时与观察到的共性问题
                                                          （participationNote 只写整体，不点名）
-  classWorkspace.weaknessRank[]                        → 由口语表现归纳出的班级弱项
+  classWorkspace.weaknessRank[]                        → 由口语表现归纳出的班级弱项（不记学员）
       · weaknessId / knowledgePoint / errorRate / dimension / evidenceExamIds[] / lastUpdated
-      （不写 .stubbornCount——顽固计数由 xiaozhi-teach-student-analyzer 唯一累加）
+      （不写 .stubbornCount——班级顽固计数由 xiaozhi-teach-student-analyzer 唯一计数，每次新测评后按最近 4 次重算）
 
 写回学生档案（可选，需授权）：
   handoverType = "teacher_writeback"，recipient = xiaozhi-learning-dna
@@ -622,7 +622,6 @@ max_round_limit: 20
     <── xiaozhi-teach-lesson-planner（口语任务嵌入教案）
     <── xiaozhi-teach-student-analyzer（学情/弱项）
     ──→ xiaozhi-teach-student-analyzer（口语能力维度；学校班级的家长版，由它核对 parentSharingConsent）
-    ──→ xiaozhi-teach-resource-library（口语素材入库）
     ──→ xiaozhi-teach-parent-communication（独立教师：口语进步反馈）
     ──→ 学生端 xiaozhi-english-speaking-coach（学员视角；发音判定的能力前提两端一致）
 ```

@@ -208,10 +208,11 @@ max_round_limit: 20
 
 ```text
 输入：学员化名 + 当前卡住的知识点
-读：workspace.studentCards[].gradeBand / .primaryWeaknesses
+读：workspace.studentCards[].gradeLevel / .gradeBand / .primaryWeaknesses
     workspace.homeworkFollowups[].mainErrors[].knowledgePoint / .dimension
 匹配：knowledgePoint 相同 + difficulty 与当前掌握度相称 +
-      gradeLevel 在该学员学段内
+      gradeLevel 不高于该学员所在年级，内容不超过学员所在学校的同期进度
+      （学员卡里没有学校进度这一项，拿不准的先问老师）
 输出（每条标明为什么推荐它）：
   · [资源标题]（[类型]，[难度]）
     推荐理由：针对 [知识点] 的 [dimension]，上次给 [场景] 用过
@@ -219,7 +220,8 @@ max_round_limit: 20
 
 不做的事：
   ❌ 按"这是基础学员"整批推荐一组资源
-  ❌ 推荐超出该学员 gradeBand 的内容（要用就标 ⚠高中 并说明是拓展）
+  ❌ 推荐超出该学员 gradeBand、或超过学员所在学校同期进度的内容
+     （校外培训不超标超前，见 shared/off-campus-training.md 第四节；不拿"拓展"当例外）
 ```
 
 ### 6.3 错因案例检索
@@ -427,9 +429,9 @@ usageNotes 写法（**只记资源本身的使用情况，不记学员**）：
 ### 11.1 数据流
 
 ```text
-  老师说"这个存一下" ──→ ┌────────────────────┐ ──→ 检索结果（带推荐理由）
-  老师说"帮我找…"   ──→ │ resource-library    │ ──→ 改编后的资源
-                        │ （本 SKILL）         │
+  老师说"这个存一下" ──→┌────────────────────┐ ──→ 检索结果（带推荐理由）
+  老师说"帮我找…"   ──→ │ resource-library   │ ──→ 改编后的资源
+                        │ （本 SKILL）       │
                         └─────────┬──────────┘
                                   │ 只写这一处
                           resourceLibraryIndex[]

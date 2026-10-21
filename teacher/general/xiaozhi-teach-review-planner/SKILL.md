@@ -233,8 +233,8 @@ max_round_limit: 30
   · 占比低或选学 = 非重点
 
 维度 ② 学情弱项
-  · student-analyzer 标记的共性弱项 = 重点
-  · 个体顽固弱项 = 个体重点
+  · student-analyzer 标记的共性弱项 = 重点；其中班级顽固弱项（weaknessRank 的 stubbornCount ≥ 3）= 重点中的重点
+  · 个别学生的顽固弱项（学情分析师诊断卡上标的）由老师个别跟进，不写进 reviewPlans（复习排期不按学生分行）
 
 维度 ③ 思维门槛
   · 需要抽象思维 = 难点
@@ -531,7 +531,7 @@ max_round_limit: 30
 
 ■ 阶段 4 后
   · 错题重做正确率
-  · 顽固弱项减少数
+  · 班级顽固弱项（stubbornCount ≥ 3）减少数
 
 ■ 阶段 5 后
   · 单元练习的知识点得分率（义务教育的单元练习拆进各课时做，按知识点汇总，不看整卷 P / D，学情分析师算出的 D、α 只作参考；高中单元测验另看实际 P / D）
@@ -546,7 +546,7 @@ max_round_limit: 30
     → 读 classWorkspace.itemStats 与 classWorkspace.weaknessRank（student-analyzer 写入）
   · 参与交叉练习的易混知识点，是否还在互相混淆
     → 看 weaknessRank 里这几个知识点的 dimension 是否仍是"方法用错"
-  · 顽固弱项的 stubbornCount 是否停止累加
+  · 班级顽固弱项的 stubbornCount 是否降到 3 以下（学情分析师每次测评后按最近 4 次重算）
 
 本 SKILL 只写 classWorkspace.reviewPlans，不写任何统计字段。
 不写"复习效果预估"这类考前编造的数字。
@@ -584,7 +584,7 @@ max_round_limit: 30
 | classWorkspace 字段 | 谁写 | 本 SKILL |
 |---|---|---|
 | `classProfile` | 老师首次建档 | 读（gradeBand 定就寝与专注参数，periodMinutes 定复习课时长） |
-| `weaknessRank` | `xiaozhi-teach-student-analyzer` 或学科老师端技能 | 读（复习重点排序 → 填 sourceWeaknessIds；dimension 决定交叉组合） |
+| `weaknessRank` | `xiaozhi-teach-student-analyzer` 或学科老师端技能 | 读（复习重点排序 → 填 sourceWeaknessIds；dimension 决定交叉组合；stubbornCount ≥ 3 的班级顽固弱项排在最前） |
 | `classSummaries` | `xiaozhi-teach-student-analyzer` 或数学测评设计（数学卷） | 读（meanRate 定复习起点） |
 | `itemStats` | `xiaozhi-teach-student-analyzer` 或数学测评设计（数学卷） | 读（历史逐题得分率；**不是** exam-designer 写的） |
 | `examBlueprints` | `xiaozhi-teach-exam-designer` 或学科老师端技能 | 读（考试范围、题号→知识点，用于对齐复习范围） |

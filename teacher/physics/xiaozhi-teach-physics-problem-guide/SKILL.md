@@ -461,12 +461,12 @@ max_round_limit: 20
               ┌────────────────────────┐
               │ xiaozhi-teach-         │
               │  physics-lesson-       │
-              │  planner（解题嵌入）    │
+              │  planner（解题嵌入）   │
               └───────────┬────────────┘
                           │
                           ↓
               ┌────────────────────────┐
-              │ 课堂（物理解题）        │
+              │ 课堂（物理解题）       │
               └───────────┬────────────┘
                           │
                           ↓
@@ -476,10 +476,10 @@ max_round_limit: 20
               │  guide（本 SKILL）     │
               └───────────┬────────────┘
                           │
-        ┌─────────────────┼─────────────────┐
-        ↓                 ↓                 ↓
-  student-analyzer  resource-library  parent-communication
-  （解题能力维度）  （错题案例库）    （独立教师的家长反馈）
+        ┌─────────────────┴─────────────────┐
+        ↓                                   ↓
+  student-analyzer                    parent-communication
+  （解题能力维度）                    （独立教师的家长反馈）
 ```
 
 ### 10.2 接口
@@ -504,7 +504,7 @@ max_round_limit: 20
                                                      tier / estimatedMinutes）
   classWorkspace.weaknessRank[]                   → 讲题中新发现的弱项条目
       · weaknessId / knowledgePoint / errorRate / dimension / evidenceExamIds[] / lastUpdated
-      （不写 .stubbornCount——顽固计数由 xiaozhi-teach-student-analyzer 唯一累加）
+      （不写 .stubbornCount——班级顽固计数由 xiaozhi-teach-student-analyzer 唯一计数，每次新测评后按最近 4 次重算）
 
 写回学生端（可选，走 handover-protocol.schema.json）：
   handoverType 取 teacher_writeback，负载用 teacherWritebackData，
@@ -550,7 +550,6 @@ max_round_limit: 20
     <── xiaozhi-teach-physics-lesson-planner（解题嵌入；讲评课里每道题的讲法与变式）
     <── xiaozhi-teach-student-analyzer（学情/弱项）
     ──→ xiaozhi-teach-student-analyzer（解题能力维度；学校班级的家长版，由它核对 parentSharingConsent）
-    ──→ xiaozhi-teach-resource-library（错题案例库）
     ──→ xiaozhi-teach-parent-communication（独立教师：解题进步反馈）
     ──→ 学生端 xiaozhi-physics-problem-coach（学员视角）
 ```

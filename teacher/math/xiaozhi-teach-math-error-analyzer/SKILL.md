@@ -68,6 +68,7 @@ max_round_limit: 25
 ```text
 第 1 步（全量，机器可算）：
   由 classWorkspace.itemScores[] 算出每题的错误率与 itemStats[].pValue
+  （错误率 = 1 − P，与工作区 weaknessRank[].errorRate 同口径）
   → 全部题目只记通用四维（概念模糊/计算失误/读题失误/方法用错），四选一，快
 
 第 2 步（阈值触发）：
@@ -392,23 +393,26 @@ max_round_limit: 25
 ### 7.2 学员错因追踪
 
 ```text
-口径按 `shared/vocab.md §5` 的**学校班级**规则：`classWorkspace.weaknessRank[].stubbornCount`
-由 `xiaozhi-teach-student-analyzer` 唯一累加，本 SKILL 不自行累加；粒度为"同一知识点 + 同一通用四维"，
-记的是**近 4 次测评中错误率 >30% 的次数**。
+口径按 `shared/vocab.md §5` 的**学校班级**规则，班级与个人分开记，都由 `xiaozhi-teach-student-analyzer`
+唯一计数（每次新测评后按最近 4 次重算），本 SKILL 只读、不自行计数；班级按"同一知识点 + 同一通用四维"，
+个人按知识点（dimension 只记最近一次归过的主维度）。
+学员的顽固与高危看个人层面的 `classWorkspace.studentWeaknesses[].hitCount`：该生该知识点最近 4 次测评中，
+得分率低于班级同题得分率、且低于 0.60 的次数。班级层面的 `weaknessRank[].stubbornCount`
+（最近 4 次中班级错误率 >30% 的次数）说的是全班，不拿来判断某个学员。
 ```
 
 ```text
-■ 学情分析师已判为顽固（同一知识点 + 同一维度，近 4 次测评中 3 次）→ 顽固弱项
+■ 学情分析师已判为顽固弱项（hitCount = 3：同一知识点，最近 4 次测评中 3 次）→ 顽固弱项
   · 启动专项干预
   · 设计针对性训练
 
-■ 学情分析师已判为高危（近 4 次测评 4 次都达到顽固条件，shared/vocab.md §5）→ 高危
+■ 学情分析师已判为高危（hitCount = 4：最近 4 次测评 4 次都达到，shared/vocab.md §5）→ 高危
   · 与学生本人先沟通策略
   · 是否告知家长依授权位（shared/vocab.md §8）：
     先查 parentSharingConsent；涉及情绪内容再查 emotionSharingWithParent
   · 不默认推送家长
 
-■ 两次独立验证做对（间隔 ≥3 天，含 1 次换题型）→ 已攻克
+■ 两次独立验证做对（间隔 ≥3 天，含 1 次换题型）→ 已攻克（写回学生端档案时的状态）
   · 状态用五档：待处理/初步弱项/顽固弱项/突破中/已攻克
   · 不用"错因消失/已解决"这类说法
 ```
@@ -480,8 +484,8 @@ max_round_limit: 25
                           │
         ┌─────────────────┼─────────────────┐
         ↓                 ↓                 ↓
-  student-analyzer  lesson-planner   resource-library
-  （错因 DNA）     （教学干预计划）  （错题案例库）
+  student-analyzer  lesson-planner   math-lesson-planner
+  （错因 DNA）     （教学干预计划）  （讲评课）
 ```
 
 ### 9.2 接口（唯一契约：`shared/class-teaching-workspace.schema.json`）
@@ -494,6 +498,10 @@ max_round_limit: 25
       → 试卷逐题得分，热力图与错误率的唯一来源
   classWorkspace.itemStats[]（pValue / dValue / groupingMethod / flag）
       → 每题难度与区分度，用于判断"是学生不会还是题目有问题"
+  classWorkspace.weaknessRank[]（knowledgePoint / dimension / stubbornCount）
+      → 学情分析师标出的班级顽固弱项（stubbornCount ≥ 3），决定要不要全班专项干预；只读，不改这个计数
+  classWorkspace.studentWeaknesses[]（studentAlias / knowledgePoint / dimension / hitCount）
+      → 学情分析师判定的个人顽固与高危，供 §7.2 学员错因追踪；只读，判定与写入都归学情分析师
   classWorkspace.examBlueprints[].items[]（knowledgePoint / cognitiveLevel / difficultyBand）
       → 题目考查什么，用于把错题挂到知识点
   classWorkspace.classProfile（gradeBand / classSize / fullScore）→ 学段与换算基准
@@ -502,8 +510,8 @@ max_round_limit: 25
   classWorkspace.weaknessRank[]
     .weaknessId / .knowledgePoint / .errorRate
     .dimension（通用四维）/ .evidenceExamIds[] / .lastUpdated
-    （不写 .stubbornCount——顽固计数由 xiaozhi-teach-student-analyzer 唯一累加；
-      两处都累加会把“近 4 次错 3 次”判错）
+    （不写 .stubbornCount——班级顽固计数由 xiaozhi-teach-student-analyzer 唯一计数，每次新测评后按最近 4 次重算；
+      两处都写会把次数算错）
   classWorkspace.homeworkAssignments[] 的 completionSummary › commonErrors[]
     knowledgePoint / dimension（四维）/ teacherCategory（七类）/ count
     （只写数学作业条目；作业设计师已写的条目只补七类，不覆盖它写的计数）
@@ -559,12 +567,10 @@ max_round_limit: 25
 ```text
 班级错因分析
     <── xiaozhi-teach-assignment-designer（作业批改的共性错因）
-    <── xiaozhi-teach-student-analyzer（学员错因）
-    <── xiaozhi-teach-lesson-planner（教学计划）
+    <── xiaozhi-teach-student-analyzer（itemStats 题目统计；weaknessRank 的 stubbornCount 班级顽固弱项；studentWeaknesses 个人的顽固与高危）
     ──→ xiaozhi-teach-student-analyzer（错因 DNA）
     ──→ xiaozhi-teach-lesson-planner（教学干预计划）
     ──→ xiaozhi-teach-math-lesson-planner（错因与讲评建议 → 讲评课）
-    ──→ xiaozhi-teach-resource-library（错题案例库）
     ──→ 学生端 xiaozhi-math-error-dna（学员视角）
 ```
 

@@ -115,35 +115,37 @@ max_round_limit: 25
 ## 三、核心流程
 
 ```text
-                ┌──────────────────────────┐
+                ┌───────────────────────────┐
                 │ ① 导入逐题分数            │
                 │  itemScores + 题号→知识点 │
-                └────────────┬─────────────┘
+                └────────────┬──────────────┘
                              ↓
-                ┌──────────────────────────┐
+                ┌───────────────────────────┐
                 │ ② 班级整体画像            │
                 │  → classSummaries         │
-                └────────────┬─────────────┘
+                └────────────┬──────────────┘
                              ↓
-                ┌──────────────────────────┐
+                ┌───────────────────────────┐
                 │ ③ 逐题统计 P / D / α      │
                 │  → itemStats              │
-                └────────────┬─────────────┘
+                └────────────┬──────────────┘
                              ↓
-                ┌──────────────────────────┐
+                ┌───────────────────────────┐
                 │ ④ 共性弱项 + 个体诊断     │
-                │  → weaknessRank           │
-                └────────────┬─────────────┘
+                │  → weaknessRank（班级）   │
+                │  → studentWeaknesses      │
+                │    （个人）               │
+                └────────────┬──────────────┘
                              ↓
-                ┌──────────────────────────┐
+                ┌───────────────────────────┐
                 │ ⑤ 分层与教学调整建议      │
                 │  → studentTiers           │
-                └────────────┬─────────────┘
+                └────────────┬──────────────┘
                              ↓
-                ┌──────────────────────────┐
+                ┌───────────────────────────┐
                 │ ⑥ 生成待确认条目          │
                 │  老师确认后落库           │
-                └──────────────────────────┘
+                └───────────────────────────┘
 ```
 
 ---
@@ -321,17 +323,18 @@ max_round_limit: 25
   → 建议触发（需老师确认）：classroom-coach 读 weaknessRank 定提问侧重点
 
 黄色强化项：得分率 40%-70%
-  → 同样写入 weaknessRank，但 stubbornCount 不累加
+  → 同样写入 weaknessRank；stubbornCount 照下面的班级口径计（黄色项的错误率也在 30% 以上）
   → 建议触发（需老师确认）：assignment-designer 读 weaknessRank 出分层作业
 
 绿色起点项：得分率 ≥ 70%
-  → 不写 weaknessRank
+  → 不新增 weaknessRank 条目；该知识点已有条目的，照下面的班级口径重算 stubbornCount（本次不计），
+    重算为 0 的条目经老师确认后删去
   → 建议触发（需老师确认）：review-planner 把它排进复习地图的"快速过"层
 ```
 
-**顽固弱项（学校班级工作区的口径；`shared/vocab.md` §5 的具体条件以本节与 §6.2 为准）**：同一知识点在近 4 次测评中有 **3 次**错误率 > 30%，
-记入 `weaknessRank[].stubbornCount`。粒度是"知识点 + 通用错因维度"（`shared/vocab.md` §1 的 概念模糊 / 计算失误 / 读题失误 / 方法用错），
-学科子类型不同但通用维度相同的仍计入同一计数。不足 3 次证据时标 🟡 初步趋势，不写"顽固"。
+**班级顽固弱项（学校班级工作区的口径；`shared/vocab.md` §4、§5 的具体条件以本节与 §6.2 为准）**：同一知识点在最近 4 次测评中有 **3 次及以上**班级错误率 > 30%（错误率 = 1 − 该知识点的班级得分率，🔴、🟡 两档都在 30% 以上；该题被判为 ⚪ 待复核的那次不计）。
+`weaknessRank[].stubbornCount` 记的就是最近 4 次里错误率 > 30% 的次数（0—4，只记班级层面，每次新测评后按最近 4 次重算）。粒度是"知识点 + 通用错因维度"（`shared/vocab.md` §1 的 概念模糊 / 计算失误 / 读题失误 / 方法用错），
+学科子类型不同但通用维度相同的仍计入同一计数。只有 2 次时标 🟡 初步趋势，1 次不下趋势结论，都不写"顽固"。个人的顽固与高危按 §6.2 记在 `studentWeaknesses`，不记进 stubbornCount。
 
 ---
 
@@ -359,17 +362,21 @@ max_round_limit: 25
 
 ### 6.2 顽固弱项判定（统一口径）
 
-个体顽固弱项按 `shared/vocab.md` §5 学校班级工作区的口径判定，具体条件就是下面几条（§5 指回本节）：
+个人的顽固与高危按 `shared/vocab.md` §4、§5 学校班级工作区的口径判定，具体条件就是下面几条（§5 指回本节）；记在个人层面的 `classWorkspace.studentWeaknesses`，与 §5.3 班级层面的 `weaknessRank[].stubbornCount` 分开记、互不累加：
 
 ```text
-粒度：同一知识点标签 + 同一通用错因维度（shared/vocab.md §1）
-窗口：近 4 次测评
-条件：其中 3 次该知识点得分率低于班级同题得分率，且该生该知识点得分率 < 0.60
+粒度：同一知识点标签（得分率按知识点算，次数按知识点计，不按维度拆开；dimension 记该生
+      这个知识点最近一次归过的通用错因维度，shared/vocab.md §1，没归过的不填）
+窗口：该知识点最近 4 次测评
+一次：该生该知识点得分率低于班级同题得分率，且 < 0.60
 排除：若该题在 §5.1 中被判为 ⚪ 待复核（题目本身有问题），本次不计数
 
-满足 → weaknessRank[].stubbornCount 累加，并在个体诊断卡标注"顽固（近 4 次 3 次）"
-近 4 次每次都低于班级同题得分率且 < 0.60 → 诊断卡改标"高危（近 4 次 4 次）"，按 shared/vocab.md §5 的高危处理：先与学生本人沟通策略，告不告诉家长看授权位（shared/vocab.md §8：先查 parentSharingConsent，涉及情绪再查 emotionSharingWithParent）
-不满足但已出现 2 次 → 标 🟡 初步趋势，只提示"下次同类题留意"
+写入：studentWeaknesses[]（studentAlias / knowledgePoint / dimension / hitCount / evidenceExamIds / lastUpdated），
+      hitCount 是最近 4 次里达到的次数；每次新测评后重算，降到 2 次以下的条目删去（照 §三 ⑥ 先给老师确认）
+4 次中 2 次 → hitCount 2，诊断卡标"初步弱项（近 4 次 2 次）"，带 🟡 初步趋势标签，只提示"下次同类题留意"
+4 次中 3 次 → hitCount 3，诊断卡标"顽固弱项（近 4 次 3 次）"
+4 次都达到 → hitCount 4，诊断卡改标"高危（近 4 次 4 次）"，按 shared/vocab.md §5 的高危处理：先与学生本人沟通策略，告不告诉家长看授权位（shared/vocab.md §8：先查 parentSharingConsent，涉及情绪再查 emotionSharingWithParent）
+不足 2 次 → 不写
 ```
 
 ---
@@ -523,7 +530,8 @@ C 层任务（拔尖学生）：
 | `interactionLogs` | `xiaozhi-teach-classroom-coach` 或学科老师端技能 | 读 `misconceptionsObserved` 作为辅助证据 |
 | `itemStats` | **本 SKILL 主写**；学科老师端技能（目前是数学测评设计 xiaozhi-teach-math-exam-designer）也写本学科卷子的条目 | 写 pValue / dValue / groupingMethod / flag；同一 examId 已有条目的（不论哪个技能写的）先读、比对，不另写一套，口径不一致时由老师定用哪一份（§8.4） |
 | `classSummaries` | **本 SKILL 主写**；数学测评设计也写数学卷的条目 | 写 mean / sd / meanRate / distribution / reliabilityAlpha / dataCompleteness；同一 examId 的规则同上 |
-| `weaknessRank` | 本 SKILL + 学科错因技能 | 写 knowledgePoint / errorRate / dimension / evidenceExamIds；**`stubbornCount` 由本 SKILL 唯一累加**，学科技能（math-error-analyzer、chinese-writing-guide、english-assessment、english-listening-designer、english-speaking-designer）只补本学科条目，不碰该计数 |
+| `weaknessRank` | 本 SKILL + 学科错因技能 | 写 knowledgePoint / errorRate / dimension / evidenceExamIds；**`stubbornCount`（班级层面的顽固计数，§5.3）由本 SKILL 唯一计数（每次新测评后按最近 4 次重算）**，学科技能（math-error-analyzer，语文的 chinese-reading-guide、chinese-classical-guide、chinese-writing-guide，英语的 english-assessment、english-listening-designer、english-speaking-designer，物理的 physics-experiment-coach、physics-problem-guide）只补本学科条目，不改该计数（可以读） |
+| `studentWeaknesses` | **本 SKILL 唯一写入** | 写 studentAlias / knowledgePoint / dimension / hitCount / evidenceExamIds / lastUpdated（个人的顽固与高危，§6.2）；数学班级错因分析只读，其他技能不读不写 |
 | `studentTiers` | **本 SKILL 唯一写入** | 写 studentAlias / tier / basis / updatedAt |
 | `lessonPlans` | `xiaozhi-teach-lesson-planner` 或学科老师端技能 | 只读（看上节课覆盖了哪些 sourceWeaknessIds） |
 | `reviewPlans` | `xiaozhi-teach-review-planner` 主写 + 学科技能（english-assessment、english-listening-designer、bio-geo-review-planner）只补本学科条目 | 只读 |
@@ -537,6 +545,7 @@ xiaozhi-teach-classroom-coach← 读 weaknessRank（提问侧重点）、student
 xiaozhi-teach-assignment-designer ← 读 weaknessRank + studentTiers（分层作业）
 xiaozhi-teach-review-planner ← 读 weaknessRank（复习重点）、classSummaries（起点水平）
 xiaozhi-teach-math-lesson-planner、xiaozhi-teach-physics-lesson-planner、xiaozhi-teach-chemistry-lesson-planner、xiaozhi-teach-biology-lesson-planner、xiaozhi-teach-geography-lesson-planner、xiaozhi-teach-history-lesson-planner ← 读 itemStats（讲评课的得分率与异常标记）
+xiaozhi-teach-math-error-analyzer ← 读 itemStats（是学生不会还是题目有问题）、weaknessRank（班级顽固弱项，要不要全班专项干预）、studentWeaknesses（学员错因追踪：个人的顽固与高危）
 ```
 
 ### 9.3 与学科教师 SKILL / 独立教师包的关系
@@ -587,6 +596,7 @@ xiaozhi-teach-math-lesson-planner、xiaozhi-teach-physics-lesson-planner、xiaoz
 ❌ 禁止：单独分数 + 排名的组合
 ❌ 义务教育阶段另外不写：总分、整卷得分率（考试写学校给的等级与知识点诊断，单元练习写知识点诊断）
 ❌ 禁止：人格判断、焦虑话术
+❌ 禁止："初步弱项""顽固弱项""高危"等档名与 studentWeaknesses 的次数——写成该生自己同一知识点前后几次的得分率变化
 ❌ 高中另外不写：赋分与等级预测、年级或联考的位次、选科或换科建议、"合格考会不会过"的预测；
        授权由学生本人决定，已满 18 周岁的学生也一样（见 §8.4）
 ```
@@ -595,6 +605,8 @@ xiaozhi-teach-math-lesson-planner、xiaozhi-teach-physics-lesson-planner、xiaoz
 
 ```text
 写入 weaknessRank：只写知识点与错因维度，不写"哪个学生差"
+写入 studentWeaknesses：只写学号/座号 + 知识点 + 维度 + 次数，不写姓名；只给老师本人用，
+                   不当作学生的身份标签，家长版不写"顽固弱项""高危"这类档名（§10.2）
 写入 studentTiers：只写学号/座号 + A/B/C + 依据，不写姓名与名次
 写入 itemStats：   只写题目统计，不写答题人信息
 ```
@@ -627,7 +639,7 @@ xiaozhi-teach-math-lesson-planner、xiaozhi-teach-physics-lesson-planner、xiaoz
     ──→ xiaozhi-teach-classroom-coach（weaknessRank / studentTiers）
     ──→ xiaozhi-teach-review-planner（weaknessRank / classSummaries）
     ──→ xiaozhi-teach-exam-designer（itemStats：题目质量）
-    ──→ 学科教师 SKILL（xiaozhi-teach-math-error-analyzer 等，做学科错因细化；高中的转交表见 §8.4）
+    ──→ 学科教师 SKILL（xiaozhi-teach-math-error-analyzer 等，做学科错因细化，数学班级错因分析另读 studentWeaknesses 做学员错因追踪；高中的转交表见 §8.4）
     ··→ 若已安装独立教师包：xiaozhi-teach-lesson-log / homework-tracker 可作补充证据（可选，一对一/小班场景，不计入顽固与高危判定）
 ```
 

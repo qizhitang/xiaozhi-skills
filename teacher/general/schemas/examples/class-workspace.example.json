@@ -137,7 +137,7 @@
     { "examId": "ex-2026-03-16-unit4", "itemNo": 1, "pValue": 0.93, "dValue": 0.11, "groupingMethod": "27%", "flag": "正常" },
     { "examId": "ex-2026-03-16-unit4", "itemNo": 2, "pValue": 0.81, "dValue": 0.24, "groupingMethod": "27%", "flag": "正常" },
     { "examId": "ex-2026-03-16-unit4", "itemNo": 3, "pValue": 0.62, "dValue": 0.38, "groupingMethod": "27%", "flag": "正常" },
-    { "examId": "ex-2026-03-16-unit4", "itemNo": 4, "pValue": 0.71, "dValue": 0.33, "groupingMethod": "27%", "flag": "正常" },
+    { "examId": "ex-2026-03-16-unit4", "itemNo": 4, "pValue": 0.58, "dValue": 0.33, "groupingMethod": "27%", "flag": "正常" },
     { "examId": "ex-2026-03-16-unit4", "itemNo": 5, "pValue": 0.55, "dValue": 0.46, "groupingMethod": "27%", "flag": "正常" },
     { "examId": "ex-2026-03-16-unit4", "itemNo": 6, "pValue": 0.18, "dValue": 0.09, "groupingMethod": "27%", "flag": "偏难" }
   ],
@@ -145,33 +145,24 @@
     {
       "examId": "ex-2026-03-16-unit4",
       "sampleSize": 42,
-      "mean": 36.4,
+      "mean": 31.5,
       "sd": 8.2,
-      "median": 37,
-      "meanRate": 0.728,
+      "median": 32,
+      "meanRate": 0.63,
       "distribution": [
-        { "band": "0-29", "count": 4 },
-        { "band": "30-34", "count": 8 },
-        { "band": "35-39", "count": 16 },
-        { "band": "40-44", "count": 9 },
-        { "band": "45-50", "count": 5 }
+        { "band": "0-29", "count": 14 },
+        { "band": "30-34", "count": 12 },
+        { "band": "35-39", "count": 9 },
+        { "band": "40-44", "count": 5 },
+        { "band": "45-50", "count": 2 }
       ],
       "dataCompleteness": "逐题",
       "reliabilityAlpha": 0.78,
-      "overallDifficulty": 0.728,
+      "overallDifficulty": 0.63,
       "analysisDate": "2026-03-17"
     }
   ],
   "weaknessRank": [
-    {
-      "weaknessId": "wk-2026-01",
-      "knowledgePoint": "待定系数法求解析式",
-      "errorRate": 0.42,
-      "dimension": "方法用错",
-      "stubbornCount": 3,
-      "evidenceExamIds": ["ex-2026-03-16-unit4"],
-      "lastUpdated": "2026-03-17"
-    },
     {
       "weaknessId": "wk-2026-02",
       "knowledgePoint": "一次函数与二元一次方程的联系",
@@ -179,6 +170,51 @@
       "dimension": "概念模糊",
       "stubbornCount": 1,
       "evidenceExamIds": ["ex-2026-03-16-unit4"],
+      "lastUpdated": "2026-03-17"
+    },
+    {
+      "weaknessId": "wk-2026-01",
+      "knowledgePoint": "待定系数法求解析式",
+      "errorRate": 0.42,
+      "dimension": "方法用错",
+      "stubbornCount": 3,
+      "evidenceExamIds": ["ex-2026-03-03-unit4-a", "ex-2026-03-10-unit4-b", "ex-2026-03-16-unit4"],
+      "lastUpdated": "2026-03-17"
+    },
+    {
+      "weaknessId": "wk-2026-03",
+      "knowledgePoint": "k 的正负与图象升降",
+      "errorRate": 0.38,
+      "dimension": "概念模糊",
+      "stubbornCount": 2,
+      "evidenceExamIds": ["ex-2026-03-10-unit4-b", "ex-2026-03-16-unit4"],
+      "lastUpdated": "2026-03-17"
+    },
+    {
+      "weaknessId": "wk-2026-04",
+      "knowledgePoint": "一次函数的应用",
+      "errorRate": 0.45,
+      "dimension": "方法用错",
+      "stubbornCount": 1,
+      "evidenceExamIds": ["ex-2026-03-16-unit4"],
+      "lastUpdated": "2026-03-17"
+    }
+  ],
+  "studentWeaknesses": [
+    {
+      "studentAlias": "座号07",
+      "knowledgePoint": "待定系数法求解析式",
+      "dimension": "方法用错",
+      "hitCount": 3,
+      "evidenceExamIds": ["ex-2026-03-03-unit4-a", "ex-2026-03-10-unit4-b", "ex-2026-03-16-unit4"],
+      "lastUpdated": "2026-03-17"
+    },
+    {
+      "studentAlias": "座号03",
+      "knowledgePoint": "k 的正负与图象升降",
+      "dimension": "概念模糊",
+      "hitCount": 2,
+      "evidenceExamIds": ["ex-2026-03-10-unit4-b", "ex-2026-03-16-unit4"],
       "lastUpdated": "2026-03-17"
     }
   ],

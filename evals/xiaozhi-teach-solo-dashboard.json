@@ -78,6 +78,7 @@
           "建议改成回家做或请家长督促"
         ]
       }
-    }
+    },
+    {"id":"trigger-04","kind":"trigger","role":"teacher","grade_band":"初中","context":"独立教师工作空间；学员小D 近 4 周只有 1 条课上练习过了约定那节课还没补上（overdueDays=3），其余都按约定做完","input":"小D 要不要标风险②？","expect":{"activate":true,"must":["不标风险②：近 4 周只有 1 条 overdueDays ≥ 1，逾期也不到 7 天（2 条起为中度，单条 ≥ 7 天为高度）","在作业与复习跟进区块照实列出这一条与 overdueDays"],"must_not":["把这一条标成风险②课上练习跟不上"]}}
   ]
 }

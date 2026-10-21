@@ -588,12 +588,12 @@ max_round_limit: 30
               ┌────────────────────────┐
               │ xiaozhi-teach-         │
               │  lesson-planner        │
-              │ （物理课嵌入教案）      │
+              │ （物理课嵌入教案）     │
               └───────────┬────────────┘
                           │
                           ↓
               ┌────────────────────────┐
-              │ 课堂（物理教学）        │
+              │ 课堂（物理教学）       │
               └───────────┬────────────┘
                           │
                           ↓
@@ -605,8 +605,8 @@ max_round_limit: 30
                           │
         ┌─────────────────┼─────────────────┐
         ↓                 ↓                 ↓
-  student-analyzer  resource-library  parent-communication
-  （物理观念维度）  （实验素材入库）  （独立教师的家长反馈）
+  student-analyzer  experiment-coach  parent-communication
+  （物理观念维度）  （实验方案）      （独立教师的家长反馈）
 ```
 
 ### 11.2 接口
@@ -701,7 +701,6 @@ max_round_limit: 30
     ──→ xiaozhi-teach-physics-experiment-coach（实验方案、器材、安全流程；实验操作考试的考前练习）
     ──→ xiaozhi-teach-physics-problem-guide（单题讲法与变式，含讲评课里每道题的五步讲法与变式链）
     ──→ xiaozhi-teach-student-analyzer（物理观念维度；学校班级的家长版，由它核对 parentSharingConsent）
-    ──→ xiaozhi-teach-resource-library（实验素材入库）
     ──→ xiaozhi-teach-parent-communication（独立教师：物理进步反馈）
     ──→ xiaozhi-teach-assignment-designer（复习课、讲评课后的作业）
     ──→ 学生端 xiaozhi-physics-concept-intuition（学员视角）

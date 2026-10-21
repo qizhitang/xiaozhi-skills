@@ -163,21 +163,21 @@
 ## 三、风险学员标记判定速查
 
 ```text
-┌──────┬────────────────────────────────────┬──────────┬──────────┐
-│ 编号 │ 判据（全部读字段值，不凭印象）        │ 中度      │ 高度      │
-├──────┼────────────────────────────────────┼──────────┼──────────┤
-│ ①   │ lessonSchedule 近 4 周（按 startTime）│ ≥ 2 次   │ ≥ 3 次   │
-│      │ status=absence/cancelled 累计         │          │          │
-│ ②   │ homeworkFollowups 近 4 周（按 dueDate）│ 2 条     │ ≥ 3 条   │
-│      │ overdueDays ≥ 1 的条目数              │          │ 或单条≥7天│
-│      │ （不是 status=overdue）               │          │          │
-│ ③   │ lessonLogs 按 date 倒序最近 5 条中，   │ 3 条     │ 5 条     │
-│      │ masteryStatus 为需要重讲/仍需巩固     │          │          │
-│ ④   │ parentCommunicationLogs 无            │ 14-21 天 │ > 21 天  │
-│      │ sentStatus=sent 的天数                │          │          │
-│ ⑤   │ coursePackageLedger remainingUnits    │ = 3      │ 1-2      │
-│      │ 或 expiryDate 距今 ≤ 7 天             │          │ 0 → ❌    │
-└──────┴────────────────────────────────────┴──────────┴──────────┘
+┌──────┬─────────────────────────────────────────┬──────────┬────────────┐
+│ 编号 │ 判据（全部读字段值，不凭印象）          │ 中度     │ 高度       │
+├──────┼─────────────────────────────────────────┼──────────┼────────────┤
+│ ①    │ lessonSchedule 近 4 周（按 startTime）  │ ≥ 2 次   │ ≥ 3 次     │
+│      │ status=absence/cancelled 累计           │          │            │
+│ ②    │ homeworkFollowups 近 4 周（按 dueDate） │ 2 条     │ ≥ 3 条     │
+│      │ overdueDays ≥ 1 的条目数                │          │ 或单条≥7天 │
+│      │ （不是 status=overdue）                 │          │            │
+│ ③    │ lessonLogs 按 date 倒序最近 5 条中，    │ 3 条     │ 5 条       │
+│      │ masteryStatus 为需要重讲/仍需巩固       │          │            │
+│ ④    │ parentCommunicationLogs 无              │ 14-21 天 │ > 21 天    │
+│      │ sentStatus=sent 的天数                  │          │            │
+│ ⑤    │ coursePackageLedger remainingUnits      │ = 3      │ 1-2        │
+│      │ 或 expiryDate 距今 ≤ 7 天               │          │ 0 → ❌     │
+└──────┴─────────────────────────────────────────┴──────────┴────────────┘
 
 综合风险 = MAX(各信号等级)
   🟡 中度 → 本周关注

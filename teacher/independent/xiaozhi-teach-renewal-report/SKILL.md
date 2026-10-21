@@ -415,10 +415,10 @@ lessonLogs[].evidence 里，就不要凭印象补进时间线。
 本 SKILL 自己去工作空间取数，**不需要任何 SKILL 先跑一遍**，也不向任何 SKILL 推送。
 
 ```text
-  只读                                  ┌────────────────────┐
-   lessonLogs[]（含 perTopicMastery）──→│ renewal-report      │──→ 三段式报告
-   homeworkFollowups[].mainErrors  ──→ │ （本 SKILL）         │    （生成的段落）
-   progressEvidence[]              ──→ │                     │──→ 续课建议
+  只读                                 ┌────────────────────┐
+   lessonLogs[]（含 perTopicMastery）─→│ renewal-report     │──→ 三段式报告
+   homeworkFollowups[].mainErrors  ──→ │ （本 SKILL）       │    （生成的段落）
+   progressEvidence[]              ──→ │                    │──→ 续课建议
    coursePackageLedger[]           ──→ └─────────┬──────────┘
    studentCards[].consent          ──→           │ 只写这一处
                                         progressEvidence[]

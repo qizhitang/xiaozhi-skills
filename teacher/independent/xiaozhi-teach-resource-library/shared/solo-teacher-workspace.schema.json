@@ -22,10 +22,10 @@
     "fields": {
       "studentCards": {
         "reads": [
+          "gradeLevel",
           "gradeBand",
           "primaryWeaknesses",
           "alias",
-          "gradeLevel",
           "subjects",
           "goals"
         ]

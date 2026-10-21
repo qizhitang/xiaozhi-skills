@@ -495,13 +495,14 @@ max_round_limit: 20
 ### 10.1 档案维度（栏位与 §9.1 的 M1-M8 一一对应）
 
 ```text
-┌──────────────┬────────────────────────────────┐
-│ 栏位          │ 记什么                          │
-├──────────────┼────────────────────────────────┤
-│ M1-M8 微技能  │ 每项标 ✓/✗ 或 [N]/5，来源是逐题得分 │
-│ 舒适语速      │ 该学员能稳定听懂的语速档（词/分钟） │
-│ 弱项状态      │ 按 shared/vocab.md §4 五档记录     │
-└──────────────┴────────────────────────────────┘
+┌──────────────┬──────────────────────────────────────┐
+│ 栏位         │ 记什么                               │
+├──────────────┼──────────────────────────────────────┤
+│ M1-M8 微技能 │ 每项标 ✓/✗ 或 [N]/5，来源是逐题得分  │
+│ 舒适语速     │ 该学员能稳定听懂的语速档（词/分钟）  │
+│ 弱项状态     │ 学校班级照学情分析师诊断卡的档名；   │
+│              │ 写回学生端用 shared/vocab.md §4 五档 │
+└──────────────┴──────────────────────────────────────┘
 
 ⚠️ 不记"听力词汇量 N 词"——课堂上没有可靠的测量手段，填了就是编数字。
    要描述词汇，就写"哪一类词听不出来"（如"数字连读听不出""人名地名一带而过就丢"）。
@@ -526,7 +527,7 @@ max_round_limit: 20
                           │
                           ↓
               ┌────────────────────────┐
-              │ 课堂（听力教学）        │
+              │ 课堂（听力教学）       │
               └───────────┬────────────┘
                           │
                           ↓
@@ -536,10 +537,10 @@ max_round_limit: 20
               │  designer（本 SKILL）  │
               └───────────┬────────────┘
                           │
-        ┌─────────────────┼─────────────────┐
-        ↓                 ↓                 ↓
-  student-analyzer  resource-library  parent-communication
-  （听力能力维度）  （听力素材入库）  （独立教师的家长反馈）
+        ┌─────────────────┴─────────────────┐
+        ↓                                   ↓
+  student-analyzer                    parent-communication
+  （听力能力维度）                    （独立教师的家长反馈）
 ```
 
 ### 11.2 接口（唯一真实字段来源：`shared/class-teaching-workspace.schema.json`）
@@ -559,9 +560,9 @@ max_round_limit: 20
   classWorkspace.examBlueprints[].items[]   → 听力题条目（itemType = "听力"）
                                               AI 生成题 aiGenerated=true，
                                               老师验算后才可 verifiedByTeacher=true
-  classWorkspace.weaknessRank[]             → 由听力题得分归纳出的弱项条目
+  classWorkspace.weaknessRank[]             → 由听力题得分归纳出的班级弱项条目（不记学员）
       · weaknessId / knowledgePoint / errorRate / dimension / evidenceExamIds[] / lastUpdated
-      （不写 .stubbornCount——顽固计数由 xiaozhi-teach-student-analyzer 唯一累加）
+      （不写 .stubbornCount——班级顽固计数由 xiaozhi-teach-student-analyzer 唯一计数，每次新测评后按最近 4 次重算）
   classWorkspace.reviewPlans[]              → 微技能训练的排布，只写英语听力条目；
                                               同一场考试已有复习计划时在原计划上补充，不另起一份；
                                               写入守复习规划师的三道门：老师确认、只用化名、不写个体分数与名次
@@ -609,7 +610,6 @@ max_round_limit: 20
     <── xiaozhi-teach-lesson-planner（听力任务嵌入教案）
     <── xiaozhi-teach-student-analyzer（学情/弱项）
     ──→ xiaozhi-teach-student-analyzer（听力能力维度；学校班级的家长版，由它核对 parentSharingConsent）
-    ──→ xiaozhi-teach-resource-library（听力素材入库）
     ──→ xiaozhi-teach-parent-communication（独立教师：听力进步反馈）
     ──→ 学生端 xiaozhi-english-listening-trainer（学员视角；语速档与生词密度两端一致）
 ```

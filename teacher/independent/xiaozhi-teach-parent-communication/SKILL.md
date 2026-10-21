@@ -434,8 +434,8 @@ max_round_limit: 15
 
 ```text
   素材（只读）                      ┌──────────────────────┐
-   lessonLogs[].parentSummary  ──→  │ parent-communication  │ ──→ 一条待老师发的消息
-   homeworkFollowups[].status  ──→  │ （本 SKILL）           │
+   lessonLogs[].parentSummary  ──→  │ parent-communication │ ──→ 一条待老师发的消息
+   homeworkFollowups[].status  ──→  │ （本 SKILL）         │
    coursePackageLedger[]       ──→  └──────────┬───────────┘
    studentCards[].consent      ──→             │ 只写这一处
                                      parentCommunicationLogs[]

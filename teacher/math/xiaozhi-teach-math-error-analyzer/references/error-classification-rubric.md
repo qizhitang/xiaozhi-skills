@@ -227,21 +227,25 @@
 ## 5. 错因追踪规则
 
 ```text
-口径按 `shared/vocab.md §5` 的**学校班级**规则：`weaknessRank[].stubbornCount` 由 `xiaozhi-teach-student-analyzer`
-唯一累加，本 SKILL 不自行累加。粒度是"同一知识点 + 同一通用四维"（不是同一子类别）。
+口径按 `shared/vocab.md §5` 的**学校班级**规则，班级与个人分开记，都由 `xiaozhi-teach-student-analyzer`
+唯一计数（每次新测评后按最近 4 次重算），本 SKILL 不自行计数。班级的粒度是"同一知识点 + 同一通用四维"
+（不是同一子类别）；个人按知识点计次，dimension 只记最近一次归过的主维度。
 
-■ 学情分析师已判为顽固（近 4 次测评中 3 次）→ 顽固弱项
-  · 启动专项干预
+■ 班级顽固弱项（weaknessRank[].stubbornCount ≥ 3：该知识点最近 4 次测评中 3 次及以上班级错误率 >30%）
+  · 启动全班的专项干预
   · 设计针对性训练
-  · 写入 classWorkspace.weaknessRank[] 的错误率与维度（stubbornCount 由学情分析师累加）
+  · 写入 classWorkspace.weaknessRank[] 的错误率与维度（stubbornCount 由学情分析师计数，本 SKILL 不写）
 
-■ 学情分析师已判为高危（近 4 次测评 4 次都达到顽固条件，shared/vocab.md §5）→ 高危
+■ 学员顽固弱项（studentWeaknesses[].hitCount = 3：该生最近 4 次测评中 3 次低于班级同题得分率、且低于 0.60）
+  · 个别辅导，设计针对性训练
+
+■ 学员高危（hitCount = 4：最近 4 次测评 4 次都达到，shared/vocab.md §5）
   · 先与学生本人沟通策略
   · 是否告知家长依授权位（shared/vocab.md §8）：先查 parentSharingConsent，
     涉及情绪内容再查 emotionSharingWithParent；不默认推送家长
   · 需要外部支持时，走学校既有流程
 
-■ 两次独立验证做对（间隔 ≥3 天，含 1 次换题型）→ 已攻克
+■ 两次独立验证做对（间隔 ≥3 天，含 1 次换题型）→ 已攻克（写回学生端档案时的状态）
   · 状态用五档：待处理 / 初步弱项 / 顽固弱项 / 突破中 / 已攻克
   · 已攻克后 30 天内再错 → 回到"突破中"
   · 不用"错因消失/已解决"这类说法

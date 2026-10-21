@@ -122,6 +122,7 @@
           "请老师把题目发过来"
         ]
       }
-    }
+    },
+    {"id":"trigger-07","kind":"trigger","role":"teacher","grade_band":"初中","context":"学校班级工作空间；初二物理","input":"班上好几个人受力分析老错，这算不算顽固弱项？次数是你这边算，还是照物理错因维度表说的由错题本算？","expect":{"activate":true,"must":["学校班级的顽固由学情分析师按最近 4 次测评计数：全班看 weaknessRank 的 stubbornCount（3 次及以上为班级顽固弱项），某个学生的以学情分析师的诊断卡为准；本 SKILL 只读这个计数、不改","说明维度表里“通用错题本是唯一计数权威”说的是学生端"],"must_not":["自己累加 stubbornCount","说学校班级也由通用错题本计数","拿班级的 stubbornCount 判断某个学生顽固"]}}
   ]
 }

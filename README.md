@@ -123,7 +123,7 @@ xiaozhi-skills/
 | 学习DNA | `student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json` | 学生长期档案：授权位、学科强弱、概念图谱、情绪、`subjectExtensions`（语数英物化史生地）、`extensions`（笔记/专注/计划/项目/理解深度）、`safetyRecord` |
 | 交接协议 | `student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json` | 七类交接：错题交接、深度分析回写、档案回写、学科档案回写、提醒入队、提醒同步、教师写回；发送方需附授权位快照 |
 | 独立教师工作空间 | `teacher/independent/schemas/solo-teacher-workspace.schema.json` | 学员卡、课表、课后记录、作业跟进、家长沟通、课时包、进步证据、资源索引 |
-| 班级教学工作空间 | `teacher/general/schemas/class-teaching-workspace.schema.json` | 班级画像、教案、课堂记录、作业、双向细目表、逐题得分与 P/D 统计、弱项排序、分层、复习计划 |
+| 班级教学工作空间 | `teacher/general/schemas/class-teaching-workspace.schema.json` | 班级画像、教案、课堂记录、作业、双向细目表、逐题得分与 P/D 统计、弱项排序、个人的顽固与高危、分层、复习计划 |
 
 ---
 

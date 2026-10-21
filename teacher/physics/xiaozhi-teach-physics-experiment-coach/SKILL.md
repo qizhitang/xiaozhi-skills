@@ -515,12 +515,12 @@ max_round_limit: 20
               ┌────────────────────────┐
               │ xiaozhi-teach-         │
               │  physics-lesson-       │
-              │  planner（实验嵌入）    │
+              │  planner（实验嵌入）   │
               └───────────┬────────────┘
                           │
                           ↓
               ┌────────────────────────┐
-              │ 实验室                  │
+              │ 实验室                 │
               └───────────┬────────────┘
                           │
                           ↓
@@ -530,10 +530,10 @@ max_round_limit: 20
               │  coach（本 SKILL）     │
               └───────────┬────────────┘
                           │
-        ┌─────────────────┼─────────────────┐
-        ↓                 ↓                 ↓
-  student-analyzer  resource-library  parent-communication
-  （实验能力维度）  （实验素材入库）  （独立教师的家长反馈）
+        ┌─────────────────┴─────────────────┐
+        ↓                                   ↓
+  student-analyzer                    parent-communication
+  （实验能力维度）                    （独立教师的家长反馈）
 ```
 
 ### 11.2 接口
@@ -561,7 +561,7 @@ max_round_limit: 20
   classWorkspace.homeworkAssignments[].tasks[] → 实验后的数据处理任务
   classWorkspace.weaknessRank[]                → 实验中新发现的操作类弱项
       · weaknessId / knowledgePoint / errorRate / dimension / evidenceExamIds[] / lastUpdated
-      （不写 .stubbornCount——顽固计数由 xiaozhi-teach-student-analyzer 唯一累加）
+      （不写 .stubbornCount——班级顽固计数由 xiaozhi-teach-student-analyzer 唯一计数，每次新测评后按最近 4 次重算）
 ```
 
 **上一次实验课的反馈怎么用**（读 `classWorkspace.interactionLogs` 的三步）：
@@ -614,7 +614,6 @@ interactionLogs 为空时跳过本步，并在方案里注明"无上次反馈"�
     <── xiaozhi-teach-physics-lesson-planner（实验嵌入；复习课的实验位、实验操作考试的考前练习）
     <── xiaozhi-teach-student-analyzer（学情/弱项）
     ──→ xiaozhi-teach-student-analyzer（实验能力维度；学校班级的家长版，由它核对 parentSharingConsent）
-    ──→ xiaozhi-teach-resource-library（实验素材入库）
     ──→ xiaozhi-teach-parent-communication（独立教师：实验进步反馈）
     ──→ 学生端 xiaozhi-physics-lab-coach（学员视角）
 ```

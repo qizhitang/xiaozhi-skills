@@ -494,7 +494,7 @@ homeworkAssignments[].completionSummary
   · commonErrors[]   共性错因（knowledgePoint + dimension + teacherCategory + count）
 
 ⚠️ 不写"学生分层变化"和"顽固弱项状态"：
-   分层写在 studentTiers、顽固计数写在 weaknessRank，都由 student-analyzer 唯一维护。
+   分层写在 studentTiers；班级的顽固计数（weaknessRank 的 stubbornCount）与学生个人的顽固、高危，都由 student-analyzer 唯一维护。
    作业数据是这两者的**输入证据**之一，不是它们的第二个来源。
    上一版这里写的 assignmentResults[] 在 schema 中不存在，已删除。
 ```
@@ -516,7 +516,7 @@ homeworkAssignments[].completionSummary
               ┌────────────────────────┐
               │ xiaozhi-teach-         │
               │  assignment-designer   │
-              │  （本 SKILL）           │
+              │  （本 SKILL）          │
               └───────────┬────────────┘
                           │
                           ↓ 作业数据回写
