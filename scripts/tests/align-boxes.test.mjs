@@ -94,14 +94,29 @@ test("整张表的分栏对不上（用“·”代替竖线）：报出来，不
   const src = fence("┌──────┬──────┐", "│ 错因 │ 干预 │", "├──────┼──────┤", "│ 漏洞 · 补前置│", "└──────┴──────┘");
   const r = alignText(src);
   assert.equal(r.text, src);
-  assert.deepEqual(r.skipped, [[2, "内容行的格数与横线对不上"]]);
+  // 同一处错误也让 ┼、┴ 两个接头对不上竖线，连线核对一并报出
+  assert.deepEqual(r.skipped, [[2, "内容行的格数与横线对不上"], [4, "连线接头 ┼ 往下没接上（第 8 列）"], [6, "连线接头 ┴ 往上没接上（第 8 列）"]]);
 });
 
 test("无外框的表：各行竖线要落在“──┼──”分隔线的接头列上", () => {
   const good = alignText(fence("知识点   │ 了解", "─────────┼─────", "概念     │ T1", "─────────┴─────"));
   assert.equal(good.skipped.length, 0);
   const bad = alignText(fence("知识点   │ 了解", "─────────┼─────", "概念与解的含义 │ T1"));
-  assert.deepEqual(bad.skipped, [[4, "无外框的表：竖线没对准分隔线的接头"]]);
+  assert.deepEqual(bad.skipped, [[3, "连线接头 ┼ 往下没接上（第 10 列）"], [4, "无外框的表：竖线没对准分隔线的接头"]]);
+});
+
+test("连线接头：分叉线的 ┼ 要正对上面伸下来的竖线，错开一列就报", () => {
+  const good = alignText(fence("    甲", "     │", "  ┌──┼──┐", "  ↓  ↓  ↓"));
+  assert.equal(good.skipped.length, 0);
+  const bad = alignText(fence("    甲", "     │", "  ┌───┼───┐", "  ↓   ↓   ↓"));
+  assert.deepEqual(bad.skipped, [[4, "连线接头 ┼ 往上没接上（第 7 列）"]]);
+});
+
+test("坐标轴的刻度、时间轴的说明文字：相邻行没有框线字符，不当成断开的连线", () => {
+  const axis = alignText(fence("  │", "0 ┼───┬───┬──→ x", "  0   1   2"));
+  assert.equal(axis.skipped.length, 0);
+  const timeline = alignText(fence("──┬────┬──", "  秦    汉"));
+  assert.equal(timeline.skipped.length, 0);
 });
 
 test("只有左侧竖线的树形图不当成框线表（含只有竖线的空行）", () => {

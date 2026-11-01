@@ -12,11 +12,14 @@
 // 以横框线（┌──┬──┐、├──┼──┤ 这类）为准：内容行按它上方最近的一条横线分列，只增减单元格末尾的空格；
 // 内容比列宽还宽时，把这一列连同全块的横线一起加宽；各条横线长短不一时补到最长。
 // 只动空格与框线字符、不动文字，check-skills 的 A2 把这类改动当排版改动，不要求重新验算。
-// 自动规整不了、只报出来（--check 也算失败，要手工重画）的三种：
+// 自动规整不了、只报出来（--check 也算失败，要手工重画）的四种：
 //   · 整块是一张表（首行顶边、末行底边），分栏却对不上：横线之间的列位置差一两列、内容行的格数与横线对不上；
 //   · 流程图、并排的框、框旁有说明文字的：整个围栏里逐个找框（┌ 横边 ┐ 往下到 └ 横边 ┘），两条竖边每行都要落在
 //     顶角那一列（缺右边框、文字把右边挤歪的都在这里报），底边要与顶边对齐；找不到底边的“┌──┼──┐”是连线拐角，不算框；
-//   · 没有外框的表（“───┼───”分隔线）：上下相邻各行的竖线要落在分隔线的接头列上。
+//   · 没有外框的表（“───┼───”分隔线）：上下相邻各行的竖线要落在分隔线的接头列上；
+//   · 连线的接头：横线上的 ┬ ┴ ┼ 往上、往下伸出的那一臂，要正对上一行、下一行的连线（│、箭头或接头）。
+//     相邻那一行一个框线字符都没有（坐标轴的刻度数字、时间轴的说明文字）时不查那一臂；├ ┤ 不查（树形图常把
+//     第一个“├──”直接接在根节点文字下面）。
 // 只有左侧竖线的树形图不是框，不报。
 // 范围：student/ teacher/ tools/ 下的 .md（技能内的 shared/ 副本是生成物，改源文件后由 sync-shared 同步）与仓库根 shared/。
 import { readFileSync, writeFileSync } from "node:fs";
@@ -187,7 +190,22 @@ export function checkOpenGrids(lines) {
   return [...out];
 }
 
-// 一个文件：找出框线块，逐块规整，再逐个围栏核对框与无外框的表；
+// 一个围栏里的连线接头：返回 [[行, 原因]…]（行号从 0 起）
+const ARM_DOWN = new Set([..."┬┼┳╋╦╬"]), ARM_UP = new Set([..."┴┼┻╋╩╬"]);
+const FROM_ABOVE = new Set([..."│┃║┴┼├┤└┘┻╋╩╬┣┫╠╣┗┛╚╝↓▼↑▲"]);   // 能接住上一行伸下来的
+const FROM_BELOW = new Set([..."│┃║┬┼├┤┌┐┳╋╦╬┣┫╠╣┏┓╔╗↓▼↑▲"]);   // 能接住下一行伸上来的
+const BOXY = /[│┃║─━═┌┐└┘├┤┬┴┼┏┓┗┛┣┫┳┻╋╔╗╚╝╠╣╦╩╬↓↑▼▲]/;
+export function checkConnectors(lines) {
+  const G = lines.map(cells), out = new Map();
+  for (let r = 0; r < G.length; r++) for (let c = 0; c < G[r].length; c++) {
+    const ch = G[r][c];
+    if (ARM_DOWN.has(ch) && BOXY.test(lines[r + 1] ?? "") && !FROM_ABOVE.has(G[r + 1][c]) && !out.has(r)) out.set(r, `连线接头 ${ch} 往下没接上（第 ${c + 1} 列）`);
+    if (ARM_UP.has(ch) && BOXY.test(lines[r - 1] ?? "") && !FROM_BELOW.has(G[r - 1][c]) && !out.has(r)) out.set(r, `连线接头 ${ch} 往上没接上（第 ${c + 1} 列）`);
+  }
+  return [...out];
+}
+
+// 一个文件：找出框线块，逐块规整，再逐个围栏核对框、无外框的表与连线接头；
 // 返回 { text, fixed: [起始行…], skipped: [[行, 原因]…] }（skipped 是自动规整不了、要手工重画的）
 export function alignText(text) {
   const eol = text.includes("\r\n") ? "\r\n" : "\n";
@@ -198,7 +216,7 @@ export function alignText(text) {
     if (/^\s*(```|~~~)/.test(L[i])) {
       if (fence < 0) { fence = i; continue; }
       const body = L.slice(fence + 1, i);   // 已规整过的
-      for (const [r, why] of [...checkBoxes(body, fence + 2), ...checkOpenGrids(body)]) {
+      for (const [r, why] of [...checkBoxes(body, fence + 2), ...checkOpenGrids(body), ...checkConnectors(body)]) {
         if (!skipped.some(([l]) => l === fence + 2 + r)) skipped.push([fence + 2 + r, why]);
       }
       fence = -1;
@@ -250,11 +268,11 @@ if (!globalThis.__alignBoxesLibraryOnly) {
   if (check) {
     if (nFixed) console.error(`❌ 框线没对齐：${nFiles} 个文件 ${nFixed} 块，运行 npm run boxes:fix 规整后重新提交`);
     if (skippedAll.length) {
-      console.error(`❌ 框线没对齐、脚本没法自动规整的 ${skippedAll.length} 处（流程图里的框、结构不规整的表、无外框的表），要手工重画：`);
+      console.error(`❌ 框线没对齐、脚本没法自动规整的 ${skippedAll.length} 处（流程图里的框、结构不规整的表、无外框的表、连线接头），要手工重画：`);
       for (const s of skippedAll) console.error(s);
     }
     if (nFixed || skippedAll.length) process.exit(1);
-    console.log("✅ 框线按显示宽度对齐（框线表、流程图里的框、无外框的表）");
+    console.log("✅ 框线按显示宽度对齐（框线表、流程图里的框、无外框的表、连线接头）");
     process.exit(0);
   }
   console.log(`${write ? "已规整" : "可自动规整"}：${nFiles} 个文件 ${nFixed} 块`);

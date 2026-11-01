@@ -20,7 +20,7 @@
 //  B1 历史、生物、地理技能、开卷答题教练与老师通用技能必须有“内容边界”行（SECURITY_BASELINE.md 4.4）
 //  I1 老师端接口路径根字段必须存在于 schema
 //  D1 docs 版本号与 package.json 一致；docs 中 SKILL 名称与目录一致
-//  A1 含"示例题"的 references 必须有"示例题验算：YYYY-MM-DD"声明（警告）
+//  A1 含"示例题"的 references 必须有"示例题验算：YYYY-MM-DD"声明（警告；写给模型的指令按原句豁免，见 A1_INSTRUCTION_ONLY）
 //  Z1 正文与契约不得含零宽/方向控制/BOM 等不可见字符（组合 emoji 请换单码位）——扫描器把它们当作元数据投毒信号
 //  A2 验算日期不得早于文件最后一次实质提交（git；纯升版提交、对该文件只改了版本号的提交与未提交的纯版本号改动不算，
 //     只动了空白与框线字符的排版改动也不算）；
@@ -32,6 +32,13 @@ import { join, dirname, resolve, relative, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+// A1 的已知误报：文件里的“例题”只是写给模型的指令、并没有示例题。按文件与原句豁免——只去掉这几句，
+// 文件里再出现别的“示例题/例题/样板题”（比如后来加了真的示例题），A1 照常要求验算声明。
+const A1_INSTRUCTION_ONLY = {
+  // 提示阶梯 L5：运行时让模型现编同型不同数的例题示范，模板库里没有示例题
+  "tools/xiaozhi-skill-creator/references/skill-templates-library.md": ["用同型不同数的例题示范"],
+};
+
 // ---------- git helpers（A2 用；git 不可用时降级为跳过） ----------
 import { execFileSync } from "node:child_process";
 let gitOk = true;
@@ -283,8 +290,9 @@ for (const f of refFiles) {
     if (seen.has(key)) err("R2", rel(f), `与 ${seen.get(key)} 内容完全重复（下沉应移动而非复制）`);
     else seen.set(key, rel(f));
   }
-  // A1
-  if (/示例题|例题|样板题/.test(text) && /^\s*(\d+[.、)]|例\s*\d|题目[:：])/m.test(text) && !/示例题验算[:：]\s*\d{4}-\d{2}-\d{2}/.test(text)) warn("A1", rel(f), "含示例题但无“示例题验算：YYYY-MM-DD”声明（shared/ai-item-check.md §3）");
+  // A1（按原句豁免的写给模型的指令先去掉再判；文件里再出现别的“示例题/例题/样板题”，照样要声明）
+  const a1Text = (A1_INSTRUCTION_ONLY[rel(f)] || []).reduce((t, phrase) => t.split(phrase).join(""), text);
+  if (/示例题|例题|样板题/.test(a1Text) && /^\s*(\d+[.、)]|例\s*\d|题目[:：])/m.test(text) && !/示例题验算[:：]\s*\d{4}-\d{2}-\d{2}/.test(text)) warn("A1", rel(f), "含示例题但无“示例题验算：YYYY-MM-DD”声明（shared/ai-item-check.md §3）");
   // A2：验算日期不得早于文件最后一次实质提交（纯升版提交、未提交的纯版本号改动不算）——否则"验算日期"只是装饰
   const decl = text.match(/示例题验算[:：]\s*(\d{4}-\d{2}-\d{2})/);
   if (decl && gitOk) {
