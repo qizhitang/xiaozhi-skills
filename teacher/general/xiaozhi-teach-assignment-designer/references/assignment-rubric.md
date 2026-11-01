@@ -1,7 +1,7 @@
 # 作业评分标准与分层任务卡模板
 
 > 适用学段：小学中段 / 小学高段 / 初中 / 高中（示例按八年级数学写；高中的作业量、考查范围与实践性作业见 SKILL.md §5.3）。
-> 示例题验算：2026-10-07
+> 示例题验算：2026-11-01（无数值结论：全文为占位模板，没有带数值答案的例题；核对了三张任务卡的题数、难度档与知识点层级标注，§三 各层题数与逐题用时空位数一致，反馈话术不超过字数上限）
 > 配合 `xiaozhi-teach-assignment-designer` 使用。分层来自 `classWorkspace.studentTiers`，
 > 每道题必须填预计用时（对应 `homeworkAssignments[].tasks[].estimatedMinutes`）。
 > 完整 Prompt 逻辑请参阅 [`../SKILL.md`](../SKILL.md)。

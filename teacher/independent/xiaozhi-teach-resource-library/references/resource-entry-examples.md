@@ -1,7 +1,7 @@
 # 资源五大类：用途、入库要求与示例
 
 > 适用学段：小学中段 / 小学高段 / 初中 / 高中
-> 示例题验算：2026-10-07
+> 示例题验算：2026-11-01
 > 配合 `xiaozhi-teach-resource-library` §四使用。标签与检索规则见 `resource-categorization.md`，版权格式见 `copyright-annotation-template.md`。
 > 字段名以 `solo-teacher-workspace.schema.json` 的 `resourceIndexItem` 为准；`resourceType` 只能取七档枚举之一：题目 / 讲义 / 课件 / 板书 / 讲评话术 / 错因案例 / 家长话术。
 
@@ -80,6 +80,10 @@
   copyrightStatus：仅存索引
   usageNotes：某教辅 八年级上 第 46 页 第 7 题。不录入题干，
               用时请翻书。
+```
+
+```verify
+{"claim": "R-Q001：y=2x+4 与 x 轴交于 (-2,0)（代回 2×(-2)+4=0）、与 y 轴交于 (0,4)，与两坐标轴围成的三角形面积 2×4÷2 = 4", "expr": "[-4 / 2, 2 * (-2) + 4, 2 * 0 + 4, Math.abs(-4 / 2) * (2 * 0 + 4) / 2]", "expect": [-2, 0, 4, 4]}
 ```
 
 ⚠️ 不记"预估 P（难度系数）"。一对一场景下没有可靠的群体作答数据，凭感觉填一个 0.65 只是给数字披了层专业外衣；`difficulty` 四档已经够用。
