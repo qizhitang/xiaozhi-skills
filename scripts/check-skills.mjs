@@ -22,7 +22,8 @@
 //  D1 docs 版本号与 package.json 一致；docs 中 SKILL 名称与目录一致
 //  A1 含"示例题"的 references 必须有"示例题验算：YYYY-MM-DD"声明（警告）
 //  Z1 正文与契约不得含零宽/方向控制/BOM 等不可见字符（组合 emoji 请换单码位）——扫描器把它们当作元数据投毒信号
-//  A2 验算日期不得早于文件最后一次实质提交（git；纯升版提交、对该文件只改了版本号的提交与未提交的纯版本号改动不算）；
+//  A2 验算日期不得早于文件最后一次实质提交（git；纯升版提交、对该文件只改了版本号的提交与未提交的纯版本号改动不算，
+//     只动了空白与框线字符的排版改动也不算）；
 //     浅克隆里核对不了提交历史，报一条错误请先 git fetch --unshallow（不逐份误报）
 //  C1 合规用语：SKILL.md、references 与 schemas/ 目录下的 JSON（教师包与学生端的数据契约及示例）里不出现分班（重点班/基础班/提升班/快慢班/尖子班/火箭班/拆班）、拍照发群、周末集中排课、寒暑假专属课时包、学期包、推荐新学员、月考（SECURITY_BASELINE.md 4.2；shared/contracts/off-campus-training.md）；只拦第二十批删掉的原词复发，不是完整的合规检查；"拍照发群"的常见否定写法与写了"义务教育法""分设重点班"的行不算
 //  M1 Markdown 代码围栏必须闭合；块内不得出现不短于外层、带语言标记的围栏行（新块插进了未闭合的块）
@@ -72,6 +73,16 @@ function gitLog(file) {
     return out.trim().split(String.fromCharCode(10)).filter(Boolean).map((l) => { const i = l.indexOf("|"), j = l.indexOf("|", i + 1); return { hash: l.slice(0, i), date: l.slice(i + 1, j), subject: l.slice(j + 1) }; });
   } catch { gitOk = false; return []; }
 }
+// 排版改动：去掉空白与框线字符后前后一样（框线表按显示宽度规整、只增减空格与横线），示例题不可能因此变错，不算实质改动
+const BOX_OR_SPACE = /[\s─━═│┃║┌┐└┘├┤┬┴┼┏┓┗┛┣┫┳┻╋╔╗╚╝╠╣╦╩╬]/g;
+const sameText = (a, b) => a !== null && b !== null && a.replace(BOX_OR_SPACE, "") === b.replace(BOX_OR_SPACE, "");
+function gitShowFile(rev, file) {
+  try {
+    return execFileSync("git", ["-c", "safe.directory=" + root.replaceAll(String.fromCharCode(92), "/"), "show", `${rev}:${relative(root, file).replaceAll(String.fromCharCode(92), "/")}`], { cwd: root, encoding: "utf-8", stdio: ["ignore", "pipe", "ignore"], maxBuffer: 64 * 1024 * 1024 });
+  } catch { return null; }
+}
+const gitCosmeticOnly = (file) => sameText(gitShowFile("HEAD", file), readFileSync(file, "utf-8"));
+const gitCommitCosmeticOnly = (hash, file) => sameText(gitShowFile(hash + "^", file), gitShowFile(hash, file));
 // 浅克隆（git clone --depth N）里，最早那个提交没有父提交，git log 把它算成“新增了全部文件”，
 // A2 会把这个日期当成每份文件的实质改动、成批误报。浅克隆时不看提交历史，只核对未提交改动，另报一条错误请先补全历史
 const gitShallow = (() => {
@@ -278,9 +289,9 @@ for (const f of refFiles) {
   const decl = text.match(/示例题验算[:：]\s*(\d{4}-\d{2}-\d{2})/);
   if (decl && gitOk) {
     if (gitShallow) a2Unchecked.push(rel(f));
-    const later = gitShallow ? [] : gitLog(f).filter((l) => l.date > decl[1] && !/升版|版本号|全库升版|bump/i.test(l.subject) && !gitCommitVersionOnly(l.hash, f));
+    const later = gitShallow ? [] : gitLog(f).filter((l) => l.date > decl[1] && !/升版|版本号|全库升版|bump/i.test(l.subject) && !gitCommitVersionOnly(l.hash, f) && !gitCommitCosmeticOnly(l.hash, f));
     if (later.length) err("A2", rel(f), `示例题验算声明为 ${decl[1]}，但此后有 ${later.length} 次实质改动（最近 ${later[0].date}），请逐题重新验算并更新日期`);
-    else if (gitDirty(f) && decl[1] < today() && !gitVersionOnly(f)) err("A2", rel(f), `示例题验算声明为 ${decl[1]}，但文件有未提交改动，请验算后把日期更新为今天`);
+    else if (gitDirty(f) && decl[1] < today() && !gitVersionOnly(f) && !gitCosmeticOnly(f)) err("A2", rel(f), `示例题验算声明为 ${decl[1]}，但文件有未提交改动，请验算后把日期更新为今天`);
   }
 }
 if (a2Unchecked.length) err("A2", "（浅克隆）", `当前仓库是浅克隆，提交历史不完整，${a2Unchecked.length} 份带“示例题验算”声明的文件只核对了未提交改动，没法核对提交历史（浅克隆最早的提交会被误当成每份文件的实质改动）。先运行 git fetch --unshallow 再跑校验；CI 的 checkout 用 fetch-depth: 0`);

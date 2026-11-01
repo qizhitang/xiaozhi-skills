@@ -2,7 +2,7 @@
 
 > **面向中国 K12 的 AI 学习与教学 SKILL 集合 — 学生端 · 老师端**
 > 作者：小智伴学 ｜ 适用平台：WorkBuddy / SkillHub · OpenClaw / ClawHub ｜ 当前版本：**v2.12.3**
-> 全库 **83 个 SKILL**（学生端 49 + 老师端 34）+ 1 个开发者工具，**299 份 references**、**6 份共享约定**、**4 份 JSON Schema**（含 8 份示例）、**7 个校验脚本**。
+> 全库 **83 个 SKILL**（学生端 49 + 老师端 34）+ 1 个开发者工具，**299 份 references**、**6 份共享约定**、**4 份 JSON Schema**（含 8 份示例）、**8 个校验脚本**。
 
 传统 AI 容易被当成"给答案的计算器"。这套 SKILL 库的目标，是把 AI 变成**追问思路的教练**和**减轻教师重复劳动的助手**，并让学生、老师、家长三方在**明确授权**的前提下共享必要的学习证据。
 
@@ -194,7 +194,8 @@ npm run check
 | `scripts/validate-schemas.mjs` | 四份 schema 自身有效、8 份 examples 合规、枚举与 `shared/vocab.md` 一致、结构与协议版本号等于 `package.json` |
 | `scripts/sync-shared.mjs --check` | 每个 SKILL 目录内的 `shared/` 副本与源一致：Markdown 逐字节（加横幅），JSON 契约按目标技能裁剪并带 `x-skill-scope`，检查时按同一规则重新生成再比对；各技能副本裁剪后的读写范围另汇总成 `scripts/snapshots/x-skill-scope.json` 一并核对，范围一变在 diff 里就看得到 |
 | `scripts/tests/sync-shared.test.mjs` | 裁剪规则的回归测试（`node --test`，也可单独 `npm test`）：否定语境、“读：/写：”声明块、交接协议的收发路由等，每条对应一条规则或一次出过的问题 |
-| `scripts/verify-examples.mjs` | references 里的 ```verify``` 断言逐条求值（示例题的关键数值结论交给 CI 算）；`check-skills` 的 A2 另查“示例题验算”日期不得早于文件最后一次实质提交（要完整 git 历史：浅克隆里只报一条错误，先 `git fetch --unshallow`） |
+| `scripts/align-boxes.mjs --check` | 代码块里的框线表按显示宽度（全角 2 列）对齐；没对齐的运行 `npm run boxes:fix` 规整，只增减空格与横线、不动文字。结构看不准的（并排的框、缺边框）只提示不报错；测试在 `scripts/tests/align-boxes.test.mjs` |
+| `scripts/verify-examples.mjs` | references 里的 ```verify``` 断言逐条求值（示例题的关键数值结论交给 CI 算）；`check-skills` 的 A2 另查“示例题验算”日期不得早于文件最后一次实质提交（要完整 git 历史：浅克隆里只报一条错误，先 `git fetch --unshallow`；只动空白与框线字符的排版改动不算实质改动） |
 | `scripts/gen-docs.mjs --check` | 文档与源码同步：`docs/skills-index.md` 由 frontmatter 生成且不落后；README / architecture 技能表的显示名、目录、学段与 frontmatter 一致；数量声明正确；安装指南的顺序不违反 `metadata.depends_on` |
 | `scripts/check-evals.mjs` | 每个 SKILL 都有回归用例：至少 1 条触发 + 1 条不触发；声明了能力代号的有降级用例；持有长期数据的有授权用例；学生端技能与会读到情绪文本的技能都有危机用例；`route_to` 指向存在的 SKILL |
 

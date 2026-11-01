@@ -100,32 +100,32 @@ max_round_limit: 20
 
 ```text
                 ┌──────────────────────────┐
-                │ ① 读取工作空间            │
-                │  lessonSchedule           │
-                │  studentCards             │
-                │  lessonLogs               │
-                │  homeworkFollowups        │
-                │  parentCommunicationLogs  │
-                │  coursePackageLedger      │
-                │  progressEvidence         │
+                │ ① 读取工作空间           │
+                │  lessonSchedule          │
+                │  studentCards            │
+                │  lessonLogs              │
+                │  homeworkFollowups       │
+                │  parentCommunicationLogs │
+                │  coursePackageLedger     │
+                │  progressEvidence        │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ② 按 7 区块分类           │
-                │  1 课表 2 课前 3 课后     │
-                │  4 作业 5 家长 6 课时     │
-                │  7 今日三件事             │
+                │ ② 按 7 区块分类          │
+                │  1 课表 2 课前 3 课后    │
+                │  4 作业 5 家长 6 课时    │
+                │  7 今日三件事            │
                 └────────────┬─────────────┘
                              ↓
                 ┌──────────────────────────┐
-                │ ③ 按字段数值标记风险学员  │
-                │  5 类信号（见 §六）        │
+                │ ③ 按字段数值标记风险学员 │
+                │  5 类信号（见 §六）      │
                 └────────────┬─────────────┘
                              ↓
-                ┌──────────────────────────┐
-                │ ④ 输出"今日最重要的三件事"│
-                │  按紧急度+影响力排序，附依据│
-                └──────────────────────────┘
+                ┌──────────────────────────────┐
+                │ ④ 输出"今日最重要的三件事"   │
+                │  按紧急度+影响力排序，附依据 │
+                └──────────────────────────────┘
 ```
 
 ---
@@ -315,18 +315,18 @@ parentSummary / factSummary 字段硬约束：
 
 ```text
              各 SKILL 各自读写工作空间（互不经由工作台）
-   ┌───────────────┬───────────────┬───────────────┬───────────────┐
-   │ student-      │ schedule-     │ lesson-log    │ homework-     │
-   │ intake        │ manager       │               │ tracker       │
-   │ →studentCards │ →lesson       │ →lessonLogs   │ →homework     │
-   │               │  Schedule     │  coursePackage│  Followups    │
-   └───────────────┴───────────────┴───────────────┴───────────────┘
-   ┌───────────────┬───────────────┬───────────────┐
-   │ parent-       │ renewal-      │ resource-     │
-   │ communication │ report        │ library       │
-   │ →parentComm   │ →progress     │ →resource     │
-   │  Logs         │  Evidence     │  LibraryIndex │
-   └───────────────┴───────────────┴───────────────┘
+   ┌───────────────┬───────────────┬────────────────┬───────────────┐
+   │ student-      │ schedule-     │ lesson-log     │ homework-     │
+   │ intake        │ manager       │                │ tracker       │
+   │ →studentCards │ →lesson       │ →lessonLogs    │ →homework     │
+   │               │  Schedule     │  coursePackage │  Followups    │
+   └───────────────┴───────────────┴────────────────┴───────────────┘
+   ┌───────────────┬───────────────┬────────────────────────────────┐
+   │ parent-       │ renewal-      │ resource-                      │
+   │ communication │ report        │ library                        │
+   │ →parentComm   │ →progress     │ →resource                      │
+   │  Logs         │  Evidence     │  LibraryIndex                  │
+   └───────────────┴───────────────┴────────────────────────────────┘
                             │
                      （只读，单向）
                             ↓
