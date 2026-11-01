@@ -368,7 +368,7 @@ consentStatus
 | `scripts/validate-schemas.mjs` | 四份 schema 有效；8 份示例合规；枚举与 `shared/vocab.md` 一致；收发方覆盖全库；关键字段存在；结构与协议版本号等于 `package.json` |
 | `scripts/sync-shared.mjs --check` | 84 个 SKILL 目录内的 `shared/` 副本与仓库根源文件一致（缺失、被改、残留均报错）；`scripts/snapshots/x-skill-scope.json` 与当前裁剪结果一致（见第八节末） |
 | `scripts/tests/sync-shared.test.mjs` | `node --test` 跑裁剪规则的回归测试：否定语境、“读：/写：”声明块（跨行声明头、→ 解释续行）、工作区子字段与 `$defs`、交接协议的类型与收发路由 |
-| `scripts/verify-examples.mjs` | X1 ```verify``` 块为合法 JSON（claim / expr / expect）· X2 expr 只含 Math 与字面量，求值结果等于 expect · X3 有验算声明却无断言的文件给警告。配合 `check-skills` 的 A2：验算日期早于最后一次实质提交即失败（要完整 git 历史，浅克隆里只报一条错误，先 `git fetch --unshallow`） |
+| `scripts/verify-examples.mjs` | X1 ```verify``` 块为合法 JSON（claim / expr / expect）· X2 expr 只含 Math 与字面量，求值结果等于 expect · X3 有验算声明却无断言的文件给警告（示例确实没有数值结论的，在声明日期后写明“（无数值结论：…）”即不再提醒）。配合 `check-skills` 的 A2：验算日期早于最后一次实质提交即失败（要完整 git 历史，浅克隆里只报一条错误，先 `git fetch --unshallow`） |
 | `scripts/gen-docs.mjs --check` | D2 `docs/skills-index.md` 与 frontmatter 生成结果一致 · D3 README / architecture 技能表：显示名 == `metadata.display_name`、反引号目录存在、学段列 == `grade_bands` 区间、改名残留报错 · D4 数量声明（全库 / 学生端 / 老师端 / references）与实际一致 · D5 安装指南顺序不违反 `metadata.depends_on` |
 | `scripts/check-evals.mjs` | E1 用例文件过 schema、id 唯一 · E2 至少 1 触发 + 1 不触发 · E3 有能力代号即有降级用例且 `missing` 不越界 · E4 持有长期数据即有授权用例 · E5 学生端一律、会读情绪文本的也要有危机用例 · E6 `route_to` 与授权字段名存在 · E7 每条用例有断言 |
 

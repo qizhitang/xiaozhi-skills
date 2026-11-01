@@ -15,7 +15,9 @@
 // 检查项：
 //  X1 每个 verify 块是合法 JSON，含 claim / expr / expect
 //  X2 expr 求值不抛错，结果等于 expect
-//  X3 含"示例题验算"声明的文件若一个 verify 块都没有 → 警告（鼓励补）
+//  X3 含"示例题验算"声明的文件若一个 verify 块都没有 → 警告（鼓励补）。示例本身没有可计算的数值结论时
+//     （语病判断、教学模板、提示词模板），在声明的日期后写明“（无数值结论：核对了什么）”，X3 不再提醒；
+//     写了这个标记又有 verify 块的，也给警告（二者取一）
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, dirname, resolve, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -47,6 +49,7 @@ let blocks = 0, filesWithBlocks = 0;
 for (const f of files) {
   const text = readFileSync(f, "utf-8");
   const declared = /示例题验算[:：]\s*\d{4}-\d{2}-\d{2}/.test(text);
+  const noNumeric = /示例题验算[:：]\s*\d{4}-\d{2}-\d{2}\s*[（(]无数值结论/.test(text);
   const re = /```verify\s*\n([\s\S]*?)\n```/g;
   let m, n = 0;
   while ((m = re.exec(text))) {
@@ -63,7 +66,8 @@ for (const f of files) {
     if (!approxEq(got, spec.expect)) err("X2", `${rel(f)}:${line}`, `“${spec.claim}” 期望 ${JSON.stringify(spec.expect)}，实得 ${JSON.stringify(got)}`);
   }
   if (n) filesWithBlocks++;
-  if (declared && !n) warn("X3", rel(f), "有示例题验算声明但没有 verify 块——关键数值断言建议写成 ```verify``` 让 CI 替你算");
+  if (declared && !n && !noNumeric) warn("X3", rel(f), "有示例题验算声明但没有 verify 块——关键数值断言建议写成 ```verify``` 让 CI 替你算；示例确实没有数值结论的，在声明日期后写明“（无数值结论：…）”");
+  if (noNumeric && n) warn("X3", rel(f), "声明写了“无数值结论”，却有 verify 块——二者取一");
 }
 
 if (warnings.length) { console.log(`\n⚠️  警告 ${warnings.length}：`); for (const w of warnings) console.log("   " + w); }
