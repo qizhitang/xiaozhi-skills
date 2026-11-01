@@ -1,0 +1,1176 @@
+{
+  "$comment": "由 scripts/sync-shared.mjs 生成，请勿手改（npm run sync:shared 重新生成，npm run check 核对）。记的是每个技能随包 schema 副本（shared/*.schema.json）裁剪后的范围：paths 即 x-skill-scope.paths（交接协议副本为保留的交接类型），reads / writes / fields 来自老师端 SKILL.md 的“读：/写：”声明块，sender 起的各项只出现在交接协议副本里。改了 SKILL.md 之后这里跟着变，说明随包契约也变了：提交前确认这是有意的。",
+  "xiaozhi-biology-chart-reader": {
+    "dna-profile.schema.json": {
+      "paths": ["basicInfo", "meta", "subjectExtensions.biology.subtypes"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "wrong_answer_handover"],
+      "sender": ["xiaozhi-biology-chart-reader"],
+      "recipient": ["xiaozhi-correction-notebook", "xiaozhi-im-reminder"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "wrongAnswerSubject": ["biology"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"]
+    }
+  },
+  "xiaozhi-biology-concept-network": {
+    "dna-profile.schema.json": {
+      "paths": ["basicInfo", "meta", "subjectExtensions.biology.conceptNetwork", "subjectExtensions.biology.subtypes"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback", "wrong_answer_handover"],
+      "sender": ["xiaozhi-biology-concept-network"],
+      "recipient": ["xiaozhi-correction-notebook", "xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "wrongAnswerSubject": ["biology"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["biology.conceptNetwork", "biology.subtypes"]
+    }
+  },
+  "xiaozhi-biology-error-dna": {
+    "dna-profile.schema.json": {
+      "paths": ["basicInfo", "meta", "subjectExtensions.biology.subtypes"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["deep_analysis_writeback", "subject_profile_writeback", "wrong_answer_handover"],
+      "sender": ["xiaozhi-biology-error-dna", "xiaozhi-correction-notebook"],
+      "recipient": ["xiaozhi-biology-error-dna", "xiaozhi-correction-notebook", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "wrongAnswerSubject": ["biology"],
+      "consent": ["crossSkillSharing", "emotionSharingWithParent", "parentSharingConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["biology.subtypes"]
+    }
+  },
+  "xiaozhi-biology-genetics-coach": {
+    "dna-profile.schema.json": {
+      "paths": ["basicInfo", "meta", "subjectExtensions.biology.geneticsSkills", "subjectExtensions.biology.subtypes"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback", "wrong_answer_handover"],
+      "sender": ["xiaozhi-biology-genetics-coach"],
+      "recipient": ["xiaozhi-correction-notebook", "xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "wrongAnswerSubject": ["biology"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["biology.geneticsSkills", "biology.subtypes"]
+    }
+  },
+  "xiaozhi-biology-inquiry-coach": {
+    "dna-profile.schema.json": {
+      "paths": ["basicInfo", "meta", "subjectExtensions.biology.labSkills", "subjectExtensions.biology.subtypes"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback", "wrong_answer_handover"],
+      "sender": ["xiaozhi-biology-inquiry-coach"],
+      "recipient": ["xiaozhi-correction-notebook", "xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "wrongAnswerSubject": ["biology"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["biology.labSkills", "biology.subtypes"]
+    }
+  },
+  "xiaozhi-bridge-planner": {
+    "dna-profile.schema.json": {
+      "paths": ["basicInfo", "extensions.plans", "meta", "subjectMap"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": [],
+      "sender": ["xiaozhi-biology-chart-reader", "xiaozhi-biology-concept-network", "xiaozhi-biology-error-dna", "xiaozhi-biology-genetics-coach", "xiaozhi-biology-inquiry-coach", "xiaozhi-bridge-planner", "xiaozhi-chemistry-error-dna", "xiaozhi-chemistry-lab-coach", "xiaozhi-chemistry-micro-visualizer", "xiaozhi-chemistry-notation-coach", "xiaozhi-chemistry-problem-coach", "xiaozhi-chinese-classical-revival", "xiaozhi-chinese-grammar-tracker", "xiaozhi-chinese-material-library", "xiaozhi-chinese-reading-decoder", "xiaozhi-chinese-writing-coach", "xiaozhi-cornell-notes", "xiaozhi-correction-notebook", "xiaozhi-cross-subject-detective", "xiaozhi-english-grammar-coach", "xiaozhi-english-listening-trainer", "xiaozhi-english-speaking-coach", "xiaozhi-english-vocabulary-dna", "xiaozhi-english-writing-coach", "xiaozhi-feynman-learning", "xiaozhi-geography-causal-chain", "xiaozhi-geography-map-reader", "xiaozhi-geography-region-builder", "xiaozhi-history-essay-coach", "xiaozhi-history-source-analyzer", "xiaozhi-history-timeline-builder", "xiaozhi-im-reminder", "xiaozhi-interest-explorer", "xiaozhi-learning-dna", "xiaozhi-learning-plan", "xiaozhi-math-concept-explainer", "xiaozhi-math-error-dna", "xiaozhi-math-gradient-trainer", "xiaozhi-math-problem-solving-coach", "xiaozhi-math-word-problem-coach", "xiaozhi-openbook-coach", "xiaozhi-physics-concept-intuition", "xiaozhi-physics-error-dna", "xiaozhi-physics-lab-coach", "xiaozhi-physics-modeling-coach", "xiaozhi-physics-problem-coach", "xiaozhi-skill-coordinator", "xiaozhi-teach-assignment-designer", "xiaozhi-teach-bio-geo-review-planner", "xiaozhi-teach-biology-lesson-planner", "xiaozhi-teach-chemistry-lab-guide", "xiaozhi-teach-chemistry-lesson-planner", "xiaozhi-teach-chemistry-notation-drill", "xiaozhi-teach-chinese-classical-guide", "xiaozhi-teach-chinese-reading-guide", "xiaozhi-teach-chinese-writing-guide", "xiaozhi-teach-classroom-coach", "xiaozhi-teach-english-assessment", "xiaozhi-teach-english-listening-designer", "xiaozhi-teach-english-speaking-designer", "xiaozhi-teach-exam-designer", "xiaozhi-teach-geography-lesson-planner", "xiaozhi-teach-history-assessment-guide", "xiaozhi-teach-history-lesson-planner", "xiaozhi-teach-homework-tracker", "xiaozhi-teach-lesson-log", "xiaozhi-teach-lesson-planner", "xiaozhi-teach-math-error-analyzer", "xiaozhi-teach-math-exam-designer", "xiaozhi-teach-math-lesson-planner", "xiaozhi-teach-parent-communication", "xiaozhi-teach-physics-experiment-coach", "xiaozhi-teach-physics-lesson-planner", "xiaozhi-teach-physics-problem-guide", "xiaozhi-teach-renewal-report", "xiaozhi-teach-resource-library", "xiaozhi-teach-review-planner", "xiaozhi-teach-schedule-manager", "xiaozhi-teach-solo-dashboard", "xiaozhi-teach-student-analyzer", "xiaozhi-teach-student-intake", "xiaozhi-time-focus-coach", "xiaozhi-weekly-review"],
+      "recipient": ["xiaozhi-biology-chart-reader", "xiaozhi-biology-concept-network", "xiaozhi-biology-error-dna", "xiaozhi-biology-genetics-coach", "xiaozhi-biology-inquiry-coach", "xiaozhi-bridge-planner", "xiaozhi-chemistry-error-dna", "xiaozhi-chemistry-lab-coach", "xiaozhi-chemistry-micro-visualizer", "xiaozhi-chemistry-notation-coach", "xiaozhi-chemistry-problem-coach", "xiaozhi-chinese-classical-revival", "xiaozhi-chinese-grammar-tracker", "xiaozhi-chinese-material-library", "xiaozhi-chinese-reading-decoder", "xiaozhi-chinese-writing-coach", "xiaozhi-cornell-notes", "xiaozhi-correction-notebook", "xiaozhi-cross-subject-detective", "xiaozhi-english-grammar-coach", "xiaozhi-english-listening-trainer", "xiaozhi-english-speaking-coach", "xiaozhi-english-vocabulary-dna", "xiaozhi-english-writing-coach", "xiaozhi-feynman-learning", "xiaozhi-geography-causal-chain", "xiaozhi-geography-map-reader", "xiaozhi-geography-region-builder", "xiaozhi-history-essay-coach", "xiaozhi-history-source-analyzer", "xiaozhi-history-timeline-builder", "xiaozhi-im-reminder", "xiaozhi-interest-explorer", "xiaozhi-learning-dna", "xiaozhi-learning-plan", "xiaozhi-math-concept-explainer", "xiaozhi-math-error-dna", "xiaozhi-math-gradient-trainer", "xiaozhi-math-problem-solving-coach", "xiaozhi-math-word-problem-coach", "xiaozhi-openbook-coach", "xiaozhi-physics-concept-intuition", "xiaozhi-physics-error-dna", "xiaozhi-physics-lab-coach", "xiaozhi-physics-modeling-coach", "xiaozhi-physics-problem-coach", "xiaozhi-skill-coordinator", "xiaozhi-teach-assignment-designer", "xiaozhi-teach-bio-geo-review-planner", "xiaozhi-teach-biology-lesson-planner", "xiaozhi-teach-chemistry-lab-guide", "xiaozhi-teach-chemistry-lesson-planner", "xiaozhi-teach-chemistry-notation-drill", "xiaozhi-teach-chinese-classical-guide", "xiaozhi-teach-chinese-reading-guide", "xiaozhi-teach-chinese-writing-guide", "xiaozhi-teach-classroom-coach", "xiaozhi-teach-english-assessment", "xiaozhi-teach-english-listening-designer", "xiaozhi-teach-english-speaking-designer", "xiaozhi-teach-exam-designer", "xiaozhi-teach-geography-lesson-planner", "xiaozhi-teach-history-assessment-guide", "xiaozhi-teach-history-lesson-planner", "xiaozhi-teach-homework-tracker", "xiaozhi-teach-lesson-log", "xiaozhi-teach-lesson-planner", "xiaozhi-teach-math-error-analyzer", "xiaozhi-teach-math-exam-designer", "xiaozhi-teach-math-lesson-planner", "xiaozhi-teach-parent-communication", "xiaozhi-teach-physics-experiment-coach", "xiaozhi-teach-physics-lesson-planner", "xiaozhi-teach-physics-problem-guide", "xiaozhi-teach-renewal-report", "xiaozhi-teach-resource-library", "xiaozhi-teach-review-planner", "xiaozhi-teach-schedule-manager", "xiaozhi-teach-solo-dashboard", "xiaozhi-teach-student-analyzer", "xiaozhi-teach-student-intake", "xiaozhi-time-focus-coach", "xiaozhi-weekly-review"],
+      "updateTarget": ["concept_graph", "emotion_dimension", "extension", "growth_milestones", "interest_dna", "safety_record", "subject_extension", "weak_knowledge_points"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "wrongAnswerSubject": ["biology", "chemistry", "chinese", "english", "geography", "history", "math", "other", "physics"],
+      "consent": ["crossSkillSharing", "emotionSharingWithParent", "emotionTrackingConsent", "interestTrackingConsent", "parentSharingConsent", "reminderConsent", "teacherWritebackConsent", "verifiedAt"]
+    }
+  },
+  "xiaozhi-chemistry-error-dna": {
+    "dna-profile.schema.json": {
+      "paths": ["basicInfo", "meta", "subjectExtensions.chemistry"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["deep_analysis_writeback", "reminder_enqueue", "subject_profile_writeback", "wrong_answer_handover"],
+      "sender": ["xiaozhi-chemistry-error-dna", "xiaozhi-correction-notebook"],
+      "recipient": ["xiaozhi-chemistry-error-dna", "xiaozhi-correction-notebook", "xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "wrongAnswerSubject": ["chemistry"],
+      "consent": ["crossSkillSharing", "emotionSharingWithParent", "parentSharingConsent", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["chemistry.labSkills", "chemistry.notationProfile", "chemistry.reactionTypes", "chemistry.subtypes"]
+    }
+  },
+  "xiaozhi-chemistry-lab-coach": {
+    "dna-profile.schema.json": {
+      "paths": ["meta", "subjectExtensions.chemistry.labSkills", "subjectExtensions.chemistry.subtypes"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback", "wrong_answer_handover"],
+      "sender": ["xiaozhi-chemistry-lab-coach"],
+      "recipient": ["xiaozhi-correction-notebook", "xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "wrongAnswerSubject": ["chemistry"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["chemistry.labSkills", "chemistry.subtypes"]
+    }
+  },
+  "xiaozhi-chemistry-micro-visualizer": {
+    "dna-profile.schema.json": {
+      "paths": ["meta", "subjectExtensions.chemistry.subtypes"]
+    }
+  },
+  "xiaozhi-chemistry-notation-coach": {
+    "dna-profile.schema.json": {
+      "paths": ["basicInfo", "meta", "subjectExtensions.chemistry.notationProfile", "subjectExtensions.chemistry.reactionTypes"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback"],
+      "sender": ["xiaozhi-chemistry-notation-coach"],
+      "recipient": ["xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["chemistry.notationProfile", "chemistry.reactionTypes"]
+    }
+  },
+  "xiaozhi-chemistry-problem-coach": {
+    "dna-profile.schema.json": {
+      "paths": ["basicInfo", "meta", "subjectExtensions.chemistry.subtypes", "subjectMap"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "wrong_answer_handover"],
+      "sender": ["xiaozhi-chemistry-problem-coach"],
+      "recipient": ["xiaozhi-correction-notebook", "xiaozhi-im-reminder"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "wrongAnswerSubject": ["chemistry"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"]
+    }
+  },
+  "xiaozhi-chinese-classical-revival": {
+    "dna-profile.schema.json": {
+      "paths": ["meta", "subjectExtensions.chinese.classicalProgress", "subjectExtensions.chinese.subtypes"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback"],
+      "sender": ["xiaozhi-chinese-classical-revival"],
+      "recipient": ["xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["chinese.classicalProgress", "chinese.subtypes"]
+    }
+  },
+  "xiaozhi-chinese-grammar-tracker": {
+    "dna-profile.schema.json": {
+      "paths": ["meta", "subjectExtensions.chinese.grammarErrorProfile", "subjectExtensions.chinese.subtypes"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback"],
+      "sender": ["xiaozhi-chinese-grammar-tracker"],
+      "recipient": ["xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "consent": ["crossSkillSharing", "parentSharingConsent", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["chinese.grammarErrorProfile", "chinese.subtypes"]
+    }
+  },
+  "xiaozhi-chinese-material-library": {
+    "dna-profile.schema.json": {
+      "paths": ["meta", "subjectExtensions.chinese.materialUsage"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["subject_profile_writeback"],
+      "sender": ["xiaozhi-chinese-material-library"],
+      "recipient": ["xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "consent": ["crossSkillSharing", "verifiedAt"],
+      "subjectExtensionPatch": ["chinese.materialUsage"]
+    }
+  },
+  "xiaozhi-chinese-reading-decoder": {
+    "dna-profile.schema.json": {
+      "paths": ["meta", "subjectExtensions.chinese.readingPits", "subjectExtensions.chinese.subtypes"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback"],
+      "sender": ["xiaozhi-chinese-reading-decoder"],
+      "recipient": ["xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["chinese.readingPits", "chinese.subtypes"]
+    }
+  },
+  "xiaozhi-chinese-writing-coach": {
+    "dna-profile.schema.json": {
+      "paths": ["meta", "subjectExtensions.chinese.grammarErrorProfile", "subjectExtensions.chinese.materialUsage", "subjectExtensions.chinese.subtypes", "subjectExtensions.chinese.writingStyle"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback"],
+      "sender": ["xiaozhi-chinese-writing-coach"],
+      "recipient": ["xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "consent": ["crossSkillSharing", "parentSharingConsent", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["chinese.grammarErrorProfile", "chinese.materialUsage", "chinese.subtypes", "chinese.writingStyle"]
+    }
+  },
+  "xiaozhi-cornell-notes": {
+    "dna-profile.schema.json": {
+      "paths": ["extensions.notes"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback"],
+      "sender": ["xiaozhi-cornell-notes"],
+      "recipient": ["xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["extension"],
+      "reminderType": ["spaced_review"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"],
+      "extensionPatch": ["notes"]
+    }
+  },
+  "xiaozhi-correction-notebook": {
+    "handover-protocol.schema.json": {
+      "paths": ["deep_analysis_writeback", "profile_writeback", "reminder_enqueue", "wrong_answer_handover"],
+      "sender": ["xiaozhi-correction-notebook"],
+      "recipient": ["xiaozhi-biology-error-dna", "xiaozhi-chemistry-error-dna", "xiaozhi-geography-map-reader", "xiaozhi-history-source-analyzer", "xiaozhi-im-reminder", "xiaozhi-learning-dna", "xiaozhi-math-error-dna", "xiaozhi-physics-error-dna"],
+      "updateTarget": ["weak_knowledge_points"],
+      "reminderType": ["error_review"],
+      "wrongAnswerSubject": ["biology", "chemistry", "chinese", "english", "geography", "history", "math", "other", "physics"],
+      "consent": ["crossSkillSharing", "parentSharingConsent", "reminderConsent", "verifiedAt"]
+    }
+  },
+  "xiaozhi-cross-subject-detective": {
+    "handover-protocol.schema.json": {
+      "paths": ["profile_writeback", "subject_profile_writeback"],
+      "sender": ["xiaozhi-cross-subject-detective"],
+      "recipient": ["xiaozhi-learning-dna"],
+      "updateTarget": ["concept_graph", "extension"],
+      "consent": ["crossSkillSharing", "verifiedAt"],
+      "extensionPatch": ["projects"]
+    }
+  },
+  "xiaozhi-feynman-learning": {
+    "dna-profile.schema.json": {
+      "paths": ["extensions.understanding"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback"],
+      "sender": ["xiaozhi-feynman-learning"],
+      "recipient": ["xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["extension"],
+      "reminderType": ["error_review"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"],
+      "extensionPatch": ["understanding"]
+    }
+  },
+  "xiaozhi-geography-causal-chain": {
+    "dna-profile.schema.json": {
+      "paths": ["basicInfo", "meta", "subjectExtensions.geography.principles", "subjectExtensions.geography.subtypes"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback", "wrong_answer_handover"],
+      "sender": ["xiaozhi-geography-causal-chain"],
+      "recipient": ["xiaozhi-correction-notebook", "xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "wrongAnswerSubject": ["geography"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["geography.principles", "geography.subtypes"]
+    }
+  },
+  "xiaozhi-geography-map-reader": {
+    "dna-profile.schema.json": {
+      "paths": ["basicInfo", "meta", "subjectExtensions.geography.mapSkills", "subjectExtensions.geography.subtypes"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["deep_analysis_writeback", "reminder_enqueue", "subject_profile_writeback", "wrong_answer_handover"],
+      "sender": ["xiaozhi-correction-notebook", "xiaozhi-geography-map-reader"],
+      "recipient": ["xiaozhi-correction-notebook", "xiaozhi-geography-map-reader", "xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "wrongAnswerSubject": ["geography"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["geography.mapSkills", "geography.subtypes"]
+    }
+  },
+  "xiaozhi-geography-region-builder": {
+    "dna-profile.schema.json": {
+      "paths": ["basicInfo", "meta", "subjectExtensions.geography.regions", "subjectExtensions.geography.subtypes"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback", "wrong_answer_handover"],
+      "sender": ["xiaozhi-geography-region-builder"],
+      "recipient": ["xiaozhi-correction-notebook", "xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "wrongAnswerSubject": ["geography"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["geography.regions", "geography.subtypes"]
+    }
+  },
+  "xiaozhi-history-essay-coach": {
+    "dna-profile.schema.json": {
+      "paths": ["basicInfo", "meta", "subjectExtensions.history.essaySkills", "subjectExtensions.history.subtypes"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback", "wrong_answer_handover"],
+      "sender": ["xiaozhi-history-essay-coach"],
+      "recipient": ["xiaozhi-correction-notebook", "xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "wrongAnswerSubject": ["history"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["history.essaySkills", "history.subtypes"]
+    }
+  },
+  "xiaozhi-history-source-analyzer": {
+    "dna-profile.schema.json": {
+      "paths": ["basicInfo", "meta", "subjectExtensions.history.subtypes"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["deep_analysis_writeback", "reminder_enqueue", "subject_profile_writeback", "wrong_answer_handover"],
+      "sender": ["xiaozhi-correction-notebook", "xiaozhi-history-source-analyzer"],
+      "recipient": ["xiaozhi-correction-notebook", "xiaozhi-history-source-analyzer", "xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "wrongAnswerSubject": ["history"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["history.subtypes"]
+    }
+  },
+  "xiaozhi-history-timeline-builder": {
+    "dna-profile.schema.json": {
+      "paths": ["basicInfo", "meta", "subjectExtensions.history.subtypes", "subjectExtensions.history.timeFrames"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback", "wrong_answer_handover"],
+      "sender": ["xiaozhi-history-timeline-builder"],
+      "recipient": ["xiaozhi-correction-notebook", "xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "wrongAnswerSubject": ["history"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["history.subtypes", "history.timeFrames"]
+    }
+  },
+  "xiaozhi-im-reminder": {
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "reminder_sync"],
+      "sender": ["xiaozhi-biology-chart-reader", "xiaozhi-biology-concept-network", "xiaozhi-biology-error-dna", "xiaozhi-biology-genetics-coach", "xiaozhi-biology-inquiry-coach", "xiaozhi-bridge-planner", "xiaozhi-chemistry-error-dna", "xiaozhi-chemistry-lab-coach", "xiaozhi-chemistry-micro-visualizer", "xiaozhi-chemistry-notation-coach", "xiaozhi-chemistry-problem-coach", "xiaozhi-chinese-classical-revival", "xiaozhi-chinese-grammar-tracker", "xiaozhi-chinese-material-library", "xiaozhi-chinese-reading-decoder", "xiaozhi-chinese-writing-coach", "xiaozhi-cornell-notes", "xiaozhi-correction-notebook", "xiaozhi-cross-subject-detective", "xiaozhi-english-grammar-coach", "xiaozhi-english-listening-trainer", "xiaozhi-english-speaking-coach", "xiaozhi-english-vocabulary-dna", "xiaozhi-english-writing-coach", "xiaozhi-feynman-learning", "xiaozhi-geography-causal-chain", "xiaozhi-geography-map-reader", "xiaozhi-geography-region-builder", "xiaozhi-history-essay-coach", "xiaozhi-history-source-analyzer", "xiaozhi-history-timeline-builder", "xiaozhi-interest-explorer", "xiaozhi-learning-dna", "xiaozhi-learning-plan", "xiaozhi-math-concept-explainer", "xiaozhi-math-error-dna", "xiaozhi-math-gradient-trainer", "xiaozhi-math-problem-solving-coach", "xiaozhi-math-word-problem-coach", "xiaozhi-openbook-coach", "xiaozhi-physics-concept-intuition", "xiaozhi-physics-error-dna", "xiaozhi-physics-lab-coach", "xiaozhi-physics-modeling-coach", "xiaozhi-physics-problem-coach", "xiaozhi-skill-coordinator", "xiaozhi-teach-assignment-designer", "xiaozhi-teach-bio-geo-review-planner", "xiaozhi-teach-biology-lesson-planner", "xiaozhi-teach-chemistry-lab-guide", "xiaozhi-teach-chemistry-lesson-planner", "xiaozhi-teach-chemistry-notation-drill", "xiaozhi-teach-chinese-classical-guide", "xiaozhi-teach-chinese-reading-guide", "xiaozhi-teach-chinese-writing-guide", "xiaozhi-teach-classroom-coach", "xiaozhi-teach-english-assessment", "xiaozhi-teach-english-listening-designer", "xiaozhi-teach-english-speaking-designer", "xiaozhi-teach-exam-designer", "xiaozhi-teach-geography-lesson-planner", "xiaozhi-teach-history-assessment-guide", "xiaozhi-teach-history-lesson-planner", "xiaozhi-teach-homework-tracker", "xiaozhi-teach-lesson-log", "xiaozhi-teach-lesson-planner", "xiaozhi-teach-math-error-analyzer", "xiaozhi-teach-math-exam-designer", "xiaozhi-teach-math-lesson-planner", "xiaozhi-teach-parent-communication", "xiaozhi-teach-physics-experiment-coach", "xiaozhi-teach-physics-lesson-planner", "xiaozhi-teach-physics-problem-guide", "xiaozhi-teach-renewal-report", "xiaozhi-teach-resource-library", "xiaozhi-teach-review-planner", "xiaozhi-teach-schedule-manager", "xiaozhi-teach-solo-dashboard", "xiaozhi-teach-student-analyzer", "xiaozhi-teach-student-intake", "xiaozhi-time-focus-coach", "xiaozhi-weekly-review"],
+      "recipient": ["xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"]
+    }
+  },
+  "xiaozhi-interest-explorer": {
+    "dna-profile.schema.json": {
+      "paths": ["interestDNA", "meta"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["profile_writeback", "reminder_enqueue"],
+      "sender": ["xiaozhi-interest-explorer"],
+      "recipient": ["xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["interest_dna"],
+      "reminderType": ["exploration_task"],
+      "consent": ["crossSkillSharing", "emotionSharingWithParent", "interestTrackingConsent", "parentSharingConsent", "reminderConsent", "verifiedAt"]
+    }
+  },
+  "xiaozhi-learning-dna": {
+    "handover-protocol.schema.json": {
+      "paths": ["profile_writeback", "subject_profile_writeback", "teacher_writeback"],
+      "sender": ["xiaozhi-biology-chart-reader", "xiaozhi-biology-concept-network", "xiaozhi-biology-error-dna", "xiaozhi-biology-genetics-coach", "xiaozhi-biology-inquiry-coach", "xiaozhi-bridge-planner", "xiaozhi-chemistry-error-dna", "xiaozhi-chemistry-lab-coach", "xiaozhi-chemistry-micro-visualizer", "xiaozhi-chemistry-notation-coach", "xiaozhi-chemistry-problem-coach", "xiaozhi-chinese-classical-revival", "xiaozhi-chinese-grammar-tracker", "xiaozhi-chinese-material-library", "xiaozhi-chinese-reading-decoder", "xiaozhi-chinese-writing-coach", "xiaozhi-cornell-notes", "xiaozhi-correction-notebook", "xiaozhi-cross-subject-detective", "xiaozhi-english-grammar-coach", "xiaozhi-english-listening-trainer", "xiaozhi-english-speaking-coach", "xiaozhi-english-vocabulary-dna", "xiaozhi-english-writing-coach", "xiaozhi-feynman-learning", "xiaozhi-geography-causal-chain", "xiaozhi-geography-map-reader", "xiaozhi-geography-region-builder", "xiaozhi-history-essay-coach", "xiaozhi-history-source-analyzer", "xiaozhi-history-timeline-builder", "xiaozhi-im-reminder", "xiaozhi-interest-explorer", "xiaozhi-learning-plan", "xiaozhi-math-concept-explainer", "xiaozhi-math-error-dna", "xiaozhi-math-gradient-trainer", "xiaozhi-math-problem-solving-coach", "xiaozhi-math-word-problem-coach", "xiaozhi-openbook-coach", "xiaozhi-physics-concept-intuition", "xiaozhi-physics-error-dna", "xiaozhi-physics-lab-coach", "xiaozhi-physics-modeling-coach", "xiaozhi-physics-problem-coach", "xiaozhi-skill-coordinator", "xiaozhi-teach-assignment-designer", "xiaozhi-teach-bio-geo-review-planner", "xiaozhi-teach-biology-lesson-planner", "xiaozhi-teach-chemistry-lab-guide", "xiaozhi-teach-chemistry-lesson-planner", "xiaozhi-teach-chemistry-notation-drill", "xiaozhi-teach-chinese-classical-guide", "xiaozhi-teach-chinese-reading-guide", "xiaozhi-teach-chinese-writing-guide", "xiaozhi-teach-classroom-coach", "xiaozhi-teach-english-assessment", "xiaozhi-teach-english-listening-designer", "xiaozhi-teach-english-speaking-designer", "xiaozhi-teach-exam-designer", "xiaozhi-teach-geography-lesson-planner", "xiaozhi-teach-history-assessment-guide", "xiaozhi-teach-history-lesson-planner", "xiaozhi-teach-homework-tracker", "xiaozhi-teach-lesson-log", "xiaozhi-teach-lesson-planner", "xiaozhi-teach-math-error-analyzer", "xiaozhi-teach-math-exam-designer", "xiaozhi-teach-math-lesson-planner", "xiaozhi-teach-parent-communication", "xiaozhi-teach-physics-experiment-coach", "xiaozhi-teach-physics-lesson-planner", "xiaozhi-teach-physics-problem-guide", "xiaozhi-teach-renewal-report", "xiaozhi-teach-resource-library", "xiaozhi-teach-review-planner", "xiaozhi-teach-schedule-manager", "xiaozhi-teach-solo-dashboard", "xiaozhi-teach-student-analyzer", "xiaozhi-teach-student-intake", "xiaozhi-time-focus-coach", "xiaozhi-weekly-review"],
+      "recipient": ["xiaozhi-learning-dna"],
+      "updateTarget": ["concept_graph", "emotion_dimension", "extension", "growth_milestones", "interest_dna", "subject_extension", "weak_knowledge_points"],
+      "consent": ["crossSkillSharing", "emotionSharingWithParent", "emotionTrackingConsent", "interestTrackingConsent", "parentSharingConsent", "teacherWritebackConsent", "verifiedAt"],
+      "extensionPatch": ["focus", "notes", "plans", "projects", "understanding"]
+    }
+  },
+  "xiaozhi-learning-plan": {
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback"],
+      "sender": ["xiaozhi-learning-plan"],
+      "recipient": ["xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["extension"],
+      "reminderType": ["exam_day", "scheduled_task", "weekly_review"],
+      "consent": ["crossSkillSharing", "emotionSharingWithParent", "parentSharingConsent", "reminderConsent", "verifiedAt"],
+      "extensionPatch": ["plans"]
+    }
+  },
+  "xiaozhi-math-gradient-trainer": {
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback"],
+      "sender": ["xiaozhi-math-gradient-trainer"],
+      "recipient": ["xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["error_review"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["math.gradientLevel", "math.subtypes", "math.trainingLog"]
+    }
+  },
+  "xiaozhi-math-problem-solving-coach": {
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "wrong_answer_handover"],
+      "sender": ["xiaozhi-math-problem-solving-coach"],
+      "recipient": ["xiaozhi-correction-notebook", "xiaozhi-im-reminder"],
+      "reminderType": ["exam_day"],
+      "wrongAnswerSubject": ["math"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"]
+    }
+  },
+  "xiaozhi-physics-error-dna": {
+    "dna-profile.schema.json": {
+      "paths": ["basicInfo", "meta", "subjectExtensions.physics"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["deep_analysis_writeback", "reminder_enqueue", "subject_profile_writeback", "wrong_answer_handover"],
+      "sender": ["xiaozhi-correction-notebook", "xiaozhi-physics-error-dna"],
+      "recipient": ["xiaozhi-correction-notebook", "xiaozhi-im-reminder", "xiaozhi-learning-dna", "xiaozhi-physics-error-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "wrongAnswerSubject": ["physics"],
+      "consent": ["crossSkillSharing", "emotionSharingWithParent", "parentSharingConsent", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["physics.labSkills", "physics.modelingProfile", "physics.subtypes"]
+    }
+  },
+  "xiaozhi-physics-modeling-coach": {
+    "dna-profile.schema.json": {
+      "paths": ["basicInfo", "meta", "subjectExtensions.physics.modelingProfile", "subjectExtensions.physics.subtypes"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback"],
+      "sender": ["xiaozhi-physics-modeling-coach"],
+      "recipient": ["xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["subject_extension"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"],
+      "subjectExtensionPatch": ["physics.modelingProfile", "physics.subtypes"]
+    }
+  },
+  "xiaozhi-physics-problem-coach": {
+    "dna-profile.schema.json": {
+      "paths": ["basicInfo", "interestDNA", "meta", "safetyRecord", "subjectExtensions.physics.subtypes", "subjectMap"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "wrong_answer_handover"],
+      "sender": ["xiaozhi-physics-problem-coach"],
+      "recipient": ["xiaozhi-correction-notebook", "xiaozhi-im-reminder"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "wrongAnswerSubject": ["physics"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"]
+    }
+  },
+  "xiaozhi-skill-creator": {
+    "dna-profile.schema.json": {
+      "paths": []
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue"],
+      "sender": ["xiaozhi-biology-chart-reader", "xiaozhi-biology-concept-network", "xiaozhi-biology-error-dna", "xiaozhi-biology-genetics-coach", "xiaozhi-biology-inquiry-coach", "xiaozhi-bridge-planner", "xiaozhi-chemistry-error-dna", "xiaozhi-chemistry-lab-coach", "xiaozhi-chemistry-micro-visualizer", "xiaozhi-chemistry-notation-coach", "xiaozhi-chemistry-problem-coach", "xiaozhi-chinese-classical-revival", "xiaozhi-chinese-grammar-tracker", "xiaozhi-chinese-material-library", "xiaozhi-chinese-reading-decoder", "xiaozhi-chinese-writing-coach", "xiaozhi-cornell-notes", "xiaozhi-correction-notebook", "xiaozhi-cross-subject-detective", "xiaozhi-english-grammar-coach", "xiaozhi-english-listening-trainer", "xiaozhi-english-speaking-coach", "xiaozhi-english-vocabulary-dna", "xiaozhi-english-writing-coach", "xiaozhi-feynman-learning", "xiaozhi-geography-causal-chain", "xiaozhi-geography-map-reader", "xiaozhi-geography-region-builder", "xiaozhi-history-essay-coach", "xiaozhi-history-source-analyzer", "xiaozhi-history-timeline-builder", "xiaozhi-im-reminder", "xiaozhi-interest-explorer", "xiaozhi-learning-dna", "xiaozhi-learning-plan", "xiaozhi-math-concept-explainer", "xiaozhi-math-error-dna", "xiaozhi-math-gradient-trainer", "xiaozhi-math-problem-solving-coach", "xiaozhi-math-word-problem-coach", "xiaozhi-openbook-coach", "xiaozhi-physics-concept-intuition", "xiaozhi-physics-error-dna", "xiaozhi-physics-lab-coach", "xiaozhi-physics-modeling-coach", "xiaozhi-physics-problem-coach", "xiaozhi-skill-coordinator", "xiaozhi-teach-assignment-designer", "xiaozhi-teach-bio-geo-review-planner", "xiaozhi-teach-biology-lesson-planner", "xiaozhi-teach-chemistry-lab-guide", "xiaozhi-teach-chemistry-lesson-planner", "xiaozhi-teach-chemistry-notation-drill", "xiaozhi-teach-chinese-classical-guide", "xiaozhi-teach-chinese-reading-guide", "xiaozhi-teach-chinese-writing-guide", "xiaozhi-teach-classroom-coach", "xiaozhi-teach-english-assessment", "xiaozhi-teach-english-listening-designer", "xiaozhi-teach-english-speaking-designer", "xiaozhi-teach-exam-designer", "xiaozhi-teach-geography-lesson-planner", "xiaozhi-teach-history-assessment-guide", "xiaozhi-teach-history-lesson-planner", "xiaozhi-teach-homework-tracker", "xiaozhi-teach-lesson-log", "xiaozhi-teach-lesson-planner", "xiaozhi-teach-math-error-analyzer", "xiaozhi-teach-math-exam-designer", "xiaozhi-teach-math-lesson-planner", "xiaozhi-teach-parent-communication", "xiaozhi-teach-physics-experiment-coach", "xiaozhi-teach-physics-lesson-planner", "xiaozhi-teach-physics-problem-guide", "xiaozhi-teach-renewal-report", "xiaozhi-teach-resource-library", "xiaozhi-teach-review-planner", "xiaozhi-teach-schedule-manager", "xiaozhi-teach-solo-dashboard", "xiaozhi-teach-student-analyzer", "xiaozhi-teach-student-intake", "xiaozhi-time-focus-coach", "xiaozhi-weekly-review"],
+      "recipient": ["xiaozhi-im-reminder"],
+      "reminderType": ["daily_confirmation", "error_review", "exam_day", "exploration_task", "scheduled_task", "spaced_review", "vocab_daily_card", "weekly_review"],
+      "consent": ["crossSkillSharing", "emotionSharingWithParent", "parentSharingConsent", "reminderConsent", "verifiedAt"]
+    }
+  },
+  "xiaozhi-teach-assignment-designer": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "examBlueprints", "homeworkAssignments", "lessonPlans", "reviewPlans", "studentTiers", "weaknessRank"]
+    }
+  },
+  "xiaozhi-teach-bio-geo-review-planner": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "lessonPlans", "reviewPlans", "weaknessRank"],
+      "reads": ["classProfile", "lessonPlans", "reviewPlans", "weaknessRank"],
+      "writes": ["reviewPlans"],
+      "fields": {
+        "classProfile": {
+          "reads": ["gradeBand", "gradeLevel", "periodMinutes", "subject"]
+        },
+        "reviewPlans": {
+          "writes": ["endDate", "interleavingSets", "phases", "reviewId", "sourceWeaknessIds", "spacingSchedule", "startDate", "targetExamId"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-biology-lesson-planner": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "examBlueprints", "interactionLogs", "itemStats", "lessonPlans", "reviewPlans", "studentTiers", "weaknessRank"],
+      "reads": ["classProfile", "examBlueprints", "interactionLogs", "itemStats", "reviewPlans", "studentTiers", "weaknessRank"],
+      "writes": ["lessonPlans"],
+      "fields": {
+        "classProfile": {
+          "reads": ["classSize", "gradeBand", "gradeLevel", "periodMinutes", "textbookVersion"]
+        },
+        "examBlueprints": {
+          "reads": ["examId", "items", "title"]
+        },
+        "interactionLogs": {
+          "reads": ["adjustmentForNext", "misconceptionsObserved", "segmentTimings"]
+        },
+        "itemStats": {
+          "reads": ["examId", "flag", "itemNo", "pValue"]
+        },
+        "lessonPlans": {
+          "writes": ["boardPlan", "date", "objectives", "periodMinutes", "planId", "planType", "questionChain", "segments", "sourceWeaknessIds", "topic"]
+        },
+        "reviewPlans": {
+          "reads": ["phases", "spacingSchedule"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-chemistry-lab-guide": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "homeworkAssignments", "interactionLogs", "lessonPlans", "studentTiers"],
+      "reads": ["classProfile", "interactionLogs", "lessonPlans", "studentTiers"],
+      "writes": ["homeworkAssignments", "lessonPlans"],
+      "fields": {
+        "classProfile": {
+          "reads": ["classSize", "gradeLevel", "periodMinutes"]
+        },
+        "homeworkAssignments": {
+          "writes": ["tasks"]
+        },
+        "interactionLogs": {
+          "reads": ["adjustmentForNext", "misconceptionsObserved", "segmentTimings"]
+        },
+        "lessonPlans": {
+          "reads": ["objectives", "segments", "topic"],
+          "writes": ["questionChain", "segments"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-chemistry-lesson-planner": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "examBlueprints", "interactionLogs", "itemStats", "lessonPlans", "reviewPlans", "studentTiers", "weaknessRank"],
+      "reads": ["classProfile", "examBlueprints", "interactionLogs", "itemStats", "reviewPlans", "studentTiers", "weaknessRank"],
+      "writes": ["lessonPlans"],
+      "fields": {
+        "classProfile": {
+          "reads": ["classSize", "gradeBand", "gradeLevel", "periodMinutes", "textbookVersion"]
+        },
+        "examBlueprints": {
+          "reads": ["examId", "items", "title"]
+        },
+        "interactionLogs": {
+          "reads": ["adjustmentForNext", "misconceptionsObserved", "segmentTimings"]
+        },
+        "itemStats": {
+          "reads": ["examId", "flag", "itemNo", "pValue"]
+        },
+        "lessonPlans": {
+          "writes": ["boardPlan", "date", "objectives", "periodMinutes", "planId", "planType", "questionChain", "segments", "sourceWeaknessIds", "topic"]
+        },
+        "reviewPlans": {
+          "reads": ["phases", "spacingSchedule"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-chemistry-notation-drill": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "homeworkAssignments", "reviewPlans", "studentTiers", "weaknessRank"],
+      "reads": ["classProfile", "reviewPlans", "studentTiers", "weaknessRank"],
+      "writes": ["homeworkAssignments"],
+      "fields": {
+        "homeworkAssignments": {
+          "writes": ["completionSummary", "purpose", "tasks"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-chinese-classical-guide": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "homeworkAssignments", "interactionLogs", "lessonPlans", "studentTiers", "weaknessRank"],
+      "reads": ["classProfile", "studentTiers", "weaknessRank"],
+      "writes": ["homeworkAssignments", "interactionLogs", "lessonPlans", "weaknessRank"],
+      "fields": {
+        "classProfile": {
+          "reads": ["gradeBand", "gradeLevel", "periodMinutes", "textbookVersion"]
+        },
+        "homeworkAssignments": {
+          "writes": ["purpose"]
+        },
+        "interactionLogs": {
+          "writes": ["misconceptionsObserved"]
+        },
+        "lessonPlans": {
+          "writes": ["boardPlan", "objectives", "questionChain", "segments", "sourceWeaknessIds"]
+        },
+        "weaknessRank": {
+          "reads": ["dimension", "errorRate", "knowledgePoint", "stubbornCount"],
+          "writes": ["dimension", "errorRate", "evidenceExamIds", "knowledgePoint", "lastUpdated", "weaknessId"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-chinese-reading-guide": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "homeworkAssignments", "interactionLogs", "itemStats", "lessonPlans", "studentTiers", "weaknessRank"],
+      "reads": ["classProfile", "itemStats", "studentTiers", "weaknessRank"],
+      "writes": ["homeworkAssignments", "interactionLogs", "lessonPlans", "weaknessRank"],
+      "fields": {
+        "classProfile": {
+          "reads": ["gradeBand", "gradeLevel", "periodMinutes", "textbookVersion"]
+        },
+        "homeworkAssignments": {
+          "writes": ["purpose"]
+        },
+        "interactionLogs": {
+          "writes": ["misconceptionsObserved"]
+        },
+        "itemStats": {
+          "reads": ["dValue", "pValue"]
+        },
+        "lessonPlans": {
+          "writes": ["objectives", "questionChain", "segments", "sourceWeaknessIds"]
+        },
+        "weaknessRank": {
+          "reads": ["dimension", "errorRate", "knowledgePoint", "stubbornCount"],
+          "writes": ["dimension", "errorRate", "evidenceExamIds", "knowledgePoint", "lastUpdated", "weaknessId"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-chinese-writing-guide": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "homeworkAssignments", "interactionLogs", "lessonPlans", "studentTiers", "weaknessRank"],
+      "reads": ["classProfile", "studentTiers", "weaknessRank"],
+      "writes": ["homeworkAssignments", "interactionLogs", "lessonPlans", "weaknessRank"],
+      "fields": {
+        "classProfile": {
+          "reads": ["fullScore", "gradeBand", "gradeLevel", "periodMinutes"]
+        },
+        "homeworkAssignments": {
+          "writes": ["purpose"]
+        },
+        "interactionLogs": {
+          "writes": ["misconceptionsObserved"]
+        },
+        "lessonPlans": {
+          "writes": ["objectives", "questionChain", "segments", "sourceWeaknessIds"]
+        },
+        "weaknessRank": {
+          "reads": ["dimension", "errorRate", "knowledgePoint", "stubbornCount"],
+          "writes": ["dimension", "errorRate", "evidenceExamIds", "knowledgePoint", "lastUpdated", "weaknessId"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-classroom-coach": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "interactionLogs", "lessonPlans", "studentTiers", "weaknessRank"]
+    }
+  },
+  "xiaozhi-teach-english-assessment": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "classSummaries", "examBlueprints", "itemScores", "itemStats", "reviewPlans", "weaknessRank"],
+      "reads": ["classProfile", "classSummaries", "itemScores", "itemStats", "reviewPlans", "weaknessRank"],
+      "writes": ["examBlueprints", "reviewPlans", "weaknessRank"],
+      "fields": {
+        "weaknessRank": {
+          "writes": ["dimension", "errorRate", "evidenceExamIds", "knowledgePoint", "lastUpdated", "weaknessId"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-english-listening-designer": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "examBlueprints", "itemScores", "itemStats", "lessonPlans", "reviewPlans", "weaknessRank"],
+      "reads": ["classProfile", "itemScores", "itemStats", "lessonPlans", "reviewPlans", "weaknessRank"],
+      "writes": ["examBlueprints", "lessonPlans", "reviewPlans", "weaknessRank"],
+      "fields": {
+        "examBlueprints": {
+          "writes": ["items"]
+        },
+        "lessonPlans": {
+          "reads": ["segments"],
+          "writes": ["segments"]
+        },
+        "weaknessRank": {
+          "writes": ["dimension", "errorRate", "evidenceExamIds", "knowledgePoint", "lastUpdated", "weaknessId"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-english-speaking-designer": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "examBlueprints", "interactionLogs", "itemScores", "lessonPlans", "studentTiers", "weaknessRank"],
+      "reads": ["classProfile", "interactionLogs", "itemScores", "lessonPlans", "studentTiers"],
+      "writes": ["examBlueprints", "interactionLogs", "lessonPlans", "weaknessRank"],
+      "fields": {
+        "examBlueprints": {
+          "writes": ["items"]
+        },
+        "interactionLogs": {
+          "writes": ["participationNote"]
+        },
+        "lessonPlans": {
+          "reads": ["segments"],
+          "writes": ["segments"]
+        },
+        "weaknessRank": {
+          "writes": ["dimension", "errorRate", "evidenceExamIds", "knowledgePoint", "lastUpdated", "weaknessId"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-exam-designer": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "classSummaries", "examBlueprints", "itemStats", "lessonPlans", "reviewPlans", "weaknessRank"]
+    }
+  },
+  "xiaozhi-teach-geography-lesson-planner": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "examBlueprints", "interactionLogs", "itemStats", "lessonPlans", "reviewPlans", "studentTiers", "weaknessRank"],
+      "reads": ["classProfile", "examBlueprints", "interactionLogs", "itemStats", "reviewPlans", "studentTiers", "weaknessRank"],
+      "writes": ["lessonPlans"],
+      "fields": {
+        "classProfile": {
+          "reads": ["classSize", "gradeBand", "gradeLevel", "periodMinutes", "textbookVersion"]
+        },
+        "examBlueprints": {
+          "reads": ["examId", "items", "title"]
+        },
+        "interactionLogs": {
+          "reads": ["adjustmentForNext", "misconceptionsObserved", "segmentTimings"]
+        },
+        "itemStats": {
+          "reads": ["examId", "flag", "itemNo", "pValue"]
+        },
+        "lessonPlans": {
+          "writes": ["boardPlan", "date", "objectives", "periodMinutes", "planId", "planType", "questionChain", "segments", "sourceWeaknessIds", "topic"]
+        },
+        "reviewPlans": {
+          "reads": ["phases", "spacingSchedule"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-history-assessment-guide": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "examBlueprints", "lessonPlans", "weaknessRank"],
+      "reads": ["classProfile", "lessonPlans", "weaknessRank"],
+      "writes": ["examBlueprints"],
+      "fields": {
+        "examBlueprints": {
+          "writes": ["assessmentType", "durationMinutes", "examId", "fullScore", "items", "title"]
+        },
+        "lessonPlans": {
+          "reads": ["objectives", "topic"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-history-lesson-planner": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "examBlueprints", "interactionLogs", "itemStats", "lessonPlans", "reviewPlans", "studentTiers", "weaknessRank"],
+      "reads": ["classProfile", "examBlueprints", "interactionLogs", "itemStats", "reviewPlans", "studentTiers", "weaknessRank"],
+      "writes": ["lessonPlans"],
+      "fields": {
+        "classProfile": {
+          "reads": ["classSize", "gradeBand", "gradeLevel", "periodMinutes", "textbookVersion"]
+        },
+        "examBlueprints": {
+          "reads": ["examId", "items", "title"]
+        },
+        "interactionLogs": {
+          "reads": ["adjustmentForNext", "misconceptionsObserved", "segmentTimings"]
+        },
+        "itemStats": {
+          "reads": ["examId", "flag", "itemNo", "pValue"]
+        },
+        "lessonPlans": {
+          "writes": ["boardPlan", "date", "objectives", "periodMinutes", "planId", "planType", "questionChain", "segments", "sourceWeaknessIds", "topic"]
+        },
+        "reviewPlans": {
+          "reads": ["phases", "spacingSchedule"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-homework-tracker": {
+    "solo-teacher-workspace.schema.json": {
+      "paths": ["homeworkFollowups", "lessonLogs", "progressEvidence", "studentCards"],
+      "reads": ["homeworkFollowups", "lessonLogs", "studentCards"],
+      "writes": ["homeworkFollowups", "progressEvidence", "studentCards"],
+      "fields": {
+        "homeworkFollowups": {
+          "reads": ["dueDate", "mainErrors", "overdueDays", "status", "task"],
+          "writes": ["dueDate", "mainErrors", "nextAction", "overdueDays", "status", "task"]
+        },
+        "lessonLogs": {
+          "reads": ["date", "nextLessonFocus"]
+        },
+        "progressEvidence": {
+          "writes": ["confidenceLevel", "date", "description", "evidenceType"]
+        },
+        "studentCards": {
+          "reads": ["goals", "gradeBand", "gradeLevel", "primaryWeaknesses", "status"],
+          "writes": ["primaryWeaknesses"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-lesson-log": {
+    "solo-teacher-workspace.schema.json": {
+      "paths": ["coursePackageLedger", "lessonLogs", "lessonSchedule", "progressEvidence", "studentCards"],
+      "reads": ["lessonLogs", "lessonSchedule", "studentCards"],
+      "writes": ["coursePackageLedger", "lessonLogs", "progressEvidence"],
+      "fields": {
+        "coursePackageLedger": {
+          "writes": ["pendingConfirmations"]
+        },
+        "lessonLogs": {
+          "reads": ["date", "nextLessonFocus"],
+          "writes": ["completedContent", "consumeLessonUnits", "date", "evidence", "masteryStatus", "nextLessonFocus", "parentSummary", "perTopicMastery", "studentReaction"]
+        },
+        "lessonSchedule": {
+          "reads": ["durationMinutes", "lessonGoal", "status"]
+        },
+        "studentCards": {
+          "reads": ["consent", "goals", "gradeBand", "gradeLevel", "primaryWeaknesses", "status"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-lesson-planner": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "classSummaries", "examBlueprints", "interactionLogs", "lessonPlans", "reviewPlans", "studentTiers", "weaknessRank"]
+    }
+  },
+  "xiaozhi-teach-math-error-analyzer": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "examBlueprints", "homeworkAssignments", "interactionLogs", "itemScores", "itemStats", "studentWeaknesses", "weaknessRank"],
+      "reads": ["classProfile", "examBlueprints", "homeworkAssignments", "itemScores", "itemStats", "studentWeaknesses", "weaknessRank"],
+      "writes": ["homeworkAssignments", "interactionLogs", "weaknessRank"],
+      "fields": {
+        "classProfile": {
+          "reads": ["classSize", "fullScore", "gradeBand"]
+        },
+        "examBlueprints": {
+          "reads": ["items"]
+        },
+        "homeworkAssignments": {
+          "reads": ["completionSummary"],
+          "writes": ["completionSummary"]
+        },
+        "interactionLogs": {
+          "writes": ["misconceptionsObserved"]
+        },
+        "itemScores": {
+          "reads": ["examId", "itemNo", "maxScore", "score", "studentAlias"]
+        },
+        "itemStats": {
+          "reads": ["dValue", "flag", "groupingMethod", "pValue"]
+        },
+        "studentWeaknesses": {
+          "reads": ["dimension", "hitCount", "knowledgePoint", "studentAlias"]
+        },
+        "weaknessRank": {
+          "reads": ["dimension", "knowledgePoint", "stubbornCount"],
+          "writes": ["dimension", "errorRate", "evidenceExamIds", "knowledgePoint", "lastUpdated", "weaknessId"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-math-exam-designer": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "classSummaries", "examBlueprints", "itemStats", "lessonPlans", "studentTiers", "weaknessRank"],
+      "reads": ["classProfile", "lessonPlans", "studentTiers", "weaknessRank"],
+      "writes": ["classSummaries", "examBlueprints", "itemStats"],
+      "fields": {
+        "classProfile": {
+          "reads": ["classSize", "fullScore", "gradeBand", "gradeLevel"]
+        },
+        "classSummaries": {
+          "writes": ["analysisDate", "distribution", "mean", "meanRate", "median", "overallDifficulty", "reliabilityAlpha", "sampleSize", "sd"]
+        },
+        "examBlueprints": {
+          "writes": ["assessmentType", "date", "difficultyRatio", "durationMinutes", "examId", "fullScore", "items", "title"]
+        },
+        "itemStats": {
+          "writes": ["dValue", "examId", "flag", "groupingMethod", "itemNo", "pValue"]
+        },
+        "lessonPlans": {
+          "reads": ["objectives", "topic"]
+        },
+        "studentTiers": {
+          "reads": ["tier"]
+        },
+        "weaknessRank": {
+          "reads": ["knowledgePoint"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-math-lesson-planner": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "examBlueprints", "interactionLogs", "itemStats", "lessonPlans", "reviewPlans", "studentTiers", "weaknessRank"],
+      "reads": ["classProfile", "examBlueprints", "itemStats", "reviewPlans", "studentTiers", "weaknessRank"],
+      "writes": ["interactionLogs", "lessonPlans"],
+      "fields": {
+        "classProfile": {
+          "reads": ["gradeBand", "gradeLevel", "periodMinutes", "textbookVersion"]
+        },
+        "examBlueprints": {
+          "reads": ["examId", "items", "title"]
+        },
+        "interactionLogs": {
+          "writes": ["adjustmentForNext", "misconceptionsObserved", "questionEffectNote"]
+        },
+        "itemStats": {
+          "reads": ["examId", "flag", "itemNo", "pValue"]
+        },
+        "lessonPlans": {
+          "writes": ["boardPlan", "date", "objectives", "periodMinutes", "planId", "planType", "questionChain", "segments", "sourceWeaknessIds", "topic"]
+        },
+        "reviewPlans": {
+          "reads": ["phases", "spacingSchedule"]
+        },
+        "studentTiers": {
+          "reads": ["studentAlias", "tier"]
+        },
+        "weaknessRank": {
+          "reads": ["dimension", "errorRate", "knowledgePoint", "weaknessId"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-parent-communication": {
+    "solo-teacher-workspace.schema.json": {
+      "paths": ["coursePackageLedger", "homeworkFollowups", "lessonLogs", "parentCommunicationLogs", "progressEvidence", "studentCards"],
+      "reads": ["coursePackageLedger", "homeworkFollowups", "lessonLogs", "progressEvidence", "studentCards"],
+      "writes": ["parentCommunicationLogs"],
+      "fields": {
+        "coursePackageLedger": {
+          "reads": ["expiryDate", "pendingConfirmations", "remainingUnits", "renewalAttention", "usedUnits"]
+        },
+        "homeworkFollowups": {
+          "reads": ["mainErrors", "nextAction", "overdueDays", "status", "task"]
+        },
+        "lessonLogs": {
+          "reads": ["completedContent", "date", "evidence", "masteryStatus", "parentSummary", "perTopicMastery", "studentReaction"]
+        },
+        "parentCommunicationLogs": {
+          "writes": ["actionSuggestion", "channel", "date", "factSummary", "scenario", "sentStatus"]
+        },
+        "progressEvidence": {
+          "reads": ["confidenceLevel", "description"]
+        },
+        "studentCards": {
+          "reads": ["alias", "consent", "gradeBand", "guardianCommunicationPreference", "status"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-physics-experiment-coach": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "homeworkAssignments", "interactionLogs", "lessonPlans", "studentTiers", "weaknessRank"],
+      "reads": ["classProfile", "interactionLogs", "lessonPlans", "studentTiers", "weaknessRank"],
+      "writes": ["homeworkAssignments", "lessonPlans", "weaknessRank"],
+      "fields": {
+        "classProfile": {
+          "reads": ["classSize", "gradeLevel", "periodMinutes", "textbookVersion"]
+        },
+        "homeworkAssignments": {
+          "writes": ["tasks"]
+        },
+        "interactionLogs": {
+          "reads": ["adjustmentForNext", "misconceptionsObserved", "segmentTimings"]
+        },
+        "lessonPlans": {
+          "reads": ["objectives", "segments", "topic"],
+          "writes": ["questionChain", "segments"]
+        },
+        "weaknessRank": {
+          "writes": ["dimension", "errorRate", "evidenceExamIds", "knowledgePoint", "lastUpdated", "weaknessId"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-physics-lesson-planner": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "examBlueprints", "interactionLogs", "itemStats", "lessonPlans", "reviewPlans", "studentTiers", "weaknessRank"],
+      "reads": ["classProfile", "examBlueprints", "interactionLogs", "itemStats", "reviewPlans", "studentTiers", "weaknessRank"],
+      "writes": ["lessonPlans"],
+      "fields": {
+        "classProfile": {
+          "reads": ["classSize", "gradeBand", "gradeLevel", "periodMinutes", "textbookVersion"]
+        },
+        "examBlueprints": {
+          "reads": ["examId", "items", "title"]
+        },
+        "interactionLogs": {
+          "reads": ["adjustmentForNext", "misconceptionsObserved", "segmentTimings"]
+        },
+        "itemStats": {
+          "reads": ["examId", "flag", "itemNo", "pValue"]
+        },
+        "lessonPlans": {
+          "writes": ["boardPlan", "date", "objectives", "periodMinutes", "planId", "planType", "questionChain", "segments", "sourceWeaknessIds", "topic"]
+        },
+        "reviewPlans": {
+          "reads": ["phases", "spacingSchedule"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-physics-problem-guide": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "homeworkAssignments", "itemStats", "lessonPlans", "studentTiers", "weaknessRank"],
+      "reads": ["classProfile", "itemStats", "lessonPlans", "studentTiers", "weaknessRank"],
+      "writes": ["homeworkAssignments", "lessonPlans", "weaknessRank"],
+      "fields": {
+        "homeworkAssignments": {
+          "writes": ["tasks"]
+        },
+        "itemStats": {
+          "reads": ["dValue", "pValue"]
+        },
+        "lessonPlans": {
+          "reads": ["objectives", "topic"],
+          "writes": ["questionChain", "segments"]
+        },
+        "weaknessRank": {
+          "reads": ["dimension", "errorRate", "knowledgePoint", "stubbornCount"],
+          "writes": ["dimension", "errorRate", "evidenceExamIds", "knowledgePoint", "lastUpdated", "weaknessId"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-renewal-report": {
+    "solo-teacher-workspace.schema.json": {
+      "paths": ["coursePackageLedger", "homeworkFollowups", "lessonLogs", "parentCommunicationLogs", "progressEvidence", "studentCards"],
+      "reads": ["coursePackageLedger", "homeworkFollowups", "lessonLogs", "parentCommunicationLogs", "progressEvidence", "studentCards"],
+      "writes": ["progressEvidence"],
+      "fields": {
+        "coursePackageLedger": {
+          "reads": ["expiryDate", "pendingConfirmations", "remainingUnits", "startDate", "totalUnits", "usedUnits"]
+        },
+        "homeworkFollowups": {
+          "reads": ["mainErrors", "overdueDays", "status", "task"]
+        },
+        "lessonLogs": {
+          "reads": ["completedContent", "date", "masteryStatus", "nextLessonFocus", "perTopicMastery", "studentReaction"]
+        },
+        "parentCommunicationLogs": {
+          "reads": ["date", "factSummary"]
+        },
+        "progressEvidence": {
+          "reads": ["confidenceLevel", "date", "description"],
+          "writes": ["confidenceLevel", "date", "description", "evidenceId", "evidenceType", "studentId"]
+        },
+        "studentCards": {
+          "reads": ["alias", "consent", "goals", "gradeBand", "primaryWeaknesses"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-resource-library": {
+    "solo-teacher-workspace.schema.json": {
+      "paths": ["homeworkFollowups", "lessonLogs", "resourceLibraryIndex", "studentCards"],
+      "reads": ["homeworkFollowups", "lessonLogs", "studentCards"],
+      "writes": ["resourceLibraryIndex"],
+      "fields": {
+        "homeworkFollowups": {
+          "reads": ["mainErrors"]
+        },
+        "lessonLogs": {
+          "reads": ["completedContent", "nextLessonFocus"]
+        },
+        "resourceLibraryIndex": {
+          "writes": ["aiGenerated", "copyrightStatus", "difficulty", "gradeLevel", "knowledgePoint", "resourceId", "resourceType", "subject", "title", "usageNotes", "verifiedByTeacher"]
+        },
+        "studentCards": {
+          "reads": ["alias", "goals", "gradeBand", "gradeLevel", "primaryWeaknesses", "subjects"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-review-planner": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "classSummaries", "examBlueprints", "homeworkAssignments", "itemStats", "lessonPlans", "reviewPlans", "weaknessRank"]
+    }
+  },
+  "xiaozhi-teach-schedule-manager": {
+    "solo-teacher-workspace.schema.json": {
+      "paths": ["coursePackageLedger", "lessonLogs", "lessonSchedule", "studentCards", "teacherProfile"],
+      "reads": ["coursePackageLedger", "lessonLogs", "studentCards", "teacherProfile"],
+      "writes": ["coursePackageLedger", "lessonSchedule"],
+      "fields": {
+        "coursePackageLedger": {
+          "reads": ["expiryDate", "pendingConfirmations", "remainingUnits", "startDate", "totalUnits", "usedUnits"],
+          "writes": ["expiryDate", "renewalAttention", "startDate", "totalUnits"]
+        },
+        "lessonLogs": {
+          "reads": ["consumeLessonUnits"]
+        },
+        "lessonSchedule": {
+          "writes": ["day_of_week", "durationMinutes", "lessonGoal", "lessonId", "startTime", "status", "studentId", "subject"]
+        },
+        "studentCards": {
+          "reads": ["alias", "availability", "gradeBand", "status"]
+        },
+        "teacherProfile": {
+          "reads": ["deliveryChannels", "serviceModes"]
+        }
+      }
+    }
+  },
+  "xiaozhi-teach-solo-dashboard": {
+    "solo-teacher-workspace.schema.json": {
+      "paths": ["coursePackageLedger", "homeworkFollowups", "lessonLogs", "lessonSchedule", "parentCommunicationLogs", "progressEvidence", "resourceLibraryIndex", "studentCards"]
+    }
+  },
+  "xiaozhi-teach-student-analyzer": {
+    "class-teaching-workspace.schema.json": {
+      "paths": ["classProfile", "classSummaries", "examBlueprints", "homeworkAssignments", "interactionLogs", "itemScores", "itemStats", "lessonPlans", "reviewPlans", "studentTiers", "studentWeaknesses", "weaknessRank"]
+    }
+  },
+  "xiaozhi-teach-student-intake": {
+    "solo-teacher-workspace.schema.json": {
+      "paths": ["coursePackageLedger", "progressEvidence", "studentCards"],
+      "reads": [],
+      "writes": ["coursePackageLedger", "progressEvidence", "studentCards"],
+      "fields": {
+        "coursePackageLedger": {
+          "writes": ["expiryDate", "packageId", "remainingUnits", "startDate", "studentId", "totalUnits", "usedUnits"]
+        },
+        "progressEvidence": {
+          "writes": ["confidenceLevel", "date", "description", "evidenceType"]
+        },
+        "studentCards": {
+          "writes": ["alias", "availability", "consent", "goals", "gradeBand", "gradeLevel", "guardianCommunicationPreference", "learningPreferences", "primaryWeaknesses", "status", "studentId", "subjects"]
+        }
+      }
+    }
+  },
+  "xiaozhi-time-focus-coach": {
+    "dna-profile.schema.json": {
+      "paths": ["extensions.focus"]
+    },
+    "handover-protocol.schema.json": {
+      "paths": ["reminder_enqueue", "subject_profile_writeback"],
+      "sender": ["xiaozhi-time-focus-coach"],
+      "recipient": ["xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["extension"],
+      "reminderType": ["daily_confirmation"],
+      "consent": ["crossSkillSharing", "reminderConsent", "verifiedAt"],
+      "extensionPatch": ["focus"]
+    }
+  },
+  "xiaozhi-weekly-review": {
+    "handover-protocol.schema.json": {
+      "paths": ["profile_writeback", "reminder_enqueue"],
+      "sender": ["xiaozhi-weekly-review"],
+      "recipient": ["xiaozhi-im-reminder", "xiaozhi-learning-dna"],
+      "updateTarget": ["growth_milestones"],
+      "reminderType": ["scheduled_task", "spaced_review", "weekly_review"],
+      "consent": ["crossSkillSharing", "emotionSharingWithParent", "parentSharingConsent", "reminderConsent", "verifiedAt"]
+    }
+  }
+}

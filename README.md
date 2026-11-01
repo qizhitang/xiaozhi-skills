@@ -2,7 +2,7 @@
 
 > **面向中国 K12 的 AI 学习与教学 SKILL 集合 — 学生端 · 老师端**
 > 作者：小智伴学 ｜ 适用平台：WorkBuddy / SkillHub · OpenClaw / ClawHub ｜ 当前版本：**v2.12.0**
-> 全库 **83 个 SKILL**（学生端 49 + 老师端 34）+ 1 个开发者工具，**299 份 references**、**6 份共享约定**、**4 份 JSON Schema**（含 8 份示例）、**3 个校验脚本**。
+> 全库 **83 个 SKILL**（学生端 49 + 老师端 34）+ 1 个开发者工具，**299 份 references**、**6 份共享约定**、**4 份 JSON Schema**（含 8 份示例）、**7 个校验脚本**。
 
 传统 AI 容易被当成"给答案的计算器"。这套 SKILL 库的目标，是把 AI 变成**追问思路的教练**和**减轻教师重复劳动的助手**，并让学生、老师、家长三方在**明确授权**的前提下共享必要的学习证据。
 
@@ -192,12 +192,13 @@ npm run check
 | `scripts/check-references.mjs` | 引用的 references / schemas 文件真实存在，无孤儿文件 |
 | `scripts/check-skills.mjs` | frontmatter 规范、依赖无环、词表一致、占位与重复文件、学段标注、控制入口与危机片段（学生端一律）、学生端使用前提与老师端试题保密、老师端教学主体边界、接口路径存在于 schema、文档一致性 |
 | `scripts/validate-schemas.mjs` | 四份 schema 自身有效、8 份 examples 合规、枚举与 `shared/vocab.md` 一致、结构与协议版本号等于 `package.json` |
-| `scripts/sync-shared.mjs --check` | 每个 SKILL 目录内的 `shared/` 副本与源一致：Markdown 逐字节（加横幅），JSON 契约按目标技能裁剪并带 `x-skill-scope`，检查时按同一规则重新生成再比对 |
-| `scripts/verify-examples.mjs` | references 里的 ```verify``` 断言逐条求值（示例题的关键数值结论交给 CI 算）；`check-skills` 的 A2 另查“示例题验算”日期不得早于文件最后一次实质提交 |
+| `scripts/sync-shared.mjs --check` | 每个 SKILL 目录内的 `shared/` 副本与源一致：Markdown 逐字节（加横幅），JSON 契约按目标技能裁剪并带 `x-skill-scope`，检查时按同一规则重新生成再比对；各技能副本裁剪后的读写范围另汇总成 `scripts/snapshots/x-skill-scope.json` 一并核对，范围一变在 diff 里就看得到 |
+| `scripts/tests/sync-shared.test.mjs` | 裁剪规则的回归测试（`node --test`，也可单独 `npm test`）：否定语境、“读：/写：”声明块、交接协议的收发路由等，每条对应一条规则或一次出过的问题 |
+| `scripts/verify-examples.mjs` | references 里的 ```verify``` 断言逐条求值（示例题的关键数值结论交给 CI 算）；`check-skills` 的 A2 另查“示例题验算”日期不得早于文件最后一次实质提交（要完整 git 历史：浅克隆里只报一条错误，先 `git fetch --unshallow`） |
 | `scripts/gen-docs.mjs --check` | 文档与源码同步：`docs/skills-index.md` 由 frontmatter 生成且不落后；README / architecture 技能表的显示名、目录、学段与 frontmatter 一致；数量声明正确；安装指南的顺序不违反 `metadata.depends_on` |
 | `scripts/check-evals.mjs` | 每个 SKILL 都有回归用例：至少 1 条触发 + 1 条不触发；声明了能力代号的有降级用例；持有长期数据的有授权用例；学生端技能与会读到情绪文本的技能都有危机用例；`route_to` 指向存在的 SKILL |
 
-行为层回归不进 `npm run check`（要 API key、非确定）：`ANTHROPIC_API_KEY=... npm run evals:run [skill...]` 把 SKILL.md 喂给模型逐条对话并判卷，报告在 `evals/report/`。格式与写法见 [evals/README.md](evals/README.md)。
+行为层回归不进 `npm run check`（要 API key、非确定）：`ANTHROPIC_API_KEY=... npm run evals:run [skill...]` 把 SKILL.md 喂给模型逐条对话并判卷，报告在 `evals/report/`（默认被测与判卷都用 `claude-sonnet-5-5`，可用 `EVAL_MODEL` / `JUDGE_MODEL` 换）。格式与写法见 [evals/README.md](evals/README.md)。
 
 ---
 
@@ -208,7 +209,7 @@ npm run check
 - 🗺️ [安装指南](docs/installation-guide.md) — WorkBuddy 安装方式、分阶段安装路径与打包建议
 - 🔄 [版本历史](docs/changelog.md) — 版本演进与本轮变更
 - 📋 [评估报告 2026-09](docs/review-2026-09.md) — 本轮问题清单与优化路线图
-- 🧭 [学科扩展路线图](docs/roadmap-new-subjects.md) — 按各地中考与高考学科要求重排：物理高中化、化学、历史、高中生物与地理、数学高中化、英语高中化、语文高中化（第零批随 v2.1.13、第一批随 v2.2.0、第二批随 v2.3.0、第三批随 v2.4.0、第四批与第五批随 v2.6.0、第六批随 v2.7.0、第七批随 v2.8.0、第八批与第九批随 v2.9.0、第十批随 v2.10.0 发布）
+- 🧭 [学科扩展路线图](docs/roadmap-new-subjects.md) — 按各地中考与高考学科要求重排：物理高中化、化学、历史、高中生物与地理、数学高中化、英语高中化、语文高中化（第零批随 v2.1.13、第一批随 v2.2.0、第二批随 v2.3.0、第三批随 v2.4.0、第四批与第五批随 v2.6.0、第六批随 v2.7.0、第七批随 v2.8.0、第八批与第九批随 v2.9.0、第十批随 v2.10.0、第十一至二十一批随 v2.11.0、第二十二批随 v2.12.0 发布）
 
 ---
 

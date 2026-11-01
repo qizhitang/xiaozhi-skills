@@ -6,8 +6,8 @@
 // 技能目录内的 shared/ 才能解析到。两处都存在时，两种用法都成立。
 //
 // 用法：
-//   node scripts/sync-shared.mjs          写入/更新副本
-//   node scripts/sync-shared.mjs --check  只校验是否与源一致（CI 用，不写文件）
+//   node scripts/sync-shared.mjs          写入/更新副本，并重写 scripts/snapshots/x-skill-scope.json 快照
+//   node scripts/sync-shared.mjs --check  只校验副本与快照是否与源一致（CI 用，不写文件）
 import { readFileSync, writeFileSync, readdirSync, statSync, existsSync, mkdirSync, rmSync } from "node:fs";
 import { join, dirname, resolve, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -551,66 +551,140 @@ function scopeJson(name, body, skillName, skillText, dirRel) {
   return JSON.stringify(head, null, 2) + String.fromCharCode(10);
 }
 
-let written = 0, stale = [], extra = [];
+// x-skill-scope 快照：每个技能随包 schema 副本裁剪后的范围汇总成一份入库（scripts/snapshots/x-skill-scope.json）。
+// 裁剪规则或 SKILL.md 措辞一改，哪个技能多读多写、少读少写，在提交里就是这份文件的几行 diff，
+// 不用去 251 份副本里翻；--check 时不一致即失败。副本本身照旧生成与核对，快照只是它们的索引
+const SNAPSHOT = join(root, "scripts", "snapshots", "x-skill-scope.json");
+const SNAPSHOT_NOTE = "由 scripts/sync-shared.mjs 生成，请勿手改（npm run sync:shared 重新生成，npm run check 核对）。" +
+  "记的是每个技能随包 schema 副本（shared/*.schema.json）裁剪后的范围：paths 即 x-skill-scope.paths（交接协议副本为保留的交接类型），" +
+  "reads / writes / fields 来自老师端 SKILL.md 的“读：/写：”声明块，sender 起的各项只出现在交接协议副本里。" +
+  "改了 SKILL.md 之后这里跟着变，说明随包契约也变了：提交前确认这是有意的。";
+const uniqSorted = (a) => [...new Set(a)].sort();
+function scopeSummary(copyText) {
+  const j = JSON.parse(copyText);
+  const s = j["x-skill-scope"] || {};
+  const out = {};
+  if (Array.isArray(s.paths)) out.paths = uniqSorted(s.paths);
+  if (Array.isArray(s.reads)) out.reads = uniqSorted(s.reads);
+  if (Array.isArray(s.writes)) out.writes = uniqSorted(s.writes);
+  if (s.fields && Object.keys(s.fields).length) {
+    out.fields = Object.fromEntries(Object.keys(s.fields).sort().map((k) =>
+      [k, Object.fromEntries(Object.keys(s.fields[k]).sort().map((rw) => [rw, uniqSorted(s.fields[k][rw])]))]));
+  }
+  // 交接协议副本：收发方、写回目标、提醒类型、授权位、学科与扩展分支也是裁剪的结果，一并记下
+  const p = j.properties || {};
+  const en = (x) => (x && Array.isArray(x.enum) ? uniqSorted(x.enum) : null);
+  const pl = (p.payload && p.payload.properties) || {};
+  const pd = (pl.profileData && pl.profileData.properties) || {};
+  const put = (k, v) => { if (v && v.length) out[k] = v; };
+  put("sender", en(p.sender));
+  put("recipient", en(p.recipient));
+  put("updateTarget", en(pd.updateTarget));
+  put("reminderType", en(pl.reminderData && pl.reminderData.properties && pl.reminderData.properties.type));
+  put("wrongAnswerSubject", en(pl.wrongAnswerData && pl.wrongAnswerData.properties && pl.wrongAnswerData.properties.subject));
+  put("consent", p.consent && p.consent.properties ? uniqSorted(Object.keys(p.consent.properties)) : null);
+  const sep = pd.subjectExtensionPatch && pd.subjectExtensionPatch.properties;
+  put("subjectExtensionPatch", sep ? uniqSorted(Object.entries(sep).flatMap(([subj, b]) => (b && b.properties ? Object.keys(b.properties).map((k) => subj + "." + k) : [subj]))) : null);
+  const ep = pd.extensionPatch && pd.extensionPatch.properties;
+  put("extensionPatch", ep ? uniqSorted(Object.keys(ep)) : null);
+  return out;
+}
+// 字符串数组写成一行，其余照 JSON.stringify 缩进：一处范围变化在 diff 里就是一行
+const formatSnapshot = (obj) => JSON.stringify(obj, null, 2)
+  .replace(/\[\n\s+("[^"\n]*"(?:,\n\s+"[^"\n]*")*)\n\s*\]/g, (m, inner) => "[" + inner.split(/,\n\s+/).join(", ") + "]") + LF;
 
-let contractCopies = 0;
+function main() {
+  let written = 0, contractCopies = 0;
+  const stale = [], extra = [], snapshot = {};
 
-for (const dir of skillDirs) {
-  const target = join(dir, "shared");
-  const skillName = dir.split(/[\\/]/).pop();
-  const skillText = readFileSync(join(dir, "SKILL.md"), "utf-8");
+  for (const dir of skillDirs) {
+    const target = join(dir, "shared");
+    const skillName = dir.split(/[\\/]/).pop();
+    const skillText = readFileSync(join(dir, "SKILL.md"), "utf-8");
 
-  // 本技能需要的文件 = 全库共享约定 + 正文引用到的跨技能契约
-  const wanted = [...sources.map((s) => ({ name: s.name, body: s.body }))];
-  for (const c of CONTRACTS) {
-    if (!c.toAll) {
-      if (c.owner === skillName) continue;               // 归属技能用自己的原件
-      // 按目录分发的（老师端工作空间 schema）：该目录下的技能都读写工作空间，不看正文有没有写 shared/ 前缀
-      const inDirs = c.toDirs && c.toDirs.some((d) => rel(dir).startsWith(d + "/"));
-      if (!inDirs && !skillText.includes(`shared/${c.as}`)) continue; // 没引用就不塞进包里
+    // 本技能需要的文件 = 全库共享约定 + 正文引用到的跨技能契约
+    const wanted = [...sources.map((s) => ({ name: s.name, body: s.body }))];
+    for (const c of CONTRACTS) {
+      if (!c.toAll) {
+        if (c.owner === skillName) continue;               // 归属技能用自己的原件
+        // 按目录分发的（老师端工作空间 schema）：该目录下的技能都读写工作空间，不看正文有没有写 shared/ 前缀
+        const inDirs = c.toDirs && c.toDirs.some((d) => rel(dir).startsWith(d + "/"));
+        if (!inDirs && !skillText.includes(`shared/${c.as}`)) continue; // 没引用就不塞进包里
+      }
+      wanted.push({ name: c.as, body: c.body, src: c.src });
+      contractCopies++;
     }
-    wanted.push({ name: c.as, body: c.body, src: c.src });
-    contractCopies++;
+
+    if (!checkOnly && !existsSync(target)) mkdirSync(target, { recursive: true });
+
+    for (const { name, body, src } of wanted) {
+      const dest = join(target, name);
+      // JSON 不能带 HTML 注释横幅，逐字节复制；Markdown 加"请勿编辑"横幅（写明原件在哪）
+      const want = name.endsWith(".schema.json") ? scopeJson(name, body, skillName, skillText, rel(dir)) : name.endsWith(".json") ? body : BANNER(src) + body;
+      if (name.endsWith(".schema.json")) (snapshot[skillName] ||= {})[name] = scopeSummary(want);
+      const cur = existsSync(dest) ? readFileSync(dest, "utf-8") : null;
+      if (cur !== null && norm(cur) === norm(want)) continue;
+      if (checkOnly) stale.push(`${rel(dest)}${cur === null ? "（缺失）" : "（与源不一致）"}`);
+      else { writeFileSync(dest, withEolOf(want, cur !== null ? cur : body), "utf-8"); written++; }
+    }
+
+    // 清理不该在这里的文件（源已删除，或正文已不再引用）
+    if (existsSync(target)) {
+      const allowed = new Set(wanted.map((w) => w.name));
+      for (const f of readdirSync(target)) {
+        if (allowed.has(f)) continue;
+        if (checkOnly) extra.push(rel(join(target, f)));
+        else { rmSync(join(target, f)); written++; }
+      }
+    }
   }
 
-  if (!checkOnly && !existsSync(target)) mkdirSync(target, { recursive: true });
-
-  for (const { name, body, src } of wanted) {
-    const dest = join(target, name);
-    // JSON 不能带 HTML 注释横幅，逐字节复制；Markdown 加"请勿编辑"横幅（写明原件在哪）
-    const want = name.endsWith(".schema.json") ? scopeJson(name, body, skillName, skillText, rel(dir)) : name.endsWith(".json") ? body : BANNER(src) + body;
-    const cur = existsSync(dest) ? readFileSync(dest, "utf-8") : null;
-    if (cur !== null && norm(cur) === norm(want)) continue;
-    if (checkOnly) stale.push(`${rel(dest)}${cur === null ? "（缺失）" : "（与源不一致）"}`);
-    else { writeFileSync(dest, withEolOf(want, cur !== null ? cur : body), "utf-8"); written++; }
+  // x-skill-scope 快照：技能、副本都按名字排序，生成结果与遍历顺序无关
+  const ordered = { $comment: SNAPSHOT_NOTE };
+  for (const k of Object.keys(snapshot).sort()) ordered[k] = Object.fromEntries(Object.keys(snapshot[k]).sort().map((n) => [n, snapshot[k][n]]));
+  const snapText = formatSnapshot(ordered);
+  const snapCur = existsSync(SNAPSHOT) ? readFileSync(SNAPSHOT, "utf-8") : null;
+  const snapCopies = Object.values(snapshot).reduce((n, v) => n + Object.keys(v).length, 0);
+  let snapChanged = [];
+  if (snapCur === null || norm(snapCur) !== norm(snapText)) {
+    if (checkOnly) {
+      let old = null;
+      try { old = snapCur ? JSON.parse(snapCur) : null; } catch { old = null; }
+      if (old) snapChanged = [...new Set([...Object.keys(old), ...Object.keys(ordered)])]
+        .filter((k) => k !== "$comment" && JSON.stringify(old[k]) !== JSON.stringify(ordered[k])).sort();
+      stale.push(`${rel(SNAPSHOT)}${snapCur === null ? "（缺失）" : `（与当前裁剪结果不一致，涉及 ${snapChanged.length} 个技能）`}`);
+    } else {
+      mkdirSync(dirname(SNAPSHOT), { recursive: true });
+      writeFileSync(SNAPSHOT, withEolOf(snapText, snapCur !== null ? snapCur : LF), "utf-8");
+      written++;
+    }
   }
 
-  // 清理不该在这里的文件（源已删除，或正文已不再引用）
-  if (existsSync(target)) {
-    const allowed = new Set(wanted.map((w) => w.name));
-    for (const f of readdirSync(target)) {
-      if (allowed.has(f)) continue;
-      if (checkOnly) extra.push(rel(join(target, f)));
-      else { rmSync(join(target, f)); written++; }
+  if (checkOnly) {
+    if (stale.length || extra.length) {
+      if (stale.length) {
+        console.error(`\n❌ 技能内 shared/ 副本未同步（${stale.length}）：`);
+        for (const s of stale.slice(0, 20)) console.error("   " + s);
+        if (stale.length > 20) console.error(`   …另有 ${stale.length - 20} 条`);
+      }
+      if (snapChanged.length) {
+        console.error(`\n   x-skill-scope 快照里范围变了的技能（${snapChanged.length}）：${snapChanged.slice(0, 20).join("、")}${snapChanged.length > 20 ? ` …另有 ${snapChanged.length - 20} 个` : ""}`);
+      }
+      if (extra.length) {
+        console.error(`\n❌ 技能内 shared/ 存在源中已无的文件（${extra.length}）：`);
+        for (const s of extra.slice(0, 20)) console.error("   " + s);
+      }
+      console.error("\n请运行 npm run sync:shared 后重新提交；x-skill-scope 快照有变化的，提交前确认读写范围的变化是有意的。\n");
+      process.exit(1);
     }
+    console.log(`✅ 共享约定副本一致：${skillDirs.length} 个 SKILL × ${sources.length} 份共享约定 + ${contractCopies} 份跨技能契约副本；x-skill-scope 快照 ${Object.keys(snapshot).length} 个技能 ${snapCopies} 份 schema 副本`);
+  } else {
+    console.log(`✅ 已同步：${skillDirs.length} 个 SKILL × ${sources.length} 份共享约定 + ${contractCopies} 份跨技能契约副本，写入/更新 ${written} 个文件`);
   }
 }
 
-if (checkOnly) {
-  if (stale.length || extra.length) {
-    if (stale.length) {
-      console.error(`\n❌ 技能内 shared/ 副本未同步（${stale.length}）：`);
-      for (const s of stale.slice(0, 20)) console.error("   " + s);
-      if (stale.length > 20) console.error(`   …另有 ${stale.length - 20} 条`);
-    }
-    if (extra.length) {
-      console.error(`\n❌ 技能内 shared/ 存在源中已无的文件（${extra.length}）：`);
-      for (const s of extra.slice(0, 20)) console.error("   " + s);
-    }
-    console.error("\n请运行 npm run sync:shared 后重新提交。\n");
-    process.exit(1);
-  }
-  console.log(`✅ 共享约定副本一致：${skillDirs.length} 个 SKILL × ${sources.length} 份共享约定 + ${contractCopies} 份跨技能契约副本`);
-} else {
-  console.log(`✅ 已同步：${skillDirs.length} 个 SKILL × ${sources.length} 份共享约定 + ${contractCopies} 份跨技能契约副本，写入/更新 ${written} 个文件`);
-}
+// 回归测试（scripts/tests/sync-shared.test.mjs）只要裁剪函数：先设 globalThis.__syncSharedLibraryOnly 再动态 import，
+// 就只加载、不同步。直接运行本脚本时一律执行
+if (!globalThis.__syncSharedLibraryOnly) main();
+
+export { mentioned, parseReadWrite, scopeJson, scopeSummary, formatSnapshot };

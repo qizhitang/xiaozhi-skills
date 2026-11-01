@@ -82,6 +82,11 @@ P1 / S1 集的判定与 `scripts/check-skills.mjs` 用同一组正则，两边�
 
 **行为（手动）**：`ANTHROPIC_API_KEY=... npm run evals:run [skill...]` → `scripts/run-evals.mjs`。把 SKILL.md + 随包分发的 shared/ 喂给模型，逐条用例对话一轮，再由判卷模型对照 `expect` 打分。报告在 `evals/report/<skill>.md`，汇总在 `_summary.json`。
 
+- **模型**：被测与判卷默认都用 `claude-sonnet-5-5`，`EVAL_MODEL` / `JUDGE_MODEL` 可换。被测模型最好与用户实际所在平台用的模型一致，结论才说明那边的情况。
+- **凭据**：`ANTHROPIC_API_KEY`，或 `ANTHROPIC_AUTH_TOKEN`，或 `ant auth login` 存下的配置（官方 SDK 按这个顺序找）。凭据或模型名有误时第一条用例就停下，不会把全部用例记成失败。
+- **结局**：`.` 通过、`F` 不通过；另有四种单独计数、不算进“不通过”：`T` 回复写满 16000 token 被截断、`R` 被测模型拒答、`E` 限流或网络错误重试 4 次后仍失败、`J` 判卷没给出 JSON。基线里出现 T、R 要先看原因，它们不说明 SKILL 写得对不对。
+- **成本**：每条用例都带整份 SKILL.md 与共享约定（全量约 1000 多条用例、3,900 万字符输入）。这部分打了提示缓存标记，同一 SKILL 的用例共用；`_summary.json` 的 `usage` 记下实际用量。
+
 行为回归的结果是非确定的——同一条用例跑两次可能一次过一次不过。它的用途是**发现回归**，不是当门禁：改了某个 SKILL 或 shared/，跑一遍它相关的用例，看有没有从过变成不过。
 
 ## 用例文件由谁维护

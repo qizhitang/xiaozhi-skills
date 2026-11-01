@@ -36,7 +36,19 @@ def main():
             changed.append(p)
 
     sub("package.json", [(f'"version": "{old}"', f'"version": "{new}"')])
-    sub("package-lock.json", [(f'"version": "{old}"', f'"version": "{new}"')])
+    # 锁文件里每个依赖也有 "version"：只改根包的两处（顶层与 packages[""]，都在第一个 node_modules/ 条目之前），
+    # 依赖恰好与仓库同版本号时不能跟着改
+    try:
+        t = open("package-lock.json", encoding="utf-8", newline="").read()
+    except FileNotFoundError:
+        t = None
+    if t is not None:
+        i = t.find('"node_modules/')
+        head, tail = (t, "") if i < 0 else (t[:i], t[i:])
+        nhead = head.replace(f'"version": "{old}"', f'"version": "{new}"')
+        if nhead != head:
+            open("package-lock.json", "w", encoding="utf-8", newline="").write(nhead + tail)
+            changed.append("package-lock.json")
     for root, ds, fs in os.walk("."):
         # 点开头的目录一律跳过：.claude/worktrees 下是其他会话的独立工作区，不能一起改
         ds[:] = [d for d in ds if d not in ("node_modules", "__pycache__", "docs", "shared") and not d.startswith(".")]

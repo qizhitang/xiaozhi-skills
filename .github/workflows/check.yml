@@ -18,5 +18,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install --no-audit --no-fund   # package-lock.json 未纳入版本管理
+      - run: npm ci --no-audit --no-fund   # 按入库的 package-lock.json 安装，依赖版本与本地一致
       - run: npm run check

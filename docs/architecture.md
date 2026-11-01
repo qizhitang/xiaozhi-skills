@@ -366,14 +366,15 @@ consentStatus
 | `scripts/check-references.mjs` | 引用文件存在；references 无孤儿；SKILL.md、references/、shared/（含 schema 与示例 JSON 副本）与技能自带的 schemas/ 里写到的路径都落在本技能目录内（单独安装可解析：指向别的技能的，有随包副本写 `shared/<文件>`，没有的只写技能名） |
 | `scripts/check-skills.mjs` | F1 frontmatter（name/version/depends_on 列表/grade_bands）· F2 依赖无环 · F3 硬命令词与自动措辞 · R1 占位文件 · R2 跨文件重复 · V1 废弃词表 · V2 协调器命名 · P1 平台边界与控制入口 · S1 危机片段（学生端一律）· G1 高中术语标注（"初高衔接"章节豁免；声明了高中学段的技能，其高中章节豁免，标题同时写初中或七至九年级的算混合章节、不豁免） · G2 学生端使用前提 · T1 老师端试题保密 · T2 老师端教学主体边界 · B1 历史、生物、地理、开卷与老师通用技能的内容边界 · A1 出题自检与示例题验算 · H1 提示阶梯 · I1 接口路径存在于 schema · D1 文档一致性 · M1 Markdown 代码围栏闭合 |
 | `scripts/validate-schemas.mjs` | 四份 schema 有效；8 份示例合规；枚举与 `shared/vocab.md` 一致；收发方覆盖全库；关键字段存在；结构与协议版本号等于 `package.json` |
-| `scripts/sync-shared.mjs --check` | 84 个 SKILL 目录内的 `shared/` 副本与仓库根源文件一致（缺失、被改、残留均报错）|
-| `scripts/verify-examples.mjs` | X1 ```verify``` 块为合法 JSON（claim / expr / expect）· X2 expr 只含 Math 与字面量，求值结果等于 expect · X3 有验算声明却无断言的文件给警告。配合 `check-skills` 的 A2：验算日期早于最后一次实质提交即失败 |
+| `scripts/sync-shared.mjs --check` | 84 个 SKILL 目录内的 `shared/` 副本与仓库根源文件一致（缺失、被改、残留均报错）；`scripts/snapshots/x-skill-scope.json` 与当前裁剪结果一致（见第八节末） |
+| `scripts/tests/sync-shared.test.mjs` | `node --test` 跑裁剪规则的回归测试：否定语境、“读：/写：”声明块（跨行声明头、→ 解释续行）、工作区子字段与 `$defs`、交接协议的类型与收发路由 |
+| `scripts/verify-examples.mjs` | X1 ```verify``` 块为合法 JSON（claim / expr / expect）· X2 expr 只含 Math 与字面量，求值结果等于 expect · X3 有验算声明却无断言的文件给警告。配合 `check-skills` 的 A2：验算日期早于最后一次实质提交即失败（要完整 git 历史，浅克隆里只报一条错误，先 `git fetch --unshallow`） |
 | `scripts/gen-docs.mjs --check` | D2 `docs/skills-index.md` 与 frontmatter 生成结果一致 · D3 README / architecture 技能表：显示名 == `metadata.display_name`、反引号目录存在、学段列 == `grade_bands` 区间、改名残留报错 · D4 数量声明（全库 / 学生端 / 老师端 / references）与实际一致 · D5 安装指南顺序不违反 `metadata.depends_on` |
 | `scripts/check-evals.mjs` | E1 用例文件过 schema、id 唯一 · E2 至少 1 触发 + 1 不触发 · E3 有能力代号即有降级用例且 `missing` 不越界 · E4 持有长期数据即有授权用例 · E5 学生端一律、会读情绪文本的也要有危机用例 · E6 `route_to` 与授权字段名存在 · E7 每条用例有断言 |
 
 推送与 PR 时，GitHub Actions（`.github/workflows/check.yml`）在 Ubuntu 上跑同一条 `npm run check`，失败的提交会在 GitHub 上标红。
 
-静态校验盖不住“文件之间互相矛盾”（SKILL.md 说不归档、references 说归档）——每份文件单看都合法。`evals/` 下每个 SKILL 一份回归用例（触发 / 不触发 / 降级 / 授权 / 危机五种），`scripts/run-evals.mjs` 把 SKILL.md 与随包 shared/ 喂给模型逐条对话、再由判卷模型对照期望打分。它不进 `npm run check`：要 API key，结果非确定，用途是发现回归而不是当门禁。
+静态校验盖不住“文件之间互相矛盾”（SKILL.md 说不归档、references 说归档）——每份文件单看都合法。`evals/` 下每个 SKILL 一份回归用例（触发 / 不触发 / 降级 / 授权 / 危机五种），`scripts/run-evals.mjs` 把 SKILL.md 与随包 shared/ 喂给模型逐条对话、再由判卷模型对照期望打分。它不进 `npm run check`：要 API key，结果非确定，用途是发现回归而不是当门禁。被测回复被截断或被拒答时不判卷、单独计数，不混进“不通过”；同一 SKILL 的用例共用提示缓存。
 
 ---
 
@@ -384,6 +385,7 @@ xiaozhi-skills/
 ├── README.md
 ├── SECURITY_BASELINE.md
 ├── package.json                     校验脚本入口
+├── package-lock.json                依赖版本锁定（CI 用 npm ci 按它安装）
 ├── shared/                          单一事实源（6 份，源文件）
 │   ├── vocab.md
 │   ├── platform-conventions.md
@@ -406,6 +408,8 @@ xiaozhi-skills/
 │   ├── verify-examples.mjs          示例题机器断言（进 CI）
 │   ├── check-evals.mjs              回归用例静态校验（进 CI）
 │   ├── run-evals.mjs                行为回归运行器（手动）
+│   ├── tests/                       sync-shared 裁剪规则的回归测试（进 CI）
+│   ├── snapshots/                   x-skill-scope 快照：各技能随包 schema 副本的读写范围（sync-shared 生成并核对）
 │   ├── gen-docs.mjs                 生成技能索引 + 文档同步核对（进 CI）
 │   └── publish/                     打包与发布到两个市场 + 线上版本核对（凭据留仓库外，见其 README）
 ├── docs/
@@ -446,7 +450,7 @@ xiaozhi-{name}/
 1. **全库共享约定**（6 份）：来自仓库根 `shared/`，每个 SKILL 都有。
 2. **跨技能契约与参考资料**（按需，25 类共 251 份副本，含分发给全部技能的危机转介协议 84 份）：只分发给正文引用它的技能——四份数据契约 schema、三份交接示例 JSON、七份学科错因维度表（英语、语文、物理、化学、历史、生物、地理）、八份参考资料（受力图指南、遗忘曲线表、跨学科联结、实验类型、高中古诗文背诵推荐篇目、高中生物学生活动清单、高中地理实践活动清单、高中八科课标对照），源文件留在归属技能内，归属技能用自己的原件；另有一份跨学科约定（实验安全），源文件在仓库根 `shared/contracts/`，没有归属技能。唯一例外是 `crisis-referral-protocol.md`：因为 `crisis-exception.md` 在每个包里都指向它，故分发给全部 84 个技能。
 
-JSON 契约的副本不是原样复制：`sync-shared.mjs` 按目标技能**裁剪**——只保留该技能 SKILL.md 在非否定语境下提到的字段子树（档案 schema 的 `subjectExtensions.x` / `extensions.x`、工作空间的顶层集合、交接协议的类型/`payload` 分支/收发方），并在头部写 `x-distributed-to` 与 `x-skill-scope`。否定语境按行判定（“不读/不写/❌”在字段之前；行尾为顿号或冒号的列表把否定带到后续行；“字段 → 由 X 维护”整行视为否定）。这样做是因为市场的安全扫描把随包 schema 当成该技能自己的数据契约：一个笔记工具带着完整档案定义，会被判为越权；带着只含 `extensions.notes` 的副本，判定才与它的职责一致。交接协议里的错题交接还按方向写死：学科学生端技能只发给通用错题本，学科错误DNA 只收错题本转来的错题，历史史料分析、地理读图两个方向都有；副本用 `allOf` 条件分支把交接类型与收发方绑在一起。`--check` 按同一规则重新生成后比对。
+JSON 契约的副本不是原样复制：`sync-shared.mjs` 按目标技能**裁剪**——只保留该技能 SKILL.md 在非否定语境下提到的字段子树（档案 schema 的 `subjectExtensions.x` / `extensions.x`、工作空间的顶层集合、交接协议的类型/`payload` 分支/收发方），并在头部写 `x-distributed-to` 与 `x-skill-scope`。否定语境按行判定（“不读/不写/❌”在字段之前；行尾为顿号或冒号的列表把否定带到后续行；“字段 → 由 X 维护”整行视为否定）。这样做是因为市场的安全扫描把随包 schema 当成该技能自己的数据契约：一个笔记工具带着完整档案定义，会被判为越权；带着只含 `extensions.notes` 的副本，判定才与它的职责一致。交接协议里的错题交接还按方向写死：学科学生端技能只发给通用错题本，学科错误DNA 只收错题本转来的错题，历史史料分析、地理读图两个方向都有；副本用 `allOf` 条件分支把交接类型与收发方绑在一起。`--check` 按同一规则重新生成后比对。裁剪结果另汇总成 `scripts/snapshots/x-skill-scope.json`：每个技能每份 schema 副本的 paths / reads / writes / fields，交接协议副本另记收发方、写回目标、提醒类型、授权位与学科分支，`--check` 时一并比对——SKILL.md 措辞一改、某个技能的读写范围跟着变了，在提交里就是快照的几行 diff，不用去副本里翻。几条后来加的规则：老师端工作区副本以 SKILL.md 的“读：/写：”声明块为准（声明头的括号说明可以跨行；“→”开头的解释行及其续行不收成子字段），键下只留声明列出的子字段加 required，`x-skill-scope` 分列 reads、writes 与各键的读写子字段；交接协议副本按保留的交接类型裁到内层——写回目标须与交接类型配套，`updateTarget`、`reminderData.type`、分项授权位跟着保留的类型与目标走；`$defs` 只留被引用的定义。由此，**副本是按技能收窄的契约**：平台若拿技能自带的副本校验来件，SKILL.md 的一处措辞改动就可能让原本合法的写回被拒，所以改读写声明时要看快照的 diff。裁剪规则本身由 `scripts/tests/sync-shared.test.mjs` 的回归测试守住。
 
 这样 `shared/vocab.md`、`shared/handover-protocol.schema.json` 这类路径在整库使用（相对仓库根）与单技能安装（相对技能目录）两种场景下都能解析。
 
