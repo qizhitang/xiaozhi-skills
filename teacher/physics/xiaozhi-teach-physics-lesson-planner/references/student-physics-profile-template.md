@@ -16,7 +16,7 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ■ 年级：[如 八年级]   班额：[classWorkspace.classProfile.classSize]
 ■ 教材版本：[classWorkspace.classProfile.textbookVersion]
-■ 当前进度：[如 八下 第十章 浮力]
+■ 当前进度：[如 八年级 浮力]
 
 ■ 物理观念（课标三个维度）
   · 物质观念：[五档之一]              证据：[…]
