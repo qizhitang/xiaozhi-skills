@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🌏 区域认知构建器
-  version: 2.12.3
+  version: 2.12.4
   author: 小智伴学
   category: 地理专项
   grade_bands:

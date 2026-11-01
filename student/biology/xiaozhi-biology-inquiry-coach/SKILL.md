@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🌿 生物实验探究教练
-  version: 2.12.3
+  version: 2.12.4
   author: 小智伴学
   category: 生物专项
   grade_bands:

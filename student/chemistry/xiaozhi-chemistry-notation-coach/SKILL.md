@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🔤 化学用语与方程式教练
-  version: 2.12.3
+  version: 2.12.4
   author: 小智伴学
   category: 化学专项
   grade_bands:
