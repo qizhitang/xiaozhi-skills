@@ -56,7 +56,7 @@ test("内容比列宽还宽：整列连同所有横线一起加宽", () => {
   assert.equal(lines[3], "│ 很长的内容 │ 乙 │");
 });
 
-test("一行里并排几个框、带箭头的流程图：不碰，列为结构看不准", () => {
+test("一行里并排几个框、带箭头的流程图：不自动改；哪个框的右边没对齐就报哪个", () => {
   const src = fence(
     "┌────┐  ┌────┐",
     "│ 甲 │→ │ 乙  │",
@@ -64,11 +64,48 @@ test("一行里并排几个框、带箭头的流程图：不碰，列为结构�
   );
   const r = alignText(src);
   assert.equal(r.text, src);
-  assert.equal(r.skipped.length, 1);
+  assert.deepEqual(r.skipped, [[2, "框的左右边没对齐（第 3 行）"]]);
 });
 
-test("只有左侧竖线的树形图不当成框线表", () => {
-  const src = fence("├── 基础信息", "│   ├── 年级", "│   └── 目标", "└── 学科");
+test("流程图画对了就不报：框边上的箭头、框外的说明文字、连线拐角“┌──┼──┐”都不算毛病", () => {
+  const src = fence(
+    "     ┌──────┐",
+    "     │ 起点 │ ←── 说明",
+    "     └──┬───┘",
+    "  ┌─────┼─────┐",
+    "  ▼     ▼     ▼",
+    "┌───┐ ┌─▼─┐ ┌───┐",
+    "│ 甲│ │ 乙│ │ 丙│",
+    "└───┘ └───┘ └───┘",
+  );
+  const r = alignText(src);
+  assert.equal(r.text, src);
+  assert.deepEqual([r.fixed.length, r.skipped.length], [0, 0]);
+});
+
+test("框的底边与顶边错开、中间横线右端错用 ┐：报出来", () => {
+  const shifted = alignText(fence("┌────┐", "│ 甲 │", " └────┘"));
+  assert.deepEqual(shifted.skipped, [[2, "框的底边与顶边错开（第 4 行）"]]);
+  const corner = alignText(fence("┌────┬────┐", "│ 甲 │ 乙 │", "├────┼────┐", "│ 丙 │ 丁 │", "└────┴────┘"));
+  assert.deepEqual(corner.skipped, [[2, "框的左右边没对齐（第 4 行）"]]);
+});
+
+test("整张表的分栏对不上（用“·”代替竖线）：报出来，不自动改", () => {
+  const src = fence("┌──────┬──────┐", "│ 错因 │ 干预 │", "├──────┼──────┤", "│ 漏洞 · 补前置│", "└──────┴──────┘");
+  const r = alignText(src);
+  assert.equal(r.text, src);
+  assert.deepEqual(r.skipped, [[2, "内容行的格数与横线对不上"]]);
+});
+
+test("无外框的表：各行竖线要落在“──┼──”分隔线的接头列上", () => {
+  const good = alignText(fence("知识点   │ 了解", "─────────┼─────", "概念     │ T1", "─────────┴─────"));
+  assert.equal(good.skipped.length, 0);
+  const bad = alignText(fence("知识点   │ 了解", "─────────┼─────", "概念与解的含义 │ T1"));
+  assert.deepEqual(bad.skipped, [[4, "无外框的表：竖线没对准分隔线的接头"]]);
+});
+
+test("只有左侧竖线的树形图不当成框线表（含只有竖线的空行）", () => {
+  const src = fence("├── 基础信息", "│   ├── 年级", "│   │", "│   └── 目标", "│", "└── 学科");
   const r = alignText(src);
   assert.equal(r.text, src);
   assert.deepEqual([r.fixed.length, r.skipped.length], [0, 0]);
