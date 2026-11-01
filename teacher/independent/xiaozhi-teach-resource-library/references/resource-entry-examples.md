@@ -63,6 +63,7 @@
   resourceId：R-Q002
   title：【AI 生成，入库前请人工验算】移项变号纯净版 8 题
   resourceType：题目
+  subject：数学
   knowledgePoint：一元一次方程移项
   difficulty：基础
   copyrightStatus：自有
@@ -75,6 +76,7 @@
   resourceId：R-Q003
   title：某教辅八年级一次函数专题（仅记出处）
   resourceType：题目
+  subject：数学
   knowledgePoint：一次函数应用
   difficulty：提升
   copyrightStatus：仅存索引
