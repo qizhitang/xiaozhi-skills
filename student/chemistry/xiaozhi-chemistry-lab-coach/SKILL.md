@@ -10,7 +10,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🧪 化学实验探究教练
-  version: 2.12.4
+  version: 2.12.5
   author: 小智伴学
   category: 化学专项
   grade_bands:
