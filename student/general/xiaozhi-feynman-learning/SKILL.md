@@ -9,7 +9,7 @@ compatibility: WorkBuddy / SkillHub / OpenClaw / ClawHub
 license: MIT
 metadata:
   display_name: 🎓 费曼学习法
-  version: 2.12.1
+  version: 2.12.2
   author: 小智伴学
   category: 通用核心
   grade_bands:
