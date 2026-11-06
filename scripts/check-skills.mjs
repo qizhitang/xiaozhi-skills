@@ -302,7 +302,7 @@ for (const f of refFiles) {
     else if (gitDirty(f) && decl[1] < today() && !gitVersionOnly(f) && !gitCosmeticOnly(f)) err("A2", rel(f), `示例题验算声明为 ${decl[1]}，但文件有未提交改动，请验算后把日期更新为今天`);
   }
 }
-if (a2Unchecked.length) err("A2", "（浅克隆）", `当前仓库是浅克隆，提交历史不完整，${a2Unchecked.length} 份带“示例题验算”声明的文件只核对了未提交改动，没法核对提交历史（浅克隆最早的提交会被误当成每份文件的实质改动）。先运行 git fetch --unshallow 再跑校验；CI 的 checkout 用 fetch-depth: 0`);
+if (a2Unchecked.length) err("A2", "（浅克隆）", `当前仓库是浅克隆，提交历史不完整，${a2Unchecked.length} 份带“示例题验算”声明的文件只核对了未提交改动，没法核对提交历史（浅克隆最早的提交会被误当成每份文件的实质改动）。先运行 git fetch --unshallow 再跑校验`);
 
 // ---------- V1/V2/P1/S1/G1 content scans ----------
 const contentFiles = [...skillFiles, ...refFiles];
