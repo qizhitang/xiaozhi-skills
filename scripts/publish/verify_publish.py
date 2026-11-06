@@ -9,7 +9,7 @@
     python verify_publish.py --quiet  # 只写文件，打印一行结论
 退出码：0 全一致；1 有落后、缺失或审核未通过；2 查询失败
 """
-import json, os, sys, time, urllib.request
+import json, os, sys, time, urllib.parse, urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _common import HERE, skill_dirs, version, workdir  # noqa: E402
@@ -30,17 +30,42 @@ PRIORITY = {
 }
 
 
-def _page(host, tok, page):
-    req = urllib.request.Request(f"{host}/api/v1/dashboard/skills?limit=100&page={page}",
-                                 headers={"Authorization": f"Bearer {tok}"})
+def _cred():
+    with open(CRED, encoding="utf-8") as f:
+        cred = json.load(f)["user"]
+    return cred["token"], cred.get("host", "https://api.skillhub.cn").rstrip("/")
+
+
+def _get(host, tok, path):
+    req = urllib.request.Request(f"{host}{path}", headers={"Authorization": f"Bearer {tok}"})
     for attempt in range(3):
         try:
-            d = json.loads(urllib.request.urlopen(req, timeout=60).read().decode())
-            break
+            return json.loads(urllib.request.urlopen(req, timeout=60).read().decode())
         except Exception:
             if attempt == 2:
                 raise
             time.sleep(5)
+
+
+def reject_label(host, tok, slug, ver):
+    """平台给被拒版本打的具体标签（如“内容含涉政内容”）。
+
+    看板列表只给笼统的 reviewNote（“未通过内容合规审查”），具体标签 contentAuditRejectLabel
+    只在逐个技能的版本列表里（2026-11-06 发现：review-planner 2.12.5 被拒，标签是“内容含涉政内容”）。
+    查不到时返回空串，不影响核对结论。
+    """
+    try:
+        d = _get(host, tok, f"/api/v1/dashboard/skills/{urllib.parse.quote(slug, safe='')}/versions")
+    except Exception:
+        return ""
+    for v in d.get("versions") or []:
+        if str(v.get("version")) == ver:
+            return str(v.get("contentAuditRejectLabel") or "")
+    return ""
+
+
+def _page(host, tok, page):
+    d = _get(host, tok, f"/api/v1/dashboard/skills?limit=100&page={page}")
     items = d.get("data", {}).get("skills") if isinstance(d.get("data"), dict) else None
     return items or d.get("skills") or (d.get("data") if isinstance(d.get("data"), list) else []) or []
 
@@ -52,9 +77,7 @@ def live_versions(passes=5):
     在翻页途中变化，同一条会在两页里重复出现、另一条被挤掉（2026-09-23 实测：连翻三遍，前两遍各重复 3 条、
     漏 3 条，且漏的是不同的技能）。所以一遍里只要出现重复就整遍重翻；几遍都不干净时取各遍并集。
     """
-    with open(CRED, encoding="utf-8") as f:
-        cred = json.load(f)["user"]
-    tok, host = cred["token"], cred.get("host", "https://api.skillhub.cn").rstrip("/")
+    tok, host = _cred()
     union = {}
     for n in range(passes):
         seen, dup = {}, 0
@@ -96,6 +119,9 @@ def main():
     # 旧报告一直写成"审核中"）与仍在排队的
     unapproved = [(k, v) for k, v in live.items() if k in want and v["version"] == ver and v["approved"] != ver]
     rejected = sorted((k, v["approved"], v["note"]) for k, v in unapproved if v["review"].lower() == "rejected")
+    if rejected:
+        tok, host = _cred()
+        labels = {k: reject_label(host, tok, k, ver) for k, _, _ in rejected}
     pending = sorted((k, v["approved"]) for k, v in unapproved if v["review"].lower() != "rejected")
     missing = sorted(want - set(live))
     pri_bad = sorted(({k for k, _ in stale} | set(missing)) & PRIORITY)
@@ -116,7 +142,8 @@ def main():
             L += ["> ★ 是安全整改改动最大的老师端技能。这些没上线，意味着线上仍是整改前的行为。", ""]
     if rejected:
         L += [f"## 审核未通过的 {len(rejected)} 个", "", f"平台已判定不通过：用户安装到的仍是下表的已通过版本。这不会自己好转——要么改内容后发新版本，要么在 SkillHub 平台申诉；重跑发布也不会让 {ver} 重新送审。", "",
-              "| 技能 | 已通过版本 | 平台说明 |", "|---|---|---|"] + [f"| `{k}` | {a or '—'} | {n or '—'} |" for k, a, n in rejected] + [""]
+              "| 技能 | 已通过版本 | 平台说明 | 拒绝标签 |", "|---|---|---|---|"]
+        L += [f"| `{k}` | {a or '—'} | {n or '—'} | {labels.get(k) or '—'} |" for k, a, n in rejected] + [""]
     if pending:
         L += [f"## 已提交、平台审核中的 {len(pending)} 个", "", "SkillHub 对新版本做异步审核；审核通过前，用户安装到的仍是下表的已通过版本。这不是发布失败，稍后重跑核对即可。", "",
               "| 技能 | 已通过版本 |", "|---|---|"] + [f"| `{k}` | {a or '—'} |" for k, a in pending] + [""]
@@ -124,7 +151,8 @@ def main():
     open(REPORT, "w", encoding="utf-8").write("\n".join(L) + "\n")
 
     if quiet:
-        print(f"SkillHub 核对：{len(ok)}/{len(want)} 已提交 {ver}（审核中 {len(pending)}，未通过 {len(rejected)}），落后 {len(stale)}，缺失 {len(missing)} → {REPORT}")
+        why = "；未通过：" + "、".join(f"{k}（{labels.get(k) or n or '无说明'}）" for k, _, n in rejected) if rejected else ""
+        print(f"SkillHub 核对：{len(ok)}/{len(want)} 已提交 {ver}（审核中 {len(pending)}，未通过 {len(rejected)}），落后 {len(stale)}，缺失 {len(missing)}{why} → {REPORT}")
     else:
         print("\n".join(L))
     return 0 if (not stale and not missing and not rejected) else 1
