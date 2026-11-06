@@ -1,7 +1,7 @@
 # 🎓 小智伴学 · SKILL 库
 
 > **面向中国 K12 的 AI 学习与教学 SKILL 集合 — 学生端 · 老师端**
-> 作者：小智伴学 ｜ 适用平台：WorkBuddy / SkillHub · OpenClaw / ClawHub ｜ 当前版本：**v2.12.5**
+> 作者：小智伴学 ｜ 适用平台：WorkBuddy / SkillHub · OpenClaw / ClawHub ｜ 当前版本：**v2.12.6**
 > 全库 **83 个 SKILL**（学生端 49 + 老师端 34）+ 1 个开发者工具，**299 份 references**、**6 份共享约定**、**4 份 JSON Schema**（含 8 份示例）、**8 个校验脚本**。
 
 传统 AI 容易被当成"给答案的计算器"。这套 SKILL 库的目标，是把 AI 变成**追问思路的教练**和**减轻教师重复劳动的助手**，并让学生、老师、家长三方在**明确授权**的前提下共享必要的学习证据。
@@ -185,7 +185,7 @@ npm install
 npm run check
 ```
 
-推送与 PR 时由 GitHub Actions（`.github/workflows/check.yml`）自动跑同一套校验。
+本库不接 CI：提交与发布前在本地跑 `npm run check`，看退出码。A2 要完整 git 历史，浅克隆先 `git fetch --unshallow`。
 
 | 脚本 | 检查什么 |
 |---|---|
