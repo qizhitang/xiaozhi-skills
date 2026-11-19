@@ -13,7 +13,7 @@
 - **发布版本**：`package.json` 的 `version`，每次升版都升，“当前版本”写它。
 - **技能包版本**：各 SKILL.md 的 `metadata.version`，是这个技能最后一次改动所在的发布版本；内容没变的技能升版时不动，发布时跳过。市场上的版本号就是它。
 - **契约版本**：`package.json` 新增 `contractVersion`（当前 2.12.7），学习DNA 的 `schemaVersion` 与交接协议的 `protocolVersion` 跟它一致，只在 schema 变化时升（`bump_version.py --contract`）。原来这两个版本号“与仓库版本一致”、每次升版都跟着变，带 schema 副本或示例的 52 个技能因此每次都有内容改动——这是没法只发改动包的根源。用户在不同时间装的技能，只要契约没变，交接协议版本也一致。
-- 新增 `scripts/package-versions.mjs` 与发布清单 `scripts/snapshots/package-versions.json`：记各技能当前版本与那一版的内容哈希（会被打包的文件，换行统一成 LF，不计版本号那一行）。`npm run check` 核对清单、SKILL.md 与 `package.json` 一致，并列出未发布的改动（`npm run versions` 也能看）。清单按已发布的 2.12.7 内容生成。测试 8 条。
+- 新增 `scripts/package-versions.mjs` 与发布清单 `scripts/snapshots/package-versions.json`：记各技能现在的版本号与那一版的内容哈希（会被打包的文件，换行统一成 LF，不计版本号那一行）。`npm run check` 核对清单、SKILL.md 与 `package.json` 一致，并列出未发布的改动（`npm run versions` 也能看）。清单按已发布的 2.12.7 内容生成。测试 8 条。
 
 ### 升版与发布脚本（工具）
 
