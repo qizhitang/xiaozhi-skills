@@ -185,14 +185,16 @@ npm install
 npm run check
 ```
 
-本库不接 CI：提交与发布前在本地跑 `npm run check`，看退出码。A2 要完整 git 历史，浅克隆先 `git fetch --unshallow`。
+本库不接 CI：提交与发布前在本地跑 `npm run check`，看退出码。每个克隆运行一次 `npm run hooks:install`（启用 `.githooks/pre-push`），之后每次 `git push` 前自动跑 `npm run check`，不通过就不推送（确认要推送时用 `git push --no-verify`）。A2 要完整 git 历史，浅克隆先 `git fetch --unshallow`。
 
 | 脚本 | 检查什么 |
 |---|---|
 | `scripts/check-references.mjs` | 引用的 references / schemas 文件真实存在，无孤儿文件 |
 | `scripts/check-skills.mjs` | frontmatter 规范、依赖无环、词表一致、占位与重复文件、学段标注、控制入口与危机片段（学生端一律）、学生端使用前提与老师端试题保密、老师端教学主体边界、接口路径存在于 schema、文档一致性 |
-| `scripts/validate-schemas.mjs` | 四份 schema 自身有效、8 份 examples 合规、枚举与 `shared/vocab.md` 一致、结构与协议版本号等于 `package.json` |
+| `scripts/validate-schemas.mjs` | 四份 schema 自身有效、8 份 examples 合规、枚举与 `shared/vocab.md` 一致、档案结构与交接协议的版本号等于 `package.json` 的 `contractVersion`（契约版本，只在 schema 变化时升） |
 | `scripts/sync-shared.mjs --check` | 每个 SKILL 目录内的 `shared/` 副本与源一致：Markdown 逐字节（加横幅），JSON 契约按目标技能裁剪并带 `x-skill-scope`，检查时按同一规则重新生成再比对；各技能副本裁剪后的读写范围另汇总成 `scripts/snapshots/x-skill-scope.json` 一并核对，范围一变在 diff 里就看得到 |
+| `scripts/package-versions.mjs --check` | 各技能的版本号（`metadata.version`，即它最后一次改动所在的发布版本）与发布清单 `scripts/snapshots/package-versions.json` 一致、不高于发布版本；内容与清单对不上的技能列为“未发布的改动”，升版时由 `bump_version.py` 只给它们升版本号，发布脚本也只发它们。测试在 `scripts/tests/package-versions.test.mjs` |
+| `scripts/check-review-risk.mjs` | 发布前的审核风险自检：已查实会被市场判不通过的说法（`scripts/review-risk.json` 的触发句）再出现就报错；观察词（双减类政策用语、敏感类别名）只提示已过审基线之外新出现的行，人工确认没问题后 `npm run review:accept` 记进基线。两个发布脚本发布前按严格模式跑，新出现的观察词也会拦下发布。测试在 `scripts/tests/check-review-risk.test.mjs` |
 | `scripts/tests/sync-shared.test.mjs` | 裁剪规则的回归测试（`node --test`，也可单独 `npm test`）：否定语境、“读：/写：”声明块、交接协议的收发路由等，每条对应一条规则或一次出过的问题 |
 | `scripts/align-boxes.mjs --check` | 代码块里的框线按显示宽度（全角 2 列）对齐：框线表没对齐的运行 `npm run boxes:fix` 规整，只增减空格与横线、不动文字；流程图里的框（两条竖边、底边与顶边）、无外框的表（竖线对准分隔线接头）与连线接头（┬ ┴ ┼ 上下正对连线）逐个核对，脚本没法自动规整的同样报错、要手工重画；树形图、坐标轴刻度不算。测试在 `scripts/tests/align-boxes.test.mjs` |
 | `scripts/verify-examples.mjs` | references 里的 ```verify``` 断言逐条求值（示例题的关键数值结论交给 CI 算）；`check-skills` 的 A2 另查“示例题验算”日期不得早于文件最后一次实质提交（要完整 git 历史：浅克隆里只报一条错误，先 `git fetch --unshallow`；只动空白与框线字符的排版改动不算实质改动） |

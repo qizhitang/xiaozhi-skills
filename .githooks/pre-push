@@ -1,0 +1,29 @@
+#!/bin/sh
+# 推送前自动跑全库校验（npm run check），不通过就不推送。本库不接 CI，这是推送前唯一的自动把关。
+# 启用（每个克隆一次）：npm run hooks:install，即 git config core.hooksPath .githooks
+# 确认要推送不合格的提交时临时跳过：git push --no-verify
+# 校验的是工作区当前的文件；没提交的改动也会参与，推送前最好先提交干净。
+
+cd "$(git rev-parse --show-toplevel)" || exit 1
+if ! command -v npm >/dev/null 2>&1; then
+  echo "pre-push：找不到 npm，这次没跑 npm run check（装好 Node 后推送前会自动校验）" >&2
+  exit 0
+fi
+
+log="$(mktemp 2>/dev/null || echo "${TMPDIR:-/tmp}/xiaozhi-pre-push.$$")"
+echo "pre-push：npm run check …"
+if npm run --silent check >"$log" 2>&1; then
+  echo "pre-push：npm run check 通过"
+  rm -f "$log"
+  exit 0
+fi
+
+echo "pre-push：npm run check 没通过，已取消推送。出错的部分：" >&2
+if grep -qE "❌|✖|not ok" "$log"; then
+  grep -E "❌|✖|not ok|^ +\[|^   " "$log" | head -40 >&2
+else
+  tail -40 "$log" >&2
+fi
+echo "完整输出：$log" >&2
+echo "改好后重新推送；确认要推送不合格的提交时用 git push --no-verify" >&2
+exit 1

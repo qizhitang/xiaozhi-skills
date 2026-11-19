@@ -8,7 +8,8 @@ import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const REPO_VERSION = JSON.parse(readFileSync(join(root, "package.json"), "utf-8")).version;
+// 档案结构与交接协议的契约版本：只在 schema 变化时升（bump_version.py --contract），与技能包各自的版本号无关
+const CONTRACT_VERSION = JSON.parse(readFileSync(join(root, "package.json"), "utf-8")).contractVersion;
 const schemas = [
   "student/general/xiaozhi-learning-dna/schemas/dna-profile.schema.json",
   "student/general/xiaozhi-skill-coordinator/schemas/handover-protocol.schema.json",
@@ -20,6 +21,7 @@ const WEAK = ["待处理", "初步弱项", "突破中", "顽固弱项", "已攻�
 const MASTERY = ["会复述", "会解释", "真正掌握"];
 
 let failed = false;
+if (!CONTRACT_VERSION) { console.error("❌ package.json 缺 contractVersion（档案结构与交接协议的契约版本）"); process.exit(1); }
 const fail = (m) => { failed = true; console.error("❌ " + m); };
 const ok = (m) => console.log("✅ " + m);
 
@@ -55,8 +57,8 @@ for (const rel of schemas) {
   // 版本号必须与 package.json 一致（shared/vocab.md：全库单一版本）
   if (rel.includes("dna-profile")) {
     const sv = schema.properties.meta.properties.schemaVersion.enum;
-    if (sv.length !== 1 || sv[0] !== REPO_VERSION) fail(`dna-profile：schemaVersion 应为 ["${REPO_VERSION}"]，实为 ${JSON.stringify(sv)}`);
-    else ok(`schemaVersion 与仓库版本一致：${REPO_VERSION}`);
+    if (sv.length !== 1 || sv[0] !== CONTRACT_VERSION) fail(`dna-profile：schemaVersion 应为 ["${CONTRACT_VERSION}"]（package.json 的 contractVersion），实为 ${JSON.stringify(sv)}`);
+    else ok(`schemaVersion 与契约版本一致：${CONTRACT_VERSION}`);
   }
   if (rel.includes("handover")) {
     const n = schema.properties.sender.enum.length;
@@ -65,8 +67,8 @@ for (const rel of schemas) {
     if (!schema.properties.handoverType.enum.includes("deep_analysis_writeback")) fail("handover：缺 deep_analysis_writeback");
     if (!schema.properties.handoverType.enum.includes("reminder_enqueue")) fail("handover：缺 reminder_enqueue");
     const pv = schema.properties.protocolVersion.enum;
-    if (pv.length !== 1 || pv[0] !== REPO_VERSION) fail(`handover：protocolVersion 应为 ["${REPO_VERSION}"]，实为 ${JSON.stringify(pv)}`);
-    else ok(`protocolVersion 与仓库版本一致：${REPO_VERSION}`);
+    if (pv.length !== 1 || pv[0] !== CONTRACT_VERSION) fail(`handover：protocolVersion 应为 ["${CONTRACT_VERSION}"]（package.json 的 contractVersion），实为 ${JSON.stringify(pv)}`);
+    else ok(`protocolVersion 与契约版本一致：${CONTRACT_VERSION}`);
   }
   if (rel.includes("solo-teacher")) {
     const st = schema.$defs.homeworkFollowup.properties.status.enum;

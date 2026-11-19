@@ -10,16 +10,18 @@ compatibility / metadata）+ 平台加载字段，本库自有字段都在 `meta
     grade_bands / tags / depends_on）
   - 补 slug（= name）、displayName、summary
   - 折叠式 description: > 展平成单行（单引号标量，内部单引号双写）
-  - version 以仓库 package.json 为准
+  - version 用这个技能自己的版本号（SKILL.md 的 metadata.version，即它最后一次改动所在的发布版本；
+    内容没变的技能停在旧版本，发布脚本跳过它们）
 
-正文与 references/ shared/ 原样复制。
+正文与 references/ shared/ 原样复制；只复制会被打包的文件（git 跟踪的与没被忽略的新文件），
+与发布清单算内容哈希的是同一批，本地草稿之类被忽略的文件不会混进包里。
 
-用法：python stage.py <输出目录> [只处理某个技能]
+用法：python stage.py <输出目录> [只处理这几个技能，逗号分隔]
 """
 import os, re, shutil, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from _common import REPO, skill_dirs, version  # noqa: E402
+from _common import REPO, package_files, skill_dirs, skill_version  # noqa: E402
 
 # 目录名与上架 slug/显示名不一致的少数条目
 OVERRIDE = {
@@ -97,7 +99,9 @@ def emit(out, k, val):
 def stage(name, src, dst, ver):
     if os.path.exists(dst):
         shutil.rmtree(dst)
-    shutil.copytree(src, dst)
+    for f in package_files(src):
+        os.makedirs(os.path.dirname(os.path.join(dst, f)), exist_ok=True)
+        shutil.copy2(os.path.join(src, f), os.path.join(dst, f))
     p = os.path.join(dst, "SKILL.md")
     top, meta, body = parse_fm(open(p, encoding="utf-8").read())
 
@@ -131,16 +135,16 @@ def main():
     if len(sys.argv) < 2:
         sys.exit(__doc__.strip().split("\n")[-1])
     stage_root, only = sys.argv[1], (sys.argv[2] if len(sys.argv) > 2 else None)
-    ver = version()
     os.makedirs(stage_root, exist_ok=True)
     done = []
     for name, src in sorted(skill_dirs().items()):
-        if only and name != only:
+        if only and name not in only.split(","):
             continue
-        done.append((name,) + stage(name, src, os.path.join(stage_root, name), ver))
-    print(f"按仓库版本 {ver} 暂存 {len(done)} 个 -> {stage_root}")
-    for n, s, d in done[:5]:
-        print(f"  {n} -> slug={s} displayName={d}")
+        ver = skill_version(src)
+        done.append((name,) + stage(name, src, os.path.join(stage_root, name), ver) + (ver,))
+    print(f"按各技能自己的版本号暂存 {len(done)} 个 -> {stage_root}")
+    for n, s, d, v in done[:5]:
+        print(f"  {n} -> slug={s} displayName={d} version={v}")
     if len(done) > 5:
         print(f"  …共 {len(done)} 个")
 

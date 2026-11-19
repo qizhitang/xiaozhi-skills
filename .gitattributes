@@ -1,0 +1,2 @@
+# 推送钩子由 sh 执行：Windows 检出也必须保持 LF，否则首行带 \r 跑不起来
+.githooks/* text eol=lf
