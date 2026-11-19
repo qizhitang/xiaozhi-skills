@@ -76,6 +76,20 @@ def require_released():
     return {name: s["version"] for name, s in st["skills"].items()}
 
 
+def review_risk_gate():
+    """发布前的审核风险自检（scripts/check-review-risk.mjs --strict）：已查实会被判不通过的触发句、
+    观察词（双减类政策用语、敏感类别名）在已过审基线之外新出现的行，都会拦下这次发布。
+    人工看过新出现的行、确认没问题后运行 npm run review:accept 记进基线，再重新发布。"""
+    node = shutil.which("node") or shutil.which("node.exe")
+    if not node:
+        sys.exit("找不到 node：发布前要用 scripts/check-review-risk.mjs 做审核风险自检")
+    r = subprocess.run([node, os.path.join(REPO, "scripts", "check-review-risk.mjs"), "--strict"],
+                       capture_output=True, text=True, encoding="utf-8", cwd=REPO, timeout=300)
+    if r.returncode != 0:
+        sys.exit(((r.stdout or "") + (r.stderr or "")).strip()
+                 + "\n发布已取消：触发句要改掉；新出现的观察词人工确认没问题后运行 npm run review:accept，再重新发布。")
+
+
 def package_files(path):
     """技能目录里会被打包的文件（相对技能目录）：git 跟踪的与没被忽略的新文件，和发布清单算哈希用的是同一批。
     git 不可用时退回遍历目录（跳过点开头的、__pycache__、node_modules）。"""

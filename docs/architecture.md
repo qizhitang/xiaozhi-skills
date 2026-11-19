@@ -370,6 +370,7 @@ consentStatus
 | `scripts/validate-schemas.mjs` | 四份 schema 有效；8 份示例合规；枚举与 `shared/vocab.md` 一致；收发方覆盖全库；关键字段存在；档案结构与交接协议的版本号等于 `package.json` 的 `contractVersion` |
 | `scripts/sync-shared.mjs --check` | 84 个 SKILL 目录内的 `shared/` 副本与仓库根源文件一致（缺失、被改、残留均报错）；`scripts/snapshots/x-skill-scope.json` 与当前裁剪结果一致（见第八节末） |
 | `scripts/package-versions.mjs --check` | 发布清单 `scripts/snapshots/package-versions.json` 的发布版本等于 `package.json`；各技能 `metadata.version` 等于清单所记、不高于发布版本；契约版本存在且不高于发布版本。内容哈希（会被打包的文件，换行统一成 LF，不计版本号那一行）与清单对不上的技能只列为未发布的改动，不报错——升版时由 `bump_version.py` 给它们升版本号，发布脚本见到没升的就拒绝发布。测试在 `scripts/tests/package-versions.test.mjs` |
+| `scripts/check-review-risk.mjs` | 触发句（`scripts/review-risk.json`，只收用测试包查实、单独一句也被拒的说法）在发布包源文件里再出现即失败；观察词逐行比对已过审基线 `scripts/snapshots/review-risk-baseline.json`，新出现或改过的行列出提示（一行 3 个以上敏感类别名标“成串”），`--strict` 时算失败（发布脚本用），`--accept` 记进基线。测试在 `scripts/tests/check-review-risk.test.mjs` |
 | `scripts/tests/sync-shared.test.mjs` | `node --test` 跑裁剪规则的回归测试：否定语境、“读：/写：”声明块（跨行声明头、→ 解释续行）、工作区子字段与 `$defs`、交接协议的类型与收发路由 |
 | `scripts/align-boxes.mjs --check` | 代码块里的框线按显示宽度对齐（全角与宽字符 2 列，其余 1 列）：框线表能自动规整却没规整的报错，`npm run boxes:fix` 规整（以横框线为准补空格、内容超宽时整列加宽，只动空格与横线）；流程图里的框逐个核对两条竖边与底边，无外框的表核对竖线是否对准分隔线接头，横线上的接头（┬ ┴ ┼）核对上下是否正对连线，整张表分栏对不上的也报——这几种脚本改不了，同样报错、要手工重画；只有左侧竖线的树形图、相邻行没有框线字符的接头（坐标轴刻度、时间轴说明）不算。测试在 `scripts/tests/align-boxes.test.mjs` |
 | `scripts/verify-examples.mjs` | X1 ```verify``` 块为合法 JSON（claim / expr / expect）· X2 expr 只含 Math 与字面量，求值结果等于 expect · X3 有验算声明却无断言的文件给警告（示例确实没有数值结论的，在声明日期后写明“（无数值结论：…）”即不再提醒）。配合 `check-skills` 的 A2：验算日期早于最后一次实质提交即失败（要完整 git 历史，浅克隆里只报一条错误，先 `git fetch --unshallow`；只动空白与框线字符的排版改动不算实质改动） |
@@ -415,9 +416,12 @@ xiaozhi-skills/
 │   ├── run-evals.mjs                行为回归运行器（手动）
 │   ├── align-boxes.mjs              框线按显示宽度规整与核对（--check 进 npm run check，--write 即 npm run boxes:fix）
 │   ├── package-versions.mjs         技能包版本与发布清单（--check 进 npm run check；升版时由 bump_version.py 调用）
-│   ├── tests/                       sync-shared 裁剪规则、框线规整、技能包版本的回归测试（进 npm run check）
+│   ├── check-review-risk.mjs        发布前的审核风险自检（进 npm run check；发布脚本发布前按严格模式跑）
+│   ├── review-risk.json             已查实的触发句与观察词
+│   ├── tests/                       sync-shared 裁剪规则、框线规整、技能包版本、审核风险自检的回归测试（进 npm run check）
 │   ├── snapshots/                   x-skill-scope 快照（各技能随包 schema 副本的读写范围，sync-shared 生成并核对）；
-│   │                                package-versions.json 发布清单（各技能当前版本与内容哈希）
+│   │                                package-versions.json 发布清单（各技能当前版本与内容哈希）；
+│   │                                review-risk-baseline.json 观察词的已过审基线
 │   ├── gen-docs.mjs                 生成技能索引 + 文档同步核对（进 npm run check）
 │   └── publish/                     打包与发布到两个市场 + 线上版本核对（凭据留仓库外，见其 README）
 ├── docs/

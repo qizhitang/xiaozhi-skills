@@ -16,7 +16,7 @@ ClawHub 的 token 由其 CLI 的配置文件持有（CLAWHUB_CONFIG_PATH，默�
 import json, os, re, shutil, subprocess, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from _common import HERE, REPO, clawhub_cli, clawhub_env, clawhub_remote_version, log, require_released, version, workdir  # noqa: E402
+from _common import HERE, REPO, clawhub_cli, clawhub_env, clawhub_remote_version, log, require_released, review_risk_gate, version, workdir  # noqa: E402
 
 STAGE = workdir("staged-clawhub")
 DONE_FILE = os.path.join(workdir(), "published-clawhub.json")
@@ -87,6 +87,7 @@ def recorded_version(entry):
 def main():
     release = version()
     want = require_released()   # {技能: 它自己的版本}；有还没升版本号的改动就在这里退出
+    review_risk_gate()          # 已查实的触发句、新出现的观察词：先拦下，别浪费审核与额度
     restage(release)
     names = sorted(os.listdir(STAGE))
 

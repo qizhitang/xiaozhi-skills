@@ -22,7 +22,7 @@
 import json, os, shutil, subprocess, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from _common import HERE, REPO, log, require_released, skillhub_cli, skillhub_env, version, workdir  # noqa: E402
+from _common import HERE, REPO, log, require_released, review_risk_gate, skillhub_cli, skillhub_env, version, workdir  # noqa: E402
 
 STAGE = workdir("staged")
 DONE_FILE = os.path.join(workdir(), "published-skillhub.json")
@@ -91,6 +91,7 @@ def live_versions_or_none():
 def main():
     release = version()
     want = require_released()   # {技能: 它自己的版本}；有还没升版本号的改动就在这里退出
+    review_risk_gate()          # 已查实的触发句、新出现的观察词：先拦下，别浪费审核与额度
     restage(release)
     allnames = sorted(os.listdir(STAGE))
     first = []

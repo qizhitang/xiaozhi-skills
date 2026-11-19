@@ -50,13 +50,15 @@ npx -y clawhub@0.23.3 login --token <你的 token>                    # 写到 C
 ```bash
 npm run versions                                     # 看哪些技能有未发布的改动（下次升版会升这些）
 python scripts/publish/bump_version.py 2.12.7 2.12.8 # 升版：只有这些技能升到 2.12.8；schema 改了加 --contract
-npm run check
+npm run check                                        # 观察词有新出现的行会列出来：人工看过没问题再 npm run review:accept
 python scripts/publish/publish_clawhub.py            # ClawHub，只发升了版本的
 python scripts/publish/publish_skillhub.py           # SkillHub，只发升了版本的；配额紧时多轮等待，可挂成计划任务
 python scripts/publish/verify_publish.py             # 随时核对 SkillHub
 ```
 
 发布前先 `npm run check`——技能包版本与发布清单一致、示例题验算不过期（A2）、文档不落后（D2–D5）都在里面，未发布的改动也会列出来。**同一个版本号不能对应两份不同的内容**：随包内容（`shared/` 六份约定、references、schema 副本）变了的技能，升版时由 `bump_version.py` 升版本号；发布脚本见到没升版本号的改动会拒绝发布。
+
+**审核风险自检**（`scripts/check-review-risk.mjs`）：两个发布脚本发布前按严格模式跑——已查实会被判不通过的说法（`scripts/review-risk.json` 的触发句）再出现、观察词（双减类政策用语、敏感类别名）在已过审基线之外新出现，都会拦下这次发布。触发句要改掉；新出现的观察词人工看过、确认没问题后 `npm run review:accept` 记进基线再发布。平台不公开审核规则、规则还会变，这只能拦住见过的几类；被拒时用二分脚本查实是哪一句，再把它加进触发句。
 
 ## 计划任务（Windows）
 
