@@ -17,6 +17,7 @@
 | `fetch_scans.py` | 拉 ClawHub 对各技能当前版本的安全扫描（停在旧版本的技能拉它那个版本的报告，每份汇总都是全库的完整状态）（ClawScan 判定 + SkillSpector 逐条证据），汇总成 `scan_summary_<版本>.json`；`--compare <上一版 summary>` 打印翻转表。ClawHub 发布后 3–5 分钟先落一份只有判定与摘要的快照，10–30 分钟后才补维度与逐条证据；快照记为 `complete: false`，重跑会重拉，直到退出码为 0 才算拉齐。全量报告之后约 1–1.5 小时，平台还会复核一部分技能、改写判定（可能翻转），所以拉齐后隔一两个小时再跑一次 `--refresh`（已有全量报告的也重拉，并列出被改写的），以那一遍为准 |
 | `bump_version.py` | 升版 `<旧> <新>`：先同步技能内副本，再给内容与发布清单不一样的技能（含新技能）升到新版本，清单同步；package.json / package-lock 根包、README / docs / changelog 的“当前版本”跟着改，技能索引重生成。没有任何未发布的改动时拒绝升版。档案结构或交接协议（schema）改了时加 `--contract`：契约版本也升到新版本，各处 `protocolVersion` / `schemaVersion`、两个主 schema 的版本枚举、学习DNA 的 schemas/README 与 validate.js 夹具一起改，漏改的会列出来。跑完 `npm run check` |
 | `compare_scans.py` | 两个版本的翻转表（转好 / 变差 / 仍 suspicious），把仍 suspicious 的按证据归类：报告不完整（只拉到快照，重拉）/ 仅摘要 / 随包 schema（分发层的事）/ 技能自身；`--evidence` 逐条列 file:line 与判词。SQP-3 与 AE1 不追 |
+| `bisect_review.py` | 技能被 SkillHub 判不通过、平台只给笼统标签时，用一个测试 slug 二分定位是哪一句触发的：整包复刻能复现才往下查 → SKILL.md 与其余各组分开发 → 中性 frontmatter 排除描述 → 按文件、按行逐半缩小 → 单独发那一行确认。每步往测试 slug 发一个新版本（占 1 次额度），等审核出结果再走下一步；审核慢可中断，重跑同一命令接着查（进度在 `<work>/bisect/`）。`--dry-run` 只生成下一步的测试包，`--status` 看进度，`--self-test` 不联网跑一遍二分逻辑。测试 slug 在命令行给、不入库；过审的测试版本公开可见，查完可去平台下架。拿修复前的复习规划师模拟，14 步查实那一句（当初手工发了 20 个版本） |
 
 ## 版本号
 
@@ -58,7 +59,11 @@ python scripts/publish/verify_publish.py             # 随时核对 SkillHub
 
 发布前先 `npm run check`——技能包版本与发布清单一致、示例题验算不过期（A2）、文档不落后（D2–D5）都在里面，未发布的改动也会列出来。**同一个版本号不能对应两份不同的内容**：随包内容（`shared/` 六份约定、references、schema 副本）变了的技能，升版时由 `bump_version.py` 升版本号；发布脚本见到没升版本号的改动会拒绝发布。
 
-**审核风险自检**（`scripts/check-review-risk.mjs`）：两个发布脚本发布前按严格模式跑——已查实会被判不通过的说法（`scripts/review-risk.json` 的触发句）再出现、观察词（双减类政策用语、敏感类别名）在已过审基线之外新出现，都会拦下这次发布。触发句要改掉；新出现的观察词人工看过、确认没问题后 `npm run review:accept` 记进基线再发布。平台不公开审核规则、规则还会变，这只能拦住见过的几类；被拒时用二分脚本查实是哪一句，再把它加进触发句。
+**审核风险自检**（`scripts/check-review-risk.mjs`）：两个发布脚本发布前按严格模式跑——已查实会被判不通过的说法（`scripts/review-risk.json` 的触发句）再出现、观察词（双减类政策用语、敏感类别名）在已过审基线之外新出现，都会拦下这次发布。触发句要改掉；新出现的观察词人工看过、确认没问题后 `npm run review:accept` 记进基线再发布。平台不公开审核规则、规则还会变，这只能拦住见过的几类；被拒时用 `bisect_review.py` 查实是哪一句，再把它加进触发句：
+
+```bash
+python scripts/publish/bisect_review.py <被拒的技能> --slug <测试slug>    # 开始或继续；审核慢时可中断，重跑接着查
+```
 
 ## 计划任务（Windows）
 
