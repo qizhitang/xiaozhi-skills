@@ -2,7 +2,8 @@
 // 全库内容级校验（比 check-references.mjs 更进一步）。
 // 用法：node scripts/check-skills.mjs [--warn-only]
 // 检查项：
-//  F1 frontmatter：顶层只含官方字段 + 平台字段；name==目录名；license；metadata.{display_name,version,author,category,grade_bands,tags,depends_on} 齐全合法、version==package.json
+//  F1 frontmatter：顶层只含官方字段 + 平台字段；name==目录名；license；metadata.{display_name,version,author,category,grade_bands,tags,depends_on} 齐全合法、
+//     version 是 x.y.z 且不高于发布版本（package.json 的 version）；各技能版本与发布清单的对应由 package-versions.mjs --check 核对
 //  F2 depends_on 无环
 //  F3 description 无硬命令词/营销句；正文无"自动触发/自动写入/自动推送/自动预扣/自动确认"
 //  R1 references 非占位（≥15 行且不含"待补充"）
@@ -102,6 +103,7 @@ const a2Unchecked = [];   // 浅克隆下没法核对提交历史的文件
 const warnOnly = process.argv.includes("--warn-only");
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf-8"));
 const REPO_VERSION = pkg.version;
+const cmpVer = (a, b) => { const x = a.split(".").map(Number), y = b.split(".").map(Number); for (let i = 0; i < 3; i++) if (x[i] !== y[i]) return x[i] < y[i] ? -1 : 1; return 0; };
 const errors = [], warnings = [];
 const err = (code, file, msg) => errors.push(`[${code}] ${file}: ${msg}`);
 const warn = (code, file, msg) => warnings.push(`[${code}] ${file}: ${msg}`);
@@ -246,7 +248,7 @@ for (const f of skillFiles) {
   if (!fm.metadata) err("F1", rel(f), "缺 metadata 块");
   if (!fm.license) err("F1", rel(f), "缺 license");
   for (const k of ["display_name", "version", "author", "category", "grade_bands", "tags"]) if (md[k] === undefined) err("F1", rel(f), `metadata 缺 ${k}`);
-  if (md.version !== REPO_VERSION) err("F1", rel(f), `metadata.version=${md.version}，应为 ${REPO_VERSION}`);
+  if (!/^\d+\.\d+\.\d+$/.test(String(md.version)) || cmpVer(String(md.version), REPO_VERSION) > 0) err("F1", rel(f), `metadata.version=${md.version}，应为 x.y.z 且不高于发布版本 ${REPO_VERSION}`);
   if (md.depends_on !== undefined && !Array.isArray(md.depends_on)) err("F1", rel(f), "metadata.depends_on 必须是 YAML 列表");
   if (!md.grade_bands) err("F1", rel(f), "缺 metadata.grade_bands");
   else if (!Array.isArray(md.grade_bands) || md.grade_bands.some((g) => !GRADE_BANDS.includes(g))) err("F1", rel(f), `grade_bands 非法：${JSON.stringify(md.grade_bands)}`);

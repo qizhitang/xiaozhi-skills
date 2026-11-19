@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""核对 SkillHub 线上版本与仓库是否一致。
+"""核对 SkillHub 线上版本与仓库是否一致：每个技能对照它自己的版本号（SKILL.md 的 metadata.version，
+即它最后一次改动所在的发布版本），不是 package.json 的发布版本。
 
 凭据运行时从 SkillHub CLI 自己的 ~/.skillhub/credentials.json 读取——本文件不存任何密钥，
 也不把 token 打印或写入任何地方。
@@ -12,7 +13,7 @@
 import json, os, sys, time, urllib.parse, urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from _common import HERE, skill_dirs, version, workdir  # noqa: E402
+from _common import HERE, skill_versions, version, workdir  # noqa: E402
 
 CRED = os.path.expanduser("~/.skillhub/credentials.json")
 REPORT = os.path.join(workdir(), "verify-report.md")
@@ -104,7 +105,7 @@ def live_versions(passes=5):
 
 def main():
     quiet = "--quiet" in sys.argv
-    ver, want = version(), set(skill_dirs())
+    release, want = version(), skill_versions()   # {技能: 它自己的版本}
     try:
         live = live_versions()
     except Exception as e:
@@ -113,35 +114,36 @@ def main():
         print(line)
         return 2
 
-    ok = sorted(k for k, v in live.items() if v["version"] == ver)
-    stale = sorted((k, v["version"]) for k, v in live.items() if k in want and v["version"] != ver)
+    ok = sorted(k for k, v in live.items() if k in want and v["version"] == want[k])
+    stale = sorted((k, v["version"]) for k, v in live.items() if k in want and v["version"] != want[k])
     # 已提交、还没通过的分两种：平台判了"rejected"的（2026-10-14 才发现：四个历史技能 2.11.x 被内容合规审查拒绝，
     # 旧报告一直写成"审核中"）与仍在排队的
-    unapproved = [(k, v) for k, v in live.items() if k in want and v["version"] == ver and v["approved"] != ver]
+    unapproved = [(k, v) for k, v in live.items() if k in want and v["version"] == want[k] and v["approved"] != want[k]]
     rejected = sorted((k, v["approved"], v["note"]) for k, v in unapproved if v["review"].lower() == "rejected")
     if rejected:
         tok, host = _cred()
-        labels = {k: reject_label(host, tok, k, ver) for k, _, _ in rejected}
+        labels = {k: reject_label(host, tok, k, want[k]) for k, _, _ in rejected}
     pending = sorted((k, v["approved"]) for k, v in unapproved if v["review"].lower() != "rejected")
-    missing = sorted(want - set(live))
+    missing = sorted(set(want) - set(live))
     pri_bad = sorted(({k for k, _ in stale} | set(missing)) & PRIORITY)
 
     L = [f"# SkillHub 核对（{time.strftime('%Y-%m-%d %H:%M')}）", "",
-         f"仓库版本 **{ver}**，应上架 {len(want)} 个技能。",
-         f"线上 {len(live)} 个，其中 **{len(ok)} 个已是 {ver}**，落后 {len(stale)} 个，缺失 {len(missing)} 个。", ""]
+         f"发布版本 **{release}**，应上架 {len(want)} 个技能；每个技能对照它自己的版本号"
+         f"（{sum(1 for v in want.values() if v == release)} 个是 {release}，其余停在各自最后改动的版本）。",
+         f"线上 {len(live)} 个，其中 **{len(ok)} 个已是自己的版本**，落后 {len(stale)} 个，缺失 {len(missing)} 个。", ""]
     if not stale and not missing:
         head = "✅ **全部一致**" if not rejected else f"⚠️ **都已提交，但 {len(rejected)} 个审核未通过**"
-        L += [f"{head}：{len(want)} 个技能都已提交到 {ver}。", ""]
+        L += [f"{head}：{len(want)} 个技能都已提交到自己的版本。", ""]
     else:
         if stale:
-            L += [f"## 落后的 {len(stale)} 个", "", "| 技能 | 线上版本 | 优先 |", "|---|---|---|"]
-            L += [f"| `{k}` | {v} | {'★' if k in PRIORITY else ''} |" for k, v in stale] + [""]
+            L += [f"## 落后的 {len(stale)} 个", "", "| 技能 | 线上版本 | 应为 | 优先 |", "|---|---|---|---|"]
+            L += [f"| `{k}` | {v} | {want[k]} | {'★' if k in PRIORITY else ''} |" for k, v in stale] + [""]
         if missing:
             L += [f"## 线上没有的 {len(missing)} 个", ""] + [f"- `{k}`{'　★' if k in PRIORITY else ''}" for k in missing] + [""]
         if pri_bad:
             L += ["> ★ 是安全整改改动最大的老师端技能。这些没上线，意味着线上仍是整改前的行为。", ""]
     if rejected:
-        L += [f"## 审核未通过的 {len(rejected)} 个", "", f"平台已判定不通过：用户安装到的仍是下表的已通过版本。这不会自己好转——要么改内容后发新版本，要么在 SkillHub 平台申诉；重跑发布也不会让 {ver} 重新送审。", "",
+        L += [f"## 审核未通过的 {len(rejected)} 个", "", f"平台已判定不通过：用户安装到的仍是下表的已通过版本。这不会自己好转——要么改内容后发新版本，要么在 SkillHub 平台申诉；重跑发布也不会让同一个版本重新送审。", "",
               "| 技能 | 已通过版本 | 平台说明 | 拒绝标签 |", "|---|---|---|---|"]
         L += [f"| `{k}` | {a or '—'} | {n or '—'} | {labels.get(k) or '—'} |" for k, a, n in rejected] + [""]
     if pending:
@@ -152,7 +154,7 @@ def main():
 
     if quiet:
         why = "；未通过：" + "、".join(f"{k}（{labels.get(k) or n or '无说明'}）" for k, _, n in rejected) if rejected else ""
-        print(f"SkillHub 核对：{len(ok)}/{len(want)} 已提交 {ver}（审核中 {len(pending)}，未通过 {len(rejected)}），落后 {len(stale)}，缺失 {len(missing)}{why} → {REPORT}")
+        print(f"SkillHub 核对：{len(ok)}/{len(want)} 已提交到自己的版本（审核中 {len(pending)}，未通过 {len(rejected)}），落后 {len(stale)}，缺失 {len(missing)}{why} → {REPORT}")
     else:
         print("\n".join(L))
     return 0 if (not stale and not missing and not rejected) else 1

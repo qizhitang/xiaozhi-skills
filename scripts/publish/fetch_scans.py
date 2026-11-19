@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""拉取 ClawHub 对当前版本的安全扫描报告，汇总成 scan_summary_<版本>.json；可与上一版对比。
+"""拉取 ClawHub 对各技能当前版本的安全扫描报告，汇总成 scan_summary_<发布版本>.json；可与上一版对比。
+
+每个技能拉它自己版本号的那一份（内容没变、停在旧版本的技能，拉的是它那个旧版本的报告），
+所以每份汇总都是当时全库的完整状态。
 
 读 publish_clawhub.py 写的 published-clawhub.json（含每个技能的线上 slug 与远端版本号），
 逐个 `clawhub scan download`，解析 clawscan.json（判定）与 skillspector.json（逐条证据）。
@@ -23,7 +26,7 @@ complete=false，重跑时会重新拉；不要拿快照当最终报告去对比
 import json, os, subprocess, sys, time, zipfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from _common import clawhub_cli, clawhub_env, log, version, workdir  # noqa: E402
+from _common import clawhub_cli, clawhub_env, log, skill_versions, version, workdir  # noqa: E402
 
 MANIFEST = os.path.join(workdir(), "published-clawhub.json")
 
@@ -62,11 +65,12 @@ def final(e):
 
 
 def main():
-    ver = version()
+    ver, want = version(), skill_versions()
     if not os.path.exists(MANIFEST):
         sys.exit(f"没有发布清单：{MANIFEST}，先跑 publish_clawhub.py")
     pub = json.load(open(MANIFEST, encoding="utf-8"))
-    pub = {k: v for k, v in pub.items() if v.get("ok") and v.get("repoVersion") == ver}
+    # 新记录写 skillVersion，旧记录（全库一个版本号时）写 repoVersion
+    pub = {k: v for k, v in pub.items() if v.get("ok") and (v.get("skillVersion") or v.get("repoVersion")) == want.get(k)}
     only = None
     if "--only" in sys.argv:
         i = sys.argv.index("--only")

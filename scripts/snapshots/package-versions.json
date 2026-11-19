@@ -1,0 +1,342 @@
+{
+  "说明": "各技能当前版本号与那一版的内容哈希（=市场上那个版本的样子）。由 bump_version.py 升版时更新，不要手改；说明见 scripts/package-versions.mjs",
+  "release": "2.12.7",
+  "packages": {
+    "xiaozhi-biology-chart-reader": {
+      "version": "2.12.7",
+      "hash": "d57ef4ee58bec255"
+    },
+    "xiaozhi-biology-concept-network": {
+      "version": "2.12.7",
+      "hash": "159b97298083f319"
+    },
+    "xiaozhi-biology-error-dna": {
+      "version": "2.12.7",
+      "hash": "1ea2d6a6db59c09f"
+    },
+    "xiaozhi-biology-genetics-coach": {
+      "version": "2.12.7",
+      "hash": "8eacbc16c5335882"
+    },
+    "xiaozhi-biology-inquiry-coach": {
+      "version": "2.12.7",
+      "hash": "a031b7e55c879a05"
+    },
+    "xiaozhi-bridge-planner": {
+      "version": "2.12.7",
+      "hash": "937fbe98063f6eb6"
+    },
+    "xiaozhi-chemistry-error-dna": {
+      "version": "2.12.7",
+      "hash": "b3474cf1d0ab162c"
+    },
+    "xiaozhi-chemistry-lab-coach": {
+      "version": "2.12.7",
+      "hash": "ed7551a79ed543ae"
+    },
+    "xiaozhi-chemistry-micro-visualizer": {
+      "version": "2.12.7",
+      "hash": "e30a923188719a7f"
+    },
+    "xiaozhi-chemistry-notation-coach": {
+      "version": "2.12.7",
+      "hash": "b9ec3bcabef6e7c7"
+    },
+    "xiaozhi-chemistry-problem-coach": {
+      "version": "2.12.7",
+      "hash": "1dab201e4bcb2d4a"
+    },
+    "xiaozhi-chinese-classical-revival": {
+      "version": "2.12.7",
+      "hash": "44bae4e8ad171456"
+    },
+    "xiaozhi-chinese-grammar-tracker": {
+      "version": "2.12.7",
+      "hash": "46f6711e68939c0b"
+    },
+    "xiaozhi-chinese-material-library": {
+      "version": "2.12.7",
+      "hash": "e21065a0a5fcb338"
+    },
+    "xiaozhi-chinese-reading-decoder": {
+      "version": "2.12.7",
+      "hash": "71a69ecb5d302e09"
+    },
+    "xiaozhi-chinese-writing-coach": {
+      "version": "2.12.7",
+      "hash": "4ac3cf95c4762c02"
+    },
+    "xiaozhi-cornell-notes": {
+      "version": "2.12.7",
+      "hash": "604e15c6e6d92796"
+    },
+    "xiaozhi-correction-notebook": {
+      "version": "2.12.7",
+      "hash": "4ef02d0e85a81e19"
+    },
+    "xiaozhi-cross-subject-detective": {
+      "version": "2.12.7",
+      "hash": "6cee1496e2b0fa2a"
+    },
+    "xiaozhi-english-grammar-coach": {
+      "version": "2.12.7",
+      "hash": "ff4a0510a11c02a3"
+    },
+    "xiaozhi-english-listening-trainer": {
+      "version": "2.12.7",
+      "hash": "fd2a08c92a25fd1e"
+    },
+    "xiaozhi-english-speaking-coach": {
+      "version": "2.12.7",
+      "hash": "93f36ab6de618587"
+    },
+    "xiaozhi-english-vocabulary-dna": {
+      "version": "2.12.7",
+      "hash": "2ce8006e8401dd9b"
+    },
+    "xiaozhi-english-writing-coach": {
+      "version": "2.12.7",
+      "hash": "1cc360162505ffcf"
+    },
+    "xiaozhi-feynman-learning": {
+      "version": "2.12.7",
+      "hash": "96ff38c93196466c"
+    },
+    "xiaozhi-geography-causal-chain": {
+      "version": "2.12.7",
+      "hash": "72f7e6aba4cfb8fa"
+    },
+    "xiaozhi-geography-map-reader": {
+      "version": "2.12.7",
+      "hash": "aa3d855161305e86"
+    },
+    "xiaozhi-geography-region-builder": {
+      "version": "2.12.7",
+      "hash": "10e6004a9c6a72db"
+    },
+    "xiaozhi-history-essay-coach": {
+      "version": "2.12.7",
+      "hash": "72a9b17b23af7db7"
+    },
+    "xiaozhi-history-source-analyzer": {
+      "version": "2.12.7",
+      "hash": "19a58e89ceaf3932"
+    },
+    "xiaozhi-history-timeline-builder": {
+      "version": "2.12.7",
+      "hash": "647f584478042935"
+    },
+    "xiaozhi-im-reminder": {
+      "version": "2.12.7",
+      "hash": "2449ee4e2f348aba"
+    },
+    "xiaozhi-interest-explorer": {
+      "version": "2.12.7",
+      "hash": "0846362ea8a291ee"
+    },
+    "xiaozhi-learning-dna": {
+      "version": "2.12.7",
+      "hash": "827e159b6e6bd9cf"
+    },
+    "xiaozhi-learning-plan": {
+      "version": "2.12.7",
+      "hash": "42e8279499982758"
+    },
+    "xiaozhi-math-concept-explainer": {
+      "version": "2.12.7",
+      "hash": "7cd2a101ff07d9f2"
+    },
+    "xiaozhi-math-error-dna": {
+      "version": "2.12.7",
+      "hash": "c9948b8a3524e0c2"
+    },
+    "xiaozhi-math-gradient-trainer": {
+      "version": "2.12.7",
+      "hash": "5954f28d338ab6bb"
+    },
+    "xiaozhi-math-problem-solving-coach": {
+      "version": "2.12.7",
+      "hash": "0d0147ebfd1dc547"
+    },
+    "xiaozhi-math-word-problem-coach": {
+      "version": "2.12.7",
+      "hash": "1a94c5562d9f60e3"
+    },
+    "xiaozhi-openbook-coach": {
+      "version": "2.12.7",
+      "hash": "6adbabbc1ab002cc"
+    },
+    "xiaozhi-physics-concept-intuition": {
+      "version": "2.12.7",
+      "hash": "7bba6c480a14a9ef"
+    },
+    "xiaozhi-physics-error-dna": {
+      "version": "2.12.7",
+      "hash": "372b3fc08d57ceb2"
+    },
+    "xiaozhi-physics-lab-coach": {
+      "version": "2.12.7",
+      "hash": "3f2e95a1da39085a"
+    },
+    "xiaozhi-physics-modeling-coach": {
+      "version": "2.12.7",
+      "hash": "23d21139e4211bb4"
+    },
+    "xiaozhi-physics-problem-coach": {
+      "version": "2.12.7",
+      "hash": "8b3a71bd2321cefc"
+    },
+    "xiaozhi-skill-coordinator": {
+      "version": "2.12.7",
+      "hash": "3d545f4de70da3c9"
+    },
+    "xiaozhi-skill-creator": {
+      "version": "2.12.7",
+      "hash": "421ec537c2b125fc"
+    },
+    "xiaozhi-teach-assignment-designer": {
+      "version": "2.12.7",
+      "hash": "4d48321f178b8706"
+    },
+    "xiaozhi-teach-bio-geo-review-planner": {
+      "version": "2.12.7",
+      "hash": "80bb467cc70bf5f3"
+    },
+    "xiaozhi-teach-biology-lesson-planner": {
+      "version": "2.12.7",
+      "hash": "d812e052edc368ed"
+    },
+    "xiaozhi-teach-chemistry-lab-guide": {
+      "version": "2.12.7",
+      "hash": "1ebf0b3c65814b0a"
+    },
+    "xiaozhi-teach-chemistry-lesson-planner": {
+      "version": "2.12.7",
+      "hash": "7ff4006d22c6e4be"
+    },
+    "xiaozhi-teach-chemistry-notation-drill": {
+      "version": "2.12.7",
+      "hash": "0c13db07450fb19d"
+    },
+    "xiaozhi-teach-chinese-classical-guide": {
+      "version": "2.12.7",
+      "hash": "2a3cc96773471741"
+    },
+    "xiaozhi-teach-chinese-reading-guide": {
+      "version": "2.12.7",
+      "hash": "e12ef45ffde110c3"
+    },
+    "xiaozhi-teach-chinese-writing-guide": {
+      "version": "2.12.7",
+      "hash": "c97f2302dc622108"
+    },
+    "xiaozhi-teach-classroom-coach": {
+      "version": "2.12.7",
+      "hash": "c9071ff47ad1060f"
+    },
+    "xiaozhi-teach-english-assessment": {
+      "version": "2.12.7",
+      "hash": "1b82b3e3cc2e907b"
+    },
+    "xiaozhi-teach-english-listening-designer": {
+      "version": "2.12.7",
+      "hash": "133359402238d0f6"
+    },
+    "xiaozhi-teach-english-speaking-designer": {
+      "version": "2.12.7",
+      "hash": "0300b529ecd8bd44"
+    },
+    "xiaozhi-teach-exam-designer": {
+      "version": "2.12.7",
+      "hash": "809c9b091cb74d2e"
+    },
+    "xiaozhi-teach-geography-lesson-planner": {
+      "version": "2.12.7",
+      "hash": "ca95758caa3633ad"
+    },
+    "xiaozhi-teach-history-assessment-guide": {
+      "version": "2.12.7",
+      "hash": "5e1b868adfad2b94"
+    },
+    "xiaozhi-teach-history-lesson-planner": {
+      "version": "2.12.7",
+      "hash": "097d426eccb58b1c"
+    },
+    "xiaozhi-teach-homework-tracker": {
+      "version": "2.12.7",
+      "hash": "6824b9c973b613cf"
+    },
+    "xiaozhi-teach-lesson-log": {
+      "version": "2.12.7",
+      "hash": "6fbd191f075f4173"
+    },
+    "xiaozhi-teach-lesson-planner": {
+      "version": "2.12.7",
+      "hash": "fb0f8d826c045bce"
+    },
+    "xiaozhi-teach-math-error-analyzer": {
+      "version": "2.12.7",
+      "hash": "eb508da4b68db7ef"
+    },
+    "xiaozhi-teach-math-exam-designer": {
+      "version": "2.12.7",
+      "hash": "07d9f49f78e11b0f"
+    },
+    "xiaozhi-teach-math-lesson-planner": {
+      "version": "2.12.7",
+      "hash": "8af40f64a806ee6f"
+    },
+    "xiaozhi-teach-parent-communication": {
+      "version": "2.12.7",
+      "hash": "e7e87ddc117739ae"
+    },
+    "xiaozhi-teach-physics-experiment-coach": {
+      "version": "2.12.7",
+      "hash": "86acd2f48cc2ca63"
+    },
+    "xiaozhi-teach-physics-lesson-planner": {
+      "version": "2.12.7",
+      "hash": "34dc51b71b89159a"
+    },
+    "xiaozhi-teach-physics-problem-guide": {
+      "version": "2.12.7",
+      "hash": "a3a4ca694127981c"
+    },
+    "xiaozhi-teach-renewal-report": {
+      "version": "2.12.7",
+      "hash": "e1372abe8b450b89"
+    },
+    "xiaozhi-teach-resource-library": {
+      "version": "2.12.7",
+      "hash": "26ba9f1ea4c652d5"
+    },
+    "xiaozhi-teach-review-planner": {
+      "version": "2.12.7",
+      "hash": "5d04c161c09b7ea3"
+    },
+    "xiaozhi-teach-schedule-manager": {
+      "version": "2.12.7",
+      "hash": "c04b274fb3958c16"
+    },
+    "xiaozhi-teach-solo-dashboard": {
+      "version": "2.12.7",
+      "hash": "5aab879989d62289"
+    },
+    "xiaozhi-teach-student-analyzer": {
+      "version": "2.12.7",
+      "hash": "bddb268dd397711f"
+    },
+    "xiaozhi-teach-student-intake": {
+      "version": "2.12.7",
+      "hash": "f721e736d6023429"
+    },
+    "xiaozhi-time-focus-coach": {
+      "version": "2.12.7",
+      "hash": "db399062cf88c26c"
+    },
+    "xiaozhi-weekly-review": {
+      "version": "2.12.7",
+      "hash": "c091de14cfa7651e"
+    }
+  }
+}

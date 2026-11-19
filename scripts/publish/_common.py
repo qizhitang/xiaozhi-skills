@@ -5,7 +5,7 @@
 两个市场的 CLI 各自维护自己的凭据文件，本目录下的脚本只通过环境变量指路，
 不读取、不复制、不打印任何 token。
 """
-import io, json, os, shutil, sys, time
+import io, json, os, re, shutil, subprocess, sys, time
 
 if hasattr(sys.stdout, "buffer"):
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
@@ -22,8 +22,75 @@ DEFAULT_TOOLS = os.path.expanduser("~/.xiaozhi-publish")
 
 
 def version():
+    """发布版本（package.json 的 version）：每次升版都升，README 与 docs 的“当前版本”写它。"""
     with open(os.path.join(REPO, "package.json"), encoding="utf-8") as f:
         return json.load(f)["version"]
+
+
+def contract_version():
+    """契约版本（package.json 的 contractVersion）：档案结构与交接协议的版本，只在 schema 变化时升。"""
+    with open(os.path.join(REPO, "package.json"), encoding="utf-8") as f:
+        return json.load(f)["contractVersion"]
+
+
+_VERSION_LINE = re.compile(r"^[ \t]+version:[ \t]*(\S+)[ \t]*$", re.M)
+
+
+def skill_version(path):
+    """一个技能自己的版本号：SKILL.md frontmatter 的 metadata.version（它最后一次改动所在的发布版本）。"""
+    text = open(os.path.join(path, "SKILL.md"), encoding="utf-8").read().replace("\r\n", "\n")
+    m = re.match(r"^---\n(.*?)\n---(\n|$)", text, re.S)
+    v = _VERSION_LINE.search(m.group(1)) if m else None
+    if not v:
+        sys.exit(f"{path}/SKILL.md 的 frontmatter 里没有 version")
+    return v.group(1)
+
+
+def skill_versions():
+    """{技能目录名: 它自己的版本号}。两个市场上每个技能的版本号以这里为准，不是 package.json。"""
+    return {name: skill_version(path) for name, path in skill_dirs().items()}
+
+
+def package_status():
+    """发布清单的状态（scripts/package-versions.mjs --json）：各技能版本、内容哈希，以及未发布的改动。"""
+    node = shutil.which("node") or shutil.which("node.exe")
+    if not node:
+        sys.exit("找不到 node：发布前要用 scripts/package-versions.mjs 核对技能包版本")
+    r = subprocess.run([node, os.path.join(REPO, "scripts", "package-versions.mjs"), "--json"],
+                       capture_output=True, text=True, encoding="utf-8", cwd=REPO, timeout=300)
+    if r.returncode != 0:
+        sys.exit("读发布清单失败：" + ((r.stdout or "") + (r.stderr or "")).strip()[:400])
+    return json.loads(r.stdout)
+
+
+def require_released():
+    """发布前的闸：有未发布的改动（内容与发布清单不一致、新技能、已删技能）就不许发——
+    否则同一个版本号在市场上会对应两份不同的内容。返回 {技能: 版本}。"""
+    st = package_status()
+    p = st["pending"]
+    if p["changed"] or p["added"] or p["removed"]:
+        parts = [f"{k} {len(v)} 个：{'、'.join(v)}" for k, v in
+                 (("内容有改动", p["changed"]), ("新技能", p["added"]), ("已删掉", p["removed"])) if v]
+        sys.exit("有还没升版本号的改动，先升版再发布（python scripts/publish/bump_version.py "
+                 f"{st['release']} <新版本>）：\n  " + "\n  ".join(parts))
+    return {name: s["version"] for name, s in st["skills"].items()}
+
+
+def package_files(path):
+    """技能目录里会被打包的文件（相对技能目录）：git 跟踪的与没被忽略的新文件，和发布清单算哈希用的是同一批。
+    git 不可用时退回遍历目录（跳过点开头的、__pycache__、node_modules）。"""
+    rel = os.path.relpath(path, REPO).replace(os.sep, "/")
+    try:
+        out = subprocess.run(["git", "ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", rel],
+                             capture_output=True, cwd=REPO, timeout=120, check=True).stdout.decode("utf-8")
+        files = [f for f in out.split("\0") if f and os.path.exists(os.path.join(REPO, f))]
+        return sorted({f[len(rel) + 1:] for f in files})
+    except Exception:
+        out = []
+        for r, ds, fs in os.walk(path):
+            ds[:] = [d for d in ds if not d.startswith(".") and d not in ("__pycache__", "node_modules")]
+            out += [os.path.relpath(os.path.join(r, f), path).replace(os.sep, "/") for f in fs if not f.startswith(".")]
+        return sorted(out)
 
 
 def clawhub_remote_version(ver):
