@@ -26,6 +26,11 @@
 
 - 学习DNA 的 schemas/README：“当前 schemaVersion 为 2.1.0，与仓库版本一致”早已过时，改为契约版本的说法（当前 2.12.7）。按新办法，下次升版只有学习DNA 一个技能升版本号。
 
+### 推送前自动校验（工具）
+
+- 新增推送钩子 `.githooks/pre-push`：`git push` 前自动跑 `npm run check`（全量约 4 秒），不通过就取消推送，并列出出错的那几行；确认要推送时用 `git push --no-verify`。每个克隆运行一次 `npm run hooks:install`（即 `git config core.hooksPath .githooks`）启用。CI 删掉后，这是推送前唯一的自动把关。
+- 新增 `.gitattributes`，让钩子文件在 Windows 检出时保持 LF——带 CRLF 时首行变成 `#!/bin/sh\r`，Git 跑不起来。
+
 ### 文档
 
 - 发布说明加“版本号”一节与日常步骤（看未发布的改动 → 升版 → 检查 → 发布）；README、架构说明的校验表补 `package-versions.mjs`，`validate-schemas` 改为对照契约版本；架构说明数据契约一节补契约版本的说明；目录树里 v2.12.6 删 CI 时漏改的 6 处“进 CI”改为 `npm run check`。

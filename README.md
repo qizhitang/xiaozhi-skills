@@ -185,7 +185,7 @@ npm install
 npm run check
 ```
 
-本库不接 CI：提交与发布前在本地跑 `npm run check`，看退出码。A2 要完整 git 历史，浅克隆先 `git fetch --unshallow`。
+本库不接 CI：提交与发布前在本地跑 `npm run check`，看退出码。每个克隆运行一次 `npm run hooks:install`（启用 `.githooks/pre-push`），之后每次 `git push` 前自动跑 `npm run check`，不通过就不推送（确认要推送时用 `git push --no-verify`）。A2 要完整 git 历史，浅克隆先 `git fetch --unshallow`。
 
 | 脚本 | 检查什么 |
 |---|---|
