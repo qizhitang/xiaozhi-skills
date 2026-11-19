@@ -233,7 +233,7 @@ if (!globalThis.__packageVersionsLibraryOnly) {
         }
         const n = Object.keys(st.skills).length;
         const at = Object.values(st.skills).filter((s) => s.version === st.release).length;
-        const spread = at === n ? `都是发布版本 ${st.release}` : `${at} 个是发布版本 ${st.release}，其余 ${n - at} 个停在各自最后改动的版本`;
+        const spread = at === n ? `都是发布版本 ${st.release}` : `，${at} 个是发布版本 ${st.release}，其余 ${n - at} 个停在各自最后改动的版本`;
         console.log(`✅ 技能包版本与发布清单一致：${n} 个技能${spread}；契约版本 ${st.contractVersion}`);
         if (lines.length) console.log("ℹ️  未发布的改动：\n" + lines.join("\n"));
       }
