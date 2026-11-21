@@ -80,12 +80,21 @@ P1 / S1 集的判定与 `scripts/check-skills.mjs` 用同一组正则，两边�
 
 **静态（进 CI）**：`npm run check:evals` → `scripts/check-evals.mjs`。查文件是否合格、覆盖是否完整、`route_to` 是否存在、`missing` 是否越界。不跑模型。
 
-**行为（手动）**：`ANTHROPIC_API_KEY=... npm run evals:run [skill...]` → `scripts/run-evals.mjs`。把 SKILL.md + 随包分发的 shared/ 喂给模型，逐条用例对话一轮，再由判卷模型对照 `expect` 打分。报告在 `evals/report/<skill>.md`，汇总在 `_summary.json`。
+**行为（手动）**：`ANTHROPIC_API_KEY=... npm run evals:run [skill...]` → `scripts/run-evals.mjs`。逐条用例对话一轮，再由判卷模型对照 `expect` 打分。报告在 `evals/report/<skill>.md`，汇总在 `_summary.json`。
 
+- **喂法（`--mode`）**：默认 `files`——system 里只有 SKILL.md 与技能目录的文件清单，`shared/` 与 `references/` 由模型用 `read_file` 按需读，技能在平台上就是这样加载的，references 里的内容也因此进得了回归；报告里每条用例列出“读过的文件”。`--mode=inline` 是旧方式：SKILL.md 加五份共享约定整份放进 system，不给工具、读不到 references，只在要对照旧结果时用。
+- **只跑几类（`--kind`）**：`npm run evals:run -- --kind=crisis,consent` 只跑危机与授权两类（全库 212 条）。这两类是安全底线，第一次跑、或手头预算有限时先跑它。
 - **模型**：被测与判卷默认都用 `claude-sonnet-5-5`，`EVAL_MODEL` / `JUDGE_MODEL` 可换。被测模型最好与用户实际所在平台用的模型一致，结论才说明那边的情况。
 - **凭据**：`ANTHROPIC_API_KEY`，或 `ANTHROPIC_AUTH_TOKEN`，或 `ant auth login` 存下的配置（官方 SDK 按这个顺序找）。凭据或模型名有误时第一条用例就停下，不会把全部用例记成失败。
-- **结局**：`.` 通过、`F` 不通过；另有四种单独计数、不算进“不通过”：`T` 回复写满 16000 token 被截断、`R` 被测模型拒答、`E` 限流或网络错误重试 4 次后仍失败、`J` 判卷没给出 JSON。基线里出现 T、R 要先看原因，它们不说明 SKILL 写得对不对。
-- **成本**：每条用例都带整份 SKILL.md 与共享约定（全量约 1000 多条用例、3,900 万字符输入）。这部分打了提示缓存标记，同一 SKILL 的用例共用；`_summary.json` 的 `usage` 记下实际用量。
+- **结局**：`.` 通过、`F` 不通过；另有五种单独计数、不算进“不通过”：`T` 回复写满 16000 token 被截断、`R` 被测模型拒答、`L` 一直在读文件、8 轮用尽还没给出回复、`E` 限流或网络错误重试 4 次后仍失败、`J` 判卷没给出 JSON。基线里出现 T、R、L 要先看原因，它们不说明 SKILL 写得对不对。
+- **成本**：`files` 模式下每条用例带 SKILL.md 与文件清单（打了提示缓存标记，同一 SKILL 的用例共用），模型读了哪份文件，那份文件才计入输入；`_summary.json` 的 `usage` 记下实际用量，`summary[].reads` 记下每份文件被读了几次。先试跑一个技能，按实测用量估全量。
+
+**路由（手动）**：`ANTHROPIC_API_KEY=... npm run evals:route [skill...]` → `scripts/run-routing-evals.mjs`。上面的行为回归测的是“SKILL 已经加载之后怎么答”，那时路由已经发生过了；这一步测路由本身：把候选技能的 name + description 全摆出来（平台上模型挑技能时看到的就是这些），用 trigger / no-trigger 用例逐条问“这句话你会加载哪个技能”，再和期望对账。答案从枚举里选，直接比对，不用判卷模型，一条用例一次调用。
+
+- **候选范围（`--scope`）**：默认 `side`——学生端技能的用例在学生端全部技能里挑，老师端同理，用例的 `route_to` 在另一端时把它补进候选。`--scope=all` 用全库一起挑，是最难的情形，结果只作上限参考。
+- **五种结果**：`correct` 选对；`missed` 该接的谁也没选；`lost` 该接的被别的技能抢走；`stolen` 不该接的被本技能抢了（最要紧，说明 description 的边界没立住）；`other` 不该接的没被本技能抢，但也没去 `route_to`。
+- **报告**：`evals/report/_routing.md`（每个技能的对账表、最常见的混淆对、没选对的用例与模型给的理由）与 `_routing.json`。报告另记“选了协调器而期望不是它”的条数——协调器的路由职能与平台自己的路由重叠到什么程度，看这个数。
+- 改 description 之前先跑一遍留底，改完再跑一遍对比；description 瘦身要以它为准。
 
 行为回归的结果是非确定的——同一条用例跑两次可能一次过一次不过。它的用途是**发现回归**，不是当门禁：改了某个 SKILL 或 shared/，跑一遍它相关的用例，看有没有从过变成不过。
 

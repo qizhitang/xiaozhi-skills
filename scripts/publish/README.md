@@ -16,6 +16,7 @@
 | `withdraw_clawhub.py` | 撤回某个版本区间的旧版本（`2.1.4 2.1.11` 含两端），保留 latest 与区间外的版本。默认预演，加 `--yes` 才真撤；进度写 `withdrawn-clawhub.json`，可中断续跑。底层是 `clawhub delete <slug> --version`：制品保留、版本号占位，`clawhub undelete <slug> --version <v>` 可恢复 |
 | `fetch_scans.py` | 拉 ClawHub 对当前版本的安全扫描（ClawScan 判定 + SkillSpector 逐条证据），汇总成 `scan_summary_<版本>.json`；`--compare <上一版 summary>` 打印翻转表。ClawHub 发布后 3–5 分钟先落一份只有判定与摘要的快照，10–30 分钟后才补维度与逐条证据；快照记为 `complete: false`，重跑会重拉，直到退出码为 0 才算拉齐。全量报告之后约 1–1.5 小时，平台还会复核一部分技能、改写判定（可能翻转），所以拉齐后隔一两个小时再跑一次 `--refresh`（已有全量报告的也重拉，并列出被改写的），以那一遍为准 |
 | `bump_version.py` | 版本号 OLD → NEW 一处改完：package.json / package-lock、各 SKILL.md 的 metadata.version 与示例 protocolVersion、schemas/examples 与 references 的 protocolVersion / schemaVersion、两个主 schema 的版本枚举、学习DNA validate.js 夹具、README / docs / changelog 的“当前版本”。跑完 `node scripts/sync-shared.mjs && npm run docs:gen && npm run check` |
+| `changed.py` | 列出自某个提交以来随包内容真的变了的技能：两边的版本号先各自换成占位符再比，只有版本号不同的不算。`--since <上次发布的升版提交>`；`--names` 只打印逗号分隔的技能名，可直接接 `publish_skillhub.py --only`；`--files` 列出每个技能改了哪些文件。不连市场、不要凭据 |
 | `compare_scans.py` | 两个版本的翻转表（转好 / 变差 / 仍 suspicious），把仍 suspicious 的按证据归类：报告不完整（只拉到快照，重拉）/ 仅摘要 / 随包 schema（分发层的事）/ 技能自身；`--evidence` 逐条列 file:line 与判词。SQP-3 与 AE1 不追 |
 
 中间产物（打包目录、进度、日志、报告）默认写到 `~/.xiaozhi-publish/work/`，不进仓库——放仓库内会被 `check-references` 当成真技能扫到。可用 `XIAOZHI_PUBLISH_WORK` 改。
@@ -40,6 +41,27 @@ python scripts/publish/verify_publish.py             # 随时核对 SkillHub
 ```
 
 发布前先 `npm run check`——版本号统一（D1）、示例题验算不过期（A2）、文档不落后（D2–D5）都在里面。**随包分发的内容变了就必须升版本号**：`shared/` 六份约定和 references 都进包，同一版本号下两份不同内容是 D1 存在的理由。
+
+## 只发改了的包
+
+全库锁步版本号，升一次版 84 个包的版本号都变，但内容真变了的通常只有几个：v2.12.6 → v2.12.7 实际只改了复习规划师一个包，其余 83 个是原样重发、重新过一遍审核与扫描。
+
+```bash
+python scripts/publish/changed.py --since <上次发布的升版提交>
+```
+
+要先拿平台审核结论、又不想占满当天配额时，把它接到 `--only`：
+
+```bash
+python scripts/publish/publish_skillhub.py --only "$(python scripts/publish/changed.py --since <上次发布的升版提交> --names)"
+```
+
+**目前只适合“先探路”，不适合当成常规发法**，有两件事还没解决：
+
+1. **线上会出现两个版本号的包。** 没重发的包停在旧版本，`verify_publish.py` 按 `package.json` 核对，会把它们报成落后。
+2. **`protocolVersion` 是只含当前版本号的单值枚举。** 交接协议与两个主 schema 随包分发，新包只认新版本号、旧包只认旧版本号，两边的交接示例互相对不上。要把“只发改了的包”做成常规发法，得先把 `protocolVersion` / `schemaVersion` 与包版本号解耦（协议不变就不升），并把 D1 从“全库同一个版本号”改成“包版本不超过库版本”——这是全库随包内容的一次改动，要项目方定。
+
+在那之前，常规发版仍是全量；探路之后不带 `--only` 重跑一遍，已发的不重发。
 
 ## 计划任务（Windows）
 

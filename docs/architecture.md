@@ -375,7 +375,14 @@ consentStatus
 
 本库不接 CI（GitHub Actions 工作流 v2.12.6 起删除：自 v2.1.13 接入后从没分到运行机器，每次几秒标红、一步没跑）。提交与发布前在本地跑 `npm run check`，以退出码为准；`npm install` 会把 `core.hooksPath` 指到 `scripts/hooks`，其中的 `pre-push` 在每次推送前自动跑一遍、没通过就拦下（临时跳过用 `git push --no-verify`）；A2 要完整 git 历史，浅克隆先 `git fetch --unshallow`。
 
-静态校验盖不住“文件之间互相矛盾”（SKILL.md 说不归档、references 说归档）——每份文件单看都合法。`evals/` 下每个 SKILL 一份回归用例（触发 / 不触发 / 降级 / 授权 / 危机五种），`scripts/run-evals.mjs` 把 SKILL.md 与随包 shared/ 喂给模型逐条对话、再由判卷模型对照期望打分。它不进 `npm run check`：要 API key，结果非确定，用途是发现回归而不是当门禁。被测回复被截断或被拒答时不判卷、单独计数，不混进“不通过”；同一 SKILL 的用例共用提示缓存。
+静态校验盖不住“文件之间互相矛盾”（SKILL.md 说不归档、references 说归档）——每份文件单看都合法。`evals/` 下每个 SKILL 一份回归用例（触发 / 不触发 / 降级 / 授权 / 危机五种），行为层分两步，都不进 `npm run check`（要 API key，结果非确定，用途是发现回归而不是当门禁）：
+
+- `scripts/run-evals.mjs`：SKILL 已加载之后怎么答。默认 `files` 模式——system 里只有 SKILL.md 与技能目录的文件清单，`shared/` 与 `references/` 由模型用 `read_file` 按需读（与平台上的渐进披露一致，references 的内容因此进得了回归）；`--mode=inline` 是旧方式（SKILL.md 与五份共享约定整份喂入）。`--kind=crisis,consent` 只跑安全底线两类。被测回复被截断、被拒答或读文件没读完时不判卷、单独计数，不混进“不通过”；同一 SKILL 的用例共用提示缓存。
+- `scripts/run-routing-evals.mjs`：平台会不会选中它。把候选技能的 name + description 全摆出来，用触发 / 不触发用例逐条让模型挑一个，与期望（本技能 / `route_to` / 谁也不选）直接对账，并统计最常见的混淆对与“被本技能抢走”的条数。
+
+两者共用的纯逻辑在 `scripts/lib/eval-core.mjs`，由 `scripts/tests/eval-core.test.mjs` 用假的模型调用测（进 `npm run check`）。
+
+**数据层原型（不随包）**：`scripts/prototypes/notebook-store.mjs` 是智能错题本“文件 + 脚本”数据层的原型——本地 `errors.jsonl` 事件流加一个零依赖脚本，把“落库”、28 天滚动计数与状态五档的迁移（`shared/vocab.md` §4、§5）从“模型在对话里照着做”变成确定的计算，没有建档同意就拒绝写入。目前没有任何 SKILL 引用它；口径由 `scripts/tests/notebook-store.test.mjs` 逐条锁住（进 `npm run check`）。要不要让技能真的带脚本，取决于三件要在平台上实测的事：脚本能不能跑与运行时、带脚本的包在市场扫描里怎么判、存储目录放哪里（见脚本开头）。
 
 ---
 

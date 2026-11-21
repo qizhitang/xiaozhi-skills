@@ -199,7 +199,7 @@ npm run check
 | `scripts/gen-docs.mjs --check` | 文档与源码同步：`docs/skills-index.md` 由 frontmatter 生成且不落后；README / architecture 技能表的显示名、目录、学段与 frontmatter 一致；数量声明正确；安装指南的顺序不违反 `metadata.depends_on` |
 | `scripts/check-evals.mjs` | 每个 SKILL 都有回归用例：至少 1 条触发 + 1 条不触发；声明了能力代号的有降级用例；持有长期数据的有授权用例；学生端技能与会读到情绪文本的技能都有危机用例；`route_to` 指向存在的 SKILL |
 
-行为层回归不进 `npm run check`（要 API key、非确定）：`ANTHROPIC_API_KEY=... npm run evals:run [skill...]` 把 SKILL.md 喂给模型逐条对话并判卷，报告在 `evals/report/`（默认被测与判卷都用 `claude-sonnet-5-5`，可用 `EVAL_MODEL` / `JUDGE_MODEL` 换）。格式与写法见 [evals/README.md](evals/README.md)。
+行为层回归不进 `npm run check`（要 API key、非确定），分两步：`ANTHROPIC_API_KEY=... npm run evals:run [skill...]` 加载 SKILL.md、让模型按需读 `shared/` 与 `references/`，逐条对话并判卷（`--kind=crisis,consent` 只跑危机与授权两类，先跑这个）；`npm run evals:route` 把候选技能的 description 全摆出来让模型挑，测路由会不会互相抢。报告在 `evals/report/`（默认被测与判卷都用 `claude-sonnet-5-5`，可用 `EVAL_MODEL` / `JUDGE_MODEL` 换）。运行器的纯逻辑由 `scripts/tests/eval-core.test.mjs` 测，进 `npm run check`。格式与写法见 [evals/README.md](evals/README.md)。
 
 ---
 
