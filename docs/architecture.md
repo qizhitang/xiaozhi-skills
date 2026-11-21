@@ -373,7 +373,7 @@ consentStatus
 | `scripts/gen-docs.mjs --check` | D2 `docs/skills-index.md` 与 frontmatter 生成结果一致 · D3 README / architecture 技能表：显示名 == `metadata.display_name`、反引号目录存在、学段列 == `grade_bands` 区间、改名残留报错 · D4 数量声明（全库 / 学生端 / 老师端 / references）与实际一致 · D5 安装指南顺序不违反 `metadata.depends_on` |
 | `scripts/check-evals.mjs` | E1 用例文件过 schema、id 唯一 · E2 至少 1 触发 + 1 不触发 · E3 有能力代号即有降级用例且 `missing` 不越界 · E4 持有长期数据即有授权用例 · E5 学生端一律、会读情绪文本的也要有危机用例 · E6 `route_to` 与授权字段名存在 · E7 每条用例有断言 |
 
-本库不接 CI（GitHub Actions 工作流 v2.12.6 起删除：自 v2.1.13 接入后从没分到运行机器，每次几秒标红、一步没跑）。提交与发布前在本地跑 `npm run check`，以退出码为准；A2 要完整 git 历史，浅克隆先 `git fetch --unshallow`。
+本库不接 CI（GitHub Actions 工作流 v2.12.6 起删除：自 v2.1.13 接入后从没分到运行机器，每次几秒标红、一步没跑）。提交与发布前在本地跑 `npm run check`，以退出码为准；`npm install` 会把 `core.hooksPath` 指到 `scripts/hooks`，其中的 `pre-push` 在每次推送前自动跑一遍、没通过就拦下（临时跳过用 `git push --no-verify`）；A2 要完整 git 历史，浅克隆先 `git fetch --unshallow`。
 
 静态校验盖不住“文件之间互相矛盾”（SKILL.md 说不归档、references 说归档）——每份文件单看都合法。`evals/` 下每个 SKILL 一份回归用例（触发 / 不触发 / 降级 / 授权 / 危机五种），`scripts/run-evals.mjs` 把 SKILL.md 与随包 shared/ 喂给模型逐条对话、再由判卷模型对照期望打分。它不进 `npm run check`：要 API key，结果非确定，用途是发现回归而不是当门禁。被测回复被截断或被拒答时不判卷、单独计数，不混进“不通过”；同一 SKILL 的用例共用提示缓存。
 

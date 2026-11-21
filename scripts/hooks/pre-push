@@ -1,0 +1,20 @@
+#!/bin/sh
+# 推送前跑全库校验（npm run check），退出码非 0 就拦下这次推送。
+#
+# 启用：npm install / npm ci 会把 core.hooksPath 指到 scripts/hooks（package.json 的 prepare）；
+#       也可以手工执行 git config core.hooksPath scripts/hooks。
+# 临时跳过：git push --no-verify（跳过了就自己先跑一遍 npm run check）。
+# A2 要完整 git 历史，浅克隆先 git fetch --unshallow。
+
+cd "$(git rev-parse --show-toplevel)" || exit 1
+
+if [ ! -d node_modules ]; then
+  echo "pre-push：没有 node_modules，校验跑不了。先执行 npm ci，再推送。" >&2
+  exit 1
+fi
+
+if ! npm run check --silent; then
+  echo >&2
+  echo "pre-push：npm run check 没通过，这次推送已拦下。按上面的报错改完再推。" >&2
+  exit 1
+fi
